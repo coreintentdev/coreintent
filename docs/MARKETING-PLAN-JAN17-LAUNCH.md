@@ -1,4 +1,4 @@
-# 🚀 COREINTENT.AI - MARKETING PLAN & WEBSITE INTEGRATION
+# 🚀 coreintent.dev - MARKETING PLAN & WEBSITE INTEGRATION
 ## Jan 17, 2026 Mainnet Launch Strategy
 
 **Status:** Pre-Launch | Website Under Development
@@ -45,7 +45,7 @@
 **Focus:** End-to-End Testing & Final Prep
 
 - [ ] COR-23: End-to-End Integration Test (Signal → Approval → Trade)
-- [ ] Website live testing on coreintent.ai
+- [ ] Website live testing on coreintent.dev
 - [ ] Social media countdown posts
 - [ ] Partnership outreach emails
 - [ ] Press release draft
@@ -75,7 +75,7 @@
 
 ## 🌐 WEBSITE INTEGRATION PLAN
 
-### **WEBSITE STRUCTURE** (coreintent.ai)
+### **WEBSITE STRUCTURE** (coreintent.dev)
 
 #### **Homepage Sections:**
 
@@ -368,7 +368,7 @@
 ## 📞 CONTACT & SUPPORT
 
 **Primary Channels:**
-- Email: support@coreintent.ai
+- Email: support@coreintent.dev
 - X/Twitter: @coreintentai
 - GitHub Issues: github.com/coreintentdev/coreintent/issues
 - Discord: (To be announced)
