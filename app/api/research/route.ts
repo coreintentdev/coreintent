@@ -45,9 +45,9 @@ export async function GET() {
   return NextResponse.json({
     identity: IDENTITY,
     research: {
-      webPresence: { source: "perplexity", ...perplexityResult },
-      socialSentiment: { source: "grok", ...grokResult },
-      selfAnalysis: { source: "claude", ...claudeResult },
+      webPresence: { ...perplexityResult, purpose: "Web presence scan" },
+      socialSentiment: { ...grokResult, purpose: "X/Twitter monitoring" },
+      selfAnalysis: { ...claudeResult, purpose: "Threat & brand analysis" },
     },
     allLive: perplexityResult.live && grokResult.live && claudeResult.live,
     timestamp: new Date().toISOString(),
