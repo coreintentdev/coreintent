@@ -22,6 +22,8 @@ const COMMANDS: Record<string, string> = {
   \x1b[32magents\x1b[0m      - List active AI agents
   \x1b[32mconfig\x1b[0m      - Show configuration
   \x1b[32mlogs\x1b[0m        - Recent activity logs
+  \x1b[32mstack\x1b[0m       - Show API orchestra & tools
+  \x1b[32mscan\x1b[0m        - Gmail/Drive AI scan status
   \x1b[32mclear\x1b[0m       - Clear terminal
   \x1b[32mversion\x1b[0m     - Show version info`,
 
@@ -68,6 +70,49 @@ const COMMANDS: Record<string, string> = {
 \x1b[90m[03:15:45]\x1b[0m System: Portfolio rebalance complete
 \x1b[90m[03:12:30]\x1b[0m MeanRevert: SOL approaching lower band
 \x1b[90m[03:10:11]\x1b[0m System: Binance WebSocket reconnected`,
+
+  stack: `\x1b[36mAPI Orchestra & Tools:\x1b[0m
+  \x1b[33mAI Services:\x1b[0m
+    Grok Pro        - Signal detection (fast, near-free via X Premium+)
+    Claude API      - Deep analysis, risk, agent orchestration
+    Perplexity Max  - Research, 9 connectors, cross-source verification
+    Gemini          - Gmail/Drive scanning & organization
+
+  \x1b[33mExchanges:\x1b[0m
+    Binance         - CEX, 500+ pairs
+    Coinbase        - CEX, 200+ pairs
+    gTrade          - DeFi (Polygon/Arbitrum)
+
+  \x1b[33mInfrastructure:\x1b[0m
+    Cloudflare Pro  - CDN, WAF, DDoS, DNS
+    Vercel          - Next.js hosting, edge functions
+    Cloudzy VPS     - Trading engine backend
+    GitHub          - 5 repos, CI/CD
+
+  \x1b[33mCustom Tools:\x1b[0m
+    The Ripper      - Data extraction engine
+    Mac the Zipper  - Compression & packaging
+    PDF Plumber     - Document parsing
+    AI-to-AI Transfer - Cross-model context pipeline
+
+  \x1b[33mStorage & Hosting:\x1b[0m
+    Google Drive    - Cloud storage (Gemini-scanned)
+    Notion          - Documentation hub
+    Domain hosting  - coreintent.dev
+
+  \x1b[33mPlatforms:\x1b[0m
+    X Premium+, Linear, Slack, Jira, Asana, Confluence`,
+
+  scan: `\x1b[36mGmail + Drive AI Scan:\x1b[0m
+  \x1b[32m●\x1b[0m Gmail (Gemini)    - Scanning inbox, categorizing, auto-labeling
+  \x1b[32m●\x1b[0m Google Drive      - Indexing docs, extracting insights
+  \x1b[33m◐\x1b[0m AI-to-AI Transfer - Syncing context across Claude/Grok/Perplexity
+
+  Use this to reorganize your life:
+  - Email triage & priority sorting
+  - Document summarization
+  - Calendar optimization
+  - Cross-platform context sync`,
 
   version: `CoreIntent v0.1.0-alpha
 Zynthio Trading Engine

@@ -26,7 +26,7 @@ const INTEGRATIONS = [
   "Binance", "Coinbase", "gTrade", "Claude API", "Grok Pro",
   "Perplexity Max", "X Premium+", "Cloudflare Pro", "Vercel",
   "Cloudzy VPS", "Linear", "GitHub", "Notion",
-  "PDF Plumber", "Mac the Zipper",
+  "PDF Plumber", "Mac the Zipper", "The Ripper", "AI-to-AI Transfer",
 ];
 
 export default function Home() {

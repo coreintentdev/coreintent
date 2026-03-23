@@ -38,6 +38,10 @@ const PLATFORMS = [
   { name: "GitHub", what: "5 repos, CI/CD, open source, coreintentdev org", color: "#8b949e" },
   { name: "Linear", what: "26 tasks, epics: BRAIN/OPS/GROWTH/LAUNCH/COMMAND", color: "#5e6ad2" },
   { name: "Notion", what: "Documentation hub, knowledge base", color: "#fff" },
+  { name: "The Ripper", what: "Custom-built data extraction tool", color: "#ef4444" },
+  { name: "Mac the Zipper", what: "Compression & packaging utility", color: "#f59e0b" },
+  { name: "PDF Plumber", what: "PDF parsing & document extraction", color: "#06b6d4" },
+  { name: "AI-to-AI Transfer", what: "Cross-model context & doc transfer pipeline", color: "#a855f7" },
 ];
 
 const CONNECTORS = [
