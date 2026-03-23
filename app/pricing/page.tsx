@@ -143,14 +143,13 @@ export default function PricingPage() {
                 style={{
                   padding: "12px",
                   borderRadius: "8px",
-                  border: "none",
+                  border: tier.highlighted ? "none" : `1px solid ${tier.color}`,
                   cursor: "pointer",
                   fontFamily: "inherit",
                   fontWeight: "bold",
                   fontSize: "14px",
                   background: tier.highlighted ? tier.color : "transparent",
                   color: tier.highlighted ? "#000" : tier.color,
-                  border: tier.highlighted ? "none" : `1px solid ${tier.color}`,
                 }}
               >
                 {tier.cta}
