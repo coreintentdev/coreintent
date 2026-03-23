@@ -23,8 +23,10 @@ const ARCHITECTURE = [
 ];
 
 const INTEGRATIONS = [
-  "Binance", "Coinbase", "gTrade", "Claude API", "Grok API",
-  "Perplexity", "Linear", "GitHub", "Vercel",
+  "Binance", "Coinbase", "gTrade", "Claude API", "Grok Pro",
+  "Perplexity Max", "X Premium+", "Cloudflare Pro", "Vercel",
+  "Cloudzy VPS", "Linear", "GitHub", "Notion",
+  "PDF Plumber", "Mac the Zipper",
 ];
 
 export default function Home() {
