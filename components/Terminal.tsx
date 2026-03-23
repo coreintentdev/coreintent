@@ -24,8 +24,11 @@ const COMMANDS: Record<string, string> = {
   \x1b[32mlogs\x1b[0m        - Recent activity logs
   \x1b[32mstack\x1b[0m       - Show API orchestra & tools
   \x1b[32mscan\x1b[0m        - Gmail/Drive AI scan status
+  \x1b[32msave\x1b[0m        - Autosave status & costs
   \x1b[32mclear\x1b[0m       - Clear terminal
-  \x1b[32mversion\x1b[0m     - Show version info`,
+  \x1b[32mversion\x1b[0m     - Show version info
+
+  \x1b[33mNo coding needed.\x1b[0m Just type commands — AI does the rest.`,
 
   status: `\x1b[32m● ENGINE ONLINE\x1b[0m
   Uptime:     0d 0h 0m
@@ -114,9 +117,30 @@ const COMMANDS: Record<string, string> = {
   - Calendar optimization
   - Cross-platform context sync`,
 
+  save: `\x1b[36mAutosave & Outsource Status:\x1b[0m
+  \x1b[32m●\x1b[0m Autosave: \x1b[32mON\x1b[0m — every command, config, signal, link saved
+
+  \x1b[33mWhere it saves (all free):\x1b[0m
+    GitHub        - Every change committed (recoverable forever)
+    Google Drive   - Files & docs (Gemini indexes them)
+    Notion        - Knowledge base
+    Browser       - Local state (instant)
+
+  \x1b[33mOutsource savings:\x1b[0m
+    Grok via X Premium+    — replaces $100+/mo AI subs     \x1b[32m→ $0\x1b[0m
+    Gemini in Gmail/Drive  — replaces $15/mo email tools   \x1b[32m→ $0\x1b[0m
+    GitHub Actions         — replaces $30/mo CI/CD         \x1b[32m→ $0\x1b[0m
+    Linear free            — replaces $10/mo project mgmt  \x1b[32m→ $0\x1b[0m
+    Vercel hobby           — replaces $20/mo hosting       \x1b[32m→ $0\x1b[0m
+    Weblinks               — share anything, no auth       \x1b[32m→ $0\x1b[0m
+
+  \x1b[33mTotal stack: ~$66/mo\x1b[0m (saves ~$443/mo vs buying separately)
+  \x1b[33mAnnual savings: ~$5,316\x1b[0m`,
+
   version: `CoreIntent v0.1.0-alpha
-Zynthio Trading Engine
+Zynthio Trading Engine — Command Center for everyone
 Built with Next.js + xterm.js
+No coding required. AI handles the code.
 Node runtime for local & web`,
 };
 
