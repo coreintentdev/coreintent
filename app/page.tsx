@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -9,9 +11,9 @@ type Tab = "terminal" | "dashboard" | "agents" | "docs";
 
 const STATUS_CARDS = [
   { label: "Engine", value: "ONLINE", color: "#10b981" },
-  { label: "Exchanges", value: "2 Active", color: "#3b82f6" },
-  { label: "AI Agents", value: "4 Running", color: "#a855f7" },
-  { label: "Signals", value: "12 Active", color: "#f59e0b" },
+  { label: "Exchanges", value: "Planned", color: "#f59e0b" },
+  { label: "AI Agents", value: "Ready", color: "#a855f7" },
+  { label: "Signals", value: "Paper Mode", color: "#3b82f6" },
 ];
 
 const ARCHITECTURE = [
@@ -23,10 +25,9 @@ const ARCHITECTURE = [
 ];
 
 const INTEGRATIONS = [
-  "Binance", "Coinbase", "gTrade", "Claude API", "Grok Pro",
-  "Perplexity Max", "X Premium+", "Cloudflare Pro", "Vercel",
-  "Cloudzy VPS", "Linear", "GitHub", "Notion",
-  "PDF Plumber", "Mac the Zipper", "The Ripper", "AI-to-AI Transfer",
+  "Claude API", "Grok Pro", "Perplexity Max", "X Premium+",
+  "Cloudflare Pro", "Vercel", "Cloudzy VPS", "Linear",
+  "GitHub", "Notion",
 ];
 
 export default function Home() {
@@ -34,49 +35,42 @@ export default function Home() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      {/* Top nav */}
-      <header
+      <SiteNav />
+
+      {/* Internal tab bar */}
+      <div
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          padding: "12px 24px",
+          gap: "4px",
+          padding: "8px 24px",
           borderBottom: "1px solid var(--border-color)",
-          background: "var(--bg-secondary)",
+          background: "var(--bg-primary)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <span style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>
-            CoreIntent
-          </span>
-          <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
-            v0.1.0-alpha | Zynthio.ai
-          </span>
-        </div>
-        <nav style={{ display: "flex", gap: "4px" }}>
-          {(["terminal", "dashboard", "agents", "docs"] as Tab[]).map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              style={{
-                padding: "6px 16px",
-                borderRadius: "6px",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "inherit",
-                fontSize: "13px",
-                background: tab === t ? "var(--accent-green)" : "transparent",
-                color: tab === t ? "#000" : "var(--text-secondary)",
-              }}
-            >
-              {t.charAt(0).toUpperCase() + t.slice(1)}
-            </button>
-          ))}
-        </nav>
-      </header>
+        {(["terminal", "dashboard", "agents", "docs"] as Tab[]).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            aria-pressed={tab === t}
+            style={{
+              padding: "6px 16px",
+              borderRadius: "6px",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: "inherit",
+              fontSize: "13px",
+              background: tab === t ? "var(--accent-green)" : "transparent",
+              color: tab === t ? "#000" : "var(--text-secondary)",
+            }}
+          >
+            {t.charAt(0).toUpperCase() + t.slice(1)}
+          </button>
+        ))}
+      </div>
 
       {/* Main content */}
-      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
+      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }} role="main">
         {tab === "terminal" && <Terminal />}
 
         {tab === "dashboard" && (
@@ -172,13 +166,16 @@ export default function Home() {
             <h3 style={{ color: "var(--text-secondary)", fontSize: "12px", textTransform: "uppercase", marginBottom: "16px" }}>
               AI Agent Fleet
             </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
+              Paper trading mode — agents are configured but not live-trading.
+            </p>
             {[
-              { name: "TrendFollower", model: "Claude Opus", status: "active", task: "BTC/ETH momentum tracking" },
-              { name: "MeanRevert", model: "Claude Sonnet", status: "active", task: "SOL mean reversion scanning" },
-              { name: "SentimentBot", model: "Grok", status: "processing", task: "Social signal aggregation" },
-              { name: "ArbitrageBot", model: "Claude Haiku", status: "paused", task: "Cross-exchange spread detection" },
-              { name: "RiskGuard", model: "Claude Opus", status: "active", task: "Circuit breaker monitoring (0.8% threshold)" },
-              { name: "ResearchAgent", model: "Perplexity", status: "active", task: "Market research & news analysis" },
+              { name: "TrendFollower", model: "Claude Opus", status: "ready", task: "BTC/ETH momentum tracking" },
+              { name: "MeanRevert", model: "Claude Sonnet", status: "ready", task: "SOL mean reversion scanning" },
+              { name: "SentimentBot", model: "Grok", status: "ready", task: "Social signal aggregation" },
+              { name: "ArbitrageBot", model: "Claude Haiku", status: "planned", task: "Cross-exchange spread detection" },
+              { name: "RiskGuard", model: "Claude Opus", status: "ready", task: "Circuit breaker monitoring (0.8% threshold)" },
+              { name: "ResearchAgent", model: "Perplexity", status: "ready", task: "Market research & news analysis" },
             ].map((agent) => (
               <div
                 key={agent.name}
@@ -199,9 +196,9 @@ export default function Home() {
                     height: "10px",
                     borderRadius: "50%",
                     background:
-                      agent.status === "active" ? "#10b981" :
-                      agent.status === "processing" ? "#f59e0b" : "#64748b",
+                      agent.status === "ready" ? "#3b82f6" : "#64748b",
                   }}
+                  aria-label={`${agent.name} status: ${agent.status}`}
                 />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: "bold", fontSize: "14px" }}>{agent.name}</div>
@@ -209,6 +206,9 @@ export default function Home() {
                 </div>
                 <span style={{ fontSize: "11px", color: "var(--text-secondary)", background: "var(--bg-primary)", padding: "4px 8px", borderRadius: "4px" }}>
                   {agent.model}
+                </span>
+                <span style={{ fontSize: "10px", color: agent.status === "ready" ? "#3b82f6" : "#64748b", textTransform: "uppercase" }}>
+                  {agent.status}
                 </span>
               </div>
             ))}
@@ -259,8 +259,8 @@ npm run build           # Production build`}
                 <li><strong>BRAIN</strong> — AI model orchestration (Claude, Grok, Perplexity)</li>
                 <li><strong>OPS</strong> — VPS deployment, Docker, monitoring</li>
                 <li><strong>GROWTH</strong> — Community, marketing, partnerships</li>
-                <li><strong>LAUNCH</strong> — Mainnet deployment & release management</li>
-                <li><strong>COMMAND</strong> — Web terminal & control center</li>
+                <li><strong>LAUNCH</strong> — Mainnet deployment &amp; release management</li>
+                <li><strong>COMMAND</strong> — Web terminal &amp; control center</li>
               </ul>
             </div>
           </div>
@@ -281,7 +281,7 @@ npm run build           # Production build`}
         }}
       >
         <span>coreintent.dev | Zynthio Trading Engine</span>
-        <span>Paper Trading Mode | Next.js + xterm | Vercel Ready</span>
+        <span>Paper Trading Mode | v0.1.0-alpha</span>
       </footer>
     </div>
   );
