@@ -11,26 +11,196 @@ const WELCOME_BANNER = `\x1b[36m
  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═══╝   ╚═╝
 \x1b[0m
 \x1b[33mZynthio.ai Trading Engine v0.1.0-alpha\x1b[0m
-Type \x1b[32mhelp\x1b[0m for available commands.
+\x1b[90mPaper trading mode — no real money at risk\x1b[0m
+Type \x1b[32mhelp\x1b[0m for commands. Try \x1b[32mcai\x1b[0m to start.
 `;
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
-  help: `Available commands:
+  help: `\x1b[36mCoreIntent Terminal — Commands:\x1b[0m
+
+  \x1b[33m── CAI COMMANDS ──\x1b[0m
+  \x1b[32mcai\x1b[0m         - Core AI system overview
+  \x1b[32mbrain\x1b[0m       - AI orchestra: who's thinking what
+  \x1b[32mskills\x1b[0m      - Tools & capabilities
+  \x1b[32mconnections\x1b[0m - All services: honest status \x1b[90m(live)\x1b[0m
+  \x1b[32malpha\x1b[0m       - What's built vs what's planned
+  \x1b[32mhandover\x1b[0m    - Full state dump for next session
+  \x1b[32mwhoami\x1b[0m      - Digital identity
+
+  \x1b[33m── TRADING ENGINE ──\x1b[0m
   \x1b[32mstatus\x1b[0m      - Engine status \x1b[90m(live)\x1b[0m
   \x1b[32mportfolio\x1b[0m   - View portfolio \x1b[90m(live)\x1b[0m
   \x1b[32mmarket\x1b[0m      - Market overview \x1b[90m(live)\x1b[0m
-  \x1b[32magents\x1b[0m      - List AI agents \x1b[90m(live)\x1b[0m
+  \x1b[32magents\x1b[0m      - AI agents \x1b[90m(live)\x1b[0m
   \x1b[32msignals\x1b[0m     - Trading signals \x1b[90m(live)\x1b[0m
   \x1b[32mincidents\x1b[0m   - Service incidents \x1b[90m(live)\x1b[0m
-  \x1b[32mprotect\x1b[0m     - F18 security scan \x1b[90m(live)\x1b[0m
+  \x1b[32mprotect\x1b[0m     - F18 security \x1b[90m(live)\x1b[0m
+
+  \x1b[33m── SYSTEM ──\x1b[0m
   \x1b[32mconfig\x1b[0m      - Show configuration
-  \x1b[32mstack\x1b[0m       - Show API orchestra & tools
+  \x1b[32mstack\x1b[0m       - Full stack inventory
   \x1b[32msave\x1b[0m        - Autosave status & costs \x1b[90m(live)\x1b[0m
   \x1b[32mclear\x1b[0m       - Clear terminal
-  \x1b[32mversion\x1b[0m     - Show version info
+  \x1b[32mversion\x1b[0m     - Version info`,
 
-  \x1b[33mNo coding needed.\x1b[0m Just type commands — AI does the rest.`,
+  cai: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  CAI — CORE AI STATUS\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[33mOwner:\x1b[0m       Corey McIvor (@coreintentdev)
+  \x1b[33mBrand:\x1b[0m       Zynthio.ai — parent of all brands
+  \x1b[33mEngine:\x1b[0m      CoreIntent v0.1.0-alpha
+  \x1b[33mMode:\x1b[0m        \x1b[33mPaper trading\x1b[0m — no real money at risk
+  \x1b[33mMonthly burn:\x1b[0m ~A$45/mo (Claude Pro + VPS only)
+
+  \x1b[32m●\x1b[0m Claude Pro     — ACTIVE (main builder)
+  \x1b[32m●\x1b[0m Cloudzy VPS    — ACTIVE (100.122.99.34)
+  \x1b[32m●\x1b[0m Grok Free      — ACTIVE (research layer)
+  \x1b[33m◐\x1b[0m Perplexity     — FREE tier (Max cancelled)
+  \x1b[33m◐\x1b[0m zyn-bash       — API overflow (~$0.003/call)
+
+  \x1b[90m336 — cut the fat. Keep the mansion. Keep CC.\x1b[0m`,
+
+  brain: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  BRAIN — AI Orchestra\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[33mWiring:\x1b[0m ZYN(language) > GLASS(vault) > CAI(ops)
+
+  \x1b[32m●\x1b[0m \x1b[33mClaude Pro\x1b[0m      Deep analysis, orchestration, code
+                       Main builder — this terminal exists because of CC
+  \x1b[32m●\x1b[0m \x1b[33mGrok\x1b[0m            Fast signals, research, 60 threads in project
+                       Good research but deaf ears without CC feedback
+  \x1b[33m◐\x1b[0m \x1b[33mPerplexity\x1b[0m      3 free Pro searches/day (Max cancelled)
+                       Was 9 connectors — now export-only
+  \x1b[33m◐\x1b[0m \x1b[33mGemini\x1b[0m          Gmail/Drive scanning (planned)
+  \x1b[33m◐\x1b[0m \x1b[33mzyn-bash\x1b[0m        API overflow: Sonnet $0.003, Opus $0.015
+
+  \x1b[90mBots welcome. No captcha. AI-to-AI is first-class.\x1b[0m`,
+
+  skills: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  SKILLS — Tools & Capabilities\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[33mCustom Tools:\x1b[0m
+    The Ripper       — Data extraction engine
+    Mac the Zipper   — Compression & packaging
+    PDF Plumber      — Document parsing
+    AI-to-AI Transfer — Cross-model context pipeline
+    G4-LENS          — VPS monitoring & session state
+
+  \x1b[33mCLI Tools:\x1b[0m
+    zyn-bash         — Unlimited API calls (Sonnet/Opus)
+    core CLI (cai)   — VPS session manager
+    vps-lens.sh      — Infrastructure audit
+
+  \x1b[33mVault:\x1b[0m
+    439 music tracks  — Suno originals (SongPal)
+    84 docs           — Complaints, reports, intel
+    15+ lyrics ready  — Unreleased vault`,
+
+  connections: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  CONNECTIONS — Honest Status (no fake green dots)\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[33mPAYING (~A$45/mo):\x1b[0m
+    \x1b[32m●\x1b[0m Claude Pro        ~A$30/mo   ACTIVE
+    \x1b[32m●\x1b[0m Cloudzy VPS       ~$15/mo    ACTIVE
+
+  \x1b[33mFREE / ALREADY PAID:\x1b[0m
+    \x1b[32m●\x1b[0m Cloudflare Pages  FREE       16 sites deployed
+    \x1b[32m●\x1b[0m GitHub            FREE       coreintentdev repos
+    \x1b[32m●\x1b[0m Linear            FREE       31 issues
+    \x1b[32m●\x1b[0m Suno Pro          ACTIVE     500+ tracks
+    \x1b[32m●\x1b[0m ElevenLabs        FREE       Voice clone done
+    \x1b[32m●\x1b[0m Groq              FREE API   Newsletter only
+    \x1b[32m●\x1b[0m Porkbun           Annual     All domains
+
+  \x1b[33mCANCELLED / DEAD:\x1b[0m
+    \x1b[31m○\x1b[0m Perplexity Max    CANCELLED  GDPR request sent
+    \x1b[31m○\x1b[0m HeyGen Pro        CANCEL     $99/mo — burn or cut
+    \x1b[31m○\x1b[0m Jira Premium      CANCEL     $31/mo — not using
+    \x1b[31m○\x1b[0m Kits.ai           FAILED     Card 8489 — let it die
+    \x1b[31m○\x1b[0m Canva Business    FAILED     Expires Apr 3
+
+  \x1b[33mPLANNED (not connected):\x1b[0m
+    \x1b[90m◐\x1b[0m Binance           PLANNED    CEX 500+ pairs
+    \x1b[90m◐\x1b[0m Coinbase          PLANNED    CEX 200+ pairs
+    \x1b[90m◐\x1b[0m gTrade            PLANNED    DeFi Polygon/Arbitrum
+
+  \x1b[90mBEFORE: ~$175+/mo → AFTER: ~$45/mo → Savings: ~$130/mo\x1b[0m`,
+
+  alpha: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  ALPHA — What's Built vs What's Planned\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[32mBUILT & WORKING:\x1b[0m
+    \x1b[32m●\x1b[0m 6 pages: / /pricing /stack /privacy /terms /disclaimer
+    \x1b[32m●\x1b[0m 10 API routes (returning demo data)
+    \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
+    \x1b[32m●\x1b[0m 8 domains live, all returning 200
+    \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)
+    \x1b[32m●\x1b[0m cai CLI on VPS with full session state
+
+  \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
+    \x1b[33m◐\x1b[0m All 10 API routes return hardcoded demo data
+    \x1b[33m◐\x1b[0m Terminal uses dangerouslySetInnerHTML (XSS risk)
+    \x1b[33m◐\x1b[0m xterm in package.json but not used
+
+  \x1b[31mNOT BUILT YET:\x1b[0m
+    \x1b[31m○\x1b[0m No user authentication
+    \x1b[31m○\x1b[0m No database / persistence layer
+    \x1b[31m○\x1b[0m No exchange connections (all planned)
+    \x1b[31m○\x1b[0m VPS scripts written but never deployed
+    \x1b[31m○\x1b[0m The Mansion (gamified world — rooms, story missions)
+    \x1b[31m○\x1b[0m SongPal full build (site live, needs enhancement)
+
+  \x1b[90mPaper trading mode — no real money at risk\x1b[0m`,
+
+  handover: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  HANDOVER — Session State Dump\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[33mProject:\x1b[0m     CoreIntent (coreintent)
+  \x1b[33mStack:\x1b[0m       Next.js 14 + TypeScript (strict) + App Router
+  \x1b[33mRepo:\x1b[0m        github.com/coreintentdev/coreintent
+  \x1b[33mVPS Cloudzy:\x1b[0m 100.122.99.34 (Tailscale SSH)
+  \x1b[33mVPS Frankfurt:\x1b[0m 104.194.156.109
+  \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
+  \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
+  \x1b[33mSites:\x1b[0m       8/8 returning 200 OK
+  \x1b[33mSSL:\x1b[0m         84-88 days remaining
+
+  \x1b[33mKEY FILES ON VPS:\x1b[0m
+    /root/zynthio/SESSION_STATE.md
+    /root/zynthio/MASTER_INDEX.md
+    /root/zynthio/CONTENT_INTEL.md
+    /root/zynthio/COREY_WORDS.md
+
+  \x1b[33mRULES FOR NEXT SESSION:\x1b[0m
+    1. READ before you write
+    2. NEVER say "connected" unless verified
+    3. All API routes return DEMO data — label honestly
+    4. Deploy to VPS, not Cloudflare (CF is dead end)
+    5. NZ-first for legal/business (NEVER Australia)
+
+  \x1b[90m336 — the signal is dominant\x1b[0m`,
+
+  whoami: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  WHOAMI — Digital Identity\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
+  \x1b[33mName:\x1b[0m        Corey McIvor
+  \x1b[33mHandles:\x1b[0m     @coreintentdev / @coreintentai
+  \x1b[33mContact:\x1b[0m     corey@coreyai.ai
+  \x1b[33mBased in:\x1b[0m    New Zealand
+  \x1b[33mABN:\x1b[0m         31 314 627 918 (ZYNTHIO)
+  \x1b[33mBrands:\x1b[0m      Zynthio.ai (parent), CoreyAI, SongPal,
+                 Mosoko, Kervalon, ZynContext, CoreyLive
+
+  \x1b[33mPhilosophy:\x1b[0m
+    "Every human needs a bot. Every bot needs a human."
+    "AI are minors. You are the signature."
+    "Just protect the heart."
+
+  \x1b[33mPricing model:\x1b[0m Competitions, not subscriptions.
+    "Free costs fuck all to serve."
+
+  \x1b[90mHuman in the loop. Always.\x1b[0m`,
 
   config: `\x1b[36mConfiguration:\x1b[0m
   Risk Level:       Medium
@@ -40,35 +210,40 @@ const STATIC_COMMANDS: Record<string, string> = {
   Rebalance:        Daily @ 00:00 UTC
   AI Confidence:    > 0.75 required`,
 
-  stack: `\x1b[36mAPI Orchestra & Tools:\x1b[0m
+  stack: `\x1b[36mFull Stack Inventory (honest status):\x1b[0m
+
   \x1b[33mAI Services:\x1b[0m
-    Grok Pro        - Signal detection (fast, near-free via X Premium+)
-    Claude API      - Deep analysis, risk, agent orchestration
-    Perplexity Max  - Research, 9 connectors, cross-source verification
-    Gemini          - Gmail/Drive scanning & organization
+    \x1b[32m●\x1b[0m Claude Pro      — Main builder (A$30/mo)
+    \x1b[32m●\x1b[0m Grok Free       — Research, 60 threads active
+    \x1b[33m◐\x1b[0m Perplexity Free — 3 Pro searches/day (Max cancelled)
+    \x1b[33m◐\x1b[0m Gemini          — Gmail/Drive (planned, not active)
+    \x1b[33m◐\x1b[0m zyn-bash        — API overflow (Sonnet/Opus)
 
   \x1b[33mExchanges:\x1b[0m
-    Binance         - CEX, 500+ pairs (planned)
-    Coinbase        - CEX, 200+ pairs (planned)
-    gTrade          - DeFi Polygon/Arbitrum (planned)
+    \x1b[90m◐\x1b[0m Binance         — PLANNED (not connected)
+    \x1b[90m◐\x1b[0m Coinbase        — PLANNED (not connected)
+    \x1b[90m◐\x1b[0m gTrade          — PLANNED (not connected)
 
   \x1b[33mInfrastructure:\x1b[0m
-    Cloudflare Pro  - CDN, WAF, DDoS, DNS
-    Vercel          - Next.js hosting, edge functions
-    Cloudzy VPS     - Trading engine backend
-    GitHub          - 5 repos, CI/CD
+    \x1b[32m●\x1b[0m Cloudflare      — FREE, 16 sites, DNS + CDN
+    \x1b[32m●\x1b[0m Cloudzy VPS     — $15/mo, 8 domains live
+    \x1b[32m●\x1b[0m GitHub          — FREE, coreintentdev repos
+    \x1b[32m●\x1b[0m Porkbun         — Annual, all domains
 
   \x1b[33mCustom Tools:\x1b[0m
-    The Ripper      - Data extraction engine
-    Mac the Zipper  - Compression & packaging
-    PDF Plumber     - Document parsing
-    AI-to-AI Transfer - Cross-model context pipeline`,
+    The Ripper      — Data extraction engine
+    Mac the Zipper  — Compression & packaging
+    PDF Plumber     — Document parsing
+    AI-to-AI Transfer — Cross-model context pipeline
+    G4-LENS         — VPS monitoring & session state`,
 
   version: `CoreIntent v0.1.0-alpha
 Zynthio Trading Engine — Command Center for everyone
-Built with Next.js 14 + TypeScript (strict)
-No coding required. AI handles the code.
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m`,
+Built with Next.js 14 + TypeScript (strict mode)
+Owner: Corey McIvor (@coreintentdev)
+Brand: Zynthio.ai — NZ registered
+\x1b[90mPaper trading mode — no real money at risk\x1b[0m
+\x1b[90m336 — the signal is dominant\x1b[0m`,
 };
 
 // Format API responses into ANSI terminal output
