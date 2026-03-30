@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Tue Mar 24 18:57:33 UTC 2026
+Generated: Mon Mar 30 20:11:33 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 20
+- INFO: Routes found: 22
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -39,7 +39,7 @@ Generated: Tue Mar 24 18:57:33 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:202:  // Strip ANSI for plain render — we use dangerouslySetInnerHTML with converted spans
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:143:    \x1b[33m◐\x1b[0m Terminal uses dangerouslySetInnerHTML (XSS risk)
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -56,7 +56,7 @@ Generated: Tue Mar 24 18:57:33 UTC 2026
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 3 API routes contain demo/hardcoded data
+- INFO: 5 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
 - PASS: ARIA attributes found (6 instances)
