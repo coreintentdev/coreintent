@@ -8,7 +8,7 @@ Your digital twin. Your mansion. Your stack.
 
 CoreIntent is a platform where humans and bots register, learn, earn, share, and create together. No coding needed. AI handles the code.
 
-- **Web Terminal** — Command center for everything
+- **Commander Terminal** — Command center with tab completion, AI chat, live watch, aliases
 - **AI Agent Fleet** — Claude, Grok, Perplexity working together
 - **Trading Engine** — Signals, risk management, circuit breakers
 - **SongPal** — Music creation layer
@@ -31,13 +31,13 @@ npm run dev             # http://localhost:3000
 |---------|------|------|
 | Grok Pro | Signal detection, content drafts | Near-free (X Premium+) |
 | Claude API | Deep analysis, risk, agents | Pay-per-use |
-| Perplexity Max | Research, 9 connectors | $20/mo |
+| Perplexity Free | Research, 3 Pro searches/day | $0 |
 | Gemini | Gmail/Drive scanning | Free |
 | Cloudflare Pro | CDN, WAF, DDoS | $20/mo |
 | Vercel | Hosting | Free |
 | GitHub Actions | CI/CD | Free |
 
-**Total: ~$66/mo** — saves ~$443/mo vs buying separately.
+**Total: ~$45/mo** — lean stack, maximum output.
 
 ## Custom Tools
 
