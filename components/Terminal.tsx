@@ -3,21 +3,24 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const WELCOME_BANNER = `\x1b[36m
- ██████╗ ██████╗ ██████╗ ███████╗██╗███╗   ██╗████████╗███████╗███╗   ██╗████████╗
-██╔════╝██╔═══██╗██╔══██╗██╔════╝██║████╗  ██║╚══██╔══╝██╔════╝████╗  ██║╚══██╔══╝
-██║     ██║   ██║██████╔╝█████╗  ██║██╔██╗ ██║   ██║   █████╗  ██╔██╗ ██║   ██║
-██║     ██║   ██║██╔══██╗██╔══╝  ██║██║╚██╗██║   ██║   ██╔══╝  ██║╚██╗██║   ██║
-╚██████╗╚██████╔╝██║  ██║███████╗██║██║ ╚████║   ██║   ███████╗██║ ╚████║   ██║
- ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═══╝   ╚═╝
+ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
+██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
+██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 \x1b[0m
-\x1b[33mZynthio.ai Trading Engine v0.1.0-alpha\x1b[0m
+\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
 \x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Try \x1b[32mcai\x1b[0m to start.
+Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
+\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
 `;
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
-  help: `\x1b[36mCoreIntent Terminal — Commands:\x1b[0m
+  help: `\x1b[36m══════════════════════════════════════════\x1b[0m
+\x1b[36m  COMMANDER — Full Command Reference\x1b[0m
+\x1b[36m══════════════════════════════════════════\x1b[0m
 
   \x1b[33m── CAI COMMANDS ──\x1b[0m
   \x1b[32mcai\x1b[0m         - Core AI system overview
@@ -37,12 +40,26 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mincidents\x1b[0m   - Service incidents \x1b[90m(live)\x1b[0m
   \x1b[32mprotect\x1b[0m     - F18 security \x1b[90m(live)\x1b[0m
 
+  \x1b[33m── COMMANDER ──\x1b[0m
+  \x1b[32mask <question>\x1b[0m  - Ask the AI orchestra anything \x1b[90m(live)\x1b[0m
+  \x1b[32mwatch <cmd>\x1b[0m     - Live refresh a command every 5s (Ctrl+C to stop)
+  \x1b[32mgrep <text>\x1b[0m     - Search last output for text
+  \x1b[32mexport\x1b[0m          - Export terminal to clipboard
+  \x1b[32mhistory\x1b[0m         - Show command history
+  \x1b[32malias <n>=<cmd>\x1b[0m - Create shortcut (e.g. \x1b[32malias s=status\x1b[0m)
+  \x1b[32maliases\x1b[0m         - List all aliases
+  \x1b[32mtime\x1b[0m            - Show NZ time + uptime
+  \x1b[32maudit\x1b[0m           - Quick health check \x1b[90m(live)\x1b[0m
+  \x1b[32mcmd1 && cmd2\x1b[0m   - Chain commands
+
   \x1b[33m── SYSTEM ──\x1b[0m
   \x1b[32mconfig\x1b[0m      - Show configuration
   \x1b[32mstack\x1b[0m       - Full stack inventory
   \x1b[32msave\x1b[0m        - Autosave status & costs \x1b[90m(live)\x1b[0m
   \x1b[32mclear\x1b[0m       - Clear terminal
-  \x1b[32mversion\x1b[0m     - Version info`,
+  \x1b[32mversion\x1b[0m     - Version info
+
+  \x1b[90mTab to autocomplete | Arrow keys for history | && to chain\x1b[0m`,
 
   cai: `\x1b[36m══════════════════════════════════════════\x1b[0m
 \x1b[36m  CAI — CORE AI STATUS\x1b[0m
@@ -139,9 +156,9 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m cai CLI on VPS with full session state
 
   \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
-    \x1b[33m◐\x1b[0m All 10 API routes return hardcoded demo data
-    \x1b[33m◐\x1b[0m Terminal uses dangerouslySetInnerHTML (XSS risk)
-    \x1b[33m◐\x1b[0m xterm in package.json but not used
+    \x1b[33m◐\x1b[0m All 12 API routes return demo data (keys not set)
+    \x1b[32m●\x1b[0m Terminal XSS hardened (ansiToHtml sanitized)
+    \x1b[32m●\x1b[0m Commander mode: tab complete, watch, ask AI, chaining
 
   \x1b[31mNOT BUILT YET:\x1b[0m
     \x1b[31m○\x1b[0m No user authentication
@@ -237,7 +254,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     AI-to-AI Transfer — Cross-model context pipeline
     G4-LENS         — VPS monitoring & session state`,
 
-  version: `CoreIntent v0.1.0-alpha
+  version: `\x1b[36mCoreIntent Commander v0.2.0\x1b[0m
 Zynthio Trading Engine — Command Center for everyone
 Built with Next.js 14 + TypeScript (strict mode)
 Owner: Corey McIvor (@coreintentdev)
@@ -429,12 +446,25 @@ const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<str
   save:      { endpoint: "/api/autosave",  format: formatSave },
 };
 
+// All known command names for tab completion
+const ALL_COMMANDS = [
+  ...Object.keys(STATIC_COMMANDS),
+  ...Object.keys(API_COMMANDS),
+  "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
+];
+
 export default function Terminal() {
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState(-1);
+  const [aliases, setAliases] = useState<Record<string, string>>({});
+  const [lastOutput, setLastOutput] = useState("");
+  const [tabMatches, setTabMatches] = useState<string[]>([]);
+  const [tabIdx, setTabIdx] = useState(0);
+  const watchRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startTime = useRef(Date.now());
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -448,49 +478,244 @@ export default function Terminal() {
     }
   }, [lines]);
 
+  // Cleanup watch on unmount
+  useEffect(() => {
+    return () => {
+      if (watchRef.current) clearInterval(watchRef.current);
+    };
+  }, []);
+
   const addLines = useCallback((...newLines: string[]) => {
     setLines((prev) => [...prev, ...newLines]);
   }, []);
 
-  const processCommand = useCallback(async (cmd: string) => {
+  // Execute a single command (no chaining)
+  const execSingle = useCallback(async (cmd: string): Promise<string> => {
     const trimmed = cmd.trim().toLowerCase();
+    const raw = cmd.trim();
 
     if (trimmed === "clear") {
       setLines([]);
-      return;
+      return "";
     }
 
-    // Check static commands first
-    if (STATIC_COMMANDS[trimmed]) {
-      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, STATIC_COMMANDS[trimmed], "");
-      return;
+    // ── COMMANDER: time ──
+    if (trimmed === "time") {
+      const nz = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" });
+      const uptime = Math.floor((Date.now() - startTime.current) / 1000);
+      const mins = Math.floor(uptime / 60);
+      const secs = uptime % 60;
+      const out = `\x1b[36mTime:\x1b[0m  ${nz} NZST\n\x1b[36mUptime:\x1b[0m ${mins}m ${secs}s`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+      return out;
+    }
+
+    // ── COMMANDER: history ──
+    if (trimmed === "history") {
+      const out = history.length === 0
+        ? "\x1b[90mNo command history yet\x1b[0m"
+        : history.slice(0, 20).map((h, i) => `  \x1b[90m${i + 1}\x1b[0m  ${h}`).join("\n");
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+      return out;
+    }
+
+    // ── COMMANDER: aliases ──
+    if (trimmed === "aliases") {
+      const entries = Object.entries(aliases);
+      const out = entries.length === 0
+        ? "\x1b[90mNo aliases set. Use: alias s=status\x1b[0m"
+        : entries.map(([k, v]) => `  \x1b[32m${k}\x1b[0m = ${v}`).join("\n");
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36mAliases:\x1b[0m\n${out}`, "");
+      return out;
+    }
+
+    // ── COMMANDER: alias name=cmd ──
+    if (trimmed.startsWith("alias ")) {
+      const parts = raw.substring(6).split("=");
+      if (parts.length >= 2) {
+        const name = parts[0].trim().toLowerCase();
+        const target = parts.slice(1).join("=").trim().toLowerCase();
+        setAliases((prev) => ({ ...prev, [name]: target }));
+        const out = `\x1b[32m✓\x1b[0m Alias set: \x1b[32m${name}\x1b[0m → ${target}`;
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+        return out;
+      }
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31mUsage: alias name=command\x1b[0m`, "");
+      return "";
+    }
+
+    // ── COMMANDER: grep <text> ──
+    if (trimmed.startsWith("grep ")) {
+      const needle = raw.substring(5).trim();
+      if (!needle) {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31mUsage: grep <search text>\x1b[0m`, "");
+        return "";
+      }
+      const matching = lastOutput.split("\n").filter((l) => l.toLowerCase().includes(needle.toLowerCase()));
+      const out = matching.length > 0
+        ? matching.map((l) => l.replace(new RegExp(`(${needle})`, "gi"), "\x1b[33m$1\x1b[0m")).join("\n")
+        : `\x1b[90mNo matches for "${needle}" in last output\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+      return out;
+    }
+
+    // ── COMMANDER: export ──
+    if (trimmed === "export") {
+      try {
+        const plainText = lines.join("\n").replace(/\x1b\[[0-9;]*m/g, "");
+        await navigator.clipboard.writeText(plainText);
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[32m✓\x1b[0m Terminal output copied to clipboard (${plainText.length} chars)`, "");
+      } catch {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31mClipboard not available (HTTPS required)\x1b[0m`, "");
+      }
+      return "";
+    }
+
+    // ── COMMANDER: watch <cmd> ──
+    if (trimmed.startsWith("watch ")) {
+      const target = trimmed.substring(6).trim();
+      if (!target) {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31mUsage: watch <command>\x1b[0m`, "");
+        return "";
+      }
+      // Stop any existing watch
+      if (watchRef.current) {
+        clearInterval(watchRef.current);
+        watchRef.current = null;
+      }
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[33m◐\x1b[0m Watching \x1b[32m${target}\x1b[0m every 5s — type \x1b[32mstop\x1b[0m to cancel`, "");
+      // Run immediately
+      await execSingle(target);
+      // Then repeat
+      watchRef.current = setInterval(() => {
+        execSingle(target);
+      }, 5000);
+      return "";
+    }
+
+    // ── COMMANDER: stop (cancel watch) ──
+    if (trimmed === "stop") {
+      if (watchRef.current) {
+        clearInterval(watchRef.current);
+        watchRef.current = null;
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[32m✓\x1b[0m Watch stopped`, "");
+      } else {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[90mNo active watch to stop\x1b[0m`, "");
+      }
+      return "";
+    }
+
+    // ── COMMANDER: audit (quick health check) ──
+    if (trimmed === "audit") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[90mRunning audit...\x1b[0m`);
+      const checks: string[] = [];
+      let pass = 0;
+      let fail = 0;
+
+      // Check each API route
+      const routes = ["status", "portfolio", "signals", "agents", "market", "connections"];
+      for (const route of routes) {
+        try {
+          const res = await fetch(`/api/${route}`);
+          if (res.ok) { checks.push(`  \x1b[32m●\x1b[0m /api/${route} — OK`); pass++; }
+          else { checks.push(`  \x1b[31m○\x1b[0m /api/${route} — HTTP ${res.status}`); fail++; }
+        } catch {
+          checks.push(`  \x1b[31m○\x1b[0m /api/${route} — UNREACHABLE`); fail++;
+        }
+      }
+
+      const score = Math.round((pass / (pass + fail)) * 100);
+      const out = `\x1b[36m══ QUICK AUDIT ══\x1b[0m\n${checks.join("\n")}\n\n  \x1b[36mScore:\x1b[0m ${score}% (${pass} pass / ${fail} fail)`;
+
+      setLines((prev) => {
+        const copy = [...prev];
+        const idx = copy.lastIndexOf(`\x1b[90mRunning audit...\x1b[0m`);
+        if (idx !== -1) copy.splice(idx, 1);
+        return [...copy, out, ""];
+      });
+      return out;
+    }
+
+    // ── COMMANDER: ask <question> — talk to AI orchestra ──
+    if (trimmed.startsWith("ask ")) {
+      const question = raw.substring(4).trim();
+      if (!question) {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31mUsage: ask <your question>\x1b[0m`, "");
+        return "";
+      }
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[33m◐\x1b[0m \x1b[90mAsking the AI orchestra...\x1b[0m`);
+      try {
+        const res = await fetch("/api/research", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ topic: question, task: "analysis" }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const result = data.result as { source?: string; content?: string; live?: boolean } | undefined;
+        const source = result?.source || "ai";
+        const content = result?.content || "No response";
+        const live = result?.live ? "\x1b[32m●\x1b[0m" : "\x1b[33m◐\x1b[0m";
+        const out = `${live} \x1b[36m${source}:\x1b[0m ${content}`;
+
+        setLines((prev) => {
+          const copy = [...prev];
+          const idx = copy.lastIndexOf(`\x1b[33m◐\x1b[0m \x1b[90mAsking the AI orchestra...\x1b[0m`);
+          if (idx !== -1) copy.splice(idx, 1);
+          return [...copy, out, ""];
+        });
+        setLastOutput(out);
+        return out;
+      } catch (err) {
+        const errMsg = `\x1b[31mAI error: ${err instanceof Error ? err.message : "Failed"}\x1b[0m`;
+        setLines((prev) => {
+          const copy = [...prev];
+          const idx = copy.lastIndexOf(`\x1b[33m◐\x1b[0m \x1b[90mAsking the AI orchestra...\x1b[0m`);
+          if (idx !== -1) copy.splice(idx, 1);
+          return [...copy, errMsg, ""];
+        });
+        return errMsg;
+      }
+    }
+
+    // ── Resolve aliases ──
+    const resolved = aliases[trimmed] || trimmed;
+
+    // Check static commands
+    if (STATIC_COMMANDS[resolved]) {
+      const out = STATIC_COMMANDS[resolved];
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+      setLastOutput(out);
+      return out;
     }
 
     // Check API-powered commands
-    const apiCmd = API_COMMANDS[trimmed];
+    const apiCmd = API_COMMANDS[resolved];
     if (apiCmd) {
-      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[90mFetching ${trimmed}...\x1b[0m`);
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[90mFetching ${resolved}...\x1b[0m`);
       try {
         const res = await fetch(apiCmd.endpoint);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        // Replace the "Fetching..." line with actual data
+        const out = apiCmd.format(data);
         setLines((prev) => {
           const copy = [...prev];
-          // Find and remove the "Fetching..." line
-          const fetchIdx = copy.lastIndexOf(`\x1b[90mFetching ${trimmed}...\x1b[0m`);
+          const fetchIdx = copy.lastIndexOf(`\x1b[90mFetching ${resolved}...\x1b[0m`);
           if (fetchIdx !== -1) copy.splice(fetchIdx, 1);
-          return [...copy, apiCmd.format(data), ""];
+          return [...copy, out, ""];
         });
+        setLastOutput(out);
+        return out;
       } catch (err) {
+        const errMsg = `\x1b[31mError: ${err instanceof Error ? err.message : "Failed to fetch"}\x1b[0m`;
         setLines((prev) => {
           const copy = [...prev];
-          const fetchIdx = copy.lastIndexOf(`\x1b[90mFetching ${trimmed}...\x1b[0m`);
+          const fetchIdx = copy.lastIndexOf(`\x1b[90mFetching ${resolved}...\x1b[0m`);
           if (fetchIdx !== -1) copy.splice(fetchIdx, 1);
-          return [...copy, `\x1b[31mError: ${err instanceof Error ? err.message : "Failed to fetch"}\x1b[0m`, ""];
+          return [...copy, errMsg, ""];
         });
+        return errMsg;
       }
-      return;
     }
 
     // Unknown command
@@ -499,18 +724,65 @@ export default function Terminal() {
       `\x1b[31mUnknown command: ${trimmed}\x1b[0m\nType \x1b[32mhelp\x1b[0m for available commands.`,
       ""
     );
-  }, [addLines]);
+    return "";
+  }, [addLines, aliases, history, lastOutput, lines]);
+
+  // Process command with && chaining support
+  const processCommand = useCallback(async (cmd: string) => {
+    const parts = cmd.split("&&").map((s) => s.trim()).filter(Boolean);
+    for (const part of parts) {
+      await execSingle(part);
+    }
+  }, [execSingle]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
     setHistory((prev) => [input, ...prev]);
     setHistoryIdx(-1);
+    setTabMatches([]);
+    setTabIdx(0);
     processCommand(input);
     setInput("");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    // ── Tab completion ──
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const partial = input.trim().toLowerCase();
+      if (!partial) return;
+
+      // If already cycling through matches, advance
+      if (tabMatches.length > 0) {
+        const next = (tabIdx + 1) % tabMatches.length;
+        setTabIdx(next);
+        setInput(tabMatches[next]);
+        return;
+      }
+
+      // Find matches
+      const allNames = [...ALL_COMMANDS, ...Object.keys(aliases)];
+      const matches = allNames.filter((c) => c.startsWith(partial) && c !== partial);
+      if (matches.length === 1) {
+        setInput(matches[0]);
+      } else if (matches.length > 1) {
+        setTabMatches(matches);
+        setTabIdx(0);
+        setInput(matches[0]);
+        // Show options briefly
+        addLines(`\x1b[90mTab: ${matches.join("  ")}\x1b[0m`);
+      }
+      return;
+    }
+
+    // Reset tab state on any other key
+    if (tabMatches.length > 0 && e.key !== "Tab") {
+      setTabMatches([]);
+      setTabIdx(0);
+    }
+
+    // ── Arrow keys for history ──
     if (e.key === "ArrowUp") {
       e.preventDefault();
       const next = Math.min(historyIdx + 1, history.length - 1);
@@ -527,6 +799,22 @@ export default function Terminal() {
         setHistoryIdx(next);
         setInput(history[next]);
       }
+    }
+
+    // ── Ctrl+C to stop watch ──
+    if (e.key === "c" && e.ctrlKey) {
+      e.preventDefault();
+      if (watchRef.current) {
+        clearInterval(watchRef.current);
+        watchRef.current = null;
+        addLines(`\x1b[33m^C\x1b[0m Watch stopped`);
+      }
+    }
+
+    // ── Ctrl+L to clear ──
+    if (e.key === "l" && e.ctrlKey) {
+      e.preventDefault();
+      setLines([]);
     }
   };
 
@@ -589,7 +877,7 @@ export default function Terminal() {
         <span style={{ width: 12, height: 12, borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
         <span style={{ width: 12, height: 12, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
         <span style={{ marginLeft: "8px", color: "var(--text-secondary)" }}>
-          coreintent — zynthio terminal
+          coreintent — zynthio commander
         </span>
       </div>
 
@@ -614,7 +902,7 @@ export default function Terminal() {
 
         {/* Input line */}
         <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ color: "var(--accent-green)", marginRight: "8px" }}>❯</span>
+          <span style={{ color: "var(--accent-green)", marginRight: "8px" }}>⚡</span>
           <input
             ref={inputRef}
             value={input}
