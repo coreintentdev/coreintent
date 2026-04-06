@@ -48,16 +48,23 @@ const ARCHITECTURE = [
   { name: "COMMAND", desc: "Control Center & Terminal", icon: "C", color: "#f59e0b" },
 ];
 
+/* ─── VPS Nodes ─── */
+const VPS_NODES = [
+  { name: "The Mansion", ip: "104.194.156.109", provider: "Cloudzy", role: "Nginx reverse proxy, domain routing", status: "legacy" },
+  { name: "Deploy Alpha", ip: "161.97.89.49", provider: "Contabo", role: "Primary deploy target, rsync receiver", status: "active" },
+  { name: "Exec Beta", ip: "84.247.137.105", provider: "Contabo", role: "Heavy compute, Drools engine (planned)", status: "active" },
+];
+
 /* ─── Stack & Costs ─── */
 const STACK_COSTS = [
   { service: "Grok Pro", role: "Signal detection, content", cost: "~$0 (X Premium+)" },
   { service: "Claude API", role: "Deep analysis, agents", cost: "Pay-per-use" },
   { service: "Perplexity Free", role: "Research, 3 Pro/day", cost: "$0" },
-  { service: "Gemini", role: "Gmail/Drive scanning", cost: "Free" },
+  { service: "Gemini 3.1 Pro", role: "Coding engine, Drive scanning", cost: "Free (trial)" },
   { service: "Cloudflare Pro", role: "CDN, WAF, DDoS", cost: "$20/mo" },
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },
-  { service: "Cloudzy VPS", role: "Trading backend", cost: "~$25/mo" },
+  { service: "Contabo VPS x2", role: "Deploy + Compute nodes", cost: "~$25/mo" },
 ];
 
 /* ─── Hard Rules ─── */
@@ -211,6 +218,24 @@ export default function Home() {
                   <div style={{ fontSize: "18px", fontWeight: "bold", color: card.color }}>
                     {card.value}
                   </div>
+                </div>
+              ))}
+            </div>
+
+            {/* VPS Topology */}
+            <h3 style={sectionTitle}>VPS Infrastructure (v3.0)</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "24px" }}>
+              {VPS_NODES.map((node) => (
+                <div key={node.name} style={{ ...cardStyle, borderLeft: `3px solid ${node.status === "active" ? "#10b981" : "#f59e0b"}` }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                    <span style={{ fontWeight: "bold", fontSize: "14px" }}>{node.name}</span>
+                    <span style={{ fontSize: "10px", color: node.status === "active" ? "#10b981" : "#f59e0b", textTransform: "uppercase" }}>
+                      {node.status}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "13px", color: "var(--accent-blue)", fontFamily: "monospace", marginBottom: "4px" }}>{node.ip}</div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "2px" }}>{node.provider}</div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{node.role}</div>
                 </div>
               ))}
             </div>
