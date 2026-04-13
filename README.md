@@ -32,7 +32,7 @@ npm run dev             # http://localhost:3000
 | Grok Pro | Signal detection, content drafts | Near-free (X Premium+) |
 | Claude API | Deep analysis, risk, agents | Pay-per-use |
 | Perplexity Free | Research, 3 Pro searches/day | $0 |
-| Gemini | Gmail/Drive scanning | Free |
+| Proton Mail/Drive | Encrypted email + storage | Proton plan |
 | Cloudflare Pro | CDN, WAF, DDoS | $20/mo |
 | Vercel | Hosting | Free |
 | GitHub Actions | CI/CD | Free |

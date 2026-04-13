@@ -22,7 +22,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
-5. Deploy files immediately — VPS, GitHub, Google Drive.
+5. Deploy files immediately — VPS, GitHub, Proton Drive.
 6. Build passes clean or you don't push.
 7. If you see fake/demo data, label it honestly. Don't hide behind green dots.
 8. Run `./scripts/audit.sh` after making changes to verify nothing broke.

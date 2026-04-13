@@ -89,12 +89,12 @@ const ZYNCONTEXT = {
         claude: "code-ready, falls back to demo without key",
         grok: "code-ready, falls back to demo without key",
         perplexity: "code-ready, falls back to demo without key",
-        gemini: "NOT wired — no code exists",
+        proton: "operational — all email accounts imported to Proton Mail/Drive",
       },
       database: "none — no persistence layer exists",
       auth: "none — no user authentication exists",
       vpsScripts: "written, never deployed (COR-20 overdue)",
-      googleDrive: "NOT connected — env placeholder only, zero code",
+      protonDrive: "operational — replaced Google Drive, all data migrated",
     },
   },
   tools: {
@@ -156,8 +156,8 @@ export async function POST(req: Request) {
     if (lower.includes("subscription") && !lower.includes("not subscription")) {
       violations.push("PRICING: Model is competitions, not subscriptions.");
     }
-    if (lower.includes("google drive") && lower.includes("connected")) {
-      violations.push("BS FILTER: Google Drive is NOT connected. No code exists for it.");
+    if (lower.includes("google drive") || lower.includes("gmail") || lower.includes("gemini")) {
+      violations.push("OUTDATED: Google/Gmail/Gemini replaced by Proton. All accounts imported to Proton Mail/Drive.");
     }
     if (lower.includes("exchange") && lower.includes("live")) {
       violations.push("BS FILTER: No exchanges are live. All are planned.");

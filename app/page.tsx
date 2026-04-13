@@ -53,7 +53,7 @@ const STACK_COSTS = [
   { service: "Grok Pro", role: "Signal detection, content", cost: "~$0 (X Premium+)" },
   { service: "Claude API", role: "Deep analysis, agents", cost: "Pay-per-use" },
   { service: "Perplexity Free", role: "Research, 3 Pro/day", cost: "$0" },
-  { service: "Gemini", role: "Gmail/Drive scanning", cost: "Free" },
+  { service: "Proton Mail/Drive", role: "Encrypted email + storage", cost: "Proton plan" },
   { service: "Cloudflare Pro", role: "CDN, WAF, DDoS", cost: "$20/mo" },
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },

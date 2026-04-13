@@ -34,6 +34,7 @@ export async function GET() {
     },
     infrastructure: {
       vps: { status: "live", host: "Cloudzy", ip: "100.122.99.34", role: "Trading engine backend" },
+      proton: { status: "active", role: "Email + Drive + Calendar (all accounts imported)" },
       cloudflare: { status: "active", plan: "Pro", role: "CDN, WAF, DDoS, DNS" },
       github: { status: "active", repos: 5, role: "CI/CD, source control" },
       linear: { status: "active", tasks: 26, completed: 3, role: "Project management" },

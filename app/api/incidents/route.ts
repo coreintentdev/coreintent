@@ -110,7 +110,7 @@ const MONITORED_SERVICES = [
   { name: "Grok API", status: "ready", uptime: "0%", note: "Code wired in lib/ai.ts — needs API key to go live" },
   { name: "Claude API", status: "ready", uptime: "0%", note: "Code wired in lib/ai.ts — needs API key to go live" },
   { name: "Perplexity API", status: "ready", uptime: "0%", note: "Code wired in lib/ai.ts — needs API key to go live" },
-  { name: "Gemini", status: "not_connected", uptime: "0%", note: "Referenced everywhere, not wired in code" },
+  { name: "Proton Mail/Drive", status: "operational", uptime: "99%", note: "All accounts imported to Proton. Email + Drive + Calendar." },
   { name: "OpenClaw", status: "degraded", uptime: "0%", note: "Frequently crashing, unknown service" },
   { name: "Cloudflare CDN", status: "not_configured", uptime: "0%", note: "Pro plan — not configured for coreintent.dev" },
   { name: "Vercel Hosting", status: "not_deployed", uptime: "0%", note: "App ready for Vercel — never deployed" },

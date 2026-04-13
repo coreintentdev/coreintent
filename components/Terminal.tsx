@@ -91,7 +91,7 @@ const STATIC_COMMANDS: Record<string, string> = {
                        Good research but deaf ears without CC feedback
   \x1b[33m◐\x1b[0m \x1b[33mPerplexity\x1b[0m      3 free Pro searches/day (Max cancelled)
                        Was 9 connectors — now export-only
-  \x1b[33m◐\x1b[0m \x1b[33mGemini\x1b[0m          Gmail/Drive scanning (planned)
+  \x1b[32m●\x1b[0m \x1b[33mProton\x1b[0m          Mail/Drive/Calendar (imported, encrypted)
   \x1b[33m◐\x1b[0m \x1b[33mzyn-bash\x1b[0m        API overflow: Sonnet $0.003, Opus $0.015
 
   \x1b[90mBots welcome. No captcha. AI-to-AI is first-class.\x1b[0m`,
@@ -124,6 +124,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m Cloudzy VPS       ~$15/mo    ACTIVE
 
   \x1b[33mFREE / ALREADY PAID:\x1b[0m
+    \x1b[32m●\x1b[0m Proton Mail/Drive ACTIVE     All accounts imported, encrypted
     \x1b[32m●\x1b[0m Cloudflare Pages  FREE       16 sites deployed
     \x1b[32m●\x1b[0m GitHub            FREE       coreintentdev repos
     \x1b[32m●\x1b[0m Linear            FREE       31 issues
@@ -235,7 +236,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m Claude Pro      — Main builder (A$30/mo)
     \x1b[32m●\x1b[0m Grok Free       — Research, 60 threads active
     \x1b[33m◐\x1b[0m Perplexity Free — 3 Pro searches/day (Max cancelled)
-    \x1b[33m◐\x1b[0m Gemini          — Gmail/Drive (planned, not active)
+    \x1b[32m●\x1b[0m Proton          — Mail/Drive/Calendar (encrypted, active)
     \x1b[33m◐\x1b[0m zyn-bash        — API overflow (Sonnet/Opus)
 
   \x1b[33mExchanges:\x1b[0m

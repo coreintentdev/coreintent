@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SAVE_BACKENDS = {
   primary: "github",         // Free — commit to repo
   docs: "notion",            // Free tier — knowledge base
-  files: "google_drive",     // 15GB free — Gemini scans them too
+  files: "proton_drive",      // Encrypted — Proton ecosystem
   cache: "cloudflare_kv",    // Free tier — 100k reads/day
   links: "repo_json",        // Free — just a JSON file in the repo
   state: "local_storage",    // Free — browser-side
@@ -20,15 +20,15 @@ const OUTSOURCE_MAP = {
   "content_drafts": { to: "grok_pro", cost: "near-free", why: "bulk draft generation, fast output" },
   "content_polish": { to: "claude_api", cost: "~$0.01/request", why: "best quality for final copy" },
   "research": { to: "perplexity_max", cost: "$20/mo flat", why: "unlimited searches, 9 connectors" },
-  "email_scan": { to: "gemini", cost: "free (Gmail built-in)", why: "auto-categorize, summarize" },
-  "drive_scan": { to: "gemini", cost: "free (Drive built-in)", why: "index & find lost files" },
+  "email_scan": { to: "proton_mail", cost: "Proton plan", why: "encrypted, private, no Google scanning" },
+  "drive_scan": { to: "proton_drive", cost: "Proton plan", why: "encrypted storage, no Google dependency" },
   "cdn_security": { to: "cloudflare_pro", cost: "$20/mo", why: "replaces $200+/mo of separate WAF/DDoS" },
   "hosting": { to: "vercel_hobby", cost: "$0", why: "free for personal projects" },
   "ci_cd": { to: "github_actions", cost: "$0", why: "2000 min/mo free" },
   "project_mgmt": { to: "linear_free", cost: "$0", why: "unlimited issues" },
   "docs": { to: "notion_free", cost: "$0", why: "unlimited pages for personal" },
   "link_sharing": { to: "weblinks", cost: "$0", why: "share via URL, no auth needed" },
-  "file_recovery": { to: "google_drive_versions", cost: "$0", why: "30-day version history, find lost stuff" },
+  "file_recovery": { to: "proton_drive_versions", cost: "Proton plan", why: "version history, encrypted" },
   "compression": { to: "mac_the_zipper", cost: "$0", why: "custom built" },
   "data_extraction": { to: "the_ripper", cost: "$0", why: "custom built" },
   "pdf_parsing": { to: "pdf_plumber", cost: "$0", why: "custom built" },
@@ -45,8 +45,8 @@ export async function GET() {
     { replaced: "Project management tool", saved: "$10/mo", with: "Linear free" },
     { replaced: "Docs platform", saved: "$8/mo", with: "Notion free" },
     { replaced: "Multiple AI subscriptions", saved: "$100+/mo", with: "Grok via X Premium+ ($16)" },
-    { replaced: "Email assistant", saved: "$15/mo", with: "Gemini (free in Gmail)" },
-    { replaced: "File search tool", saved: "$10/mo", with: "Gemini (free in Drive)" },
+    { replaced: "Email assistant", saved: "$15/mo", with: "Proton Mail (encrypted, imported)" },
+    { replaced: "File search tool", saved: "$10/mo", with: "Proton Drive (encrypted storage)" },
   ];
 
   const totalSaved = servicesReplaced.reduce((s, r) => {
@@ -73,7 +73,7 @@ export async function GET() {
       uses: [
         "Share AI context between Claude/Grok/Perplexity sessions",
         "Send terminal state to collaborators",
-        "Link Google Drive docs directly into workflows",
+        "Link Proton Drive docs directly into workflows",
         "Quick-share incident reports",
         "Integration via URL params (backwards-compatible discovery)",
       ],
@@ -81,8 +81,8 @@ export async function GET() {
     recovery: {
       description: "Find lost stuff via unconventional paths",
       methods: [
-        "Google Drive version history (30 days)",
-        "Gmail search (everything is an email trail)",
+        "Proton Drive version history",
+        "Proton Mail search (everything is an email trail)",
         "GitHub commit history (every save is recoverable)",
         "Perplexity re-research (re-find anything you found before)",
         "Weblink trail (shared URLs = breadcrumbs)",

@@ -48,7 +48,7 @@ const PLATFORMS = [
 ];
 
 const CONNECTORS = [
-  "Gmail + Calendar", "Google Drive", "Linear", "Notion",
+  "Proton Mail + Calendar", "Proton Drive", "Linear", "Notion",
   "GitHub", "Asana", "Slack", "Jira", "Confluence",
 ];
 
