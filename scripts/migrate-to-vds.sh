@@ -14,16 +14,19 @@
 
 set -e
 
-VDS_HOST="${VDS_HOST:?Set VDS_HOST — Tailscale hostname or IP}"
+VDS_HOST="${ZYN_VDS_HOST:-${VDS_HOST:-100.121.107.112}}"
 VDS_USER="${VDS_USER:-root}"
 
 # All existing VPS instances to migrate FROM (via Tailscale)
-# Use Tailscale hostnames or IPs — auth handled by Tailscale
-SOURCES=(
-  "root@100.122.99.34"     # Cloudzy
-  "root@104.194.156.109"   # Frankfurt
-  # Add 3rd VPS here if needed
-)
+# ZYN_SOURCES override or defaults below
+if [ -n "$ZYN_SOURCES" ]; then
+  IFS=' ' read -ra SOURCES <<< "$ZYN_SOURCES"
+else
+  SOURCES=(
+    "root@100.122.99.34"     # Cloudzy
+    "root@104.194.156.109"   # Frankfurt
+  )
+fi
 
 MIRROR="migration_$(date +%Y%m%d_%H%M%S)"
 REPORT="${MIRROR}/MIGRATION_REPORT.md"

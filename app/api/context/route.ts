@@ -48,9 +48,10 @@ const ZYNCONTEXT = {
     contextSync: {
       active: true,
       sources: {
-        repo: "github.com/coreintentdev/coreintent",
-        vds: "VDS_HOST env var (check CLAUDE.md for known hosts)",
-        local: "~/Desktop/ZYNTHIO_MASTER/ (via zynrip-organize.sh)",
+        repo: "github.com/coreintentdev/coreintent — scripts + manifests only, not vault data",
+        vds: "100.121.107.112 (ZYN_VDS_HOST) — consolidation target, Tailscale SSH",
+        local: "~/Desktop/ZYNTHIO_MASTER/ + ~/Desktop/zynthio-tools/ (110-API CLI)",
+        desktopCli: "~/Desktop/zynthio-tools/bin/cai — takes priority over repo scripts/cai-cloud",
         stateFiles: [
           "/root/zynthio/SESSION_STATE.md",
           "/root/zynthio/MASTER_HANDOVER.md",
@@ -58,6 +59,7 @@ const ZYNCONTEXT = {
           "/root/zynthio/CONTENT_INTEL.md",
           "/root/zynthio/MASTER_INDEX.md",
         ],
+        dataFlow: "Mac (ZYNTHIO_MASTER) → sync chosen payloads → VDS /root/zynthio/",
       },
     },
   },
@@ -98,11 +100,14 @@ const ZYNCONTEXT = {
     },
   },
   tools: {
-    cai: "Desktop Commander CLI — run locally, bridges sandbox limitations",
-    zynrip: "Data organizer — sorts Desktop into ZYNTHIO_MASTER structure",
-    vpsLens: "VPS auditor — catalogs files, pulls state, generates report",
-    deployVds: "VDS consolidation — deploys everything to single server",
-    migrateToVds: "Multi-VPS migration — mirrors all VPS to local, then pushes to VDS",
+    cai: "~/Desktop/zynthio-tools/bin/cai — 110 APIs, desktop commander (priority CLI)",
+    caiCloud: "scripts/cai-cloud — lightweight cloud fallback (conflicts with desktop cai)",
+    zynrip: "scripts/zynrip-organize.sh — ZYN_RIP_SRC → organized + manifest",
+    vpsLens: "scripts/vps-lens.sh — ZYN_SOURCES → rsync mirror per host",
+    deployVds: "scripts/deploy-vds.sh — deploys app to VDS 100.121.107.112",
+    vdsConsolidation: "scripts/vds-consolidation-deploy.sh (desktop) — ZYN_LOCAL_PAYLOAD → VDS",
+    migrateToVds: "scripts/migrate-to-vds.sh — mirrors all VPS to local before teardown",
+    g4Lens: "commander/G4-LENS-COMMANDER-v3.sh — defines cai as G4 alias (conflict: rename one)",
   },
   pricing: {
     model: "Competitions, not subscriptions",

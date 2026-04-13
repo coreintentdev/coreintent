@@ -37,10 +37,15 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Audit: scripts/audit.sh
 - VPS Lens: scripts/vps-lens.sh
 
-## VPS
-- Cloudzy: 100.122.99.34
+## VDS / VPS
+- VDS Primary: 100.121.107.112 (consolidation target, Tailscale SSH)
+- Cloudzy VPS: 100.122.99.34 (legacy, migrating to VDS)
+- Frankfurt VPS: 104.194.156.109 (legacy, migrating to VDS)
+- All connected via Tailscale — no passwords needed
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+- Desktop CLI: ~/Desktop/zynthio-tools/bin/cai (110 APIs, takes priority over repo scripts)
+- Data flow: Mac (ZYNTHIO_MASTER) → sync payloads → VDS /root/zynthio/
+- This repo = scripts + manifests only, NOT bulk vault data
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."

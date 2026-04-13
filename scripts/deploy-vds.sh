@@ -14,7 +14,7 @@
 
 set -e
 
-VDS_HOST="${VDS_HOST:?Set VDS_HOST — Tailscale hostname or IP}"
+VDS_HOST="${ZYN_VDS_HOST:-${VDS_HOST:-100.121.107.112}}"
 VDS_USER="${VDS_USER:-root}"
 REMOTE_DIR="/root/coreintent"
 DOMAIN="${DOMAIN:-coreintent.dev}"
