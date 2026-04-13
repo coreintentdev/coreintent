@@ -72,6 +72,7 @@ ${YELLOW}── VDS MANAGEMENT ──${RESET}
   ${green("cai health")}        Full VDS health check
 
 ${YELLOW}── DATA MANAGEMENT ──${RESET}
+  ${green("cai find-creds")}    Scan Mac for VPS credentials, SSH keys, .env files
   ${green("cai pull")}          Pull state files from VDS (amnesia shield)
   ${green("cai push-env")}      Push local .env to VDS
   ${green("cai lens")}          Run VPS Lens (full audit + mirror)
@@ -191,6 +192,11 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
     print(cyan("Pushing .env to VDS..."));
     run(`scp -o ConnectTimeout=10 .env ${VDS_USER}@${VDS_HOST}:/root/coreintent/.env`);
     print(green("Done. Restart services: cai restart all"));
+  },
+
+  "find-creds": () => {
+    print(cyan("Scanning for VPS credentials..."));
+    run("bash scripts/find-vps-creds.sh");
   },
 
   lens: () => {
