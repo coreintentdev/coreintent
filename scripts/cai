@@ -347,9 +347,10 @@ ${dim("Human in the loop. Always.")}
     print(`
 ${cyan("═══ ZynContext — Active Filters ═══")}
 
-  ${GREEN}● EMOTION BLOCKER${RESET}    ${dim("ON")}
+  ${GREEN}● EMOTION BLOCKER${RESET}    ${dim("ON — INC-008")}
     Corey is happy. NZ direct. No assumed frustration.
     "fuck you cunt" = friendly. Read tone from content, not words.
+    INC-008: AI projected frustration onto Corey. Never repeat.
 
   ${GREEN}● ASSUMPTION BLOCKER${RESET} ${dim("ON")}
     If you don't know → research or ask.

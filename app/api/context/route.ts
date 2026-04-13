@@ -15,11 +15,14 @@ const ZYNCONTEXT = {
   filters: {
     emotionBlocker: {
       active: true,
+      incident: "INC-008",
       rules: [
         "Corey is happy. Do not assume frustration from direct language.",
         "NZ/AU slang is friendly — 'fuck you cunt' = casual greeting.",
         "Read tone from content, not words. If unsure, assume positive.",
         "Never add emotional assessments to responses.",
+        "Never say 'He's frustrated' or similar — you don't know his state.",
+        "INC-008: Cursor Cloud agent projected frustration onto Corey (April 13, 2026). Don't repeat this.",
       ],
     },
     assumptionBlocker: {

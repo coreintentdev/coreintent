@@ -89,6 +89,16 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-03-24T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-008",
+    service: "AI Emotion Projection",
+    status: "mitigating",
+    severity: "major",
+    message: "Cursor Cloud agent (April 13, 2026) projected frustration onto Corey when he was not frustrated. Corey is direct, NZ style — always happy. AI read tone from word choice instead of content. Violated ZynContext emotion blocker rule: never add emotional assessments. Same class as INC-004 (building on assumptions). Fix: ZynContext /api/context now enforces emotion blocker filter. All AI sessions must load context first.",
+    autoUpdate: true,
+    detectedAt: "2026-04-13T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
