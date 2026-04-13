@@ -8,12 +8,18 @@ Run these immediately:
 
 1. `pwd` (must be `/workspace`)
 2. `git status -sb` (confirm branch + dirty state)
-3. `node -v && npm -v` (confirm runtime tools)
-4. `ls .env .env.example` (confirm env files exist)
+3. `gh auth status` (confirm GitHub CLI session is available for PR/CI inspection)
+4. `node -v && npm -v` (confirm runtime tools)
+5. `ls .env .env.example` (confirm env files exist)
 
 If `.env` is missing:
 
 - `cp .env.example .env`
+
+Login reality check:
+
+- There is currently no in-app user auth flow to complete for local testing.
+- "Login" for runtime integrations is done by providing API keys in `.env`.
 
 ## 1) Fast setup and app startup
 
