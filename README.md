@@ -62,6 +62,8 @@ npm run dev             # http://localhost:3000
 | `/api/protect` | Digital identity protection |
 | `/api/notes` | Public customer notes |
 | `/api/connections` | Honest service connection status |
+| `/api/context` | ZynContext (assumption blocker / BS filter) |
+| `/api/music` | SongPal track catalog |
 
 ## Pages
 

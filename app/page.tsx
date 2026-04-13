@@ -36,7 +36,7 @@ const STATUS_CARDS = [
   { label: "AI Agents", value: "Ready", color: "#a855f7" },
   { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
   { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "12", color: "#06b6d4" },
+  { label: "API Routes", value: "14", color: "#06b6d4" },
 ];
 
 /* ─── Architecture Pillars ─── */
@@ -504,6 +504,8 @@ npm run build           # Production build`}
                     ["/api/incidents", "Service monitoring", "Semi-real"],
                     ["/api/notes", "In-memory notes", "Real"],
                     ["/api/autosave", "On-the-fly persistence", "Demo"],
+                    ["/api/context", "ZynContext (assumption blocker)", "Live"],
+                    ["/api/music", "SongPal track catalog", "Real"],
                   ].map(([route, desc, type]) => (
                     <tr key={route} style={{ borderBottom: "1px solid var(--border-color)" }}>
                       <td style={{ padding: "8px", color: "var(--accent-blue)" }}>{route}</td>

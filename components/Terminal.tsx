@@ -39,6 +39,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32msignals\x1b[0m     - Trading signals \x1b[90m(live)\x1b[0m
   \x1b[32mincidents\x1b[0m   - Service incidents \x1b[90m(live)\x1b[0m
   \x1b[32mprotect\x1b[0m     - F18 security \x1b[90m(live)\x1b[0m
+  \x1b[32mmusic\x1b[0m       - SongPal track catalog \x1b[90m(live)\x1b[0m
+  \x1b[32mzyncontext\x1b[0m  - ZynContext filters \x1b[90m(live)\x1b[0m
 
   \x1b[33m── COMMANDER ──\x1b[0m
   \x1b[32mask <question>\x1b[0m  - Ask the AI orchestra anything \x1b[90m(live)\x1b[0m
@@ -149,14 +151,14 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[32mBUILT & WORKING:\x1b[0m
     \x1b[32m●\x1b[0m 6 pages: / /pricing /stack /privacy /terms /disclaimer
-    \x1b[32m●\x1b[0m 12 API routes (returning demo data)
+    \x1b[32m●\x1b[0m 14 API routes (returning demo data)
     \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
     \x1b[32m●\x1b[0m 8 domains live, all returning 200
     \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)
     \x1b[32m●\x1b[0m cai CLI on VPS with full session state
 
   \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
-    \x1b[33m◐\x1b[0m All 12 API routes return demo data (keys not set)
+    \x1b[33m◐\x1b[0m All 14 API routes return demo data (keys not set)
     \x1b[32m●\x1b[0m Terminal XSS hardened (ansiToHtml sanitized)
     \x1b[32m●\x1b[0m Commander mode: tab complete, watch, ask AI, chaining
 
@@ -435,6 +437,37 @@ function formatSave(data: Record<string, unknown>): string {
 }
 
 // API-powered commands: endpoint + formatter
+function formatMusic(data: Record<string, unknown>): string {
+  const count = data.count as number || 0;
+  const sources = data.sources as Record<string, number> | undefined;
+  let out = `\x1b[36mSongPal — Music Catalog\x1b[0m`;
+  out += `\n  Total tracks: \x1b[32m${count}\x1b[0m`;
+  if (sources) {
+    out += `\n  Suno:     ${sources.suno || 0}`;
+    out += `\n  Original: ${sources.original || 0}`;
+    out += `\n  Other:    ${sources.other || 0}`;
+  }
+  out += `\n\n  ${data.note || ""}`;
+  if (count === 0) {
+    out += `\n\n  \x1b[33mTo load tracks from your Mac:\x1b[0m`;
+    out += `\n    \x1b[32mcai tracks --push\x1b[0m  (scans Music/ + ZYNTHIO_MASTER/ and pushes to API)`;
+  }
+  return out;
+}
+
+function formatContext(data: Record<string, unknown>): string {
+  const filters = data.filters as Record<string, Record<string, unknown>> | undefined;
+  let out = `\x1b[36m═══ ZynContext — Active Filters ═══\x1b[0m`;
+  if (filters) {
+    for (const [name, filter] of Object.entries(filters)) {
+      const active = filter.active ? "\x1b[32m● ON\x1b[0m" : "\x1b[31m○ OFF\x1b[0m";
+      out += `\n  ${active}  ${name}`;
+    }
+  }
+  out += `\n\n  \x1b[90mGET /api/context for full payload. POST to run BS filter.\x1b[0m`;
+  return out;
+}
+
 const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<string, unknown>) => string }> = {
   status:    { endpoint: "/api/status",    format: formatStatus },
   portfolio: { endpoint: "/api/portfolio", format: formatPortfolio },
@@ -444,6 +477,8 @@ const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<str
   incidents: { endpoint: "/api/incidents", format: formatIncidents },
   protect:   { endpoint: "/api/protect",   format: formatProtect },
   save:      { endpoint: "/api/autosave",  format: formatSave },
+  music:     { endpoint: "/api/music",     format: formatMusic },
+  zyncontext: { endpoint: "/api/context",  format: formatContext },
 };
 
 // All known command names for tab completion

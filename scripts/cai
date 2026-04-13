@@ -203,19 +203,57 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
     run("bash scripts/zynrip-organize.sh");
   },
 
-  tracks: () => {
+  tracks: (args) => {
     const home = process.env.HOME || "/Users/coreymcivor";
-    const musicDir = path.join(home, "Music");
-    const desktopSongpal = path.join(home, "Desktop/ZYNTHIO_MASTER/03_SONGPAL/suno_tracks");
+    const searchDirs = [
+      path.join(home, "Music"),
+      path.join(home, "Desktop/ZYNTHIO_MASTER/03_SONGPAL/suno_tracks"),
+      path.join(home, "Downloads/Suno"),
+      path.join(home, "Downloads/suno"),
+      path.join(home, "Documents/Suno"),
+      path.join(home, "Documents/Music"),
+    ];
 
-    print(cyan("═══ Suno Track Count ═══"));
-    for (const dir of [musicDir, desktopSongpal]) {
+    const extensions = ["mp3", "wav", "m4a", "flac", "aac", "ogg", "mp4", "webm"];
+    const extPattern = extensions.map(e => `-name "*.${e}"`).join(" -o ");
+    let totalTracks = 0;
+    const allFiles = [];
+
+    print(cyan("═══ Suno Track Scan ═══"));
+    for (const dir of searchDirs) {
       if (fs.existsSync(dir)) {
-        const count = run(`find "${dir}" -type f \\( -name "*.mp3" -o -name "*.wav" -o -name "*.m4a" -o -name "*.flac" -o -name "*.aac" -o -name "*.ogg" \\) | wc -l`, { silent: true }).trim();
-        print(`  ${green(count)} tracks in ${dim(dir)}`);
-      } else {
-        print(`  ${yellow("Not found:")} ${dim(dir)}`);
+        const result = run(`find "${dir}" -type f \\( ${extPattern} \\) 2>/dev/null`, { silent: true });
+        const files = result.split("\n").filter(Boolean);
+        totalTracks += files.length;
+        allFiles.push(...files);
+        print(`  ${green(String(files.length).padStart(5))} tracks in ${dim(dir)}`);
       }
+    }
+    print(`\n  ${green(String(totalTracks))} total tracks found`);
+
+    if (args.includes("--push")) {
+      const base = process.env.APP_URL || "http://localhost:3000";
+      print(cyan(`\nPushing ${totalTracks} tracks to ${base}/api/music...`));
+      const tracks = allFiles.map(f => ({
+        filename: path.basename(f),
+        title: path.basename(f, path.extname(f)).replace(/[-_]/g, " "),
+        source: f.toLowerCase().includes("suno") ? "suno" : "original",
+      }));
+
+      const batchSize = 100;
+      for (let i = 0; i < tracks.length; i += batchSize) {
+        const batch = tracks.slice(i, i + batchSize);
+        try {
+          const res = run(`curl -s -X POST ${base}/api/music -H "Content-Type: application/json" -d '${JSON.stringify({ tracks: batch })}'`, { silent: true });
+          const data = JSON.parse(res);
+          print(`  Batch ${Math.floor(i / batchSize) + 1}: ${green(String(data.added))} added (total: ${data.total})`);
+        } catch (e) {
+          print(red(`  Batch failed: ${e}`));
+        }
+      }
+      print(green(`\nDone. ${totalTracks} tracks pushed to /api/music`));
+    } else {
+      print(dim("\nTo push to API: cai tracks --push"));
     }
   },
 
