@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Mon Mar 30 20:11:33 UTC 2026
+Generated: Mon Apr 13 06:03:36 PM UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -39,7 +39,7 @@ Generated: Mon Mar 30 20:11:33 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:143:    \x1b[33m◐\x1b[0m Terminal uses dangerouslySetInnerHTML (XSS risk)
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:900:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -52,18 +52,22 @@ Generated: Mon Mar 30 20:11:33 UTC 2026
 - PASS: next/link used in 2 files
 
 ## 7. Truth Check
+- WARN: Potentially misleading status '"active"' found in pages
+  app/page.tsx:14:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:15:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:16:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
+- PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 5 API routes contain demo/hardcoded data
+- INFO: 6 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
 - PASS: ARIA attributes found (6 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
-- PASS: xterm package is used
 - INFO: Using Next.js 14
 
 ## 10. VPS & Deployment
@@ -84,6 +88,6 @@ Generated: Mon Mar 30 20:11:33 UTC 2026
 |--------|-------|
 | PASS | 52 |
 | FAIL | 0 |
-| WARN | 1 |
+| WARN | 2 |
 
-**Audit Score: 98%** (52/53 checks passed)
+**Audit Score: 96%** (52/54 checks passed)

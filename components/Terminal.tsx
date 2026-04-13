@@ -149,7 +149,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[32mBUILT & WORKING:\x1b[0m
     \x1b[32m●\x1b[0m 6 pages: / /pricing /stack /privacy /terms /disclaimer
-    \x1b[32m●\x1b[0m 10 API routes (returning demo data)
+    \x1b[32m●\x1b[0m 12 API routes (returning demo data)
     \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
     \x1b[32m●\x1b[0m 8 domains live, all returning 200
     \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)

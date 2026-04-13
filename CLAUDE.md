@@ -30,7 +30,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 ## Architecture
 - Next.js 14 (App Router) + TypeScript (strict mode)
 - 6 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer
-- 10 API routes in app/api/
+- 12 API routes in app/api/
 - AI service layer: lib/ai.ts (Grok, Claude, Perplexity with graceful fallback)
 - VPS scripts: scripts/risk_monitor.ts, signal_listener.ts, gtrade_listener.ts
 - Deploy scripts: scripts/deploy-vercel.sh, deploy-vps.sh, deploy-all.sh
@@ -50,12 +50,12 @@ Based in: New Zealand (NEVER register anything in Australia)
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues
-- All 10 API routes return hardcoded demo data
+- All 12 API routes return hardcoded demo data
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI (potential XSS)
-- xterm packages in package.json but not actually used
+- No .cursorrules file exists — cursor configuration is in CLAUDE.md and AGENTS.md only
 
 ## Family (NEVER fabricate)
 - Michelle (wife), Ruby (~14, daughter), Wesley (son)

@@ -60,6 +60,8 @@ npm run dev             # http://localhost:3000
 | `/api/autosave` | On-the-fly persistence |
 | `/api/research` | AI research about you |
 | `/api/protect` | Digital identity protection |
+| `/api/notes` | Public customer notes |
+| `/api/connections` | Honest service connection status |
 
 ## Pages
 
