@@ -27,6 +27,10 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mbrain\x1b[0m       - AI orchestra: who's thinking what
   \x1b[32mskills\x1b[0m      - Tools & capabilities
   \x1b[32mconnections\x1b[0m - All services: honest status \x1b[90m(live)\x1b[0m
+  \x1b[32mmaster\x1b[0m      - Web/Desktop master sync policy \x1b[90m(live)\x1b[0m
+  \x1b[32msync <task>\x1b[0m - Route task to best channel \x1b[90m(live)\x1b[0m
+  \x1b[32mzynhandball <task>\x1b[0m - Force handoff evaluation \x1b[90m(live)\x1b[0m
+  \x1b[32mzynkyc <task>\x1b[0m - Ask KYC clarifiers when unsure \x1b[90m(live)\x1b[0m
   \x1b[32malpha\x1b[0m       - What's built vs what's planned
   \x1b[32mhandover\x1b[0m    - Full state dump for next session
   \x1b[32mwhoami\x1b[0m      - Digital identity
@@ -434,6 +438,54 @@ function formatSave(data: Record<string, unknown>): string {
   return out;
 }
 
+function formatSync(data: Record<string, unknown>): string {
+  // GET /api/sync returns policy; POST /api/sync returns a routing decision.
+  if (data.mode === "master_sync_policy") {
+    const rules = data.rules as Record<string, unknown> | undefined;
+    const channels = data.channels as Record<string, string[]> | undefined;
+    let out = `\x1b[36mMaster Sync Policy\x1b[0m`;
+    out += `\n  Summary: ${data.summary || "Single source of truth for channel routing."}`;
+    if (rules) {
+      out += `\n\n  \x1b[33mRules:\x1b[0m`;
+      out += `\n    handoff: ${rules.handoffName || "zynhandball"}`;
+      out += `\n    uncertainty: ${rules.uncertainFlow || "zynKYC"}`;
+      out += `\n    min confidence: ${rules.minConfidenceForAutoRoute || "?"}`;
+      out += `\n    default route: ${rules.defaultRoute || "web"}`;
+    }
+    if (channels) {
+      out += `\n\n  \x1b[33mChannels:\x1b[0m`;
+      for (const [name, caps] of Object.entries(channels)) {
+        out += `\n    \x1b[32m${name}\x1b[0m → ${caps.join(", ")}`;
+      }
+    }
+    return out;
+  }
+
+  const decision = String(data.decision || "unknown");
+  const reason = String(data.reason || "");
+  const source = String(data.source || "web");
+  const target = String(data.target || source);
+  const decisionColor = decision === "zynKYC" ? "\x1b[33m" : decision === "zynhandball" ? "\x1b[36m" : "\x1b[32m";
+
+  let out = `\x1b[36mSync Decision\x1b[0m`;
+  out += `\n  Decision: ${decisionColor}${decision}\x1b[0m`;
+  out += `\n  Source: ${source}  Target: ${target}`;
+  if (reason) out += `\n  Reason: ${reason}`;
+
+  const handoff = data.handoff as Record<string, unknown> | null;
+  if (handoff) {
+    out += `\n\n  \x1b[33mHandoff:\x1b[0m ${handoff.from} → ${handoff.to} (${handoff.mode})`;
+  }
+
+  const questions = data.questions as string[] | undefined;
+  if (questions && questions.length > 0) {
+    out += `\n\n  \x1b[33mzynKYC questions:\x1b[0m`;
+    for (const q of questions) out += `\n    - ${q}`;
+  }
+
+  return out;
+}
+
 // API-powered commands: endpoint + formatter
 const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<string, unknown>) => string }> = {
   status:    { endpoint: "/api/status",    format: formatStatus },
@@ -444,6 +496,7 @@ const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<str
   incidents: { endpoint: "/api/incidents", format: formatIncidents },
   protect:   { endpoint: "/api/protect",   format: formatProtect },
   save:      { endpoint: "/api/autosave",  format: formatSave },
+  master:    { endpoint: "/api/sync",      format: formatSync },
 };
 
 // All known command names for tab completion
@@ -451,6 +504,7 @@ const ALL_COMMANDS = [
   ...Object.keys(STATIC_COMMANDS),
   ...Object.keys(API_COMMANDS),
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
+  "sync", "zynhandball", "zynkyc",
 ];
 
 export default function Terminal() {
@@ -671,6 +725,62 @@ export default function Terminal() {
         setLines((prev) => {
           const copy = [...prev];
           const idx = copy.lastIndexOf(`\x1b[33m◐\x1b[0m \x1b[90mAsking the AI orchestra...\x1b[0m`);
+          if (idx !== -1) copy.splice(idx, 1);
+          return [...copy, errMsg, ""];
+        });
+        return errMsg;
+      }
+    }
+
+    // ── COMMANDER: sync/zynhandball/zynkyc <task> ──
+    const syncCommands = ["sync ", "zynhandball ", "zynkyc "];
+    if (syncCommands.some((prefix) => trimmed.startsWith(prefix))) {
+      const task = raw.substring(raw.indexOf(" ") + 1).trim();
+      if (!task) {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31mUsage: ${trimmed.split(" ")[0]} <task>\x1b[0m`, "");
+        return "";
+      }
+
+      const mode = trimmed.startsWith("zynkyc ")
+        ? "zynkyc"
+        : trimmed.startsWith("zynhandball ")
+          ? "zynhandball"
+          : "sync";
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[90mRouting task through master sync policy...\x1b[0m`);
+      try {
+        const payload: Record<string, unknown> = {
+          task,
+          source: "web",
+          confidence: mode === "zynkyc" ? 0.4 : 0.85,
+          contextComplete: mode === "zynkyc" ? false : true,
+        };
+        if (mode === "zynhandball") {
+          payload.hints = {
+            needsLocalFiles: true,
+            needsProcessControl: true,
+          };
+        }
+        const res = await fetch("/api/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const out = formatSync(data);
+        setLines((prev) => {
+          const copy = [...prev];
+          const idx = copy.lastIndexOf(`\x1b[90mRouting task through master sync policy...\x1b[0m`);
+          if (idx !== -1) copy.splice(idx, 1);
+          return [...copy, out, ""];
+        });
+        setLastOutput(out);
+        return out;
+      } catch (err) {
+        const errMsg = `\x1b[31mSync error: ${err instanceof Error ? err.message : "Failed"}\x1b[0m`;
+        setLines((prev) => {
+          const copy = [...prev];
+          const idx = copy.lastIndexOf(`\x1b[90mRouting task through master sync policy...\x1b[0m`);
           if (idx !== -1) copy.splice(idx, 1);
           return [...copy, errMsg, ""];
         });
