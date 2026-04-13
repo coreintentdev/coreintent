@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Mon Apr 13 06:03:36 PM UTC 2026
+Generated: Mon Apr 13 07:57:56 PM UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 22
+- INFO: Routes found: 23
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -61,7 +61,7 @@ Generated: Mon Apr 13 06:03:36 PM UTC 2026
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 6 API routes contain demo/hardcoded data
+- INFO: 7 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
 - PASS: ARIA attributes found (6 instances)
@@ -78,6 +78,7 @@ Generated: Mon Apr 13 06:03:36 PM UTC 2026
 - PASS: Deploy script exists: scripts/deploy-vercel.sh
 - PASS: Deploy script exists: scripts/deploy-all.sh
 - PASS: Executable: scripts/deploy-all.sh
+- PASS: Executable: scripts/deploy-vds.sh
 - PASS: Executable: scripts/deploy-vercel.sh
 - PASS: Executable: scripts/deploy-vps.sh
 
@@ -86,8 +87,8 @@ Generated: Mon Apr 13 06:03:36 PM UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
+| PASS | 53 |
 | FAIL | 0 |
 | WARN | 2 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 96%** (53/55 checks passed)
