@@ -14,12 +14,12 @@
 
 set -e
 
-VDS_HOST="${VDS_HOST:?Set VDS_HOST to your VDS IP address}"
+VDS_HOST="${VDS_HOST:?Set VDS_HOST — Tailscale hostname or IP}"
 VDS_USER="${VDS_USER:-root}"
-VDS_PASS="${VDS_PASS:-}"
 REMOTE_DIR="/root/coreintent"
 DOMAIN="${DOMAIN:-coreintent.dev}"
 NODE_VERSION="20"
+# Tailscale SSH — no passwords needed
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -40,23 +40,9 @@ if [ ! -f "package.json" ]; then
   exit 1
 fi
 
-# SSH command builder — supports key auth or password via sshpass
-SSH_CMD=""
-SCP_CMD=""
-if [ -n "$VDS_PASS" ]; then
-  command -v sshpass &>/dev/null || {
-    echo -e "${YELLOW}sshpass not found. Install it or use SSH key auth instead.${NC}"
-    exit 1
-  }
-  SSH_CMD="sshpass -p '$VDS_PASS' ssh -o ConnectTimeout=15 -o StrictHostKeyChecking=no"
-  SCP_CMD="sshpass -p '$VDS_PASS' scp -o ConnectTimeout=15 -o StrictHostKeyChecking=no"
-else
-  SSH_CMD="ssh -o ConnectTimeout=15"
-  SCP_CMD="scp -o ConnectTimeout=15"
-fi
-
-ssh_run() { eval "$SSH_CMD ${VDS_USER}@${VDS_HOST} \"$1\""; }
-scp_to() { eval "$SCP_CMD $1 ${VDS_USER}@${VDS_HOST}:$2"; }
+# Tailscale SSH — no passwords, no keys, just works
+ssh_run() { ssh -o ConnectTimeout=15 ${VDS_USER}@${VDS_HOST} "$1"; }
+scp_to() { scp -o ConnectTimeout=15 $1 ${VDS_USER}@${VDS_HOST}:$2; }
 
 # ═══════════════════════════════════════════
 # PHASE 1: Connection + System Setup

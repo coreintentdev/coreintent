@@ -14,13 +14,15 @@
 
 set -e
 
-VDS_HOST="${VDS_HOST:?Set VDS_HOST to your new VDS IP}"
+VDS_HOST="${VDS_HOST:?Set VDS_HOST — Tailscale hostname or IP}"
 VDS_USER="${VDS_USER:-root}"
 
-# All existing VPS instances to migrate FROM
+# All existing VPS instances to migrate FROM (via Tailscale)
+# Use Tailscale hostnames or IPs — auth handled by Tailscale
 SOURCES=(
   "root@100.122.99.34"     # Cloudzy
   "root@104.194.156.109"   # Frankfurt
+  # Add 3rd VPS here if needed
 )
 
 MIRROR="migration_$(date +%Y%m%d_%H%M%S)"

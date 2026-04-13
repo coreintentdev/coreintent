@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════
-# Find VPS credentials from ZYNTHIO_MASTER
+# Find VPS info — Tailscale network
 # Run on YOUR Mac: bash scripts/find-vps-creds.sh
 # ═══════════════════════════════════════════
 
@@ -11,8 +11,16 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 echo ""
-echo -e "${CYAN}═══ VPS Credential Finder ═══${NC}"
+echo -e "${CYAN}═══ VPS Finder (Tailscale) ═══${NC}"
 echo -e "${CYAN}Scanning: ${MASTER}${NC}"
+echo ""
+
+echo -e "${YELLOW}── Tailscale Status ──${NC}"
+if command -v tailscale &>/dev/null; then
+  tailscale status 2>/dev/null || echo "  Tailscale installed but not connected"
+else
+  echo "  Tailscale CLI not found"
+fi
 echo ""
 
 # Search everywhere
