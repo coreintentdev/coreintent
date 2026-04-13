@@ -107,8 +107,39 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
   };
 }
 
+// --- SUNO (Paid API) — Music generation, track management ---
+export async function callSuno(prompt: string, style?: string): Promise<AIResponse> {
+  const key = process.env.SUNO_API_KEY;
+  const baseUrl = process.env.SUNO_API_URL || "https://api.suno.ai";
+  if (!key) {
+    return { source: "suno", model: "suno-demo", content: `[DEMO] Suno response for: ${prompt}`, live: false };
+  }
+
+  const res = await fetch(`${baseUrl}/v1/music`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      prompt,
+      style: style || "auto",
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    return { source: "suno", model: "suno-api", content: `[ERROR] ${err}`, live: false };
+  }
+
+  const data = await res.json();
+  return {
+    source: "suno",
+    model: "suno-api",
+    content: JSON.stringify(data),
+    live: true,
+  };
+}
+
 // --- ORCHESTRATOR — Send to best AI for the job ---
-export async function orchestrate(task: "signal" | "analysis" | "research" | "content", prompt: string) {
+export async function orchestrate(task: "signal" | "analysis" | "research" | "content" | "music", prompt: string) {
   switch (task) {
     case "signal":
       return callGrok(prompt);       // Fast, cheap
@@ -118,6 +149,8 @@ export async function orchestrate(task: "signal" | "analysis" | "research" | "co
       return callClaude(prompt);     // Deep with Claude
     case "research":
       return callPerplexity(prompt); // Facts with Perplexity
+    case "music":
+      return callSuno(prompt);       // Tracks with Suno
     default:
       return callGrok(prompt);
   }

@@ -91,12 +91,16 @@ const ZYNCONTEXT = {
         claude: "code-ready, falls back to demo without key",
         grok: "code-ready, falls back to demo without key",
         perplexity: "code-ready, falls back to demo without key",
-        proton: "operational — all email accounts imported to Proton Mail/Drive",
+        proton: "operational — email on Proton Mail",
+        googleDrive: "operational — accessed via Claude/Perplexity desktop app auth (not SDK in this repo)",
+        suno: "operational — paid API via suno.api.com, wired in lib/ai.ts",
       },
       database: "none — no persistence layer exists",
       auth: "none — no user authentication exists",
       vpsScripts: "written, never deployed (COR-20 overdue)",
-      protonDrive: "operational — replaced Google Drive, all data migrated",
+      protonMail: "operational — all email accounts imported",
+      googleDrive: "operational — via Claude/Perplexity desktop app auth, not in this repo",
+      sunoApi: "wired — paid API, lib/ai.ts callSuno(), needs SUNO_API_KEY",
     },
   },
   tools: {
@@ -161,8 +165,8 @@ export async function POST(req: Request) {
     if (lower.includes("subscription") && !lower.includes("not subscription")) {
       violations.push("PRICING: Model is competitions, not subscriptions.");
     }
-    if (lower.includes("google drive") || lower.includes("gmail") || lower.includes("gemini")) {
-      violations.push("OUTDATED: Google/Gmail/Gemini replaced by Proton. All accounts imported to Proton Mail/Drive.");
+    if (lower.includes("gmail")) {
+      violations.push("OUTDATED: Gmail replaced by Proton Mail. All accounts imported.");
     }
     if (lower.includes("exchange") && lower.includes("live")) {
       violations.push("BS FILTER: No exchanges are live. All are planned.");
