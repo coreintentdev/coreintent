@@ -10,15 +10,38 @@
 
 ## FINANCIAL SUMMARY
 
+### Anthropic / Claude Direct Charges (verified from billing screen April 14, 2026)
+
+| Item | Amount | Period |
+|------|--------|--------|
+| Claude Max subscription (20x, ~A$100/mo) | A$400+ | Jan–Apr 2026 (4 months) |
+| Extra usage charges (current cycle, resets May 1) | A$349.39 | Apr 2026 |
+| 32 auto-reload charges in 24hrs (zero output) | A$400+ | March 2026 |
+| Prior extra usage / API overages | A$300+ (est.) | Jan–Mar 2026 |
+| Current balance sitting unused | A$309.90 | As of Apr 14 |
+| **ANTHROPIC TOTAL** | **A$1,450+ paid to Anthropic** | |
+
+### Other AI Platform Losses
+
 | Item | Amount | Date |
 |------|--------|------|
-| Claude API usage (context loops, zero output) | A$347+ | Jan–Apr 2026 |
-| 32 auto-reload charges in 24hrs (context compaction crash) | A$400+ | March 2026 |
-| Claude Max subscription (ongoing) | A$100+/mo | Jan–Apr 2026 |
-| Perplexity credits burned by recursive agent loop | 15,000–30,000 credits | Feb 2026 |
-| Lost productivity (5 months, daily sessions, repeated rebuilds) | Unquantified | Jan–Apr 2026 |
-| Grok hallucinated phishing crypto address — direct loss | US$1,700 | Jan 4, 2026 |
-| **TOTAL DOCUMENTED FINANCIAL LOSS** | **A$1,200+ direct, US$1,700 crypto** | |
+| Perplexity credits burned by recursive agent loop | 15,000–30,000 credits (~A$300+) | Feb 2026 |
+| Grok hallucinated phishing crypto address — direct loss | US$1,700 (A$2,600+) | Jan 4, 2026 |
+| Google Workspace suspended (unpaid, AI-caused billing chaos) | A$242.19 | Apr 2026 |
+| ElevenLabs halted (billing failure) | A$140.56 | Apr 2026 |
+| Contabo VPS x2 (deployed to, never used because AI can't SSH) | A$80+ | Apr 2026 |
+| GCP trial credits expiring unused (AI can't access from sandbox) | US$385.36 | Expires Apr 8 |
+| Lost productivity (5 months daily sessions, rebuilding same work) | Unquantified | Jan–Apr 2026 |
+
+### TOTAL
+
+| Category | Amount |
+|----------|--------|
+| **Paid to Anthropic (Claude)** | **A$1,450+** |
+| **Other AI platform losses** | **A$3,360+** |
+| **GRAND TOTAL DOCUMENTED LOSS** | **A$4,800+** |
+
+Monthly spend limit was set to A$2,600 — that's how much trust was placed in this platform.
 
 ---
 
