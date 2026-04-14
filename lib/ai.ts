@@ -1,44 +1,70 @@
 /**
- * AI Service Layer — Real API calls when keys are set, demo fallback when not.
- * The orchestra: Grok (fast) → Claude (deep) → Perplexity (research) → Gemini (code/scan)
+ * AI Service Layer — 8 models, real API calls, demo fallback.
+ *
+ * PRIMARY ORCHESTRA:
+ *   Grok (fast) → Claude (deep) → Perplexity (research) → Gemini (code/scan)
+ *
+ * EXTENDED FLEET (free tiers):
+ *   Groq (fastest inference) → DeepSeek (cheapest) → Mistral (1B tokens/mo free) → OpenRouter (400+ models)
  */
 
-interface AIResponse {
+export interface AIResponse {
   source: string;
   model: string;
   content: string;
   live: boolean;
 }
 
-// --- GROK (via X.ai) — Fast, near-free with X Premium+ ---
-export async function callGrok(prompt: string): Promise<AIResponse> {
-  const key = process.env.GROK_API_KEY;
-  if (!key || key === "xai-xxx") {
-    return { source: "grok", model: "grok-demo", content: `[DEMO] Grok response for: ${prompt}`, live: false };
+// ── Generic OpenAI-compatible caller ──────────────────────────────
+async function callOpenAICompatible(opts: {
+  source: string;
+  baseUrl: string;
+  keyEnvVar: string;
+  demoKey: string;
+  model: string;
+  prompt: string;
+  maxTokens?: number;
+}): Promise<AIResponse> {
+  const key = process.env[opts.keyEnvVar];
+  if (!key || key === opts.demoKey) {
+    return { source: opts.source, model: `${opts.source}-demo`, content: `[DEMO] ${opts.source} response for: ${opts.prompt}`, live: false };
   }
 
-  const res = await fetch("https://api.x.ai/v1/chat/completions", {
+  const res = await fetch(`${opts.baseUrl}/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
     body: JSON.stringify({
-      model: "grok-3",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 1000,
+      model: opts.model,
+      messages: [{ role: "user", content: opts.prompt }],
+      max_tokens: opts.maxTokens || 1024,
     }),
   });
 
   if (!res.ok) {
     const err = await res.text();
-    return { source: "grok", model: "grok-3", content: `[ERROR] ${err}`, live: false };
+    return { source: opts.source, model: opts.model, content: `[ERROR] ${err}`, live: false };
   }
 
   const data = await res.json();
   return {
-    source: "grok",
-    model: data.model || "grok-3",
+    source: opts.source,
+    model: data.model || opts.model,
     content: data.choices?.[0]?.message?.content || "",
     live: true,
   };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PRIMARY ORCHESTRA (4 models)
+// ═══════════════════════════════════════════════════════════════════
+
+// --- GROK (via X.ai) — Fast, near-free with X Premium+ ---
+export async function callGrok(prompt: string): Promise<AIResponse> {
+  return callOpenAICompatible({
+    source: "grok", baseUrl: "https://api.x.ai/v1",
+    keyEnvVar: "GROK_API_KEY", demoKey: "xai-xxx",
+    model: "grok-3", prompt, maxTokens: 1000,
+  });
 }
 
 // --- CLAUDE (Anthropic) — Deep analysis, risk, orchestration ---
@@ -79,32 +105,11 @@ export async function callClaude(prompt: string, system?: string): Promise<AIRes
 
 // --- PERPLEXITY — Research, fact-checking ---
 export async function callPerplexity(query: string): Promise<AIResponse> {
-  const key = process.env.PERPLEXITY_API_KEY;
-  if (!key || key === "pplx-xxx") {
-    return { source: "perplexity", model: "perplexity-demo", content: `[DEMO] Perplexity research for: ${query}`, live: false };
-  }
-
-  const res = await fetch("https://api.perplexity.ai/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model: "sonar-pro",
-      messages: [{ role: "user", content: query }],
-    }),
+  return callOpenAICompatible({
+    source: "perplexity", baseUrl: "https://api.perplexity.ai",
+    keyEnvVar: "PERPLEXITY_API_KEY", demoKey: "pplx-xxx",
+    model: "sonar-pro", prompt: query,
   });
-
-  if (!res.ok) {
-    const err = await res.text();
-    return { source: "perplexity", model: "sonar-pro", content: `[ERROR] ${err}`, live: false };
-  }
-
-  const data = await res.json();
-  return {
-    source: "perplexity",
-    model: data.model || "sonar-pro",
-    content: data.choices?.[0]?.message?.content || "",
-    live: true,
-  };
 }
 
 // --- GEMINI (Google) — Code generation, scanning, grounding ---
@@ -114,30 +119,17 @@ export async function callGemini(prompt: string, system?: string): Promise<AIRes
     return { source: "gemini", model: "gemini-demo", content: `[DEMO] Gemini response for: ${prompt}`, live: false };
   }
 
-  const contents: { role: string; parts: { text: string }[] }[] = [];
-
-  // Gemini uses systemInstruction separately
   const body: Record<string, unknown> = {
-    contents: [
-      { role: "user", parts: [{ text: prompt }] },
-    ],
-    generationConfig: {
-      maxOutputTokens: 2048,
-      temperature: 0.7,
-    },
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    generationConfig: { maxOutputTokens: 2048, temperature: 0.7 },
   };
-
   if (system) {
     body.systemInstruction = { parts: [{ text: system }] };
   }
 
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    }
+    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }
   );
 
   if (!res.ok) {
@@ -146,51 +138,119 @@ export async function callGemini(prompt: string, system?: string): Promise<AIRes
   }
 
   const data = await res.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
   return {
     source: "gemini",
     model: data.modelVersion || "gemini-2.0-flash",
-    content: text,
+    content: data.candidates?.[0]?.content?.parts?.[0]?.text || "",
     live: true,
   };
 }
 
-// --- ORCHESTRATOR — Send to best AI for the job ---
-export async function orchestrate(
-  task: "signal" | "analysis" | "research" | "content" | "code" | "scan",
-  prompt: string
-) {
+// ═══════════════════════════════════════════════════════════════════
+// EXTENDED FLEET (4 more — all free tiers, all OpenAI-compatible)
+// ═══════════════════════════════════════════════════════════════════
+
+// --- GROQ — Fastest inference engine (LPU hardware) ---
+export async function callGroq(prompt: string): Promise<AIResponse> {
+  return callOpenAICompatible({
+    source: "groq", baseUrl: "https://api.groq.com/openai/v1",
+    keyEnvVar: "GROQ_API_KEY", demoKey: "groq-xxx",
+    model: "llama-3.3-70b-versatile", prompt,
+  });
+}
+
+// --- DEEPSEEK — Cheapest quality LLM ($0.28/M tokens) ---
+export async function callDeepSeek(prompt: string): Promise<AIResponse> {
+  return callOpenAICompatible({
+    source: "deepseek", baseUrl: "https://api.deepseek.com",
+    keyEnvVar: "DEEPSEEK_API_KEY", demoKey: "deepseek-xxx",
+    model: "deepseek-chat", prompt, maxTokens: 2048,
+  });
+}
+
+// --- MISTRAL — 1B tokens/month free (EU-based) ---
+export async function callMistral(prompt: string): Promise<AIResponse> {
+  return callOpenAICompatible({
+    source: "mistral", baseUrl: "https://api.mistral.ai/v1",
+    keyEnvVar: "MISTRAL_API_KEY", demoKey: "mistral-xxx",
+    model: "mistral-large-latest", prompt,
+  });
+}
+
+// --- OPENROUTER — 400+ models via single API key ---
+export async function callOpenRouter(prompt: string, model?: string): Promise<AIResponse> {
+  return callOpenAICompatible({
+    source: "openrouter", baseUrl: "https://openrouter.ai/api/v1",
+    keyEnvVar: "OPENROUTER_API_KEY", demoKey: "openrouter-xxx",
+    model: model || "meta-llama/llama-3.3-70b-instruct:free", prompt,
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ORCHESTRATOR & COMPARE
+// ═══════════════════════════════════════════════════════════════════
+
+export type OrchestratorTask = "signal" | "analysis" | "research" | "content" | "code" | "scan" | "fast" | "cheap" | "bulk";
+
+export async function orchestrate(task: OrchestratorTask, prompt: string) {
   switch (task) {
-    case "signal":
-      return callGrok(prompt);       // Fast, cheap
-    case "content":
-      return callGrok(prompt);       // Draft with Grok
-    case "analysis":
-      return callClaude(prompt);     // Deep with Claude
-    case "research":
-      return callPerplexity(prompt); // Facts with Perplexity
-    case "code":
-      return callGemini(prompt);     // Code gen with Gemini
-    case "scan":
-      return callGemini(prompt);     // File/Drive scanning
-    default:
-      return callGrok(prompt);
+    case "signal":   return callGrok(prompt);
+    case "fast":     return callGroq(prompt);       // Fastest inference
+    case "content":  return callGrok(prompt);
+    case "analysis": return callClaude(prompt);
+    case "research": return callPerplexity(prompt);
+    case "code":     return callGemini(prompt);
+    case "scan":     return callGemini(prompt);
+    case "cheap":    return callDeepSeek(prompt);    // Cheapest quality
+    case "bulk":     return callMistral(prompt);     // 1B free tokens
+    default:         return callGroq(prompt);        // Default to fastest
   }
 }
 
-// --- COMPARE ALL — Fire all 4 models in parallel ---
+// Fire all 8 models in parallel
 export async function compareAll(prompt: string, system?: string) {
-  const [grok, claude, perplexity, gemini] = await Promise.allSettled([
+  const results = await Promise.allSettled([
+    callGrok(prompt),
+    callClaude(prompt, system),
+    callPerplexity(prompt),
+    callGemini(prompt, system),
+    callGroq(prompt),
+    callDeepSeek(prompt),
+    callMistral(prompt),
+    callOpenRouter(prompt),
+  ]);
+
+  const names = ["grok", "claude", "perplexity", "gemini", "groq", "deepseek", "mistral", "openrouter"] as const;
+  const defaults = ["grok-3", "claude-sonnet-4-6", "sonar-pro", "gemini-2.0-flash", "llama-3.3-70b-versatile", "deepseek-chat", "mistral-large-latest", "llama-3.3-70b-instruct:free"];
+
+  const out: Record<string, AIResponse> = {};
+  names.forEach((name, i) => {
+    const r = results[i];
+    out[name] = r.status === "fulfilled"
+      ? r.value
+      : { source: name, model: defaults[i], content: `[ERROR] ${(r as PromiseRejectedResult).reason}`, live: false };
+  });
+  return out;
+}
+
+// Fire only primary 4 (for lighter compare)
+export async function comparePrimary(prompt: string, system?: string) {
+  const results = await Promise.allSettled([
     callGrok(prompt),
     callClaude(prompt, system),
     callPerplexity(prompt),
     callGemini(prompt, system),
   ]);
 
-  return {
-    grok: grok.status === "fulfilled" ? grok.value : { source: "grok", model: "grok-3", content: `[ERROR] ${(grok as PromiseRejectedResult).reason}`, live: false },
-    claude: claude.status === "fulfilled" ? claude.value : { source: "claude", model: "claude-sonnet-4-6", content: `[ERROR] ${(claude as PromiseRejectedResult).reason}`, live: false },
-    perplexity: perplexity.status === "fulfilled" ? perplexity.value : { source: "perplexity", model: "sonar-pro", content: `[ERROR] ${(perplexity as PromiseRejectedResult).reason}`, live: false },
-    gemini: gemini.status === "fulfilled" ? gemini.value : { source: "gemini", model: "gemini-2.0-flash", content: `[ERROR] ${(gemini as PromiseRejectedResult).reason}`, live: false },
-  };
+  const names = ["grok", "claude", "perplexity", "gemini"] as const;
+  const defaults = ["grok-3", "claude-sonnet-4-6", "sonar-pro", "gemini-2.0-flash"];
+
+  const out: Record<string, AIResponse> = {};
+  names.forEach((name, i) => {
+    const r = results[i];
+    out[name] = r.status === "fulfilled"
+      ? r.value
+      : { source: name, model: defaults[i], content: `[ERROR] ${(r as PromiseRejectedResult).reason}`, live: false };
+  });
+  return out;
 }

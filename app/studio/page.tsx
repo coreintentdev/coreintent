@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 
-type Model = "grok" | "claude" | "perplexity" | "gemini" | "all";
+type Model = "grok" | "claude" | "perplexity" | "gemini" | "groq" | "deepseek" | "mistral" | "openrouter" | "primary" | "all";
 
 interface AIResult {
   source: string;
@@ -20,22 +20,27 @@ interface Message {
   source?: string;
   live?: boolean;
   elapsed?: number;
-  // For compare mode
-  compare?: {
-    grok: AIResult;
-    claude: AIResult;
-    perplexity: AIResult;
-    gemini: AIResult;
-  };
+  compare?: Record<string, AIResult>;
 }
 
-const MODELS: { id: Model; label: string; desc: string; color: string }[] = [
-  { id: "grok", label: "Grok", desc: "Fast signals, X/Twitter, content", color: "#ef4444" },
-  { id: "claude", label: "Claude", desc: "Deep analysis, orchestration", color: "#a855f7" },
-  { id: "perplexity", label: "Perplexity", desc: "Research, fact-checking", color: "#3b82f6" },
-  { id: "gemini", label: "Gemini", desc: "Code gen, scanning, grounding", color: "#f59e0b" },
-  { id: "all", label: "Compare All", desc: "Send to all 4, side-by-side", color: "#10b981" },
+const MODELS: { id: Model; label: string; desc: string; color: string; group: "primary" | "extended" | "compare" }[] = [
+  // Primary Orchestra
+  { id: "grok", label: "Grok", desc: "Fast signals, X/Twitter", color: "#ef4444", group: "primary" },
+  { id: "claude", label: "Claude", desc: "Deep analysis, orchestration", color: "#a855f7", group: "primary" },
+  { id: "perplexity", label: "Perplexity", desc: "Research, fact-checking", color: "#3b82f6", group: "primary" },
+  { id: "gemini", label: "Gemini", desc: "Code gen, scanning, grounding", color: "#f59e0b", group: "primary" },
+  // Extended Fleet (free tiers)
+  { id: "groq", label: "Groq", desc: "Fastest inference (LPU)", color: "#06b6d4", group: "extended" },
+  { id: "deepseek", label: "DeepSeek", desc: "Cheapest quality LLM", color: "#22d3ee", group: "extended" },
+  { id: "mistral", label: "Mistral", desc: "1B tokens/mo free (EU)", color: "#fb923c", group: "extended" },
+  { id: "openrouter", label: "OpenRouter", desc: "400+ models, single key", color: "#a3e635", group: "extended" },
+  // Compare modes
+  { id: "primary", label: "Compare 4", desc: "Grok + Claude + Perplexity + Gemini", color: "#10b981", group: "compare" },
+  { id: "all", label: "Compare 8", desc: "All models side-by-side", color: "#10b981", group: "compare" },
 ];
+
+const ALL_MODEL_KEYS = ["grok", "claude", "perplexity", "gemini", "groq", "deepseek", "mistral", "openrouter"];
+const PRIMARY_MODEL_KEYS = ["grok", "claude", "perplexity", "gemini"];
 
 export default function StudioPage() {
   const [model, setModel] = useState<Model>("grok");
@@ -75,6 +80,7 @@ export default function StudioPage() {
     setLoading(true);
 
     try {
+      const isCompare = model === "all" || model === "primary";
       const res = await fetch("/api/studio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,13 +88,13 @@ export default function StudioPage() {
           prompt,
           model,
           system: systemPrompt || undefined,
-          compare: model === "all",
+          compare: isCompare ? (model === "all" ? "all" : "primary") : undefined,
         }),
       });
 
       const data = await res.json();
 
-      if (data.mode === "compare") {
+      if (data.mode?.startsWith("compare")) {
         const assistantMsg: Message = {
           id: crypto.randomUUID(),
           role: "assistant",
@@ -158,30 +164,34 @@ export default function StudioPage() {
 
           {/* Model selector */}
           <div>
-            <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", marginBottom: "8px" }}>
-              Model
-            </div>
-            {MODELS.map((m) => (
-              <button
-                key={m.id}
-                onClick={() => setModel(m.id)}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "10px 12px",
-                  marginBottom: "4px",
-                  borderRadius: "6px",
-                  border: model === m.id ? `2px solid ${m.color}` : "1px solid var(--border-color)",
-                  background: model === m.id ? m.color + "15" : "transparent",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  fontFamily: "inherit",
-                  color: "var(--text-primary)",
-                }}
-              >
-                <div style={{ fontWeight: "bold", fontSize: "13px", color: m.color }}>{m.label}</div>
-                <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "2px" }}>{m.desc}</div>
-              </button>
+            {(["primary", "extended", "compare"] as const).map((group) => (
+              <div key={group}>
+                <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", marginBottom: "4px", marginTop: group === "primary" ? 0 : "12px" }}>
+                  {group === "primary" ? "Orchestra" : group === "extended" ? "Free Fleet" : "Compare"}
+                </div>
+                {MODELS.filter((m) => m.group === group).map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setModel(m.id)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      padding: "8px 10px",
+                      marginBottom: "3px",
+                      borderRadius: "6px",
+                      border: model === m.id ? `2px solid ${m.color}` : "1px solid var(--border-color)",
+                      background: model === m.id ? m.color + "15" : "transparent",
+                      cursor: "pointer",
+                      textAlign: "left",
+                      fontFamily: "inherit",
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    <div style={{ fontWeight: "bold", fontSize: "12px", color: m.color }}>{m.label}</div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "1px" }}>{m.desc}</div>
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
 
@@ -384,10 +394,10 @@ export default function StudioPage() {
                     <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "8px" }}>
                       Compare All {msg.elapsed !== undefined && `\u2014 ${msg.elapsed}ms`}
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
-                      {(["grok", "claude", "perplexity", "gemini"] as const).map((key) => {
+                    <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Object.keys(msg.compare!).length, 4)}, 1fr)`, gap: "8px" }}>
+                      {Object.keys(msg.compare!).map((key) => {
                         const r = msg.compare![key];
-                        const m = MODELS.find((x) => x.id === key)!;
+                        const m = MODELS.find((x) => x.id === key);
                         return (
                           <div
                             key={key}
@@ -395,14 +405,14 @@ export default function StudioPage() {
                               padding: "14px",
                               background: "var(--bg-secondary)",
                               border: `1px solid var(--border-color)`,
-                              borderTop: `3px solid ${m.color}`,
+                              borderTop: `3px solid ${m?.color || "#64748b"}`,
                               borderRadius: "8px",
                               overflow: "auto",
                               maxHeight: "400px",
                             }}
                           >
                             <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
-                              <span style={{ fontWeight: "bold", fontSize: "13px", color: m.color }}>{m.label}</span>
+                              <span style={{ fontWeight: "bold", fontSize: "13px", color: m?.color || "#64748b" }}>{m?.label || key}</span>
                               <span style={{ fontSize: "10px", color: r.live ? "#10b981" : "#f59e0b" }}>
                                 {r.live ? "LIVE" : "DEMO"}
                               </span>
@@ -441,7 +451,7 @@ export default function StudioPage() {
                 </div>
                 <span>
                   {model === "all"
-                    ? "Querying Grok + Claude + Perplexity + Gemini..."
+                    ? model === "all" ? "Querying all 8 models..." : "Querying 4 primary models..."
                     : `${selectedModel.label} is thinking...`}
                 </span>
               </div>
