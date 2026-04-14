@@ -15,11 +15,18 @@
 | Item | Amount | Period |
 |------|--------|--------|
 | Claude Max subscription (20x, ~A$100/mo) | A$400+ | Jan–Apr 2026 (4 months) |
-| Extra usage charges (current cycle, resets May 1) | A$349.39 | Apr 2026 |
-| 32 auto-reload charges in 24hrs (zero output) | A$400+ | March 2026 |
-| Prior extra usage / API overages | A$300+ (est.) | Jan–Mar 2026 |
-| Current balance sitting unused | A$309.90 | As of Apr 14 |
-| **ANTHROPIC TOTAL** | **A$1,450+ paid to Anthropic** | |
+| Max extra usage charges (current cycle, resets May 1) | A$349.39 | Apr 2026 |
+| Anthropic API usage (sk-ant-api03 key, SEPARATE billing) | A$347+ | Jan–Apr 2026 |
+| 32 auto-reload charges in 24hrs (zero output produced) | A$400+ | March 2026 |
+| Prior extra usage / API overages (earlier billing cycles) | A$300+ (est.) | Jan–Mar 2026 |
+| Current balance sitting unused (auto-reload OFF now) | A$309.90 | As of Apr 14 |
+| **ANTHROPIC TOTAL** | **A$1,800+ paid to Anthropic** | |
+
+NOTE: The A$347+ API usage and the A$349.39 extra usage are SEPARATE charges.
+API key billing (console.anthropic.com) is independent from Max subscription
+billing (claude.ai). User was charged on BOTH simultaneously. The A$2,600
+monthly spend limit on Max was set because the user trusted the platform.
+Auto-reload has been turned OFF after the March incident of 32 charges in 24hrs.
 
 ### Other AI Platform Losses
 
@@ -37,9 +44,9 @@
 
 | Category | Amount |
 |----------|--------|
-| **Paid to Anthropic (Claude)** | **A$1,450+** |
+| **Paid to Anthropic (Claude Max + API combined)** | **A$1,800+** |
 | **Other AI platform losses** | **A$3,360+** |
-| **GRAND TOTAL DOCUMENTED LOSS** | **A$4,800+** |
+| **GRAND TOTAL DOCUMENTED LOSS** | **A$5,160+** |
 
 Monthly spend limit was set to A$2,600 — that's how much trust was placed in this platform.
 
