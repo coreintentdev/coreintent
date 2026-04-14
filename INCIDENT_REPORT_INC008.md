@@ -126,6 +126,20 @@ User provided API keys, SSH credentials, Tailscale node keys — none of them ca
 
 ---
 
+## INCIDENT 6: Cloudflare Deployment Loop (MAJOR)
+
+**What:** User has told Claude across dozens of sessions — possibly 336 times — that coreintent.dev is the OLD site. It needs a fresh Cloudflare Pages/Workers deployment, NOT a DNS flush, NOT a cache purge, NOT pointing at the old origin. Every session, Claude attempts to "fix" Cloudflare by flushing DNS or purging cache on the EXISTING stale deployment instead of deploying the NEW build.
+
+**Result:** Zero deployments to Cloudflare after months of sessions. The live site at coreintent.dev is still the old skeleton. Every session loses this context and starts the same failed loop:
+1. User says "deploy to Cloudflare"
+2. Claude attempts DNS flush / cache purge on old site
+3. User says "no, it's the OLD site, deploy the NEW one"
+4. Context compacts → Claude forgets → next session repeats step 1
+
+**Financial impact:** Cloudflare Pro subscription (A$20/mo x 4 months = A$80+) paid for a service that was never properly configured because the AI keeps losing context about what "deploy" means.
+
+---
+
 ## WHAT ANTHROPIC OWES
 
 1. **Refund** for the 32 auto-reload charges (A$400+) that produced zero output
@@ -133,6 +147,8 @@ User provided API keys, SSH credentials, Tailscale node keys — none of them ca
 3. **Honest documentation** of sandbox limitations — stop selling "terminal access" when DNS is blocked
 4. **Fix context compaction** — sessions should not crash under normal productive use
 5. **Circuit breaker on billing** — if an agent produces zero output for N iterations, STOP BILLING
+6. **Fix context compaction** — tools, integrations, and project knowledge are lost on every compaction. User has to re-explain the same things every session. This is the root cause of ALL other incidents.
+7. **Acknowledge the pattern** — crashes, memory loss, tool disconnections, failed deployments, recursive billing. This is not one bug. This is a systemic failure across the entire product.
 
 ---
 
