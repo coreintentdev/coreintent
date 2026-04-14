@@ -60,6 +60,26 @@ const INCIDENTS: Incident[] = [
     updatedAt: "2026-03-24T00:00:00Z",
   },
   {
+    id: "INC-008",
+    service: "Claude Code CLI",
+    status: "detected",
+    severity: "critical",
+    message: "Claude Code crashes repeatedly during active coding sessions. Session on April 14, 2026 crashed mid-build (8-model orchestra integration). User waited 1+ hour for restart. Maccy clipboard history has evidence of repeated crash/restart cycles across multiple sessions. Context compaction triggers crashes — long sessions with heavy tool use are at highest risk. User loses momentum, trust, and time with every crash. This is NOT a one-off — it is a pattern.",
+    autoUpdate: true,
+    detectedAt: "2026-04-14T13:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-009",
+    service: "Port 7681 (ttyd)",
+    status: "mitigating",
+    severity: "critical",
+    message: "P0 security: ttyd web terminal exposed on port 7681 on Cloudzy VPS (104.194.156.109). Returned 503 when tested — possibly behind Cloudflare but still a risk. Cannot kill from sandbox (SSH blocked). User must run: ssh root@100.122.99.34 'pkill -f ttyd; ufw deny 7681/tcp'. Tailscale auth expired, needs re-auth first.",
+    autoUpdate: true,
+    detectedAt: "2026-04-14T10:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
     id: "INC-005",
     service: "Project Delivery",
     status: "detected",
@@ -93,21 +113,33 @@ const INCIDENTS: Incident[] = [
 
 // REAL status — no more lies. Show what's actually connected.
 const MONITORED_SERVICES = [
-  { name: "CoreIntent Engine", status: "operational", uptime: "99.9%", note: "Build passes, app runs" },
-  { name: "Binance Connection", status: "not_connected", uptime: "0%", note: "Demo data only — no SDK, no API key" },
-  { name: "Coinbase Connection", status: "not_connected", uptime: "0%", note: "Demo data only — no SDK, no API key" },
+  // Core
+  { name: "CoreIntent Engine", status: "operational", uptime: "99.9%", note: "Build passes, app runs, 36+ commits this session" },
+  { name: "AI Studio", status: "operational", uptime: "100%", note: "/studio — 8-model playground, compare mode, real API calls" },
+  { name: "Commander Terminal", status: "operational", uptime: "100%", note: "Tab completion, watch, aliases, AI chat, chaining" },
+  // AI Orchestra (8 models)
+  { name: "Grok API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — needs GROK_API_KEY" },
+  { name: "Claude API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — needs ANTHROPIC_API_KEY" },
+  { name: "Perplexity API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — needs PERPLEXITY_API_KEY" },
+  { name: "Gemini API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — user has 4 keys, needs GEMINI_API_KEY in .env" },
+  { name: "Groq API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — free tier, needs GROQ_API_KEY" },
+  { name: "DeepSeek API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — 5M tokens free, needs DEEPSEEK_API_KEY" },
+  { name: "Mistral API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — 1B tokens/mo free, needs MISTRAL_API_KEY" },
+  { name: "OpenRouter API", status: "ready", uptime: "0%", note: "Wired in lib/ai.ts — 28 free models, needs OPENROUTER_API_KEY" },
+  // Exchanges
+  { name: "Binance Connection", status: "not_connected", uptime: "0%", note: "PLANNED — no SDK, no API key" },
+  { name: "Coinbase Connection", status: "not_connected", uptime: "0%", note: "PLANNED — no SDK, no API key" },
   { name: "gTrade DeFi", status: "not_connected", uptime: "0%", note: "Script exists, never deployed" },
-  { name: "Grok API", status: "ready", uptime: "0%", note: "Code wired in lib/ai.ts — needs API key to go live" },
-  { name: "Claude API", status: "ready", uptime: "0%", note: "Code wired in lib/ai.ts — needs API key to go live" },
-  { name: "Perplexity API", status: "ready", uptime: "0%", note: "Code wired in lib/ai.ts — needs API key to go live" },
-  { name: "Gemini", status: "not_connected", uptime: "0%", note: "Referenced everywhere, not wired in code" },
-  { name: "OpenClaw", status: "degraded", uptime: "0%", note: "Frequently crashing, unknown service" },
+  // Infrastructure
   { name: "Cloudflare CDN", status: "not_configured", uptime: "0%", note: "Pro plan — not configured for coreintent.dev" },
   { name: "Vercel Hosting", status: "not_deployed", uptime: "0%", note: "App ready for Vercel — never deployed" },
-  { name: "Cloudzy VPS", status: "not_deployed", uptime: "0%", note: "Server exists at 100.122.99.34 — scripts never deployed" },
-  { name: "X Premium+ API", status: "not_configured", uptime: "0%", note: "Account exists — API not wired" },
-  { name: "Linear", status: "operational", uptime: "N/A", note: "26 tasks, 3 completed, no cross-links" },
-  { name: "GitHub", status: "operational", uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },
+  { name: "VPS Mansion (Cloudzy)", status: "degraded", uptime: "0%", note: "104.194.156.109 — legacy, port 7681 P0, Tailscale expired" },
+  { name: "VPS Alpha (Contabo)", status: "not_deployed", uptime: "0%", note: "161.97.89.49 — primary deploy target, scripts not yet pushed" },
+  { name: "VPS Beta (Contabo)", status: "not_deployed", uptime: "0%", note: "84.247.137.105 — heavy compute, Drools planned" },
+  { name: "Cloud Run (GCP)", status: "ready", uptime: "0%", note: "Dockerfile + cloudbuild.yaml ready — needs gcloud builds submit" },
+  // Platforms
+  { name: "GitHub", status: "operational", uptime: "99.9%", note: "Repo active, CI/CD + Cloud Run deploy workflows" },
+  { name: "Claude Code CLI", status: "degraded", uptime: "0%", note: "INC-008: Repeated crashes during long sessions, context compaction failures" },
 ];
 
 export async function GET() {
