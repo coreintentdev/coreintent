@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 
-type Model = "grok" | "claude" | "perplexity" | "all";
+type Model = "grok" | "claude" | "perplexity" | "gemini" | "all";
 
 interface AIResult {
   source: string;
@@ -25,6 +25,7 @@ interface Message {
     grok: AIResult;
     claude: AIResult;
     perplexity: AIResult;
+    gemini: AIResult;
   };
 }
 
@@ -32,7 +33,8 @@ const MODELS: { id: Model; label: string; desc: string; color: string }[] = [
   { id: "grok", label: "Grok", desc: "Fast signals, X/Twitter, content", color: "#ef4444" },
   { id: "claude", label: "Claude", desc: "Deep analysis, orchestration", color: "#a855f7" },
   { id: "perplexity", label: "Perplexity", desc: "Research, fact-checking", color: "#3b82f6" },
-  { id: "all", label: "Compare All", desc: "Send to all 3, side-by-side", color: "#10b981" },
+  { id: "gemini", label: "Gemini", desc: "Code gen, scanning, grounding", color: "#f59e0b" },
+  { id: "all", label: "Compare All", desc: "Send to all 4, side-by-side", color: "#10b981" },
 ];
 
 export default function StudioPage() {
@@ -382,8 +384,8 @@ export default function StudioPage() {
                     <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "8px" }}>
                       Compare All {msg.elapsed !== undefined && `\u2014 ${msg.elapsed}ms`}
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-                      {(["grok", "claude", "perplexity"] as const).map((key) => {
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
+                      {(["grok", "claude", "perplexity", "gemini"] as const).map((key) => {
                         const r = msg.compare![key];
                         const m = MODELS.find((x) => x.id === key)!;
                         return (
@@ -439,7 +441,7 @@ export default function StudioPage() {
                 </div>
                 <span>
                   {model === "all"
-                    ? "Querying Grok + Claude + Perplexity..."
+                    ? "Querying Grok + Claude + Perplexity + Gemini..."
                     : `${selectedModel.label} is thinking...`}
                 </span>
               </div>
