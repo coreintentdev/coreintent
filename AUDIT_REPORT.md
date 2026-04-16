@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 16:05:05 UTC 2026
+Generated: Thu Apr 16 16:33:03 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 28
+- INFO: Routes found: 30
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -28,9 +28,9 @@ Generated: Thu Apr 16 16:05:05 UTC 2026
 - PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- PASS: Page metadata: app/privacy/page.tsx
-- PASS: Page metadata: app/terms/page.tsx
-- PASS: Page metadata: app/disclaimer/page.tsx
+- PASS: Route metadata: app/privacy/page.tsx
+- PASS: Route metadata: app/terms/page.tsx
+- PASS: Route metadata: app/disclaimer/page.tsx
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -64,7 +64,7 @@ Generated: Thu Apr 16 16:05:05 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (12 instances)
+- PASS: ARIA attributes found (15 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
