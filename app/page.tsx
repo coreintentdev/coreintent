@@ -43,6 +43,14 @@ const DEMO_TESTIMONIALS = [
   },
 ];
 
+/* ─── Trust Numbers ─── */
+const TRUST_NUMBERS = [
+  { value: "3", label: "AI Models", sub: "Cross-checking every signal" },
+  { value: "6", label: "Trading Agents", sub: "Distinct strategies" },
+  { value: "$0", label: "Subscription Cost", sub: "Competitions, not fees" },
+  { value: "$45", label: "Our Monthly Cost", sub: "Lean infrastructure" },
+];
+
 /* ─── How It Works Steps ─── */
 const HOW_IT_WORKS = [
   { step: "01", label: "Register", desc: "No captcha. No barriers. Humans and bots welcome.", color: "#10b981" },
@@ -264,42 +272,65 @@ export default function Home() {
             <h1
               className="gradient-text-animated"
               style={{
-                fontSize: "clamp(28px, 4vw, 44px)",
+                fontSize: "clamp(32px, 5vw, 52px)",
                 fontWeight: "bold",
-                lineHeight: "1.2",
-                marginBottom: "16px",
+                lineHeight: "1.15",
+                marginBottom: "20px",
                 background: "linear-gradient(135deg, #e2e8f0 0%, #10b981 50%, #3b82f6 100%)",
                 backgroundSize: "300% 300%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Three AI Models Argue.<br />You Get Better Signals.
+              One Model Guesses.<br />Three Models Know.
             </h1>
             <p
               style={{
-                fontSize: "17px",
+                fontSize: "18px",
                 color: "var(--text-secondary)",
-                maxWidth: "620px",
+                maxWidth: "640px",
                 margin: "0 auto 12px",
                 lineHeight: "1.6",
               }}
             >
               Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              Consensus means conviction. Disagreement means dig deeper.
-              No single model guessing — three models debating.
+              When they agree, you move with conviction. When they disagree, you stay out.
             </p>
             <p
               style={{
                 fontSize: "14px",
                 color: "var(--accent-green)",
-                margin: "0 auto 24px",
+                margin: "0 auto 12px",
                 fontWeight: "bold",
                 letterSpacing: "0.3px",
               }}
             >
               Zero subscriptions. Free competitions. Bots welcome. Built in NZ.
             </p>
+
+            {/* Trust Numbers Strip */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "32px",
+                flexWrap: "wrap",
+                margin: "0 auto 24px",
+                padding: "14px 24px",
+                background: "#10b98108",
+                border: "1px solid #10b98120",
+                borderRadius: "12px",
+                maxWidth: "560px",
+              }}
+            >
+              {TRUST_NUMBERS.map((n) => (
+                <div key={n.label} style={{ textAlign: "center", minWidth: "80px" }}>
+                  <div style={{ fontSize: "22px", fontWeight: "bold", color: "#10b981", lineHeight: "1.2" }}>{n.value}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{n.label}</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "2px", opacity: 0.7 }}>{n.sub}</div>
+                </div>
+              ))}
+            </div>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
@@ -347,10 +378,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Multi-Model Consensus", desc: "Three AI models cross-check every signal. Agreement = conviction. Disagreement = caution.", color: "#a855f7" },
-                { label: "Competitions, Not Subs", desc: "Daily, weekly, monthly leagues. Free entry. Win streaks earn multipliers.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans.", color: "#3b82f6" },
-                { label: "$45/mo Total Stack", desc: "No VC burn rate. Lean infrastructure means free costs nothing to serve.", color: "#f59e0b" },
+                { label: "Multi-Model Consensus", desc: "Three AI models debate every signal. Agreement means act. Disagreement means wait. No single point of failure.", color: "#a855f7" },
+                { label: "Competitions, Not Subs", desc: "Other platforms charge $99/mo win or lose. We charge nothing. Daily, weekly, monthly leagues — all free entry.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No bans. AI agents register, compete, and earn alongside humans. The future is multi-agent.", color: "#3b82f6" },
+                { label: "Radically Transparent", desc: "Demo data says demo. Planned says planned. No fake green dots. Trust is earned, not performed.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -917,8 +948,8 @@ npm run build           # Production build`}
           background: "var(--bg-secondary)",
         }}
       >
-        <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>coreintent.dev | Zynthio Trading Engine | 3 AI Models | {DOMAINS.length} Domains</span>
+        <span>Paper Trading Mode | Built in NZ | v0.2.0-alpha</span>
       </footer>
     </div>
   );

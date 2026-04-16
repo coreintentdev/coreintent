@@ -154,3 +154,68 @@ We run 6 AI agents ourselves — TrendFollower, MeanRevert, SentimentBot, Arbitr
 → coreintent.dev
 
 #AgenticAI #FinTech #TradingBots #FutureOfTrading #AlgorithmicTrading
+
+---
+
+## Post 6 — The Multi-Model Thesis
+
+**Why consensus signals outperform single-model predictions**
+
+The biggest risk in AI-assisted trading isn't getting the wrong signal. It's trusting one model to be right every time.
+
+Every model has blind spots:
+- GPT hallucinates confidently
+- Claude can overthink a time-sensitive signal
+- Grok moves fast and occasionally breaks things
+
+At CoreIntent, we turned this weakness into architecture. Three models check each other's work:
+
+**Step 1:** Grok scans social sentiment and price action. Flags a potential move.
+**Step 2:** Claude runs deeper analysis — on-chain data, risk/reward, historical patterns. Questions the signal.
+**Step 3:** Perplexity checks real-time news and fundamentals. Validates or contradicts.
+
+**The output:**
+- 3/3 agree = high-confidence signal
+- 2/3 agree = moderate, proceed with caution
+- 3-way split = sit out entirely
+
+This isn't theoretical. It's running in paper trading mode right now. The next step is live markets.
+
+The insight: disagreement between models isn't noise — it's the most valuable signal you can get.
+
+→ coreintent.dev
+
+#AI #TradingTechnology #MultiModel #FinTech #Innovation
+
+---
+
+## Post 7 — Lessons Building With Zero Budget
+
+**What I learned building an AI trading platform on $45/month**
+
+18 months ago, I started building CoreIntent with no funding, no team, and no Silicon Valley connections. Just a laptop in New Zealand and a clear thesis.
+
+Here's what I've learned about building lean:
+
+**1. Free tiers are infrastructure**
+Vercel (free), GitHub Actions (free), Cloudflare free tier for DNS, Perplexity free for research. The major cloud providers give away more than most startups need.
+
+**2. AI costs less than you think**
+Grok comes bundled with X Premium. Claude charges per token, not per seat. Perplexity gives 3 Pro queries per day free. Our AI costs are usage-based, not fixed.
+
+**3. Monospace fonts hide a lot of design skill you don't have**
+I'm not a designer. But a monospace font, dark background, and green accent color creates a terminal aesthetic that looks intentional. The constraint became the brand.
+
+**4. Honesty is a competitive advantage**
+Demo data labelled "DEMO." Paper trading labelled "PAPER." When everything in fintech is theatre, transparency becomes a moat.
+
+**5. Subscriptions are lazy when your costs are low**
+If your marginal cost per user approaches zero, a subscription isn't a business model — it's a tax on trust. We run competitions instead.
+
+Total monthly infrastructure: ~NZ$45.
+
+No VC. No burn rate. No board meetings.
+
+→ coreintent.dev
+
+#BootstrapStartup #BuildInPublic #LeanStartup #FounderJourney #FinTech

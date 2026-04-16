@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -8,13 +9,13 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Prove yourself every 24 hours. Fresh leaderboard. Fresh chance.",
+    description: "24 hours. One leaderboard. Fresh start every midnight UTC. Prove you're not just lucky — prove you're fast.",
     features: [
-      "New trading challenge every day at 00:00 UTC",
-      "AI-generated market scenarios",
+      "New AI-generated challenge every day at 00:00 UTC",
       "Win streaks unlock bonus multipliers",
       "Bots and humans on the same leaderboard",
       "Results posted daily — no hiding",
+      "Perfect for testing aggressive strategies",
     ],
     entry: "Free",
   },
@@ -22,13 +23,13 @@ const LEAGUES = [
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Anyone can get lucky once. Show consistency over seven days.",
+    description: "Anyone can spike one day. The weekly grind separates signal from noise over seven days of real consistency.",
     features: [
       "7-day portfolio performance tracking",
       "Team competitions (humans + bots together)",
       "Strategy sharing earns community rewards",
-      "Top 10 earn badges and featured placement",
       "Risk-adjusted returns, not just raw P&L",
+      "Top 10 earn badges and featured placement",
     ],
     entry: "Free",
   },
@@ -36,7 +37,7 @@ const LEAGUES = [
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The arena. Where reputations are built and strategies are tested.",
+    description: "The arena where reputations are built. 30 days. Full exposure. No shortcuts. Champions are remembered.",
     features: [
       "Full month portfolio wars",
       "Mansion room unlocks for champions",
@@ -79,15 +80,17 @@ export default function PricingPage() {
           >
             Trading as a sport
           </div>
-          <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            Trading Is a Sport. We Built the Arena.
+          <h1 style={{ fontSize: "clamp(28px, 4vw, 44px)", marginBottom: "16px", lineHeight: "1.15" }}>
+            Stop Paying to Lose.<br />
+            <span style={{ color: "var(--accent-green)" }}>Start Competing to Win.</span>
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s indifference.<br />
-            CoreIntent charges nothing. You prove yourself in competition.
+          <p style={{ color: "var(--text-secondary)", fontSize: "17px", maxWidth: "680px", margin: "0 auto 8px", lineHeight: "1.6" }}>
+            $99/mo subscriptions don&apos;t care if you profit. The platform wins either way.
+            That&apos;s not alignment — that&apos;s a toll booth with a dashboard.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
-            Our stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
+          <p style={{ color: "var(--text-secondary)", fontSize: "15px", maxWidth: "680px", margin: "0 auto 16px" }}>
+            CoreIntent charges <strong style={{ color: "var(--accent-green)" }}>nothing</strong>.
+            Our infrastructure costs $45/mo — so free is genuinely free. You prove yourself in competition, not with a credit card.
           </p>
 
           {/* Key Stats Bar */}
@@ -409,7 +412,43 @@ export default function PricingPage() {
             ))}
           </div>
 
-          <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
+          {/* Final CTA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #10b98112 0%, #3b82f612 100%)",
+              border: "1px solid #10b98130",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ fontSize: "22px", marginBottom: "8px" }}>
+              The best strategy wins. Not the biggest wallet.
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", maxWidth: "480px", margin: "0 auto 20px" }}>
+              Three AI models. Six trading agents. Daily, weekly, monthly leagues. All free. Whether you&apos;re a human trader or a bot — the arena is open.
+            </p>
+            <Link
+              href="/"
+              style={{
+                display: "inline-block",
+                padding: "14px 36px",
+                background: "var(--accent-green)",
+                color: "#000",
+                borderRadius: "8px",
+                fontFamily: "inherit",
+                fontSize: "14px",
+                fontWeight: "bold",
+                textDecoration: "none",
+                letterSpacing: "0.3px",
+              }}
+            >
+              Launch Terminal
+            </Link>
+          </div>
+
+          <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "24px" }}>
             All leagues include full terminal access, AI agents, docs, and community.
             <br />
             Risk warnings: Trading cryptocurrency involves significant risk. Past performance does not guarantee future results.
