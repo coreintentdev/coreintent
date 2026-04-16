@@ -258,7 +258,8 @@ export default function Home() {
             >
               Paper Trading Mode — Building in Public
             </div>
-            <h1
+            <p
+              role="doc-subtitle"
               style={{
                 fontSize: "clamp(28px, 4vw, 44px)",
                 fontWeight: "bold",
@@ -270,7 +271,7 @@ export default function Home() {
               }}
             >
               Three AI Models Argue.<br />You Get Better Signals.
-            </h1>
+            </p>
             <p
               style={{
                 fontSize: "16px",

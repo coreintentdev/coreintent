@@ -15,6 +15,12 @@ export const metadata: Metadata = {
     url: "https://coreintent.dev/disclaimer",
     type: "website",
   },
+  twitter: {
+    card: "summary",
+    title: "Disclaimer | CoreIntent",
+    description:
+      "Trading risk warnings and AI disclaimers. Paper trading only — not financial advice.",
+  },
 };
 
 export default function DisclaimerPage() {
