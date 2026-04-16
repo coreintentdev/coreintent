@@ -32,6 +32,8 @@ export interface AIResponse {
    * Enables monitoring dashboards to classify failure modes.
    */
   errorType?: "api_error" | "rate_limit" | "network_error" | "timeout";
+  /** Wall-clock milliseconds for the API round-trip. Absent for demo/fallback responses. */
+  latencyMs?: number;
 }
 
 export type OrchestrateTask = "signal" | "analysis" | "research" | "content";
@@ -63,6 +65,20 @@ export function getAiKeyStatus(): AiKeyStatus {
 /** Returns true when the key is missing or is a known placeholder value. */
 function isDemoKey(key: string | undefined, placeholder: string): boolean {
   return !key || key === placeholder;
+}
+
+/**
+ * Strip ASCII control characters (except \n and \t) and enforce a length cap
+ * before sending user-supplied text to an AI API.
+ * Prevents prompt injection via null bytes or escape sequences.
+ * Called automatically inside callGrok / callClaude / callPerplexity —
+ * callers do not need to apply this themselves.
+ */
+export function sanitizeInput(input: string, maxLen = 4000): string {
+  return input
+    // eslint-disable-next-line no-control-regex
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
+    .slice(0, maxLen);
 }
 
 /**
@@ -138,12 +154,15 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
   const key = process.env.GROK_API_KEY;
   if (isDemoKey(key, "xai-xxx")) {
     return {
-      source: "grok",
-      model:  "grok-demo",
+      source:  "grok",
+      model:   "grok-demo",
       content: `[DEMO] Grok: ${prompt}`,
-      live: false,
+      live:    false,
     };
   }
+
+  const safePrompt = sanitizeInput(prompt);
+  const start = Date.now();
 
   try {
     const res = await fetchWithTimeout(
@@ -158,7 +177,7 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
           model: "grok-3",
           messages: [
             { role: "system", content: system ?? GROK_SYSTEM },
-            { role: "user",   content: prompt },
+            { role: "user",   content: safePrompt },
           ],
           max_tokens: 1000,
           temperature: 0.3,
@@ -170,23 +189,25 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
     if (!res.ok) {
       const text = await res.text();
       return {
-        source: "grok",
-        model:  "grok-3",
-        content: `[API ERROR ${res.status}] ${text}`,
-        live: false,
+        source:    "grok",
+        model:     "grok-3",
+        content:   `[API ERROR ${res.status}] ${text}`,
+        live:      false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
+        latencyMs: Date.now() - start,
       };
     }
 
     const data = await res.json();
     return {
-      source:  "grok",
-      model:   data.model ?? "grok-3",
-      content: data.choices?.[0]?.message?.content ?? "",
-      live: true,
+      source:    "grok",
+      model:     data.model ?? "grok-3",
+      content:   data.choices?.[0]?.message?.content ?? "",
+      live:      true,
+      latencyMs: Date.now() - start,
     };
   } catch (e) {
-    return classifyFetchError(e, "grok", "grok-3");
+    return { ...classifyFetchError(e, "grok", "grok-3"), latencyMs: Date.now() - start };
   }
 }
 
@@ -238,11 +259,13 @@ export async function callClaude(
       source:  "claude",
       model:   "claude-demo",
       content: `[DEMO] Claude: ${prompt}`,
-      live: false,
+      live:    false,
     };
   }
 
+  const safePrompt = sanitizeInput(prompt);
   const systemText = system ?? CLAUDE_DEFAULT_SYSTEM;
+  const start = Date.now();
 
   try {
     const res = await fetchWithTimeout(
@@ -250,11 +273,11 @@ export async function callClaude(
       {
         method: "POST",
         headers: {
-          "Content-Type":    "application/json",
-          "x-api-key":       key!,
+          "Content-Type":      "application/json",
+          "x-api-key":         key!,
           "anthropic-version": "2023-06-01",
           // Enable server-side prompt caching for the system message
-          "anthropic-beta":  "prompt-caching-2024-07-31",
+          "anthropic-beta":    "prompt-caching-2024-07-31",
         },
         body: JSON.stringify({
           model:      "claude-sonnet-4-6",
@@ -266,7 +289,7 @@ export async function callClaude(
               cache_control: { type: "ephemeral" },
             },
           ],
-          messages: [{ role: "user", content: prompt }],
+          messages: [{ role: "user", content: safePrompt }],
         }),
       },
       CLAUDE_TIMEOUT_MS
@@ -275,23 +298,25 @@ export async function callClaude(
     if (!res.ok) {
       const text = await res.text();
       return {
-        source:  "claude",
-        model:   "claude-sonnet-4-6",
-        content: `[API ERROR ${res.status}] ${text}`,
-        live: false,
+        source:    "claude",
+        model:     "claude-sonnet-4-6",
+        content:   `[API ERROR ${res.status}] ${text}`,
+        live:      false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
+        latencyMs: Date.now() - start,
       };
     }
 
     const data = await res.json();
     return {
-      source:  "claude",
-      model:   data.model ?? "claude-sonnet-4-6",
-      content: data.content?.[0]?.text ?? "",
-      live: true,
+      source:    "claude",
+      model:     data.model ?? "claude-sonnet-4-6",
+      content:   data.content?.[0]?.text ?? "",
+      live:      true,
+      latencyMs: Date.now() - start,
     };
   } catch (e) {
-    return classifyFetchError(e, "claude", "claude-sonnet-4-6");
+    return { ...classifyFetchError(e, "claude", "claude-sonnet-4-6"), latencyMs: Date.now() - start };
   }
 }
 
@@ -332,9 +357,12 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
       source:  "perplexity",
       model:   "perplexity-demo",
       content: `[DEMO] Perplexity: ${query}`,
-      live: false,
+      live:    false,
     };
   }
+
+  const safeQuery = sanitizeInput(query);
+  const start = Date.now();
 
   try {
     const res = await fetchWithTimeout(
@@ -349,7 +377,7 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
           model: "sonar-pro",
           messages: [
             { role: "system", content: system ?? PERPLEXITY_SYSTEM },
-            { role: "user",   content: query },
+            { role: "user",   content: safeQuery },
           ],
           max_tokens:  1024,
           temperature: 0.2,
@@ -361,23 +389,25 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
     if (!res.ok) {
       const text = await res.text();
       return {
-        source:  "perplexity",
-        model:   "sonar-pro",
-        content: `[API ERROR ${res.status}] ${text}`,
-        live: false,
+        source:    "perplexity",
+        model:     "sonar-pro",
+        content:   `[API ERROR ${res.status}] ${text}`,
+        live:      false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
+        latencyMs: Date.now() - start,
       };
     }
 
     const data = await res.json();
     return {
-      source:  "perplexity",
-      model:   data.model ?? "sonar-pro",
-      content: data.choices?.[0]?.message?.content ?? "",
-      live: true,
+      source:    "perplexity",
+      model:     data.model ?? "sonar-pro",
+      content:   data.choices?.[0]?.message?.content ?? "",
+      live:      true,
+      latencyMs: Date.now() - start,
     };
   } catch (e) {
-    return classifyFetchError(e, "perplexity", "sonar-pro");
+    return { ...classifyFetchError(e, "perplexity", "sonar-pro"), latencyMs: Date.now() - start };
   }
 }
 
@@ -421,6 +451,31 @@ export async function callAll(
     callClaude(claudePrompt),
     callPerplexity(perplexityQuery),
   ]);
+}
+
+// ---------------------------------------------------------------------------
+// FALLBACK — Try primary AI; fall back to secondary on non-live response
+// ---------------------------------------------------------------------------
+
+/**
+ * Try the primary AI call. If it returns a non-live response (demo or error),
+ * immediately try the fallback instead.
+ * If both fail, the fallback's response is returned (never throws).
+ * Use this on critical paths where a single model's outage must not block output.
+ *
+ * @example
+ * const result = await callWithFallback(
+ *   () => callGrok(prompt),
+ *   () => callClaude(prompt),
+ * );
+ */
+export async function callWithFallback(
+  primary:  () => Promise<AIResponse>,
+  fallback: () => Promise<AIResponse>
+): Promise<AIResponse> {
+  const result = await primary();
+  if (result.live) return result;
+  return fallback();
 }
 
 // ---------------------------------------------------------------------------
