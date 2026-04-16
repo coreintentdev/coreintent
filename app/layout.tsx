@@ -12,6 +12,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://coreintent.dev",
   },
+  icons: {
+    icon: [
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     type: "website",
     locale: "en_NZ",
@@ -76,9 +85,6 @@ export const metadata: Metadata = {
     "AI crypto trading",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
-  },
 };
 
 const jsonLd = {
@@ -114,15 +120,29 @@ const jsonLd = {
       "@type": "Organization",
       "@id": "https://zynthio.ai/#organization",
       name: "Zynthio",
+      legalName: "Zynthio",
       url: "https://zynthio.ai",
       logo: "https://coreintent.dev/opengraph-image.png",
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
       },
+      foundingLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "NZ",
+        },
+      },
       areaServed: {
         "@type": "Country",
         name: "New Zealand",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer support",
+        availableLanguage: "English",
       },
       sameAs: [
         "https://github.com/coreintentdev",
@@ -193,6 +213,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-NZ">
+      <head>
+        <link rel="dns-prefetch" href="https://zynthio.ai" />
+        <link rel="dns-prefetch" href="https://github.com" />
+        <meta name="theme-color" content="#0a0e17" />
+        <meta name="color-scheme" content="dark" />
+      </head>
       <body>
         <script
           type="application/ld+json"

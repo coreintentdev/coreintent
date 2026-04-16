@@ -323,7 +323,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang=' app/layout.tsx 2>/dev/null; then
+if grep -qE 'lang="en' app/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"
