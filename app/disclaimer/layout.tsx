@@ -3,22 +3,32 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Disclaimer — Risk Warnings & Legal Information",
   description:
-    "CoreIntent risk disclaimer. Paper trading mode. Not financial advice. Trading cryptocurrency involves significant risk.",
+    "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
   alternates: {
     canonical: "https://coreintent.dev/disclaimer",
   },
   openGraph: {
-    title: "Disclaimer — Risk Warnings & Legal Information",
+    title: "Disclaimer — Risk Warnings & Legal Information | CoreIntent",
     description:
-      "CoreIntent risk disclaimer. Paper trading mode. Not financial advice. Trading involves significant risk.",
+      "Trading risk warnings and AI disclaimers. Paper trading mode only. Not financial advice.",
     url: "https://coreintent.dev/disclaimer",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Disclaimer — Risk Warnings",
+      },
+    ],
   },
   twitter: {
     card: "summary",
     title: "Disclaimer | CoreIntent",
     description:
-      "Risk warnings and legal information for the CoreIntent trading platform.",
+      "Trading risk warnings and AI disclaimers. Paper trading only — not financial advice.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
   },
 };
 

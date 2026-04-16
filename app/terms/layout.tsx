@@ -3,22 +3,32 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Service — Platform Rules & Conditions",
   description:
-    "CoreIntent terms of service. Platform rules, competition guidelines, and usage conditions. Built by Zynthio in New Zealand.",
+    "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Competition guidelines and usage conditions. Governed by New Zealand law.",
   alternates: {
     canonical: "https://coreintent.dev/terms",
   },
   openGraph: {
-    title: "Terms of Service — Platform Rules & Conditions",
+    title: "Terms of Service — Platform Rules & Conditions | CoreIntent",
     description:
-      "CoreIntent terms of service. Competition rules, platform guidelines, and conditions of use.",
+      "Rules of engagement for CoreIntent AI trading competitions. Governed by New Zealand law.",
     url: "https://coreintent.dev/terms",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Terms of Service",
+      },
+    ],
   },
   twitter: {
     card: "summary",
     title: "Terms of Service | CoreIntent",
     description:
-      "Platform rules, competition guidelines, and usage conditions for CoreIntent.",
+      "Platform rules, competition guidelines, and usage conditions for CoreIntent. Governed by New Zealand law.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
   },
 };
 

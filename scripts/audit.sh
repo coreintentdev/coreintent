@@ -142,8 +142,12 @@ else
   log_fail "Twitter card meta tags MISSING"
 fi
 
-# robots.txt
-[ -f "public/robots.txt" ] && log_pass "robots.txt exists" || log_fail "robots.txt MISSING"
+# robots (dynamic app/robots.ts or static public/robots.txt)
+if [ -f "app/robots.ts" ] || [ -f "public/robots.txt" ]; then
+  log_pass "Robots configuration exists"
+else
+  log_fail "robots.txt / robots.ts MISSING"
+fi
 
 # sitemap
 if [ -f "app/sitemap.ts" ] || [ -f "public/sitemap.xml" ]; then
@@ -159,12 +163,14 @@ else
   log_warn "No favicon found"
 fi
 
-# Page-level metadata
-for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
-  if [ -f "$page" ] && grep -q "metadata" "$page" 2>/dev/null; then
-    log_pass "Page metadata: $page"
+# Page-level metadata (check page.tsx or layout.tsx for each route)
+for route in privacy terms disclaimer; do
+  page="app/$route/page.tsx"
+  layout="app/$route/layout.tsx"
+  if ([ -f "$page" ] && grep -q "metadata" "$page" 2>/dev/null) || ([ -f "$layout" ] && grep -q "metadata" "$layout" 2>/dev/null); then
+    log_pass "Route metadata: /$route"
   elif [ -f "$page" ]; then
-    log_warn "No page-level metadata: $page"
+    log_warn "No route-level metadata: /$route"
   fi
 done
 
@@ -317,7 +323,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en"' app/layout.tsx 2>/dev/null; then
+if grep -q 'lang=' app/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"

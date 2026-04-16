@@ -1,36 +1,5 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "CoreIntent privacy policy — how we handle your data. Operated by Corey McIvor / Zynthio under New Zealand law.",
-  alternates: {
-    canonical: "https://coreintent.dev/privacy",
-  },
-  openGraph: {
-    title: "Privacy Policy | CoreIntent",
-    description: "How CoreIntent handles your data. NZ Privacy Act 2020 compliant.",
-    url: "https://coreintent.dev/privacy",
-    type: "website",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "CoreIntent Privacy Policy",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary",
-    title: "Privacy Policy | CoreIntent",
-    description: "How CoreIntent handles your data. NZ Privacy Act 2020 compliant. Operated under New Zealand law.",
-    creator: "@coreintentai",
-    site: "@coreintentai",
-  },
-};
 
 export default function PrivacyPage() {
   return (
