@@ -120,7 +120,17 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const type = body.type ?? "state";
+  const VALID_SAVE_TYPES: SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
+  const type: SaveType = VALID_SAVE_TYPES.includes(body.type as SaveType)
+    ? (body.type as SaveType)
+    : "state";
+
+  if (body.content !== undefined) {
+    if (typeof body.content !== "string" || body.content.length > 10_000) {
+      return err("content must be a string of 10,000 characters or fewer", 400);
+    }
+  }
+
   const backends: BackendResult[] = Object.entries(SAVE_BACKENDS)
     .filter(([key]) => {
       if (type === "link") return key === "links" || key === "cache";

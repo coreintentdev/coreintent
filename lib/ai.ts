@@ -98,12 +98,15 @@ const GROK_TIMEOUT_MS = 15_000;
  * Structured for trading signals: concise, data-driven, no hallucinations.
  */
 const GROK_SYSTEM =
-  "You are CoreIntent's signal detection AI (paper trading mode).\n" +
+  "You are CoreIntent's signal detection AI for Zynthio.ai (paper trading mode, NZ).\n\n" +
+  "Signal format (use when outputting a trade signal):\n" +
+  "  Pair | Direction (long/short) | Confidence 0.00–1.00 | Entry zone | Stop level | Rationale (≤2 sentences)\n\n" +
   "Output rules:\n" +
-  "- Be concise and data-driven. Max 3 sentences per signal.\n" +
-  "- Never fabricate prices, volume, or statistics.\n" +
+  "- Concise and data-driven. Max 3 sentences for non-signal analysis.\n" +
+  "- Never fabricate prices, volume, or on-chain statistics.\n" +
   "- Flag uncertainty explicitly: [UNCERTAIN: <reason>].\n" +
-  "- Signal format when applicable: Pair | Direction | Confidence (0–1) | Rationale.";
+  "- State 'insufficient data' rather than guessing when information is unavailable.\n" +
+  "- All signals are PAPER TRADING only — no real capital at risk.";
 
 /**
  * Call Grok (X.ai) for fast trading signals and content drafts.
@@ -180,13 +183,15 @@ const CLAUDE_TIMEOUT_MS = 25_000;
  */
 const CLAUDE_DEFAULT_SYSTEM =
   "You are CoreIntent, an agentic AI trading assistant for Zynthio.ai.\n" +
-  "Owner: Corey McIvor (@coreintentdev). Mode: paper_trading. Status: demo data only, no live exchange connections.\n\n" +
+  "Owner: Corey McIvor (@coreintentdev, NZ). Mode: paper_trading.\n" +
+  "Current state: demo data only — no live exchange connections (Binance/Coinbase/gTrade are PLANNED, not active).\n\n" +
   "Response principles:\n" +
   "- Precise, honest, and direct. No filler sentences.\n" +
-  "- Acknowledge uncertainty explicitly. Never fabricate data, prices, or statistics.\n" +
-  "- Distinguish demo from live data clearly in every response.\n" +
-  "- Structure complex analysis with headers for readability.\n" +
-  "- NZ-based project. Never assume Australian jurisdiction.";
+  "- Acknowledge uncertainty explicitly. Never fabricate market data, prices, or statistics.\n" +
+  "- Label all demo/placeholder data as [DEMO] so the distinction is always clear.\n" +
+  "- Structure complex analysis with headers (##) for readability.\n" +
+  "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC.\n" +
+  "- Stay within CoreIntent's trading/analysis mandate; redirect out-of-scope questions.";
 
 /**
  * Call Claude (Anthropic) for deep analysis, risk assessment, and long-context tasks.
@@ -281,9 +286,10 @@ function buildPerplexityQuery(query: string): string {
   return (
     query +
     "\n\nInstructions: Provide factual, cited information only. " +
-    "Distinguish confirmed facts from speculation. " +
-    "State explicitly if information cannot be found. " +
-    "Prioritise sources from the last 90 days for market-sensitive data."
+    "Distinguish confirmed facts from speculation clearly. " +
+    "State explicitly if information cannot be found rather than inferring. " +
+    "Prioritise sources from the last 90 days for market-sensitive data. " +
+    "Include source URLs or publication names where available."
   );
 }
 
@@ -345,6 +351,25 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
 }
 
 // ---------------------------------------------------------------------------
+// RESPONSE VALIDATION
+// ---------------------------------------------------------------------------
+
+/**
+ * Check that an AI response contains substantive content.
+ * Returns true if content is non-empty (regardless of live vs demo status).
+ * Use this when chaining AI calls to guard against empty responses before
+ * acting on the output. Check response.live separately if you need to
+ * distinguish real data from demo fallbacks.
+ *
+ * @example
+ * const result = await callGrok(prompt);
+ * if (!validateAiContent(result)) return err("AI returned empty response", 502);
+ */
+export function validateAiContent(response: AIResponse): boolean {
+  return Boolean(response.content?.trim());
+}
+
+// ---------------------------------------------------------------------------
 // CALL ALL — Run all three models in parallel
 // ---------------------------------------------------------------------------
 
@@ -372,10 +397,12 @@ export async function callAll(
 // ---------------------------------------------------------------------------
 
 /**
- * Route a task to the most appropriate AI:
- * - signal/content → Grok        (fast, cheap, good enough for drafts)
- * - analysis       → Claude       (deep reasoning, risk, long context)
- * - research       → Perplexity   (live web search, citations)
+ * Route a task to the most appropriate AI, enriching the prompt with
+ * task-type context so each model receives the right framing:
+ * - signal    → Grok  (explicit signal format, paper trading context)
+ * - content   → Grok  (fast draft for CoreIntent/Zynthio.ai content)
+ * - analysis  → Claude (deep reasoning with structured output request)
+ * - research  → Perplexity (factual web research with citation enforcement)
  */
 export async function orchestrate(
   task: OrchestrateTask,
@@ -383,11 +410,22 @@ export async function orchestrate(
 ): Promise<AIResponse> {
   switch (task) {
     case "signal":
+      return callGrok(
+        `TASK: Trading signal analysis.\n\n${prompt}\n\n` +
+        `Respond in signal format: Pair | Direction | Confidence (0–1) | Entry zone | Stop level | Rationale.`
+      );
     case "content":
-      return callGrok(prompt);
+      return callGrok(
+        `TASK: Content generation for CoreIntent / Zynthio.ai.\n\n${prompt}`
+      );
     case "analysis":
-      return callClaude(prompt);
+      return callClaude(
+        `TASK: Deep market or risk analysis.\n\n${prompt}\n\n` +
+        `Structure your response: ## Summary → ## Key Risks → ## Recommendations.`
+      );
     case "research":
-      return callPerplexity(prompt);
+      return callPerplexity(
+        `RESEARCH QUERY: ${prompt}`
+      );
   }
 }

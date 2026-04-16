@@ -116,8 +116,14 @@ export async function POST(req: NextRequest) {
   }
 
   const source: Channel    = body.source === "desktop" ? "desktop" : "web";
-  const confidence         = typeof body.confidence === "number" ? body.confidence : DEFAULT_CONFIDENCE;
+  const rawConf            = typeof body.confidence === "number" ? body.confidence : DEFAULT_CONFIDENCE;
+  const confidence         = Math.min(1, Math.max(0, rawConf));
   const contextComplete    = body.contextComplete !== false;
+
+  if (body.task !== undefined && typeof body.task === "string" && body.task.length > 500) {
+    return err("task must be 500 characters or fewer", 400);
+  }
+
   const target             = classifyTarget(body);
   const needsKyc           = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
   const handoffRequired    = !needsKyc && source !== target;

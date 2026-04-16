@@ -111,6 +111,9 @@ export async function POST(req: NextRequest) {
   if (!topic || typeof topic !== "string" || !topic.trim()) {
     return err("topic is required", 400);
   }
+  if (topic.trim().length > 500) {
+    return err("topic must be 500 characters or fewer", 400);
+  }
   if (typeof count !== "number" || count < 1 || count > BULK_LIMITS[type]) {
     return err(`count must be between 1 and ${BULK_LIMITS[type]} for type "${type}"`, 400);
   }

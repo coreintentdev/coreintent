@@ -109,6 +109,57 @@ export function methodNotAllowed(
   );
 }
 
+/**
+ * 401 Unauthorized — caller is not authenticated.
+ * Use when the request requires a valid API key or auth token that was not provided.
+ */
+export function unauthorized(message = "Unauthorized"): NextResponse<ApiResponse<null>> {
+  return err(message, 401);
+}
+
+/**
+ * 403 Forbidden — caller is authenticated but not permitted.
+ * Use when a valid token lacks the required scope or permission for this resource.
+ */
+export function forbidden(message = "Forbidden"): NextResponse<ApiResponse<null>> {
+  return err(message, 403);
+}
+
+/**
+ * 500 Internal Server Error — unexpected failure.
+ * Logs the underlying error server-side; always returns a safe generic message to the client.
+ *
+ * @param detail  Optional error detail for server-side logging only — never sent to the client.
+ */
+export function serverError(detail?: unknown): NextResponse<ApiResponse<null>> {
+  if (detail !== undefined) {
+    console.error("[CoreIntent API] Internal error:", detail);
+  }
+  return err("Internal server error. Please try again.", 500);
+}
+
+// ---------------------------------------------------------------------------
+// Input validation helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Validate and trim a string value from a request body.
+ * Returns the trimmed string when valid, or null when absent, non-string, empty,
+ * or exceeding maxLen. Callers decide whether null means a 400 error or a default.
+ *
+ * Avoids silent truncation — the full value is either accepted or rejected.
+ *
+ * @example
+ * const text = validateString(body.text, 2000);
+ * if (!text) return err("text is required and must be ≤ 2000 characters", 400);
+ */
+export function validateString(value: unknown, maxLen: number): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > maxLen) return null;
+  return trimmed;
+}
+
 // ---------------------------------------------------------------------------
 // Rate limiting — structure ready, implementation pending KV store
 // ---------------------------------------------------------------------------

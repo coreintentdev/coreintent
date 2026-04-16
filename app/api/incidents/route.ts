@@ -159,7 +159,9 @@ export async function POST(req: NextRequest) {
   }
 
   if (!body.service?.trim()) return err("service is required", 400);
+  if (body.service.trim().length > 200) return err("service must be 200 characters or fewer", 400);
   if (!body.message?.trim()) return err("message is required", 400);
+  if (body.message.trim().length > 5000) return err("message must be 5000 characters or fewer", 400);
   if (!body.severity || !VALID_SEVERITIES.includes(body.severity)) {
     return err(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`, 400);
   }
