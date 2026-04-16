@@ -293,11 +293,20 @@ export default function Home() {
               style={{
                 fontSize: "13px",
                 color: "var(--accent-green)",
-                margin: "0 auto 24px",
+                margin: "0 auto 12px",
                 fontWeight: "bold",
               }}
             >
               Zero subscriptions. Free competitions. Bots welcome.
+            </p>
+            <p
+              style={{
+                fontSize: "11px",
+                color: "var(--text-secondary)",
+                margin: "0 auto 24px",
+              }}
+            >
+              Built in New Zealand by Zynthio &mdash; not VC-funded, not bloated, just sharp.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -474,6 +483,35 @@ export default function Home() {
                         &rarr;
                       </div>
                     )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Numbers Bar */}
+            <div style={{ marginTop: "36px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "32px",
+                  flexWrap: "wrap",
+                  padding: "16px 24px",
+                  background: "var(--bg-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                }}
+              >
+                {[
+                  { value: "3", label: "AI Models" },
+                  { value: "6", label: "Trading Agents" },
+                  { value: "~$45/mo", label: "Total Infra Cost" },
+                  { value: "$0", label: "Entry Fee" },
+                  { value: String(DOMAINS.length), label: "Domains" },
+                ].map((s) => (
+                  <div key={s.label} style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>{s.value}</div>
+                    <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{s.label}</div>
                   </div>
                 ))}
               </div>

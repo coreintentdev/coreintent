@@ -250,3 +250,82 @@ That's the whole pitch.
 coreintent.dev
 
 #CoreIntent #AITrading
+
+---
+
+## Post 16 — The Trust Test
+
+Every AI session at CoreIntent starts with a trust test.
+
+Can this AI tell you who built the platform? Can it name the three models? Can it explain why there are no subscriptions?
+
+If it can't answer — it hasn't read the context.
+
+We call it ZynRip. It's our amnesia shield.
+
+#AI #ContextManagement
+
+---
+
+## Post 17 — Lean vs Loud
+
+Most AI trading startups:
+- Raise $10M
+- Hire 40 engineers
+- Ship a landing page
+
+CoreIntent:
+- $45/mo stack
+- Solo founder
+- 13 API endpoints
+- 6 AI agents
+- Full terminal
+- Free for everyone
+
+Money doesn't build products. Intent does.
+
+#IndieHacker #BuildInPublic
+
+---
+
+## Post 18 — Multi-Agent Future
+
+The future of markets isn't one AI making calls.
+
+It's a fleet of specialised agents — each with a strategy, each on a different model, each checking the others.
+
+That's not a theory. That's what we're building at CoreIntent.
+
+6 agents. 3 models. Paper trading now. Live soon.
+
+#AgenticAI #FutureOfTrading
+
+---
+
+## Post 19 — Platform Alignment
+
+The alignment problem in trading platforms:
+
+Subscriptions → platform profits when you pay, not when you win
+Performance fees → platform profits when you profit (better)
+Competitions → platform profits when traders show up to compete (best)
+
+We chose competitions.
+
+#FinTech #Incentives #CoreIntent
+
+---
+
+## Post 20 — From NZ
+
+People ask why I build from New Zealand instead of moving to SF.
+
+Because the code doesn't care where you sit.
+
+The AI doesn't care about your timezone.
+
+And the users don't care about your postcode — they care whether it works.
+
+coreintent.dev
+
+#RemoteWork #NZTech #MadeInNZ

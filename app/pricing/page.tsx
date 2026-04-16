@@ -86,8 +86,11 @@ export default function PricingPage() {
             Most platforms charge $99/mo whether you win or lose.<br />
             We charge nothing — and let you prove yourself in the arena.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
             Free costs us fuck all to serve — so we give it away.
+          </p>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "12px" }}>
+            Built by traders who got tired of paying for dashboards. Powered by Zynthio, from New Zealand.
           </p>
 
           {/* Key Stats Bar */}
@@ -407,6 +410,42 @@ export default function PricingPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Final CTA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #10b98112 0%, #3b82f612 100%)",
+              border: "1px solid #10b98133",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
+              Ready to Compete?
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "16px" }}>
+              No credit card. No signup forms. No friction.<br />
+              Open the terminal and start trading.
+            </p>
+            <a
+              href="/"
+              style={{
+                display: "inline-block",
+                padding: "12px 32px",
+                background: "var(--accent-green)",
+                color: "#000",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: "bold",
+                fontFamily: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Launch CoreIntent
+            </a>
           </div>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
