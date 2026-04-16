@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AITwin from "@/components/AITwin";
 
 export const metadata: Metadata = {
   title: {
@@ -199,6 +200,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <AITwin />
       </body>
     </html>
   );
