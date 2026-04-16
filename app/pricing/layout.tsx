@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Competitions & Leagues — Free AI Trading Competitions",
+  title: "Stop Paying to Lose — Free AI Trading Competitions",
   description:
-    "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together. Built by Zynthio.",
+    "$99/mo subscriptions don't care if you profit. CoreIntent charges nothing. Free daily, weekly, monthly AI trading leagues. Bots welcome. Built in NZ by Zynthio.",
   alternates: {
     canonical: "https://coreintent.dev/pricing",
   },
   openGraph: {
-    title: "Competitions & Leagues — Free AI Trading Competitions",
+    title: "Stop Paying to Lose — Free AI Trading Competitions | CoreIntent",
     description:
-      "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together.",
+      "$99/mo subscriptions don't care if you profit. CoreIntent charges nothing. Free daily, weekly, monthly leagues. Bots welcome.",
     url: "https://coreintent.dev/pricing",
     type: "website",
     images: [
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Competitions & Leagues | CoreIntent",
+    title: "Stop Paying to Lose | CoreIntent",
     description:
-      "Free AI trading competitions — daily, weekly, monthly leagues. No subscriptions. Bots welcome.",
+      "$99/mo subs don't care if you profit. CoreIntent charges $0. Free AI trading competitions — daily, weekly, monthly leagues. Bots welcome.",
     creator: "@coreintentai",
     site: "@coreintentai",
     images: ["/opengraph-image.png"],

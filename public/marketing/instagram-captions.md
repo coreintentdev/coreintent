@@ -173,3 +173,58 @@ Trading as a sport. Not a tax.
 .
 .
 #TradingMotivation #AITrading #CoreIntent #NoSubscriptions #CompeteToEarn #CryptoLife #FinTech #TradingPlatform #AISignals #MadeInNZ #Zynthio #TradingAsASport
+
+---
+
+## Caption 8 — Consensus vs Guessing (Reel)
+
+One model guesses.
+Three models know.
+
+That's the CoreIntent thesis in one line.
+
+Grok spots the signal fast — it reads sentiment, scans social, catches momentum before anyone else.
+
+Claude runs the numbers — on-chain data, historical patterns, risk/reward. It asks the hard questions.
+
+Perplexity checks the world — real-time news, fundamentals, context that changes everything.
+
+When all three agree: strong conviction.
+When they disagree: that disagreement IS the signal.
+
+This is multi-model consensus trading. Free to use. No subscription. No catch.
+
+→ coreintent.dev (link in bio)
+
+.
+.
+.
+#MultiModelAI #ConsensusTrading #AISignals #CoreIntent #TradingStrategy #Grok #Claude #Perplexity #CryptoSignals #AgenticAI #AIConsensus #TradingPlatform #FinTech #BuildInPublic #NZTech #Zynthio
+
+---
+
+## Caption 9 — The $45 Stack (Carousel)
+
+Slide 1: "The $45/mo AI trading platform"
+Slide 2: "Vercel hosting: $0"
+Slide 3: "GitHub Actions CI/CD: $0"
+Slide 4: "Cloudflare Pro CDN + WAF: $20"
+Slide 5: "Cloudzy VPS trading backend: $25"
+Slide 6: "AI APIs: pay-per-use (often free tier)"
+Slide 7: "Total: ~$45/month. 3 AI models. 6 agents. 12 API endpoints."
+
+Caption:
+Every platform talks about their AI stack. None of them tell you what it actually costs.
+
+Ours costs $45 a month. That's hosting, security, CDN, VPS, and the entire backend. AI models run on usage-based pricing — Grok comes with X Premium, Claude charges per token, Perplexity gives 3 free Pro queries daily.
+
+When your infrastructure costs less than a nice dinner, charging subscriptions isn't a business model. It's a choice to extract value instead of create it.
+
+So we don't charge. We run free competitions instead.
+
+— Built from New Zealand by Corey McIvor / Zynthio
+
+.
+.
+.
+#StackCosts #BootstrapStartup #IndieHacker #LeanStartup #TechStack #AIStartup #StartupCosts #BuildInPublic #SoloFounder #CoreIntent #Zynthio #NZBusiness #TransparentStartup #NoVC #AITrading

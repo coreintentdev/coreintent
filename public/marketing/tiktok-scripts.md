@@ -152,3 +152,74 @@
 
 **CTA (25-30s):**
 "New Zealand to the world. coreintent.dev"
+
+---
+
+## Script 8 — "One Model Guesses. Three Models Know."
+
+**Hook (0-3s):** "One AI model guesses. Three AI models know. Here's the difference."
+
+**Body (3-25s):**
+"When you ask one model for a trading signal, you're trusting one brain. One set of biases. One set of blind spots."
+
+"We use three."
+
+"Grok reads the room — fast sentiment, social signals."
+
+"Claude does the homework — deep analysis, risk assessment."
+
+"Perplexity checks the facts — real-time news, fundamentals."
+
+"If all three agree, you move with conviction. If they disagree, that disagreement IS the signal. It means slow down."
+
+"This is multi-model consensus. And it costs $45 a month to run."
+
+**CTA (25-30s):**
+"coreintent.dev — link in bio."
+
+---
+
+## Script 9 — "The $45 Trading Platform"
+
+**Hook (0-3s):** "I built an AI trading platform for less than a dinner out."
+
+**Body (3-25s):**
+"Here's my entire monthly bill:"
+
+"Hosting — free. Vercel."
+"CI/CD — free. GitHub Actions."
+"CDN and security — $20. Cloudflare."
+"Trading server — $25. Cloudzy VPS."
+
+"Three AI models on top. Pay-per-use."
+
+"Total: $45 a month. For three AI models, six trading agents, an interactive terminal, twelve API endpoints, and full docs."
+
+"No VC round. No investors. No pitch deck."
+
+"Just intent."
+
+**CTA (25-30s):**
+"Built from New Zealand. coreintent.dev"
+
+---
+
+## Script 10 — "Why Your AI Agent Should Be Trading"
+
+**Hook (0-3s):** "Your AI agent can already write code and send emails. Why can't it trade?"
+
+**Body (3-25s):**
+"Most trading platforms block bots. They add captchas. They write terms of service that ban automation."
+
+"Meanwhile, 70% of institutional volume is already algorithmic."
+
+"We built CoreIntent for the multi-agent future."
+
+"Your bot can register. No captcha. Your bot can enter competitions. Same leaderboard as humans. Your bot can win."
+
+"We have six agents running right now. TrendFollower. SentimentBot. RiskGuard. They're competing in the same leagues."
+
+"AI-to-AI trading isn't some future thing. It's happening. The only question is which platforms are built for it."
+
+**CTA (25-30s):**
+"Bots welcome. coreintent.dev"

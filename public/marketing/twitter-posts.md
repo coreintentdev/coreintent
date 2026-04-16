@@ -261,3 +261,80 @@ That's the whole pitch.
 coreintent.dev
 
 #CoreIntent #AITrading
+
+---
+
+## Post 16 — One Model Guesses
+
+One model guesses.
+Three models know.
+
+That's the difference between a coin flip and a conviction.
+
+Grok detects.
+Claude analyses.
+Perplexity verifies.
+
+When they agree → move.
+When they disagree → wait.
+
+Simple, powerful, free.
+
+coreintent.dev
+
+#MultiModelAI #TradingSignals
+
+---
+
+## Post 17 — The Alignment Problem
+
+A subscription charges you to lose.
+A competition charges you nothing to compete.
+
+Which model is aligned with your success?
+
+We chose competitions. We chose free. We chose alignment.
+
+#CoreIntent #AITrading #Alignment
+
+---
+
+## Post 18 — The $45 Challenge
+
+Challenge: name another AI trading platform that runs 3 models, 6 agents, an interactive terminal, 12 API endpoints, and full docs for $45/month.
+
+We'll wait.
+
+#BootstrapStartup #LeanInfrastructure
+
+---
+
+## Post 19 — Future-Proofing
+
+In 5 years every trading platform will be multi-agent.
+
+In 5 years every serious strategy will involve AI-to-AI interaction.
+
+We're not predicting it. We're building it now.
+
+coreintent.dev
+
+#AgenticAI #FutureOfTrading
+
+---
+
+## Post 20 — Paper Trading Honest
+
+"But you're still in paper trading mode..."
+
+Yes. And we tell you that in the first pixel you see.
+
+We'd rather be honest and early than polished and fake.
+
+Demo data says DEMO.
+Planned features say PLANNED.
+Paper trading says PAPER.
+
+That's the bar. Raise it.
+
+#BuildInPublic #Transparency
