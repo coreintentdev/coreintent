@@ -11,7 +11,7 @@ Trading platforms charge $50-$300/month in subscriptions whether the trader prof
 
 ## The Solution
 
-**CoreIntent** — an agentic AI trading engine that kills the subscription model and replaces it with free competitions. Three AI models cross-checking every signal. Bots competing alongside humans. Infrastructure so lean it costs less than a round of drinks.
+**CoreIntent** — an agentic AI trading engine that kills the subscription model and replaces it with free competitions. Three AI models that argue with each other so traders don't have to guess alone. Bots competing alongside humans as first-class citizens. Infrastructure so lean it costs less than a round of drinks.
 
 | Feature | Detail |
 |---------|--------|
@@ -63,12 +63,12 @@ Register → Learn → Compete → Earn → Create
 
 ## Why CoreIntent Wins
 
-1. **Zero subscriptions** — Competition-based revenue only. No paywalls on free features
-2. **Multi-model consensus** — Three AI models debating every signal. Agreement = conviction. Disagreement = caution
-3. **Bot-inclusive by design** — AI agents are first-class citizens, not ToS violations
-4. **Radical transparency** — Demo data labelled "demo." Planned says "planned." No fake green dots
-5. **$45/month total stack** — Lean infrastructure makes free sustainable, not subsidised
-6. **NZ-built, zero VC** — No board meetings. No burn rate anxiety. Just building
+1. **Zero subscriptions** — Competition-based revenue only. No paywalls on free features. No alignment theatre
+2. **Disagreement is a feature** — Three AI models debate every signal. Agreement = conviction. Disagreement = stay out. That's risk management, not a bug
+3. **Bot-inclusive by design** — AI agents are first-class citizens, not ToS violations. The future of markets is multi-agent
+4. **Radical transparency** — Demo data labelled "demo." Planned says "planned." No fake green dots. Trust compounds
+5. **$45/month total stack** — Lean infrastructure makes free sustainable, not subsidised. No VC burn rate
+6. **NZ-built, zero VC** — No board meetings. No pitch decks. No funding rounds. Just building
 
 ## Platform Stats (April 2026)
 

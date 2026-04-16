@@ -152,3 +152,25 @@
 
 **CTA (25-30s):**
 "New Zealand to the world. coreintent.dev"
+
+---
+
+## Script 8 — "One Model Guesses. Three Models Know."
+
+**Hook (0-3s):** "Stop trusting a single AI to trade for you."
+
+**Body (3-25s):**
+"One model has blind spots. Every single one."
+
+"GPT hallucinates. Claude overthinks. Grok moves fast and breaks things."
+
+"So what if you made them check each other's homework?"
+
+"Grok says 'BTC is about to rip.' Claude says 'the on-chain data disagrees.' Perplexity says 'here's what the news actually says.'"
+
+"When all three agree — that's a signal. When they disagree — that's risk management."
+
+"We call it multi-model consensus. It costs us $45 a month."
+
+**CTA (25-30s):**
+"Three opinions are better than one guess. coreintent.dev"

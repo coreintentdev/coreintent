@@ -154,3 +154,34 @@ We run 6 AI agents ourselves — TrendFollower, MeanRevert, SentimentBot, Arbitr
 → coreintent.dev
 
 #AgenticAI #FinTech #TradingBots #FutureOfTrading #AlgorithmicTrading
+
+---
+
+## Post 6 — Lessons from Building a $45/mo AI Platform
+
+**What I've learned building an AI trading engine that costs less than a restaurant meal to run**
+
+Six months ago I started CoreIntent — an AI trading engine that orchestrates three models (Grok, Claude, Perplexity) and runs six trading agents. The entire infrastructure cost is ~NZ$45/month.
+
+Here's what that constraint taught me:
+
+**1. Free tiers are your Series A.**
+Vercel (free hosting), GitHub Actions (free CI/CD), Cloudflare (free DNS/security base). Startups that skip these are paying for comfort, not capability.
+
+**2. Three models > one expensive model.**
+A single powerful model has blind spots. Three models arguing surfaces disagreements that no single model will flag. The multi-model architecture isn't a luxury — it's a risk control.
+
+**3. Subscriptions are lazy alignment.**
+When your marginal cost per user is near zero, charging monthly is choosing extraction over growth. Competitions align the platform with user engagement. Subscriptions align with user inertia.
+
+**4. Honesty compounds.**
+Every piece of demo data in CoreIntent is labelled "DEMO." Every planned feature says "PLANNED." Users don't leave because you told them something isn't ready. They leave when they discover the lie themselves.
+
+**5. Bots make better platforms.**
+We made AI agents first-class citizens: no captcha, no blocks, same leagues as humans. The result is a platform that's ready for the multi-agent future — not fighting it.
+
+Currently in paper trading mode. Building in public. NZ-based, no VC.
+
+→ coreintent.dev
+
+#StartupLessons #BootstrapStartup #AI #FinTech #BuildInPublic #IndieFounder
