@@ -1,10 +1,11 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 02:42:20 UTC 2026
+Generated: Thu Apr 16 03:10:50 UTC 2026
 
 ## 1. Build
-- **FAIL:** npm run build FAILS — see /tmp/coreintent_build.log
-- **FAIL:** TypeScript errors found
-- WARN: ESLint warnings or errors
+- PASS: npm run build succeeds
+- INFO: Routes found: 25
+- PASS: TypeScript compiles (strict mode)
+- PASS: ESLint passes
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -60,7 +61,7 @@ Generated: Thu Apr 16 02:42:20 UTC 2026
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 6 API routes contain demo/hardcoded data
+- INFO: 11 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
 - PASS: ARIA attributes found (7 instances)
@@ -85,8 +86,8 @@ Generated: Thu Apr 16 02:42:20 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 49 |
-| FAIL | 2 |
-| WARN | 3 |
+| PASS | 52 |
+| FAIL | 0 |
+| WARN | 2 |
 
-**Audit Score: 90%** (49/54 checks passed)
+**Audit Score: 96%** (52/54 checks passed)

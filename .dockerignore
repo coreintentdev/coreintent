@@ -15,4 +15,5 @@ docs
 scripts
 LICENSE
 tsconfig.tsbuildinfo
+cloudbuild.yaml
 .dockerignore
