@@ -142,9 +142,9 @@ export default function PricingPage() {
                 >
                   {league.icon}
                 </div>
-                <h2 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
+                <h3 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
                   {league.name}
-                </h2>
+                </h3>
                 <p
                   style={{
                     fontSize: "13px",

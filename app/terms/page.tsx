@@ -3,8 +3,18 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | CoreIntent",
-  description: "CoreIntent terms of service — rules of engagement.",
+  title: "Terms of Service",
+  description:
+    "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
+  alternates: {
+    canonical: "https://coreintent.dev/terms",
+  },
+  openGraph: {
+    title: "Terms of Service | CoreIntent",
+    description: "Rules of engagement for CoreIntent AI trading competitions.",
+    url: "https://coreintent.dev/terms",
+    type: "website",
+  },
 };
 
 export default function TermsPage() {

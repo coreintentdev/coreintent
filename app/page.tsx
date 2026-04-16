@@ -163,7 +163,8 @@ export default function Home() {
       <SiteNav />
 
       {/* Tab bar */}
-      <div
+      <nav
+        aria-label="Content tabs"
         style={{
           display: "flex",
           alignItems: "center",
@@ -192,10 +193,11 @@ export default function Home() {
             {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
           </button>
         ))}
-      </div>
+      </nav>
 
       {/* Main content */}
-      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }} role="main">
+      <h1 className="sr-only">CoreIntent — Agentic AI Trading Engine</h1>
+      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
         {tab === "terminal" && <Terminal />}
 
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
@@ -216,7 +218,7 @@ export default function Home() {
             </div>
 
             {/* Domain Portfolio */}
-            <h3 style={sectionTitle}>Domain Portfolio ({DOMAINS.length})</h3>
+            <h2 style={sectionTitle}>Domain Portfolio ({DOMAINS.length})</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "8px", marginBottom: "24px" }}>
               {DOMAINS.map((d) => (
                 <div
@@ -254,7 +256,7 @@ export default function Home() {
             </div>
 
             {/* Architecture */}
-            <h3 style={sectionTitle}>Architecture</h3>
+            <h2 style={sectionTitle}>Architecture</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px", marginBottom: "24px" }}>
               {ARCHITECTURE.map((a) => (
                 <div key={a.name} style={{ ...cardStyle, textAlign: "center" }}>
@@ -281,7 +283,7 @@ export default function Home() {
             </div>
 
             {/* Stack & Costs */}
-            <h3 style={sectionTitle}>Stack &amp; Costs (~$45/mo)</h3>
+            <h2 style={sectionTitle}>Stack &amp; Costs (~$45/mo)</h2>
             <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "24px" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
@@ -302,7 +304,7 @@ export default function Home() {
             </table>
 
             {/* TM Portfolio */}
-            <h3 style={sectionTitle}>Trademark Portfolio</h3>
+            <h2 style={sectionTitle}>Trademark Portfolio</h2>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "24px" }}>
               {TRADEMARKS.map((tm) => (
                 <div key={tm.mark} style={{ ...cardStyle, display: "flex", alignItems: "center", gap: "12px" }}>
@@ -316,7 +318,7 @@ export default function Home() {
             </div>
 
             {/* Hard Rules */}
-            <h3 style={sectionTitle}>Hard Rules</h3>
+            <h2 style={sectionTitle}>Hard Rules</h2>
             <div style={{ ...cardStyle, marginBottom: "24px" }}>
               {HARD_RULES.map((rule, i) => (
                 <div
@@ -339,7 +341,7 @@ export default function Home() {
         {/* ═══════════════════════ AGENTS ═══════════════════════ */}
         {tab === "agents" && (
           <div style={{ overflow: "auto", height: "100%" }}>
-            <h3 style={sectionTitle}>AI Agent Fleet</h3>
+            <h2 style={sectionTitle}>AI Agent Fleet</h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
               Paper trading mode — agents are configured but not live-trading.
             </p>
