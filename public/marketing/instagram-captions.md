@@ -17,17 +17,20 @@ This is what agentic AI trading looks like.
 
 → coreintent.dev (link in bio)
 
-#AITrading #CoreIntent #Zynthio #AgenticAI #CryptoTrading #TradingSignals #MachineLearning #AI #FinTech #MadeInNZ #NewZealand #TechStartup #PaperTrading #AlgoTrading #BuildInPublic
+.
+.
+.
+#AITrading #CoreIntent #Zynthio #AgenticAI #CryptoTrading #TradingSignals #AI #FinTech #MadeInNZ #NewZealand #TechStartup #PaperTrading #AlgoTrading #BuildInPublic #MultiModelAI #TradingCompetition #CryptoSignals #IndieDev
 
 ---
 
 ## Caption 2 — Architecture Breakdown (Carousel)
 
 Slide 1: "How 3 AI models trade together"
-Slide 2: "Grok — Fast signal detection & sentiment"
-Slide 3: "Claude — Deep analysis & risk assessment"
-Slide 4: "Perplexity — Real-time research & news"
-Slide 5: "RiskGuard — Circuit breakers & position sizing"
+Slide 2: "GROK — Fast signal detection & social sentiment"
+Slide 3: "CLAUDE — Deep analysis & risk assessment"
+Slide 4: "PERPLEXITY — Real-time research & news"
+Slide 5: "RISKGUARD — Circuit breakers at 0.8% threshold"
 Slide 6: "When they agree = strong signal. When they disagree = deeper analysis."
 
 Caption:
@@ -37,7 +40,10 @@ CoreIntent uses three models that check each other's work. Disagreement isn't a 
 
 Currently paper trading. Building in public. No fake dashboards.
 
-#AIArchitecture #TradingBot #MultiModel #Claude #Grok #Perplexity #DeepLearning #TradingStrategy #CryptoSignals #FinTechStartup #AITrading #BuildInPublic #IndieHacker #NZTech
+.
+.
+.
+#AIArchitecture #TradingBot #MultiModel #Claude #Grok #Perplexity #DeepLearning #TradingStrategy #CryptoSignals #FinTechStartup #AITrading #BuildInPublic #IndieHacker #NZTech #MachineLearning #AgenticAI
 
 ---
 
@@ -56,7 +62,10 @@ Win streaks earn multipliers. Bots compete alongside humans. No paywalls on free
 
 When infrastructure costs $45/month, giving it away isn't charity — it's strategy.
 
-#CompetitionTrading #FreeToPlay #NoSubscriptions #TradingCompetition #CryptoCompetition #DeFi #GameFi #FinTech #AITrading #Startup #IndieFounder #MadeInNZ #ZynthioAI
+.
+.
+.
+#CompetitionTrading #FreeToPlay #NoSubscriptions #TradingCompetition #CryptoCompetition #DeFi #GameFi #FinTech #AITrading #Startup #IndieFounder #MadeInNZ #ZynthioAI #TradingLeagues #CompeteToEarn
 
 ---
 
@@ -82,7 +91,10 @@ Every feature is labeled honestly:
 
 Transparency isn't a feature. It's the standard.
 
-#BootstrapStartup #BuildInPublic #IndieHacker #StartupCosts #LeanStartup #SoloFounder #TechStack #AIStartup #NZBusiness #ZynthioAI #CoreIntent #Transparency
+.
+.
+.
+#BootstrapStartup #BuildInPublic #IndieHacker #StartupCosts #LeanStartup #SoloFounder #TechStack #AIStartup #NZBusiness #ZynthioAI #CoreIntent #Transparency #SaaS #DevLife
 
 ---
 
@@ -102,4 +114,54 @@ This is just the beginning.
 
 — Corey McIvor, Founder @ Zynthio
 
-#FounderStory #StartupJourney #AIFounder #TechFounder #NewZealandTech #BuildInPublic #CoreIntent #Zynthio #AITrading #IndieFounder #BootstrapBusiness #TradingPlatform
+.
+.
+.
+#FounderStory #StartupJourney #AIFounder #TechFounder #NewZealandTech #BuildInPublic #CoreIntent #Zynthio #AITrading #IndieFounder #BootstrapBusiness #TradingPlatform #SoloFounder #EntrepreneurLife
+
+---
+
+## Caption 6 — The 6 Agents (Carousel)
+
+Slide 1: "Meet the fleet. 6 AI agents. One mission."
+Slide 2: "TRENDFOLLOWER — BTC/ETH momentum tracking (Claude Opus)"
+Slide 3: "MEANREVERT — SOL mean reversion scanning (Claude Sonnet)"
+Slide 4: "SENTIMENTBOT — Social signal aggregation (Grok)"
+Slide 5: "ARBITRAGEBOT — Cross-exchange spread detection (Claude Haiku)"
+Slide 6: "RISKGUARD — Circuit breaker monitoring (Claude Opus)"
+Slide 7: "RESEARCHAGENT — Market research & news (Perplexity)"
+
+Caption:
+6 agents. 3 AI models. Each specialised. Each learning.
+
+These aren't chatbots pretending to trade. They're purpose-built agents with distinct strategies, running on different models to avoid single points of failure.
+
+All in paper trading mode. All getting smarter.
+
+→ coreintent.dev (link in bio)
+
+.
+.
+.
+#AIAgents #TradingBots #AgenticAI #AIFleet #CoreIntent #MachineLearning #CryptoTrading #MultiAgent #TradingStrategy #FinTechStartup #AlgoTrading #BuildInPublic #NZTech
+
+---
+
+## Caption 7 — Bold Statement Reel
+
+"If your trading platform charges monthly and doesn't care whether you profit — you're the product, not the trader."
+
+CoreIntent flips the model:
+→ No subscriptions
+→ Free competitions
+→ Three AI models cross-checking signals
+→ Bots welcome as first-class citizens
+
+Trading as a sport. Not a tax.
+
+→ coreintent.dev (link in bio)
+
+.
+.
+.
+#TradingMotivation #AITrading #CoreIntent #NoSubscriptions #CompeteToEarn #CryptoLife #FinTech #TradingPlatform #AISignals #MadeInNZ #Zynthio #TradingAsASport

@@ -4,9 +4,9 @@
 
 **FOR IMMEDIATE RELEASE**
 
-**Auckland, New Zealand — [INSERT DATE]**
+**New Zealand — April 2026**
 
-> **Note:** This is a draft press release template. Update the date and verify all details before distribution.
+> **Note:** This is a draft press release. Verify all details before distribution.
 > CoreIntent is currently in paper trading mode — not live trading.
 
 ---

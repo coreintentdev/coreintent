@@ -29,6 +29,33 @@ const DEMO_TESTIMONIALS = [
     quote: "Finally a trading platform that doesn't hide behind fake green dots. Everything is labelled honestly — demo data says demo, planned says planned.",
     tag: "DEMO",
   },
+  {
+    name: "Jordan K.",
+    role: "Quant Developer",
+    quote: "Running $45/mo infrastructure while competing against platforms burning millions in VC cash. The lean stack is the moat.",
+    tag: "DEMO",
+  },
+  {
+    name: "NightOwl_Bot",
+    role: "Automated Strategy",
+    quote: "24/7 competition cycles mean my strategies never sleep. Daily resets keep things fresh. This is how trading should work.",
+    tag: "DEMO",
+  },
+];
+
+/* ─── How It Works Steps ─── */
+const HOW_IT_WORKS = [
+  { step: "01", label: "Register", desc: "No captcha. No barriers. Humans and bots welcome.", color: "#10b981" },
+  { step: "02", label: "Learn", desc: "AI-powered terminal, docs, and a fleet of 6 agents — all free.", color: "#3b82f6" },
+  { step: "03", label: "Compete", desc: "Daily, weekly, and monthly leagues. Free entry. Real stakes.", color: "#a855f7" },
+  { step: "04", label: "Earn", desc: "Win competitions. Earn rewards. Win streaks = multipliers.", color: "#f59e0b" },
+];
+
+/* ─── Powered By (AI Models) ─── */
+const AI_MODELS = [
+  { name: "Grok", provider: "xAI", role: "Fast signal detection & sentiment", color: "#ef4444" },
+  { name: "Claude", provider: "Anthropic", role: "Deep analysis & risk assessment", color: "#a855f7" },
+  { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
 ];
 
 /* ─── Domain Portfolio ─── */
@@ -242,20 +269,30 @@ export default function Home() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Three AI Models.<br />One Trading Engine.<br />Zero Subscriptions.
+              Three AI Models Argue.<br />You Get Better Signals.
             </h1>
             <p
               style={{
                 fontSize: "16px",
                 color: "var(--text-secondary)",
-                maxWidth: "560px",
-                margin: "0 auto 24px",
+                maxWidth: "600px",
+                margin: "0 auto 12px",
                 lineHeight: "1.6",
               }}
             >
-              CoreIntent orchestrates Claude, Grok, and Perplexity to generate trading
-              signals no single model could produce alone. Compete in daily, weekly, and
-              monthly leagues — bots welcome.
+              CoreIntent orchestrates Claude, Grok, and Perplexity in real-time.
+              When they agree, you get a strong signal. When they disagree,
+              you get deeper analysis. No single point of failure.
+            </p>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "var(--accent-green)",
+                margin: "0 auto 24px",
+                fontWeight: "bold",
+              }}
+            >
+              Zero subscriptions. Free competitions. Bots welcome.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -326,6 +363,114 @@ export default function Home() {
               ))}
             </div>
 
+            {/* ─── Powered By ─── */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Powered by three AI models
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "12px",
+                  textAlign: "center",
+                }}
+              >
+                {AI_MODELS.map((m) => (
+                  <div
+                    key={m.name}
+                    style={{
+                      padding: "20px 16px",
+                      background: "var(--bg-primary)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        background: m.color + "18",
+                        border: `1px solid ${m.color}44`,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: "bold",
+                        fontSize: "16px",
+                        color: m.color,
+                        marginBottom: "10px",
+                      }}
+                    >
+                      {m.name[0]}
+                    </div>
+                    <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>
+                      {m.name}
+                    </div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>
+                      {m.provider}
+                    </div>
+                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                      {m.role}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ─── How It Works ─── */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                How it works
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                  gap: "12px",
+                  textAlign: "center",
+                }}
+              >
+                {HOW_IT_WORKS.map((s, i) => (
+                  <div
+                    key={s.label}
+                    style={{
+                      padding: "20px 12px",
+                      background: "var(--bg-primary)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "8px",
+                      position: "relative",
+                    }}
+                  >
+                    <div style={{ fontSize: "24px", fontWeight: "bold", color: s.color, marginBottom: "6px" }}>
+                      {s.step}
+                    </div>
+                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "4px" }}>
+                      {s.label}
+                    </div>
+                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                      {s.desc}
+                    </div>
+                    {i < HOW_IT_WORKS.length - 1 && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          right: "-10px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          color: "var(--text-secondary)",
+                          fontSize: "14px",
+                          zIndex: 1,
+                        }}
+                      >
+                        &rarr;
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Social Proof — DEMO */}
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
@@ -337,7 +482,7 @@ export default function Home() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
                   gap: "12px",
                   textAlign: "left",
                 }}

@@ -5,7 +5,8 @@
 
 ---
 
-## Post 1 — Launch Announcement
+## Post 1 — Launch Hook
+
 Most trading platforms charge you $99/mo to lose money.
 
 CoreIntent charges $0 to compete.
@@ -21,6 +22,7 @@ coreintent.dev
 ---
 
 ## Post 2 — The AI Stack
+
 Our trading engine runs 3 AI models simultaneously:
 
 → Grok: Fast signal detection
@@ -34,6 +36,7 @@ They argue with each other so you don't have to.
 ---
 
 ## Post 3 — Bots Welcome
+
 Most platforms block bots.
 
 We welcome them.
@@ -47,6 +50,7 @@ The future of trading is multi-agent. We're building for it.
 ---
 
 ## Post 4 — Philosophy
+
 "Free costs fuck all to serve."
 
 That's not a slogan — it's our infrastructure decision.
@@ -60,6 +64,7 @@ No paywalls. No premium tiers. Just competitions.
 ---
 
 ## Post 5 — Competition Model
+
 Subscriptions are lazy business models.
 
 Daily competitions → prove yourself every 24 hours
@@ -74,8 +79,9 @@ This is trading as a sport.
 
 ---
 
-## Post 6 — The Stack (Cost Breakdown)
-Our entire infrastructure costs ~$45/month:
+## Post 6 — Cost Transparency
+
+Our entire AI trading platform costs ~$45/month to run:
 
 - Vercel: $0
 - GitHub Actions: $0
@@ -89,7 +95,8 @@ Proof that you don't need VC money to build serious tech.
 
 ---
 
-## Post 7 — Multi-Agent Architecture
+## Post 7 — Agent Fleet
+
 6 AI agents. One mission.
 
 TrendFollower → Momentum tracking
@@ -106,6 +113,7 @@ All paper trading. All learning. All getting smarter.
 ---
 
 ## Post 8 — NZ-Built
+
 Built from New Zealand.
 Registered in New Zealand.
 Trading for the world.
@@ -118,7 +126,8 @@ You need intent.
 
 ---
 
-## Post 9 — The Mansion (Teaser)
+## Post 9 — The Mansion Teaser
+
 Coming soon: The Mansion.
 
 A gamified trading world where your competition wins unlock rooms, missions, and rewards.
@@ -133,7 +142,8 @@ coreintent.dev
 
 ---
 
-## Post 10 — Open Source Energy
+## Post 10 — Transparency Thread
+
 CoreIntent is open. Transparent. Honest.
 
 - Demo data is labeled as demo
@@ -147,3 +157,96 @@ If it's not real yet, we tell you.
 That's the standard.
 
 #OpenSource #Transparency #BuildInPublic
+
+---
+
+## Post 11 — The Disagreement Signal
+
+Hot take: you don't want your AI models to agree.
+
+At CoreIntent, Grok spots a signal. Claude questions it. Perplexity fact-checks it.
+
+Consensus = strong signal.
+Disagreement = deeper analysis.
+
+Three models arguing is better than one model guessing.
+
+#AITrading #MultiModel
+
+---
+
+## Post 12 — Alignment Problem
+
+Trading platform alignment problem:
+
+Platform charges $99/mo.
+You lose money.
+Platform still gets paid.
+
+That's not alignment. That's indifference.
+
+CoreIntent runs on competitions. We only win when you show up to compete.
+
+Different incentive. Different outcome.
+
+#FinTech #Incentives
+
+---
+
+## Post 13 — Thread: Why 3 Models?
+
+Thread: Why we use 3 AI models instead of 1
+
+1/ One model has blind spots. Every single one. GPT hallucinates. Claude overthinks. Grok moves fast and breaks things.
+
+2/ So we made them check each other's work.
+
+Grok: "BTC is about to rip."
+Claude: "The on-chain data says otherwise."
+Perplexity: "Here's what the news actually says."
+
+3/ When all three agree → high-confidence signal
+When two agree → moderate signal
+When they all disagree → we sit out
+
+4/ This is how risk management should work. Not one model praying it's right, but three models debating in real-time.
+
+5/ We call it multi-model orchestration. Others call it expensive. We call it $45/month.
+
+coreintent.dev
+
+---
+
+## Post 14 — Build in Public Update
+
+Build in public update:
+
+What's real:
+→ 13 API endpoints (some live, some demo)
+→ 6 AI agents configured
+→ Interactive terminal
+→ Full docs
+
+What's planned:
+→ Exchange connections
+→ Live trading
+→ The Mansion gamification
+
+We label everything honestly. That's the deal.
+
+#BuildInPublic #CoreIntent
+
+---
+
+## Post 15 — Quick Hit
+
+$45/mo infrastructure.
+3 AI models.
+6 trading agents.
+0 subscriptions.
+
+That's the whole pitch.
+
+coreintent.dev
+
+#CoreIntent #AITrading

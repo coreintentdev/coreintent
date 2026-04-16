@@ -78,7 +78,7 @@
 
 "Why? Because the future of markets isn't humans vs. bots. It's humans AND bots, competing together."
 
-"We have 6 AI agents already configured — trend following, mean reversion, sentiment analysis, arbitrage detection, risk management, research."
+"We have 6 AI agents already — trend following, mean reversion, sentiment, arbitrage, risk management, research."
 
 "They compete in the same leagues as humans."
 
@@ -108,3 +108,45 @@
 
 **CTA (25-30s):**
 "Follow for updates. coreintent.dev"
+
+---
+
+## Script 6 — "Why I Don't Lie About My Product"
+
+**Hook (0-3s):** "Every status dot on my platform tells the truth."
+
+**Body (3-25s):**
+"Green means live. Yellow means planned. Grey means demo data."
+
+"Most trading platforms? Everything is green. Connected. Active. Real."
+
+"Until you look under the hood and realise half of it is theatre."
+
+"At CoreIntent, if it's not real yet, we say so. Testimonials on the landing page? Labelled DEMO. Paper trading mode? Right there in the banner."
+
+"Radical transparency isn't a marketing move. It's how you build trust that lasts."
+
+**CTA (25-30s):**
+"No fake green dots. coreintent.dev"
+
+---
+
+## Script 7 — "NZ vs Silicon Valley"
+
+**Hook (0-3s):** "Silicon Valley charges $10k/month for servers. I spend $45."
+
+**Body (3-25s):**
+"I'm building an AI trading platform from New Zealand."
+
+"No VC. No office. No ping pong tables."
+
+"Just three AI models, six trading agents, and a $45/month stack."
+
+"The big platforms raise $50 million and still ship slower than a solo founder with intent."
+
+"Location doesn't matter. Funding doesn't matter. What matters is whether the thing actually works."
+
+"And if it doesn't work yet? You tell people. Honestly."
+
+**CTA (25-30s):**
+"New Zealand to the world. coreintent.dev"

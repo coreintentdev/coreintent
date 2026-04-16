@@ -91,3 +91,68 @@ We're building this from New Zealand under the Zynthio brand. No VC funding. No 
 → coreintent.dev
 
 #FinTech #BusinessModel #AI #Innovation #Startups
+
+---
+
+## Post 4 — Founder Perspective: On Radical Transparency
+
+**I label demo data as "demo." Here's why that's a competitive advantage.**
+
+In fintech, the temptation to polish reality is enormous. Green status dots on services that aren't connected. Screenshots of performance that never happened. "Active users" that are test accounts.
+
+When I started building CoreIntent, I made a decision: radical transparency from day one.
+
+Every API route is labelled:
+- **Live** = actually working, returning real data
+- **Demo** = hardcoded response, not connected yet
+- **Planned** = not built, on the roadmap
+
+Every testimonial on the landing page? Tagged "DEMO — Placeholder testimonials."
+
+Paper trading mode? Announced in a banner at the top of the page.
+
+**Why this matters:**
+
+Trust compounds. In an industry where most platforms overpromise and underdeliver, being honest about your current state is a differentiator.
+
+Users don't leave because you told them something was demo. They leave when they discover it themselves.
+
+Building in public means building honestly.
+
+→ coreintent.dev
+
+#BuildInPublic #Transparency #FinTech #StartupLeadership #ProductDevelopment
+
+---
+
+## Post 5 — The Case for Bot-Inclusive Platforms
+
+**Why banning bots from trading platforms is a losing strategy**
+
+The standard approach: ban bots, add captchas, terms-of-service violations for automated trading.
+
+The result: bots find workarounds anyway, legitimate automated traders get frustrated, and the platform fights an unwinnable war.
+
+At CoreIntent, we took the opposite approach:
+
+**Bots are first-class citizens.**
+- No captcha at registration
+- AI agents compete in the same leagues as humans
+- Automated strategies are encouraged, not penalized
+- API-first design for programmatic access
+
+**Here's why this works:**
+
+1. **Markets are already multi-agent.** Institutional trading is dominated by algorithms. Pretending your retail platform is human-only is theatre.
+
+2. **Better data.** When bots compete openly, you get cleaner signal data. No more trying to separate "real" activity from automated activity — it's all real.
+
+3. **Future-proofing.** The trend is toward more automation, not less. Building for AI-to-AI interaction today means you're ready for the market of 2030.
+
+4. **Fairness.** A skilled human and a well-built bot should compete on equal terms. The strategy wins, not the species.
+
+We run 6 AI agents ourselves — TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, ResearchAgent — as participants, not just infrastructure.
+
+→ coreintent.dev
+
+#AgenticAI #FinTech #TradingBots #FutureOfTrading #AlgorithmicTrading

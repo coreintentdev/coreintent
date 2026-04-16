@@ -313,6 +313,102 @@ export default function PricingPage() {
             </div>
           </div>
 
+          {/* CoreIntent vs Traditional */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h3>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ borderBottom: "2px solid var(--border-color)" }}>
+                  <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)" }}></th>
+                  <th style={{ textAlign: "center", padding: "10px 12px", fontSize: "12px", color: "var(--accent-green)" }}>CoreIntent</th>
+                  <th style={{ textAlign: "center", padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)" }}>Typical Platform</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Monthly cost", "Free", "$49–$299/mo"],
+                  ["AI models", "3 (Claude + Grok + Perplexity)", "0–1"],
+                  ["Trading agents", "6 included", "Premium add-on"],
+                  ["Bot access", "First-class citizen", "Banned or tolerated"],
+                  ["Revenue model", "Competitions", "Subscriptions"],
+                  ["Profit alignment", "We win when you compete", "They win either way"],
+                  ["Transparency", "Demo data labelled honestly", "Green dots everywhere"],
+                  ["Infrastructure cost", "~$45/mo total", "$10k+/mo"],
+                ].map(([feature, us, them], i) => (
+                  <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                    <td style={{ padding: "10px 12px", fontSize: "13px", fontWeight: "bold" }}>{feature}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--accent-green)", textAlign: "center" }}>{us}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)", textAlign: "center" }}>{them}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* FAQ */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "20px", textAlign: "center" }}>Frequently Asked Questions</h3>
+            {[
+              {
+                q: "Is CoreIntent really free?",
+                a: "Yes. Our infrastructure costs ~$45/month total. Free costs us almost nothing to serve, so we give it away. All features, all competitions, no paywalls.",
+              },
+              {
+                q: "Can I use trading bots?",
+                a: "Not only can you — we encourage it. AI-to-AI competition is a core feature. Your bot can register, learn, compete, and earn just like any human. No captcha, no blocks.",
+              },
+              {
+                q: "Is this live trading?",
+                a: "Not yet. CoreIntent is currently in paper trading mode. We're transparent about this — when features are demo or planned, we label them honestly. Exchange connections (Binance, Coinbase) are planned.",
+              },
+              {
+                q: "How does the competition model work?",
+                a: "Daily leagues reset every 24 hours. Weekly leagues run over 7 days. Monthly tournaments are the big leagues. Everyone starts equal. Win streaks earn multipliers. Leaderboards track everything.",
+              },
+              {
+                q: "What AI models power the platform?",
+                a: "Three: Grok (xAI) for fast signal detection and sentiment, Claude (Anthropic) for deep analysis and risk assessment, and Perplexity for real-time research and news. They cross-check each other.",
+              },
+              {
+                q: "Where is CoreIntent based?",
+                a: "New Zealand. Built by Corey McIvor under the Zynthio brand. Registered in NZ — no Silicon Valley, no VC money, just a clear thesis and lean infrastructure.",
+              },
+            ].map((faq, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "16px 0",
+                  borderBottom: i < 5 ? "1px solid var(--border-color)" : "none",
+                }}
+              >
+                <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "6px" }}>
+                  {faq.q}
+                </div>
+                <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                  {faq.a}
+                </div>
+              </div>
+            ))}
+          </div>
+
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
             All leagues include full terminal access, AI agents, docs, and community.
             <br />
