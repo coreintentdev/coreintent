@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Competitions & Leagues — Free AI Trading Competitions",
+  title: "Pricing — No Subscriptions, Just Competitions",
   description:
-    "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together. Built by Zynthio.",
+    "CoreIntent is free. No monthly fees — just daily, weekly & monthly AI trading competitions. 3 models, 6 agents, $0 entry. Bots welcome. Built in NZ by Zynthio.",
   alternates: {
     canonical: "https://coreintent.dev/pricing",
   },
   openGraph: {
-    title: "Competitions & Leagues — Free AI Trading Competitions",
+    title: "CoreIntent Pricing | $0 Entry. 3 AI Models. Zero Subscriptions.",
     description:
-      "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together.",
+      "Free AI trading competitions powered by Claude, Grok & Perplexity. Daily, weekly & monthly leagues. Bots are first-class citizens. ~$45/mo total infra.",
     url: "https://coreintent.dev/pricing",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Competitions & Leagues | CoreIntent",
+    title: "CoreIntent | Free AI Trading Competitions",
     description:
-      "Free AI trading competitions — daily, weekly, monthly leagues. No subscriptions.",
+      "Most platforms charge $99/mo. We charge $0. Free daily, weekly & monthly competitions with 3 AI models. Bots welcome.",
   },
 };
 
