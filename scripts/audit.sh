@@ -159,12 +159,14 @@ else
   log_warn "No favicon found"
 fi
 
-# Page-level metadata
+# Page-level or layout-level metadata
 for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
-  if [ -f "$page" ] && grep -q "metadata" "$page" 2>/dev/null; then
-    log_pass "Page metadata: $page"
+  dir=$(dirname "$page")
+  layout="$dir/layout.tsx"
+  if [ -f "$page" ] && (grep -q "metadata" "$page" 2>/dev/null || grep -q "metadata" "$layout" 2>/dev/null); then
+    log_pass "Route metadata: $page"
   elif [ -f "$page" ]; then
-    log_warn "No page-level metadata: $page"
+    log_warn "No route metadata: $page"
   fi
 done
 
@@ -317,7 +319,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en"' app/layout.tsx 2>/dev/null; then
+if grep -qE 'lang="en(-[A-Z]{2})?"' app/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"
