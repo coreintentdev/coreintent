@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -185,6 +186,9 @@ const HERO_PHRASES = [
   "Grok Spots. Claude Questions.",
   "Perplexity Fact-Checks.",
   "Consensus = Conviction.",
+  "No Subscriptions. Ever.",
+  "Bots Compete With Humans.",
+  "Trading Is a Sport Now.",
   "Built in New Zealand.",
 ];
 
@@ -373,7 +377,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "14px", color: "var(--accent-green)", marginBottom: "8px", minHeight: "1.4em" }}>
-              Multi-model consensus trading engine
+              Multi-model consensus trading engine by Zynthio
             </p>
             <p
               style={{
@@ -384,20 +388,30 @@ export default function Home() {
                 lineHeight: "1.6",
               }}
             >
+              One model guesses. Three models debate.
               Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              Consensus means conviction. Disagreement means dig deeper.
-              No single model guessing — three models debating.
+              When they agree, you move with conviction. When they disagree, you dig deeper.
             </p>
             <p
               style={{
                 fontSize: "14px",
                 color: "var(--accent-green)",
-                margin: "0 auto 24px",
+                margin: "0 auto 8px",
                 fontWeight: "bold",
                 letterSpacing: "0.3px",
               }}
             >
               Zero subscriptions. Free competitions. Bots welcome. Built in NZ.
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "var(--text-secondary)",
+                margin: "0 auto 24px",
+                letterSpacing: "0.2px",
+              }}
+            >
+              Paper trading mode — building honestly, shipping transparently.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -417,6 +431,25 @@ export default function Home() {
               >
                 Launch Terminal
               </button>
+              <Link
+                href="/pricing"
+                style={{
+                  padding: "14px 32px",
+                  background: "transparent",
+                  color: "#a855f7",
+                  border: "1px solid #a855f744",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  letterSpacing: "0.3px",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+              >
+                View Competitions
+              </Link>
               <button
                 onClick={() => { setShowHero(false); setTab("agents"); }}
                 style={{
@@ -446,10 +479,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Multi-Model Consensus", desc: "Three AI models cross-check every signal. Agreement = conviction. Disagreement = caution.", color: "#a855f7" },
-                { label: "Competitions, Not Subs", desc: "Daily, weekly, monthly leagues. Free entry. Win streaks earn multipliers.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans.", color: "#3b82f6" },
-                { label: "$45/mo Total Stack", desc: "No VC burn rate. Lean infrastructure means free costs nothing to serve.", color: "#f59e0b" },
+                { label: "Multi-Model Consensus", desc: "Three AI models cross-check every signal. No single model guessing — three debating. Agreement = move. Disagreement = wait.", color: "#a855f7" },
+                { label: "Competitions, Not Subs", desc: "Other platforms charge $99/mo whether you win or lose. We charge $0. Prove yourself in daily, weekly, and monthly leagues.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The best strategy wins — human or bot.", color: "#3b82f6" },
+                { label: "$45/mo Total Stack", desc: "No VC. No burn rate. Our entire infrastructure costs less than your gym membership. Free is sustainable, not subsidised.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -583,11 +616,14 @@ export default function Home() {
 
             {/* Social Proof — DEMO */}
             <div style={{ marginTop: "36px" }}>
-              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                What people are saying
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "4px" }}>
+                What traders and bots are saying
                 <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
                   DEMO — Placeholder testimonials
                 </span>
+              </div>
+              <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "12px" }}>
+                These are example testimonials showing the kind of feedback we&apos;re building for. Not real users yet.
               </div>
               <div
                 style={{
@@ -1016,8 +1052,8 @@ npm run build           # Production build`}
           background: "var(--bg-secondary)",
         }}
       >
-        <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>coreintent.dev | Powered by Zynthio.ai | 3 AI Models | {DOMAINS.length} Domains</span>
+        <span>Paper Trading Mode | v0.2.0-alpha | NZ Built</span>
       </footer>
     </div>
   );

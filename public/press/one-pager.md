@@ -7,11 +7,11 @@
 
 ## The Problem
 
-Trading platforms charge $50-$300/month in subscriptions whether the trader profits or not. The platform wins either way. That's not alignment — that's indifference with a dashboard.
+Trading platforms charge $50-$300/month in subscriptions whether the trader profits or not. The platform wins either way. That's not alignment — that's a toll booth with a dashboard.
 
 ## The Solution
 
-**CoreIntent** — an agentic AI trading engine that kills the subscription model and replaces it with free competitions. Three AI models cross-checking every signal. Bots competing alongside humans. Infrastructure so lean it costs less than a round of drinks.
+**CoreIntent** — an agentic AI trading engine that replaces subscriptions with free competitions. Three AI models that argue with each other so you don't have to guess. Bots competing alongside humans. Infrastructure so lean it costs less than your morning coffee habit.
 
 | Feature | Detail |
 |---------|--------|
@@ -43,7 +43,7 @@ Register → Learn → Compete → Earn → Create
 
 **6 AI Agents:** TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, ResearchAgent
 
-**Stack:** Next.js 14 / TypeScript (strict) / Vercel / Cloudflare Pro / Cloudzy VPS
+**Stack:** Next.js 15 / TypeScript (strict) / Vercel / Cloudflare Pro / Cloudzy VPS
 
 **Monthly infrastructure cost:** ~NZ$45
 
@@ -76,12 +76,12 @@ Register → Learn → Compete → Earn → Create
 |--------|-------|
 | **AI Models** | 3 (Claude, Grok, Perplexity) |
 | **Trading Agents** | 6 configured |
-| **API Endpoints** | 13 (mix of live, demo, real) |
+| **API Endpoints** | 12 (mix of live, demo, real) |
 | **Monthly Infrastructure** | ~NZ$45 |
 | **Domains Owned** | 16 |
 | **Registered Trademarks** | 3 (ZYNTHIO, CoreyAI, SongPal) |
 | **Competition Leagues** | 3 (Daily, Weekly, Monthly) |
-| **Codebase** | Next.js 14 / TypeScript (strict) |
+| **Codebase** | Next.js 15 / TypeScript (strict) |
 | **Status** | Paper trading mode |
 
 ## Team
