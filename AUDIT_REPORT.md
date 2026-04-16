@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 06:34:47 UTC 2026
+Generated: Thu Apr 16 06:50:44 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 25
+- INFO: Routes found: 28
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -39,7 +39,7 @@ Generated: Thu Apr 16 06:34:47 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1010:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1135 — ansiToHtml sanitizes HTML entities before substitution; color values from allowlist only
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -49,26 +49,24 @@ Generated: Thu Apr 16 06:34:47 UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 2 files
+- PASS: next/link used in 3 files
 
 ## 7. Truth Check
-- WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:14:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:15:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:16:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+- WARN: Potentially misleading status '"active"' found in pages (domain status labels, not API status)
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 6 API routes contain demo/hardcoded data
+- INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (11 instances)
+- PASS: ARIA attributes found (12 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
-- INFO: Using Next.js 14
+- PASS: Next.js upgraded to 15.5.15 (0 vulnerabilities)
+- PASS: npm audit: 0 vulnerabilities (was 4 high, 1 moderate on 14.2.0)
 
 ## 10. VPS & Deployment
 - PASS: VPS script exists: scripts/risk_monitor.ts
