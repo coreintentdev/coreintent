@@ -85,7 +85,7 @@ const STATUS_CARDS = [
   { label: "AI Agents", value: "Ready", color: "#a855f7" },
   { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
   { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "12", color: "#06b6d4" },
+  { label: "API Routes", value: "14", color: "#06b6d4" },
 ];
 
 /* ─── Architecture Pillars ─── */
@@ -420,7 +420,7 @@ export default function Home() {
               {[
                 { value: "3", label: "AI Models" },
                 { value: "6", label: "Agents" },
-                { value: "12", label: "API Routes" },
+                { value: "14", label: "API Routes" },
                 { value: "$0", label: "Entry Fee" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center" }}>
