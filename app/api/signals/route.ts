@@ -10,39 +10,57 @@
 import { ok, preflight } from "@/lib/api";
 
 interface Signal {
-  id: number;
-  pair: string;
-  direction: "long" | "short";
+  id:         number;
+  pair:       string;
+  direction:  "long" | "short";
   /** 0–1 confidence score. Only signals >= minConfidence are actionable. */
   confidence: number;
-  source: string;
-  timestamp: string;
+  source:     string;
+  timestamp:  string;
+}
+
+/** Template without timestamp — stamped fresh at request time in GET. */
+interface SignalTemplate {
+  id:         number;
+  pair:       string;
+  direction:  "long" | "short";
+  confidence: number;
+  source:     string;
 }
 
 interface SignalsResponse {
   /** Filtered to signals >= minConfidence. */
-  signals: Signal[];
+  signals:       Signal[];
   minConfidence: number;
-  totalActive: number;
-  totalPending: number;
-  mode: "demo" | "live";
+  /** Count of signals at or above minConfidence. */
+  totalActive:   number;
+  /** Count of signals below minConfidence (low-confidence, not surfaced). */
+  totalPending:  number;
+  mode:          "demo" | "live";
 }
 
 const MIN_CONFIDENCE = 0.75;
 
-const ALL_SIGNALS: Signal[] = [
-  { id: 1, pair: "BTC/USD", direction: "long",  confidence: 0.87, source: "TrendFollower", timestamp: new Date().toISOString() },
-  { id: 2, pair: "ETH/USD", direction: "long",  confidence: 0.79, source: "MeanRevert",    timestamp: new Date().toISOString() },
-  { id: 3, pair: "SOL/USD", direction: "short", confidence: 0.62, source: "SentimentBot",  timestamp: new Date().toISOString() },
+/**
+ * Static signal definitions. Timestamps are stamped per-request in GET
+ * to avoid serving stale module-load timestamps after long uptimes.
+ */
+const SIGNAL_TEMPLATES: SignalTemplate[] = [
+  { id: 1, pair: "BTC/USD", direction: "long",  confidence: 0.87, source: "TrendFollower" },
+  { id: 2, pair: "ETH/USD", direction: "long",  confidence: 0.79, source: "MeanRevert"    },
+  { id: 3, pair: "SOL/USD", direction: "short", confidence: 0.62, source: "SentimentBot"  },
 ];
 
 export async function GET() {
+  const now = new Date().toISOString();
+  const allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));
+
   const data: SignalsResponse = {
-    signals: ALL_SIGNALS.filter((s) => s.confidence >= MIN_CONFIDENCE),
+    signals:       allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE),
     minConfidence: MIN_CONFIDENCE,
-    totalActive: 12,
-    totalPending: 3,
-    mode: "demo",
+    totalActive:   allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
+    totalPending:  allSignals.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
+    mode:          "demo",
   };
   return ok(data);
 }

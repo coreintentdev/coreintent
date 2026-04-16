@@ -23,7 +23,7 @@
 
 export interface AIResponse {
   source: "grok" | "claude" | "perplexity";
-  model: string;
+  model:  string;
   content: string;
   /** true = live API call succeeded; false = demo or error fallback */
   live: boolean;
@@ -90,7 +90,6 @@ function classifyFetchError(
 // GROK — via X.ai — Fast signals, near-free with X Premium+
 // ---------------------------------------------------------------------------
 
-/** Request timeout for Grok (ms). */
 const GROK_TIMEOUT_MS = 15_000;
 
 /**
@@ -117,7 +116,7 @@ export async function callGrok(prompt: string): Promise<AIResponse> {
   if (isDemoKey(key, "xai-xxx")) {
     return {
       source: "grok",
-      model: "grok-demo",
+      model:  "grok-demo",
       content: `[DEMO] Grok: ${prompt}`,
       live: false,
     };
@@ -149,7 +148,7 @@ export async function callGrok(prompt: string): Promise<AIResponse> {
       const text = await res.text();
       return {
         source: "grok",
-        model: "grok-3",
+        model:  "grok-3",
         content: `[API ERROR ${res.status}] ${text}`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
@@ -158,8 +157,8 @@ export async function callGrok(prompt: string): Promise<AIResponse> {
 
     const data = await res.json();
     return {
-      source: "grok",
-      model: data.model ?? "grok-3",
+      source:  "grok",
+      model:   data.model ?? "grok-3",
       content: data.choices?.[0]?.message?.content ?? "",
       live: true,
     };
@@ -172,14 +171,12 @@ export async function callGrok(prompt: string): Promise<AIResponse> {
 // CLAUDE — Anthropic — Deep analysis, risk assessment, orchestration
 // ---------------------------------------------------------------------------
 
-/** Request timeout for Claude (ms). */
 const CLAUDE_TIMEOUT_MS = 25_000;
 
 /**
  * Default system prompt for Claude.
- * Includes project context so responses are grounded in CoreIntent's reality.
- * This string is marked for prompt caching — Anthropic will cache it server-side
- * after the first call, reducing token cost on subsequent requests.
+ * Marked for prompt caching — Anthropic caches it server-side after the first call,
+ * reducing token cost on subsequent requests with the same system prompt.
  */
 const CLAUDE_DEFAULT_SYSTEM =
   "You are CoreIntent, an agentic AI trading assistant for Zynthio.ai.\n" +
@@ -196,7 +193,6 @@ const CLAUDE_DEFAULT_SYSTEM =
 /**
  * Call Claude (Anthropic) for deep analysis, risk assessment, and long-context tasks.
  * Enables prompt caching on the system prompt to reduce API cost.
- * Falls back gracefully when the API key is absent or the call fails.
  *
  * @param prompt   User-side message.
  * @param system   Optional override for the system prompt. Caching still applies.
@@ -208,8 +204,8 @@ export async function callClaude(
   const key = process.env.ANTHROPIC_API_KEY;
   if (isDemoKey(key, "sk-ant-xxx")) {
     return {
-      source: "claude",
-      model: "claude-demo",
+      source:  "claude",
+      model:   "claude-demo",
       content: `[DEMO] Claude: ${prompt}`,
       live: false,
     };
@@ -223,22 +219,19 @@ export async function callClaude(
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "x-api-key": key!,
+          "Content-Type":    "application/json",
+          "x-api-key":       key!,
           "anthropic-version": "2023-06-01",
           // Enable server-side prompt caching for the system message
-          "anthropic-beta": "prompt-caching-2024-07-31",
+          "anthropic-beta":  "prompt-caching-2024-07-31",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-6",
+          model:      "claude-sonnet-4-6",
           max_tokens: 1024,
-          // Structured system array with cache_control marks the prompt for caching.
-          // Anthropic caches it after first use — saves cost on repeated calls with
-          // the same system prompt (e.g. protect, research, analysis routes).
           system: [
             {
-              type: "text",
-              text: systemText,
+              type:          "text",
+              text:          systemText,
               cache_control: { type: "ephemeral" },
             },
           ],
@@ -251,8 +244,8 @@ export async function callClaude(
     if (!res.ok) {
       const text = await res.text();
       return {
-        source: "claude",
-        model: "claude-sonnet-4-6",
+        source:  "claude",
+        model:   "claude-sonnet-4-6",
         content: `[API ERROR ${res.status}] ${text}`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
@@ -261,8 +254,8 @@ export async function callClaude(
 
     const data = await res.json();
     return {
-      source: "claude",
-      model: data.model ?? "claude-sonnet-4-6",
+      source:  "claude",
+      model:   data.model ?? "claude-sonnet-4-6",
       content: data.content?.[0]?.text ?? "",
       live: true,
     };
@@ -275,12 +268,10 @@ export async function callClaude(
 // PERPLEXITY — Research, fact-checking, live web search, $20/mo flat
 // ---------------------------------------------------------------------------
 
-/** Request timeout for Perplexity (ms). */
 const PERPLEXITY_TIMEOUT_MS = 30_000;
 
 /**
  * Wrap a research query with instructions that enforce factual, cited output.
- * Appended as a suffix so any caller-supplied query is preserved verbatim at the front.
  */
 function buildPerplexityQuery(query: string): string {
   return (
@@ -301,8 +292,8 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
   const key = process.env.PERPLEXITY_API_KEY;
   if (isDemoKey(key, "pplx-xxx")) {
     return {
-      source: "perplexity",
-      model: "perplexity-demo",
+      source:  "perplexity",
+      model:   "perplexity-demo",
       content: `[DEMO] Perplexity: ${query}`,
       live: false,
     };
@@ -315,12 +306,12 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${key}`,
+          Authorization:  `Bearer ${key}`,
         },
         body: JSON.stringify({
           model: "sonar-pro",
           messages: [{ role: "user", content: buildPerplexityQuery(query) }],
-          max_tokens: 1024,
+          max_tokens:  1024,
           temperature: 0.2,
         }),
       },
@@ -330,8 +321,8 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
     if (!res.ok) {
       const text = await res.text();
       return {
-        source: "perplexity",
-        model: "sonar-pro",
+        source:  "perplexity",
+        model:   "sonar-pro",
         content: `[API ERROR ${res.status}] ${text}`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
@@ -340,8 +331,8 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
 
     const data = await res.json();
     return {
-      source: "perplexity",
-      model: data.model ?? "sonar-pro",
+      source:  "perplexity",
+      model:   data.model ?? "sonar-pro",
       content: data.choices?.[0]?.message?.content ?? "",
       live: true,
     };
@@ -381,9 +372,9 @@ export function validateAiContent(response: AIResponse): boolean {
  * @returns [grokResult, claudeResult, perplexityResult]
  */
 export async function callAll(
-  grokPrompt: string,
-  claudePrompt: string,
-  perplexityQuery: string
+  grokPrompt:       string,
+  claudePrompt:     string,
+  perplexityQuery:  string
 ): Promise<[AIResponse, AIResponse, AIResponse]> {
   return Promise.all([
     callGrok(grokPrompt),
@@ -399,10 +390,10 @@ export async function callAll(
 /**
  * Route a task to the most appropriate AI, enriching the prompt with
  * task-type context so each model receives the right framing:
- * - signal    → Grok  (explicit signal format, paper trading context)
- * - content   → Grok  (fast draft for CoreIntent/Zynthio.ai content)
- * - analysis  → Claude (deep reasoning with structured output request)
- * - research  → Perplexity (factual web research with citation enforcement)
+ * - signal    → Grok        (explicit signal format, paper trading context)
+ * - content   → Grok        (fast draft for CoreIntent/Zynthio.ai, brand voice)
+ * - analysis  → Claude      (deep reasoning, structured output with required sections)
+ * - research  → Perplexity  (factual web research with citation enforcement, NZ context)
  */
 export async function orchestrate(
   task: OrchestrateTask,
@@ -411,21 +402,34 @@ export async function orchestrate(
   switch (task) {
     case "signal":
       return callGrok(
-        `TASK: Trading signal analysis.\n\n${prompt}\n\n` +
-        `Respond in signal format: Pair | Direction | Confidence (0–1) | Entry zone | Stop level | Rationale.`
+        `[CoreIntent Signal Engine | paper_trading mode]\n` +
+        `TASK: Generate a trading signal analysis for: ${prompt}\n\n` +
+        `Format EXACTLY: <Pair> | <long/short> | <confidence 0.00–1.00> | Entry: <zone> | Stop: <level> | Rationale: <≤2 sentences>\n` +
+        `Rules: Only signal if confidence ≥ 0.70. State [INSUFFICIENT DATA] if unable to form a view. ` +
+        `All signals are paper trading only — no real capital at risk.`
       );
     case "content":
       return callGrok(
-        `TASK: Content generation for CoreIntent / Zynthio.ai.\n\n${prompt}`
+        `[CoreIntent Content Engine | Zynthio.ai]\n` +
+        `TASK: Generate content for CoreIntent / Zynthio.ai.\n\n${prompt}\n\n` +
+        `Brand voice: Direct, data-driven, no hype. Competition-based platform (not subscriptions). NZ-based.\n` +
+        `Output must be ready to publish — no placeholder text, no Lorem Ipsum.`
       );
     case "analysis":
       return callClaude(
-        `TASK: Deep market or risk analysis.\n\n${prompt}\n\n` +
-        `Structure your response: ## Summary → ## Key Risks → ## Recommendations.`
+        `[CoreIntent Analysis Engine | paper_trading mode]\n` +
+        `TASK: Deep analysis for: ${prompt}\n\n` +
+        `Required sections:\n## Summary\n## Key Risks\n## Recommendations\n\n` +
+        `Rules: Label all data sources. Flag uncertainty with [UNCERTAIN: reason]. ` +
+        `NZ regulatory context where applicable (NZ FMA, not ASIC). ` +
+        `Do not fabricate prices, volume, or on-chain statistics.`
       );
     case "research":
       return callPerplexity(
-        `RESEARCH QUERY: ${prompt}`
+        `[CoreIntent Research Engine | Zynthio.ai | NZ jurisdiction]\n` +
+        `RESEARCH QUERY: ${prompt}\n\n` +
+        `Context: Paper trading platform. Prioritise sources from the last 90 days for market-sensitive data. ` +
+        `Cite all sources. State explicitly if information cannot be found rather than inferring.`
       );
   }
 }

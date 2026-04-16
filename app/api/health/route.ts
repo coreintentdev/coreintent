@@ -16,22 +16,22 @@ const BOOT_TIME = Date.now();
 
 interface AIKeyStatus {
   /** true = a real key is configured; false = demo placeholder */
-  claude: boolean;
-  grok: boolean;
+  claude:     boolean;
+  grok:       boolean;
   perplexity: boolean;
 }
 
 interface HealthResponse {
-  status: "ok";
-  version: string;
+  status:      "ok";
+  version:     string;
   /** Seconds since this process started. */
-  uptime: number;
-  timestamp: string;
-  mode: "paper_trading" | "live";
+  uptime:      number;
+  timestamp:   string;
+  mode:        "paper_trading" | "live";
   /** Node.js runtime version (e.g. "v20.12.0"). */
   nodeVersion: string;
   /** Which AI API keys are configured (true) vs demo placeholder (false). */
-  aiKeys: AIKeyStatus;
+  aiKeys:      AIKeyStatus;
 }
 
 function isKeyConfigured(key: string | undefined, placeholder: string): boolean {

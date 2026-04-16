@@ -10,20 +10,20 @@
 import { ok, preflight } from "@/lib/api";
 
 interface Holding {
-  asset: string;
-  balance: number;
-  price: number;
+  asset:     string;
+  balance:   number;
+  price:     number;
   change24h: number;
   /** Calculated: balance × price */
-  value: number;
+  value:     number;
 }
 
 interface PortfolioResponse {
-  holdings: Holding[];
+  holdings:   Holding[];
   totalValue: number;
-  currency: "USD";
-  mode: "paper_trading";
-  timestamp: string;
+  currency:   "USD";
+  mode:       "paper_trading";
+  timestamp:  string;
 }
 
 const RAW_HOLDINGS = [
@@ -40,8 +40,8 @@ export async function GET() {
   const data: PortfolioResponse = {
     holdings,
     totalValue,
-    currency: "USD",
-    mode: "paper_trading",
+    currency:  "USD",
+    mode:      "paper_trading",
     timestamp: new Date().toISOString(),
   };
   return ok(data);

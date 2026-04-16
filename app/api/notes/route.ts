@@ -12,12 +12,12 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight } from "@/lib/api";
+import { ok, err, preflight, validateString } from "@/lib/api";
 
 interface Note {
-  id: number;
-  text: string;
-  tag: string;
+  id:        number;
+  text:      string;
+  tag:       string;
   timestamp: string;
 }
 
@@ -29,7 +29,7 @@ interface NoteRequest {
 interface NotesListResponse {
   notes: Note[];
   count: number;
-  info: string;
+  info:  string;
 }
 
 // In-memory store — survives the process lifetime only. Not durable.
@@ -40,7 +40,7 @@ export async function GET() {
   const data: NotesListResponse = {
     notes: publicNotes,
     count: publicNotes.length,
-    info: "Public notes only. Private notes are not accessible via this endpoint.",
+    info:  "Public notes only. Private notes are not accessible via this endpoint.",
   };
   return ok(data);
 }
@@ -53,11 +53,12 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const text = body.text?.trim();
-  if (!text) return err("text is required", 400);
-  if (text.length > 2000) return err("text must be 2000 characters or fewer", 400);
+  const text = validateString(body.text, 2000);
+  if (!text) return err("text is required and must be 2000 characters or fewer", 400);
 
-  const tag = (body.tag?.trim() ?? "general").slice(0, 50);
+  const rawTag = typeof body.tag === "string" ? body.tag.trim().slice(0, 50) : "general";
+  const tag    = rawTag || "general";
+
   const note: Note = { id: nextId++, text, tag, timestamp: new Date().toISOString() };
   publicNotes.push(note);
 

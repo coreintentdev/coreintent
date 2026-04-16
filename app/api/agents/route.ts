@@ -11,21 +11,22 @@ import { ok, preflight } from "@/lib/api";
 type AgentStatus = "active" | "processing" | "paused" | "error";
 
 interface Agent {
-  name: string;
-  model: string;
+  name:   string;
+  model:  string;
   status: AgentStatus;
-  task: string;
+  task:   string;
   /** Uptime in seconds. 0 = paused or not yet started. */
   uptime: number;
 }
 
 interface AgentsResponse {
-  agents: Agent[];
-  totalActive: number;
-  totalPaused: number;
+  agents:          Agent[];
+  totalActive:     number;
+  totalPaused:     number;
   totalProcessing: number;
   /** demo = VPS not yet deployed; live = agents running on Cloudzy */
-  mode: "demo" | "live";
+  mode:            "demo" | "live";
+  timestamp:       string;
 }
 
 const AGENTS: Agent[] = [
@@ -39,11 +40,12 @@ const AGENTS: Agent[] = [
 
 export async function GET() {
   const data: AgentsResponse = {
-    agents: AGENTS,
+    agents:          AGENTS,
     totalActive:     AGENTS.filter((a) => a.status === "active").length,
     totalPaused:     AGENTS.filter((a) => a.status === "paused").length,
     totalProcessing: AGENTS.filter((a) => a.status === "processing").length,
-    mode: "demo",
+    mode:            "demo",
+    timestamp:       new Date().toISOString(),
   };
   return ok(data);
 }
