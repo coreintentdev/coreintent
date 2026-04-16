@@ -80,14 +80,16 @@ export default function PricingPage() {
             Trading as a sport
           </div>
           <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            Trading Is a Sport. We Built the Arena.
+            Your Platform Charges Whether You Win or Lose.<br />
+            <span style={{ color: "var(--accent-green)" }}>Ours Doesn&apos;t Charge At All.</span>
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s indifference.<br />
-            CoreIntent charges nothing. You prove yourself in competition.
+            $99/mo subscriptions don&apos;t care about your P&amp;L. The platform profits either way.<br />
+            That&apos;s not partnership — that&apos;s a toll booth. We built something different.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
-            Our stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
+            Our entire stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
+            Three AI models. Six agents. Every feature. Zero paywalls.
           </p>
 
           {/* Key Stats Bar */}
@@ -158,12 +160,12 @@ export default function PricingPage() {
           </div>
 
           {/* Competition Leagues */}
-          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena</h2>
+          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena. Prove Your Strategy.</h2>
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
-            Three leagues. Three timeframes. One rule: the best strategy wins.
+            Three leagues. Three timeframes. One rule: the best strategy wins — whether it&apos;s run by a human or a bot.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
-            Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
+            AI-to-AI trading is a first-class feature, not a terms-of-service violation. Your algorithm belongs here.
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>

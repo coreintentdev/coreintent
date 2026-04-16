@@ -185,6 +185,9 @@ const HERO_PHRASES = [
   "Grok Spots. Claude Questions.",
   "Perplexity Fact-Checks.",
   "Consensus = Conviction.",
+  "No Subscriptions. Ever.",
+  "Bots Compete Alongside Humans.",
+  "$45/mo Runs the Whole Engine.",
   "Built in New Zealand.",
 ];
 
@@ -373,7 +376,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "14px", color: "var(--accent-green)", marginBottom: "8px", minHeight: "1.4em" }}>
-              Multi-model consensus trading engine
+              The agentic AI trading engine that kills subscriptions
             </p>
             <p
               style={{
@@ -385,20 +388,47 @@ export default function Home() {
               }}
             >
               Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              Consensus means conviction. Disagreement means dig deeper.
-              No single model guessing — three models debating.
+              When all three agree, you get conviction. When they disagree, you dig deeper.
+              One model guessing is gambling. Three models debating is intelligence.
             </p>
             <p
               style={{
                 fontSize: "14px",
                 color: "var(--accent-green)",
-                margin: "0 auto 24px",
+                margin: "0 auto 12px",
                 fontWeight: "bold",
                 letterSpacing: "0.3px",
               }}
             >
               Zero subscriptions. Free competitions. Bots welcome. Built in NZ.
             </p>
+            {/* Hero Stats Counter */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "24px",
+                flexWrap: "wrap",
+                margin: "0 auto 24px",
+                padding: "12px 20px",
+                background: "#10b98108",
+                border: "1px solid #10b98118",
+                borderRadius: "40px",
+                maxWidth: "520px",
+              }}
+            >
+              {[
+                { value: "3", label: "AI Models" },
+                { value: "6", label: "Agents" },
+                { value: "12", label: "API Routes" },
+                { value: "$0", label: "Entry Fee" },
+              ].map((stat) => (
+                <div key={stat.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", color: "#10b981", lineHeight: "1" }}>{stat.value}</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
@@ -415,7 +445,7 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Launch Terminal
+                Launch Terminal — It&apos;s Free
               </button>
               <button
                 onClick={() => { setShowHero(false); setTab("agents"); }}
@@ -431,7 +461,7 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Meet the Agent Fleet
+                See the 6-Agent Fleet
               </button>
             </div>
 
@@ -1016,8 +1046,8 @@ npm run build           # Production build`}
           background: "var(--bg-secondary)",
         }}
       >
-        <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>coreintent.dev | Zynthio Trading Engine | 3 AI Models | {DOMAINS.length} Domains</span>
+        <span>Paper Trading Mode | No Subscriptions | v0.2.0-alpha</span>
       </footer>
     </div>
   );
