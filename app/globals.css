@@ -304,6 +304,12 @@ a {
   animation: ripple 2s ease-out infinite;
 }
 
+/* ─── AI Twin ─── */
+@keyframes fabGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.25), 0 4px 12px rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(0,0,0,0.4); }
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {
