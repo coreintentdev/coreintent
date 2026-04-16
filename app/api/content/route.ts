@@ -10,7 +10,7 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, err, preflight, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
@@ -103,28 +103,25 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const { type, count = 1, tone = "technical" } = body;
-
-  if (!type || !VALID_TYPES.includes(type)) {
-    return err(`type must be one of: ${VALID_TYPES.join(", ")}`, 400);
-  }
+  const type = validateEnum(body.type, VALID_TYPES);
+  if (!type) return err(`type must be one of: ${VALID_TYPES.join(", ")}`, 400);
 
   const topic = validateString(body.topic, 500);
   if (!topic) return err("topic is required and must be 500 characters or fewer", 400);
 
-  if (typeof count !== "number" || count < 1 || count > BULK_LIMITS[type]) {
-    return err(`count must be between 1 and ${BULK_LIMITS[type]} for type "${type}"`, 400);
+  const count = validatePositiveInt(body.count ?? 1, BULK_LIMITS[type]);
+  if (count === null) {
+    return err(`count must be an integer between 1 and ${BULK_LIMITS[type]} for type "${type}"`, 400);
   }
-  if (!VALID_TONES.includes(tone as ContentTone)) {
-    return err(`tone must be one of: ${VALID_TONES.join(", ")}`, 400);
-  }
+
+  const tone = validateEnum(body.tone, VALID_TONES) ?? "technical";
 
   const data: ContentJobResponse = {
     status:        "queued",
     type,
     topic,
     count,
-    tone:          tone as ContentTone,
+    tone,
     estimatedTime: `${count * 2}s`,
     pipeline:      ["grok_draft", "claude_refine", "review_queue"],
     message:       `${count}x ${type} queued for: "${topic}"`,

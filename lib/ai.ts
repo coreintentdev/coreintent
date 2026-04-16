@@ -36,6 +36,26 @@ export interface AIResponse {
 
 export type OrchestrateTask = "signal" | "analysis" | "research" | "content";
 
+/** Which AI API keys are configured (true) vs demo placeholder (false). */
+export interface AiKeyStatus {
+  claude:     boolean;
+  grok:       boolean;
+  perplexity: boolean;
+}
+
+/**
+ * Returns which AI API keys are configured.
+ * Centralises key-presence detection so routes don't duplicate the logic.
+ * Returns booleans only — never exposes the key values.
+ */
+export function getAiKeyStatus(): AiKeyStatus {
+  return {
+    claude:     !isDemoKey(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
+    grok:       !isDemoKey(process.env.GROK_API_KEY, "xai-xxx"),
+    perplexity: !isDemoKey(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Internal helpers
 // ---------------------------------------------------------------------------
@@ -177,18 +197,26 @@ const CLAUDE_TIMEOUT_MS = 25_000;
  * Default system prompt for Claude.
  * Marked for prompt caching — Anthropic caches it server-side after the first call,
  * reducing token cost on subsequent requests with the same system prompt.
+ *
+ * Keep this prompt stable between requests to maximise cache hit rate.
+ * Avoid injecting per-request variables (timestamps, prices) here — put those
+ * in the user message instead.
  */
 const CLAUDE_DEFAULT_SYSTEM =
   "You are CoreIntent, an agentic AI trading assistant for Zynthio.ai.\n" +
   "Owner: Corey McIvor (@coreintentdev, NZ). Mode: paper_trading.\n" +
-  "Current state: demo data only — no live exchange connections (Binance/Coinbase/gTrade are PLANNED, not active).\n\n" +
+  "Platform state: demo data only — no live exchange connections.\n" +
+  "Binance, Coinbase, and gTrade are PLANNED integrations, not yet active.\n\n" +
   "Response principles:\n" +
   "- Precise, honest, and direct. No filler sentences.\n" +
-  "- Acknowledge uncertainty explicitly. Never fabricate market data, prices, or statistics.\n" +
+  "- Acknowledge uncertainty explicitly with [UNCERTAIN: <reason>].\n" +
+  "- Never fabricate market data, prices, volume, or on-chain statistics.\n" +
   "- Label all demo/placeholder data as [DEMO] so the distinction is always clear.\n" +
-  "- Structure complex analysis with headers (##) for readability.\n" +
+  "- Structure analysis with Markdown headers (##) when the response has multiple sections.\n" +
   "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC.\n" +
-  "- Stay within CoreIntent's trading/analysis mandate; redirect out-of-scope questions.";
+  "- Stay within CoreIntent's trading/analysis mandate; redirect out-of-scope questions.\n" +
+  "- Target ≤600 tokens unless the complexity of the request warrants more.\n" +
+  "  For deep analysis (task context = 'analysis'), use up to 1024 tokens.";
 
 /**
  * Call Claude (Anthropic) for deep analysis, risk assessment, and long-context tasks.
@@ -381,6 +409,29 @@ export async function callAll(
     callClaude(claudePrompt),
     callPerplexity(perplexityQuery),
   ]);
+}
+
+// ---------------------------------------------------------------------------
+// RETRY — Recover from transient rate-limit errors
+// ---------------------------------------------------------------------------
+
+const RETRY_DELAY_MS = 1_500;
+
+/**
+ * Wrap any single AI call with one retry on rate-limit responses.
+ * Other failure types (timeout, api_error, network_error) are not retried —
+ * retrying a timeout or network failure immediately is unlikely to help.
+ *
+ * @example
+ * const result = await withRetry(() => callGrok(prompt));
+ */
+export async function withRetry(
+  fn: () => Promise<AIResponse>
+): Promise<AIResponse> {
+  const first = await fn();
+  if (first.errorType !== "rate_limit") return first;
+  await new Promise<void>((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+  return fn();
 }
 
 // ---------------------------------------------------------------------------

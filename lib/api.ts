@@ -128,6 +128,54 @@ export function validateString(value: unknown, maxLen: number): string | null {
   return trimmed;
 }
 
+/**
+ * Validate a numeric field from a request body.
+ * Returns the number when valid, or null when absent / non-finite / out of range.
+ *
+ * @example
+ * const confidence = validateNumber(body.confidence, 0, 1);
+ * if (confidence === null) return err("confidence must be 0–1", 400);
+ */
+export function validateNumber(
+  value: unknown,
+  min: number,
+  max: number,
+): number | null {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  if (value < min || value > max) return null;
+  return value;
+}
+
+/**
+ * Validate a positive integer from a request body (e.g. count fields).
+ * Returns the integer when valid, or null when absent / non-integer / out of range.
+ *
+ * @example
+ * const count = validatePositiveInt(body.count, 100);
+ * if (count === null) return err("count must be an integer between 1 and 100", 400);
+ */
+export function validatePositiveInt(value: unknown, max: number): number | null {
+  const n = validateNumber(value, 1, max);
+  if (n === null || !Number.isInteger(n)) return null;
+  return n;
+}
+
+/**
+ * Validate that a string value is one of the allowed enum options.
+ * Returns the typed value when valid, or null when missing / unrecognised.
+ * Preserves the TypeScript enum type so the caller avoids casts.
+ *
+ * @example
+ * const tone = validateEnum(body.tone, VALID_TONES) ?? "technical";
+ */
+export function validateEnum<T extends string>(
+  value: unknown,
+  allowed: readonly T[],
+): T | null {
+  if (typeof value !== "string") return null;
+  return (allowed as readonly string[]).includes(value) ? (value as T) : null;
+}
+
 // ---------------------------------------------------------------------------
 // Rate limiting — structure ready, implementation pending KV store
 // ---------------------------------------------------------------------------
