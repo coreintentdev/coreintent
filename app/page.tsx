@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -178,6 +178,96 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
   },
 ];
 
+/* ─── TypeWriter Component ─── */
+const HERO_PHRASES = [
+  "Three AI Models Argue.",
+  "You Get Better Signals.",
+  "Grok Spots. Claude Questions.",
+  "Perplexity Fact-Checks.",
+  "Consensus = Conviction.",
+  "Built in New Zealand.",
+];
+
+function TypeWriter() {
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState("");
+
+  const tick = useCallback(() => {
+    const current = HERO_PHRASES[phraseIdx];
+    if (!isDeleting) {
+      setText(current.substring(0, charIdx + 1));
+      setCharIdx((c) => c + 1);
+      if (charIdx + 1 >= current.length) {
+        setTimeout(() => setIsDeleting(true), 2000);
+        return;
+      }
+    } else {
+      setText(current.substring(0, charIdx - 1));
+      setCharIdx((c) => c - 1);
+      if (charIdx <= 1) {
+        setIsDeleting(false);
+        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        return;
+      }
+    }
+  }, [charIdx, isDeleting, phraseIdx]);
+
+  useEffect(() => {
+    const speed = isDeleting ? 40 : 80;
+    const timer = setTimeout(tick, speed);
+    return () => clearTimeout(timer);
+  }, [tick, isDeleting]);
+
+  return (
+    <span className="typewriter-text" style={{ display: "inline-block" }}>
+      {text}
+    </span>
+  );
+}
+
+/* ─── Floating Particles ─── */
+function FloatingParticles() {
+  const [mounted, setMounted] = useState(false);
+  const [particles] = useState(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 8}s`,
+      duration: `${6 + Math.random() * 8}s`,
+      dx: `${(Math.random() - 0.5) * 40}px`,
+      dy: `${(Math.random() - 0.5) * 40}px`,
+      size: 1 + Math.random() * 2,
+      color: ["#10b981", "#3b82f6", "#a855f7"][Math.floor(Math.random() * 3)],
+    }))
+  );
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  return (
+    <>
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="particle"
+          style={{
+            left: p.left,
+            top: p.top,
+            width: p.size,
+            height: p.size,
+            background: p.color,
+            "--dx": p.dx,
+            "--dy": p.dy,
+            animation: `dotFloat ${p.duration} ${p.delay} ease-in-out infinite`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </>
+  );
+}
+
 /* ─── Helpers ─── */
 function statusDot(status: string) {
   const colors: Record<string, string> = {
@@ -226,6 +316,11 @@ export default function Home() {
             overflow: "hidden",
           }}
         >
+          {/* Animated grid background */}
+          <div className="grid-bg" />
+          {/* Floating particles */}
+          <FloatingParticles />
+
           <button
             onClick={() => setShowHero(false)}
             aria-label="Dismiss hero section"
@@ -239,11 +334,12 @@ export default function Home() {
               cursor: "pointer",
               fontSize: "18px",
               fontFamily: "inherit",
+              zIndex: 2,
             }}
           >
             x
           </button>
-          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
             <div
               style={{
                 display: "inline-block",
@@ -267,15 +363,18 @@ export default function Home() {
                 fontSize: "clamp(28px, 4vw, 44px)",
                 fontWeight: "bold",
                 lineHeight: "1.2",
-                marginBottom: "16px",
+                marginBottom: "8px",
                 background: "linear-gradient(135deg, #e2e8f0 0%, #10b981 50%, #3b82f6 100%)",
                 backgroundSize: "300% 300%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Three AI Models Argue.<br />You Get Better Signals.
+              <TypeWriter />
             </h1>
+            <p style={{ fontSize: "14px", color: "var(--accent-green)", marginBottom: "8px", minHeight: "1.4em" }}>
+              Multi-model consensus trading engine
+            </p>
             <p
               style={{
                 fontSize: "17px",
