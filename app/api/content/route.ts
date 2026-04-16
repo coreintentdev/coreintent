@@ -10,27 +10,27 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight } from "@/lib/api";
+import { ok, err, preflight, validateString } from "@/lib/api";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
 
 interface ContentRequest {
-  type: ContentType;
-  topic: string;
+  type:   ContentType;
+  topic:  string;
   count?: number;
-  tone?: ContentTone;
+  tone?:  ContentTone;
 }
 
 interface ContentJobResponse {
-  status: "queued";
-  type: ContentType;
-  topic: string;
-  count: number;
-  tone: ContentTone;
+  status:        "queued";
+  type:          ContentType;
+  topic:         string;
+  count:         number;
+  tone:          ContentTone;
   estimatedTime: string;
-  pipeline: string[];
-  message: string;
+  pipeline:      string[];
+  message:       string;
 }
 
 const VALID_TYPES: ContentType[] = ["video_6s", "tweet", "linkedin", "thread", "announcement", "blog"];
@@ -48,7 +48,7 @@ const BULK_LIMITS: Record<ContentType, number> = {
 const TEMPLATES: Record<ContentType, object> = {
   video_6s: {
     format: "6-second vertical video",
-    specs: { duration: 6, ratio: "9:16", resolution: "1080x1920" },
+    specs:  { duration: 6, ratio: "9:16", resolution: "1080x1920" },
     hooks: [
       "AI just detected a {signal} on {pair}...",
       "Your portfolio while you sleep: {pnl}",
@@ -58,25 +58,25 @@ const TEMPLATES: Record<ContentType, object> = {
     workflow: "Grok drafts hook → Claude refines → auto-render",
   },
   tweet: {
-    format: "X/Twitter post",
-    specs: { maxChars: 280 },
+    format:   "X/Twitter post",
+    specs:    { maxChars: 280 },
     workflow: "Grok drafts → Claude refines → X Premium+ schedules",
   },
   linkedin: {
-    format: "LinkedIn post",
-    specs: { maxChars: 3000 },
+    format:   "LinkedIn post",
+    specs:    { maxChars: 3000 },
     workflow: "Claude drafts → review → post",
   },
   thread: {
-    format: "X/Twitter thread (5–10 tweets)",
+    format:   "X/Twitter thread (5–10 tweets)",
     workflow: "Grok generates outline → Claude expands → X Premium+ API schedules",
   },
   announcement: {
-    format: "Product announcement",
+    format:   "Product announcement",
     workflow: "Claude drafts → Corey approves → publish",
   },
   blog: {
-    format: "Long-form blog post",
+    format:   "Long-form blog post",
     workflow: "Perplexity researches → Claude writes → review",
   },
 };
@@ -84,8 +84,8 @@ const TEMPLATES: Record<ContentType, object> = {
 export async function GET() {
   return ok({
     availableTypes: VALID_TYPES,
-    templates: TEMPLATES,
-    bulkLimits: BULK_LIMITS,
+    templates:      TEMPLATES,
+    bulkLimits:     BULK_LIMITS,
     aiPipeline: {
       draft:    "Grok Pro (fast, cheap)",
       refine:   "Claude (quality polish)",
@@ -103,17 +103,15 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const { type, topic, count = 1, tone = "technical" } = body;
+  const { type, count = 1, tone = "technical" } = body;
 
   if (!type || !VALID_TYPES.includes(type)) {
     return err(`type must be one of: ${VALID_TYPES.join(", ")}`, 400);
   }
-  if (!topic || typeof topic !== "string" || !topic.trim()) {
-    return err("topic is required", 400);
-  }
-  if (topic.trim().length > 500) {
-    return err("topic must be 500 characters or fewer", 400);
-  }
+
+  const topic = validateString(body.topic, 500);
+  if (!topic) return err("topic is required and must be 500 characters or fewer", 400);
+
   if (typeof count !== "number" || count < 1 || count > BULK_LIMITS[type]) {
     return err(`count must be between 1 and ${BULK_LIMITS[type]} for type "${type}"`, 400);
   }
@@ -122,14 +120,14 @@ export async function POST(req: NextRequest) {
   }
 
   const data: ContentJobResponse = {
-    status: "queued",
+    status:        "queued",
     type,
-    topic: topic.trim(),
+    topic,
     count,
-    tone: tone as ContentTone,
+    tone:          tone as ContentTone,
     estimatedTime: `${count * 2}s`,
-    pipeline: ["grok_draft", "claude_refine", "review_queue"],
-    message: `${count}x ${type} queued for: "${topic.trim()}"`,
+    pipeline:      ["grok_draft", "claude_refine", "review_queue"],
+    message:       `${count}x ${type} queued for: "${topic}"`,
   };
   return ok(data, 202);
 }

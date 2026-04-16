@@ -11,10 +11,10 @@ export function middleware(req: NextRequest): NextResponse | undefined {
     return new NextResponse(null, {
       status: 204,
       headers: {
-        "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN ?? "*",
+        "Access-Control-Allow-Origin":  process.env.ALLOWED_ORIGIN ?? "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-        "Access-Control-Max-Age": "86400",
+        "Access-Control-Max-Age":       "86400",
       },
     });
   }

@@ -10,8 +10,8 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callClaude, callGrok } from "@/lib/ai";
-import { ok, err, preflight } from "@/lib/api";
+import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
+import { ok, err, preflight, serverError, validateString } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -32,35 +32,40 @@ const IDENTITY = {
 const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
 
 export async function GET() {
-  const [perplexityResult, grokResult, claudeResult] = await Promise.all([
-    callPerplexity(
-      `Search for "${IDENTITY.name}" OR "${IDENTITY.project}" OR "${IDENTITY.domain}" OR "${IDENTITY.twitter}". ` +
-      `Find mentions, profiles, articles, or social media posts. ` +
-      `What is the current web presence of this person and project?`
-    ),
-    callGrok(
-      `Search X/Twitter for ${IDENTITY.twitter} and CoreIntent. ` +
-      `Latest activity? Any mentions? Overall sentiment? ` +
-      `Are there any impersonation attempts on this account?`
-    ),
-    callClaude(
-      `You are analyzing the digital twin of Corey McIvor (${IDENTITY.handle}), creator of ${IDENTITY.project}. ` +
-      `Summarize the current project state, identify the top 3 risks to the digital identity, ` +
-      `and suggest 3 immediate actions to strengthen online presence and protect the brand.`,
-      "You are CoreIntent's self-awareness module. Be precise, honest, and direct."
-    ),
-  ]);
+  try {
+    const [perplexityResult, grokResult, claudeResult] = await Promise.all([
+      callPerplexity(
+        `Search for "${IDENTITY.name}" OR "${IDENTITY.project}" OR "${IDENTITY.domain}" OR "${IDENTITY.twitter}". ` +
+        `Find mentions, profiles, articles, or social media posts. ` +
+        `What is the current web presence of this person and project?`
+      ),
+      callGrok(
+        `Search X/Twitter for ${IDENTITY.twitter} and CoreIntent. ` +
+        `Latest activity? Any mentions? Overall sentiment? ` +
+        `Are there any impersonation attempts on this account?`
+      ),
+      callClaude(
+        `You are analyzing the digital twin of Corey McIvor (${IDENTITY.handle}), creator of ${IDENTITY.project}. ` +
+        `Summarize the current project state, identify the top 3 risks to the digital identity, ` +
+        `and suggest 3 immediate actions to strengthen online presence and protect the brand.`,
+        "You are CoreIntent's self-awareness module. Be precise, honest, and direct."
+      ),
+    ]);
 
-  return ok({
-    identity: IDENTITY,
-    research: {
-      webPresence:     { ...perplexityResult, purpose: "Web presence scan" },
-      socialSentiment: { ...grokResult,       purpose: "X/Twitter monitoring" },
-      selfAnalysis:    { ...claudeResult,     purpose: "Threat & brand analysis" },
-    },
-    allLive: perplexityResult.live && grokResult.live && claudeResult.live,
-    timestamp: new Date().toISOString(),
-  });
+    return ok({
+      identity: IDENTITY,
+      research: {
+        webPresence:     { ...perplexityResult, purpose: "Web presence scan",        contentValid: validateAiContent(perplexityResult) },
+        socialSentiment: { ...grokResult,       purpose: "X/Twitter monitoring",     contentValid: validateAiContent(grokResult)       },
+        selfAnalysis:    { ...claudeResult,     purpose: "Threat & brand analysis",  contentValid: validateAiContent(claudeResult)     },
+      },
+      allLive:  perplexityResult.live && grokResult.live && claudeResult.live,
+      allValid: validateAiContent(perplexityResult) && validateAiContent(grokResult) && validateAiContent(claudeResult),
+      timestamp: new Date().toISOString(),
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -71,24 +76,31 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const topic = body.topic?.trim();
-  if (!topic) return err("topic is required", 400);
-  if (topic.length > 1000) return err("topic must be 1000 characters or fewer", 400);
+  const topic = validateString(body.topic, 1000);
+  if (!topic) return err("topic is required and must be 1000 characters or fewer", 400);
 
   const task: ResearchTask = VALID_TASKS.includes(body.task as ResearchTask)
     ? (body.task as ResearchTask)
     : "research";
 
-  type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;
-  const taskMap: Record<ResearchTask, TaskFn> = {
-    research:  () => callPerplexity(topic),
-    analysis:  () => callClaude(topic),
-    signal:    () => callGrok(topic),
-    sentiment: () => callGrok(`Analyze market and social sentiment for: ${topic}`),
-  };
+  try {
+    type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;
+    const taskMap: Record<ResearchTask, TaskFn> = {
+      research:  () => callPerplexity(topic),
+      analysis:  () => callClaude(topic),
+      signal:    () => callGrok(topic),
+      sentiment: () => callGrok(`Analyze market and social sentiment for: ${topic}`),
+    };
 
-  const result = await taskMap[task]();
-  return ok({ topic, task, result, timestamp: new Date().toISOString() });
+    const result = await taskMap[task]();
+    if (!validateAiContent(result)) {
+      return err("AI returned an empty response", 502);
+    }
+
+    return ok({ topic, task, result, timestamp: new Date().toISOString() });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {

@@ -10,8 +10,8 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callGrok, callClaude } from "@/lib/ai";
-import { ok, err, preflight } from "@/lib/api";
+import { callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
+import { ok, err, preflight, serverError, validateString } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -31,42 +31,47 @@ const PROTECTED_ASSETS = {
 const VALID_TYPES: ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
 
 export async function GET() {
-  const [impersonationScan, webScan, threatAnalysis] = await Promise.all([
-    callGrok(
-      `Scan X/Twitter for accounts impersonating or copying: ${PROTECTED_ASSETS.socials.join(", ")}. ` +
-      `Check for unauthorized use of these names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
-      `Report any suspicious accounts or copycat activity. Be specific.`
-    ),
-    callPerplexity(
-      `Search the web for unauthorized use of these brands and names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
-      `Check for typosquatting near: ${PROTECTED_ASSETS.domains.join(", ")}. ` +
-      `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`
-    ),
-    callClaude(
-      `Assess the digital identity protection status for:\n` +
-      `Names: ${PROTECTED_ASSETS.names.join(", ")}\n` +
-      `Domains: ${PROTECTED_ASSETS.domains.join(", ")}\n` +
-      `Socials: ${PROTECTED_ASSETS.socials.join(", ")}\n` +
-      `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
-      `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
-      "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable."
-    ),
-  ]);
+  try {
+    const [impersonationScan, webScan, threatAnalysis] = await Promise.all([
+      callGrok(
+        `Scan X/Twitter for accounts impersonating or copying: ${PROTECTED_ASSETS.socials.join(", ")}. ` +
+        `Check for unauthorized use of these names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
+        `Report any suspicious accounts or copycat activity. Be specific.`
+      ),
+      callPerplexity(
+        `Search the web for unauthorized use of these brands and names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
+        `Check for typosquatting near: ${PROTECTED_ASSETS.domains.join(", ")}. ` +
+        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`
+      ),
+      callClaude(
+        `Assess the digital identity protection status for:\n` +
+        `Names: ${PROTECTED_ASSETS.names.join(", ")}\n` +
+        `Domains: ${PROTECTED_ASSETS.domains.join(", ")}\n` +
+        `Socials: ${PROTECTED_ASSETS.socials.join(", ")}\n` +
+        `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
+        `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
+        "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable."
+      ),
+    ]);
 
-  return ok({
-    protectedAssets: PROTECTED_ASSETS,
-    scan: {
-      impersonation:    { ...impersonationScan, purpose: "Fast X/Twitter scan" },
-      webPresence:      { ...webScan,           purpose: "Web-wide brand monitoring" },
-      threatAssessment: { ...threatAnalysis,    purpose: "Risk analysis & recommendations" },
-    },
-    allLive: impersonationScan.live && webScan.live && threatAnalysis.live,
-    landmines: {
-      status:   "armed",
-      coverage: PROTECTED_ASSETS.names.length + PROTECTED_ASSETS.domains.length + PROTECTED_ASSETS.socials.length,
-    },
-    timestamp: new Date().toISOString(),
-  });
+    return ok({
+      protectedAssets: PROTECTED_ASSETS,
+      scan: {
+        impersonation:    { ...impersonationScan, purpose: "Fast X/Twitter scan",             contentValid: validateAiContent(impersonationScan) },
+        webPresence:      { ...webScan,           purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(webScan)           },
+        threatAssessment: { ...threatAnalysis,    purpose: "Risk analysis & recommendations", contentValid: validateAiContent(threatAnalysis)     },
+      },
+      allLive:  impersonationScan.live && webScan.live && threatAnalysis.live,
+      allValid: validateAiContent(impersonationScan) && validateAiContent(webScan) && validateAiContent(threatAnalysis),
+      landmines: {
+        status:   "armed",
+        coverage: PROTECTED_ASSETS.names.length + PROTECTED_ASSETS.domains.length + PROTECTED_ASSETS.socials.length,
+      },
+      timestamp: new Date().toISOString(),
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -77,36 +82,43 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const check = body.check?.trim();
-  if (!check) return err("check is required", 400);
-  if (check.length > 500) return err("check must be 500 characters or fewer", 400);
+  const check = validateString(body.check, 500);
+  if (!check) return err("check is required and must be 500 characters or fewer", 400);
 
   const type: ThreatCheckType = VALID_TYPES.includes(body.type as ThreatCheckType)
     ? (body.type as ThreatCheckType)
     : "general";
 
-  type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaude>;
-  const scanMap: Record<ThreatCheckType, ScanFn> = {
-    impersonation: () => callGrok(
-      `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +
-      `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`
-    ),
-    domain: () => callPerplexity(
-      `Is the domain "${check}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
-      `Check registration date, content, and stated intent.`
-    ),
-    threat: () => callClaude(
-      `Assess this as a potential threat to CoreIntent's digital identity: "${check}". ` +
-      `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
-      "You are the F18 Security AI for CoreIntent. Be specific and actionable."
-    ),
-    general: () => callPerplexity(
-      `Does "${check}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
-    ),
-  };
+  try {
+    type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaude>;
+    const scanMap: Record<ThreatCheckType, ScanFn> = {
+      impersonation: () => callGrok(
+        `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +
+        `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`
+      ),
+      domain: () => callPerplexity(
+        `Is the domain "${check}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
+        `Check registration date, content, and stated intent.`
+      ),
+      threat: () => callClaude(
+        `Assess this as a potential threat to CoreIntent's digital identity: "${check}". ` +
+        `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
+        "You are the F18 Security AI for CoreIntent. Be specific and actionable."
+      ),
+      general: () => callPerplexity(
+        `Does "${check}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
+      ),
+    };
 
-  const result = await scanMap[type]();
-  return ok({ check, type, result, timestamp: new Date().toISOString() });
+    const result = await scanMap[type]();
+    if (!validateAiContent(result)) {
+      return err("AI returned an empty response", 502);
+    }
+
+    return ok({ check, type, result, timestamp: new Date().toISOString() });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {

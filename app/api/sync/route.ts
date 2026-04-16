@@ -20,37 +20,37 @@ import { ok, err, preflight } from "@/lib/api";
 type Channel = "web" | "desktop";
 
 interface SyncRequest {
-  task?: string;
-  source?: Channel;
-  confidence?: number;
+  task?:            string;
+  source?:          Channel;
+  confidence?:      number;
   contextComplete?: boolean;
   hints?: {
-    needsLocalFiles?: boolean;
-    needsProcessControl?: boolean;
-    needsBrowserSession?: boolean;
+    needsLocalFiles?:       boolean;
+    needsProcessControl?:   boolean;
+    needsBrowserSession?:   boolean;
     needsSystemAutomation?: boolean;
   };
 }
 
 interface KycDecision {
-  decision: "zynKYC";
-  reason: string;
-  confidence: number;
+  decision:        "zynKYC";
+  reason:          string;
+  confidence:      number;
   contextComplete: boolean;
-  source: Channel;
-  task: string;
-  questions: string[];
+  source:          Channel;
+  task:            string;
+  questions:       string[];
 }
 
 interface RouteDecision {
-  decision: "zynhandball" | "direct";
-  reason: string;
-  source: Channel;
-  target: Channel;
-  task: string;
-  confidence: number;
+  decision:        "zynhandball" | "direct";
+  reason:          string;
+  source:          Channel;
+  target:          Channel;
+  task:            string;
+  confidence:      number;
   contextComplete: boolean;
-  handoff: { from: Channel; to: Channel; mode: string; status: string } | null;
+  handoff:         { from: Channel; to: Channel; mode: string; status: string } | null;
 }
 
 const CAPABILITIES: Record<Channel, string[]> = {
@@ -58,7 +58,7 @@ const CAPABILITIES: Record<Channel, string[]> = {
   desktop: ["local_filesystem", "process_control", "automation_scripts", "high_context_workflows"],
 };
 
-const DEFAULT_CONFIDENCE = 0.8;
+const DEFAULT_CONFIDENCE         = 0.8;
 const MIN_CONFIDENCE_FOR_AUTOROUTE = 0.7;
 
 function classifyTarget(input: SyncRequest): Channel {
@@ -90,7 +90,7 @@ function buildKycQuestions(input: SyncRequest): string[] {
 
 export async function GET() {
   return ok({
-    mode: "master_sync_policy",
+    mode:    "master_sync_policy",
     summary: "Single source of truth for web/desktop task routing.",
     rules: {
       handoffName:               "zynhandball",
@@ -100,9 +100,9 @@ export async function GET() {
     },
     channels: CAPABILITIES,
     examples: [
-      { task: "check dashboard latency",                        decision: "web",     action: "execute_in_place" },
-      { task: "run deploy script and inspect local artifacts",  decision: "desktop", action: "zynhandball" },
-      { task: "ambiguous request with missing details",         decision: "hold",    action: "zynKYC" },
+      { task: "check dashboard latency",                       decision: "web",     action: "execute_in_place" },
+      { task: "run deploy script and inspect local artifacts", decision: "desktop", action: "zynhandball"      },
+      { task: "ambiguous request with missing details",        decision: "hold",    action: "zynKYC"           },
     ],
   });
 }
@@ -115,18 +115,17 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const source: Channel    = body.source === "desktop" ? "desktop" : "web";
-  const rawConf            = typeof body.confidence === "number" ? body.confidence : DEFAULT_CONFIDENCE;
-  const confidence         = Math.min(1, Math.max(0, rawConf));
-  const contextComplete    = body.contextComplete !== false;
-
-  if (body.task !== undefined && typeof body.task === "string" && body.task.length > 500) {
-    return err("task must be 500 characters or fewer", 400);
+  if (body.task !== undefined && (typeof body.task !== "string" || body.task.length > 500)) {
+    return err("task must be a string of 500 characters or fewer", 400);
   }
 
-  const target             = classifyTarget(body);
-  const needsKyc           = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
-  const handoffRequired    = !needsKyc && source !== target;
+  const source:          Channel = body.source === "desktop" ? "desktop" : "web";
+  const rawConf                  = typeof body.confidence === "number" ? body.confidence : DEFAULT_CONFIDENCE;
+  const confidence               = Math.min(1, Math.max(0, rawConf));
+  const contextComplete          = body.contextComplete !== false;
+  const target                   = classifyTarget(body);
+  const needsKyc                 = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
+  const handoffRequired          = !needsKyc && source !== target;
 
   if (needsKyc) {
     const data: KycDecision = {
@@ -143,12 +142,12 @@ export async function POST(req: NextRequest) {
 
   const data: RouteDecision = {
     decision: handoffRequired ? "zynhandball" : "direct",
-    reason: handoffRequired
+    reason:   handoffRequired
       ? `Task is better executed on ${target}; initiating channel handoff.`
       : `Task matches ${target}; continue in current channel.`,
     source,
     target,
-    task:          body.task ?? "",
+    task:           body.task ?? "",
     confidence,
     contextComplete,
     handoff: handoffRequired

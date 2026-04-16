@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 08:28:20 UTC 2026
+Generated: Thu Apr 16 08:46:50 UTC 2026
 
 ## 1. Build
 - **FAIL:** npm run build FAILS — see /tmp/coreintent_build.log
@@ -24,12 +24,12 @@ Generated: Thu Apr 16 08:28:20 UTC 2026
 ## 4. SEO & Meta Tags
 - PASS: OpenGraph meta tags configured
 - PASS: Twitter card meta tags configured
-- PASS: Robots configuration exists
+- PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- PASS: Route metadata: /privacy
-- PASS: Route metadata: /terms
-- PASS: Route metadata: /disclaimer
+- PASS: Page metadata: app/privacy/page.tsx
+- PASS: Page metadata: app/terms/page.tsx
+- PASS: Page metadata: app/disclaimer/page.tsx
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
