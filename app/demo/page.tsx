@@ -28,6 +28,87 @@ const CHART_Y = [
   40, 20, 35, 25, 45, 30, 50, 35, 20, 28,
 ];
 
+/* ─── AI DECISION ENGINE — Model Thoughts ─── */
+
+const GROK_THOUGHTS = [
+  "BTC showing strong momentum on 4H timeframe. RSI at 67 — not overbought yet. Volume confirming upward pressure.",
+  "Social sentiment spiking +340% on ETH mentions. Whale wallet 0x7a2... accumulated 1,200 ETH in the last hour.",
+  "SOL breaking key resistance at $145. On-chain DEX volume up 28% — this move has legs.",
+  "AVAX forming textbook bull flag. 60 threads analyzed — 78% bullish consensus across X/Twitter.",
+];
+
+const CLAUDE_THOUGHTS = [
+  "Cross-referencing macro data: Fed minutes neutral, DXY weakening. Historical pattern match shows 82% win rate when RSI + volume align this way.",
+  "Risk assessment: max position size 5% at current volatility. Sharpe ratio optimal at 2.3x leverage. Recommending scaled entry.",
+  "Correlation analysis: BTC leads ETH by 4-6 hours in current regime. Timing the ETH entry 3 hours from now would be optimal.",
+  "Running Monte Carlo simulation on portfolio impact. 10,000 scenarios — 94th percentile drawdown stays within circuit breaker threshold.",
+];
+
+const PERPLEXITY_THOUGHTS = [
+  "Latest news: BlackRock ETF inflows hit $340M today. Institutional accumulation pattern confirmed by 3 independent sources.",
+  "Regulatory scan complete: no negative catalysts in pipeline. SEC comment period on staking rules closes April 30 — neutral outlook.",
+  "On-chain intelligence: exchange reserves declining to 18-month low. Supply squeeze forming. Miners holding, not selling.",
+  "Global macro context: DXY down 0.4%, 10Y yield flat. Risk-on environment. Asia session opened bullish — Nikkei +1.2%.",
+];
+
+const CONSENSUS_DECISIONS = [
+  { pair: "BTC/USDT", direction: "LONG", confidence: 87, reason: "Grok + Claude agree. Perplexity confirms fundamentals." },
+  { pair: "ETH/USDT", direction: "LONG", confidence: 79, reason: "Claude + Perplexity align. Grok sees social confirmation." },
+  { pair: "AVAX/USDT", direction: "LONG", confidence: 91, reason: "All 3 models in full consensus. Highest conviction signal." },
+  { pair: "SOL/USDT", direction: "SHORT", confidence: 68, reason: "Only Grok bearish. Claude neutral. Low conviction — skip." },
+];
+
+/* ─── ORDER BOOK DATA ─── */
+
+function generateOrderBook() {
+  const mid = 67400;
+  const bids = Array.from({ length: 8 }, (_, i) => ({
+    price: mid - (i + 1) * 20,
+    size: +(Math.random() * 4 + 0.5).toFixed(3),
+  }));
+  const asks = Array.from({ length: 8 }, (_, i) => ({
+    price: mid + (i + 1) * 20,
+    size: +(Math.random() * 4 + 0.5).toFixed(3),
+  }));
+  return { bids, asks };
+}
+
+/* ─── TYPING TEXT COMPONENT ─── */
+
+function TypingText({ texts, speed = 22, pause = 3500 }: { texts: string[]; speed?: number; pause?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const idxRef = useRef(0);
+  const charRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    function tick() {
+      const text = texts[idxRef.current % texts.length];
+      if (charRef.current < text.length) {
+        charRef.current++;
+        setDisplayed(text.slice(0, charRef.current));
+        timerRef.current = setTimeout(tick, speed + Math.random() * 20);
+      } else {
+        timerRef.current = setTimeout(() => {
+          idxRef.current++;
+          charRef.current = 0;
+          setDisplayed("");
+          timerRef.current = setTimeout(tick, 100);
+        }, pause);
+      }
+    }
+    tick();
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [texts, speed, pause]);
+
+  return (
+    <span>
+      {displayed}
+      <span className="typing-cursor" />
+    </span>
+  );
+}
+
 export default function DemoPage() {
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
@@ -39,6 +120,9 @@ export default function DemoPage() {
   const [chartDrawn, setChartDrawn] = useState(false);
   const [paperBalance, setPaperBalance] = useState(10000);
   const [tradeLog, setTradeLog] = useState<string[]>([]);
+  const [orderBook, setOrderBook] = useState(generateOrderBook);
+  const [consensusIdx, setConsensusIdx] = useState(0);
+  const [obFlash, setObFlash] = useState<Record<string, string>>({});
   const sigId = useRef(0);
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -103,7 +187,34 @@ export default function DemoPage() {
     return () => obs.disconnect();
   }, []);
 
+  // Order book updates
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setOrderBook((prev) => {
+        const side = Math.random() > 0.5 ? "bids" : "asks";
+        const idx = Math.floor(Math.random() * prev[side].length);
+        const newBook = { ...prev, [side]: [...prev[side]] };
+        const delta = +(Math.random() * 1.5 - 0.3).toFixed(3);
+        const entry = newBook[side][idx];
+        newBook[side][idx] = { ...entry, size: Math.max(0.1, +(entry.size + delta).toFixed(3)) };
+        setObFlash({ [`${side}-${idx}`]: side === "bids" ? "flash-green" : "flash-red" });
+        setTimeout(() => setObFlash({}), 500);
+        return newBook;
+      });
+    }, 800);
+    return () => clearInterval(iv);
+  }, []);
+
+  // Consensus decision rotation
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setConsensusIdx((prev) => (prev + 1) % CONSENSUS_DECISIONS.length);
+    }, 8000);
+    return () => clearInterval(iv);
+  }, []);
+
   const overallConsensus = Math.round((consensus.grok + consensus.claude + consensus.perplexity) / 3);
+  const currentDecision = CONSENSUS_DECISIONS[consensusIdx];
 
   // Paper trade simulation
   const paperTrade = (pair: string, direction: string) => {
@@ -314,6 +425,133 @@ export default function DemoPage() {
             </div>
           </section>
 
+          {/* ═══ AI DECISION ENGINE ═══ */}
+          <section style={{ marginBottom: "40px" }}>
+            <h2 style={sectionLabel}>
+              AI Decision Engine
+              <span style={{ marginLeft: "8px", fontSize: "10px", padding: "2px 8px", background: "#a855f722", color: "#a855f7", borderRadius: "8px" }}>
+                LIVE
+              </span>
+            </h2>
+
+            {/* Three model cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px", marginBottom: "16px" }}>
+              {([
+                { name: "Grok", role: "Fast Signals", color: "#ef4444", thoughts: GROK_THOUGHTS, speed: 18 },
+                { name: "Claude", role: "Deep Analysis", color: "#a855f7", thoughts: CLAUDE_THOUGHTS, speed: 22 },
+                { name: "Perplexity", role: "Research", color: "#3b82f6", thoughts: PERPLEXITY_THOUGHTS, speed: 20 },
+              ] as const).map((model) => (
+                <div
+                  key={model.name}
+                  className="neon-border"
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "10px",
+                    borderTop: `3px solid ${model.color}`,
+                    minHeight: "180px",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                    <div
+                      className="node-active"
+                      style={{
+                        width: "10px",
+                        height: "10px",
+                        borderRadius: "50%",
+                        background: model.color,
+                        color: model.color,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span style={{ fontWeight: "bold", fontSize: "14px", color: model.color }}>{model.name}</span>
+                    <span style={{ fontSize: "10px", color: "var(--text-secondary)", marginLeft: "auto" }}>{model.role}</span>
+                  </div>
+                  <div style={{ flex: 1, fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                    <TypingText texts={[...model.thoughts]} speed={model.speed} pause={3000} />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Data flow lines */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", padding: "0 40px" }}>
+              <div className="data-flow-line" style={{ flex: 1 }} />
+              <span style={{ fontSize: "10px", color: "var(--text-secondary)", whiteSpace: "nowrap" }}>converging signals</span>
+              <div className="data-flow-line" style={{ flex: 1 }} />
+            </div>
+
+            {/* Consensus result */}
+            <div
+              style={{
+                padding: "20px 24px",
+                background: "var(--bg-secondary)",
+                border: `1px solid ${currentDecision.confidence > 80 ? "#10b98144" : "#f59e0b44"}`,
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "24px",
+                boxShadow: currentDecision.confidence > 80
+                  ? "0 0 20px rgba(16, 185, 129, 0.08)"
+                  : "0 0 20px rgba(245, 158, 11, 0.08)",
+              }}
+            >
+              <div style={{ textAlign: "center", minWidth: "80px" }}>
+                <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", marginBottom: "4px" }}>
+                  Consensus
+                </div>
+                <div
+                  style={{
+                    fontSize: "32px",
+                    fontWeight: "bold",
+                    color: currentDecision.confidence > 80 ? "#10b981" : "#f59e0b",
+                    lineHeight: 1,
+                  }}
+                >
+                  {currentDecision.confidence}%
+                </div>
+              </div>
+              <div style={{ width: "1px", height: "48px", background: "var(--border-color)" }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+                  <span style={{ fontWeight: "bold", fontSize: "15px" }}>{currentDecision.pair}</span>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      padding: "3px 10px",
+                      borderRadius: "4px",
+                      fontWeight: "bold",
+                      background: currentDecision.direction === "LONG" ? "#10b98122" : "#ef444422",
+                      color: currentDecision.direction === "LONG" ? "#10b981" : "#ef4444",
+                    }}
+                  >
+                    {currentDecision.direction === "LONG" ? "\u25B2" : "\u25BC"} {currentDecision.direction}
+                  </span>
+                </div>
+                <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5" }}>
+                  {currentDecision.reason}
+                </div>
+              </div>
+              <div
+                style={{
+                  padding: "8px 16px",
+                  border: `1px solid ${currentDecision.confidence > 80 ? "#10b98144" : "var(--border-color)"}`,
+                  borderRadius: "6px",
+                  fontSize: "11px",
+                  color: currentDecision.confidence > 80 ? "#10b981" : "var(--text-secondary)",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {currentDecision.confidence > 80 ? "Actionable" : "Low Conviction"}
+              </div>
+            </div>
+          </section>
+
           {/* ═══ SIGNAL FEED + CHART ═══ */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "40px" }}>
             {/* Signals */}
@@ -495,6 +733,123 @@ export default function DemoPage() {
               </div>
             </section>
           </div>
+
+          {/* ═══ LIVE ORDER BOOK ═══ */}
+          <section style={{ marginBottom: "40px" }}>
+            <h2 style={sectionLabel}>
+              Live Order Book — BTC/USDT
+              <span
+                className="animate-pulse"
+                style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }}
+              />
+            </h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "2px",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "10px",
+                overflow: "hidden",
+              }}
+            >
+              {/* Bids */}
+              <div style={{ padding: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase" }}>
+                  <span>Price (USD)</span>
+                  <span>Size (BTC)</span>
+                </div>
+                {orderBook.bids.map((bid, i) => {
+                  const maxSize = Math.max(...orderBook.bids.map((b) => b.size));
+                  const pct = (bid.size / maxSize) * 100;
+                  return (
+                    <div
+                      key={`bid-${i}`}
+                      className={obFlash[`bids-${i}`] || ""}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "4px 8px",
+                        fontSize: "12px",
+                        position: "relative",
+                        borderRadius: "3px",
+                      }}
+                    >
+                      <div
+                        className="orderbook-bar"
+                        style={{
+                          position: "absolute",
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          width: `${pct}%`,
+                          background: "rgba(16, 185, 129, 0.1)",
+                          borderRadius: "3px",
+                          zIndex: 0,
+                        }}
+                      />
+                      <span style={{ color: "#10b981", fontWeight: "bold", position: "relative", zIndex: 1 }}>
+                        ${bid.price.toLocaleString()}
+                      </span>
+                      <span style={{ color: "var(--text-secondary)", position: "relative", zIndex: 1 }}>
+                        {bid.size.toFixed(3)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Asks */}
+              <div style={{ padding: "16px", borderLeft: "1px solid var(--border-color)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase" }}>
+                  <span>Price (USD)</span>
+                  <span>Size (BTC)</span>
+                </div>
+                {orderBook.asks.map((ask, i) => {
+                  const maxSize = Math.max(...orderBook.asks.map((a) => a.size));
+                  const pct = (ask.size / maxSize) * 100;
+                  return (
+                    <div
+                      key={`ask-${i}`}
+                      className={obFlash[`asks-${i}`] || ""}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "4px 8px",
+                        fontSize: "12px",
+                        position: "relative",
+                        borderRadius: "3px",
+                      }}
+                    >
+                      <div
+                        className="orderbook-bar"
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          width: `${pct}%`,
+                          background: "rgba(239, 68, 68, 0.1)",
+                          borderRadius: "3px",
+                          zIndex: 0,
+                        }}
+                      />
+                      <span style={{ color: "#ef4444", fontWeight: "bold", position: "relative", zIndex: 1 }}>
+                        ${ask.price.toLocaleString()}
+                      </span>
+                      <span style={{ color: "var(--text-secondary)", position: "relative", zIndex: 1 }}>
+                        {ask.size.toFixed(3)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div style={{ textAlign: "center", fontSize: "10px", color: "var(--text-secondary)", marginTop: "8px" }}>
+              Spread: ${(orderBook.asks[0].price - orderBook.bids[0].price).toFixed(0)} | Updates: ~1/sec | DEMO — simulated order book
+            </div>
+          </section>
 
           {/* ═══ CTA ═══ */}
           <section

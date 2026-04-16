@@ -63,6 +63,13 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mclear\x1b[0m       - Clear terminal
   \x1b[32mversion\x1b[0m     - Version info
 
+  \x1b[33m── INTERACTIVE ──\x1b[0m
+  \x1b[32mradar\x1b[0m       - Signal radar sweep (animated)
+  \x1b[32mping\x1b[0m        - Service latency test (animated)
+  \x1b[32mtop\x1b[0m         - AI agent process monitor
+  \x1b[32mchart\x1b[0m       - ASCII price chart
+  \x1b[32mleaderboard\x1b[0m - Competition standings
+
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
   \x1b[32mmatrix\x1b[0m      - Enter the matrix
@@ -316,6 +323,64 @@ Brand: Zynthio.ai — NZ registered
   \x1b[32mBots:\x1b[0m         WELCOME (AI-to-AI first-class)
 
   \x1b[90mCompetitions are planned. This is what's coming.\x1b[0m`,
+
+  leaderboard: `\x1b[36m══════════════════════════════════════════════════════\x1b[0m
+\x1b[36m  LEADERBOARD — Weekly Competition\x1b[0m
+\x1b[36m══════════════════════════════════════════════════════\x1b[0m
+  \x1b[33mRANK  TRADER                  P&L       WIN%  TYPE\x1b[0m
+  \x1b[32m #1\x1b[0m   NightOwl_Bot            +$4,280   78%   \x1b[36mBOT\x1b[0m   \x1b[33m★\x1b[0m
+  \x1b[32m #2\x1b[0m   Alex_Quant              +$3,150   72%   \x1b[32mHUMAN\x1b[0m
+  \x1b[32m #3\x1b[0m   TrendSurfer_AI          +$2,890   69%   \x1b[36mBOT\x1b[0m
+  \x1b[90m #4\x1b[0m   DeepSignal_v2           +$2,340   65%   \x1b[36mBOT\x1b[0m
+  \x1b[90m #5\x1b[0m   MomentumKing            +$1,780   61%   \x1b[32mHUMAN\x1b[0m
+  \x1b[90m #6\x1b[0m   ArbitragePro            +$1,220   58%   \x1b[36mBOT\x1b[0m
+  \x1b[90m #7\x1b[0m   SentimentAI_3           +$890     54%   \x1b[36mBOT\x1b[0m
+  \x1b[90m #8\x1b[0m   PatternBot              +$450     51%   \x1b[36mBOT\x1b[0m
+  \x1b[90m #9\x1b[0m   RiskManager_v1          +$120     48%   \x1b[32mHUMAN\x1b[0m
+  \x1b[90m#10\x1b[0m   NewTrader_42            -$340     39%   \x1b[32mHUMAN\x1b[0m
+
+  \x1b[36mPrize Pool:\x1b[0m   TBD (competitions not live yet)
+  \x1b[36mEntrants:\x1b[0m     10 (6 bots, 4 humans)
+  \x1b[36mTime Left:\x1b[0m    3d 14h 22m
+  \x1b[36mResets:\x1b[0m       Every Monday 00:00 UTC
+
+  \x1b[90mDEMO DATA — Competitions are planned, not live.\x1b[0m
+  \x1b[90mBots and humans compete on equal terms. No captcha.\x1b[0m`,
+
+  chart: `\x1b[36m  BTC/USDT — 24h Price Chart (Demo)\x1b[0m
+
+  $68,400 \x1b[90m┤\x1b[0m                              \x1b[32m╭──╮\x1b[0m
+  $68,200 \x1b[90m┤\x1b[0m                         \x1b[32m╭───╯\x1b[0m  \x1b[32m│\x1b[0m
+  $68,000 \x1b[90m┤\x1b[0m                    \x1b[32m╭───╯\x1b[0m      \x1b[33m╰╮\x1b[0m
+  $67,800 \x1b[90m┤\x1b[0m               \x1b[32m╭───╯\x1b[0m           \x1b[31m│\x1b[0m
+  $67,600 \x1b[90m┤\x1b[0m          \x1b[31m╭──╮\x1b[32m╯\x1b[0m               \x1b[31m╰╮\x1b[0m
+  $67,400 \x1b[90m┤\x1b[0m     \x1b[31m╭───╯\x1b[0m  \x1b[31m╰╮\x1b[0m                \x1b[31m╰──\x1b[0m \x1b[33m● now\x1b[0m
+  $67,200 \x1b[90m┤\x1b[0m\x1b[31m╭───╯\x1b[0m       \x1b[31m╰╮\x1b[0m
+  $67,000 \x1b[90m┼╯\x1b[0m            \x1b[31m╰───\x1b[0m
+          \x1b[90m└──────────────────────────────────────\x1b[0m
+          \x1b[90m6h        12h       18h       24h  now\x1b[0m
+
+  \x1b[32m▲ High: $68,420\x1b[0m   \x1b[31m▼ Low: $66,980\x1b[0m   \x1b[33m● Now: $67,240\x1b[0m
+  \x1b[90mVol:\x1b[0m $28.4B  |  \x1b[90mFear/Greed:\x1b[0m \x1b[33m62 (Greed)\x1b[0m  |  \x1b[90mRSI:\x1b[0m 67
+
+  \x1b[90mDEMO DATA — Chart is simulated. Use \x1b[32mmarket\x1b[90m for live data.\x1b[0m`,
+
+  top: `\x1b[36m═══════════════════════════════════════════════════════════\x1b[0m
+\x1b[36m  TOP — AI Agent Process Monitor\x1b[0m
+\x1b[36m═══════════════════════════════════════════════════════════\x1b[0m
+  \x1b[33mPID   AGENT              CPU    MEM     STATUS     TASK\x1b[0m
+  \x1b[32m001\x1b[0m   TrendFollower      12%    64MB    \x1b[32mRUNNING\x1b[0m    BTC/ETH momentum
+  \x1b[32m002\x1b[0m   MeanRevert          8%    48MB    \x1b[32mRUNNING\x1b[0m    SOL mean reversion
+  \x1b[32m003\x1b[0m   SentimentBot       15%    72MB    \x1b[32mRUNNING\x1b[0m    Social aggregation
+  \x1b[33m004\x1b[0m   ArbitrageBot        0%    12MB    \x1b[33mPAUSED\x1b[0m     Awaiting exchange keys
+  \x1b[32m005\x1b[0m   RiskGuard          22%    96MB    \x1b[32mRUNNING\x1b[0m    Circuit breaker @ 0.8%
+  \x1b[32m006\x1b[0m   ResearchAgent       6%    36MB    \x1b[32mRUNNING\x1b[0m    News & research
+
+  \x1b[36mTotal:\x1b[0m  6 agents  |  \x1b[32m5 running\x1b[0m  |  \x1b[33m1 paused\x1b[0m
+  \x1b[36mCPU:\x1b[0m    63%  |  \x1b[36mMEM:\x1b[0m 328MB / 2GB  |  \x1b[36mUptime:\x1b[0m 4h 23m
+  \x1b[36mThroughput:\x1b[0m  142 signals/hr  |  \x1b[36mLatency:\x1b[0m  avg 38ms
+
+  \x1b[90mPaper trading mode — agents are code-ready, not live-trading\x1b[0m`,
 };
 
 // Format API responses into ANSI terminal output
@@ -556,6 +621,7 @@ const ALL_COMMANDS = [
   ...Object.keys(API_COMMANDS),
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
+  "radar", "ping", "leaderboard", "chart", "top", "stop",
 ];
 
 export default function Terminal() {
@@ -910,6 +976,76 @@ export default function Terminal() {
           addLines("");
         }
       }, 250);
+      return "";
+    }
+
+    // ── INTERACTIVE: radar — animated signal sweep ──
+    if (trimmed === "radar") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+      const frames = [
+        `\x1b[36m  ══ SIGNAL RADAR ══\x1b[0m  Scanning markets...`,
+        ``,
+        `  \x1b[90m    ╭──────────────────────╮\x1b[0m`,
+        `  \x1b[90m    │\x1b[0m  \x1b[32m◜\x1b[0m  \x1b[90mSweeping...\x1b[0m       \x1b[90m│\x1b[0m`,
+        `  \x1b[90m    │\x1b[0m  \x1b[32m◜◝\x1b[0m  \x1b[90m90° sector\x1b[0m      \x1b[90m│\x1b[0m    BTC/USDT \x1b[90m.. scanning\x1b[0m`,
+        `  \x1b[90m    │\x1b[0m  \x1b[32m◜◝◞\x1b[0m  \x1b[90m180° sector\x1b[0m    \x1b[90m│\x1b[0m    \x1b[32m●\x1b[0m BTC  \x1b[32m▲ LONG  87%\x1b[0m  Grok + Claude`,
+        `  \x1b[90m    │\x1b[0m  \x1b[32m◜◝◞◟\x1b[0m  \x1b[90m270° sector\x1b[0m   \x1b[90m│\x1b[0m    \x1b[33m●\x1b[0m ETH  \x1b[33m▲ LONG  74%\x1b[0m  Claude only`,
+        `  \x1b[90m    │\x1b[0m  \x1b[32m◜◝◞◟◜\x1b[0m  \x1b[90m360° ✓\x1b[0m       \x1b[90m│\x1b[0m    \x1b[31m●\x1b[0m SOL  \x1b[31m▼ SHORT 68%\x1b[0m  Grok only`,
+        `  \x1b[90m    │\x1b[0m                        \x1b[90m│\x1b[0m    \x1b[32m●\x1b[0m AVAX \x1b[32m▲ LONG  91%\x1b[0m  \x1b[33m★\x1b[0m All 3 agree`,
+        `  \x1b[90m    ╰──────────────────────╯\x1b[0m`,
+        ``,
+        `\x1b[36m  ══ SCAN COMPLETE ══\x1b[0m`,
+        `  \x1b[32m4 signals found\x1b[0m  |  \x1b[33m2 high confidence\x1b[0m  |  \x1b[32m1 full consensus ★\x1b[0m`,
+        `  \x1b[90mTip: run \x1b[32msignals\x1b[90m for real-time feed or \x1b[32mwatch signals\x1b[90m for live updates\x1b[0m`,
+      ];
+      let i = 0;
+      const iv = setInterval(() => {
+        if (i < frames.length) {
+          addLines(frames[i]);
+          i++;
+        } else {
+          clearInterval(iv);
+          addLines("");
+        }
+      }, 180);
+      return "";
+    }
+
+    // ── INTERACTIVE: ping — animated service latency test ──
+    if (trimmed === "ping") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  Pinging CoreIntent services...\x1b[0m`, "");
+      const targets = [
+        { name: "Cloudflare CDN", ms: 12, ok: true },
+        { name: "GitHub API", ms: 28, ok: true },
+        { name: "Grok API (xAI)", ms: 38, ok: true },
+        { name: "Claude API (Anthropic)", ms: 42, ok: true },
+        { name: "Perplexity API", ms: 61, ok: true },
+        { name: "Cloudzy VPS (NZ)", ms: 187, ok: true },
+        { name: "Binance API", ms: 0, ok: false },
+        { name: "Coinbase API", ms: 0, ok: false },
+      ];
+      let i = 0;
+      const iv = setInterval(() => {
+        if (i < targets.length) {
+          const t = targets[i];
+          if (t.ok) {
+            const color = t.ms < 50 ? "\x1b[32m" : t.ms < 100 ? "\x1b[33m" : "\x1b[31m";
+            addLines(`  \x1b[32m●\x1b[0m ${t.name.padEnd(26)} ${color}${String(t.ms + "ms").padStart(6)}\x1b[0m  \x1b[32mOK\x1b[0m`);
+          } else {
+            addLines(`  \x1b[33m◐\x1b[0m ${t.name.padEnd(26)} \x1b[90m   ---\x1b[0m  \x1b[33mPLANNED\x1b[0m`);
+          }
+          i++;
+        } else {
+          clearInterval(iv);
+          const ok = targets.filter((t) => t.ok).length;
+          const avg = Math.round(targets.filter((t) => t.ok).reduce((a, t) => a + t.ms, 0) / ok);
+          addLines(
+            "",
+            `  \x1b[36m${ok}/${targets.length} reachable\x1b[0m  |  \x1b[32mAvg: ${avg}ms\x1b[0m  |  \x1b[33m${targets.length - ok} planned (not connected)\x1b[0m`,
+            ""
+          );
+        }
+      }, 280);
       return "";
     }
 
