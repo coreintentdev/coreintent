@@ -303,6 +303,14 @@ export default function Home() {
 
   const [showHero, setShowHero] = useState(true);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("launch") === "terminal") {
+      setShowHero(false);
+      setTab("terminal");
+    }
+  }, []);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
