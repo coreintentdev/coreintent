@@ -117,10 +117,6 @@ const jsonLd = {
         "@type": "Country",
         name: "New Zealand",
       },
-      sameAs: [
-        "https://github.com/coreintentdev",
-        "https://x.com/coreintentai",
-      ],
     },
     {
       "@type": "WebApplication",
