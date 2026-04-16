@@ -13,12 +13,23 @@ export const metadata: Metadata = {
       "CoreIntent risk disclaimer. Paper trading mode. Not financial advice. Trading involves significant risk.",
     url: "https://coreintent.dev/disclaimer",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Disclaimer — Risk Warnings & Legal Information",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Disclaimer | CoreIntent",
     description:
       "Risk warnings and legal information for the CoreIntent trading platform.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
+    images: ["/opengraph-image.png"],
   },
 };
 

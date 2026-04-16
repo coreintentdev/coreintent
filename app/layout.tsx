@@ -76,8 +76,8 @@ export const metadata: Metadata = {
     "AI crypto trading",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
+  verification: {
+    google: undefined, // Add Google Search Console verification code when available
   },
 };
 
@@ -192,7 +192,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en-NZ">
       <body>
         <script
           type="application/ld+json"
