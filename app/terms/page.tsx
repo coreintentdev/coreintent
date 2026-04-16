@@ -14,6 +14,21 @@ export const metadata: Metadata = {
     description: "Rules of engagement for CoreIntent AI trading competitions.",
     url: "https://coreintent.dev/terms",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Terms of Service",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | CoreIntent",
+    description: "Rules of engagement for CoreIntent AI trading competitions. Governed by New Zealand law.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
   },
 };
 

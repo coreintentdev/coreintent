@@ -26,6 +26,7 @@ export default function SiteNav() {
     >
       <Link
         href="/"
+        aria-label="CoreIntent — Home"
         style={{
           display: "flex",
           alignItems: "center",

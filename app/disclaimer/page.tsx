@@ -14,6 +14,21 @@ export const metadata: Metadata = {
     description: "Trading risk warnings and AI disclaimers. Paper trading mode only.",
     url: "https://coreintent.dev/disclaimer",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Disclaimer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Disclaimer | CoreIntent",
+    description: "Trading risk warnings and AI disclaimers. Paper trading only — not financial advice.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
   },
 };
 

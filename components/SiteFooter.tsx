@@ -3,6 +3,7 @@ import Link from "next/link";
 export default function SiteFooter() {
   return (
     <footer
+      role="contentinfo"
       style={{
         borderTop: "1px solid var(--border-color)",
         background: "var(--bg-secondary)",
@@ -33,10 +34,10 @@ export default function SiteFooter() {
           >
             CoreIntent
           </div>
-          <div>Agentic AI Trading Engine</div>
-          <div style={{ marginTop: "4px" }}>
+          <p>Agentic AI Trading Engine</p>
+          <p style={{ marginTop: "4px" }}>
             Built by Corey McIvor | Zynthio.ai
-          </div>
+          </p>
         </div>
 
         <nav
@@ -80,12 +81,23 @@ export default function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+              aria-label="CoreIntent on GitHub"
             >
               GitHub
             </a>
             <a
+              href="https://x.com/coreintentai"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+              aria-label="CoreIntent on X (Twitter)"
+            >
+              X / Twitter
+            </a>
+            <a
               href="mailto:corey@coreyai.ai"
               style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+              aria-label="Email CoreIntent"
             >
               Contact
             </a>
@@ -105,11 +117,11 @@ export default function SiteFooter() {
           gap: "8px",
         }}
       >
-        <span>&copy; {new Date().getFullYear()} Corey McIvor. All rights reserved.</span>
-        <span>
+        <small>&copy; {new Date().getFullYear()} Corey McIvor. All rights reserved.</small>
+        <small>
           Trading cryptocurrency involves significant risk. Past performance does
           not guarantee future results. Paper trading mode.
-        </span>
+        </small>
       </div>
     </footer>
   );

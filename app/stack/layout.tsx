@@ -13,12 +13,23 @@ export const metadata: Metadata = {
       "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
     url: "https://coreintent.dev/stack",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Technology Stack — Claude, Grok & Perplexity",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "The Stack | CoreIntent",
     description:
       "Claude + Grok + Perplexity — the multi-AI stack powering CoreIntent trading engine.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
+    images: ["/opengraph-image.png"],
   },
 };
 
