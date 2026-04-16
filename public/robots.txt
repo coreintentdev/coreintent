@@ -3,4 +3,28 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 
+# AI crawlers — welcome to index public pages
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
 Sitemap: https://coreintent.dev/sitemap.xml

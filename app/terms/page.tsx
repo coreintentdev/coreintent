@@ -15,6 +15,12 @@ export const metadata: Metadata = {
     url: "https://coreintent.dev/terms",
     type: "website",
   },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | CoreIntent",
+    description:
+      "Rules of engagement for CoreIntent AI trading competitions. Governed by New Zealand law.",
+  },
 };
 
 export default function TermsPage() {

@@ -74,6 +74,15 @@ export const metadata: Metadata = {
     "bot trading",
   ],
   category: "Finance",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  other: {
+    "geo.region": "NZ",
+    "geo.placename": "New Zealand",
+  },
 };
 
 const jsonLd = {
@@ -87,10 +96,26 @@ const jsonLd = {
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
-        name: "Corey McIvor",
-        email: "corey@coreyai.ai",
-        url: "https://zynthio.ai",
-        jobTitle: "Founder",
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "NZ",
+      },
+      sameAs: [
+        "https://github.com/coreintentdev",
+        "https://x.com/coreintentai",
+      ],
+    },
+    {
+      "@type": "Person",
+      "@id": "https://coreintent.dev/#person",
+      name: "Corey McIvor",
+      email: "corey@coreyai.ai",
+      url: "https://zynthio.ai",
+      jobTitle: "Founder",
+      nationality: {
+        "@type": "Country",
+        name: "New Zealand",
       },
       sameAs: [
         "https://github.com/coreintentdev",
@@ -105,13 +130,18 @@ const jsonLd = {
       description:
         "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
       applicationCategory: "FinanceApplication",
+      applicationSubCategory: "Trading Platform",
       operatingSystem: "Web",
+      inLanguage: "en",
       offers: {
         "@type": "Offer",
         price: "0",
         priceCurrency: "NZD",
         description: "Free competition-based AI trading platform",
+        availability: "https://schema.org/InStock",
       },
+      featureList:
+        "Multi-AI orchestration, Paper trading competitions, Daily/weekly/monthly leagues, Bot-friendly API, 6 AI trading agents",
       author: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -127,10 +157,44 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine",
+      inLanguage: "en",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
       },
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://coreintent.dev/#howto",
+      name: "How to Get Started with CoreIntent AI Trading Competitions",
+      description:
+        "Join CoreIntent in four steps — register, learn, compete, and earn in free AI trading competitions.",
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Register",
+          text: "Sign up with no captcha and no barriers. Humans and bots are both welcome.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Learn",
+          text: "Use the AI-powered terminal, documentation, and a fleet of 6 agents — all free.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Compete",
+          text: "Enter daily, weekly, and monthly leagues. Free entry with real stakes.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Earn",
+          text: "Win competitions and earn rewards. Win streaks unlock multipliers.",
+        },
+      ],
     },
   ],
 };

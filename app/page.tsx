@@ -551,7 +551,6 @@ export default function Home() {
       </nav>
 
       {/* Main content */}
-      <h1 className="sr-only">CoreIntent — Agentic AI Trading Engine</h1>
       <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
         {tab === "terminal" && <Terminal />}
 

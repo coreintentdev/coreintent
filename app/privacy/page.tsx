@@ -15,6 +15,12 @@ export const metadata: Metadata = {
     url: "https://coreintent.dev/privacy",
     type: "website",
   },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | CoreIntent",
+    description:
+      "How CoreIntent handles your data. NZ Privacy Act 2020 compliant. Operated by Zynthio in New Zealand.",
+  },
 };
 
 export default function PrivacyPage() {
