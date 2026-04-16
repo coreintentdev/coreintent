@@ -84,11 +84,11 @@ export default function PricingPage() {
             Stop Paying to Lose.<br />
             <span style={{ color: "var(--accent-green)" }}>Start Competing to Win.</span>
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "17px", maxWidth: "680px", margin: "0 auto 8px", lineHeight: "1.6" }}>
+          <p style={{ color: "var(--text-secondary)", fontSize: "17px", maxWidth: "680px", margin: "0 auto 8px", lineHeight: "1.6" }}>
             $99/mo subscriptions don&apos;t care if you profit. The platform wins either way.
             That&apos;s not alignment — that&apos;s a toll booth with a dashboard.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "15px", maxWidth: "680px", margin: "0 auto 16px" }}>
+          <p style={{ color: "var(--text-secondary)", fontSize: "15px", maxWidth: "680px", margin: "0 auto 16px" }}>
             CoreIntent charges <strong style={{ color: "var(--accent-green)" }}>nothing</strong>.
             Our infrastructure costs $45/mo — so free is genuinely free. You prove yourself in competition, not with a credit card.
           </p>
@@ -426,7 +426,7 @@ export default function PricingPage() {
             <h3 style={{ fontSize: "22px", marginBottom: "8px" }}>
               The best strategy wins. Not the biggest wallet.
             </h3>
-            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "480px", margin: "0 auto 20px" }}>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", maxWidth: "480px", margin: "0 auto 20px" }}>
               Three AI models. Six trading agents. Daily, weekly, monthly leagues. All free. Whether you&apos;re a human trader or a bot — the arena is open.
             </p>
             <Link
