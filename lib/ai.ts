@@ -34,8 +34,6 @@ export interface AIResponse {
   errorType?: "api_error" | "rate_limit" | "network_error" | "timeout";
 }
 
-export type OrchestrateTask = "signal" | "analysis" | "research" | "content";
-
 /** Which AI API keys are configured (true) vs demo placeholder (false). */
 export interface AiKeyStatus {
   claude:     boolean;
@@ -400,99 +398,3 @@ export function validateAiContent(response: AIResponse): boolean {
   return Boolean(response.content?.trim());
 }
 
-// ---------------------------------------------------------------------------
-// CALL ALL — Run all three models in parallel
-// ---------------------------------------------------------------------------
-
-/**
- * Fire all three AI models in parallel and return their responses as a tuple.
- * Used by routes (e.g. /api/protect, /api/research) that need multi-model consensus.
- * Individual failures do not block the others — each returns its own fallback.
- *
- * @returns [grokResult, claudeResult, perplexityResult]
- */
-export async function callAll(
-  grokPrompt:       string,
-  claudePrompt:     string,
-  perplexityQuery:  string
-): Promise<[AIResponse, AIResponse, AIResponse]> {
-  return Promise.all([
-    callGrok(grokPrompt),
-    callClaude(claudePrompt),
-    callPerplexity(perplexityQuery),
-  ]);
-}
-
-// ---------------------------------------------------------------------------
-// RETRY — Recover from transient rate-limit errors
-// ---------------------------------------------------------------------------
-
-const RETRY_DELAY_MS = 1_500;
-
-/**
- * Wrap any single AI call with one retry on rate-limit responses.
- * Other failure types (timeout, api_error, network_error) are not retried —
- * retrying a timeout or network failure immediately is unlikely to help.
- *
- * @example
- * const result = await withRetry(() => callGrok(prompt));
- */
-export async function withRetry(
-  fn: () => Promise<AIResponse>
-): Promise<AIResponse> {
-  const first = await fn();
-  if (first.errorType !== "rate_limit") return first;
-  await new Promise<void>((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
-  return fn();
-}
-
-// ---------------------------------------------------------------------------
-// ORCHESTRATOR — Route each task type to the best-fit model
-// ---------------------------------------------------------------------------
-
-/**
- * Route a task to the most appropriate AI, enriching the prompt with
- * task-type context so each model receives the right framing:
- * - signal    → Grok        (explicit signal format, paper trading context)
- * - content   → Grok        (fast draft for CoreIntent/Zynthio.ai, brand voice)
- * - analysis  → Claude      (deep reasoning, structured output with required sections)
- * - research  → Perplexity  (factual web research with citation enforcement, NZ context)
- */
-export async function orchestrate(
-  task: OrchestrateTask,
-  prompt: string
-): Promise<AIResponse> {
-  switch (task) {
-    case "signal":
-      return callGrok(
-        `[CoreIntent Signal Engine | paper_trading mode]\n` +
-        `TASK: Generate a trading signal analysis for: ${prompt}\n\n` +
-        `Format EXACTLY: <Pair> | <long/short> | <confidence 0.00–1.00> | Entry: <zone> | Stop: <level> | Rationale: <≤2 sentences>\n` +
-        `Rules: Only signal if confidence ≥ 0.70. State [INSUFFICIENT DATA] if unable to form a view. ` +
-        `All signals are paper trading only — no real capital at risk.`
-      );
-    case "content":
-      return callGrok(
-        `[CoreIntent Content Engine | Zynthio.ai]\n` +
-        `TASK: Generate content for CoreIntent / Zynthio.ai.\n\n${prompt}\n\n` +
-        `Brand voice: Direct, data-driven, no hype. Competition-based platform (not subscriptions). NZ-based.\n` +
-        `Output must be ready to publish — no placeholder text, no Lorem Ipsum.`
-      );
-    case "analysis":
-      return callClaude(
-        `[CoreIntent Analysis Engine | paper_trading mode]\n` +
-        `TASK: Deep analysis for: ${prompt}\n\n` +
-        `Required sections:\n## Summary\n## Key Risks\n## Recommendations\n\n` +
-        `Rules: Label all data sources. Flag uncertainty with [UNCERTAIN: reason]. ` +
-        `NZ regulatory context where applicable (NZ FMA, not ASIC). ` +
-        `Do not fabricate prices, volume, or on-chain statistics.`
-      );
-    case "research":
-      return callPerplexity(
-        `[CoreIntent Research Engine | Zynthio.ai | NZ jurisdiction]\n` +
-        `RESEARCH QUERY: ${prompt}\n\n` +
-        `Context: Paper trading platform. Prioritise sources from the last 90 days for market-sensitive data. ` +
-        `Cite all sources. State explicitly if information cannot be found rather than inferring.`
-      );
-  }
-}
