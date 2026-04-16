@@ -109,9 +109,14 @@ This is a **paper trade simulation**. No real money was used. This is how CoreIn
 Type **help** to explore more.`,
 ];
 
+let sharedAudioCtx: AudioContext | null = null;
+
 function playNotificationSound(): void {
   try {
-    const ctx = new AudioContext();
+    if (!sharedAudioCtx || sharedAudioCtx.state === "closed") {
+      sharedAudioCtx = new AudioContext();
+    }
+    const ctx = sharedAudioCtx;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
@@ -130,7 +135,7 @@ function playNotificationSound(): void {
 function getResponse(input: string): string {
   const lower = input.toLowerCase().trim();
 
-  if (RESPONSES[lower]) return RESPONSES[lower];
+  if (Object.hasOwn(RESPONSES, lower)) return RESPONSES[lower];
 
   if (lower.includes("help") || lower === "?") return RESPONSES.help;
   if (lower.includes("about") || lower.includes("what is") || lower.includes("who are"))
