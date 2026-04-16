@@ -454,31 +454,6 @@ export async function callAll(
 }
 
 // ---------------------------------------------------------------------------
-// FALLBACK — Try primary AI; fall back to secondary on non-live response
-// ---------------------------------------------------------------------------
-
-/**
- * Try the primary AI call. If it returns a non-live response (demo or error),
- * immediately try the fallback instead.
- * If both fail, the fallback's response is returned (never throws).
- * Use this on critical paths where a single model's outage must not block output.
- *
- * @example
- * const result = await callWithFallback(
- *   () => callGrok(prompt),
- *   () => callClaude(prompt),
- * );
- */
-export async function callWithFallback(
-  primary:  () => Promise<AIResponse>,
-  fallback: () => Promise<AIResponse>
-): Promise<AIResponse> {
-  const result = await primary();
-  if (result.live) return result;
-  return fallback();
-}
-
-// ---------------------------------------------------------------------------
 // RETRY — Recover from transient rate-limit errors
 // ---------------------------------------------------------------------------
 
