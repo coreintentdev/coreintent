@@ -77,6 +77,7 @@ export default function StackPage() {
             {AI_SERVICES.map((svc) => (
               <div
                 key={svc.name}
+                className="card-hover"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -114,6 +115,7 @@ export default function StackPage() {
             {EXCHANGES.map((ex) => (
               <div
                 key={ex.name}
+                className="card-hover"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -151,6 +153,7 @@ export default function StackPage() {
             {PLATFORMS.map((p) => (
               <div
                 key={p.name}
+                className="card-hover"
                 style={{
                   display: "flex",
                   alignItems: "center",

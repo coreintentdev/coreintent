@@ -216,12 +216,14 @@ export default function Home() {
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
         <section
+          className="scan-line"
           style={{
             padding: "48px 24px 40px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
             borderBottom: "1px solid var(--border-color)",
             textAlign: "center",
             position: "relative",
+            overflow: "hidden",
           }}
         >
           <button
@@ -256,15 +258,18 @@ export default function Home() {
                 textTransform: "uppercase",
               }}
             >
+              <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle" }} />
               Paper Trading Mode — Building in Public
             </div>
             <h1
+              className="gradient-text-animated"
               style={{
                 fontSize: "clamp(28px, 4vw, 44px)",
                 fontWeight: "bold",
                 lineHeight: "1.2",
                 marginBottom: "16px",
-                background: "linear-gradient(135deg, #e2e8f0 0%, #10b981 100%)",
+                background: "linear-gradient(135deg, #e2e8f0 0%, #10b981 50%, #3b82f6 100%)",
+                backgroundSize: "300% 300%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -346,6 +351,7 @@ export default function Home() {
               ].map((prop) => (
                 <div
                   key={prop.label}
+                  className="card-hover"
                   style={{
                     padding: "16px",
                     background: "var(--bg-secondary)",
@@ -379,6 +385,7 @@ export default function Home() {
                 {AI_MODELS.map((m) => (
                   <div
                     key={m.name}
+                    className="card-hover"
                     style={{
                       padding: "20px 16px",
                       background: "var(--bg-primary)",
@@ -434,6 +441,7 @@ export default function Home() {
                 {HOW_IT_WORKS.map((s, i) => (
                   <div
                     key={s.label}
+                    className="card-hover"
                     style={{
                       padding: "20px 12px",
                       background: "var(--bg-primary)",
@@ -490,6 +498,7 @@ export default function Home() {
                 {DEMO_TESTIMONIALS.map((t) => (
                   <div
                     key={t.name}
+                    className="card-hover"
                     style={{
                       padding: "16px",
                       background: "var(--bg-primary)",
@@ -710,6 +719,7 @@ export default function Home() {
             ].map((agent) => (
               <div
                 key={agent.name}
+                className="card-hover"
                 style={{
                   display: "flex",
                   alignItems: "center",

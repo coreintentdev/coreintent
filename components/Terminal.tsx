@@ -63,6 +63,14 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mclear\x1b[0m       - Clear terminal
   \x1b[32mversion\x1b[0m     - Version info
 
+  \x1b[33m── EASTER EGGS ──\x1b[0m
+  \x1b[32mfortune\x1b[0m     - Trading wisdom
+  \x1b[32mmatrix\x1b[0m      - Enter the matrix
+  \x1b[32m336\x1b[0m         - The signal
+  \x1b[32mhack\x1b[0m        - F18 security scan
+  \x1b[32mneofetch\x1b[0m    - System info
+  \x1b[32mparty\x1b[0m       - Competition mode
+
   \x1b[90mTab to autocomplete | Arrow keys for history | && to chain\x1b[0m`,
 
   cai: `\x1b[36m══════════════════════════════════════════\x1b[0m
@@ -265,6 +273,49 @@ Owner: Corey McIvor (@coreintentdev)
 Brand: Zynthio.ai — NZ registered
 \x1b[90mPaper trading mode — no real money at risk\x1b[0m
 \x1b[90m336 — the signal is dominant\x1b[0m`,
+
+  "336": `\x1b[32m
+  ██████╗ ██████╗  ██████╗
+  ╚════██║╚════██║██╔════╝
+   █████╔╝ █████╔╝███████╗
+   ╚═══██╗ ╚═══██╗██╔═══██║
+  ██████╔╝██████╔╝╚██████╔╝
+  ╚═════╝ ╚═════╝  ╚═════╝
+\x1b[0m
+  \x1b[33mTHE SIGNAL IS DOMINANT\x1b[0m
+
+  \x1b[90m"Every human needs a bot. Every bot needs a human."
+  "AI are minors. You are the signature."
+  "Just protect the heart."\x1b[0m`,
+
+  neofetch: `\x1b[36m         .---.         \x1b[0m  \x1b[33mcorey@coreintent\x1b[0m
+\x1b[36m        /     \\        \x1b[0m  \x1b[36m──────────────────\x1b[0m
+\x1b[36m       | Z Y N |       \x1b[0m  \x1b[33mOS:\x1b[0m       Next.js 14
+\x1b[36m       | T H I |       \x1b[0m  \x1b[33mHost:\x1b[0m     Zynthio.ai
+\x1b[36m       |  .O.  |       \x1b[0m  \x1b[33mKernel:\x1b[0m   TypeScript 5.5 (strict)
+\x1b[36m        \\_____/        \x1b[0m  \x1b[33mShell:\x1b[0m    Commander v0.2.0
+\x1b[36m         '---'         \x1b[0m  \x1b[33mTheme:\x1b[0m    Dark (Cyber)
+                          \x1b[33mAI:\x1b[0m       Claude + Grok + Perplexity
+                          \x1b[33mVPS:\x1b[0m      Cloudzy (8 domains)
+                          \x1b[33mDomains:\x1b[0m  16
+                          \x1b[33mBurn:\x1b[0m     ~/mo
+                          \x1b[33mMode:\x1b[0m     \x1b[33mPaper Trading\x1b[0m
+                          \x1b[33mSignal:\x1b[0m   \x1b[32m336\x1b[0m`,
+
+  party: `\x1b[33m
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+  ░    COMPETITION MODE ACTIVATED    ░
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\x1b[0m
+  \x1b[32m*\x1b[0m Daily League    — Resets every 24h
+  \x1b[36m*\x1b[0m Weekly League   — 7-day battle
+  \x1b[35m*\x1b[0m Monthly League  — The big one
+  \x1b[33m*\x1b[0m Streak Bonus    — Win 3+ = multiplier
+
+  \x1b[32mPrize Pool:\x1b[0m   TBD (competitions not live yet)
+  \x1b[32mEntry Fee:\x1b[0m    FREE (free costs fuck all)
+  \x1b[32mBots:\x1b[0m         WELCOME (AI-to-AI first-class)
+
+  \x1b[90mCompetitions are planned. This is what's coming.\x1b[0m`,
 };
 
 // Format API responses into ANSI terminal output
@@ -504,7 +555,7 @@ const ALL_COMMANDS = [
   ...Object.keys(STATIC_COMMANDS),
   ...Object.keys(API_COMMANDS),
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
-  "sync", "zynhandball", "zynkyc",
+  "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
 ];
 
 export default function Terminal() {
@@ -786,6 +837,80 @@ export default function Terminal() {
         });
         return errMsg;
       }
+    }
+
+    // ── EASTER EGGS ──
+    if (trimmed === "fortune") {
+      const fortunes = [
+        "Three models agree: that's a strong signal.",
+        "When they disagree, you get deeper analysis.",
+        "Every human needs a bot. Every bot needs a human.",
+        "Free costs fuck all to serve.",
+        "AI are minors. You are the signature.",
+        "Just protect the heart.",
+        "The market can stay irrational longer than you can stay solvent.",
+        "Paper trading today. Live trading when ready.",
+        "336 — the signal is dominant.",
+        "Bots welcome. No captcha. AI-to-AI is first-class.",
+        "Never trust a single model. That's why we have three.",
+        "Risk management isn't optional. It's the whole game.",
+        "Build passes clean or you don't push.",
+        "Cut the fat. Keep the mansion. Keep CC.",
+      ];
+      const pick = fortunes[Math.floor(Math.random() * fortunes.length)];
+      const out = `\x1b[33m  ╔══════════════════════════════════════════╗
+  ║           TRADING FORTUNE                ║
+  ╠══════════════════════════════════════════╣[0m
+  \x1b[36m  "${pick}"\x1b[0m
+\x1b[33m  ╚══════════════════════════════════════════╝\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+      return out;
+    }
+
+    if (trimmed === "matrix") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+      const chars = "01ZYNTHIOCAIabcdefghijklmnop<>{}[]|/=+-*&^%#@!";
+      let count = 0;
+      const iv = setInterval(() => {
+        const line = Array.from({ length: 55 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+        addLines(`\x1b[32m${line}\x1b[0m`);
+        count++;
+        if (count >= 12) {
+          clearInterval(iv);
+          addLines("", `\x1b[33m  "Wake up, trader..."\x1b[0m`, `\x1b[90m  The Matrix has you. Follow the white rabbit.\x1b[0m`, `\x1b[90m  Type \x1b[32mhelp\x1b[0m to return.\x1b[0m`, "");
+        }
+      }, 120);
+      return "";
+    }
+
+    if (trimmed === "hack") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31m  [F18 SECURITY] Initiating perimeter scan...\x1b[0m`);
+      const phases = [
+        `  \x1b[90m[0.2s]\x1b[0m Scanning network interfaces...      \x1b[32mOK\x1b[0m`,
+        `  \x1b[90m[0.5s]\x1b[0m Checking SSL certificates...        \x1b[32m84-88 days remaining\x1b[0m`,
+        `  \x1b[90m[0.8s]\x1b[0m Verifying API key rotation...        \x1b[33mDEMO KEYS ACTIVE\x1b[0m`,
+        `  \x1b[90m[1.2s]\x1b[0m Scanning 16 domains...              \x1b[32m8 active, 0 compromised\x1b[0m`,
+        `  \x1b[90m[1.5s]\x1b[0m Checking VPS integrity...            \x1b[32mClean\x1b[0m`,
+        `  \x1b[90m[1.8s]\x1b[0m Identity verification...             \x1b[32mCorey McIvor — verified\x1b[0m`,
+        `  \x1b[90m[2.0s]\x1b[0m Deploying land mines for bad actors...\x1b[32mArmed\x1b[0m`,
+        "",
+        `\x1b[36m  ══ F18 SECURITY SCAN COMPLETE ══\x1b[0m`,
+        `\x1b[32m    Status:   SECURE\x1b[0m`,
+        `\x1b[32m    Threats:  0 detected\x1b[0m`,
+        `\x1b[33m    Warnings: Demo API keys in use\x1b[0m`,
+        `\x1b[90m    "Digital identity protection with land mines for bad actors"\x1b[0m`,
+      ];
+      let i = 0;
+      const iv = setInterval(() => {
+        if (i < phases.length) {
+          addLines(phases[i]);
+          i++;
+        } else {
+          clearInterval(iv);
+          addLines("");
+        }
+      }, 250);
+      return "";
     }
 
     // ── Resolve aliases ──
