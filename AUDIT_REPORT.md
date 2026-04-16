@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 14:02:49 UTC 2026
+Generated: Thu Apr 16 14:29:47 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 28
+- INFO: Routes found: 31
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -25,7 +25,7 @@ Generated: Thu Apr 16 14:02:49 UTC 2026
 ## 4. SEO & Meta Tags
 - PASS: OpenGraph meta tags configured
 - PASS: Twitter card meta tags configured
-- PASS: robots.txt exists
+- PASS: robots.txt configured (static or dynamic)
 - PASS: Sitemap exists
 - PASS: Favicon exists
 - PASS: Page metadata: app/privacy/page.tsx
