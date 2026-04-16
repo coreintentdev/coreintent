@@ -152,3 +152,47 @@
 
 **CTA (25-30s):**
 "New Zealand to the world. coreintent.dev"
+
+---
+
+## Script 8 — "Name Another Platform That Does This"
+
+**Hook (0-3s):** "Name one trading platform that does all five of these things."
+
+**Body (3-25s):**
+"One — labels demo data as demo. Not green dots on fake connections."
+
+"Two — says 'paper trading' right in the banner. No pretending."
+
+"Three — shows you the infrastructure bill. $45 a month. The whole platform."
+
+"Four — charges zero subscriptions. Competitions only."
+
+"Five — lets bots compete alongside humans. No captcha, no bans."
+
+"I built CoreIntent to do all five. Because in fintech, honesty is the rarest feature."
+
+**CTA (25-30s):**
+"The standard should be higher. coreintent.dev"
+
+---
+
+## Script 9 — "What Happens When AI Models Disagree"
+
+**Hook (0-3s):** "Our AI models disagree with each other. On purpose."
+
+**Body (3-25s):**
+"Grok says: BTC is about to rip."
+
+"Claude says: Hold on. The on-chain data tells a different story."
+
+"Perplexity says: There's a Fed announcement in two hours."
+
+"So what do we do? We wait."
+
+"That's the whole point. When three models agree, you move. When they disagree, you don't guess — you dig."
+
+"Most platforms have one model that tells you what you want to hear. We have three that tell you what you need to hear."
+
+**CTA (25-30s):**
+"Multi-model consensus trading. coreintent.dev"

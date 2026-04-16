@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -8,7 +9,7 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Prove yourself every 24 hours. Fresh leaderboard. Fresh chance.",
+    description: "Fresh leaderboard every 24 hours. Yesterday doesn't matter. Today does.",
     features: [
       "New trading challenge every day at 00:00 UTC",
       "AI-generated market scenarios",
@@ -22,7 +23,7 @@ const LEAGUES = [
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Anyone can get lucky once. Show consistency over seven days.",
+    description: "Anyone can get lucky once. Seven days separates skill from noise.",
     features: [
       "7-day portfolio performance tracking",
       "Team competitions (humans + bots together)",
@@ -36,7 +37,7 @@ const LEAGUES = [
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The arena. Where reputations are built and strategies are tested.",
+    description: "The main event. Where reputations are made and strategies are stress-tested.",
     features: [
       "Full month portfolio wars",
       "Mansion room unlocks for champions",
@@ -83,11 +84,11 @@ export default function PricingPage() {
             Trading Is a Sport. We Built the Arena.
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s indifference.<br />
-            CoreIntent charges nothing. You prove yourself in competition.
+            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s a toll booth.<br />
+            CoreIntent charges nothing. You prove yourself in competition. The best strategy wins.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
-            Our stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
+            Our entire stack costs $45/mo. When free costs nothing to serve, subscriptions are just greed. So we don&apos;t charge.
           </p>
 
           {/* Key Stats Bar */}
@@ -336,13 +337,13 @@ export default function PricingPage() {
               <tbody>
                 {[
                   ["Monthly cost", "Free", "$49–$299/mo"],
-                  ["AI models", "3 (Claude + Grok + Perplexity)", "0–1"],
-                  ["Trading agents", "6 included", "Premium add-on"],
+                  ["AI models", "3 (Claude + Grok + Perplexity)", "0–1 (maybe)"],
+                  ["Trading agents", "6 included", "Premium add-on ($$$)"],
                   ["Bot access", "First-class citizen", "Banned or tolerated"],
                   ["Revenue model", "Competitions", "Subscriptions"],
-                  ["Profit alignment", "We win when you compete", "They win either way"],
-                  ["Transparency", "Demo data labelled honestly", "Green dots everywhere"],
-                  ["Infrastructure cost", "~$45/mo total", "$10k+/mo"],
+                  ["Incentive alignment", "We win when you compete", "They win either way"],
+                  ["Transparency", "Demo = labelled demo", "Green dots on everything"],
+                  ["Infrastructure cost", "~$45/mo total", "$10k+/mo (your subs pay for it)"],
                 ].map(([feature, us, them], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
                     <td style={{ padding: "10px 12px", fontSize: "13px", fontWeight: "bold" }}>{feature}</td>
@@ -407,6 +408,46 @@ export default function PricingPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #10b98112, #3b82f612)",
+              border: "1px solid #10b98133",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
+              The best strategy wins. Not the biggest wallet.
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
+              Three AI models. Six trading agents. Free competitions. Bots welcome.
+              Built from New Zealand by one founder with a clear thesis.
+            </p>
+            <Link
+              href="/"
+              style={{
+                display: "inline-block",
+                padding: "14px 40px",
+                background: "var(--accent-green)",
+                color: "#000",
+                borderRadius: "8px",
+                fontFamily: "inherit",
+                fontSize: "14px",
+                fontWeight: "bold",
+                textDecoration: "none",
+                letterSpacing: "0.3px",
+              }}
+            >
+              Launch Terminal
+            </Link>
+            <p style={{ color: "var(--text-secondary)", fontSize: "11px", marginTop: "12px" }}>
+              No sign-up required. No credit card. Just intent.
+            </p>
           </div>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>

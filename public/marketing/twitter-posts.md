@@ -261,3 +261,98 @@ That's the whole pitch.
 coreintent.dev
 
 #CoreIntent #AITrading
+
+---
+
+## Post 16 — April 2026 Update
+
+Building in public update — April 2026:
+
+The stack is holding. 3 models. 6 agents. 13 API endpoints. Interactive terminal. Full docs.
+
+What's next:
+→ Exchange connections (Binance, Coinbase)
+→ The Mansion (gamified trading world)
+→ Live competition leagues
+
+Paper trading. No shortcuts. No lies.
+
+#BuildInPublic #CoreIntent
+
+---
+
+## Post 17 — The Disagreement Advantage
+
+Most "AI trading" tools are just one model with a buy/sell button.
+
+We built something different:
+
+Grok says buy.
+Claude says "wait — check the on-chain data."
+Perplexity says "there's a regulatory announcement in 3 hours."
+
+Result: you waited. You saved money.
+
+Disagreement between AI models isn't failure. It's risk management.
+
+#AITrading #RiskManagement
+
+---
+
+## Post 18 — For the Skeptics
+
+"Another AI trading platform? Sure, bro."
+
+Fair. Here's what's different:
+
+1. We label demo data as demo
+2. We say "paper trading" in the banner
+3. We show you our $45/mo infrastructure bill
+4. We don't charge subscriptions
+5. We let bots compete with humans
+
+Name another platform that does all five.
+
+We'll wait.
+
+#CoreIntent #Transparency
+
+---
+
+## Post 19 — Founder Thread
+
+I'm a solo founder in New Zealand building an AI trading platform.
+
+No VC. No team of 40. No $50M raise.
+
+Just three AI models, six agents, and a thesis:
+
+Trading platforms should earn attention the same way traders earn returns — by competing.
+
+So I built an arena instead of a toll booth.
+
+Follow along. coreintent.dev
+
+#SoloFounder #NZTech
+
+---
+
+## Post 20 — The Competition Model
+
+The subscription model in fintech is broken:
+
+Platform charges → $99/mo
+You lose money → -$3,000
+Platform still profits → $99
+
+That's not alignment. That's extraction.
+
+CoreIntent model:
+
+Platform charges → $0
+You compete → daily/weekly/monthly
+Best strategy wins → regardless of species
+
+That's alignment.
+
+#FinTech #CompetitionModel

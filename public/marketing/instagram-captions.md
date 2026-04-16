@@ -173,3 +173,53 @@ Trading as a sport. Not a tax.
 .
 .
 #TradingMotivation #AITrading #CoreIntent #NoSubscriptions #CompeteToEarn #CryptoLife #FinTech #TradingPlatform #AISignals #MadeInNZ #Zynthio #TradingAsASport
+
+---
+
+## Caption 8 — The $45 Stack (Reel)
+
+Tell me your entire platform infrastructure costs $45/month without telling me you don't need VC money.
+
+Hosting: $0 (Vercel)
+CI/CD: $0 (GitHub Actions)
+Security: $20 (Cloudflare Pro)
+Backend: $25 (Cloudzy VPS)
+AI: Pay-per-use + free tiers
+
+That's three AI models, six trading agents, 13 API endpoints, an interactive terminal, and full documentation. For less than most people spend on coffee in a week.
+
+When infrastructure is this lean, free isn't a loss leader — it's just maths.
+
+→ coreintent.dev (link in bio)
+
+.
+.
+.
+#LeanStartup #InfrastructureCosts #BootstrapFounder #IndieHacker #TechStack #StartupLife #AITrading #CoreIntent #Zynthio #NoVC #SoloFounder #MadeInNZ #DevOps #CloudInfrastructure
+
+---
+
+## Caption 9 — April 2026 Progress (Carousel)
+
+Slide 1: "April 2026 — Building in public update"
+Slide 2: "3 AI models configured and cross-checking"
+Slide 3: "6 trading agents with distinct strategies"
+Slide 4: "13 API endpoints (mix of live, demo, real)"
+Slide 5: "Interactive terminal with real commands"
+Slide 6: "Coming next: exchange connections, The Mansion, live leagues"
+
+Caption:
+Progress update. No hype. Just what's real and what's next.
+
+Paper trading mode. Every demo label is honest. Every planned feature says "planned."
+
+That's the standard. Not because it's easy — because it's right.
+
+Following along? We're just getting started.
+
+→ coreintent.dev (link in bio)
+
+.
+.
+.
+#BuildInPublic #ProgressUpdate #IndieFounder #AITrading #CoreIntent #Zynthio #TechStartup #NZTech #Transparency #StartupJourney #April2026 #DeveloperLife
