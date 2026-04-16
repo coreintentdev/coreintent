@@ -19,7 +19,7 @@ Zero subscriptions. Free competitions. $45/mo total infrastructure. Bots and hum
 
 Built from New Zealand. No VC. No nonsense.
 
-→ coreintent.dev (link in bio)
+-> coreintent.dev (link in bio)
 
 .
 .
@@ -58,9 +58,9 @@ Why we don't do subscriptions:
 $99/month for a trading tool means the platform profits whether you win or lose. That's misaligned.
 
 Our model: Free competitions.
-→ Daily leagues (24-hour challenges)
-→ Weekly leagues (consistency tests)
-→ Monthly tournaments (the big leagues)
+-> Daily leagues (24-hour challenges)
+-> Weekly leagues (consistency tests)
+-> Monthly tournaments (the big leagues)
 
 Win streaks earn multipliers. Bots compete alongside humans. No paywalls on free features.
 
@@ -77,11 +77,11 @@ When infrastructure costs $45/month, giving it away isn't charity — it's strat
 
 Building an AI trading platform from New Zealand with:
 
-→ $0 hosting (Vercel)
-→ $0 CI/CD (GitHub Actions)
-→ $20 CDN/security (Cloudflare)
-→ $25 VPS (Cloudzy)
-→ Pay-per-use AI (Claude API)
+-> $0 hosting (Vercel)
+-> $0 CI/CD (GitHub Actions)
+-> $20 CDN/security (Cloudflare)
+-> $25 VPS (Cloudzy)
+-> Pay-per-use AI (Claude API)
 
 Total: ~$45/month.
 
@@ -146,7 +146,7 @@ These aren't chatbots pretending to trade. They're purpose-built agents with dis
 
 All in paper trading mode. All getting smarter.
 
-→ coreintent.dev (link in bio)
+-> coreintent.dev (link in bio)
 
 .
 .
@@ -160,16 +160,86 @@ All in paper trading mode. All getting smarter.
 "If your trading platform charges monthly and doesn't care whether you profit — you're the product, not the trader."
 
 CoreIntent flips the model:
-→ No subscriptions
-→ Free competitions
-→ Three AI models cross-checking signals
-→ Bots welcome as first-class citizens
+-> No subscriptions
+-> Free competitions
+-> Three AI models cross-checking signals
+-> Bots welcome as first-class citizens
 
 Trading as a sport. Not a tax.
 
-→ coreintent.dev (link in bio)
+-> coreintent.dev (link in bio)
 
 .
 .
 .
 #TradingMotivation #AITrading #CoreIntent #NoSubscriptions #CompeteToEarn #CryptoLife #FinTech #TradingPlatform #AISignals #MadeInNZ #Zynthio #TradingAsASport
+
+---
+
+## Caption 8 — The $45 Stack (Reel)
+
+The entire CoreIntent AI trading platform costs $45/month to run.
+
+Not per user. Not per feature. The whole thing.
+
+-> Hosting: $0
+-> CI/CD: $0
+-> CDN + security: $20
+-> Server: $25
+-> 3 AI models
+-> 6 trading agents
+-> Interactive terminal
+-> Full API
+
+When your infrastructure costs less than dinner, you can give everything away for free.
+
+And that's exactly what we did.
+
+.
+.
+.
+#BootstrapStartup #StartupCosts #LeanInfrastructure #IndieFounder #TechStack #AIStartup #CoreIntent #Zynthio #BuildInPublic #MadeInNZ #DevOps #StartupLife #FreeToPlay #NoSubscriptions
+
+---
+
+## Caption 9 — Paper Trading Pride
+
+Everyone asks: "When are you going live?"
+
+Our answer: "When the system earns it."
+
+Paper trading isn't a limitation. It's discipline. It means we test every agent, validate every signal model, and stress-test every competition mechanic before anyone's real money touches the platform.
+
+In an industry that ships first and fixes later, we're doing it the other way around.
+
+Demo data is labelled DEMO. Planned features say PLANNED. Paper trading is right there in the banner.
+
+That's not weakness. That's what responsible fintech looks like.
+
+.
+.
+.
+#PaperTrading #ResponsibleFinTech #BuildInPublic #Transparency #CoreIntent #AITrading #Discipline #StartupMindset #MadeInNZ #TradingPlatform #HonestTech #IndieFounder
+
+---
+
+## Caption 10 — Competition Drop (Event Teaser)
+
+The arena opens.
+
+Daily Sprint -> 24-hour challenges. Fresh leaderboard every morning.
+Weekly Grind -> 7-day consistency test. Prove you're not just lucky.
+Monthly Championship -> The big leagues. 30 days. Full portfolio wars.
+
+Entry: $0.
+Bots: Welcome.
+Best strategy: Wins.
+
+This is what trading looks like when it's a sport instead of a subscription.
+
+-> coreintent.dev (link in bio)
+
+.
+.
+.
+#TradingCompetition #CompeteToEarn #AITrading #CoreIntent #DailyChallenge #WeeklyGrind #MonthlyChampionship #FreeToPlay #CryptoCompetition #TradingAsASport #FinTech #MadeInNZ #Zynthio #GameFi

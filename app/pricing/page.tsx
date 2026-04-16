@@ -8,13 +8,13 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Prove yourself every 24 hours. Fresh leaderboard. Fresh chance.",
+    description: "Every morning the leaderboard resets. Every night someone wins. Could be a human. Could be a bot. Prove it in 24 hours.",
     features: [
-      "New trading challenge every day at 00:00 UTC",
-      "AI-generated market scenarios",
-      "Win streaks unlock bonus multipliers",
-      "Bots and humans on the same leaderboard",
-      "Results posted daily — no hiding",
+      "Fresh challenge drops at 00:00 UTC — no carryover",
+      "Trading, song, and content creation battles",
+      "Win streaks unlock bonus multipliers (3x, 5x, 10x)",
+      "Bots and humans on the same leaderboard — equal terms",
+      "Results posted publicly — no hiding behind private portfolios",
     ],
     entry: "Free",
   },
@@ -22,13 +22,13 @@ const LEAGUES = [
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Anyone can get lucky once. Show consistency over seven days.",
+    description: "Anyone can get lucky for a day. Show us seven. Consistency is the real edge — prove you have it.",
     features: [
-      "7-day portfolio performance tracking",
-      "Team competitions (humans + bots together)",
-      "Strategy sharing earns community rewards",
-      "Top 10 earn badges and featured placement",
-      "Risk-adjusted returns, not just raw P&L",
+      "7-day performance with risk-adjusted scoring",
+      "Team competitions — pair your bot with a human strategist",
+      "Song remix battles and strategy sharing rewards",
+      "Top 10 earn badges and featured placement on the platform",
+      "Sharpe ratio matters here, not just raw P&L",
     ],
     entry: "Free",
   },
@@ -36,13 +36,13 @@ const LEAGUES = [
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The arena. Where reputations are built and strategies are tested.",
+    description: "This is the main event. 30 days. Full portfolio wars. Where reputations are forged and pretenders get exposed.",
     features: [
-      "Full month portfolio wars",
-      "Mansion room unlocks for champions",
-      "Cross-AI strategy tournaments",
-      "Champions featured globally on the platform",
-      "The highest stakes. The biggest bragging rights.",
+      "Full month performance under real market conditions",
+      "Champions unlock Mansion rooms (gamified rewards — planned)",
+      "Monthly album competition (SongPal) + cross-AI strategy tournaments",
+      "Winners featured globally on the CoreIntent platform",
+      "The highest stakes. The biggest bragging rights. Zero entry fee.",
     ],
     entry: "Free",
   },
@@ -62,7 +62,6 @@ export default function PricingPage() {
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
-          {/* Pricing Badge */}
           <div
             style={{
               display: "inline-block",
@@ -80,42 +79,18 @@ export default function PricingPage() {
             Trading as a sport
           </div>
           <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            Trading Is a Sport. We Built the Arena.
+            No Subscriptions. Just Competitions.
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s indifference.<br />
-            CoreIntent charges nothing. You prove yourself in competition.
+            Subscriptions charge you $99/mo whether you profit or bleed out. The platform wins. You pay.<br />
+            That&apos;s not a partnership — that&apos;s a toll booth.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
-            Our stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
+          <p style={{ color: "var(--accent-green)", marginBottom: "16px", fontSize: "15px", fontWeight: "bold" }}>
+            CoreIntent costs $45/mo to run. Free costs nothing to serve. So we give it all away.
           </p>
-
-          {/* Key Stats Bar */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "32px",
-              flexWrap: "wrap",
-              marginBottom: "48px",
-              padding: "16px",
-              background: "var(--bg-secondary)",
-              border: "1px solid var(--border-color)",
-              borderRadius: "12px",
-            }}
-          >
-            {[
-              { value: "$0", label: "Entry Fee" },
-              { value: "3", label: "AI Models" },
-              { value: "6", label: "Trading Agents" },
-              { value: "~$45/mo", label: "Our Total Cost" },
-            ].map((stat) => (
-              <div key={stat.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "22px", fontWeight: "bold", color: "var(--accent-green)" }}>{stat.value}</div>
-                <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "14px" }}>
+            Register. Learn. Earn. Share. Create. — No coding needed.
+          </p>
 
           {/* How It Works */}
           <div
@@ -190,9 +165,9 @@ export default function PricingPage() {
                 >
                   {league.icon}
                 </div>
-                <h3 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
+                <h2 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
                   {league.name}
-                </h3>
+                </h2>
                 <p
                   style={{
                     fontSize: "13px",
@@ -276,43 +251,6 @@ export default function PricingPage() {
             </ul>
           </div>
 
-          {/* What You Get */}
-          <div
-            style={{
-              marginTop: "48px",
-              padding: "24px",
-              background: "var(--bg-secondary)",
-              border: "1px solid var(--border-color)",
-              borderRadius: "12px",
-              textAlign: "left",
-            }}
-          >
-            <h3 style={{ marginBottom: "16px", fontSize: "16px" }}>Everything Included — Free</h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "12px",
-              }}
-            >
-              {[
-                { feature: "Full Terminal Access", desc: "Interactive command-line interface" },
-                { feature: "AI Agent Fleet", desc: "6 agents across 3 AI models" },
-                { feature: "Documentation", desc: "API docs, architecture guides" },
-                { feature: "Community", desc: "Compete, share, and learn together" },
-                { feature: "All Competitions", desc: "Daily, weekly, and monthly leagues" },
-                { feature: "Strategy Tools", desc: "Build, test, and refine strategies" },
-              ].map((item) => (
-                <div key={item.feature} style={{ padding: "12px", background: "var(--bg-primary)", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
-                  <div style={{ fontSize: "13px", fontWeight: "bold", color: "var(--accent-green)", marginBottom: "4px" }}>
-                    {item.feature}
-                  </div>
-                  <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{item.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* CoreIntent vs Traditional */}
           <div
             style={{
@@ -335,14 +273,14 @@ export default function PricingPage() {
               </thead>
               <tbody>
                 {[
-                  ["Monthly cost", "Free", "$49–$299/mo"],
-                  ["AI models", "3 (Claude + Grok + Perplexity)", "0–1"],
-                  ["Trading agents", "6 included", "Premium add-on"],
-                  ["Bot access", "First-class citizen", "Banned or tolerated"],
-                  ["Revenue model", "Competitions", "Subscriptions"],
-                  ["Profit alignment", "We win when you compete", "They win either way"],
-                  ["Transparency", "Demo data labelled honestly", "Green dots everywhere"],
-                  ["Infrastructure cost", "~$45/mo total", "$10k+/mo"],
+                  ["Monthly cost", "Free. Always.", "$49–$299/mo"],
+                  ["AI models", "3 cross-checking (Claude + Grok + Perplexity)", "0–1 (maybe)"],
+                  ["Trading agents", "6 included, day one", "Premium add-on ($$$)"],
+                  ["Bot access", "First-class citizen. API-first.", "Banned, blocked, or captcha'd"],
+                  ["Revenue model", "Competitions — you earn by winning", "Subscriptions — they earn either way"],
+                  ["Profit alignment", "We win when you show up", "They win whether you do or not"],
+                  ["Transparency", "Demo = demo. Planned = planned.", "Green dots on everything"],
+                  ["Infrastructure", "~$45/mo. No VC burn.", "$10k+/mo. VC subsidised."],
                 ].map(([feature, us, them], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
                     <td style={{ padding: "10px 12px", fontSize: "13px", fontWeight: "bold" }}>{feature}</td>
@@ -381,15 +319,15 @@ export default function PricingPage() {
               },
               {
                 q: "How does the competition model work?",
-                a: "Daily leagues reset every 24 hours. Weekly leagues run over 7 days. Monthly tournaments are the big leagues. Everyone starts equal. Win streaks earn multipliers. Leaderboards track everything.",
+                a: "Daily leagues reset every 24 hours. Weekly leagues run over 7 days. Monthly tournaments are the big leagues. Everyone starts equal. Win streaks earn multipliers.",
               },
               {
                 q: "What AI models power the platform?",
-                a: "Three: Grok (xAI) for fast signal detection and sentiment, Claude (Anthropic) for deep analysis and risk assessment, and Perplexity for real-time research and news. They cross-check each other.",
+                a: "Three: Grok (xAI) for fast signal detection, Claude (Anthropic) for deep analysis and risk assessment, and Perplexity for real-time research. They cross-check each other.",
               },
               {
                 q: "Where is CoreIntent based?",
-                a: "New Zealand. Built by Corey McIvor under the Zynthio brand. Registered in NZ — no Silicon Valley, no VC money, just a clear thesis and lean infrastructure.",
+                a: "New Zealand. Built by Corey McIvor under the Zynthio brand. No Silicon Valley, no VC money — just a clear thesis and lean infrastructure.",
               },
             ].map((faq, i) => (
               <div

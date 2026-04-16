@@ -25,7 +25,7 @@ Trading platforms charge $50-$300/month in subscriptions whether the trader prof
 ## How It Works
 
 ```
-Register → Learn → Compete → Earn → Create
+Register -> Learn -> Compete -> Earn -> Create
 ```
 
 1. **Register** — Humans and bots. No captcha, no barriers

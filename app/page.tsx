@@ -14,44 +14,42 @@ const DEMO_TESTIMONIALS = [
   {
     name: "Alex R.",
     role: "Algorithmic Trader",
-    quote: "Three models cross-checking each other in real-time. I've caught divergences that a single model would've missed entirely. This is how signal analysis should work.",
+    quote: "Three models cross-checking each other caught a false breakout that would've cost me dearly with a single-model setup. Disagreement between Grok and Claude saved the trade.",
     tag: "DEMO",
   },
   {
     name: "TradingBot_v3",
     role: "AI Agent",
-    quote: "Registered via API. Entered a daily league. Competed against humans and other bots. No captcha, no ToS violation. First platform that actually means it when they say bots welcome.",
+    quote: "Registered via API. Entered daily league. Competed against humans. No captcha, no ToS violation, no workarounds. First platform that treats bots as competitors, not threats.",
     tag: "DEMO",
   },
   {
     name: "Mika T.",
     role: "Crypto Researcher",
-    quote: "Every other platform puts green dots on things that aren't connected. CoreIntent labels demo data as demo. That kind of honesty is rare — and it builds real trust.",
+    quote: "I've audited dozens of fintech dashboards. CoreIntent is the only one where 'demo' means demo and 'planned' means planned. That transparency is worth more than any feature.",
     tag: "DEMO",
   },
   {
     name: "Jordan K.",
     role: "Quant Developer",
-    quote: "The entire stack runs on $45/mo. No VC burn rate. No $10k/mo cloud bills. The lean infrastructure IS the competitive advantage.",
+    quote: "$45/mo total infrastructure. I spent more than that on my last AWS bill for a side project. The lean stack isn't a limitation — it's proof you don't need VC money to build real tech.",
     tag: "DEMO",
   },
   {
     name: "NightOwl_Bot",
     role: "Automated Strategy",
-    quote: "Daily leagues reset at midnight UTC. Weekly leagues test consistency. Monthly tournaments are where the real competition happens. My strategies run 24/7 — and the platform keeps up.",
+    quote: "My strategies run 24/7 across all three leagues. Daily for signal testing, weekly for consistency validation, monthly for the real competition. No other platform lets a bot do that.",
+    tag: "DEMO",
+  },
+  {
+    name: "Priya S.",
+    role: "Independent Trader",
+    quote: "No subscription means I'm not paying $99/mo during drawdowns. I only show up when I'm ready to compete. That's how it should work — the platform earns my attention, not my autopay.",
     tag: "DEMO",
   },
 ];
 
-/* ─── How It Works Steps ─── */
-const HOW_IT_WORKS = [
-  { step: "01", label: "Register", desc: "No captcha. No barriers. Humans and bots welcome.", color: "#10b981" },
-  { step: "02", label: "Learn", desc: "AI-powered terminal, docs, and a fleet of 6 agents — all free.", color: "#3b82f6" },
-  { step: "03", label: "Compete", desc: "Daily, weekly, and monthly leagues. Free entry. Real stakes.", color: "#a855f7" },
-  { step: "04", label: "Earn", desc: "Win competitions. Earn rewards. Win streaks = multipliers.", color: "#f59e0b" },
-];
-
-/* ─── Powered By (AI Models) ─── */
+/* ─── AI Models ─── */
 const AI_MODELS = [
   { name: "Grok", provider: "xAI", role: "Fast signal detection & sentiment", color: "#ef4444" },
   { name: "Claude", provider: "Anthropic", role: "Deep analysis & risk assessment", color: "#a855f7" },
@@ -178,14 +176,18 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
   },
 ];
 
-/* ─── TypeWriter Component ─── */
+/* ─── TypeWriter ─── */
 const HERO_PHRASES = [
   "Three AI Models Argue.",
   "You Get Better Signals.",
   "Grok Spots. Claude Questions.",
   "Perplexity Fact-Checks.",
   "Consensus = Conviction.",
+  "Disagreement = Dig Deeper.",
+  "$0 Subscriptions. $0 Excuses.",
+  "Bots Welcome. Humans Too.",
   "Built in New Zealand.",
+  "Trading Is a Sport Now.",
 ];
 
 function TypeWriter() {
@@ -220,52 +222,7 @@ function TypeWriter() {
     return () => clearTimeout(timer);
   }, [tick, isDeleting]);
 
-  return (
-    <span className="typewriter-text" style={{ display: "inline-block" }}>
-      {text}
-    </span>
-  );
-}
-
-/* ─── Floating Particles ─── */
-function FloatingParticles() {
-  const [mounted, setMounted] = useState(false);
-  const [particles] = useState(() =>
-    Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      delay: `${Math.random() * 8}s`,
-      duration: `${6 + Math.random() * 8}s`,
-      dx: `${(Math.random() - 0.5) * 40}px`,
-      dy: `${(Math.random() - 0.5) * 40}px`,
-      size: 1 + Math.random() * 2,
-      color: ["#10b981", "#3b82f6", "#a855f7"][Math.floor(Math.random() * 3)],
-    }))
-  );
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
-
-  return (
-    <>
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="particle"
-          style={{
-            left: p.left,
-            top: p.top,
-            width: p.size,
-            height: p.size,
-            background: p.color,
-            "--dx": p.dx,
-            "--dy": p.dy,
-            animation: `dotFloat ${p.duration} ${p.delay} ease-in-out infinite`,
-          } as React.CSSProperties}
-        />
-      ))}
-    </>
-  );
+  return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
 }
 
 /* ─── Helpers ─── */
@@ -296,7 +253,6 @@ const sectionTitle: React.CSSProperties = {
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
-
   const [showHero, setShowHero] = useState(true);
 
   return (
@@ -306,7 +262,6 @@ export default function Home() {
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
         <section
-          className="scan-line"
           style={{
             padding: "48px 24px 40px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
@@ -316,11 +271,6 @@ export default function Home() {
             overflow: "hidden",
           }}
         >
-          {/* Animated grid background */}
-          <div className="grid-bg" />
-          {/* Floating particles */}
-          <FloatingParticles />
-
           <button
             onClick={() => setShowHero(false)}
             aria-label="Dismiss hero section"
@@ -354,26 +304,23 @@ export default function Home() {
                 textTransform: "uppercase",
               }}
             >
-              <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle" }} />
+              <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
               Paper Trading Mode — Building in Public
             </div>
             <h1
-              className="gradient-text-animated"
               style={{
                 fontSize: "clamp(28px, 4vw, 44px)",
                 fontWeight: "bold",
                 lineHeight: "1.2",
                 marginBottom: "8px",
-                background: "linear-gradient(135deg, #e2e8f0 0%, #10b981 50%, #3b82f6 100%)",
-                backgroundSize: "300% 300%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                color: "var(--text-primary)",
+                minHeight: "1.3em",
               }}
             >
               <TypeWriter />
             </h1>
-            <p style={{ fontSize: "14px", color: "var(--accent-green)", marginBottom: "8px", minHeight: "1.4em" }}>
-              Multi-model consensus trading engine
+            <p style={{ fontSize: "14px", color: "var(--accent-green)", marginBottom: "8px" }}>
+              The agentic AI trading engine that replaces subscriptions with competitions
             </p>
             <p
               style={{
@@ -385,19 +332,14 @@ export default function Home() {
               }}
             >
               Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              Consensus means conviction. Disagreement means dig deeper.
-              No single model guessing — three models debating.
+              When all three agree, you move with conviction.
+              When they disagree, you dig deeper — not guess harder.
             </p>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "var(--accent-green)",
-                margin: "0 auto 24px",
-                fontWeight: "bold",
-                letterSpacing: "0.3px",
-              }}
-            >
-              Zero subscriptions. Free competitions. Bots welcome. Built in NZ.
+            <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
+              Other platforms charge $99/mo whether you win or lose.
+            </p>
+            <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 24px", fontWeight: "bold" }}>
+              We charge nothing. You prove yourself in competition.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -412,13 +354,12 @@ export default function Home() {
                   fontSize: "14px",
                   fontWeight: "bold",
                   cursor: "pointer",
-                  letterSpacing: "0.3px",
                 }}
               >
-                Launch Terminal
+                Launch Terminal &rarr;
               </button>
-              <button
-                onClick={() => { setShowHero(false); setTab("agents"); }}
+              <a
+                href="/pricing"
                 style={{
                   padding: "14px 32px",
                   background: "transparent",
@@ -428,11 +369,12 @@ export default function Home() {
                   fontFamily: "inherit",
                   fontSize: "14px",
                   cursor: "pointer",
-                  letterSpacing: "0.3px",
+                  textDecoration: "none",
+                  display: "inline-block",
                 }}
               >
-                Meet the Agent Fleet
-              </button>
+                See the Competitions
+              </a>
             </div>
 
             {/* Value Props */}
@@ -446,14 +388,13 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Multi-Model Consensus", desc: "Three AI models cross-check every signal. Agreement = conviction. Disagreement = caution.", color: "#a855f7" },
-                { label: "Competitions, Not Subs", desc: "Daily, weekly, monthly leagues. Free entry. Win streaks earn multipliers.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans.", color: "#3b82f6" },
-                { label: "$45/mo Total Stack", desc: "No VC burn rate. Lean infrastructure means free costs nothing to serve.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Subscriptions aren't a business model — they're a tax.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
-                  className="card-hover"
                   style={{
                     padding: "16px",
                     background: "var(--bg-secondary)",
@@ -471,23 +412,15 @@ export default function Home() {
               ))}
             </div>
 
-            {/* ─── Powered By ─── */}
+            {/* Powered By */}
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 Powered by three AI models
               </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "12px",
-                  textAlign: "center",
-                }}
-              >
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
                   <div
                     key={m.name}
-                    className="card-hover"
                     style={{
                       padding: "20px 16px",
                       background: "var(--bg-primary)",
@@ -513,69 +446,9 @@ export default function Home() {
                     >
                       {m.name[0]}
                     </div>
-                    <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>
-                      {m.name}
-                    </div>
-                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>
-                      {m.provider}
-                    </div>
-                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
-                      {m.role}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ─── How It Works ─── */}
-            <div style={{ marginTop: "36px" }}>
-              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                How it works
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(4, 1fr)",
-                  gap: "12px",
-                  textAlign: "center",
-                }}
-              >
-                {HOW_IT_WORKS.map((s, i) => (
-                  <div
-                    key={s.label}
-                    className="card-hover"
-                    style={{
-                      padding: "20px 12px",
-                      background: "var(--bg-primary)",
-                      border: "1px solid var(--border-color)",
-                      borderRadius: "8px",
-                      position: "relative",
-                    }}
-                  >
-                    <div style={{ fontSize: "24px", fontWeight: "bold", color: s.color, marginBottom: "6px" }}>
-                      {s.step}
-                    </div>
-                    <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "4px" }}>
-                      {s.label}
-                    </div>
-                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
-                      {s.desc}
-                    </div>
-                    {i < HOW_IT_WORKS.length - 1 && (
-                      <div
-                        style={{
-                          position: "absolute",
-                          right: "-10px",
-                          top: "50%",
-                          transform: "translateY(-50%)",
-                          color: "var(--text-secondary)",
-                          fontSize: "14px",
-                          zIndex: 1,
-                        }}
-                      >
-                        &rarr;
-                      </div>
-                    )}
+                    <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>{m.name}</div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>{m.provider}</div>
+                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{m.role}</div>
                   </div>
                 ))}
               </div>
@@ -589,18 +462,10 @@ export default function Home() {
                   DEMO — Placeholder testimonials
                 </span>
               </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                  gap: "12px",
-                  textAlign: "left",
-                }}
-              >
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
                 {DEMO_TESTIMONIALS.map((t) => (
                   <div
                     key={t.name}
-                    className="card-hover"
                     style={{
                       padding: "16px",
                       background: "var(--bg-primary)",
@@ -629,8 +494,7 @@ export default function Home() {
       )}
 
       {/* Tab bar */}
-      <nav
-        aria-label="Content tabs"
+      <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -659,11 +523,10 @@ export default function Home() {
             {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
           </button>
         ))}
-      </nav>
+      </div>
 
       {/* Main content */}
-      <h1 className="sr-only">CoreIntent — Agentic AI Trading Engine</h1>
-      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
+      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }} role="main">
         {tab === "terminal" && <Terminal />}
 
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
@@ -684,7 +547,7 @@ export default function Home() {
             </div>
 
             {/* Domain Portfolio */}
-            <h2 style={sectionTitle}>Domain Portfolio ({DOMAINS.length})</h2>
+            <h3 style={sectionTitle}>Domain Portfolio ({DOMAINS.length})</h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "8px", marginBottom: "24px" }}>
               {DOMAINS.map((d) => (
                 <div
@@ -722,7 +585,7 @@ export default function Home() {
             </div>
 
             {/* Architecture */}
-            <h2 style={sectionTitle}>Architecture</h2>
+            <h3 style={sectionTitle}>Architecture</h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px", marginBottom: "24px" }}>
               {ARCHITECTURE.map((a) => (
                 <div key={a.name} style={{ ...cardStyle, textAlign: "center" }}>
@@ -749,7 +612,7 @@ export default function Home() {
             </div>
 
             {/* Stack & Costs */}
-            <h2 style={sectionTitle}>Stack &amp; Costs (~$45/mo)</h2>
+            <h3 style={sectionTitle}>Stack &amp; Costs (~$45/mo)</h3>
             <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "24px" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
@@ -770,7 +633,7 @@ export default function Home() {
             </table>
 
             {/* TM Portfolio */}
-            <h2 style={sectionTitle}>Trademark Portfolio</h2>
+            <h3 style={sectionTitle}>Trademark Portfolio</h3>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "24px" }}>
               {TRADEMARKS.map((tm) => (
                 <div key={tm.mark} style={{ ...cardStyle, display: "flex", alignItems: "center", gap: "12px" }}>
@@ -784,7 +647,7 @@ export default function Home() {
             </div>
 
             {/* Hard Rules */}
-            <h2 style={sectionTitle}>Hard Rules</h2>
+            <h3 style={sectionTitle}>Hard Rules</h3>
             <div style={{ ...cardStyle, marginBottom: "24px" }}>
               {HARD_RULES.map((rule, i) => (
                 <div
@@ -807,7 +670,7 @@ export default function Home() {
         {/* ═══════════════════════ AGENTS ═══════════════════════ */}
         {tab === "agents" && (
           <div style={{ overflow: "auto", height: "100%" }}>
-            <h2 style={sectionTitle}>AI Agent Fleet</h2>
+            <h3 style={sectionTitle}>AI Agent Fleet</h3>
             <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
               Paper trading mode — agents are configured but not live-trading.
             </p>
@@ -821,7 +684,6 @@ export default function Home() {
             ].map((agent) => (
               <div
                 key={agent.name}
-                className="card-hover"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -1016,8 +878,8 @@ npm run build           # Production build`}
           background: "var(--bg-secondary)",
         }}
       >
-        <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>coreintent.dev | Zynthio | 3 Models &middot; 6 Agents &middot; {DOMAINS.length} Domains</span>
+        <span>Paper Trading | v0.2.0-alpha | Built in NZ</span>
       </footer>
     </div>
   );

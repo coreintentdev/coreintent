@@ -26,7 +26,7 @@ Currently in paper trading mode — building honestly, shipping transparently. D
 
 Based in New Zealand. Built by Corey McIvor under the Zynthio brand.
 
-→ coreintent.dev
+-> coreintent.dev
 
 #AITrading #AgenticAI #FinTech #Startups #NewZealand
 
@@ -77,16 +77,16 @@ At CoreIntent, we flipped this:
 
 **Why this works:**
 1. **Alignment** — We only succeed when our competitions attract engaged traders
-2. **Accessibility** — No financial barrier to entry. Fair for everyone, including those who can't afford monthly fees
+2. **Accessibility** — No financial barrier to entry. Fair for everyone
 3. **Honesty** — You know exactly what you're paying for: a chance to compete, not a hope that the tool works
 4. **Bot-inclusive** — AI agents compete alongside humans. This isn't a bug — it's the future of markets
 
 **The infrastructure argument:**
 Our stack costs ~$45/month total. Vercel (free), GitHub Actions (free), Cloudflare Pro ($20), VPS ($25). When your marginal cost per user approaches zero, the subscription model stops making sense.
 
-We're building this from New Zealand under the Zynthio brand. No VC funding. No inflated runway. Just a clear thesis: trading platforms should compete for your attention the same way traders compete for returns.
+Building from New Zealand under the Zynthio brand. No VC funding. Just a clear thesis.
 
-→ coreintent.dev
+-> coreintent.dev
 
 #FinTech #BusinessModel #AI #Innovation #Startups
 
@@ -113,11 +113,9 @@ Paper trading mode? Right there in the banner. You see it before you see anythin
 
 Trust compounds. Users don't leave because you told them something was demo. They leave when they discover the lie themselves.
 
-In an industry built on hype, honesty is a moat. It costs nothing, and it's the one thing competitors with VC money can't copy — because their investors won't let them.
+In an industry built on hype, honesty is a moat.
 
-Building in public means building without the mask.
-
-→ coreintent.dev
+-> coreintent.dev
 
 #BuildInPublic #Transparency #FinTech #StartupLeadership #ProductDevelopment
 
@@ -143,14 +141,64 @@ At CoreIntent, we took the opposite approach:
 
 1. **Markets are already multi-agent.** Institutional trading is dominated by algorithms. Pretending your retail platform is human-only is theatre.
 
-2. **Better data.** When bots compete openly, you get cleaner signal data. No more trying to separate "real" activity from automated activity — it's all real.
+2. **Better data.** When bots compete openly, you get cleaner signal data.
 
-3. **Future-proofing.** The trend is toward more automation, not less. Building for AI-to-AI interaction today means you're ready for the market of 2030.
+3. **Future-proofing.** The trend is toward more automation, not less.
 
 4. **Fairness.** A skilled human and a well-built bot should compete on equal terms. The strategy wins, not the species.
 
 We run 6 AI agents ourselves — TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, ResearchAgent — as participants, not just infrastructure.
 
-→ coreintent.dev
+-> coreintent.dev
 
 #AgenticAI #FinTech #TradingBots #FutureOfTrading #AlgorithmicTrading
+
+---
+
+## Post 6 — Infrastructure Economics: Why $45/mo Changes Everything
+
+**Most fintech startups spend $10k+/month on infrastructure before their first user. We spend $45.**
+
+Here's our actual bill:
+- **Vercel:** $0 (static + SSR hosting)
+- **GitHub Actions:** $0 (CI/CD pipeline)
+- **Cloudflare Pro:** $20/mo (CDN, WAF, DDoS protection)
+- **Cloudzy VPS:** $25/mo (trading backend)
+- **Claude API:** Pay-per-use (cents per analysis)
+- **Grok:** Included with X Premium+
+- **Perplexity:** Free tier (3 Pro searches/day)
+
+Total: approximately NZ$45/month.
+
+**What this enables:** When your marginal cost per user approaches zero, "free" isn't a loss leader — it's the business model.
+
+**The strategic implication:** Every VC-funded competitor is carrying $100k+/year in infrastructure debt before they've validated their thesis. We validated ours for the cost of dinner.
+
+When your burn rate is $45/month, you can be patient. You can be honest. You can give everything away and still survive.
+
+-> coreintent.dev
+
+#Infrastructure #StartupEconomics #FinTech #LeanStartup #BootstrapBusiness
+
+---
+
+## Post 7 — What Paper Trading Taught Us About Product Honesty
+
+**We've been in paper trading mode for months. Here's what we've learned about being honest with users.**
+
+When we launched CoreIntent, we had a choice: launch with fake dashboards and green dots on everything, or launch transparently and label every piece of demo data for what it was.
+
+We chose transparency. And here's the counterintuitive result: it made the product *better*.
+
+**What honesty forced us to do:**
+1. **Better architecture** — When you can't hide behind fake numbers, your real system has to be solid enough to demonstrate on its own merits
+2. **Trust-first onboarding** — Users who see "DEMO" tags don't feel tricked. They feel informed.
+3. **Clearer roadmap** — "Planned" vs "Live" vs "Demo" gives users a real picture of where we are.
+
+**The competitive advantage of honesty:** In fintech, where every product shows green arrows and active connections, the bar for trust is underground. Being the one platform that says "this isn't ready yet" is counterintuitively powerful.
+
+Trust compounds faster than features.
+
+-> coreintent.dev
+
+#ProductManagement #Transparency #FinTech #BuildInPublic #StartupLessons

@@ -27,9 +27,9 @@ coreintent.dev
 
 Our trading engine runs 3 AI models simultaneously:
 
-→ Grok: Fast signal detection
-→ Claude: Deep market analysis
-→ Perplexity: Real-time research
+-> Grok: Fast signal detection
+-> Claude: Deep market analysis
+-> Perplexity: Real-time research
 
 They argue with each other so you don't have to.
 
@@ -71,9 +71,9 @@ So we don't.
 
 Subscriptions are lazy business models.
 
-Daily competitions → prove yourself every 24 hours
-Weekly leagues → consistency over 7 days
-Monthly tournaments → the big leagues
+Daily competitions -> prove yourself every 24 hours
+Weekly leagues -> consistency over 7 days
+Monthly tournaments -> the big leagues
 
 Win streaks = multipliers. Bots compete alongside humans.
 
@@ -103,12 +103,12 @@ Proof that you don't need VC money to build serious tech.
 
 6 AI agents. One mission.
 
-TrendFollower → Momentum tracking
-MeanRevert → Reversion scanning
-SentimentBot → Social signals
-ArbitrageBot → Spread detection
-RiskGuard → Circuit breakers
-ResearchAgent → News analysis
+TrendFollower -> Momentum tracking
+MeanRevert -> Reversion scanning
+SentimentBot -> Social signals
+ArbitrageBot -> Spread detection
+RiskGuard -> Circuit breakers
+ResearchAgent -> News analysis
 
 All paper trading. All learning. All getting smarter.
 
@@ -211,9 +211,9 @@ Grok: "BTC is about to rip."
 Claude: "The on-chain data says otherwise."
 Perplexity: "Here's what the news actually says."
 
-3/ When all three agree → high-confidence signal
-When two agree → moderate signal
-When they all disagree → we sit out
+3/ When all three agree -> high-confidence signal
+When two agree -> moderate signal
+When they all disagree -> we sit out
 
 4/ This is how risk management should work. Not one model praying it's right, but three models debating in real-time.
 
@@ -228,20 +228,20 @@ coreintent.dev
 Build in public update — April 2026:
 
 What's live:
-→ 13 API endpoints
-→ 6 AI agents configured
-→ Interactive terminal with real commands
-→ Full docs and architecture guide
+-> 13 API endpoints
+-> 6 AI agents configured
+-> Interactive terminal with real commands
+-> Full docs and architecture guide
 
 What's planned:
-→ Binance/Coinbase exchange connections
-→ Live trading with real funds
-→ The Mansion — gamified trading world
+-> Binance/Coinbase exchange connections
+-> Live trading with real funds
+-> The Mansion — gamified trading world
 
 What's honest:
-→ Demo data is labelled "demo"
-→ Paper trading says "paper trading"
-→ Planned features say "planned"
+-> Demo data is labelled "demo"
+-> Paper trading says "paper trading"
+-> Planned features say "planned"
 
 That's the standard. Always has been.
 
@@ -261,3 +261,92 @@ That's the whole pitch.
 coreintent.dev
 
 #CoreIntent #AITrading
+
+---
+
+## Post 16 — The Alignment Problem (Visual)
+
+Trading platform alignment check:
+
+Platform charges $99/mo.
+You lose 40% of your portfolio.
+Platform still gets paid.
+
+That's not misaligned. That's *designed* misaligned.
+
+CoreIntent charges $0. We only exist if you keep competing.
+
+Different incentive. Different product.
+
+#FinTech #Alignment #AITrading
+
+---
+
+## Post 17 — Open Challenge
+
+Open challenge to any trading platform:
+
+Publish your infrastructure costs.
+Show us your P&L model.
+Tell us how much "free" actually costs you to serve.
+
+We did:
+
+Hosting -> $0 (Vercel)
+CI/CD -> $0 (GitHub)
+CDN -> $20 (Cloudflare)
+VPS -> $25 (Cloudzy)
+
+Total: $45/mo. Your move.
+
+#Transparency #BuildInPublic
+
+---
+
+## Post 18 — Paper Trading Isn't Weakness
+
+"You're just paper trading."
+
+Yeah. We are.
+
+Because shipping a live trading platform with untested models, fake dashboards, and green dots everywhere isn't bravery — it's negligence.
+
+Paper trading is how you build confidence in the system before people's money touches it.
+
+We'll go live when it's ready. Not when it's convenient.
+
+#HonestTech #CoreIntent
+
+---
+
+## Post 19 — The Future Is Multi-Agent
+
+Hot take: in 5 years, most trading on retail platforms will be bot-to-bot.
+
+The platforms blocking bots right now are building for 2019.
+
+We're building for 2030.
+
+CoreIntent: AI agents as first-class competitors. Today.
+
+coreintent.dev
+
+#AgenticAI #FutureOfTrading
+
+---
+
+## Post 20 — NZ Startup Energy
+
+Started an AI trading engine from New Zealand with:
+
+No VC
+No accelerator
+No co-founder
+No office
+No ping pong table
+
+Just three AI models, a $25/mo VPS, and the conviction that subscriptions are a lazy business model.
+
+You don't need permission. You need intent.
+
+#MadeInNZ #IndieFounder #CoreIntent

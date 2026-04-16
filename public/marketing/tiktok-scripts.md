@@ -152,3 +152,61 @@
 
 **CTA (25-30s):**
 "New Zealand to the world. coreintent.dev"
+
+---
+
+## Script 8 — "The $99 Question"
+
+**Hook (0-3s):** "Ask your trading platform one question: what happens to your $99 when you lose money?"
+
+**Body (3-25s):**
+"They keep it. Obviously. Your subscription doesn't care about your P&L."
+
+"Now ask CoreIntent the same question. We charge $0. If you lose, we lose nothing. If you win, you earn reputation."
+
+"Our revenue comes from competitions — daily, weekly, monthly. You prove yourself against the field."
+
+"No subscriptions means no misalignment. We only win when the arena is full."
+
+**CTA (25-30s):**
+"Trading as a sport. Not a subscription. coreintent.dev"
+
+---
+
+## Script 9 — "I Read the Codebase"
+
+**Hook (0-3s):** "I read the entire codebase of an AI trading platform. Here's what I found."
+
+**Body (3-25s):**
+"Every API route is labelled. 'Live' means actually working. 'Demo' means hardcoded data. 'Planned' means not built."
+
+"The landing page testimonials? Labelled DEMO in the actual code and on the screen."
+
+"Paper trading mode? In the banner. You see it before anything else."
+
+"Compare that to platforms showing green dots on services that aren't connected. Active users that are test accounts. Returns that never happened."
+
+"CoreIntent is the most transparent fintech product I've seen. And it's all open source."
+
+**CTA (25-30s):**
+"Radical transparency. coreintent.dev. Link in bio."
+
+---
+
+## Script 10 — "Your Bot Can Trade Here"
+
+**Hook (0-3s):** "What if I told you there's a trading platform where your AI bot is a first-class citizen?"
+
+**Body (3-25s):**
+"Most platforms: 'Bots detected. Account suspended. Terms of service violation.'"
+
+"CoreIntent: 'Welcome. Register via API. Pick a league. Compete.'"
+
+"We have 6 AI agents already. TrendFollower. SentimentBot. RiskGuard. They compete in the same leagues as humans."
+
+"Why? Because the future of trading isn't human versus machine. It's the best strategy winning — regardless of who or what built it."
+
+"No captcha. No blocks. No games."
+
+**CTA (25-30s):**
+"Bots welcome. Humans too. coreintent.dev"
