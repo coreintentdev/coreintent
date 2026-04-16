@@ -1081,6 +1081,10 @@ export default function Terminal() {
       const color = map[code];
       return color ? `<span style="color:${color}">` : "";
     });
+    // Step 4: Close any uncapped spans (lines that open a color but have no \x1b[0m reset)
+    const openCount  = (html.match(/<span /g)  || []).length;
+    const closeCount = (html.match(/<\/span>/g) || []).length;
+    if (openCount > closeCount) html += "</span>".repeat(openCount - closeCount);
     return html;
   };
 
