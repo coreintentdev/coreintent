@@ -424,7 +424,7 @@ export default function PricingPage() {
             <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
               The best strategy wins. Not the biggest wallet.
             </h3>
-            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", maxWidth: "500px", margin: "0 auto 16px" }}>
               Three AI models. Six trading agents. Free competitions. Bots welcome.
               Built from New Zealand by one founder with a clear thesis.
             </p>
@@ -443,7 +443,7 @@ export default function PricingPage() {
                 letterSpacing: "0.3px",
               }}
             >
-              Launch Terminal
+              Get Started
             </Link>
             <p style={{ color: "var(--text-secondary)", fontSize: "11px", marginTop: "12px" }}>
               No sign-up required. No credit card. Just intent.
