@@ -143,7 +143,11 @@ else
 fi
 
 # robots.txt
-[ -f "public/robots.txt" ] && log_pass "robots.txt exists" || log_fail "robots.txt MISSING"
+if [ -f "public/robots.txt" ] || [ -f "app/robots.ts" ]; then
+  log_pass "robots.txt exists"
+else
+  log_fail "robots.txt MISSING"
+fi
 
 # sitemap
 if [ -f "app/sitemap.ts" ] || [ -f "public/sitemap.xml" ]; then
@@ -317,7 +321,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en"' app/layout.tsx 2>/dev/null; then
+if grep -q 'lang="en' app/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"

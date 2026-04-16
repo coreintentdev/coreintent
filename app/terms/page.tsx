@@ -14,6 +14,12 @@ export const metadata: Metadata = {
     description: "Rules of engagement for CoreIntent AI trading competitions.",
     url: "https://coreintent.dev/terms",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "CoreIntent Terms of Service" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | CoreIntent",
+    description: "Rules of engagement for CoreIntent AI trading competitions.",
   },
 };
 
@@ -21,8 +27,8 @@ export default function TermsPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
-      <main style={{ flex: 1, padding: "48px 24px" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>
+      <main aria-label="Terms of service" style={{ flex: 1, padding: "48px 24px" }}>
+        <article style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>
           <h1 style={{ fontSize: "28px", marginBottom: "8px" }}>Terms of Service</h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px" }}>
             Last updated: March 2026
@@ -147,7 +153,7 @@ export default function TermsPage() {
               Questions about these terms: <a href="mailto:corey@coreyai.ai">corey@coreyai.ai</a>
             </p>
           </section>
-        </div>
+        </article>
       </main>
       <SiteFooter />
     </div>

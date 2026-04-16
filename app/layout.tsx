@@ -1,5 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#0a0e17",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +31,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CoreIntent — Agentic AI Trading Engine",
+        alt: "CoreIntent — Agentic AI Trading Engine by Zynthio",
       },
     ],
   },
@@ -72,30 +78,47 @@ export const metadata: Metadata = {
     "AI trading engine",
     "New Zealand",
     "bot trading",
+    "free trading platform",
+    "AI orchestration",
   ],
   category: "Finance",
+  other: {
+    "google-site-verification": "PLACEHOLDER_VERIFY_TOKEN",
+  },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://zynthio.ai/#organization",
-      name: "Zynthio",
+      "@type": "Person",
+      "@id": "https://coreintent.dev/#person",
+      name: "Corey McIvor",
+      email: "corey@coreyai.ai",
       url: "https://zynthio.ai",
-      founder: {
-        "@type": "Person",
-        "@id": "https://coreintent.dev/#person",
-        name: "Corey McIvor",
-        email: "corey@coreyai.ai",
-        url: "https://zynthio.ai",
-        jobTitle: "Founder",
-      },
+      jobTitle: "Founder",
+      worksFor: { "@id": "https://zynthio.ai/#organization" },
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
       ],
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://zynthio.ai/#organization",
+      name: "Zynthio",
+      url: "https://zynthio.ai",
+      logo: "https://coreintent.dev/og-image.png",
+      founder: { "@id": "https://coreintent.dev/#person" },
+      sameAs: [
+        "https://github.com/coreintentdev",
+        "https://x.com/coreintentai",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer support",
+      },
     },
     {
       "@type": "WebApplication",
@@ -106,30 +129,32 @@ const jsonLd = {
         "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
       applicationCategory: "FinanceApplication",
       operatingSystem: "Web",
+      browserRequirements: "Requires JavaScript. Requires HTML5.",
+      softwareVersion: "0.2.0-alpha",
       offers: {
         "@type": "Offer",
         price: "0",
         priceCurrency: "NZD",
         description: "Free competition-based AI trading platform",
+        availability: "https://schema.org/InStock",
       },
-      author: {
-        "@type": "Organization",
-        "@id": "https://zynthio.ai/#organization",
-      },
-      creator: {
-        "@type": "Person",
-        "@id": "https://coreintent.dev/#person",
-      },
+      author: { "@id": "https://zynthio.ai/#organization" },
+      creator: { "@id": "https://coreintent.dev/#person" },
+      featureList:
+        "Multi-AI trading signals, Paper trading competitions, Daily/Weekly/Monthly leagues, Bot-friendly API, Claude + Grok + Perplexity orchestration",
     },
     {
       "@type": "WebSite",
       "@id": "https://coreintent.dev/#website",
       url: "https://coreintent.dev",
       name: "CoreIntent",
-      description: "Agentic AI Trading Engine",
-      publisher: {
-        "@type": "Organization",
-        "@id": "https://zynthio.ai/#organization",
+      description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      publisher: { "@id": "https://zynthio.ai/#organization" },
+      inLanguage: "en-NZ",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://coreintent.dev/?q={search_term_string}",
+        "query-input": "required name=search_term_string",
       },
     },
   ],
@@ -141,12 +166,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en-NZ">
+      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+      </head>
+      <body>
         {children}
       </body>
     </html>

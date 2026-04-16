@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "The Stack — AI Services, Infrastructure & Architecture",
   description:
-    "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure. Built by Zynthio.",
+    "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure. Built by Zynthio in New Zealand.",
   alternates: {
     canonical: "https://coreintent.dev/stack",
   },
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
       "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
     url: "https://coreintent.dev/stack",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "CoreIntent Technology Stack" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -22,21 +23,34 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const stackJsonLd = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "The Stack",
+          item: "https://coreintent.dev/stack",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "The Stack",
-      item: "https://coreintent.dev/stack",
+      "@type": "TechArticle",
+      headline: "CoreIntent Technology Stack",
+      description:
+        "Full API orchestra powering CoreIntent / Zynthio — Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
+      author: { "@id": "https://coreintent.dev/#person" },
+      publisher: { "@id": "https://zynthio.ai/#organization" },
+      mainEntityOfPage: "https://coreintent.dev/stack",
     },
   ],
 };
@@ -50,7 +64,7 @@ export default function StackLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(stackJsonLd) }}
       />
       {children}
     </>

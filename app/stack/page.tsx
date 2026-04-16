@@ -1,5 +1,3 @@
-"use client";
-
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -62,7 +60,7 @@ export default function StackPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
-      <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
+      <main aria-label="Technology stack" style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
           <h1 style={{ fontSize: "28px", marginBottom: "4px" }}>The Stack</h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "40px" }}>

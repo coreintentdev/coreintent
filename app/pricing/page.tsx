@@ -1,5 +1,3 @@
-"use client";
-
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -60,7 +58,7 @@ export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
-      <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
+      <main aria-label="Competitions and pricing" style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
           {/* Pricing Badge */}
           <div
@@ -118,6 +116,7 @@ export default function PricingPage() {
           </div>
 
           {/* How It Works */}
+          <h2 style={{ fontSize: "24px", marginBottom: "16px" }}>How It Works</h2>
           <div
             style={{
               display: "flex",
@@ -244,7 +243,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "12px" }}>The Philosophy</h3>
+            <h2 style={{ marginBottom: "12px", fontSize: "16px" }}>The Philosophy</h2>
             <ul
               style={{
                 listStyle: "none",
@@ -287,7 +286,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "16px", fontSize: "16px" }}>Everything Included — Free</h3>
+            <h2 style={{ marginBottom: "16px", fontSize: "16px" }}>Everything Included — Free</h2>
             <div
               style={{
                 display: "grid",
