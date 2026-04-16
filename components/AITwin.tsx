@@ -120,6 +120,9 @@ function playNotificationSound(): void {
     osc.type = "sine";
     gain.gain.value = 0.08;
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    osc.onended = () => {
+      void ctx.close();
+    };
     osc.start();
     osc.stop(ctx.currentTime + 0.15);
   } catch {
@@ -130,7 +133,7 @@ function playNotificationSound(): void {
 function getResponse(input: string): string {
   const lower = input.toLowerCase().trim();
 
-  if (RESPONSES[lower]) return RESPONSES[lower];
+  if (Object.prototype.hasOwnProperty.call(RESPONSES, lower)) return RESPONSES[lower];
 
   if (lower.includes("help") || lower === "?") return RESPONSES.help;
   if (lower.includes("about") || lower.includes("what is") || lower.includes("who are"))
