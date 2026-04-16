@@ -82,9 +82,6 @@ export const metadata: Metadata = {
     "AI orchestration",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "PLACEHOLDER_VERIFY_TOKEN",
-  },
 };
 
 const jsonLd = {
@@ -151,11 +148,6 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       publisher: { "@id": "https://zynthio.ai/#organization" },
       inLanguage: "en-NZ",
-      potentialAction: {
-        "@type": "SearchAction",
-        target: "https://coreintent.dev/?q={search_term_string}",
-        "query-input": "required name=search_term_string",
-      },
     },
   ],
 };
