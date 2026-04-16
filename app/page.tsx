@@ -327,6 +327,7 @@ export default function Home() {
                 <div key={n.label} style={{ textAlign: "center", minWidth: "80px" }}>
                   <div style={{ fontSize: "22px", fontWeight: "bold", color: "#10b981", lineHeight: "1.2" }}>{n.value}</div>
                   <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{n.label}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "2px" }}>{n.sub}</div>
                 </div>
               ))}
             </div>
