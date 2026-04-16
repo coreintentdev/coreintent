@@ -120,6 +120,13 @@ const jsonLd = {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
       },
+      foundingLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "NZ",
+        },
+      },
       areaServed: {
         "@type": "Country",
         name: "New Zealand",
@@ -138,6 +145,7 @@ const jsonLd = {
         "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
       applicationCategory: "FinanceApplication",
       operatingSystem: "Web",
+      inLanguage: "en-NZ",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
       offers: {
@@ -170,17 +178,10 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      inLanguage: "en-NZ",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
       },
     },
   ],
