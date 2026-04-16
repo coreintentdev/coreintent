@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { ok, err, badGateway, preflight, serverError, validateString } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
 
     const result = await scanMap[type]();
     if (!validateAiContent(result)) {
-      return err("AI returned an empty response", 502);
+      return badGateway("AI returned an empty response");
     }
 
     return ok({ check, type, result, timestamp: new Date().toISOString() });

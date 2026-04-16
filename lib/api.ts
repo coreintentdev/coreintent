@@ -26,7 +26,7 @@ export interface ApiResponse<T = unknown> {
 // ---------------------------------------------------------------------------
 
 /**
- * CORS headers applied to all API responses.
+ * CORS + security headers applied to all API responses.
  * Set ALLOWED_ORIGIN env var to a specific domain in production
  * (e.g. "https://coreintent.dev"). Defaults to "*" for dev.
  */
@@ -35,6 +35,11 @@ export const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
   "Access-Control-Max-Age":       "86400",
+  // Security hardening — sent on every response
+  "X-Content-Type-Options":       "nosniff",
+  "X-Frame-Options":              "DENY",
+  "Referrer-Policy":              "strict-origin-when-cross-origin",
+  "Strict-Transport-Security":    "max-age=31536000; includeSubDomains",
 };
 
 // ---------------------------------------------------------------------------
@@ -83,6 +88,18 @@ export function unauthorized(message = "Unauthorized"): NextResponse<ApiResponse
 /** 403 Forbidden. */
 export function forbidden(message = "Forbidden"): NextResponse<ApiResponse<null>> {
   return err(message, 403);
+}
+
+/** 502 Bad Gateway — upstream AI or external service returned an unusable response. */
+export function badGateway(
+  message = "Upstream service returned an unusable response"
+): NextResponse<ApiResponse<null>> {
+  return err(message, 502);
+}
+
+/** Generate a short random request ID for distributed tracing. */
+export function generateRequestId(): string {
+  return `req_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
 }
 
 /**
@@ -214,3 +231,21 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
 };
+
+/**
+ * Check whether the given IP is within the rate limit budget for a route.
+ * Returns true = request allowed; false = limit exceeded (call tooManyRequests()).
+ *
+ * Currently a pass-through — wire to Cloudflare KV or Upstash Redis when ready.
+ *
+ * @example
+ * const ip = req.headers.get("x-forwarded-for") ?? "unknown";
+ * if (!checkRateLimit(ip, RATE_LIMITS.protect)) return tooManyRequests();
+ */
+export function checkRateLimit(
+  _ip: string,
+  _config: RateLimitConfig
+): boolean {
+  // TODO: implement sliding-window counter via Cloudflare KV or Upstash Redis
+  return true;
+}

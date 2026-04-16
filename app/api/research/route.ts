@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { ok, err, badGateway, preflight, serverError, validateString } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
 
     const result = await taskMap[task]();
     if (!validateAiContent(result)) {
-      return err("AI returned an empty response", 502);
+      return badGateway("AI returned an empty response");
     }
 
     return ok({ topic, task, result, timestamp: new Date().toISOString() });
