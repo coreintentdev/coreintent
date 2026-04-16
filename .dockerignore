@@ -1,9 +1,9 @@
 .git
 .gitignore
+.github
 .next
 node_modules
 npm-debug.log*
-README*.md
 .env
 .env.*
 !.env.example
@@ -11,4 +11,8 @@ coverage
 .turbo
 .vercel
 *.md
+docs
+scripts
+LICENSE
+tsconfig.tsbuildinfo
 .dockerignore
