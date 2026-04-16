@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 06:50:44 UTC 2026
+Generated: Thu Apr 16 06:55:51 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -39,7 +39,7 @@ Generated: Thu Apr 16 06:50:44 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1135 — ansiToHtml sanitizes HTML entities before substitution; color values from allowlist only
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1135:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -52,7 +52,10 @@ Generated: Thu Apr 16 06:50:44 UTC 2026
 - PASS: next/link used in 3 files
 
 ## 7. Truth Check
-- WARN: Potentially misleading status '"active"' found in pages (domain status labels, not API status)
+- WARN: Potentially misleading status '"active"' found in pages
+  app/page.tsx:63:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:64:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:65:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -65,8 +68,6 @@ Generated: Thu Apr 16 06:50:44 UTC 2026
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
-- PASS: Next.js upgraded to 15.5.15 (0 vulnerabilities)
-- PASS: npm audit: 0 vulnerabilities (was 4 high, 1 moderate on 14.2.0)
 
 ## 10. VPS & Deployment
 - PASS: VPS script exists: scripts/risk_monitor.ts
