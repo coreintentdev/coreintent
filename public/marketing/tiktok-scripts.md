@@ -5,21 +5,23 @@
 
 ---
 
-## Script 1 — "Trading Platforms Are Scamming You"
+## Script 1 — "Your Trading Platform Doesn't Care If You Win"
 
-**Hook (0-3s):** "Trading platforms charge you $99/month to lose money."
+**Hook (0-3s):** "Your trading platform makes money whether you profit or not. Think about that."
 
 **Body (3-25s):**
-"Think about it. They make money whether you win or lose. That's not alignment — that's a scam with a dashboard."
+"$99/month. $199/month. $299/month. Whether you're up 50% or down 80%, they still get paid."
 
-"We built CoreIntent differently. No subscriptions. Just competitions."
+"That's not a partnership. That's a toll booth."
 
-"Daily leagues. Weekly leagues. Monthly tournaments. Free entry."
+"We built CoreIntent on a different model: free competitions. Daily, weekly, monthly. You compete. You prove yourself."
 
-"Three AI models working together — Grok for speed, Claude for depth, Perplexity for research."
+"Three AI models — Grok, Claude, Perplexity — cross-checking every signal in real-time."
+
+"And here's the thing: our entire platform costs $45 a month to run. So free actually costs us nothing."
 
 **CTA (25-30s):**
-"Built in New Zealand. Link in bio. coreintent.dev"
+"No subscriptions. No excuses. coreintent.dev — link in bio."
 
 ---
 
@@ -45,25 +47,25 @@
 
 ---
 
-## Script 3 — "I Built a Trading Platform for $45/Month"
+## Script 3 — "My AI Trading Platform Costs Less Than Your Netflix"
 
-**Hook (0-3s):** "My entire trading platform costs $45 a month to run."
+**Hook (0-3s):** "My entire AI trading platform costs less per month than your Netflix subscription."
 
 **Body (3-25s):**
-"Vercel hosting: free. GitHub CI/CD: free. Cloudflare: $20. VPS: $25."
+"Hosting: free. CI/CD: free. CDN and security: $20. Server: $25."
 
-"AI? Claude is pay-per-use. Grok comes with X Premium. Perplexity has a free tier."
+"AI? Claude charges per use. Grok comes with X Premium. Perplexity has a free tier."
 
-"Total: about $45/month."
+"Grand total: $45 a month. For the whole platform."
 
-"That's less than one month of the subscriptions most traders pay."
+"That's three AI models, six trading agents, a terminal, API endpoints — everything."
 
-"When your costs are this low, you can give the product away for free and let competitions drive revenue."
+"When your infrastructure is that cheap, charging users subscriptions isn't a business model. It's greed."
 
-"No VC money. No funding rounds. Just building."
+"So we don't charge. We run free competitions instead."
 
 **CTA (25-30s):**
-"From New Zealand to the world. coreintent.dev"
+"Built from New Zealand. No VC. No funding. Just intent. coreintent.dev"
 
 ---
 

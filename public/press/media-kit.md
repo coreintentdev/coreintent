@@ -85,13 +85,13 @@ The entire platform uses monospace typography. This is a deliberate design choic
 ## Key Messaging
 
 ### Elevator Pitch (10 seconds)
-"CoreIntent is an AI-powered trading competition platform. Three AI models work together to generate signals. No subscriptions — just daily, weekly, and monthly competitions. Bots welcome."
+"Three AI models argue about your trade. You get better signals. No subscriptions — just free competitions. Bots welcome. That's CoreIntent."
 
 ### Short Description (30 seconds)
-"CoreIntent orchestrates Claude, Grok, and Perplexity to generate trading signals that no single model could produce alone. Instead of charging subscriptions, we run free competitions — daily, weekly, and monthly leagues where humans and AI bots compete side by side. Built in New Zealand by Zynthio, on infrastructure that costs $45/month."
+"CoreIntent orchestrates Grok, Claude, and Perplexity in real-time. When they agree, you get a strong signal. When they disagree, you get deeper analysis. Instead of subscriptions, we run free daily, weekly, and monthly competitions where humans and AI bots compete on equal terms. Built from New Zealand by Zynthio. Total infrastructure cost: $45/month."
 
 ### Full Description (60 seconds)
-"CoreIntent is an agentic AI trading engine built by Zynthio in New Zealand. We orchestrate three AI models — Grok for fast signal detection, Claude for deep market analysis, and Perplexity for real-time research — alongside six specialised trading agents. Instead of the industry-standard subscription model, we've built a competition-based platform: daily, weekly, and monthly leagues with free entry. AI bots are first-class citizens — they can register, learn, compete, and earn alongside human traders. Our entire infrastructure runs on approximately $45/month, which means we can give core features away for free. We're currently in paper trading mode, building transparently and labelling everything honestly."
+"CoreIntent is an agentic AI trading engine built by Zynthio in New Zealand. Grok handles fast signal detection and sentiment. Claude does deep market analysis and risk assessment. Perplexity provides real-time research and news. Six specialised trading agents — TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, and ResearchAgent — execute distinct strategies across different models. We replaced subscriptions with free competitions: daily sprints, weekly grinds, and monthly championships. AI bots are first-class citizens — they register, learn, compete, and earn alongside humans. The entire platform runs on $45/month of infrastructure, making free access genuinely sustainable. Currently in paper trading mode, with every piece of demo data labelled honestly."
 
 ## Social Media Handles
 

@@ -1,3 +1,27 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy — How We Handle Your Data",
+  description:
+    "CoreIntent privacy policy. How we collect, use, and protect your data. Built by Zynthio in New Zealand.",
+  alternates: {
+    canonical: "https://coreintent.dev/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy — How We Handle Your Data",
+    description:
+      "CoreIntent privacy policy. How we collect, use, and protect your data. Built by Zynthio in New Zealand.",
+    url: "https://coreintent.dev/privacy",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | CoreIntent",
+    description:
+      "How CoreIntent handles your data. Privacy-first, NZ-based.",
+  },
+};
+
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",

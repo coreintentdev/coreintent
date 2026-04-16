@@ -5,44 +5,44 @@ import SiteFooter from "@/components/SiteFooter";
 
 const LEAGUES = [
   {
-    name: "Daily",
+    name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Quick-fire challenges. New every day.",
+    description: "Prove yourself every 24 hours. Fresh leaderboard. Fresh chance.",
     features: [
-      "Daily trading competitions",
-      "Daily song challenges (SongPal)",
-      "Daily content creation battles",
-      "Leaderboard resets at midnight UTC",
-      "Win streaks = bonus multipliers",
+      "New trading challenge every day at 00:00 UTC",
+      "AI-generated market scenarios",
+      "Win streaks unlock bonus multipliers",
+      "Bots and humans on the same leaderboard",
+      "Results posted daily — no hiding",
     ],
     entry: "Free",
   },
   {
-    name: "Weekly",
+    name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Prove consistency over a full week.",
+    description: "Anyone can get lucky once. Show consistency over seven days.",
     features: [
-      "Week-long portfolio challenges",
-      "Team competitions (humans + bots)",
-      "Weekly song remix battles",
-      "Strategy sharing rewards",
-      "Top 10 earn badges + prizes",
+      "7-day portfolio performance tracking",
+      "Team competitions (humans + bots together)",
+      "Strategy sharing earns community rewards",
+      "Top 10 earn badges and featured placement",
+      "Risk-adjusted returns, not just raw P&L",
     ],
     entry: "Free",
   },
   {
-    name: "Monthly",
+    name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The big leagues. Serious competitors.",
+    description: "The arena. Where reputations are built and strategies are tested.",
     features: [
       "Full month portfolio wars",
-      "Mansion room unlocks",
-      "Monthly album competition (SongPal)",
+      "Mansion room unlocks for champions",
       "Cross-AI strategy tournaments",
-      "Champions get featured globally",
+      "Champions featured globally on the platform",
+      "The highest stakes. The biggest bragging rights.",
     ],
     entry: "Free",
   },
@@ -80,14 +80,14 @@ export default function PricingPage() {
             Trading as a sport
           </div>
           <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            No Subscriptions. Just Competitions.
+            Trading Is a Sport. We Built the Arena.
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Most platforms charge $99/mo whether you win or lose.<br />
-            We charge nothing — and let you prove yourself in the arena.
+            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s indifference.<br />
+            CoreIntent charges nothing. You prove yourself in competition.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
-            Free costs us fuck all to serve — so we give it away.
+            Our stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
           </p>
 
           {/* Key Stats Bar */}
@@ -158,12 +158,12 @@ export default function PricingPage() {
           </div>
 
           {/* Competition Leagues */}
-          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Competition Leagues</h2>
+          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena</h2>
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
-            Everyone starts free. Revenue comes from people who choose to compete at higher levels.
+            Three leagues. Three timeframes. One rule: the best strategy wins.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
-            Humans and bots compete side by side. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
+            Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>

@@ -7,13 +7,15 @@
 
 ## Post 1 — Launch Hook
 
-Most trading platforms charge you $99/mo to lose money.
+Your trading platform charges you $99/mo whether you profit or not.
 
-CoreIntent charges $0 to compete.
+CoreIntent charges $0.
 
-AI-powered. Competition-based. No subscriptions.
+Three AI models. Free competitions. Bots welcome.
 
-Built in NZ. Built different.
+No subscriptions. No paywalls. No bullshit.
+
+Built from New Zealand.
 
 coreintent.dev
 
@@ -53,13 +55,15 @@ The future of trading is multi-agent. We're building for it.
 
 "Free costs fuck all to serve."
 
-That's not a slogan — it's our infrastructure decision.
+That's not a slogan. It's a line item on our infrastructure bill.
 
-When you build on free tiers and keep your stack under $50/mo, you can actually give everything away.
+$0 hosting. $0 CI/CD. $20 CDN. $25 VPS. Total: ~$45/mo.
 
-No paywalls. No premium tiers. Just competitions.
+When your costs are that low, charging subscriptions is just greed.
 
-#StartupLife #Web3
+So we don't.
+
+#StartupLife #BootstrapStartup
 
 ---
 
@@ -116,11 +120,13 @@ All paper trading. All learning. All getting smarter.
 
 Built from New Zealand.
 Registered in New Zealand.
-Trading for the world.
+Competing with the world.
 
-CoreIntent is proof that you don't need Silicon Valley to build a serious AI platform.
+No VC. No Valley. No ping pong tables.
 
-You need intent.
+Just three AI models, six agents, and a clear thesis: the best strategy wins — human or bot.
+
+You don't need Silicon Valley. You need intent.
 
 #MadeInNZ #TechStartup #CoreIntent
 
@@ -219,20 +225,25 @@ coreintent.dev
 
 ## Post 14 — Build in Public Update
 
-Build in public update:
+Build in public update — April 2026:
 
-What's real:
-→ 13 API endpoints (some live, some demo)
+What's live:
+→ 13 API endpoints
 → 6 AI agents configured
-→ Interactive terminal
-→ Full docs
+→ Interactive terminal with real commands
+→ Full docs and architecture guide
 
 What's planned:
-→ Exchange connections
-→ Live trading
-→ The Mansion gamification
+→ Binance/Coinbase exchange connections
+→ Live trading with real funds
+→ The Mansion — gamified trading world
 
-We label everything honestly. That's the deal.
+What's honest:
+→ Demo data is labelled "demo"
+→ Paper trading says "paper trading"
+→ Planned features say "planned"
+
+That's the standard. Always has been.
 
 #BuildInPublic #CoreIntent
 

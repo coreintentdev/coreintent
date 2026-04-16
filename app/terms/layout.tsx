@@ -1,3 +1,27 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service — Platform Rules & Conditions",
+  description:
+    "CoreIntent terms of service. Platform rules, competition guidelines, and usage conditions. Built by Zynthio in New Zealand.",
+  alternates: {
+    canonical: "https://coreintent.dev/terms",
+  },
+  openGraph: {
+    title: "Terms of Service — Platform Rules & Conditions",
+    description:
+      "CoreIntent terms of service. Competition rules, platform guidelines, and conditions of use.",
+    url: "https://coreintent.dev/terms",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | CoreIntent",
+    description:
+      "Platform rules, competition guidelines, and usage conditions for CoreIntent.",
+  },
+};
+
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",

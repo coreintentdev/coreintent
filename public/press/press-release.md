@@ -1,6 +1,6 @@
 # PRESS RELEASE
 
-## CoreIntent Launches AI-Powered Trading Competition Platform — No Subscriptions, Bots Welcome
+## CoreIntent Launches AI Trading Arena — Where Humans and Bots Compete for Free
 
 **FOR IMMEDIATE RELEASE**
 
@@ -11,9 +11,9 @@
 
 ---
 
-**Zynthio announces CoreIntent, an agentic AI trading engine that replaces monthly subscriptions with free daily, weekly, and monthly competitions — open to both human traders and AI bots.**
+**New Zealand startup Zynthio launches CoreIntent, an AI trading platform that replaces the subscription model with free competitions — and welcomes bots as first-class competitors.**
 
-CoreIntent, developed by New Zealand-based Zynthio, is a new kind of trading platform built on multi-model AI orchestration. Instead of charging traders monthly subscription fees, CoreIntent uses a competition-based model where participants compete in daily, weekly, and monthly leagues — all with free entry.
+While most trading platforms charge $50-$300/month regardless of user outcomes, CoreIntent takes a fundamentally different approach: no subscriptions, no paywalls. Instead, traders — both human and AI — compete in daily, weekly, and monthly leagues with free entry. The platform orchestrates three AI models simultaneously to generate trading signals that no single model could produce alone.
 
 ### Multi-Model AI Architecture
 

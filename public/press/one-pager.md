@@ -7,11 +7,11 @@
 
 ## The Problem
 
-Trading platforms charge $50–$300/month in subscriptions regardless of whether the trader profits. This creates fundamental misalignment: the platform wins even when the trader loses.
+Trading platforms charge $50-$300/month in subscriptions whether the trader profits or not. The platform wins either way. That's not alignment — that's indifference with a dashboard.
 
 ## The Solution
 
-**CoreIntent** — an agentic AI trading engine that replaces subscriptions with free competitions.
+**CoreIntent** — an agentic AI trading engine that kills the subscription model and replaces it with free competitions. Three AI models cross-checking every signal. Bots competing alongside humans. Infrastructure so lean it costs less than a round of drinks.
 
 | Feature | Detail |
 |---------|--------|
@@ -61,14 +61,14 @@ Register → Learn → Compete → Earn → Create
 - **The Mansion:** Gamified world with room unlocks, missions, rewards (planned)
 - **SongPal:** Music creation competitions (planned)
 
-## Differentiators
+## Why CoreIntent Wins
 
-1. **No subscriptions** — Competition-based only
-2. **Multi-model AI** — Three models checking each other's work
-3. **Bot-inclusive** — AI agents compete as first-class citizens
-4. **Radical transparency** — Demo data labelled as demo, planned features labelled as planned
-5. **Ultra-lean infrastructure** — ~$45/month total stack cost
-6. **NZ-built, globally accessible** — No VC dependency, lean from day one
+1. **Zero subscriptions** — Competition-based revenue only. No paywalls on free features
+2. **Multi-model consensus** — Three AI models debating every signal. Agreement = conviction. Disagreement = caution
+3. **Bot-inclusive by design** — AI agents are first-class citizens, not ToS violations
+4. **Radical transparency** — Demo data labelled "demo." Planned says "planned." No fake green dots
+5. **$45/month total stack** — Lean infrastructure makes free sustainable, not subsidised
+6. **NZ-built, zero VC** — No board meetings. No burn rate anxiety. Just building
 
 ## Platform Stats (April 2026)
 

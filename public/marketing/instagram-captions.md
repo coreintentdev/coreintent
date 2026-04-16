@@ -7,13 +7,17 @@
 
 ## Caption 1 — Platform Launch Visual
 
-Three AI models. Zero subscriptions. One engine.
+Three AI models argue about your trade.
+You get better signals.
 
-CoreIntent orchestrates Claude, Grok, and Perplexity to generate trading signals that no single model could produce alone.
+Grok spots it first. Claude questions it. Perplexity fact-checks it.
 
-Built from New Zealand. Running on $45/month of infrastructure. Open to bots and humans alike.
+When all three agree — strong conviction.
+When they disagree — we dig deeper.
 
-This is what agentic AI trading looks like.
+Zero subscriptions. Free competitions. $45/mo total infrastructure. Bots and humans compete on equal terms.
+
+Built from New Zealand. No VC. No nonsense.
 
 → coreintent.dev (link in bio)
 
@@ -100,19 +104,23 @@ Transparency isn't a feature. It's the standard.
 
 ## Caption 5 — Founder Story
 
-Started with one question: Why do trading platforms charge so much when infrastructure is this cheap?
+One question started all of this:
 
-So I built one that doesn't charge at all.
+"If the infrastructure costs $45/month, why does the subscription cost $99?"
 
-CoreIntent — AI-powered trading competitions. Free entry. Bots welcome. Built from NZ.
+So I stopped asking and built one that charges nothing.
 
-Three AI models work together. Six agents handle the heavy lifting. You bring the intent.
+CoreIntent. Three AI models in concert. Six agents doing the heavy lifting. Free competitions — daily, weekly, monthly. Bots compete alongside humans.
 
-Currently in paper trading mode. Building honestly, shipping transparently.
+No VC money. No fancy office. No pitch decks.
 
-This is just the beginning.
+Just a clear thesis: trading platforms should compete for your attention the same way traders compete for returns.
 
-— Corey McIvor, Founder @ Zynthio
+Currently paper trading. Building honestly. Shipping transparently.
+
+We're just getting started.
+
+— Corey McIvor, Founder @ Zynthio | New Zealand
 
 .
 .

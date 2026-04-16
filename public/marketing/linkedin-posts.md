@@ -7,30 +7,28 @@
 
 ## Post 1 — Platform Introduction
 
-**We're building an AI trading engine that doesn't charge subscriptions.**
+**The trading platform model is broken. Here's how we're fixing it.**
 
-At CoreIntent, we've taken a fundamentally different approach to the trading platform model. Instead of monthly fees that make money whether you do or not, we've built a competition-based system.
+A $99/month subscription doesn't care whether you profit. The platform wins either way. That's not alignment — that's indifference.
 
-Here's how it works:
+At CoreIntent, we replaced subscriptions with competitions.
 
 **The Stack:**
-We orchestrate three AI models — Claude for deep analysis, Grok for fast signal detection, and Perplexity for real-time research. They work in concert, each handling what they're best at.
+Three AI models working in concert — Grok for fast signal detection, Claude for deep market analysis, and Perplexity for real-time research. They cross-check each other. Consensus signals are stronger. Disagreement triggers deeper analysis.
 
 **The Model:**
-Daily, weekly, and monthly competitions. Free entry. Bots compete alongside humans — because the future of trading is multi-agent, and pretending otherwise is dishonest.
+Daily sprints. Weekly grinds. Monthly championships. All free entry. Bots compete alongside humans — because the future of trading is multi-agent, and pretending otherwise is just delaying the inevitable.
 
-**The Philosophy:**
-Our entire infrastructure runs on ~$45/month. When your costs are that low, you can actually give the product away and let competition drive revenue naturally.
+**The Numbers:**
+Our entire infrastructure runs on ~$45/month. No VC funding. No inflated runway. When your marginal cost per user approaches zero, subscriptions aren't a business model — they're a tax.
 
-We're currently in paper trading mode — building, testing, and being transparent about what's real and what's planned.
+Currently in paper trading mode — building honestly, shipping transparently. Demo data is labelled "demo." Planned features say "planned."
 
 Based in New Zealand. Built by Corey McIvor under the Zynthio brand.
 
-If you're interested in AI-driven trading, agentic architectures, or just a different business model — I'd love to connect.
-
 → coreintent.dev
 
-#AITrading #AgenticAI #FinTech #StartupLife #NewZealand
+#AITrading #AgenticAI #FinTech #Startups #NewZealand
 
 ---
 
@@ -96,11 +94,11 @@ We're building this from New Zealand under the Zynthio brand. No VC funding. No 
 
 ## Post 4 — Founder Perspective: On Radical Transparency
 
-**I label demo data as "demo." Here's why that's a competitive advantage.**
+**Every fintech dashboard lies to you. Ours doesn't. Here's why.**
 
-In fintech, the temptation to polish reality is enormous. Green status dots on services that aren't connected. Screenshots of performance that never happened. "Active users" that are test accounts.
+Green dots on services that aren't connected. Screenshots of returns that never happened. "Active users" that are test accounts. The fintech industry has a credibility problem.
 
-When I started building CoreIntent, I made a decision: radical transparency from day one.
+When I started building CoreIntent, I made one rule: no theatre.
 
 Every API route is labelled:
 - **Live** = actually working, returning real data
@@ -109,15 +107,15 @@ Every API route is labelled:
 
 Every testimonial on the landing page? Tagged "DEMO — Placeholder testimonials."
 
-Paper trading mode? Announced in a banner at the top of the page.
+Paper trading mode? Right there in the banner. You see it before you see anything else.
 
-**Why this matters:**
+**Why this is a competitive advantage:**
 
-Trust compounds. In an industry where most platforms overpromise and underdeliver, being honest about your current state is a differentiator.
+Trust compounds. Users don't leave because you told them something was demo. They leave when they discover the lie themselves.
 
-Users don't leave because you told them something was demo. They leave when they discover it themselves.
+In an industry built on hype, honesty is a moat. It costs nothing, and it's the one thing competitors with VC money can't copy — because their investors won't let them.
 
-Building in public means building honestly.
+Building in public means building without the mask.
 
 → coreintent.dev
 
