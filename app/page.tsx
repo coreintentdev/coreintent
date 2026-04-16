@@ -212,6 +212,11 @@ export default function Home() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
+      {!showHero && (
+        <h1 className="sr-only">
+          Three AI Models Argue. You Get Better Signals.
+        </h1>
+      )}
 
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
