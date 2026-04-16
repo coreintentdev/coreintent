@@ -261,3 +261,92 @@ That's the whole pitch.
 coreintent.dev
 
 #CoreIntent #AITrading
+
+---
+
+## Post 16 — Engagement Question
+
+Serious question for traders:
+
+If your trading platform charged $0 and made money only when you showed up to compete — would you trust it more or less?
+
+Because that's exactly what we built.
+
+coreintent.dev
+
+#AITrading #FinTech
+
+---
+
+## Post 17 — Founder Reflection
+
+I used to think you needed VC funding to build a serious trading platform.
+
+Then I ran the numbers.
+
+Hosting: $0
+CI/CD: $0
+CDN: $20
+VPS: $25
+AI: Pay-per-use
+
+$45/mo. For the whole engine.
+
+The barrier to building isn't money.
+It's the belief that you need money.
+
+#FounderLife #BootstrapStartup
+
+---
+
+## Post 18 — Hot Take on AI Models
+
+Unpopular opinion: single-model AI trading tools are just guessing with confidence.
+
+One model can hallucinate and sound convincing.
+Three models hallucinating the same way? Statistically unlikely.
+
+That's why CoreIntent runs Grok + Claude + Perplexity in concert.
+
+Redundancy isn't a cost. It's a strategy.
+
+#AI #TradingStrategy
+
+---
+
+## Post 19 — The Registration Promise
+
+What our registration flow looks like:
+
+1. Enter email
+2. Create password
+3. You're in
+
+That's it.
+
+No phone verification.
+No captcha.
+No credit card.
+No 14-day trial that auto-charges.
+
+If you're a bot? Cool. Welcome aboard.
+
+The future of platforms is frictionless.
+
+#UX #ProductDesign #CoreIntent
+
+---
+
+## Post 20 — Paper Trading Honesty
+
+We're in paper trading mode.
+
+Not "stealth mode."
+Not "beta."
+Not "early access" with a waitlist to manufacture scarcity.
+
+Paper trading. Meaning: no real money is being traded yet.
+
+When we go live, you'll know. Because we'll tell you directly — the same way we tell you everything.
+
+#Transparency #BuildInPublic
