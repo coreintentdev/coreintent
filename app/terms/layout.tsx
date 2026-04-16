@@ -10,15 +10,25 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Terms of Service — Platform Rules & Conditions",
     description:
-      "CoreIntent terms of service. Competition rules, platform guidelines, and conditions of use.",
+      "CoreIntent terms of service. Competition rules, platform guidelines, and conditions of use. Governed by New Zealand law.",
     url: "https://coreintent.dev/terms",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Terms of Service",
+      },
+    ],
   },
   twitter: {
     card: "summary",
     title: "Terms of Service | CoreIntent",
     description:
-      "Platform rules, competition guidelines, and usage conditions for CoreIntent.",
+      "Platform rules, competition guidelines, and usage conditions for CoreIntent. Governed by New Zealand law.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
   },
 };
 
