@@ -33,21 +33,73 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "The Stack",
+          item: "https://coreintent.dev/stack",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "The Stack",
-      item: "https://coreintent.dev/stack",
+      "@type": "ItemList",
+      name: "CoreIntent AI Technology Stack",
+      description:
+        "The multi-AI orchestration stack powering CoreIntent trading engine, built by Zynthio in New Zealand.",
+      numberOfItems: 3,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@type": "SoftwareApplication",
+            name: "Grok",
+            applicationCategory: "AI Signal Detection",
+            operatingSystem: "Web API",
+            description:
+              "Fast signal detection and sentiment analysis via xAI. Real-time X/Twitter sentiment scoring and market mood analysis.",
+            author: { "@type": "Organization", name: "xAI" },
+          },
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          item: {
+            "@type": "SoftwareApplication",
+            name: "Claude",
+            applicationCategory: "AI Deep Analysis",
+            operatingSystem: "Web API",
+            description:
+              "Deep analysis, risk assessment, strategy generation, and agent orchestration via Anthropic.",
+            author: { "@type": "Organization", name: "Anthropic" },
+          },
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          item: {
+            "@type": "SoftwareApplication",
+            name: "Perplexity",
+            applicationCategory: "AI Research",
+            operatingSystem: "Web API",
+            description:
+              "Real-time market research, news aggregation, and cross-source verification with 9 platform connectors.",
+            author: { "@type": "Organization", name: "Perplexity AI" },
+          },
+        },
+      ],
     },
   ],
 };
@@ -61,7 +113,7 @@ export default function StackLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
     </>
