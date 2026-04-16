@@ -76,9 +76,6 @@ export const metadata: Metadata = {
     "AI crypto trading",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
-  },
 };
 
 const jsonLd = {
@@ -115,15 +112,31 @@ const jsonLd = {
       "@id": "https://zynthio.ai/#organization",
       name: "Zynthio",
       url: "https://zynthio.ai",
+      description:
+        "Parent brand behind CoreIntent — building agentic AI trading tools with multi-model orchestration. Based in New Zealand.",
       logo: "https://coreintent.dev/opengraph-image.png",
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
       },
+      foundingLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "NZ",
+        },
+      },
       areaServed: {
         "@type": "Country",
         name: "New Zealand",
       },
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer support",
+        availableLanguage: "English",
+      },
+      slogan: "No Subscriptions. Just Competitions.",
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
@@ -140,6 +153,8 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
+      inLanguage: "en",
+      isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
         price: "0",
@@ -170,6 +185,7 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      inLanguage: "en",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
