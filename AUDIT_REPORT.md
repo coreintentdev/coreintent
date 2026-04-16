@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 04:35:25 UTC 2026
+Generated: Thu Apr 16 04:49:21 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -61,7 +61,7 @@ Generated: Thu Apr 16 04:35:25 UTC 2026
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 11 API routes contain demo/hardcoded data
+- INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
 - PASS: ARIA attributes found (7 instances)

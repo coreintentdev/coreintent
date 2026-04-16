@@ -5,6 +5,7 @@
  * - Standard {success, data, error} response envelope
  * - CORS headers applied to every response
  * - ok() / err() / preflight() response helpers
+ * - notFound() / tooManyRequests() / methodNotAllowed() for common HTTP codes
  * - Rate limit config structure (wire to Cloudflare KV / Upstash when ready)
  */
 
@@ -59,6 +60,55 @@ export function preflight(): NextResponse {
   return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
 }
 
+/**
+ * 404 Not Found — resource does not exist.
+ * Use when a route receives a valid request for a resource that cannot be located.
+ */
+export function notFound(message = "Not found"): NextResponse<ApiResponse<null>> {
+  return err(message, 404);
+}
+
+/**
+ * 429 Too Many Requests — caller has exceeded the rate limit.
+ * Optionally include a Retry-After header (seconds) so clients can back off.
+ *
+ * @param retryAfterSeconds  How long the caller should wait before retrying.
+ */
+export function tooManyRequests(
+  retryAfterSeconds = 60
+): NextResponse<ApiResponse<null>> {
+  return NextResponse.json(
+    { success: false, data: null, error: "Rate limit exceeded. Please slow down." },
+    {
+      status: 429,
+      headers: {
+        ...CORS_HEADERS,
+        "Retry-After": String(retryAfterSeconds),
+      },
+    }
+  );
+}
+
+/**
+ * 405 Method Not Allowed — the HTTP method is not supported on this route.
+ * Next.js handles this automatically for unexported methods, but this helper
+ * lets routes return a consistent envelope when they want explicit control.
+ */
+export function methodNotAllowed(
+  allowed: string[] = ["GET", "POST", "OPTIONS"]
+): NextResponse<ApiResponse<null>> {
+  return NextResponse.json(
+    { success: false, data: null, error: `Method not allowed. Allowed: ${allowed.join(", ")}` },
+    {
+      status: 405,
+      headers: {
+        ...CORS_HEADERS,
+        Allow: allowed.join(", "),
+      },
+    }
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Rate limiting — structure ready, implementation pending KV store
 // ---------------------------------------------------------------------------
@@ -73,13 +123,14 @@ export interface RateLimitConfig {
 /**
  * Per-route rate limit budgets.
  * TODO: implement checkRateLimit(ip, route) once Cloudflare KV or Upstash Redis is wired in.
+ *       When triggered, call tooManyRequests() from lib/api.ts.
  * AI routes are deliberately tight — each call costs real money.
  */
 export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   default:  { windowMs: 60_000, max: 60 },
   ai:       { windowMs: 60_000, max: 10 },
-  protect:  { windowMs: 60_000, max: 5 },
-  research: { windowMs: 60_000, max: 5 },
+  protect:  { windowMs: 60_000, max: 5  },
+  research: { windowMs: 60_000, max: 5  },
   content:  { windowMs: 60_000, max: 20 },
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
