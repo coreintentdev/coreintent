@@ -195,3 +195,97 @@ a {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
 }
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — v0.3.0 Additions
+   ═══════════════════════════════════════════ */
+
+@keyframes dataFlowRight {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: var(--border-color); }
+  50% { border-color: var(--accent-green); box-shadow: 0 0 12px rgba(16, 185, 129, 0.15); }
+}
+
+@keyframes flashGreen {
+  0% { background-color: rgba(16, 185, 129, 0.2); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flashRed {
+  0% { background-color: rgba(239, 68, 68, 0.2); }
+  100% { background-color: transparent; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes nodeGlow {
+  0%, 100% { box-shadow: 0 0 4px currentColor, 0 0 8px transparent; }
+  50% { box-shadow: 0 0 8px currentColor, 0 0 20px currentColor; }
+}
+
+@keyframes barPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Stagger children entrance animations */
+.stagger-children > * {
+  animation: fadeInUp 0.4s ease both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* Neon border pulse */
+.neon-border {
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* Data flow line between nodes */
+.data-flow-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+  background-size: 200% 100%;
+  animation: dataFlowRight 2s linear infinite;
+}
+
+/* Active node ripple */
+.node-active {
+  animation: nodeGlow 2s ease-in-out infinite;
+}
+
+/* Order book entry flash */
+.flash-green { animation: flashGreen 0.5s ease; }
+.flash-red { animation: flashRed 0.5s ease; }
+
+/* Typing cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: currentColor;
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+
+/* Order book bar */
+.orderbook-bar {
+  transition: width 0.6s ease;
+  animation: barPulse 3s ease-in-out infinite;
+}
