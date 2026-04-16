@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# CoreIntent — Next.js 14 for Cloud Run / Artifact Registry (GCP Cloud Build expects ./Dockerfile)
+# CoreIntent — Next.js 15 for Cloud Run / Artifact Registry (GCP Cloud Build expects ./Dockerfile)
 
 FROM node:20-alpine AS base
 RUN apk add --no-cache libc6-compat
