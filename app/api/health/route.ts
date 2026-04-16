@@ -11,6 +11,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { ok, preflight } from "@/lib/api";
+import { isLive } from "@/lib/ai";
 
 const BOOT_TIME = Date.now();
 
@@ -45,10 +46,6 @@ interface HealthResponse {
   memory:      MemoryMetrics;
 }
 
-function isKeyConfigured(key: string | undefined, placeholder: string): boolean {
-  return Boolean(key && key !== placeholder);
-}
-
 export async function GET() {
   const mem = process.memoryUsage();
   const toMb = (bytes: number) => Math.round(bytes / 1024 / 1024 * 10) / 10;
@@ -61,9 +58,9 @@ export async function GET() {
     mode:        "paper_trading",
     nodeVersion: process.version,
     aiKeys: {
-      claude:     isKeyConfigured(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
-      grok:       isKeyConfigured(process.env.GROK_API_KEY, "xai-xxx"),
-      perplexity: isKeyConfigured(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+      claude:     isLive("claude"),
+      grok:       isLive("grok"),
+      perplexity: isLive("perplexity"),
     },
     memory: {
       heapUsedMb:  toMb(mem.heapUsed),

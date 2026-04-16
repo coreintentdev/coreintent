@@ -12,7 +12,7 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, err, preflight, serviceUnavailable, validateString } from "@/lib/api";
 
 interface Note {
   id:        number;
@@ -61,10 +61,9 @@ export async function POST(req: NextRequest) {
   }
 
   if (publicNotes.length >= MAX_NOTES) {
-    return err(
+    return serviceUnavailable(
       `Note store is at capacity (${MAX_NOTES} notes). ` +
-      "Connect a persistent store (Cloudflare KV) to lift this limit.",
-      503
+      "Connect a persistent store (Cloudflare KV) to lift this limit."
     );
   }
 
