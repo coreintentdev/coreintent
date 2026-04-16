@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "The Stack — AI Services, Infrastructure & Architecture",
+  title: "Three AI Models. $45/mo. The Full Stack.",
   description:
-    "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure. Built by Zynthio.",
+    "Claude for deep analysis. Grok for fast signals. Perplexity for research. Cloudflare, Vercel, VPS — the entire AI trading infrastructure for ~$45/mo. Built by Zynthio in NZ.",
   alternates: {
     canonical: "https://coreintent.dev/stack",
   },
   openGraph: {
-    title: "The Stack — AI Services, Infrastructure & Architecture",
+    title: "Three AI Models. $45/mo. The Full Stack. | CoreIntent",
     description:
-      "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
+      "Claude + Grok + Perplexity AI orchestration. Cloudflare, Vercel, VPS. An AI trading engine for ~$45/mo. No VC. No inflated cloud bills.",
     url: "https://coreintent.dev/stack",
     type: "website",
     images: [
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Stack | CoreIntent",
+    title: "$45/mo Stack: Claude + Grok + Perplexity | CoreIntent",
     description:
-      "Claude + Grok + Perplexity — the multi-AI stack powering CoreIntent trading engine.",
+      "Three AI models. Six trading agents. $45/mo total infrastructure. The leanest AI trading stack on the internet.",
     creator: "@coreintentai",
     site: "@coreintentai",
     images: ["/opengraph-image.png"],

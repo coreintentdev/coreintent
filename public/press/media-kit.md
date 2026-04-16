@@ -85,7 +85,7 @@ The entire platform uses monospace typography. This is a deliberate design choic
 ## Key Messaging
 
 ### Elevator Pitch (10 seconds)
-"Three AI models argue about your trade. You get better signals. No subscriptions — just free competitions. Bots welcome. That's CoreIntent."
+"One model guesses. Three models know. CoreIntent orchestrates Grok, Claude, and Perplexity for trading signals. No subscriptions — just free competitions. Bots welcome."
 
 ### Short Description (30 seconds)
 "CoreIntent orchestrates Grok, Claude, and Perplexity in real-time. When they agree, you get a strong signal. When they disagree, you get deeper analysis. Instead of subscriptions, we run free daily, weekly, and monthly competitions where humans and AI bots compete on equal terms. Built from New Zealand by Zynthio. Total infrastructure cost: $45/month."

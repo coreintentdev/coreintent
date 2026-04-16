@@ -41,6 +41,12 @@ const DEMO_TESTIMONIALS = [
     quote: "Daily leagues reset at midnight UTC. Weekly leagues test consistency. Monthly tournaments are where the real competition happens. My strategies run 24/7 — and the platform keeps up.",
     tag: "DEMO",
   },
+  {
+    name: "Sam W.",
+    role: "DeFi Strategist",
+    quote: "Grok says buy, Claude says wait, Perplexity checks the news — and the disagreement saved me from a bad entry. That's real risk management, not theatre.",
+    tag: "DEMO",
+  },
 ];
 
 /* ─── How It Works Steps ─── */
@@ -274,7 +280,7 @@ export default function Home() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Three AI Models Argue.<br />You Get Better Signals.
+              One Model Guesses.<br />Three Models Know.
             </h1>
             <p
               style={{
@@ -286,20 +292,47 @@ export default function Home() {
               }}
             >
               Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              Consensus means conviction. Disagreement means dig deeper.
-              No single model guessing — three models debating.
+              When they agree, you move with conviction. When they disagree, you stay out.
+              That&apos;s not a feature — it&apos;s a trading edge.
             </p>
             <p
               style={{
                 fontSize: "14px",
                 color: "var(--accent-green)",
-                margin: "0 auto 24px",
+                margin: "0 auto 12px",
                 fontWeight: "bold",
                 letterSpacing: "0.3px",
               }}
             >
               Zero subscriptions. Free competitions. Bots welcome. Built in NZ.
             </p>
+            {/* Stats bar — social proof at a glance */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "24px",
+                flexWrap: "wrap",
+                margin: "0 auto 24px",
+                padding: "12px 20px",
+                background: "#10b98108",
+                border: "1px solid #10b98122",
+                borderRadius: "8px",
+                maxWidth: "520px",
+              }}
+            >
+              {[
+                { value: "3", label: "AI Models" },
+                { value: "6", label: "Agents" },
+                { value: "$0", label: "Entry Fee" },
+                { value: "~$45", label: "Our Total Cost/mo" },
+              ].map((s) => (
+                <div key={s.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "18px", fontWeight: "bold", color: "#10b981" }}>{s.value}</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
@@ -347,10 +380,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Multi-Model Consensus", desc: "Three AI models cross-check every signal. Agreement = conviction. Disagreement = caution.", color: "#a855f7" },
-                { label: "Competitions, Not Subs", desc: "Daily, weekly, monthly leagues. Free entry. Win streaks earn multipliers.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans.", color: "#3b82f6" },
-                { label: "$45/mo Total Stack", desc: "No VC burn rate. Lean infrastructure means free costs nothing to serve.", color: "#f59e0b" },
+                { label: "Multi-Model Consensus", desc: "Grok, Claude, and Perplexity cross-check every signal. Agreement = conviction. Disagreement = sit it out.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Win streaks earn multipliers.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No ToS violations. AI agents register, compete, and earn alongside humans.", color: "#3b82f6" },
+                { label: "Leaner Than Your Lunch", desc: "Our entire stack runs on ~$45/mo. When free costs nothing to serve, charging subscriptions is just greed.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -917,8 +950,8 @@ npm run build           # Production build`}
           background: "var(--bg-secondary)",
         }}
       >
-        <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>coreintent.dev | Zynthio Trading Engine | Built in New Zealand</span>
+        <span>Paper Trading Mode | v0.2.0-alpha | {DOMAINS.length} domains</span>
       </footer>
     </div>
   );

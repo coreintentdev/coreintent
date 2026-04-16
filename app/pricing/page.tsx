@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -8,13 +9,13 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Prove yourself every 24 hours. Fresh leaderboard. Fresh chance.",
+    description: "24 hours. Fresh leaderboard. No hiding. Prove it or move on.",
     features: [
-      "New trading challenge every day at 00:00 UTC",
+      "New challenge drops at 00:00 UTC sharp",
       "AI-generated market scenarios",
       "Win streaks unlock bonus multipliers",
       "Bots and humans on the same leaderboard",
-      "Results posted daily — no hiding",
+      "Results posted daily — full transparency",
     ],
     entry: "Free",
   },
@@ -22,7 +23,7 @@ const LEAGUES = [
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Anyone can get lucky once. Show consistency over seven days.",
+    description: "Anyone can get lucky once. Consistency over seven days separates traders from gamblers.",
     features: [
       "7-day portfolio performance tracking",
       "Team competitions (humans + bots together)",
@@ -36,7 +37,7 @@ const LEAGUES = [
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The arena. Where reputations are built and strategies are tested.",
+    description: "The big leagues. Where reputations are built and real strategies are tested under pressure.",
     features: [
       "Full month portfolio wars",
       "Mansion room unlocks for champions",
@@ -80,14 +81,14 @@ export default function PricingPage() {
             Trading as a sport
           </div>
           <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            Trading Is a Sport. We Built the Arena.
+            Your Platform Charges $99/mo.<br />Ours Charges Nothing.
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Other platforms charge $99/mo whether you win or lose. That&apos;s not alignment — that&apos;s indifference.<br />
-            CoreIntent charges nothing. You prove yourself in competition.
+            A subscription doesn&apos;t care whether you profit. The platform wins either way.<br />
+            CoreIntent runs on competitions. You prove yourself — or you don&apos;t.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
-            Our stack costs $45/mo. Free costs us nothing to serve — so we give it all away.
+            Our entire stack costs ~$45/mo. When free costs nothing to serve, charging subscriptions is just greed. So we don&apos;t.
           </p>
 
           {/* Key Stats Bar */}
@@ -158,12 +159,12 @@ export default function PricingPage() {
           </div>
 
           {/* Competition Leagues */}
-          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena</h2>
+          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena. Prove Your Strategy.</h2>
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
-            Three leagues. Three timeframes. One rule: the best strategy wins.
+            Three leagues. Three timeframes. One rule: the best strategy wins — human or bot.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
-            Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
+            AI-to-AI trading is a first-class feature, not a terms-of-service violation. Your bot belongs here.
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
@@ -407,6 +408,40 @@ export default function PricingPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Final CTA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #10b98112 0%, #3b82f612 100%)",
+              border: "1px solid #10b98133",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>Ready to Compete?</h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "16px" }}>
+              No credit card. No subscription. No catch. Just bring your strategy.
+            </p>
+            <Link
+              href="/"
+              style={{
+                display: "inline-block",
+                padding: "14px 40px",
+                background: "var(--accent-green)",
+                color: "#000",
+                borderRadius: "8px",
+                fontFamily: "inherit",
+                fontSize: "14px",
+                fontWeight: "bold",
+                textDecoration: "none",
+                letterSpacing: "0.3px",
+              }}
+            >
+              Launch the Terminal
+            </Link>
           </div>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>

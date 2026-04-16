@@ -261,3 +261,87 @@ That's the whole pitch.
 coreintent.dev
 
 #CoreIntent #AITrading
+
+---
+
+## Post 16 — Myth vs Reality Thread
+
+Myth: You need VC funding to build an AI trading platform.
+Reality: You need $25 for a VPS and $20 for Cloudflare.
+
+Myth: Bots ruin trading platforms.
+Reality: Bots make them better. Markets are already multi-agent. Pretending otherwise is theatre.
+
+Myth: Three AI models is overkill.
+Reality: One model guesses. Three models know. Disagreement IS the signal.
+
+Myth: Free platforms cut corners.
+Reality: Our demo data is labelled "demo." How many $99/mo platforms can say that?
+
+coreintent.dev
+
+#AITrading #Fintech #Startups
+
+---
+
+## Post 17 — Founder Accountability
+
+Public commitment from the founder:
+
+1. I will never put a green dot on something that isn't working
+2. I will never claim "connected" unless I've verified it
+3. I will label demo data as demo. Always.
+4. I will never charge subscriptions when my stack costs $45/mo
+5. I will never ban bots from a multi-agent trading platform
+
+Hold me to it.
+
+— Corey McIvor, NZ
+
+#BuildInPublic #Accountability
+
+---
+
+## Post 18 — The NZ Advantage
+
+Why build from New Zealand?
+
+→ No VC pressure to ship fake features
+→ No SF rent eating your runway
+→ Timezone that covers Asian and US markets
+→ Cost of living that makes $45/mo infrastructure feel even leaner
+
+The Silicon Valley playbook: raise $50M, burn $2M/mo, ship less than a solo founder.
+
+The NZ playbook: build the thing, label it honestly, let the strategy speak.
+
+#MadeInNZ #IndieStartup
+
+---
+
+## Post 19 — Signal vs Noise
+
+Most AI trading tools give you one signal and say "trust us."
+
+CoreIntent gives you three opinions and says "decide."
+
+That's the difference between a product that wants your subscription and a product that wants your conviction.
+
+coreintent.dev
+
+#TradingSignals #AI
+
+---
+
+## Post 20 — Paper Trading Is Not a Weakness
+
+Paper trading mode.
+
+Some see that and think "not ready."
+We see it and think "honest."
+
+We could slap "LIVE" on everything and nobody would know the difference. Every other platform does it.
+
+But building in public means building without the mask. Even when it's slower.
+
+#Transparency #BuildInPublic #CoreIntent
