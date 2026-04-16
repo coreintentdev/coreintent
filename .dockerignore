@@ -4,6 +4,7 @@
 .next
 node_modules
 npm-debug.log*
+*.log
 .env
 .env.*
 !.env.example
@@ -17,3 +18,6 @@ LICENSE
 tsconfig.tsbuildinfo
 cloudbuild.yaml
 .dockerignore
+.DS_Store
+.vscode
+.idea
