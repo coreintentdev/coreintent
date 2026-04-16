@@ -7,7 +7,7 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight } from "@/lib/api";
+import { ok, preflight, serverError } from "@/lib/api";
 
 interface Holding {
   asset:     string;
@@ -34,17 +34,21 @@ const RAW_HOLDINGS = [
 ];
 
 export async function GET() {
-  const holdings: Holding[] = RAW_HOLDINGS.map((h) => ({ ...h, value: h.balance * h.price }));
-  const totalValue = holdings.reduce((sum, h) => sum + h.value, 0);
+  try {
+    const holdings: Holding[] = RAW_HOLDINGS.map((h) => ({ ...h, value: h.balance * h.price }));
+    const totalValue = holdings.reduce((sum, h) => sum + h.value, 0);
 
-  const data: PortfolioResponse = {
-    holdings,
-    totalValue,
-    currency:  "USD",
-    mode:      "paper_trading",
-    timestamp: new Date().toISOString(),
-  };
-  return ok(data);
+    const data: PortfolioResponse = {
+      holdings,
+      totalValue,
+      currency:  "USD",
+      mode:      "paper_trading",
+      timestamp: new Date().toISOString(),
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {

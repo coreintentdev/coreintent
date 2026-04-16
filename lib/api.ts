@@ -147,6 +147,18 @@ export function validateNumber(
 }
 
 /**
+ * Validate a boolean from a request body.
+ * Returns the boolean when valid, or null when absent / non-boolean.
+ *
+ * @example
+ * const flag = validateBoolean(body.contextComplete) ?? true;
+ */
+export function validateBoolean(value: unknown): boolean | null {
+  if (typeof value !== "boolean") return null;
+  return value;
+}
+
+/**
  * Validate a positive integer from a request body (e.g. count fields).
  * Returns the integer when valid, or null when absent / non-integer / out of range.
  *

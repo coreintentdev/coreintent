@@ -6,7 +6,7 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight } from "@/lib/api";
+import { ok, preflight, serverError } from "@/lib/api";
 
 type AgentStatus = "active" | "processing" | "paused" | "error";
 
@@ -39,15 +39,19 @@ const AGENTS: Agent[] = [
 ];
 
 export async function GET() {
-  const data: AgentsResponse = {
-    agents:          AGENTS,
-    totalActive:     AGENTS.filter((a) => a.status === "active").length,
-    totalPaused:     AGENTS.filter((a) => a.status === "paused").length,
-    totalProcessing: AGENTS.filter((a) => a.status === "processing").length,
-    mode:            "demo",
-    timestamp:       new Date().toISOString(),
-  };
-  return ok(data);
+  try {
+    const data: AgentsResponse = {
+      agents:          AGENTS,
+      totalActive:     AGENTS.filter((a) => a.status === "active").length,
+      totalPaused:     AGENTS.filter((a) => a.status === "paused").length,
+      totalProcessing: AGENTS.filter((a) => a.status === "processing").length,
+      mode:            "demo",
+      timestamp:       new Date().toISOString(),
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {

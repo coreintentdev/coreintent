@@ -6,7 +6,7 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight } from "@/lib/api";
+import { ok, preflight, serverError } from "@/lib/api";
 
 interface AIService {
   status: "keyed" | "demo";
@@ -44,47 +44,51 @@ function keyStatus(key: string | undefined, placeholder: string): "keyed" | "dem
 }
 
 export async function GET() {
-  const data: ConnectionsResponse = {
-    ai: {
-      grok: {
-        status: keyStatus(process.env.GROK_API_KEY, "xai-xxx"),
-        model:  "grok-3",
-        role:   "Signal detection, fast, near-free via X Premium+",
+  try {
+    const data: ConnectionsResponse = {
+      ai: {
+        grok: {
+          status: keyStatus(process.env.GROK_API_KEY, "xai-xxx"),
+          model:  "grok-3",
+          role:   "Signal detection, fast, near-free via X Premium+",
+        },
+        claude: {
+          status: keyStatus(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
+          model:  "claude-sonnet-4-6",
+          role:   "Deep analysis, risk assessment, orchestration",
+        },
+        perplexity: {
+          status: keyStatus(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+          model:  "sonar-pro",
+          role:   "Research, 9 connectors, fact-checking",
+        },
       },
-      claude: {
-        status: keyStatus(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
-        model:  "claude-sonnet-4-6",
-        role:   "Deep analysis, risk assessment, orchestration",
+      exchanges: {
+        binance:  { status: "planned", pairs: "500+", type: "CEX"  },
+        coinbase: { status: "planned", pairs: "200+", type: "CEX"  },
+        gtrade:   { status: "planned", pairs: "50+",  type: "DeFi" },
       },
-      perplexity: {
-        status: keyStatus(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
-        model:  "sonar-pro",
-        role:   "Research, 9 connectors, fact-checking",
+      infrastructure: {
+        vps:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"  },
+        cloudflare: { status: "active", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"    },
+        github:     { status: "active", repos: 5,        role: "CI/CD, source control"  },
+        linear:     { status: "active", tasks: 26, completed: 3, role: "Project management" },
+        notion:     { status: "active", role: "Documentation" },
       },
-    },
-    exchanges: {
-      binance:  { status: "planned", pairs: "500+", type: "CEX"  },
-      coinbase: { status: "planned", pairs: "200+", type: "CEX"  },
-      gtrade:   { status: "planned", pairs: "50+",  type: "DeFi" },
-    },
-    infrastructure: {
-      vps:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"  },
-      cloudflare: { status: "active", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"    },
-      github:     { status: "active", repos: 5,        role: "CI/CD, source control"  },
-      linear:     { status: "active", tasks: 26, completed: 3, role: "Project management" },
-      notion:     { status: "active", role: "Documentation" },
-    },
-    tools: {
-      theRipper:    { status: "ready",   role: "Data extraction engine"        },
-      macTheZipper: { status: "ready",   role: "Compression & packaging"       },
-      pdfPlumber:   { status: "ready",   role: "Document parsing"              },
-      aiTransfer:   { status: "ready",   role: "Cross-model context pipeline"  },
-      songpal:      { status: "planned", role: "Music layer (Corey originals)" },
-      f18:          { status: "ready",   role: "Digital identity protection"   },
-    },
-    summary: { total: 17, live: 5, demo: 3, planned: 3, ready: 6 },
-  };
-  return ok(data);
+      tools: {
+        theRipper:    { status: "ready",   role: "Data extraction engine"        },
+        macTheZipper: { status: "ready",   role: "Compression & packaging"       },
+        pdfPlumber:   { status: "ready",   role: "Document parsing"              },
+        aiTransfer:   { status: "ready",   role: "Cross-model context pipeline"  },
+        songpal:      { status: "planned", role: "Music layer (Corey originals)" },
+        f18:          { status: "ready",   role: "Digital identity protection"   },
+      },
+      summary: { total: 17, live: 5, demo: 3, planned: 3, ready: 6 },
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {

@@ -7,7 +7,7 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight } from "@/lib/api";
+import { ok, preflight, serverError } from "@/lib/api";
 
 interface Signal {
   id:         number;
@@ -52,17 +52,21 @@ const SIGNAL_TEMPLATES: SignalTemplate[] = [
 ];
 
 export async function GET() {
-  const now = new Date().toISOString();
-  const allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));
+  try {
+    const now = new Date().toISOString();
+    const allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));
 
-  const data: SignalsResponse = {
-    signals:       allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE),
-    minConfidence: MIN_CONFIDENCE,
-    totalActive:   allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
-    totalPending:  allSignals.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
-    mode:          "demo",
-  };
-  return ok(data);
+    const data: SignalsResponse = {
+      signals:       allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE),
+      minConfidence: MIN_CONFIDENCE,
+      totalActive:   allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
+      totalPending:  allSignals.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
+      mode:          "demo",
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {

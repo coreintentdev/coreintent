@@ -130,8 +130,11 @@ const GROK_SYSTEM =
 /**
  * Call Grok (X.ai) for fast trading signals and content drafts.
  * Falls back gracefully when the API key is absent or the call fails.
+ *
+ * @param prompt  User-side message.
+ * @param system  Optional override for the system prompt.
  */
-export async function callGrok(prompt: string): Promise<AIResponse> {
+export async function callGrok(prompt: string, system?: string): Promise<AIResponse> {
   const key = process.env.GROK_API_KEY;
   if (isDemoKey(key, "xai-xxx")) {
     return {
@@ -154,7 +157,7 @@ export async function callGrok(prompt: string): Promise<AIResponse> {
         body: JSON.stringify({
           model: "grok-3",
           messages: [
-            { role: "system", content: GROK_SYSTEM },
+            { role: "system", content: system ?? GROK_SYSTEM },
             { role: "user",   content: prompt },
           ],
           max_tokens: 1000,
@@ -299,24 +302,30 @@ export async function callClaude(
 const PERPLEXITY_TIMEOUT_MS = 30_000;
 
 /**
- * Wrap a research query with instructions that enforce factual, cited output.
+ * Default system prompt for Perplexity.
+ * Enforces factual, cited output and sets NZ regulatory context.
+ * Keep stable between requests to benefit from any server-side caching.
  */
-function buildPerplexityQuery(query: string): string {
-  return (
-    query +
-    "\n\nInstructions: Provide factual, cited information only. " +
-    "Distinguish confirmed facts from speculation clearly. " +
-    "State explicitly if information cannot be found rather than inferring. " +
-    "Prioritise sources from the last 90 days for market-sensitive data. " +
-    "Include source URLs or publication names where available."
-  );
-}
+const PERPLEXITY_SYSTEM =
+  "You are CoreIntent's research AI for Zynthio.ai (paper trading mode, NZ).\n\n" +
+  "Research rules:\n" +
+  "- Provide factual, cited information only. No speculation presented as fact.\n" +
+  "- Distinguish confirmed facts from speculation clearly.\n" +
+  "- State explicitly if information cannot be found rather than inferring.\n" +
+  "- Prioritise sources from the last 90 days for market-sensitive data.\n" +
+  "- Include source URLs or publication names where available.\n" +
+  "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC.\n" +
+  "- Label any demo/placeholder data as [DEMO] so callers can distinguish it.\n" +
+  "- Do not fabricate prices, volume, or on-chain statistics.";
 
 /**
  * Call Perplexity (sonar-pro) for live web research and fact-checking.
  * Falls back gracefully when the API key is absent or the call fails.
+ *
+ * @param query   The research query.
+ * @param system  Optional override for the system prompt. Defaults to PERPLEXITY_SYSTEM.
  */
-export async function callPerplexity(query: string): Promise<AIResponse> {
+export async function callPerplexity(query: string, system?: string): Promise<AIResponse> {
   const key = process.env.PERPLEXITY_API_KEY;
   if (isDemoKey(key, "pplx-xxx")) {
     return {
@@ -338,7 +347,10 @@ export async function callPerplexity(query: string): Promise<AIResponse> {
         },
         body: JSON.stringify({
           model: "sonar-pro",
-          messages: [{ role: "user", content: buildPerplexityQuery(query) }],
+          messages: [
+            { role: "system", content: system ?? PERPLEXITY_SYSTEM },
+            { role: "user",   content: query },
+          ],
           max_tokens:  1024,
           temperature: 0.2,
         }),

@@ -8,7 +8,8 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight } from "@/lib/api";
+import { ok, preflight, serverError } from "@/lib/api";
+import { getAiKeyStatus } from "@/lib/ai";
 
 type AIStatus       = "active" | "demo";
 type ExchangeStatus = "planned" | "connected";
@@ -27,31 +28,32 @@ interface StatusResponse {
   timestamp:      string;
 }
 
-function aiStatus(key: string | undefined, placeholder: string): AIStatus {
-  return key && key !== placeholder ? "active" : "demo";
-}
-
 export async function GET() {
-  const data: StatusResponse = {
-    engine:  "online",
-    version: "0.2.0-alpha",
-    uptime:  process.uptime(),
-    mode:    "paper_trading",
-    exchanges: {
-      binance:  "planned",
-      coinbase: "planned",
-      gtrade:   "planned",
-    },
-    ai: {
-      claude:     aiStatus(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
-      grok:       aiStatus(process.env.GROK_API_KEY, "xai-xxx"),
-      perplexity: aiStatus(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
-    },
-    signals:        { active: 2, pending: 1 },
-    circuitBreaker: { threshold: 0.008, status: "armed" },
-    timestamp:      new Date().toISOString(),
-  };
-  return ok(data);
+  try {
+    const keys = getAiKeyStatus();
+    const data: StatusResponse = {
+      engine:  "online",
+      version: "0.2.0-alpha",
+      uptime:  process.uptime(),
+      mode:    "paper_trading",
+      exchanges: {
+        binance:  "planned",
+        coinbase: "planned",
+        gtrade:   "planned",
+      },
+      ai: {
+        claude:     keys.claude     ? "active" : "demo",
+        grok:       keys.grok       ? "active" : "demo",
+        perplexity: keys.perplexity ? "active" : "demo",
+      },
+      signals:        { active: 2, pending: 1 },
+      circuitBreaker: { threshold: 0.008, status: "armed" },
+      timestamp:      new Date().toISOString(),
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {
