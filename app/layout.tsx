@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AITwinLoader from "@/components/AITwinLoader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -199,6 +200,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <AITwinLoader />
       </body>
     </html>
   );
