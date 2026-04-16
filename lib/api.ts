@@ -97,11 +97,6 @@ export function badGateway(
   return err(message, 502);
 }
 
-/** Generate a short random request ID for distributed tracing. */
-export function generateRequestId(): string {
-  return `req_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
-}
-
 /**
  * 429 Too Many Requests.
  * @param retryAfterSeconds How long the caller should wait before retrying.
