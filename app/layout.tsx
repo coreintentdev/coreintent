@@ -12,6 +12,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://coreintent.dev",
   },
+  icons: {
+    icon: [
+      { url: "/icon", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon", type: "image/png", sizes: "180x180" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_NZ",
@@ -22,7 +30,7 @@ export const metadata: Metadata = {
       "AI-powered trading competitions with Claude, Grok & Perplexity. Daily, weekly & monthly leagues. Bots welcome. Built in New Zealand by Zynthio.",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "CoreIntent — Agentic AI Trading Engine powered by Claude, Grok & Perplexity",
@@ -36,7 +44,7 @@ export const metadata: Metadata = {
       "3 AI models working together. Free trading competitions. Bots welcome. No subscriptions. Built by @coreintentai in NZ.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -76,9 +84,6 @@ export const metadata: Metadata = {
     "AI crypto trading",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
-  },
 };
 
 const jsonLd = {
@@ -115,7 +120,7 @@ const jsonLd = {
       "@id": "https://zynthio.ai/#organization",
       name: "Zynthio",
       url: "https://zynthio.ai",
-      logo: "https://coreintent.dev/opengraph-image.png",
+      logo: "https://coreintent.dev/opengraph-image",
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
@@ -123,6 +128,12 @@ const jsonLd = {
       areaServed: {
         "@type": "Country",
         name: "New Zealand",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer service",
+        availableLanguage: "English",
       },
       sameAs: [
         "https://github.com/coreintentdev",
@@ -192,7 +203,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en-NZ">
+      <head>
+        <meta name="theme-color" content="#0a0e17" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body>
         <script
           type="application/ld+json"

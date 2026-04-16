@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "CoreIntent — Free AI Trading Competitions",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Free AI trading competitions — daily, weekly, monthly leagues. No subscriptions. Bots welcome.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/opengraph-image"],
   },
 };
 

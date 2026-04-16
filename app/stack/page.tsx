@@ -113,7 +113,7 @@ function ArchitectureDiagram() {
         />
       </div>
 
-      <svg viewBox="0 0 600 340" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
+      <svg viewBox="0 0 600 340" role="img" aria-label="CoreIntent architecture diagram showing AI models, engine orchestrator, and infrastructure connections" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
         <defs>
           <filter id="nodeGlow">
             <feGaussianBlur stdDeviation="3" result="blur" />
@@ -168,7 +168,11 @@ function ArchitectureDiagram() {
             <g
               key={node.id}
               className="arch-node"
+              role="button"
+              aria-label={`${node.label}: ${node.role}`}
+              tabIndex={0}
               onClick={() => setActiveNode(isActive ? null : node.id)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setActiveNode(isActive ? null : node.id); }}
               style={{ cursor: "pointer" }}
             >
               {/* Outer glow ring */}
