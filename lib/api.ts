@@ -26,15 +26,22 @@ export interface ApiResponse<T = unknown> {
 // ---------------------------------------------------------------------------
 
 /**
- * CORS headers applied to all API responses.
+ * CORS + security headers applied to all API responses.
  * Set ALLOWED_ORIGIN env var to a specific domain in production
  * (e.g. "https://coreintent.dev"). Defaults to "*" for dev.
+ *
+ * Security headers are defence-in-depth alongside middleware.ts.
  */
 export const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Origin":  process.env.ALLOWED_ORIGIN ?? "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
   "Access-Control-Max-Age":       "86400",
+  // Security headers
+  "X-Content-Type-Options":       "nosniff",
+  "X-Frame-Options":              "DENY",
+  "X-XSS-Protection":             "1; mode=block",
+  "Referrer-Policy":              "strict-origin-when-cross-origin",
 };
 
 // ---------------------------------------------------------------------------
@@ -97,6 +104,16 @@ export function tooManyRequests(retryAfterSeconds = 60): NextResponse<ApiRespons
       headers: { ...CORS_HEADERS, "Retry-After": String(retryAfterSeconds) },
     }
   );
+}
+
+/**
+ * 503 Service Unavailable — upstream dependency (AI service, exchange, VPS) is down or
+ * not yet configured. Include a Retry-After hint when an ETA is known.
+ */
+export function serviceUnavailable(
+  message = "Service temporarily unavailable. Please try again later."
+): NextResponse<ApiResponse<null>> {
+  return err(message, 503);
 }
 
 /**

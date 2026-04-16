@@ -32,6 +32,13 @@ interface NotesListResponse {
   info:  string;
 }
 
+/**
+ * Hard cap on in-memory notes.
+ * Prevents unbounded memory growth if the endpoint is spammed before a
+ * persistent store (Cloudflare KV / DB) is wired in.
+ */
+const MAX_NOTES = 500;
+
 // In-memory store — survives the process lifetime only. Not durable.
 const publicNotes: Note[] = [];
 let nextId = 1;
@@ -51,6 +58,14 @@ export async function POST(req: NextRequest) {
     body = (await req.json()) as Partial<NoteRequest>;
   } catch {
     return err("Invalid JSON body", 400);
+  }
+
+  if (publicNotes.length >= MAX_NOTES) {
+    return err(
+      `Note store is at capacity (${MAX_NOTES} notes). ` +
+      "Connect a persistent store (Cloudflare KV) to lift this limit.",
+      503
+    );
   }
 
   const text = validateString(body.text, 2000);

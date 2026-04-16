@@ -87,6 +87,50 @@ function classifyFetchError(
 }
 
 // ---------------------------------------------------------------------------
+// Demo response helper
+// ---------------------------------------------------------------------------
+
+/**
+ * Builds an informative demo fallback response.
+ * Tells the caller which env var to set, rather than just echoing the prompt.
+ */
+function demoFallback(
+  source:  AIResponse["source"],
+  envVar:  string,
+  prompt:  string
+): AIResponse {
+  const snippet = prompt.length > 150 ? `${prompt.slice(0, 150)}…` : prompt;
+  return {
+    source,
+    model:   `${source}-demo`,
+    content: `[DEMO] ${source.toUpperCase()} is not configured. ` +
+             `Set ${envVar} in your .env to enable live calls. ` +
+             `Prompt received: "${snippet}"`,
+    live: false,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// isLive() — exported utility for routes that need to gate on key presence
+// ---------------------------------------------------------------------------
+
+/**
+ * Returns true when a real API key is present for the given AI source.
+ * Useful for status routes and conditional UI — avoids duplicating the
+ * isDemoKey check across multiple files.
+ *
+ * @example
+ * if (!isLive("grok")) return serviceUnavailable("Grok API key not configured");
+ */
+export function isLive(source: AIResponse["source"]): boolean {
+  switch (source) {
+    case "grok":       return !isDemoKey(process.env.GROK_API_KEY,       "xai-xxx");
+    case "claude":     return !isDemoKey(process.env.ANTHROPIC_API_KEY,  "sk-ant-xxx");
+    case "perplexity": return !isDemoKey(process.env.PERPLEXITY_API_KEY, "pplx-xxx");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // GROK — via X.ai — Fast signals, near-free with X Premium+
 // ---------------------------------------------------------------------------
 
@@ -113,14 +157,7 @@ const GROK_SYSTEM =
  */
 export async function callGrok(prompt: string): Promise<AIResponse> {
   const key = process.env.GROK_API_KEY;
-  if (isDemoKey(key, "xai-xxx")) {
-    return {
-      source: "grok",
-      model:  "grok-demo",
-      content: `[DEMO] Grok: ${prompt}`,
-      live: false,
-    };
-  }
+  if (isDemoKey(key, "xai-xxx")) return demoFallback("grok", "GROK_API_KEY", prompt);
 
   try {
     const res = await fetchWithTimeout(
@@ -202,14 +239,7 @@ export async function callClaude(
   system?: string
 ): Promise<AIResponse> {
   const key = process.env.ANTHROPIC_API_KEY;
-  if (isDemoKey(key, "sk-ant-xxx")) {
-    return {
-      source:  "claude",
-      model:   "claude-demo",
-      content: `[DEMO] Claude: ${prompt}`,
-      live: false,
-    };
-  }
+  if (isDemoKey(key, "sk-ant-xxx")) return demoFallback("claude", "ANTHROPIC_API_KEY", prompt);
 
   const systemText = system ?? CLAUDE_DEFAULT_SYSTEM;
 
@@ -290,14 +320,7 @@ function buildPerplexityQuery(query: string): string {
  */
 export async function callPerplexity(query: string): Promise<AIResponse> {
   const key = process.env.PERPLEXITY_API_KEY;
-  if (isDemoKey(key, "pplx-xxx")) {
-    return {
-      source:  "perplexity",
-      model:   "perplexity-demo",
-      content: `[DEMO] Perplexity: ${query}`,
-      live: false,
-    };
-  }
+  if (isDemoKey(key, "pplx-xxx")) return demoFallback("perplexity", "PERPLEXITY_API_KEY", query);
 
   try {
     const res = await fetchWithTimeout(
@@ -402,7 +425,7 @@ export async function orchestrate(
   switch (task) {
     case "signal":
       return callGrok(
-        `[CoreIntent Signal Engine | paper_trading mode]\n` +
+        `[CoreIntent Signal Engine | paper_trading mode | ${new Date().toISOString()}]\n` +
         `TASK: Generate a trading signal analysis for: ${prompt}\n\n` +
         `Format EXACTLY: <Pair> | <long/short> | <confidence 0.00–1.00> | Entry: <zone> | Stop: <level> | Rationale: <≤2 sentences>\n` +
         `Rules: Only signal if confidence ≥ 0.70. State [INSUFFICIENT DATA] if unable to form a view. ` +

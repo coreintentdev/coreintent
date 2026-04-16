@@ -21,6 +21,15 @@ interface AIKeyStatus {
   perplexity: boolean;
 }
 
+interface MemoryMetrics {
+  /** V8 heap currently in use (MB). */
+  heapUsedMb:  number;
+  /** Total V8 heap allocated (MB). */
+  heapTotalMb: number;
+  /** Resident set size — total process memory including native heap (MB). */
+  rssMb:       number;
+}
+
 interface HealthResponse {
   status:      "ok";
   version:     string;
@@ -32,6 +41,8 @@ interface HealthResponse {
   nodeVersion: string;
   /** Which AI API keys are configured (true) vs demo placeholder (false). */
   aiKeys:      AIKeyStatus;
+  /** Process memory snapshot at request time. */
+  memory:      MemoryMetrics;
 }
 
 function isKeyConfigured(key: string | undefined, placeholder: string): boolean {
@@ -39,6 +50,9 @@ function isKeyConfigured(key: string | undefined, placeholder: string): boolean 
 }
 
 export async function GET() {
+  const mem = process.memoryUsage();
+  const toMb = (bytes: number) => Math.round(bytes / 1024 / 1024 * 10) / 10;
+
   const data: HealthResponse = {
     status:      "ok",
     version:     "0.2.0-alpha",
@@ -50,6 +64,11 @@ export async function GET() {
       claude:     isKeyConfigured(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
       grok:       isKeyConfigured(process.env.GROK_API_KEY, "xai-xxx"),
       perplexity: isKeyConfigured(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+    },
+    memory: {
+      heapUsedMb:  toMb(mem.heapUsed),
+      heapTotalMb: toMb(mem.heapTotal),
+      rssMb:       toMb(mem.rss),
     },
   };
   return ok(data);
