@@ -1,11 +1,10 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 08:06:07 UTC 2026
+Generated: Thu Apr 16 08:28:20 UTC 2026
 
 ## 1. Build
-- PASS: npm run build succeeds
-- INFO: Routes found: 28
-- PASS: TypeScript compiles (strict mode)
-- PASS: ESLint passes
+- **FAIL:** npm run build FAILS — see /tmp/coreintent_build.log
+- **FAIL:** TypeScript errors found
+- WARN: ESLint warnings or errors
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -25,12 +24,12 @@ Generated: Thu Apr 16 08:06:07 UTC 2026
 ## 4. SEO & Meta Tags
 - PASS: OpenGraph meta tags configured
 - PASS: Twitter card meta tags configured
-- PASS: robots.txt exists
+- PASS: Robots configuration exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- PASS: Page metadata: app/privacy/page.tsx
-- PASS: Page metadata: app/terms/page.tsx
-- PASS: Page metadata: app/disclaimer/page.tsx
+- PASS: Route metadata: /privacy
+- PASS: Route metadata: /terms
+- PASS: Route metadata: /disclaimer
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -85,8 +84,8 @@ Generated: Thu Apr 16 08:06:07 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
-| FAIL | 0 |
-| WARN | 2 |
+| PASS | 49 |
+| FAIL | 2 |
+| WARN | 3 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 90%** (49/54 checks passed)
