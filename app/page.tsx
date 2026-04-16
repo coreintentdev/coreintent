@@ -420,7 +420,7 @@ export default function Home() {
               {[
                 { value: "3", label: "AI Models" },
                 { value: "6", label: "Agents" },
-                { value: "12", label: "API Routes" },
+                { value: "14", label: "API Routes" },
                 { value: "$0", label: "Entry Fee" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center" }}>
