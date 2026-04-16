@@ -9,6 +9,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { ok, preflight } from "@/lib/api";
+import { isLive } from "@/lib/ai";
 
 type AIStatus       = "active" | "demo";
 type ExchangeStatus = "planned" | "connected";
@@ -27,10 +28,6 @@ interface StatusResponse {
   timestamp:      string;
 }
 
-function aiStatus(key: string | undefined, placeholder: string): AIStatus {
-  return key && key !== placeholder ? "active" : "demo";
-}
-
 export async function GET() {
   const data: StatusResponse = {
     engine:  "online",
@@ -43,9 +40,9 @@ export async function GET() {
       gtrade:   "planned",
     },
     ai: {
-      claude:     aiStatus(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
-      grok:       aiStatus(process.env.GROK_API_KEY, "xai-xxx"),
-      perplexity: aiStatus(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+      claude:     isLive("claude")     ? "active" : "demo",
+      grok:       isLive("grok")       ? "active" : "demo",
+      perplexity: isLive("perplexity") ? "active" : "demo",
     },
     signals:        { active: 2, pending: 1 },
     circuitBreaker: { threshold: 0.008, status: "armed" },
