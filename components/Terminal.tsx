@@ -621,7 +621,7 @@ const ALL_COMMANDS = [
   ...Object.keys(API_COMMANDS),
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
-  "radar", "ping", "leaderboard", "chart", "top", "stop",
+  "radar", "ping", "stop",
 ];
 
 export default function Terminal() {

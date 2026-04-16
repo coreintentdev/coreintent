@@ -123,6 +123,7 @@ export default function DemoPage() {
   const [orderBook, setOrderBook] = useState(generateOrderBook);
   const [consensusIdx, setConsensusIdx] = useState(0);
   const [obFlash, setObFlash] = useState<Record<string, string>>({});
+  const obFlashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sigId = useRef(0);
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -190,19 +191,24 @@ export default function DemoPage() {
   // Order book updates
   useEffect(() => {
     const iv = setInterval(() => {
+      const side = Math.random() > 0.5 ? "bids" : "asks";
+      const idx = Math.floor(Math.random() * 8);
+      const delta = +(Math.random() * 1.5 - 0.3).toFixed(3);
       setOrderBook((prev) => {
-        const side = Math.random() > 0.5 ? "bids" : "asks";
-        const idx = Math.floor(Math.random() * prev[side].length);
         const newBook = { ...prev, [side]: [...prev[side]] };
-        const delta = +(Math.random() * 1.5 - 0.3).toFixed(3);
         const entry = newBook[side][idx];
+        if (!entry) return prev;
         newBook[side][idx] = { ...entry, size: Math.max(0.1, +(entry.size + delta).toFixed(3)) };
-        setObFlash({ [`${side}-${idx}`]: side === "bids" ? "flash-green" : "flash-red" });
-        setTimeout(() => setObFlash({}), 500);
         return newBook;
       });
+      setObFlash({ [`${side}-${idx}`]: side === "bids" ? "flash-green" : "flash-red" });
+      if (obFlashTimeoutRef.current) clearTimeout(obFlashTimeoutRef.current);
+      obFlashTimeoutRef.current = setTimeout(() => setObFlash({}), 500);
     }, 800);
-    return () => clearInterval(iv);
+    return () => {
+      clearInterval(iv);
+      if (obFlashTimeoutRef.current) clearTimeout(obFlashTimeoutRef.current);
+    };
   }, []);
 
   // Consensus decision rotation
@@ -471,7 +477,7 @@ export default function DemoPage() {
                     <span style={{ fontSize: "10px", color: "var(--text-secondary)", marginLeft: "auto" }}>{model.role}</span>
                   </div>
                   <div style={{ flex: 1, fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
-                    <TypingText texts={[...model.thoughts]} speed={model.speed} pause={3000} />
+                    <TypingText texts={model.thoughts} speed={model.speed} pause={3000} />
                   </div>
                 </div>
               ))}
