@@ -142,8 +142,12 @@ else
   log_fail "Twitter card meta tags MISSING"
 fi
 
-# robots.txt
-[ -f "public/robots.txt" ] && log_pass "robots.txt exists" || log_fail "robots.txt MISSING"
+# robots.txt (static or dynamic)
+if [ -f "public/robots.txt" ] || [ -f "app/robots.ts" ] || [ -f "app/robots.tsx" ]; then
+  log_pass "robots.txt configured (static or dynamic)"
+else
+  log_fail "robots.txt MISSING (no public/robots.txt or app/robots.ts)"
+fi
 
 # sitemap
 if [ -f "app/sitemap.ts" ] || [ -f "public/sitemap.xml" ]; then
@@ -317,7 +321,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en"' app/layout.tsx 2>/dev/null; then
+if grep -qE 'lang="en(-[A-Z]{2})?"' app/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"

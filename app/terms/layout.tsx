@@ -13,12 +13,23 @@ export const metadata: Metadata = {
       "CoreIntent terms of service. Competition rules, platform guidelines, and conditions of use.",
     url: "https://coreintent.dev/terms",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Terms of Service — Platform Rules & Conditions",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Terms of Service | CoreIntent",
     description:
       "Platform rules, competition guidelines, and usage conditions for CoreIntent.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
+    images: ["/opengraph-image.png"],
   },
 };
 

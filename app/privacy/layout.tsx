@@ -13,12 +13,23 @@ export const metadata: Metadata = {
       "CoreIntent privacy policy. How we collect, use, and protect your data. Built by Zynthio in New Zealand.",
     url: "https://coreintent.dev/privacy",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent Privacy Policy — How We Handle Your Data",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Privacy Policy | CoreIntent",
     description:
       "How CoreIntent handles your data. Privacy-first, NZ-based.",
+    creator: "@coreintentai",
+    site: "@coreintentai",
+    images: ["/opengraph-image.png"],
   },
 };
 

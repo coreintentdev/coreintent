@@ -33,21 +33,59 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "The Stack",
+          item: "https://coreintent.dev/stack",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "The Stack",
-      item: "https://coreintent.dev/stack",
+      "@type": "SoftwareSourceCode",
+      name: "CoreIntent",
+      description:
+        "Agentic AI trading engine orchestrating Claude, Grok, and Perplexity for multi-model consensus trading signals.",
+      codeRepository: "https://github.com/coreintentdev/coreintent",
+      programmingLanguage: ["TypeScript", "React"],
+      runtimePlatform: "Next.js",
+      author: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      license: "https://opensource.org/licenses/MIT",
+    },
+    {
+      "@type": "TechArticle",
+      headline: "CoreIntent Technology Stack — AI Services, Infrastructure & Architecture",
+      description:
+        "Full technology stack powering CoreIntent: Claude (Anthropic), Grok (xAI), Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
+      url: "https://coreintent.dev/stack",
+      author: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      publisher: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      about: [
+        { "@type": "Thing", name: "Claude", description: "Anthropic AI for deep analysis & risk assessment" },
+        { "@type": "Thing", name: "Grok", description: "xAI for fast signal detection & sentiment" },
+        { "@type": "Thing", name: "Perplexity", description: "Perplexity AI for real-time research & news" },
+      ],
     },
   ],
 };
@@ -61,7 +99,7 @@ export default function StackLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
     </>
