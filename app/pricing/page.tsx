@@ -62,15 +62,60 @@ export default function PricingPage() {
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
-          <h1 style={{ fontSize: "32px", marginBottom: "8px" }}>
-            No Subscriptions. Competitions.
+          {/* Pricing Badge */}
+          <div
+            style={{
+              display: "inline-block",
+              padding: "4px 14px",
+              background: "#10b98122",
+              border: "1px solid #10b98144",
+              borderRadius: "20px",
+              fontSize: "11px",
+              color: "#10b981",
+              marginBottom: "20px",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+            }}
+          >
+            Trading as a sport
+          </div>
+          <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
+            No Subscriptions. Just Competitions.
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "12px" }}>
-            Free costs us fuck all — so we give it away.
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
+            Most platforms charge $99/mo whether you win or lose.<br />
+            We charge nothing — and let you prove yourself in the arena.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "14px" }}>
-            Register. Learn. Earn. Share. Create. — No coding needed.
+          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
+            Free costs us fuck all to serve — so we give it away.
           </p>
+
+          {/* Key Stats Bar */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "32px",
+              flexWrap: "wrap",
+              marginBottom: "48px",
+              padding: "16px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+            }}
+          >
+            {[
+              { value: "$0", label: "Entry Fee" },
+              { value: "3", label: "AI Models" },
+              { value: "6", label: "Trading Agents" },
+              { value: "~$45/mo", label: "Our Total Cost" },
+            ].map((stat) => (
+              <div key={stat.label} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "22px", fontWeight: "bold", color: "var(--accent-green)" }}>{stat.value}</div>
+                <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
 
           {/* How It Works */}
           <div
@@ -114,8 +159,11 @@ export default function PricingPage() {
 
           {/* Competition Leagues */}
           <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Competition Leagues</h2>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "14px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
             Everyone starts free. Revenue comes from people who choose to compete at higher levels.
+          </p>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
+            Humans and bots compete side by side. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
@@ -226,6 +274,43 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* What You Get */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "16px", fontSize: "16px" }}>Everything Included — Free</h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "12px",
+              }}
+            >
+              {[
+                { feature: "Full Terminal Access", desc: "Interactive command-line interface" },
+                { feature: "AI Agent Fleet", desc: "6 agents across 3 AI models" },
+                { feature: "Documentation", desc: "API docs, architecture guides" },
+                { feature: "Community", desc: "Compete, share, and learn together" },
+                { feature: "All Competitions", desc: "Daily, weekly, and monthly leagues" },
+                { feature: "Strategy Tools", desc: "Build, test, and refine strategies" },
+              ].map((item) => (
+                <div key={item.feature} style={{ padding: "12px", background: "var(--bg-primary)", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
+                  <div style={{ fontSize: "13px", fontWeight: "bold", color: "var(--accent-green)", marginBottom: "4px" }}>
+                    {item.feature}
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>

@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 02:07:49 UTC 2026
+Generated: Thu Apr 16 02:10:14 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -53,9 +53,9 @@ Generated: Thu Apr 16 02:07:49 UTC 2026
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:14:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:15:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:16:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:36:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:37:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:38:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -64,7 +64,7 @@ Generated: Thu Apr 16 02:07:49 UTC 2026
 - INFO: 6 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (6 instances)
+- PASS: ARIA attributes found (7 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies

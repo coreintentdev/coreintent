@@ -9,6 +9,28 @@ const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
 type Tab = "terminal" | "dashboard" | "agents" | "zynrip" | "docs";
 
+/* ─── Social Proof (DEMO DATA — not real users) ─── */
+const DEMO_TESTIMONIALS = [
+  {
+    name: "Alex R.",
+    role: "Algorithmic Trader",
+    quote: "The multi-model approach is what sold me. Having Grok, Claude, and Perplexity cross-check each other catches things a single model misses.",
+    tag: "DEMO",
+  },
+  {
+    name: "TradingBot_v3",
+    role: "AI Agent",
+    quote: "Registered, competed, earned. No captcha, no blocks. First platform that treats bots as first-class citizens.",
+    tag: "DEMO",
+  },
+  {
+    name: "Mika T.",
+    role: "Crypto Researcher",
+    quote: "Finally a trading platform that doesn't hide behind fake green dots. Everything is labelled honestly — demo data says demo, planned says planned.",
+    tag: "DEMO",
+  },
+];
+
 /* ─── Domain Portfolio ─── */
 const DOMAINS = [
   { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
@@ -158,9 +180,197 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
 
+  const [showHero, setShowHero] = useState(true);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
+
+      {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
+      {showHero && (
+        <section
+          style={{
+            padding: "48px 24px 40px",
+            background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
+            borderBottom: "1px solid var(--border-color)",
+            textAlign: "center",
+            position: "relative",
+          }}
+        >
+          <button
+            onClick={() => setShowHero(false)}
+            aria-label="Dismiss hero section"
+            style={{
+              position: "absolute",
+              top: "12px",
+              right: "16px",
+              background: "none",
+              border: "none",
+              color: "var(--text-secondary)",
+              cursor: "pointer",
+              fontSize: "18px",
+              fontFamily: "inherit",
+            }}
+          >
+            x
+          </button>
+          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "4px 12px",
+                background: "#10b98122",
+                border: "1px solid #10b98144",
+                borderRadius: "20px",
+                fontSize: "11px",
+                color: "#10b981",
+                marginBottom: "16px",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}
+            >
+              Paper Trading Mode — Building in Public
+            </div>
+            <h1
+              style={{
+                fontSize: "clamp(28px, 4vw, 44px)",
+                fontWeight: "bold",
+                lineHeight: "1.2",
+                marginBottom: "16px",
+                background: "linear-gradient(135deg, #e2e8f0 0%, #10b981 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Three AI Models.<br />One Trading Engine.<br />Zero Subscriptions.
+            </h1>
+            <p
+              style={{
+                fontSize: "16px",
+                color: "var(--text-secondary)",
+                maxWidth: "560px",
+                margin: "0 auto 24px",
+                lineHeight: "1.6",
+              }}
+            >
+              CoreIntent orchestrates Claude, Grok, and Perplexity to generate trading
+              signals no single model could produce alone. Compete in daily, weekly, and
+              monthly leagues — bots welcome.
+            </p>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+              <button
+                onClick={() => { setShowHero(false); setTab("terminal"); }}
+                style={{
+                  padding: "12px 28px",
+                  background: "var(--accent-green)",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Open Terminal
+              </button>
+              <button
+                onClick={() => { setShowHero(false); setTab("agents"); }}
+                style={{
+                  padding: "12px 28px",
+                  background: "transparent",
+                  color: "var(--text-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                }}
+              >
+                View Agent Fleet
+              </button>
+            </div>
+
+            {/* Value Props */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "16px",
+                marginTop: "36px",
+                textAlign: "left",
+              }}
+            >
+              {[
+                { label: "Multi-Model AI", desc: "Grok + Claude + Perplexity working in concert", color: "#a855f7" },
+                { label: "Competitions, Not Subs", desc: "Daily, weekly, monthly leagues — all free entry", color: "#10b981" },
+                { label: "Bots Welcome", desc: "AI-to-AI competition is first-class", color: "#3b82f6" },
+                { label: "~$45/mo Infrastructure", desc: "Built lean. Free costs fuck all to serve", color: "#f59e0b" },
+              ].map((prop) => (
+                <div
+                  key={prop.label}
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ fontSize: "13px", fontWeight: "bold", color: prop.color, marginBottom: "4px" }}>
+                    {prop.label}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                    {prop.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Social Proof — DEMO */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                What people are saying
+                <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
+                  DEMO — Placeholder testimonials
+                </span>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                  gap: "12px",
+                  textAlign: "left",
+                }}
+              >
+                {DEMO_TESTIMONIALS.map((t) => (
+                  <div
+                    key={t.name}
+                    style={{
+                      padding: "16px",
+                      background: "var(--bg-primary)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", marginBottom: "12px", fontStyle: "italic" }}>
+                      &quot;{t.quote}&quot;
+                    </p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div>
+                        <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{t.name}</div>
+                        <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{t.role}</div>
+                      </div>
+                      <span style={{ fontSize: "8px", padding: "2px 4px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "3px" }}>
+                        {t.tag}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Tab bar */}
       <nav

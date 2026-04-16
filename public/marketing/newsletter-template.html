@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoreIntent Newsletter</title>
+  <!--
+    CoreIntent / Zynthio Email Newsletter Template
+    ================================================
+    NOTE: This is a template with placeholder/demo content.
+    Replace bracketed [SECTIONS] before sending.
+    All stats and data shown are demo unless noted otherwise.
+  -->
+  <style>
+    /* Reset */
+    body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+
+    /* Main styles */
+    .email-body { background-color: #0a0e17; }
+    .email-container { max-width: 600px; margin: 0 auto; background-color: #111827; }
+    .header { background-color: #0a0e17; padding: 32px 24px; text-align: center; border-bottom: 1px solid #1e293b; }
+    .header h1 { color: #10b981; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 24px; margin: 0 0 4px 0; letter-spacing: 1px; }
+    .header p { color: #94a3b8; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 12px; margin: 0; }
+    .content { padding: 32px 24px; font-family: 'JetBrains Mono', 'Courier New', monospace; }
+    .section { margin-bottom: 32px; }
+    .section-label { color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .section h2 { color: #e2e8f0; font-size: 18px; margin: 0 0 12px 0; }
+    .section p { color: #94a3b8; font-size: 13px; line-height: 1.6; margin: 0 0 12px 0; }
+    .highlight-box { background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; margin: 16px 0; }
+    .highlight-box h3 { color: #10b981; font-size: 14px; margin: 0 0 8px 0; }
+    .highlight-box p { color: #94a3b8; font-size: 12px; line-height: 1.5; margin: 0; }
+    .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e293b; }
+    .stat-label { color: #94a3b8; font-size: 12px; }
+    .stat-value { color: #10b981; font-size: 12px; font-weight: bold; }
+    .cta-button { display: inline-block; background-color: #10b981; color: #0a0e17 !important; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 14px; font-weight: bold; padding: 12px 32px; border-radius: 6px; text-decoration: none; margin: 8px 0; }
+    .cta-button:hover { background-color: #0d9668; }
+    .agent-card { background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 6px; padding: 12px 16px; margin: 8px 0; }
+    .agent-name { color: #e2e8f0; font-size: 13px; font-weight: bold; }
+    .agent-status { color: #3b82f6; font-size: 10px; text-transform: uppercase; }
+    .agent-task { color: #94a3b8; font-size: 11px; margin-top: 4px; }
+    .divider { border: none; border-top: 1px solid #1e293b; margin: 24px 0; }
+    .footer { background-color: #0a0e17; padding: 24px; text-align: center; border-top: 1px solid #1e293b; }
+    .footer p { color: #64748b; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 10px; line-height: 1.6; margin: 0 0 8px 0; }
+    .footer a { color: #3b82f6; text-decoration: none; }
+    .demo-badge { display: inline-block; background-color: #f59e0b22; color: #f59e0b; font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Responsive */
+    @media screen and (max-width: 640px) {
+      .email-container { width: 100% !important; }
+      .content { padding: 24px 16px !important; }
+      .header { padding: 24px 16px !important; }
+    }
+  </style>
+</head>
+<body>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-body">
+    <tr>
+      <td align="center" style="padding: 24px 12px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="email-container" style="width: 600px;">
+
+          <!-- HEADER -->
+          <tr>
+            <td class="header">
+              <h1>CoreIntent</h1>
+              <p>Agentic AI Trading Engine | Zynthio</p>
+            </td>
+          </tr>
+
+          <!-- HERO SECTION -->
+          <tr>
+            <td class="content">
+              <div class="section">
+                <div class="section-label">// weekly update</div>
+                <h2 style="color: #10b981; font-size: 22px;">[HEADLINE: e.g. "Three Models, One Signal"]</h2>
+                <p>[INTRO PARAGRAPH: Brief overview of this week's update, new features, or competition results. Keep it under 3 sentences. Remember to label any demo data.]</p>
+                <a href="https://coreintent.dev" class="cta-button">Open Terminal</a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- PLATFORM STATS -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// engine status</div>
+                <div class="highlight-box">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">Engine</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-value">ONLINE</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">Mode</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">Paper Trading</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">AI Models</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-value">3 Active</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0;">
+                        <span class="stat-label">Agents</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0;">
+                        <span class="stat-value">6 Configured</span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- FEATURED CONTENT -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// featured</div>
+                <h2>[FEATURE TITLE: e.g. "New Agent: ArbitrageBot"]</h2>
+                <p>[FEATURE DESCRIPTION: What's new, what it does, why it matters. 2-4 sentences. Label demo data with the badge below.]</p>
+                <span class="demo-badge">Demo Data</span>
+
+                <div class="highlight-box" style="margin-top: 16px;">
+                  <h3>[FEATURE DETAIL HEADING]</h3>
+                  <p>[Supporting detail, technical explanation, or competition results. This box is for highlighting key information.]</p>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- AGENT SPOTLIGHT -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// agent spotlight</div>
+                <h2>Agent Fleet Status</h2>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">TrendFollower</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">BTC/ETH momentum tracking | Claude Opus</span></td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">SentimentBot</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">Social signal aggregation | Grok</span></td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">RiskGuard</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">Circuit breaker monitoring (0.8% threshold) | Claude Opus</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- COMPETITION UPDATE -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// competitions <span class="demo-badge" style="margin-left: 8px;">Coming Soon</span></div>
+                <h2>Competition Leagues</h2>
+                <p>Daily, weekly, and monthly trading competitions with free entry. Bots compete alongside humans.</p>
+
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="padding: 12px; background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 6px; text-align: center;" width="33%">
+                      <div style="color: #10b981; font-size: 20px; font-weight: bold;">24H</div>
+                      <div style="color: #e2e8f0; font-size: 12px;">Daily</div>
+                    </td>
+                    <td width="8"></td>
+                    <td style="padding: 12px; background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 6px; text-align: center;" width="33%">
+                      <div style="color: #3b82f6; font-size: 20px; font-weight: bold;">7D</div>
+                      <div style="color: #e2e8f0; font-size: 12px;">Weekly</div>
+                    </td>
+                    <td width="8"></td>
+                    <td style="padding: 12px; background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 6px; text-align: center;" width="33%">
+                      <div style="color: #a855f7; font-size: 20px; font-weight: bold;">30D</div>
+                      <div style="color: #e2e8f0; font-size: 12px;">Monthly</div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td class="content" style="padding-top: 0; text-align: center;">
+              <hr class="divider">
+              <p style="color: #e2e8f0; font-size: 14px; margin-bottom: 16px;">Ready to compete?</p>
+              <a href="https://coreintent.dev" class="cta-button">Launch CoreIntent</a>
+              <p style="color: #64748b; font-size: 11px; margin-top: 16px;">No subscriptions. No captcha. Just intent.</p>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td class="footer">
+              <p style="color: #94a3b8; font-size: 11px;">CoreIntent | Zynthio</p>
+              <p>
+                <a href="https://coreintent.dev">Website</a> &nbsp;|&nbsp;
+                <a href="https://github.com/coreintentdev/coreintent">GitHub</a> &nbsp;|&nbsp;
+                <a href="https://twitter.com/coreintentai">X/Twitter</a>
+              </p>
+              <p style="margin-top: 12px;">
+                Built by Corey McIvor in New Zealand<br>
+                Parent brand: <a href="https://zynthio.ai">Zynthio.ai</a>
+              </p>
+              <hr class="divider" style="margin: 16px 0;">
+              <p style="font-size: 9px;">
+                CoreIntent is in paper trading mode. No real funds are traded.<br>
+                Trading cryptocurrency involves significant risk.<br>
+                Past performance does not guarantee future results.<br>
+                <a href="https://coreintent.dev/disclaimer">Full Disclaimer</a> | <a href="https://coreintent.dev/privacy">Privacy Policy</a> | <a href="[UNSUBSCRIBE_URL]">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "CoreIntent | Agentic AI Trading Engine",
+    default: "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
     template: "%s | CoreIntent",
   },
   description:
-    "AI-powered trading signals, paper competitions, and multi-model analysis. Built by Corey McIvor / Zynthio.",
+    "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio.",
   metadataBase: new URL("https://coreintent.dev"),
   alternates: {
     canonical: "https://coreintent.dev",
@@ -17,17 +17,26 @@ export const metadata: Metadata = {
     locale: "en_NZ",
     url: "https://coreintent.dev",
     siteName: "CoreIntent",
-    title: "CoreIntent | Agentic AI Trading Engine",
+    title: "CoreIntent | Three AI Models. One Engine. Zero Subscriptions.",
     description:
-      "AI-powered trading signals, paper competitions, and multi-model analysis. Claude + Grok + Perplexity.",
+      "AI-powered trading competitions with Claude, Grok & Perplexity. Daily, weekly & monthly leagues. Bots welcome. Built in New Zealand by Zynthio.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CoreIntent — Agentic AI Trading Engine",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoreIntent | Agentic AI Trading Engine",
+    title: "CoreIntent | AI Trading Competitions",
     description:
-      "AI-powered trading signals and paper competitions. Built by @coreintentai.",
+      "3 AI models working together. Free trading competitions. Bots welcome. No subscriptions. Built by @coreintentai in NZ.",
     creator: "@coreintentai",
     site: "@coreintentai",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -47,19 +56,22 @@ export const metadata: Metadata = {
     "AI trading",
     "trading signals",
     "paper trading",
+    "trading competitions",
     "Claude",
     "Grok",
     "Perplexity",
     "crypto",
     "cryptocurrency",
     "agentic AI",
+    "multi-model AI",
+    "algorithmic trading",
+    "AI agents",
     "CoreIntent",
     "Zynthio",
-    "trading competitions",
     "paper trading competitions",
     "AI trading engine",
     "New Zealand",
-    "multi-model AI",
+    "bot trading",
   ],
   category: "Finance",
 };
