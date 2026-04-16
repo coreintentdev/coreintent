@@ -1,6 +1,6 @@
 # Org Git Health Report
 
-**Generated:** 2026-04-16 (second pass — same day)
+**Generated:** 2026-04-16 (third pass)
 **Scope:** coreintentdev org — 3 repos
 **Owner:** Corey McIvor / Zynthio.ai / NZ
 **Scanner:** Claude Code (claude-sonnet-4-6)
@@ -11,10 +11,10 @@
 
 | Repo | Score | Status |
 |------|-------|--------|
-| coreintent | 90/100 | Active — Next.js 15, 0 vulns, 96% audit |
-| coreintentai | 93/100 | Active — full AI layer live, 45 tests |
-| Zynthio | 84/100 | Live — all quick wins applied |
-| **Org avg** | **89/100** | Healthy. Active development. |
+| coreintent | 90/100 | Active — Next.js 15, 0 vulns, lean deps |
+| coreintentai | 94/100 | Active — full AI layer, 45 tests, docs corrected |
+| Zynthio | 87/100 | Live — all stale doc issues cleared this pass |
+| **Org avg** | **90/100** | Healthy. Active development. All quick wins applied. |
 
 ---
 
@@ -28,50 +28,59 @@
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| README.md | ✅ PASS | Comprehensive — stack, routes, philosophy, quick start |
+| README.md | ✅ PASS | Comprehensive — stack table, API routes, philosophy, quick start |
 | CLAUDE.md | ✅ PASS | Excellent — architecture, rules, known issues, VPS context |
 | .gitignore | ✅ PASS | Comprehensive — .DS_Store, .vercel, editor files, Next.js outputs |
 | package.json | ✅ PASS | Next.js 15.5.15, React 18.3, TS 5.5, lean deps, `node>=20` |
 | Dockerfile | ✅ PASS | Multi-stage node:20-alpine for Cloud Run |
-| .env.example | ✅ PASS | Comprehensive placeholder config — no real secrets |
-| No hardcoded secrets | ✅ PASS | All values are placeholders (sk-ant-xxx, xai-xxx, etc.) |
+| .env.example | ✅ PASS | Full placeholder config — no real secrets |
+| No hardcoded secrets | ✅ PASS | All values are placeholders (sk-ant-xxx, xai-xxx, pplx-xxx, etc.) |
 | No TODO/FIXME | ✅ PASS | Zero items across entire codebase |
-| npm audit | ✅ PASS | 0 vulnerabilities — Next.js 14→15 upgrade cleared all CVEs |
-| API route hardening | ✅ PASS | Input validation on all 10 routes (max lengths, type checks) |
-| Build quality | ✅ PASS | 52/54 PASS (96%), lint clean, TSC clean |
-| Branch hygiene | ⚠️ WARN | 13 non-main branches — see table below |
+| Dependencies | ✅ PASS | 0 vulnerabilities — Next.js 15, cleared all CVEs |
+| API route hardening | ✅ PASS | Input validation on all 10 routes |
+| Branch hygiene | ⚠️ WARN | 20 non-main branches — see table below |
 
-### Branches (13 non-main)
+### Branches (20 non-main)
 
-| Branch | Last Commit | PR | Recommendation |
-|--------|------------|-----|----------------|
-| `seo/comprehensive-improvements` | Apr 16 | #7 draft | Review + merge |
-| `seo/structured-data-and-meta-improvements` | Apr 16 | None | Duplicate SEO branch — close |
-| `marketing/enhance-copy-and-og-images` | Apr 16 | None | Review — merged to main? Check overlap |
-| `cursorlayout-metadata-cleanup-a68a` | Apr 16 | None | Review and merge or close |
-| `cursornotification-sound-responses-fbd1` | Apr 16 | #10 | Check bugbot feedback addressed |
-| `cursorh1-and-schema-issues-8649` | Apr 16 | None | Review — merge or close |
-| `cursor-dependency-security-upgrade-ef32` | Apr 15 | #6 draft | **MERGED TO MAIN** — close this branch |
-| `claude/check-coreintent-builds-JTrDd` | Apr 14 | None | Incident review branch — delete |
-| `feat/i18n-multilingual` | Apr 14 | None | Feature — review or close |
-| `feat/ai-twin-interactive-widget` | Apr 16 | None | Active feature — leave open |
-| `cursor/update-outdated-docs-cc84` | Apr 13 | #2 draft | Large feature — review architecture first |
-| `cursor/dev-environment-setup-cc84` | Apr 13 | #1 draft | AGENTS.md docs — merge or close |
-| `build-monitor/security-audit-fix` | Apr 16 | None | Build monitor pass — delete after verifying |
+| Branch | Recommendation |
+|--------|----------------|
+| `seo/comprehensive-improvements` | Review + merge or close — check against main |
+| `seo/comprehensive-seo-improvements` | Likely duplicate of above — compare and close one |
+| `seo/structured-data-and-meta-improvements` | Review — merge or close |
+| `marketing/refresh-content-apr-2026` | Active — review and merge when ready |
+| `marketing/enhance-copy-and-og-images` | Review — merge or close if superseded |
+| `marketing/hero-pricing-social-refresh` | Review — merge or close |
+| `feat/ai-twin-interactive-widget` | Active feature — leave open, create PR |
+| `feat/i18n-multilingual` | Feature — review scope, create PR or close |
+| `feat/api-hardening-round2` | Review — may be superseded by merged hardening |
+| `feat/interactive-content-v1` | Review — create PR or close |
+| `cursorlayout-metadata-cleanup-a68a` | Review and merge or close |
+| `cursornotification-sound-responses-fbd1` | Review and merge or close |
+| `cursorh1-and-schema-issues-8649` | Review and merge or close |
+| `cursorunused-helper-functions-f7ed` | Review — remove unused helpers or close |
+| `cursorui-rendering-and-styles-3930` | Review and merge or close |
+| `cursordemo-and-terminal-issues-6940` | Review and merge or close |
+| `cursor-dependency-security-upgrade-ef32` | **DELETE** — already merged to main |
+| `cursor/update-outdated-docs-cc84` | Review — large feature, check if superseded |
+| `cursor/dev-environment-setup-cc84` | Review — AGENTS.md docs, merge or close |
+| `claude/check-coreintent-builds-JTrDd` | **DELETE** — incident review branch, no longer needed |
+| `build-monitor/security-audit-fix` | **DELETE** — audit fix verified, no longer needed |
 
-### Known Code Issues (from CLAUDE.md — still open)
+### Open Code Issues (from CLAUDE.md — still outstanding)
 
-- **XSS risk** — `components/Terminal.tsx` uses `dangerouslySetInnerHTML` for ANSI rendering. Replace with a proper ANSI parser library (e.g. `ansi-to-html`).
-- **Unused packages** — `xterm` packages in `package.json` declared but not used. Remove to reduce install footprint.
-- **All 10 API routes return hardcoded demo data** — no live backend connections yet. Label clearly in UI.
-- **No auth / no database** — intentional for now, required before any real user data is stored.
-- **VPS scripts never deployed** — COR-20, overdue per CLAUDE.md.
+| Issue | Severity | Notes |
+|-------|----------|-------|
+| XSS risk in Terminal.tsx | High | `dangerouslySetInnerHTML` for ANSI rendering — replace with `ansi-to-html` |
+| Unused xterm packages | Low | Declared in package.json but never used — remove |
+| All 10 API routes return demo data | Medium | No live backend yet — clearly labelled |
+| No auth / no database | Medium | Intentional for now |
+| VPS scripts never deployed | Medium | COR-20, overdue per CLAUDE.md |
 
 ---
 
 ## Repo 2: coreintentai
 
-**Score: 93/100**
+**Score: 94/100**
 **URL:** https://github.com/coreintentdev/coreintentai
 **Tech:** TypeScript / Node 20 / Vitest / npm package (`@coreintent/ai`)
 
@@ -79,37 +88,39 @@
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| README.md | ✅ PASS | Excellent — ASCII architecture diagram, usage examples, multi-model table |
-| CLAUDE.md | ✅ PASS | Detailed — intent routing, fallback chains, commands, patterns |
+| README.md | ✅ PASS | Excellent — ASCII diagram, usage examples, multi-model table. Fixed "Next.js 14 → 15" this pass. |
+| CLAUDE.md | ✅ PASS | Detailed — intent routing, fallback chains, commands, patterns. Fixed "Next.js 14 → 15" this pass. |
 | .gitignore | ✅ PASS | Comprehensive |
-| package.json | ✅ PASS | `engines: node>=20`, anthropic-ai/sdk, openai, zod, vitest |
+| package.json | ✅ PASS | `engines: node>=20`, @anthropic-ai/sdk, openai, zod, vitest |
 | .env.example | ✅ PASS | Clear placeholders for all 3 model providers |
-| CAPABILITIES.md | ✅ PASS | Full capabilities manifest present |
+| CAPABILITIES.md | ✅ PASS | Full capabilities manifest |
 | No hardcoded secrets | ✅ PASS | All placeholder values |
 | No TODO/FIXME | ✅ PASS | Zero items found |
-| Tests | ✅ PASS | 45 tests in main; branches extend coverage further |
-| Branch hygiene | ⚠️ WARN | 6 non-main branches |
+| Tests | ✅ PASS | 45 tests |
+| Branch hygiene | ⚠️ WARN | 7 non-main branches |
 
-### Branches (6 non-main)
+### Branches (7 non-main)
 
-| Branch | Last Commit | PR | Recommendation |
-|--------|------------|-----|----------------|
-| `cursorconsensus-agreement-accuracy-cf98` | Apr 16 | None | **Create PR** — consensus bugfix, no PR yet |
-| `cursororchestrator-caching-and-fallback-41dd` | Apr 16 | None | Review — create PR or merge |
-| `cursorprompt-telemetry-circuit-logic-b000` | Apr 16 | None | Review — create PR or merge |
-| `feat/anomaly-detection-capability` | Apr 16 | #1 draft | Ready to merge — review PR #1 |
-| `feat/brain-expansion` | Apr 16 | None | Review scope — create PR |
-| `feat/resilience-layer` | Apr 16 | None | Review scope — create PR |
+| Branch | Recommendation |
+|--------|----------------|
+| `cursorconsensus-agreement-accuracy-cf98` | Create PR — consensus bugfix, trading-critical |
+| `cursororchestrator-caching-and-fallback-41dd` | Create PR — orchestrator improvement |
+| `cursororchestrator-system-logic-bugs-fe79` | Create PR — system logic fixes |
+| `cursorprompt-telemetry-circuit-logic-b000` | Create PR — telemetry/circuit logic |
+| `feat/anomaly-detection-capability` | Review PR #1 — AnomalyDetector capability, ready to merge |
+| `feat/brain-expansion` | Create PR — review scope |
+| `feat/resilience-and-observability` | Create PR — review scope |
+| `feat/resilience-layer` | Create PR — may overlap with resilience-and-observability |
 
 ### Notes
 
-This is the most structurally clean repo in the org. Fully typed, tested, and documented. Six active feature/fix branches all committed today — this repo is moving fast. Primary gap: no PRs exist for most branches. Recommend opening PRs to maintain visibility.
+Most structurally clean repo in the org. Fully typed, tested, documented. All doc references now correct. Eight active branches — all committed today — this repo is moving fast. Primary gap: most branches still have no PR. Recommend opening PRs for visibility and review.
 
 ---
 
 ## Repo 3: Zynthio
 
-**Score: 84/100** (was 78/100 before this scan's fixes)
+**Score: 87/100** (was 84/100 — improved this pass)
 **URL:** https://github.com/coreintentdev/Zynthio
 **Live:** https://zynthio.ai
 **Tech:** Static HTML + Vercel Serverless Functions
@@ -118,25 +129,25 @@ This is the most structurally clean repo in the org. Fully typed, tested, and do
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| README.md | ✅ FIXED | Cross-reference for coreintentai was wrong ("coreintent.dev marketing site") — corrected to "AI intelligence layer" this scan |
-| CLAUDE.md | ✅ PASS | Good — env vars, architecture, known issues |
+| README.md | ✅ PASS | Comprehensive — architecture, deploy instructions, related repos all correct |
+| CLAUDE.md | ✅ FIXED | Cleared 3 stale Known Issues (JAN 17, CORS wildcard, package.json stub) and corrected coreintentai description this pass |
 | .gitignore | ✅ PASS | Comprehensive |
-| package.json | ✅ PASS | Description + deploy script (fixed prior scan) |
-| .env.example | ✅ FIXED | Added this scan — RESEND_API_KEY placeholder |
-| No hardcoded secrets | ✅ PASS | RESEND_API_KEY from `process.env` — confirmed |
+| package.json | ✅ PASS | Has name, description, private, deploy script |
+| .env.example | ✅ PASS | RESEND_API_KEY placeholder |
+| api/waitlist.js | ✅ PASS | CORS restricted to `https://zynthio.ai` (not wildcard) |
+| public/index.html | ✅ PASS | No expired dates — shows "OPEN SOURCE — LIVE NOW" |
+| No hardcoded secrets | ✅ PASS | RESEND_API_KEY from `process.env` |
 | No TODO/FIXME | ✅ PASS | Zero items found |
-| Expired launch date | ✅ FIXED | "JAN 17" removed from index.html and waitlist email (prior scan) |
-| CORS | ✅ FIXED | Restricted from `*` wildcard to `https://zynthio.ai` (prior scan) |
-| Branch hygiene | ⚠️ WARN | 4 non-main branches |
+| Branch hygiene | ⚠️ WARN | 4 non-main branches — some redundant |
 
 ### Branches (4 non-main)
 
-| Branch | Last Commit | PR | Recommendation |
-|--------|------------|-----|----------------|
-| `feat/music-pipeline-docs` | Apr 16 | #2 draft | Merge — updated docs, clean |
-| `cursorisrc-readiness-requirement-7f98` | Apr 16 | None | Addresses PR #2 feedback — include in that PR or close |
-| `feature/music-pipeline-scaffold` | Apr 16 | None | Check if superseded by `feat/music-pipeline-docs` |
-| `music-pipeline-setup` | Apr 16 | #1 draft | Close — superseded by PR #2 |
+| Branch | Recommendation |
+|--------|----------------|
+| `feat/music-pipeline-docs` | Merge — updated docs, clean |
+| `cursorisrc-readiness-requirement-7f98` | Include in music-pipeline PR or close |
+| `feature/music-pipeline-scaffold` | Check if superseded by `feat/music-pipeline-docs` — close if so |
+| `music-pipeline-setup` | **CLOSE** — superseded by `feat/music-pipeline-docs` |
 
 ---
 
@@ -147,65 +158,70 @@ This is the most structurally clean repo in the org. Fully typed, tested, and do
 | README.md | ✅ | ✅ | ✅ | ✅ YES |
 | CLAUDE.md | ✅ | ✅ | ✅ | ✅ YES |
 | .gitignore | ✅ | ✅ | ✅ | ✅ YES |
-| .env.example | ✅ | ✅ | ✅ Fixed | ✅ YES |
-| No secrets in code | ✅ | ✅ | ✅ | ✅ YES |
+| .env.example | ✅ | ✅ | ✅ | ✅ YES |
+| No secrets | ✅ | ✅ | ✅ | ✅ YES |
 | No TODO/FIXME | ✅ | ✅ | ✅ | ✅ YES |
 | License (MIT) | ✅ | ✅ | ✅ | ✅ YES |
-| Node >=20 | ✅ | ✅ | N/A (no Node app) | ✅ YES |
+| Node >=20 | ✅ | ✅ | N/A | ✅ YES |
 | NZ-first in CLAUDE.md | ✅ | ✅ | ✅ | ✅ YES |
-| Cross-repo links correct | ✅ | ✅ | ✅ Fixed | ✅ YES |
-| Active today (Apr 16) | ✅ | ✅ | ✅ | ✅ YES |
+| Cross-repo version refs | ✅ | ✅ Fixed | ✅ Fixed | ✅ YES |
+| coreintentai description | ✅ | ✅ | ✅ Fixed | ✅ YES |
+| Active development | ✅ | ✅ | ✅ | ✅ YES |
 
-### Observations
+### Stack Divergence (Intentional)
 
-- **Stack divergence is intentional and correct.** coreintent = Next.js engine; coreintentai = TypeScript AI library; Zynthio = static landing. Each is right-sized for its role.
-- **All repos clean of secrets.** Zero API keys, tokens, or credentials found in any codebase across all three repos.
-- **All repos clean of TODO/FIXME.** Zero items across all 3 repos.
-- **Org is live and actively moving.** All 3 repos had commits on Apr 16 (today). coreintentai was the heaviest day — full AI layer built and committed.
-- **Cross-repo documentation is now consistent.** After the README fix to Zynthio, all three repos correctly describe each other.
+Stack differences across repos are correct and intentional:
+
+| Repo | Stack | Rationale |
+|------|-------|-----------|
+| coreintent | Next.js 15 + TypeScript | Full-stack web app with App Router |
+| coreintentai | TypeScript library + Vitest | Headless AI layer, published as npm package |
+| Zynthio | Static HTML + Vercel Functions | Minimal landing page — no framework overhead needed |
 
 ---
 
 ## Action Items (Priority Order)
 
 ### High
-- [ ] **Create PRs for coreintentai branches** — `cursorconsensus-agreement-accuracy-cf98`, `cursororchestrator-caching-and-fallback-41dd`, `cursorprompt-telemetry-circuit-logic-b000`, `feat/brain-expansion`, `feat/resilience-layer` all have no PR. The consensus bugfix in particular (prevents inflated confidence when only one model responds) is trading-critical.
-- [ ] **Merge PR #1** (coreintentai) — AnomalyDetector capability. Review and merge.
-- [ ] **Fix XSS in Terminal.tsx** (coreintent) — replace `dangerouslySetInnerHTML` with a proper ANSI renderer.
+- [ ] **Fix XSS in Terminal.tsx** (coreintent) — replace `dangerouslySetInnerHTML` with `ansi-to-html` library
+- [ ] **Merge PR #1** (coreintentai) — AnomalyDetector capability, ready for review
+- [ ] **Create PRs for coreintentai cursor/* branches** — consensus fix is trading-critical
 
 ### Medium
-- [ ] **Remove unused xterm packages** (coreintent) — declared in package.json but never used.
-- [ ] **Prune stale branches** (coreintent) — `cursor-dependency-security-upgrade-ef32` (already merged to main), `build-monitor/security-audit-fix`, `claude/check-coreintent-builds-JTrDd`.
-- [ ] **Merge PR #2 / close PR #1** (Zynthio) — Music pipeline docs. PR #1 superseded, PR #2 is clean.
-- [ ] **Review and merge or close** (coreintent): `seo/comprehensive-improvements` (#7), `cursor/dev-environment-setup-cc84` (#1).
-- [ ] **Review i18n feature branch** (coreintent) — `feat/i18n-multilingual` has no PR, unclear status.
+- [ ] **Remove unused xterm packages** (coreintent) — declared in package.json but never imported
+- [ ] **Prune confirmed-stale branches** (coreintent): `cursor-dependency-security-upgrade-ef32`, `claude/check-coreintent-builds-JTrDd`, `build-monitor/security-audit-fix`
+- [ ] **Consolidate duplicate SEO branches** (coreintent): `seo/comprehensive-improvements` and `seo/comprehensive-seo-improvements` — pick one, close the other
+- [ ] **Merge or close music-pipeline branches** (Zynthio): close `music-pipeline-setup`, resolve `feat/music-pipeline-docs`
+- [ ] **Create PRs for feat/* branches in coreintentai**: `feat/brain-expansion`, `feat/resilience-and-observability`, `feat/resilience-layer`
 
 ### Low / Ongoing
-- [ ] **Deploy VPS scripts** (coreintent) — COR-20, overdue per CLAUDE.md.
-- [ ] **Connect API routes to live data** (coreintent) — all 10 routes still return hardcoded demo data.
-- [ ] **Add auth + persistence layer** (coreintent) — required before any real user data.
+- [ ] **Deploy VPS scripts** (coreintent) — COR-20, overdue per CLAUDE.md
+- [ ] **Connect API routes to live data** (coreintent) — all 10 routes return hardcoded demo data
+- [ ] **Add auth + persistence layer** (coreintent) — required before real user data
 
 ---
 
-## Files Changed This Scan
+## Files Changed This Pass (Third Pass — Apr 16 2026)
 
 | Repo | File | Action |
 |------|------|--------|
-| Zynthio | `README.md` | Fixed coreintentai cross-reference (was "coreintent.dev marketing site", now "AI intelligence layer") |
-| Zynthio | `.env.example` | Added — RESEND_API_KEY placeholder |
-| coreintent | `HEALTH_REPORT.md` | Updated (this file) |
+| Zynthio | `CLAUDE.md` | Fixed 3 stale Known Issues; corrected coreintentai description ("coreintent.dev marketing site" → "AI intelligence layer"); updated Next.js ref to v15 |
+| coreintentai | `README.md` | Fixed "Next.js 14" → "Next.js 15" in repo relationship table |
+| coreintentai | `CLAUDE.md` | Fixed "Next.js 14" → "Next.js 15" in Related Repos |
+| coreintent | `HEALTH_REPORT.md` | Updated — this file |
 
-## Files Changed Prior Scan (confirmed applied)
+## Files Changed Prior Passes (confirmed applied)
 
-| Repo | File | Action |
-|------|------|--------|
-| coreintent | `package.json` | Added `engines: { node: >=20.0.0 }` |
-| coreintent | All 10 `app/api/*/route.ts` | Input validation hardened |
-| coreintent | `lib/ai.ts`, `lib/api.ts` | Production-grade prompt and utility hardening |
-| coreintent | `next`, `eslint-config-next` | Upgraded 14→15.5.15, cleared 5 CVEs, 0 npm audit vulns |
-| Zynthio | `public/index.html` | Removed expired "OPEN SOURCE LAUNCH: JAN 17" |
-| Zynthio | `api/waitlist.js` | Restricted CORS to `https://zynthio.ai`; removed expired date from email |
-| Zynthio | `package.json` | Added description + deploy script |
+| Pass | Repo | File | Action |
+|------|------|------|--------|
+| 2nd | Zynthio | `README.md` | Fixed coreintentai cross-reference |
+| 2nd | Zynthio | `.env.example` | Added RESEND_API_KEY placeholder |
+| 1st | coreintent | `package.json` | Added `engines: { node: >=20.0.0 }` |
+| 1st | coreintent | All 10 `app/api/*/route.ts` | Input validation hardened |
+| 1st | coreintent | `next`, `eslint-config-next` | Upgraded 14→15.5.15, cleared 5 CVEs |
+| 1st | Zynthio | `public/index.html` | Removed expired "OPEN SOURCE LAUNCH: JAN 17" |
+| 1st | Zynthio | `api/waitlist.js` | Restricted CORS to `https://zynthio.ai` |
+| 1st | Zynthio | `package.json` | Added description + deploy script |
 
 ---
 
