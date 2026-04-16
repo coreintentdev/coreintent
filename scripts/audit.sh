@@ -142,8 +142,12 @@ else
   log_fail "Twitter card meta tags MISSING"
 fi
 
-# robots.txt
-[ -f "public/robots.txt" ] && log_pass "robots.txt exists" || log_fail "robots.txt MISSING"
+# robots.txt (static or dynamic)
+if [ -f "public/robots.txt" ] || [ -f "app/robots.ts" ] || [ -f "app/robots.js" ]; then
+  log_pass "robots.txt configured"
+else
+  log_fail "robots.txt MISSING"
+fi
 
 # sitemap
 if [ -f "app/sitemap.ts" ] || [ -f "public/sitemap.xml" ]; then
