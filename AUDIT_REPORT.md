@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Fri Apr 17 03:07:56 UTC 2026
+Generated: Fri Apr 17 03:57:57 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -49,13 +49,13 @@ Generated: Fri Apr 17 03:07:56 UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 3 files
+- PASS: next/link used in 4 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:61:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:62:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:63:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:110:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:111:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:112:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
