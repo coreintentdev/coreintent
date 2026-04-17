@@ -13,6 +13,7 @@
  */
 import { ok, preflight } from "@/lib/api";
 import { getAiKeyStatus, type AiKeyStatus } from "@/lib/ai";
+import { APP_VERSION, PLATFORM_MODE } from "@/lib/constants";
 
 const BOOT_TIME = Date.now();
 
@@ -35,10 +36,10 @@ export async function GET() {
   const mem = process.memoryUsage();
   const data: HealthResponse = {
     status:      "ok",
-    version:     "0.2.0-alpha",
+    version:     APP_VERSION,
     uptime:      Math.floor((Date.now() - BOOT_TIME) / 1000),
     timestamp:   new Date().toISOString(),
-    mode:        "paper_trading",
+    mode:        PLATFORM_MODE,
     nodeVersion: process.version,
     memoryMB:    Math.round(mem.rss / 1_048_576),
     aiKeys:      getAiKeyStatus(),

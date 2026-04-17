@@ -15,7 +15,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight } from "@/lib/api";
+import { ok, err, preflight, validateString } from "@/lib/api";
 
 type Channel = "web" | "desktop";
 
@@ -115,8 +115,8 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  if (body.task !== undefined && (typeof body.task !== "string" || body.task.length > 500)) {
-    return err("task must be a string of 500 characters or fewer", 400);
+  if (body.task !== undefined && validateString(body.task, 500) === null) {
+    return err("task must be a non-empty string of 500 characters or fewer", 400);
   }
 
   const source:          Channel = body.source === "desktop" ? "desktop" : "web";

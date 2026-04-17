@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.autosave in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, err, preflight, validateString, validateEnum } from "@/lib/api";
 
 type BackendKey = "primary" | "docs" | "files" | "cache" | "links" | "state";
 type SaveType   = "link" | "doc" | "state" | "command" | "config" | "signal" | "agent";
@@ -120,10 +120,8 @@ export async function POST(req: NextRequest) {
     return err("Invalid JSON body", 400);
   }
 
-  const VALID_SAVE_TYPES: SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
-  const type: SaveType = VALID_SAVE_TYPES.includes(body.type as SaveType)
-    ? (body.type as SaveType)
-    : "state";
+  const VALID_SAVE_TYPES: readonly SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
+  const type: SaveType = validateEnum(body.type, VALID_SAVE_TYPES) ?? "state";
 
   if (body.content !== undefined) {
     const content = validateString(body.content, 10_000);

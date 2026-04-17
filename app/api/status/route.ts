@@ -10,6 +10,7 @@
  */
 import { ok, preflight, serverError } from "@/lib/api";
 import { getAiKeyStatus } from "@/lib/ai";
+import { APP_VERSION, PLATFORM_MODE } from "@/lib/constants";
 
 type AIStatus       = "active" | "demo";
 type ExchangeStatus = "planned" | "connected";
@@ -33,9 +34,9 @@ export async function GET() {
     const keys = getAiKeyStatus();
     const data: StatusResponse = {
       engine:  "online",
-      version: "0.2.0-alpha",
+      version: APP_VERSION,
       uptime:  process.uptime(),
-      mode:    "paper_trading",
+      mode:    PLATFORM_MODE,
       exchanges: {
         binance:  "planned",
         coinbase: "planned",

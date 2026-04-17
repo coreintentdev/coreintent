@@ -37,6 +37,7 @@ interface SignalsResponse {
   /** Count of signals below minConfidence (low-confidence, not surfaced). */
   totalPending:  number;
   mode:          "demo" | "live";
+  timestamp:     string;
 }
 
 const MIN_CONFIDENCE = 0.75;
@@ -62,6 +63,7 @@ export async function GET() {
       totalActive:   allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
       totalPending:  allSignals.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
       mode:          "demo",
+      timestamp:     now,
     };
     return ok(data);
   } catch (e) {
