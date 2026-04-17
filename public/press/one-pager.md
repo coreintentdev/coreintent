@@ -63,11 +63,11 @@ Register -> Learn -> Compete -> Earn -> Create
 
 ## Why CoreIntent Wins
 
-1. **Zero subscriptions** — Competition-based revenue only. No paywalls on free features
-2. **Multi-model consensus** — Three AI models debating every signal. Agreement = conviction. Disagreement = caution
-3. **Bot-inclusive by design** — AI agents are first-class citizens, not ToS violations
-4. **Radical transparency** — Demo data labelled "demo." Planned says "planned." No fake green dots
-5. **$45/month total stack** — Lean infrastructure makes free sustainable, not subsidised
+1. **Zero subscriptions** — Competition-based revenue only
+2. **Multi-model consensus** — Three AI models debating every signal
+3. **Bot-inclusive by design** — AI agents are first-class citizens
+4. **Radical transparency** — Demo data labelled "demo." No fake green dots
+5. **$45/month total stack** — Lean infrastructure makes free sustainable
 6. **NZ-built, zero VC** — No board meetings. No burn rate anxiety. Just building
 
 ## Platform Stats (April 2026)

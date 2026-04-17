@@ -92,9 +92,9 @@ Building from New Zealand under the Zynthio brand. No VC funding. Just a clear t
 
 ---
 
-## Post 4 — Founder Perspective: On Radical Transparency
+## Post 4 — On Radical Transparency
 
-**Every fintech dashboard lies to you. Ours doesn't. Here's why.**
+**Every fintech dashboard lies to you. Ours doesn't.**
 
 Green dots on services that aren't connected. Screenshots of returns that never happened. "Active users" that are test accounts. The fintech industry has a credibility problem.
 
@@ -109,15 +109,13 @@ Every testimonial on the landing page? Tagged "DEMO — Placeholder testimonials
 
 Paper trading mode? Right there in the banner. You see it before you see anything else.
 
-**Why this is a competitive advantage:**
-
 Trust compounds. Users don't leave because you told them something was demo. They leave when they discover the lie themselves.
 
 In an industry built on hype, honesty is a moat.
 
 -> coreintent.dev
 
-#BuildInPublic #Transparency #FinTech #StartupLeadership #ProductDevelopment
+#BuildInPublic #Transparency #FinTech #StartupLeadership
 
 ---
 
@@ -152,53 +150,3 @@ We run 6 AI agents ourselves — TrendFollower, MeanRevert, SentimentBot, Arbitr
 -> coreintent.dev
 
 #AgenticAI #FinTech #TradingBots #FutureOfTrading #AlgorithmicTrading
-
----
-
-## Post 6 — Infrastructure Economics: Why $45/mo Changes Everything
-
-**Most fintech startups spend $10k+/month on infrastructure before their first user. We spend $45.**
-
-Here's our actual bill:
-- **Vercel:** $0 (static + SSR hosting)
-- **GitHub Actions:** $0 (CI/CD pipeline)
-- **Cloudflare Pro:** $20/mo (CDN, WAF, DDoS protection)
-- **Cloudzy VPS:** $25/mo (trading backend)
-- **Claude API:** Pay-per-use (cents per analysis)
-- **Grok:** Included with X Premium+
-- **Perplexity:** Free tier (3 Pro searches/day)
-
-Total: approximately NZ$45/month.
-
-**What this enables:** When your marginal cost per user approaches zero, "free" isn't a loss leader — it's the business model.
-
-**The strategic implication:** Every VC-funded competitor is carrying $100k+/year in infrastructure debt before they've validated their thesis. We validated ours for the cost of dinner.
-
-When your burn rate is $45/month, you can be patient. You can be honest. You can give everything away and still survive.
-
--> coreintent.dev
-
-#Infrastructure #StartupEconomics #FinTech #LeanStartup #BootstrapBusiness
-
----
-
-## Post 7 — What Paper Trading Taught Us About Product Honesty
-
-**We've been in paper trading mode for months. Here's what we've learned about being honest with users.**
-
-When we launched CoreIntent, we had a choice: launch with fake dashboards and green dots on everything, or launch transparently and label every piece of demo data for what it was.
-
-We chose transparency. And here's the counterintuitive result: it made the product *better*.
-
-**What honesty forced us to do:**
-1. **Better architecture** — When you can't hide behind fake numbers, your real system has to be solid enough to demonstrate on its own merits
-2. **Trust-first onboarding** — Users who see "DEMO" tags don't feel tricked. They feel informed.
-3. **Clearer roadmap** — "Planned" vs "Live" vs "Demo" gives users a real picture of where we are.
-
-**The competitive advantage of honesty:** In fintech, where every product shows green arrows and active connections, the bar for trust is underground. Being the one platform that says "this isn't ready yet" is counterintuitively powerful.
-
-Trust compounds faster than features.
-
--> coreintent.dev
-
-#ProductManagement #Transparency #FinTech #BuildInPublic #StartupLessons

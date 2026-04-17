@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -208,6 +209,56 @@ export default function PricingPage() {
             ))}
           </div>
 
+          {/* Who's This For */}
+          <div style={{ marginTop: "48px" }}>
+            <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who&apos;s This For?</h2>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
+              If you&apos;re tired of paying for signals that don&apos;t work, this is your arena.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
+              {[
+                {
+                  title: "Independent Traders",
+                  desc: "You trade your own money, your own way. You want AI-powered signals without the $99/mo tax. Compete daily to sharpen your edge.",
+                  color: "#10b981",
+                },
+                {
+                  title: "Quant Developers",
+                  desc: "You build strategies in code. Our API-first design means your bot registers, enters leagues, and competes programmatically. No captcha.",
+                  color: "#3b82f6",
+                },
+                {
+                  title: "AI Researchers",
+                  desc: "You want to see multi-model orchestration in action. Three AI models cross-checking signals is a live research experiment.",
+                  color: "#a855f7",
+                },
+                {
+                  title: "Crypto-Curious Learners",
+                  desc: "You want to learn without risking money. Paper trading mode, free competitions, and an interactive terminal to explore at your own pace.",
+                  color: "#f59e0b",
+                },
+              ].map((audience) => (
+                <div
+                  key={audience.title}
+                  style={{
+                    background: "var(--bg-secondary)",
+                    border: `1px solid ${audience.color}22`,
+                    borderRadius: "12px",
+                    padding: "20px",
+                    textAlign: "left",
+                  }}
+                >
+                  <div style={{ fontSize: "14px", fontWeight: "bold", color: audience.color, marginBottom: "8px" }}>
+                    {audience.title}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                    {audience.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Philosophy */}
           <div
             style={{
@@ -278,7 +329,6 @@ export default function PricingPage() {
                   ["Trading agents", "6 included, day one", "Premium add-on ($$$)"],
                   ["Bot access", "First-class citizen. API-first.", "Banned, blocked, or captcha'd"],
                   ["Revenue model", "Competitions — you earn by winning", "Subscriptions — they earn either way"],
-                  ["Profit alignment", "We win when you show up", "They win whether you do or not"],
                   ["Transparency", "Demo = demo. Planned = planned.", "Green dots on everything"],
                   ["Infrastructure", "~$45/mo. No VC burn.", "$10k+/mo. VC subsidised."],
                 ].map(([feature, us, them], i) => (
@@ -345,6 +395,77 @@ export default function PricingPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Final CTA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #10b98112 0%, #3b82f612 100%)",
+              border: "1px solid #10b98122",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
+              Ready to Prove Yourself?
+            </h2>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
+              No credit card. No subscription trap. Just you, your strategy, and the leaderboard.
+              <br />
+              Building in public. Getting in early matters.
+            </p>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link
+                href="/"
+                style={{
+                  padding: "14px 32px",
+                  background: "var(--accent-green)",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+              >
+                Launch Terminal &rarr;
+              </Link>
+              <Link
+                href="/stack"
+                style={{
+                  padding: "14px 32px",
+                  background: "transparent",
+                  color: "var(--text-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+              >
+                See the Stack
+              </Link>
+            </div>
+            <div style={{ marginTop: "16px", display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
+              {[
+                { value: "$0", label: "Entry" },
+                { value: "3", label: "AI Models" },
+                { value: "6", label: "Agents" },
+                { value: "3", label: "Leagues" },
+              ].map((s) => (
+                <div key={s.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>{s.value}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
