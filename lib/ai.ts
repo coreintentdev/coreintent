@@ -94,11 +94,12 @@ function classifyFetchError(
       errorType: "timeout",
     };
   }
-  const msg = e instanceof Error ? e.message : String(e);
+  // Log detail server-side only — never expose internal network errors to clients.
+  console.error(`[CoreIntent] ${source} network error:`, e instanceof Error ? e.message : String(e));
   return {
     source,
     model,
-    content: `[NETWORK ERROR] ${msg}`,
+    content: `[NETWORK ERROR] Could not reach ${source} service.`,
     live: false,
     errorType: "network_error",
   };
@@ -167,11 +168,12 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      // Log raw upstream error server-side only — never forward to clients.
+      console.error(`[CoreIntent] Grok API error ${res.status}:`, await res.text());
       return {
         source: "grok",
         model:  "grok-3",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: `[API ERROR ${res.status}] Upstream service unavailable.`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
@@ -276,11 +278,12 @@ export async function callClaude(
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      // Log raw upstream error server-side only — never forward to clients.
+      console.error(`[CoreIntent] Claude API error ${res.status}:`, await res.text());
       return {
         source:  "claude",
         model:   "claude-sonnet-4-6",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: `[API ERROR ${res.status}] Upstream service unavailable.`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
@@ -363,11 +366,12 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      // Log raw upstream error server-side only — never forward to clients.
+      console.error(`[CoreIntent] Perplexity API error ${res.status}:`, await res.text());
       return {
         source:  "perplexity",
         model:   "sonar-pro",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: `[API ERROR ${res.status}] Upstream service unavailable.`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
