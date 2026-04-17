@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 16 04:26:49 UTC 2026
+Generated: Fri Apr 17 02:55:50 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -64,7 +64,7 @@ Generated: Thu Apr 16 04:26:49 UTC 2026
 - INFO: 11 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (7 instances)
+- PASS: ARIA attributes found (8 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies

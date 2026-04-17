@@ -27,4 +27,5 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 
+Host: https://coreintent.dev
 Sitemap: https://coreintent.dev/sitemap.xml

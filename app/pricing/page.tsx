@@ -244,7 +244,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "12px" }}>The Philosophy</h3>
+            <h2 style={{ marginBottom: "12px" }}>The Philosophy</h2>
             <ul
               style={{
                 listStyle: "none",
@@ -287,7 +287,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "16px", fontSize: "16px" }}>Everything Included — Free</h3>
+            <h2 style={{ marginBottom: "16px", fontSize: "16px" }}>Everything Included — Free</h2>
             <div
               style={{
                 display: "grid",
@@ -324,7 +324,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h3>
+            <h2 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h2>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ borderBottom: "2px solid var(--border-color)" }}>
@@ -365,7 +365,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "20px", textAlign: "center" }}>Frequently Asked Questions</h3>
+            <h2 style={{ marginBottom: "20px", textAlign: "center" }}>Frequently Asked Questions</h2>
             {[
               {
                 q: "Is CoreIntent really free?",

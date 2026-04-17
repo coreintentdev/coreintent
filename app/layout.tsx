@@ -1,7 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  themeColor: "#10b981",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: {
     default: "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
     template: "%s | CoreIntent",
@@ -93,10 +100,12 @@ const jsonLd = {
       "@id": "https://zynthio.ai/#organization",
       name: "Zynthio",
       url: "https://zynthio.ai",
+      logo: "https://coreintent.dev/og-image.png",
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
       },
+      foundingDate: "2025",
       address: {
         "@type": "PostalAddress",
         addressCountry: "NZ",
@@ -112,7 +121,21 @@ const jsonLd = {
       name: "Corey McIvor",
       email: "corey@coreyai.ai",
       url: "https://zynthio.ai",
-      jobTitle: "Founder",
+      jobTitle: "Founder & Developer",
+      worksFor: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      sameAs: [
+        "https://github.com/coreintentdev",
+        "https://x.com/coreintentai",
+      ],
+      knowsAbout: [
+        "Artificial Intelligence",
+        "Cryptocurrency Trading",
+        "Multi-Model AI Orchestration",
+        "Software Engineering",
+      ],
       nationality: {
         "@type": "Country",
         name: "New Zealand",
@@ -201,7 +224,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en-NZ">
       <body>
         <script
           type="application/ld+json"
