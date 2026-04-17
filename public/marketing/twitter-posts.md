@@ -264,25 +264,7 @@ coreintent.dev
 
 ---
 
-## Post 16 — The Alignment Problem (Visual)
-
-Trading platform alignment check:
-
-Platform charges $99/mo.
-You lose 40% of your portfolio.
-Platform still gets paid.
-
-That's not misaligned. That's *designed* misaligned.
-
-CoreIntent charges $0. We only exist if you keep competing.
-
-Different incentive. Different product.
-
-#FinTech #Alignment #AITrading
-
----
-
-## Post 17 — Open Challenge
+## Post 16 — Open Challenge
 
 Open challenge to any trading platform:
 
@@ -303,7 +285,7 @@ Total: $45/mo. Your move.
 
 ---
 
-## Post 18 — Paper Trading Isn't Weakness
+## Post 17 — Paper Trading Isn't Weakness
 
 "You're just paper trading."
 
@@ -319,7 +301,7 @@ We'll go live when it's ready. Not when it's convenient.
 
 ---
 
-## Post 19 — The Future Is Multi-Agent
+## Post 18 — The Future Is Multi-Agent
 
 Hot take: in 5 years, most trading on retail platforms will be bot-to-bot.
 
@@ -335,7 +317,7 @@ coreintent.dev
 
 ---
 
-## Post 20 — NZ Startup Energy
+## Post 19 — NZ Startup Energy
 
 Started an AI trading engine from New Zealand with:
 
@@ -350,3 +332,97 @@ Just three AI models, a $25/mo VPS, and the conviction that subscriptions are a 
 You don't need permission. You need intent.
 
 #MadeInNZ #IndieFounder #CoreIntent
+
+---
+
+## Post 20 — The Three-Body Problem
+
+Trading platforms have a three-body problem:
+
+1. User wants profit
+2. Platform wants revenue
+3. Market doesn't care about either
+
+Subscriptions solve #2. Competitions solve #1.
+
+We chose the harder path.
+
+coreintent.dev
+
+#AITrading #GameTheory
+
+---
+
+## Post 21 — Signal vs Noise
+
+Single-model trading is just an expensive coin flip with extra steps.
+
+At CoreIntent, model disagreement IS the signal.
+
+Grok says buy. Claude says wait. Perplexity says check the news first.
+
+That tension? That's alpha.
+
+#MultiModelAI #TradingSignals
+
+---
+
+## Post 22 — Open Source Conviction
+
+We open-sourced our trading engine.
+
+"But won't people copy it?"
+
+Good. The model works because our infrastructure costs $45/mo. Copy the code. You still need the conviction to give it all away for free.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #BuildInPublic
+
+---
+
+## Post 23 — The Arena Metaphor
+
+Trading platforms are gyms. You pay monthly whether you show up or not.
+
+CoreIntent is an arena. Show up, compete, prove yourself. Don't show up? We don't charge you for the privilege.
+
+The best model is one where the platform and the user want the same thing: a full arena.
+
+#FinTech #ProductDesign
+
+---
+
+## Post 24 — For the Skeptics
+
+"But you're just paper trading."
+
+Correct.
+
+We're also:
+- Labelling every demo endpoint
+- Tagging every placeholder testimonial
+- Showing "planned" instead of "active"
+- Publishing our actual costs
+
+Name one competitor doing all five.
+
+We'll wait.
+
+#HonestTech #Transparency #CoreIntent
+
+---
+
+## Post 25 — The $45 Challenge
+
+Every month we publish our exact infrastructure bill.
+
+Every month it's around $45.
+
+Every month someone asks "but how do you make money?"
+
+The answer: competitions. The same way sports leagues work. The arena is free. The competition is where value gets created.
+
+coreintent.dev
+
+#BootstrapStartup #FinTech

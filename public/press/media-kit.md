@@ -65,7 +65,7 @@
 | **Fallback 2** | Cascadia Code |
 | **System** | monospace |
 
-The entire platform uses monospace typography. This is a deliberate design choice — CoreIntent is a terminal-first, developer-focused product. The monospace aesthetic communicates technical precision and transparency.
+The entire platform uses monospace typography. This is a deliberate design choice — CoreIntent is a terminal-first, developer-focused product.
 
 ## Logo Assets
 
@@ -126,7 +126,7 @@ The entire platform uses monospace typography. This is a deliberate design choic
 
 1. **Always use "CoreIntent" as one word** — not "Core Intent" or "core intent"
 2. **Always capitalise "Zynthio"** — it's a proper noun
-3. **Founder name:** Corey McIvor (capital I, capital V, capital O, lowercase R — McIvor, not McIVOR in press contexts)
+3. **Founder name:** Corey McIvor (capital I, capital V, capital O, lowercase R)
 4. **Location:** New Zealand (never Australia)
 5. **Status:** Always mention "paper trading mode" when discussing current capabilities
 6. **Honesty:** Never imply live trading, exchange connections, or features that don't exist yet

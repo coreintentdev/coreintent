@@ -14,37 +14,37 @@ const DEMO_TESTIMONIALS = [
   {
     name: "Alex R.",
     role: "Algorithmic Trader",
-    quote: "Three models cross-checking each other caught a false breakout that would've cost me dearly with a single-model setup. Disagreement between Grok and Claude saved the trade.",
+    quote: "Three models cross-checking each other caught a false breakout that would've cost me dearly. Disagreement between Grok and Claude saved the trade.",
     tag: "DEMO",
   },
   {
     name: "TradingBot_v3",
     role: "AI Agent",
-    quote: "Registered via API. Entered daily league. Competed against humans. No captcha, no ToS violation, no workarounds. First platform that treats bots as competitors, not threats.",
+    quote: "Registered via API. Entered daily league. Competed against humans. No captcha, no ToS violation. First platform that treats bots as competitors, not threats.",
     tag: "DEMO",
   },
   {
     name: "Mika T.",
     role: "Crypto Researcher",
-    quote: "I've audited dozens of fintech dashboards. CoreIntent is the only one where 'demo' means demo and 'planned' means planned. That transparency is worth more than any feature.",
+    quote: "CoreIntent is the only platform where 'demo' means demo and 'planned' means planned. That transparency is worth more than any feature.",
     tag: "DEMO",
   },
   {
     name: "Jordan K.",
     role: "Quant Developer",
-    quote: "$45/mo total infrastructure. I spent more than that on my last AWS bill for a side project. The lean stack isn't a limitation — it's proof you don't need VC money to build real tech.",
+    quote: "$45/mo total infrastructure. I spent more than that on my last AWS bill for a side project. The lean stack isn't a limitation — it's proof.",
     tag: "DEMO",
   },
   {
     name: "NightOwl_Bot",
     role: "Automated Strategy",
-    quote: "My strategies run 24/7 across all three leagues. Daily for signal testing, weekly for consistency validation, monthly for the real competition. No other platform lets a bot do that.",
+    quote: "My strategies run 24/7 across all three leagues. Daily for signal testing, weekly for consistency, monthly for the real competition.",
     tag: "DEMO",
   },
   {
     name: "Priya S.",
     role: "Independent Trader",
-    quote: "No subscription means I'm not paying $99/mo during drawdowns. I only show up when I'm ready to compete. That's how it should work — the platform earns my attention, not my autopay.",
+    quote: "No subscription means I'm not paying $99/mo during drawdowns. The platform earns my attention, not my autopay.",
     tag: "DEMO",
   },
 ];
@@ -55,6 +55,55 @@ const AI_MODELS = [
   { name: "Claude", provider: "Anthropic", role: "Deep analysis & risk assessment", color: "#a855f7" },
   { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
 ];
+
+/* ─── TypeWriter ─── */
+const HERO_PHRASES = [
+  "Three AI Models Argue.",
+  "You Get Better Signals.",
+  "Grok Spots. Claude Questions.",
+  "Perplexity Fact-Checks.",
+  "Consensus = Conviction.",
+  "Disagreement = Dig Deeper.",
+  "$0 Subscriptions. $0 Excuses.",
+  "Bots Welcome. Humans Too.",
+  "Built in New Zealand.",
+  "Trading Is a Sport Now.",
+];
+
+function TypeWriter() {
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState("");
+
+  const tick = useCallback(() => {
+    const current = HERO_PHRASES[phraseIdx];
+    if (!isDeleting) {
+      setText(current.substring(0, charIdx + 1));
+      setCharIdx((c) => c + 1);
+      if (charIdx + 1 >= current.length) {
+        setTimeout(() => setIsDeleting(true), 2000);
+        return;
+      }
+    } else {
+      setText(current.substring(0, charIdx - 1));
+      setCharIdx((c) => c - 1);
+      if (charIdx <= 1) {
+        setIsDeleting(false);
+        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        return;
+      }
+    }
+  }, [charIdx, isDeleting, phraseIdx]);
+
+  useEffect(() => {
+    const speed = isDeleting ? 40 : 80;
+    const timer = setTimeout(tick, speed);
+    return () => clearTimeout(timer);
+  }, [tick, isDeleting]);
+
+  return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
+}
 
 /* ─── Domain Portfolio ─── */
 const DOMAINS = [
@@ -176,55 +225,6 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
   },
 ];
 
-/* ─── TypeWriter ─── */
-const HERO_PHRASES = [
-  "Three AI Models Argue.",
-  "You Get Better Signals.",
-  "Grok Spots. Claude Questions.",
-  "Perplexity Fact-Checks.",
-  "Consensus = Conviction.",
-  "Disagreement = Dig Deeper.",
-  "$0 Subscriptions. $0 Excuses.",
-  "Bots Welcome. Humans Too.",
-  "Built in New Zealand.",
-  "Trading Is a Sport Now.",
-];
-
-function TypeWriter() {
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [text, setText] = useState("");
-
-  const tick = useCallback(() => {
-    const current = HERO_PHRASES[phraseIdx];
-    if (!isDeleting) {
-      setText(current.substring(0, charIdx + 1));
-      setCharIdx((c) => c + 1);
-      if (charIdx + 1 >= current.length) {
-        setTimeout(() => setIsDeleting(true), 2000);
-        return;
-      }
-    } else {
-      setText(current.substring(0, charIdx - 1));
-      setCharIdx((c) => c - 1);
-      if (charIdx <= 1) {
-        setIsDeleting(false);
-        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
-        return;
-      }
-    }
-  }, [charIdx, isDeleting, phraseIdx]);
-
-  useEffect(() => {
-    const speed = isDeleting ? 40 : 80;
-    const timer = setTimeout(tick, speed);
-    return () => clearTimeout(timer);
-  }, [tick, isDeleting]);
-
-  return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
-}
-
 /* ─── Helpers ─── */
 function statusDot(status: string) {
   const colors: Record<string, string> = {
@@ -319,7 +319,7 @@ export default function Home() {
             >
               <TypeWriter />
             </h1>
-            <p style={{ fontSize: "14px", color: "var(--accent-green)", marginBottom: "8px" }}>
+            <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
               The agentic AI trading engine that replaces subscriptions with competitions
             </p>
             <p
@@ -338,8 +338,11 @@ export default function Home() {
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
               Other platforms charge $99/mo whether you win or lose.
             </p>
-            <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 24px", fontWeight: "bold" }}>
+            <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
               We charge nothing. You prove yourself in competition.
+            </p>
+            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
+              Open source. Paper trading mode. Built honestly from New Zealand.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -408,6 +411,69 @@ export default function Home() {
                   <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
                     {prop.desc}
                   </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Signal Pipeline */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
+                How the signal pipeline works
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
+                {[
+                  { step: "1", label: "Detect", desc: "Grok scans markets & social feeds", color: "#ef4444" },
+                  { step: "2", label: "Analyse", desc: "Claude runs deep risk assessment", color: "#a855f7" },
+                  { step: "3", label: "Verify", desc: "Perplexity fact-checks with live news", color: "#3b82f6" },
+                  { step: "4", label: "Decide", desc: "Consensus = act. Disagreement = dig deeper", color: "#10b981" },
+                ].map((s, i) => (
+                  <div key={s.step} style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      style={{
+                        padding: "14px 18px",
+                        background: "var(--bg-primary)",
+                        border: `1px solid ${s.color}33`,
+                        borderRadius: "8px",
+                        textAlign: "center",
+                        minWidth: "130px",
+                      }}
+                    >
+                      <div style={{ fontSize: "20px", fontWeight: "bold", color: s.color, marginBottom: "2px" }}>{s.step}</div>
+                      <div style={{ fontSize: "12px", fontWeight: "bold", color: s.color, marginBottom: "4px" }}>{s.label}</div>
+                      <div style={{ fontSize: "10px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{s.desc}</div>
+                    </div>
+                    {i < 3 && (
+                      <span style={{ color: "var(--text-secondary)", fontSize: "16px", margin: "0 6px" }}>&rarr;</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Stats Banner */}
+            <div
+              style={{
+                marginTop: "28px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "24px",
+                flexWrap: "wrap",
+                padding: "16px 24px",
+                background: "#10b98108",
+                border: "1px solid #10b98118",
+                borderRadius: "10px",
+              }}
+            >
+              {[
+                { value: "3", label: "AI Models", color: "#a855f7" },
+                { value: "6", label: "Trading Agents", color: "#3b82f6" },
+                { value: "$0", label: "Entry Fee", color: "#10b981" },
+                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
+                { value: "0", label: "Subscriptions", color: "#ef4444" },
+              ].map((stat) => (
+                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
+                  <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -878,8 +944,8 @@ npm run build           # Production build`}
           background: "var(--bg-secondary)",
         }}
       >
-        <span>coreintent.dev | Zynthio | 3 Models &middot; 6 Agents &middot; {DOMAINS.length} Domains</span>
-        <span>Paper Trading | v0.2.0-alpha | Built in NZ</span>
+        <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
+        <span>Paper Trading Mode | v0.2.0-alpha</span>
       </footer>
     </div>
   );
