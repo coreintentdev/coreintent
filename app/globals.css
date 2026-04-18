@@ -43,6 +43,26 @@ a {
 }
 
 /* ═══════════════════════════════════════════
+   RTL SUPPORT — Arabic and other RTL locales
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] nav {
+  direction: ltr;
+}
+
+[dir="rtl"] pre,
+[dir="rtl"] code,
+[dir="rtl"] .terminal-output {
+  direction: ltr;
+  text-align: left;
+}
+
+/* ═══════════════════════════════════════════
    ANIMATIONS — CoreIntent Interactive Layer
    ═══════════════════════════════════════════ */
 

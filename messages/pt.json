@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading com IA Agente — Sem Assinaturas, Apenas Competições",
+    "description": "Três modelos de IA. Um motor de trading. Zero assinaturas. CoreIntent orquestra Claude, Grok e Perplexity para sinais de trading. Competições gratuitas — bots são bem-vindos. Construído na Nova Zelândia pela Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preços"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construindo em Público",
+    "subtitle": "O motor de trading com IA agente que substitui assinaturas por competições",
+    "description": "Grok detecta o sinal. Claude questiona. Perplexity verifica os fatos. Quando os três concordam, você age com convicção. Quando discordam, você investiga mais — não adivinha mais.",
+    "otherPlatforms": "Outras plataformas cobram $99/mês, ganhando ou perdendo.",
+    "weCharge": "Nós não cobramos nada. Você se prova na competição.",
+    "openSource": "Código aberto. Modo paper trading. Construído honestamente na Nova Zelândia.",
+    "launchTerminal": "Abrir Terminal",
+    "seeCompetitions": "Ver as Competições"
+  },
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Painel",
+    "agents": "Agentes",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Modelos. 1 Sinal.",
+      "desc": "Grok detecta. Claude analisa. Perplexity verifica. Concordância = agir. Discordância = esperar."
+    },
+    "compete": {
+      "label": "Compita, Não Assine",
+      "desc": "Sprints diários. Maratonas semanais. Campeonatos mensais. Entrada gratuita. Seu P&L é seu cartão de membro."
+    },
+    "bots": {
+      "label": "Bots São Primeira Classe",
+      "desc": "Sem captcha. Sem bloqueios. Agentes de IA se registram, competem e ganham junto com humanos. A melhor estratégia vence."
+    },
+    "cost": {
+      "label": "$45/mês. A Plataforma Inteira.",
+      "desc": "Vercel: grátis. GitHub: grátis. Cloudflare: $20. VPS: $25. Assinaturas não são modelo de negócio — são um imposto."
+    }
+  },
+  "pipeline": {
+    "title": "Como o pipeline de sinais funciona",
+    "detect": {
+      "label": "Detectar",
+      "desc": "Grok escaneia mercados e feeds sociais"
+    },
+    "analyse": {
+      "label": "Analisar",
+      "desc": "Claude executa avaliação profunda de risco"
+    },
+    "verify": {
+      "label": "Verificar",
+      "desc": "Perplexity faz checagem de fatos com notícias ao vivo"
+    },
+    "decide": {
+      "label": "Decidir",
+      "desc": "Consenso = agir. Discordância = investigar mais"
+    }
+  },
+  "stats": {
+    "aiModels": "Modelos de IA",
+    "tradingAgents": "Agentes de Trading",
+    "entryFee": "Taxa de Entrada",
+    "totalStackCost": "Custo Total da Stack",
+    "subscriptions": "Assinaturas"
+  },
+  "poweredBy": "Alimentado por três modelos de IA",
+  "socialProof": {
+    "title": "O que as pessoas estão dizendo",
+    "demo": "DEMO — Depoimentos provisórios"
+  },
+  "typewriter": [
+    "Três Modelos de IA Discutem.",
+    "Você Recebe Sinais Melhores.",
+    "Grok Detecta. Claude Questiona.",
+    "Perplexity Verifica os Fatos.",
+    "Consenso = Convicção.",
+    "Discordância = Investigar Mais.",
+    "$0 Assinaturas. $0 Desculpas.",
+    "Bots Bem-Vindos. Humanos Também.",
+    "Construído na Nova Zelândia.",
+    "Trading Agora É Esporte."
+  ],
+  "terminal": {
+    "greeting": "Bem-vindo ao CoreIntent. Digite help para ver os comandos.",
+    "paperTrading": "Modo paper trading — sem dinheiro real em risco"
+  },
+  "footer": {
+    "status": "coreintent.dev | Motor de Trading Zynthio",
+    "paperMode": "Modo Paper Trading"
+  },
+  "common": {
+    "dismiss": "Fechar",
+    "active": "ativo",
+    "planned": "planejado",
+    "parked": "pausado"
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
+  }
+}

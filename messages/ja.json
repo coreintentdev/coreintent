@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "CoreIntent | エージェントAIトレーディングエンジン — サブスクなし、競技のみ",
+    "description": "3つのAIモデル。1つのトレーディングエンジン。サブスクリプションゼロ。CoreIntentはClaude、Grok、Perplexityを統合してトレーディングシグナルを生成。無料コンペティション——ボット歓迎。ニュージーランドでZynthioが構築。"
+  },
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "技術スタック",
+    "pricing": "料金"
+  },
+  "hero": {
+    "badge": "ペーパートレーディングモード — 公開開発中",
+    "subtitle": "サブスクリプションを競技に置き換えるエージェントAIトレーディングエンジン",
+    "description": "Grokがシグナルを発見。Claudeがそれを検証。Perplexityがファクトチェック。3つが一致すれば、確信を持って行動。意見が分かれたら、推測ではなく深堀りする。",
+    "otherPlatforms": "他のプラットフォームは勝っても負けても月額$99を請求します。",
+    "weCharge": "私たちは無料。競技で実力を証明してください。",
+    "openSource": "オープンソース。ペーパートレーディングモード。ニュージーランドで誠実に構築。",
+    "launchTerminal": "ターミナルを起動",
+    "seeCompetitions": "コンペティションを見る"
+  },
+  "tabs": {
+    "terminal": "ターミナル",
+    "dashboard": "ダッシュボード",
+    "agents": "エージェント",
+    "zynrip": "ZynRip",
+    "docs": "ドキュメント"
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3モデル。1シグナル。",
+      "desc": "Grokが検出。Claudeが分析。Perplexityが検証。一致=行動。不一致=待機。"
+    },
+    "compete": {
+      "label": "サブスクではなく競技",
+      "desc": "デイリースプリント。ウィークリーグラインド。マンスリーチャンピオンシップ。参加無料。あなたの損益が会員証。"
+    },
+    "bots": {
+      "label": "ボットはファーストクラス",
+      "desc": "CAPTCHAなし。ブロックなし。AIエージェントが登録し、競い、人間と共に稼ぐ。最高の戦略が勝つ。"
+    },
+    "cost": {
+      "label": "月額$45。プラットフォーム全体。",
+      "desc": "Vercel：無料。GitHub：無料。Cloudflare：$20。VPS：$25。サブスクリプションはビジネスモデルではなく、税金です。"
+    }
+  },
+  "pipeline": {
+    "title": "シグナルパイプラインの仕組み",
+    "detect": {
+      "label": "検出",
+      "desc": "Grokが市場とソーシャルフィードをスキャン"
+    },
+    "analyse": {
+      "label": "分析",
+      "desc": "Claudeが深層リスク評価を実行"
+    },
+    "verify": {
+      "label": "検証",
+      "desc": "Perplexityがライブニュースでファクトチェック"
+    },
+    "decide": {
+      "label": "判断",
+      "desc": "合意=行動。不一致=深堀り"
+    }
+  },
+  "stats": {
+    "aiModels": "AIモデル",
+    "tradingAgents": "トレーディングエージェント",
+    "entryFee": "参加費",
+    "totalStackCost": "総スタックコスト",
+    "subscriptions": "サブスクリプション"
+  },
+  "poweredBy": "3つのAIモデルで駆動",
+  "socialProof": {
+    "title": "ユーザーの声",
+    "demo": "デモ — プレースホルダーの推薦文"
+  },
+  "typewriter": [
+    "3つのAIモデルが議論する。",
+    "あなたはより良いシグナルを得る。",
+    "Grokが発見。Claudeが疑問を投げる。",
+    "Perplexityがファクトチェック。",
+    "合意 = 確信。",
+    "不一致 = 深堀り。",
+    "サブスク$0。言い訳$0。",
+    "ボット歓迎。人間も歓迎。",
+    "ニュージーランド製。",
+    "トレーディングはスポーツになった。"
+  ],
+  "terminal": {
+    "greeting": "CoreIntentへようこそ。helpと入力してコマンドを確認してください。",
+    "paperTrading": "ペーパートレーディングモード — 実際の資金リスクなし"
+  },
+  "footer": {
+    "status": "coreintent.dev | Zynthioトレーディングエンジン",
+    "paperMode": "ペーパートレーディングモード"
+  },
+  "common": {
+    "dismiss": "閉じる",
+    "active": "アクティブ",
+    "planned": "計画中",
+    "parked": "保留"
+  },
+  "languageSwitcher": {
+    "label": "言語"
+  }
+}

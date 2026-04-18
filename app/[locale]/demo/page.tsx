@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 /* ─── DEMO DATA — Simulated, not real trading ─── */
 

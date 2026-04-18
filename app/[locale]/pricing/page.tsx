@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -474,9 +474,9 @@ export default function PricingPage() {
             Risk warnings: Trading cryptocurrency involves significant risk. Past performance does not guarantee future results.
             <br />
             See our{" "}
-            <a href="/disclaimer" style={{ color: "var(--accent-blue)" }}>
+            <Link href="/disclaimer" style={{ color: "var(--accent-blue)" }}>
               full disclaimer
-            </a>{" "}
+            </Link>{" "}
             for more information.
           </p>
         </div>

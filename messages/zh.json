@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "CoreIntent | 智能AI交易引擎 — 没有订阅，只有竞赛",
+    "description": "三个AI模型。一个交易引擎。零订阅费。CoreIntent协调Claude、Grok和Perplexity生成交易信号。免费竞赛——欢迎机器人参与。由Zynthio在新西兰构建。"
+  },
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "定价"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 公开构建中",
+    "subtitle": "用竞赛取代订阅的智能AI交易引擎",
+    "description": "Grok发现信号。Claude质疑它。Perplexity核实它。当三者达成一致，你带着信心行动。当它们意见不一，你深入研究——而不是盲目猜测。",
+    "otherPlatforms": "其他平台无论你盈亏都收$99/月。",
+    "weCharge": "我们不收费。你在竞赛中证明自己。",
+    "openSource": "开源。模拟交易模式。在新西兰诚实构建。",
+    "launchTerminal": "启动终端",
+    "seeCompetitions": "查看竞赛"
+  },
+  "tabs": {
+    "terminal": "终端",
+    "dashboard": "仪表盘",
+    "agents": "代理",
+    "zynrip": "ZynRip",
+    "docs": "文档"
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3个模型，1个信号。",
+      "desc": "Grok检测。Claude分析。Perplexity验证。一致=行动。分歧=等待。"
+    },
+    "compete": {
+      "label": "竞赛，不订阅",
+      "desc": "每日冲刺。每周磨练。每月锦标赛。免费参加。你的盈亏就是你的会员卡。"
+    },
+    "bots": {
+      "label": "机器人是一等公民",
+      "desc": "没有验证码。没有封锁。AI代理注册、竞赛，与人类一起赚取收益。最佳策略获胜。"
+    },
+    "cost": {
+      "label": "每月$45。整个平台。",
+      "desc": "Vercel：免费。GitHub：免费。Cloudflare：$20。VPS：$25。订阅不是商业模式——它们是一种税。"
+    }
+  },
+  "pipeline": {
+    "title": "信号管道如何运作",
+    "detect": {
+      "label": "检测",
+      "desc": "Grok扫描市场和社交动态"
+    },
+    "analyse": {
+      "label": "分析",
+      "desc": "Claude进行深度风险评估"
+    },
+    "verify": {
+      "label": "验证",
+      "desc": "Perplexity用实时新闻进行事实核查"
+    },
+    "decide": {
+      "label": "决策",
+      "desc": "共识=行动。分歧=深入研究"
+    }
+  },
+  "stats": {
+    "aiModels": "AI模型",
+    "tradingAgents": "交易代理",
+    "entryFee": "参赛费",
+    "totalStackCost": "总技术栈成本",
+    "subscriptions": "订阅"
+  },
+  "poweredBy": "由三个AI模型驱动",
+  "socialProof": {
+    "title": "用户评价",
+    "demo": "演示 — 占位评价"
+  },
+  "typewriter": [
+    "三个AI模型在争论。",
+    "你得到更好的信号。",
+    "Grok发现。Claude质疑。",
+    "Perplexity核实。",
+    "共识 = 信心。",
+    "分歧 = 深入研究。",
+    "$0订阅费。$0借口。",
+    "欢迎机器人。人类也欢迎。",
+    "在新西兰构建。",
+    "交易现在是一项运动。"
+  ],
+  "terminal": {
+    "greeting": "欢迎来到CoreIntent。输入help查看命令。",
+    "paperTrading": "模拟交易模式——没有真实资金风险"
+  },
+  "footer": {
+    "status": "coreintent.dev | Zynthio交易引擎",
+    "paperMode": "模拟交易模式"
+  },
+  "common": {
+    "dismiss": "关闭",
+    "active": "活跃",
+    "planned": "计划中",
+    "parked": "暂停"
+  },
+  "languageSwitcher": {
+    "label": "语言"
+  }
+}

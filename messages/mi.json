@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "CoreIntent | Pukaha Hokohoko IA — Kaore he Ohaurunga, Ko nga Whakataetae Anake",
+    "description": "E toru nga tauira IA. Kotahi te pukaha hokohoko. Kore ohaurunga. Ka whakahaere a CoreIntent i a Claude, Grok me Perplexity. I hangaia i Aotearoa e Zynthio."
+  },
+  "nav": {
+    "terminal": "Puhanga",
+    "demo": "Whakaaturanga",
+    "stack": "Taputanga",
+    "pricing": "Utu"
+  },
+  "hero": {
+    "badge": "Aratau Pepa — Te Hanga i te Marea",
+    "subtitle": "Te pukaha hokohoko IA e whakakapinga ana i nga ohaurunga ki nga whakataetae",
+    "description": "Ka kitea e Grok te tohu. Ka patai a Claude. Ka whakamana a Perplexity. Ki te whakaae nga toru, ka neke koe me te maia. Ki te whakahee ratou, ka keri koe — kaua e matapae.",
+    "otherPlatforms": "He $99/marama te utu o etahi atu puhanga, ahakoa toa, ahakoa hinga.",
+    "weCharge": "Kore matou e utu. Whakaaturia tou kaha ki te whakataetae.",
+    "openSource": "Puna tuwhera. Aratau pepa. I hangaia i Aotearoa.",
+    "launchTerminal": "Whakarewa Puhanga",
+    "seeCompetitions": "Tirohia nga Whakataetae"
+  },
+  "tabs": {
+    "terminal": "Puhanga",
+    "dashboard": "Papa Matua",
+    "agents": "Mangai",
+    "zynrip": "ZynRip",
+    "docs": "Tuhinga"
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Tauira. 1 Tohu.",
+      "desc": "Ka kite a Grok. Ka wetewete a Claude. Ka whakapono a Perplexity. Whakaae = mahi. Whakahee = tatari."
+    },
+    "compete": {
+      "label": "Whakataetae, Kaua e Ohaurunga",
+      "desc": "Tere a-ra. Pakanga a-wiki. Whakataetae a-marama. He utu kore. Ko tou P&L to kaari mema."
+    },
+    "bots": {
+      "label": "He Tangata Tuatahi nga Karetao",
+      "desc": "Kaore he captcha. Kaore he aukati. Ka rehita, ka whakataetae, ka whiwhi nga mangai IA tahi me nga tangata."
+    },
+    "cost": {
+      "label": "$45/marama. Te Puhanga Katoa.",
+      "desc": "Vercel: utu kore. GitHub: utu kore. Cloudflare: $20. VPS: $25. Ehara nga ohaurunga i te tauira pakihi — he take ke."
+    }
+  },
+  "pipeline": {
+    "title": "Te ahua o te arawhata tohu",
+    "detect": {
+      "label": "Kite",
+      "desc": "Ka matai a Grok i nga makete me nga papaho papori"
+    },
+    "analyse": {
+      "label": "Wetewete",
+      "desc": "Ka whakahaere a Claude i te aromatawai turaru hohonu"
+    },
+    "verify": {
+      "label": "Whakapono",
+      "desc": "Ka whakamana a Perplexity ki nga rongo ora"
+    },
+    "decide": {
+      "label": "Whakatau",
+      "desc": "Whakaae = mahi. Whakahee = keri hohonu ake"
+    }
+  },
+  "stats": {
+    "aiModels": "Tauira IA",
+    "tradingAgents": "Mangai Hokohoko",
+    "entryFee": "Utu Urunga",
+    "totalStackCost": "Utu Taputanga Katoa",
+    "subscriptions": "Ohaurunga"
+  },
+  "poweredBy": "Ka whakahaerehia e nga tauira IA e toru",
+  "socialProof": {
+    "title": "He aha ta ratou e korero ana",
+    "demo": "WHAKAATURANGA — Korero tauira"
+  },
+  "typewriter": [
+    "E Toru nga Tauira IA e Tautohe ana.",
+    "Ka Whiwhi Koe i nga Tohu Pai.",
+    "Ka Kite a Grok. Ka Patai a Claude.",
+    "Ka Whakamana a Perplexity.",
+    "Whakaae = Maia.",
+    "Whakahee = Keri Hohonu.",
+    "$0 Ohaurunga. $0 Whakapahe.",
+    "Karetao Pai. Tangata Ano.",
+    "I Hangaia i Aotearoa.",
+    "He Hakinakina te Hokohoko."
+  ],
+  "terminal": {
+    "greeting": "Nau mai ki CoreIntent. Patohia help mo nga tohutohu.",
+    "paperTrading": "Aratau pepa — kaore he moni tuturu"
+  },
+  "footer": {
+    "status": "coreintent.dev | Pukaha Hokohoko Zynthio",
+    "paperMode": "Aratau Pepa"
+  },
+  "common": {
+    "dismiss": "Whakakore",
+    "active": "ora",
+    "planned": "mahere",
+    "parked": "tu"
+  },
+  "languageSwitcher": {
+    "label": "Reo"
+  }
+}
