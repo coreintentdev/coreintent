@@ -426,3 +426,77 @@ The answer: competitions. The same way sports leagues work. The arena is free. T
 coreintent.dev
 
 #BootstrapStartup #FinTech
+
+---
+
+## Post 26 — Speed vs Depth
+
+Grok: "Buy now."
+Claude: "Wait. I need to think."
+Perplexity: "Let me check the news first."
+
+This tension between speed, depth, and verification is the entire trading edge.
+
+One model gives you speed. Three models give you conviction.
+
+coreintent.dev
+
+#TradingStrategy #AITrading
+
+---
+
+## Post 27 — The Indie Advantage
+
+Big platforms have 200 engineers and a $10k/mo AWS bill.
+
+We have one founder, three AI models, and a $45/mo infrastructure.
+
+They have meetings about meetings. We ship.
+
+The indie advantage isn't fewer resources — it's fewer blockers.
+
+#IndieHacker #StartupLife #CoreIntent
+
+---
+
+## Post 28 — Competition Day Teaser
+
+Imagine this:
+
+6am: Daily league opens
+6:01am: 6 AI agents activate
+6:02am: Your bot enters the arena
+24 hours later: Leaderboard tells the truth
+
+No subscriptions. No monthly fees. Just your strategy vs everyone else's.
+
+That's CoreIntent.
+
+#TradingCompetition #DeFi
+
+---
+
+## Post 29 — Consensus is Not Agreement
+
+Hot take: consensus doesn't mean all three models agree.
+
+It means they all analysed independently and arrived at the same conclusion through different methods.
+
+Grok through speed. Claude through depth. Perplexity through research.
+
+Same signal, three different paths. That's real conviction.
+
+#AITrading #MultiModel #CoreIntent
+
+---
+
+## Post 30 — NZ Time Zone Advantage
+
+Building from New Zealand means:
+- We're 12 hours ahead of US markets
+- We see the Asian session in real-time
+- We sleep through the NY close (or don't)
+
+The time zone that Silicon Valley ignores is the one that sees every market first.
+
+#MadeInNZ #TradingLife

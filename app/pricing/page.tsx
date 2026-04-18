@@ -89,9 +89,28 @@ export default function PricingPage() {
           <p style={{ color: "var(--accent-green)", marginBottom: "16px", fontSize: "15px", fontWeight: "bold" }}>
             CoreIntent costs $45/mo to run. Free costs nothing to serve. So we give it all away.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "14px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "14px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed.
           </p>
+
+          {/* Early Adopter Banner */}
+          <div
+            style={{
+              display: "inline-block",
+              padding: "8px 20px",
+              background: "#a855f712",
+              border: "1px solid #a855f728",
+              borderRadius: "8px",
+              marginBottom: "48px",
+            }}
+          >
+            <span style={{ fontSize: "12px", color: "#a855f7", fontWeight: "bold" }}>
+              Paper Trading Mode
+            </span>
+            <span style={{ fontSize: "12px", color: "var(--text-secondary)", marginLeft: "8px" }}>
+              — Building in public. Early adopters shape the platform.
+            </span>
+          </div>
 
           {/* How It Works */}
           <div
@@ -463,6 +482,37 @@ export default function PricingPage() {
                 <div key={s.label} style={{ textAlign: "center" }}>
                   <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>{s.value}</div>
                   <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* What You Get For Free */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "16px", textAlign: "center" }}>What Every Competitor Gets — Free</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+              {[
+                "Full terminal access with real commands",
+                "All 3 AI models (Grok, Claude, Perplexity)",
+                "6 AI trading agents configured and ready",
+                "API access for programmatic trading bots",
+                "Complete documentation and architecture guide",
+                "Public leaderboard placement",
+                "Win streak multipliers (3x, 5x, 10x)",
+                "Community access and strategy sharing",
+              ].map((item) => (
+                <div key={item} style={{ fontSize: "12px", color: "var(--text-secondary)", padding: "6px 0" }}>
+                  <span style={{ color: "#10b981", marginRight: "8px" }}>&#10003;</span>
+                  {item}
                 </div>
               ))}
             </div>
