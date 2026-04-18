@@ -65,9 +65,14 @@ const STATIC_COMMANDS: Record<string, string> = {
 
   \x1b[33m── INTERACTIVE ──\x1b[0m
   \x1b[32mtrade [pair]\x1b[0m - Paper trade simulation (e.g. \x1b[32mtrade ETH/USDT\x1b[0m)
+  \x1b[32mchart [pair]\x1b[0m - Animated 24h price chart
   \x1b[32mradar\x1b[0m       - Animated market radar scan
   \x1b[32mping\x1b[0m        - Service connectivity diagnostics
   \x1b[32mtop\x1b[0m         - Live process monitor
+  \x1b[32mwallet\x1b[0m      - Paper trading wallet
+  \x1b[32mbattle\x1b[0m      - Live competition simulation
+  \x1b[32mleaderboard\x1b[0m - Weekly competition rankings (alias: \x1b[32mlb\x1b[0m)
+  \x1b[32mdemo\x1b[0m        - Auto-run platform showcase
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -564,6 +569,7 @@ const ALL_COMMANDS = [
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
   "trade", "radar", "ping", "cowsay", "top",
+  "chart", "leaderboard", "lb", "demo", "wallet", "battle",
 ];
 
 export default function Terminal() {
@@ -1049,6 +1055,240 @@ export default function Terminal() {
       return "";
     }
 
+    // ── CHART: Animated price chart ──
+    if (trimmed === "chart" || trimmed.startsWith("chart ")) {
+      const pairInput = trimmed === "chart" ? "BTC/USDT" : raw.substring(6).trim().toUpperCase();
+      const pair = pairInput || "BTC/USDT";
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60,
+      };
+      const base = basePrices[pair] || 100;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ ${pair} — 24h Price Chart ══\x1b[0m`, ``);
+
+      const points: number[] = [];
+      let p = base;
+      for (let i = 0; i < 30; i++) {
+        p += (Math.random() - 0.48) * base * 0.003;
+        points.push(p);
+      }
+      const min = Math.min(...points);
+      const max = Math.max(...points);
+      const range = max - min || 1;
+      const height = 12;
+
+      const grid: string[][] = [];
+      for (let r = 0; r < height; r++) {
+        grid.push(Array(30).fill(" "));
+      }
+      for (let col = 0; col < 30; col++) {
+        const row = height - 1 - Math.round(((points[col] - min) / range) * (height - 1));
+        grid[row][col] = "\u2588";
+        for (let r = row + 1; r < height; r++) {
+          grid[r][col] = "\u2591";
+        }
+      }
+
+      let rowIdx = 0;
+      const iv = setInterval(() => {
+        if (rowIdx < height) {
+          const priceLabel = (max - (rowIdx / (height - 1)) * range).toFixed(pair.includes("BTC") ? 0 : 2);
+          const row = grid[rowIdx].map((c) => {
+            if (c === "\u2588") return `\x1b[32m${c}\x1b[0m`;
+            if (c === "\u2591") return `\x1b[90m${c}\x1b[0m`;
+            return c;
+          }).join("");
+          addLines(`  \x1b[90m${priceLabel.padStart(8)}\x1b[0m \x1b[90m│\x1b[0m${row}`);
+          rowIdx++;
+        } else {
+          clearInterval(iv);
+          const change = ((points[29] - points[0]) / points[0]) * 100;
+          const changeColor = change >= 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(
+            `  \x1b[90m         └${"─".repeat(30)}\x1b[0m`,
+            `  \x1b[90m          0h                          24h\x1b[0m`,
+            ``,
+            `  Current: ${changeColor}$${points[29].toLocaleString("en-US", { maximumFractionDigits: 2 })}\x1b[0m  Change: ${changeColor}${change >= 0 ? "+" : ""}${change.toFixed(2)}%\x1b[0m`,
+            `  High: \x1b[32m$${max.toLocaleString("en-US", { maximumFractionDigits: 2 })}\x1b[0m  Low: \x1b[31m$${min.toLocaleString("en-US", { maximumFractionDigits: 2 })}\x1b[0m`,
+            `  \x1b[90mSimulated chart — demo data\x1b[0m`, ``
+          );
+        }
+      }, 80);
+      return "";
+    }
+
+    // ── LEADERBOARD: Competition rankings ──
+    if (trimmed === "leaderboard" || trimmed === "lb") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ WEEKLY COMPETITION LEADERBOARD ══\x1b[0m`, ``);
+      const players = [
+        { rank: 1, name: "AlphaBot_v7", pnl: "+12.4%", trades: 47, badge: "\x1b[33m\u2605\x1b[0m", type: "BOT" },
+        { rank: 2, name: "DegenTrader", pnl: "+9.8%", trades: 23, badge: "\x1b[90m\u2605\x1b[0m", type: "HUMAN" },
+        { rank: 3, name: "NightOwl_AI", pnl: "+7.2%", trades: 156, badge: "\x1b[90m\u2605\x1b[0m", type: "BOT" },
+        { rank: 4, name: "MomentumKing", pnl: "+5.1%", trades: 12, badge: " ", type: "HUMAN" },
+        { rank: 5, name: "MeanRevertBot", pnl: "+4.3%", trades: 89, badge: " ", type: "BOT" },
+        { rank: 6, name: "SatoshiSurfer", pnl: "+3.7%", trades: 31, badge: " ", type: "HUMAN" },
+        { rank: 7, name: "ArbitrageX", pnl: "+2.9%", trades: 203, badge: " ", type: "BOT" },
+        { rank: 8, name: "DiamondHands", pnl: "+1.2%", trades: 3, badge: " ", type: "HUMAN" },
+        { rank: 9, name: "ScalperBot_3", pnl: "+0.8%", trades: 412, badge: " ", type: "BOT" },
+        { rank: 10, name: "PaperTrader1", pnl: "-0.3%", trades: 7, badge: " ", type: "HUMAN" },
+      ];
+
+      addLines(
+        `  \x1b[90m  #  PLAYER              P&L      TRADES  TYPE\x1b[0m`,
+        `  \x1b[90m  ${"─".repeat(56)}\x1b[0m`
+      );
+
+      let idx = 0;
+      const iv = setInterval(() => {
+        if (idx < players.length) {
+          const p = players[idx];
+          const pnlColor = p.pnl.startsWith("+") ? "\x1b[32m" : "\x1b[31m";
+          const rankColor = p.rank <= 3 ? "\x1b[33m" : "\x1b[90m";
+          const typeColor = p.type === "BOT" ? "\x1b[36m" : "\x1b[35m";
+          addLines(`  ${p.badge} ${rankColor}${String(p.rank).padStart(2)}\x1b[0m  ${p.name.padEnd(20)} ${pnlColor}${p.pnl.padEnd(8)}\x1b[0m ${String(p.trades).padStart(4)}    ${typeColor}${p.type}\x1b[0m`);
+          idx++;
+        } else {
+          clearInterval(iv);
+          addLines(
+            `  \x1b[90m  ${"─".repeat(56)}\x1b[0m`,
+            `  \x1b[33m  Bots: 5\x1b[0m | \x1b[35mHumans: 5\x1b[0m | Prize Pool: \x1b[32mTBD\x1b[0m`,
+            `  \x1b[90m  Weekly league — resets Sunday 00:00 NZST\x1b[0m`,
+            `  \x1b[90m  Demo leaderboard — competitions not live yet\x1b[0m`, ``
+          );
+        }
+      }, 120);
+      return "";
+    }
+
+    // ── DEMO: Auto-run showcase sequence ──
+    if (trimmed === "demo") {
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  ██████╗ ███████╗███╗   ███╗ ██████╗\x1b[0m`,
+        `\x1b[36m  ██╔══██╗██╔════╝████╗ ████║██╔═══██╗\x1b[0m`,
+        `\x1b[36m  ██║  ██║█████╗  ██╔████╔██║██║   ██║\x1b[0m`,
+        `\x1b[36m  ██║  ██║██╔══╝  ██║╚██╔╝██║██║   ██║\x1b[0m`,
+        `\x1b[36m  ██████╔╝███████╗██║ ╚═╝ ██║╚██████╔╝\x1b[0m`,
+        `\x1b[36m  ╚═════╝ ╚══════╝╚═╝     ╚═╝ ╚═════╝\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        ``,
+        `  \x1b[33mWelcome to CoreIntent.\x1b[0m`,
+        `  \x1b[90mThis demo showcases the platform in 5 steps.\x1b[0m`,
+        `  \x1b[90mSit back and watch the engine work.\x1b[0m`,
+        ``
+      );
+
+      const steps = [
+        { delay: 1500, cmd: "status" },
+        { delay: 3500, cmd: "chart BTC/USDT" },
+        { delay: 7000, cmd: "radar" },
+        { delay: 11000, cmd: "leaderboard" },
+        { delay: 14500, cmd: "fortune" },
+      ];
+
+      for (const step of steps) {
+        setTimeout(() => {
+          addLines(`\x1b[90m  ─── demo step ───\x1b[0m`);
+          execSingle(step.cmd);
+        }, step.delay);
+      }
+
+      setTimeout(() => {
+        addLines(
+          ``,
+          `\x1b[36m  ══ DEMO COMPLETE ══\x1b[0m`,
+          `  \x1b[33mThat's CoreIntent.\x1b[0m`,
+          `  Three AI models. Competition-based. Bots welcome.`,
+          `  \x1b[90mType \x1b[32mhelp\x1b[0m to explore more. \x1b[32mcai\x1b[0m for the full picture.\x1b[0m`,
+          ``
+        );
+      }, 17000);
+
+      return "";
+    }
+
+    // ── WALLET: Wallet simulation ──
+    if (trimmed === "wallet") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+      const phases = [
+        `  \x1b[90m[wallet]\x1b[0m Initializing secure connection...`,
+        `  \x1b[90m[wallet]\x1b[0m Checking paper trading balance...`,
+        ``,
+        `  \x1b[36m══ PAPER WALLET ══\x1b[0m`,
+        `  \x1b[33mAddress:\x1b[0m  0x7a3d...f4e2 \x1b[90m(simulated)\x1b[0m`,
+        `  \x1b[33mNetwork:\x1b[0m  Polygon Mumbai \x1b[90m(testnet)\x1b[0m`,
+        ``,
+        `  \x1b[36m┌─────────────┬──────────────┐\x1b[0m`,
+        `  \x1b[36m│\x1b[0m Token       \x1b[36m│\x1b[0m Balance      \x1b[36m│\x1b[0m`,
+        `  \x1b[36m├─────────────┼──────────────┤\x1b[0m`,
+        `  \x1b[36m│\x1b[0m USDT        \x1b[36m│\x1b[0m \x1b[32m10,000.00\x1b[0m   \x1b[36m│\x1b[0m`,
+        `  \x1b[36m│\x1b[0m BTC         \x1b[36m│\x1b[0m \x1b[32m0.15000\x1b[0m     \x1b[36m│\x1b[0m`,
+        `  \x1b[36m│\x1b[0m ETH         \x1b[36m│\x1b[0m \x1b[32m2.50000\x1b[0m     \x1b[36m│\x1b[0m`,
+        `  \x1b[36m│\x1b[0m SOL         \x1b[36m│\x1b[0m \x1b[32m50.00000\x1b[0m    \x1b[36m│\x1b[0m`,
+        `  \x1b[36m└─────────────┴──────────────┘\x1b[0m`,
+        ``,
+        `  Total value: \x1b[32m$28,447.00\x1b[0m \x1b[90m(paper)\x1b[0m`,
+        `  \x1b[90mNo real money at risk. Testnet only.\x1b[0m`,
+      ];
+      let i = 0;
+      const iv = setInterval(() => {
+        if (i < phases.length) {
+          addLines(phases[i]);
+          i++;
+        } else {
+          clearInterval(iv);
+          addLines(``);
+        }
+      }, 150);
+      return "";
+    }
+
+    // ── BATTLE: Live competition simulation ──
+    if (trimmed === "battle") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[33m  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\x1b[0m`,
+        `\x1b[33m  ░     LIVE BATTLE SIMULATION       ░\x1b[0m`,
+        `\x1b[33m  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\x1b[0m`, ``);
+
+      const competitors = [
+        { name: "You", score: 0 },
+        { name: "AlphaBot_v7", score: 0 },
+        { name: "DegenTrader", score: 0 },
+      ];
+      let round = 0;
+      const totalRounds = 8;
+
+      const iv = setInterval(() => {
+        if (round < totalRounds) {
+          round++;
+          for (const c of competitors) {
+            c.score += +(Math.random() * 3 - 0.5).toFixed(2);
+          }
+          const sorted = [...competitors].sort((a, b) => b.score - a.score);
+          addLines(`  \x1b[90mRound ${round}/${totalRounds}\x1b[0m`);
+          for (let i = 0; i < sorted.length; i++) {
+            const c = sorted[i];
+            const barLen = Math.max(0, Math.round(c.score * 3));
+            const bar = "\u2588".repeat(barLen);
+            const color = i === 0 ? "\x1b[32m" : i === 1 ? "\x1b[33m" : "\x1b[90m";
+            const nameColor = c.name === "You" ? "\x1b[36m" : "\x1b[90m";
+            addLines(`    ${color}${String(i + 1)}.\x1b[0m ${nameColor}${c.name.padEnd(14)}\x1b[0m ${color}${bar} ${c.score >= 0 ? "+" : ""}${c.score.toFixed(2)}%\x1b[0m`);
+          }
+          addLines(``);
+        } else {
+          clearInterval(iv);
+          const sorted = [...competitors].sort((a, b) => b.score - a.score);
+          const winner = sorted[0];
+          addLines(
+            `  \x1b[36m══ BATTLE RESULT ══\x1b[0m`,
+            `  Winner: \x1b[32m${winner.name}\x1b[0m with \x1b[32m+${winner.score.toFixed(2)}%\x1b[0m`,
+            `  \x1b[90mSimulated competition — battles not live yet\x1b[0m`, ``
+          );
+        }
+      }, 500);
+      return "";
+    }
+
     // ── COWSAY: ASCII cow with trading wisdom ──
     if (trimmed === "cowsay") {
       const wisdoms = [
@@ -1298,6 +1538,7 @@ export default function Terminal() {
 
   return (
     <div
+      className="terminal-boot"
       style={{
         background: "var(--bg-terminal)",
         border: "1px solid var(--border-color)",

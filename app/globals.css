@@ -304,9 +304,171 @@ a {
   animation: ripple 2s ease-out infinite;
 }
 
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 3: Data Ticker & Micro-interactions
+   ═══════════════════════════════════════════ */
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes sparkline {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes glitchFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; transform: translateX(-1px); }
+  94% { opacity: 1; transform: translateX(1px); }
+  95% { opacity: 0.9; }
+  96% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes dataFlash {
+  0% { background: transparent; }
+  50% { background: rgba(16, 185, 129, 0.08); }
+  100% { background: transparent; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: var(--border-color); }
+  50% { border-color: rgba(16, 185, 129, 0.3); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes terminalBoot {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes signalPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* ─── Data Ticker Bar ─── */
+.ticker-wrap {
+  overflow: hidden;
+  background: rgba(16, 185, 129, 0.04);
+  border-top: 1px solid rgba(16, 185, 129, 0.1);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+  padding: 8px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  gap: 32px;
+  animation: tickerScroll 30s linear infinite;
+  width: max-content;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: default;
+  transition: color 0.2s ease;
+}
+
+.ticker-item:hover {
+  color: var(--text-primary);
+}
+
+.ticker-item .ticker-price {
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.ticker-item .ticker-change-up {
+  color: #10b981;
+}
+
+.ticker-item .ticker-change-down {
+  color: #ef4444;
+}
+
+/* ─── Card micro-interactions ─── */
+.card-interactive {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-interactive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.03), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.25);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08), 0 0 1px rgba(16, 185, 129, 0.2);
+}
+
+.card-interactive:hover::before {
+  left: 100%;
+}
+
+/* ─── Pipeline step animation ─── */
+.pipeline-step {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.pipeline-step:hover {
+  transform: scale(1.05);
+  border-color: currentColor !important;
+}
+
+/* ─── Stat counter ─── */
+.stat-value {
+  animation: countUp 0.6s ease both;
+}
+
+/* ─── Signal dot ─── */
+.signal-dot {
+  animation: signalPulse 2s ease-in-out infinite;
+}
+
+/* ─── Terminal boot ─── */
+.terminal-boot {
+  animation: terminalBoot 0.4s ease both;
+}
+
+/* ─── Glitch on hover ─── */
+.glitch-hover:hover {
+  animation: glitchFlicker 0.3s ease;
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {
     grid-template-columns: 1fr !important;
+  }
+  .ticker-track {
+    animation-duration: 20s;
   }
 }

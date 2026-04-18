@@ -225,6 +225,107 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
   },
 ];
 
+/* ─── Live Data Ticker ─── */
+const TICKER_DATA = [
+  { symbol: "BTC", price: "67,420", change: "+2.4%", up: true },
+  { symbol: "ETH", price: "3,285", change: "+1.8%", up: true },
+  { symbol: "SOL", price: "142.80", change: "-0.6%", up: false },
+  { symbol: "AVAX", price: "35.60", change: "+3.1%", up: true },
+  { symbol: "LINK", price: "14.92", change: "+0.9%", up: true },
+  { symbol: "DOT", price: "7.24", change: "-1.2%", up: false },
+  { symbol: "MATIC", price: "0.72", change: "+4.7%", up: true },
+  { symbol: "ARB", price: "1.18", change: "+2.1%", up: true },
+  { symbol: "OP", price: "2.34", change: "-0.3%", up: false },
+  { symbol: "NEAR", price: "5.67", change: "+1.5%", up: true },
+];
+
+function DataTicker() {
+  const items = [...TICKER_DATA, ...TICKER_DATA];
+  return (
+    <div className="ticker-wrap">
+      <div className="ticker-track">
+        {items.map((t, i) => (
+          <span key={i} className="ticker-item">
+            <span style={{ color: t.up ? "#10b981" : "#ef4444", fontSize: "10px" }}>{t.up ? "\u25B2" : "\u25BC"}</span>
+            <span style={{ fontWeight: "bold", color: "var(--text-primary)", fontSize: "11px" }}>{t.symbol}</span>
+            <span className="ticker-price">${t.price}</span>
+            <span className={t.up ? "ticker-change-up" : "ticker-change-down"}>{t.change}</span>
+            <span style={{ color: "var(--border-color)" }}>|</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Live Signal Feed ─── */
+function LiveSignalFeed() {
+  const [signals, setSignals] = useState<Array<{ id: number; pair: string; direction: string; confidence: number; source: string; time: string }>>([]);
+
+  useEffect(() => {
+    const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT", "LINK/USDT"];
+    const sources = ["Grok", "Claude", "Perplexity"];
+    const directions = ["LONG", "SHORT"];
+    let id = 0;
+
+    const addSignal = () => {
+      const pair = pairs[Math.floor(Math.random() * pairs.length)];
+      const source = sources[Math.floor(Math.random() * sources.length)];
+      const direction = directions[Math.floor(Math.random() * directions.length)];
+      const confidence = 65 + Math.floor(Math.random() * 30);
+      const now = new Date();
+      const time = now.toLocaleTimeString("en-NZ", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      id++;
+      setSignals((prev) => [{ id, pair, direction, confidence, source, time }, ...prev].slice(0, 5));
+    };
+
+    addSignal();
+    const iv = setInterval(addSignal, 3000);
+    return () => clearInterval(iv);
+  }, []);
+
+  return (
+    <div style={{ marginTop: "28px", textAlign: "left", maxWidth: "600px", margin: "28px auto 0" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px", textAlign: "center" }}>
+        <span className="signal-dot" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle" }} />
+        Live Signal Feed
+        <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
+          DEMO
+        </span>
+      </div>
+      <div style={{ background: "var(--bg-terminal)", border: "1px solid var(--border-color)", borderRadius: "8px", overflow: "hidden" }}>
+        {signals.map((s, i) => (
+          <div
+            key={s.id}
+            className="signal-enter"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              padding: "8px 12px",
+              borderBottom: i < signals.length - 1 ? "1px solid var(--border-color)" : "none",
+              fontSize: "12px",
+              animationDelay: `${i * 0.05}s`,
+            }}
+          >
+            <span style={{ color: "var(--text-secondary)", fontSize: "10px", minWidth: "60px" }}>{s.time}</span>
+            <span style={{ fontWeight: "bold", color: "var(--text-primary)", minWidth: "70px" }}>{s.pair}</span>
+            <span style={{ color: s.direction === "LONG" ? "#10b981" : "#ef4444", fontWeight: "bold", minWidth: "50px" }}>
+              {s.direction === "LONG" ? "\u25B2" : "\u25BC"} {s.direction}
+            </span>
+            <span style={{ color: s.confidence >= 80 ? "#10b981" : s.confidence >= 70 ? "#f59e0b" : "#ef4444", minWidth: "35px" }}>
+              {s.confidence}%
+            </span>
+            <span style={{ color: s.source === "Grok" ? "#ef4444" : s.source === "Claude" ? "#a855f7" : "#3b82f6", fontSize: "11px" }}>
+              {s.source}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Helpers ─── */
 function statusDot(status: string) {
   const colors: Record<string, string> = {
@@ -263,7 +364,7 @@ export default function Home() {
       {showHero && (
         <section
           style={{
-            padding: "48px 24px 40px",
+            padding: "48px 24px 64px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
             borderBottom: "1px solid var(--border-color)",
             textAlign: "center",
@@ -271,6 +372,8 @@ export default function Home() {
             overflow: "hidden",
           }}
         >
+          {/* Grid background */}
+          <div className="grid-bg" />
           <button
             onClick={() => setShowHero(false)}
             aria-label="Dismiss hero section"
@@ -555,6 +658,13 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            {/* Live Signal Feed */}
+            <LiveSignalFeed />
+          </div>
+
+          {/* Data Ticker */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
+            <DataTicker />
           </div>
         </section>
       )}
