@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Fri Apr 17 03:57:57 UTC 2026
+Generated: Sat Apr 18 02:57:39 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 28
+- INFO: Routes found: 23
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -39,7 +39,7 @@ Generated: Fri Apr 17 03:57:57 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1347:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1010:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -49,25 +49,26 @@ Generated: Fri Apr 17 03:57:57 UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 4 files
+- PASS: next/link used in 2 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:110:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:111:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:112:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:14:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:15:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:16:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 12 API routes contain demo/hardcoded data
+- INFO: 6 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (12 instances)
+- PASS: ARIA attributes found (6 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
+- INFO: Using Next.js 14
 
 ## 10. VPS & Deployment
 - PASS: VPS script exists: scripts/risk_monitor.ts
