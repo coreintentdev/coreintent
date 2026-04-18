@@ -592,7 +592,7 @@ export default function Home() {
       </div>
 
       {/* Main content */}
-      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }} role="main">
+      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
         {tab === "terminal" && <Terminal />}
 
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}

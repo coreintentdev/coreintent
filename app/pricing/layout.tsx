@@ -90,10 +90,18 @@ const structuredData = {
         },
         {
           "@type": "Question",
+          name: "How does the competition model work?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Daily leagues reset every 24 hours. Weekly leagues run over 7 days. Monthly tournaments are the big leagues. Everyone starts equal. Win streaks earn multipliers.",
+          },
+        },
+        {
+          "@type": "Question",
           name: "Where is CoreIntent based?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "New Zealand. Built by Corey McIvor under the Zynthio brand.",
+            text: "New Zealand. Built by Corey McIvor under the Zynthio brand. No Silicon Valley, no VC money — just a clear thesis and lean infrastructure.",
           },
         },
       ],

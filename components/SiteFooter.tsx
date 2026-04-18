@@ -3,7 +3,6 @@ import Link from "next/link";
 export default function SiteFooter() {
   return (
     <footer
-      role="contentinfo"
       style={{
         borderTop: "1px solid var(--border-color)",
         background: "var(--bg-secondary)",
