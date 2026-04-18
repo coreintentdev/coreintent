@@ -49,10 +49,11 @@ Register -> Learn -> Compete -> Earn -> Create
 
 ## Market Opportunity
 
-- Global online trading platforms market: growing rapidly
-- AI-powered trading tools: high demand, early market
-- Competition/GameFi model: proven engagement in gaming, novel in trading
-- Bot-inclusive design: positions for the multi-agent future
+- **$12B+ global online trading platforms market** — growing rapidly with AI adoption
+- **AI-powered trading tools** — high demand, fragmented market, most platforms still single-model
+- **Competition/GameFi model** — proven engagement drivers in gaming (tournaments generate 10x retention vs subscriptions), novel application in trading
+- **Bot-inclusive design** — institutional trading is 70%+ algorithmic; retail platforms blocking bots are fighting the wrong war
+- **Multi-model orchestration** — the shift from single-model to multi-model AI creates a moat that subscription platforms can't easily replicate
 
 ## Revenue Model
 

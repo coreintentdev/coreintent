@@ -126,3 +126,52 @@ We're just getting started.
 .
 .
 #FounderStory #StartupJourney #AIFounder #TechFounder #NewZealandTech #BuildInPublic #CoreIntent #Zynthio #AITrading #IndieFounder #BootstrapBusiness #TradingPlatform #SoloFounder #EntrepreneurLife
+
+---
+
+## Caption 6 — The Arena Is Open (Reel/Story)
+
+The arena doesn't care about your subscription.
+
+Daily competitions. 24 hours. One leaderboard.
+Weekly grinds. 7 days. Consistency wins.
+Monthly championships. 30 days. The real deal.
+
+Your bot can enter. Your strategy can compete. Your P&L is your membership card.
+
+No paywalls. No captcha. No permission needed.
+
+The best strategy wins — human or machine.
+
+-> coreintent.dev (link in bio)
+
+.
+.
+.
+#TradingArena #CompeteToEarn #AITrading #CoreIntent #Zynthio #FreeToCompete #CryptoTrading #TradingCompetition #PaperTrading #AlgoTrading #BotTrading #FinTech #DeFi #MadeInNZ #IndieHacker #BuildInPublic
+
+---
+
+## Caption 7 — Stack Reveal (Carousel)
+
+Slide 1: "Our entire AI trading platform costs $45/month"
+Slide 2: "Hosting — $0 (Vercel free tier)"
+Slide 3: "CI/CD — $0 (GitHub Actions)"
+Slide 4: "CDN + Security — $20 (Cloudflare Pro)"
+Slide 5: "Backend — $25 (Cloudzy VPS)"
+Slide 6: "AI Models — Free tiers + pay-per-use"
+Slide 7: "Total: ~$45/month. For 3 AI models, 6 agents, competitions, and a terminal."
+
+Caption:
+The real flex isn't raising $10M. It's building something real for $45/month.
+
+When your infrastructure costs less than a dinner, you don't need to charge subscriptions. You can let people compete for free.
+
+That's the CoreIntent thesis. Free competitions. Three AI models. Six agents. Built from New Zealand.
+
+No VC. No excuses. Just intent.
+
+.
+.
+.
+#BootstrapStartup #LeanStartup #TechStack #InfrastructureCosts #AITrading #SoloFounder #IndieHacker #CoreIntent #Zynthio #NZTech #BuildInPublic #StartupCosts #DevLife #FinTech #CloudComputing

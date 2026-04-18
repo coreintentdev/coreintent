@@ -68,6 +68,11 @@ const HERO_PHRASES = [
   "Bots Welcome. Humans Too.",
   "Built in New Zealand.",
   "Trading Is a Sport Now.",
+  "Your Edge Isn't One Model.",
+  "It's Three Models Debating.",
+  "$45/mo Runs the Whole Engine.",
+  "No VC. No Permission Needed.",
+  "Win Streaks Unlock Multipliers.",
 ];
 
 function TypeWriter() {
@@ -342,8 +347,41 @@ export default function Home() {
               We charge nothing. You prove yourself in competition.
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand.
+              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
             </p>
+
+            {/* Trust Indicators */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "16px",
+                flexWrap: "wrap",
+                marginBottom: "24px",
+              }}
+            >
+              {[
+                "Multi-Model Consensus",
+                "NZ-Registered",
+                "Open Source",
+                "No VC Funding",
+              ].map((badge) => (
+                <span
+                  key={badge}
+                  style={{
+                    padding: "4px 10px",
+                    background: "#10b98110",
+                    border: "1px solid #10b98128",
+                    borderRadius: "16px",
+                    fontSize: "10px",
+                    color: "#10b981",
+                    letterSpacing: "0.3px",
+                  }}
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
@@ -470,6 +508,7 @@ export default function Home() {
                 { value: "$0", label: "Entry Fee", color: "#10b981" },
                 { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
                 { value: "0", label: "Subscriptions", color: "#ef4444" },
+                { value: "3", label: "Competition Leagues", color: "#06b6d4" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
                   <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>

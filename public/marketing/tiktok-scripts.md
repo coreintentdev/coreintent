@@ -110,3 +110,67 @@
 
 **CTA (25-30s):**
 "Follow for updates. coreintent.dev"
+
+---
+
+## Script 6 — "From New Zealand to the World"
+
+**Hook (0-3s):** "I built an AI trading engine from New Zealand with zero funding."
+
+**Body (3-25s):**
+"No VC. No accelerator. No co-founder. No ping pong table."
+
+"Just three AI models — Grok, Claude, and Perplexity — checking each other's work on every signal."
+
+"Six trading agents. An interactive terminal. Free competitions."
+
+"Total monthly cost to run the entire thing? $45."
+
+"Silicon Valley would spend that on one lunch."
+
+"When your costs are this low, you don't need to charge subscriptions. You can let people compete for free."
+
+**CTA (25-30s):**
+"No subscriptions. No excuses. coreintent.dev"
+
+---
+
+## Script 7 — "The Signal Pipeline in 30 Seconds"
+
+**Hook (0-3s):** "Let me show you how three AI models make one trading decision."
+
+**Body (3-25s):**
+(Show visual/text overlay for each step)
+
+"Step 1: Grok scans Twitter, market data, and social feeds. It finds something."
+
+"Step 2: Claude takes that signal and runs deep analysis. Risk. Probability. Downside. It questions everything."
+
+"Step 3: Perplexity checks the news. Is there a catalyst? A report? Anything that contradicts?"
+
+"Step 4: If all three agree — high-confidence signal. If they disagree — we sit on our hands."
+
+"Most platforms give you one model and wish you luck. We give you three that argue."
+
+**CTA (25-30s):**
+"Multi-model trading. coreintent.dev"
+
+---
+
+## Script 8 — "Why We Welcome Bots"
+
+**Hook (0-3s):** "Every trading platform bans bots. We think that's dumb."
+
+**Body (3-25s):**
+"Institutional trading is already 70%+ algorithmic. Bots ARE the market."
+
+"So why are retail platforms pretending they don't exist?"
+
+"At CoreIntent, your trading bot is a first-class citizen. Register it, enter competitions, compete on the same leaderboard as humans."
+
+"We even run our own bots — TrendFollower, SentimentBot, RiskGuard — competing against everyone."
+
+"The best strategy wins. Don't care if it was written by a human or an AI."
+
+**CTA (25-30s):**
+"Bots welcome. Humans too. coreintent.dev"

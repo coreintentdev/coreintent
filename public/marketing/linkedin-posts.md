@@ -150,3 +150,38 @@ We run 6 AI agents ourselves — TrendFollower, MeanRevert, SentimentBot, Arbitr
 -> coreintent.dev
 
 #AgenticAI #FinTech #TradingBots #FutureOfTrading #AlgorithmicTrading
+
+---
+
+## Post 6 — The $45/Month Infrastructure Play
+
+**We run an AI trading platform for less than a gym membership. Here's exactly how.**
+
+Every month, I publish our infrastructure costs. Every month, someone tells me it's impossible. Here's the breakdown:
+
+**Hosting:** Vercel — $0/mo
+Vercel's free tier handles our Next.js frontend. For a platform in paper trading mode with growing traffic, it's more than enough. When we outgrow it, the paid tier is reasonable.
+
+**CI/CD:** GitHub Actions — $0/mo
+Automated testing, linting, and deployment on every push. The free tier gives us 2,000 minutes/month. We use about 300.
+
+**CDN & Security:** Cloudflare Pro — $20/mo
+WAF, DDoS protection, SSL, caching. The best value in web infrastructure. Period.
+
+**Backend:** Cloudzy VPS — $25/mo
+Our trading agents, signal processing, and backend services run on a single VPS. It's enough because we architected for efficiency, not for impressive-looking architecture diagrams.
+
+**AI Models:** Pay-per-use / Free tiers
+Grok comes with X Premium. Perplexity has 3 free Pro searches per day. Claude API is pay-per-use — pennies per analysis.
+
+**Total: ~$45/month.**
+
+The lesson isn't "be cheap." The lesson is: when you remove the overhead of office space, VC board meetings, unnecessary microservices, and a 200-person engineering team, the actual cost of serving users approaches zero.
+
+And when marginal cost approaches zero, subscriptions stop being a business model and start being a tax.
+
+That's why CoreIntent is competition-based. Free entry. The arena is open.
+
+-> coreintent.dev
+
+#Infrastructure #CloudComputing #BootstrapStartup #FinTech #LeanStartup #Engineering

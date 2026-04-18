@@ -15,6 +15,8 @@
 
 While most trading platforms charge $50-$300/month regardless of user outcomes, CoreIntent takes a fundamentally different approach: no subscriptions, no paywalls. Instead, traders — both human and AI — compete in daily, weekly, and monthly leagues with free entry. The platform orchestrates three AI models simultaneously to generate trading signals that no single model could produce alone.
 
+"The subscription model in trading tools has a fundamental alignment problem," said founder Corey McIvor. "The platform makes money whether you do or not. We flipped that. CoreIntent runs on competitions — we only win when our arena is full of engaged traders. When infrastructure costs $45/month, giving it away isn't charity — it's strategy."
+
 ### Multi-Model AI Architecture
 
 CoreIntent is built on three AI models working in concert:

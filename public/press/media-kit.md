@@ -131,6 +131,24 @@ The entire platform uses monospace typography. This is a deliberate design choic
 5. **Status:** Always mention "paper trading mode" when discussing current capabilities
 6. **Honesty:** Never imply live trading, exchange connections, or features that don't exist yet
 
+## Do's and Don'ts
+
+### Do
+- Refer to CoreIntent as "an agentic AI trading engine"
+- Mention the three AI models by name (Grok, Claude, Perplexity)
+- Highlight the competition model over the technology
+- Use "Paper trading mode" when describing current status
+- Credit Corey McIvor as founder, Zynthio as parent brand
+- Emphasise the NZ origin story
+
+### Don't
+- Say "connected to exchanges" (they're planned, not connected)
+- Imply users are trading real money (paper trading only)
+- Use "cheap" — use "lean" or "efficient" for infrastructure costs
+- Call it a "crypto platform" — it's an "AI trading engine"
+- Use testimonials without the DEMO label
+- Register or reference anything in Australia for business purposes
+
 ## Media Contact
 
 Corey McIvor
