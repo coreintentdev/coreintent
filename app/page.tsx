@@ -69,7 +69,7 @@ const HERO_PHRASES = [
   "Built in New Zealand.",
   "Trading Is a Sport Now.",
   "Your Edge Isn't One Model.",
-  "It's Three Models Debating.",
+  "Three Models Are Debating.",
   "$45/mo Runs the Whole Engine.",
   "No VC. No Permission Needed.",
   "Win Streaks Unlock Multipliers.",
