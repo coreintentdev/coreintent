@@ -7,6 +7,19 @@ import { isRTL } from "@/lib/i18n";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import type { Locale } from "@/i18n/routing";
 
+const OG_LOCALE: Record<string, string> = {
+  en: "en_NZ",
+  es: "es_419",
+  mi: "mi_NZ",
+  zh: "zh_CN",
+  ja: "ja_JP",
+  pt: "pt_BR",
+  fr: "fr_FR",
+  de: "de_DE",
+  ar: "ar_SA",
+  hi: "hi_IN",
+};
+
 export async function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
@@ -41,7 +54,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_NZ" : locale,
+      locale: OG_LOCALE[locale] || locale,
       url: "https://coreintent.dev",
       siteName: "CoreIntent",
       title: t("title"),
