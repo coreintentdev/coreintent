@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { isRTL } from "@/lib/i18n";
+import { isRTL, toOpenGraphLocale } from "@/lib/i18n";
 import { SUPPORTED_LOCALES } from "@/i18n/routing";
 import type { Locale } from "@/i18n/routing";
 
@@ -41,7 +41,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_NZ" : locale,
+      locale: toOpenGraphLocale(locale),
       url: "https://coreintent.dev",
       siteName: "CoreIntent",
       title: t("title"),
