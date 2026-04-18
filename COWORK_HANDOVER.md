@@ -5,10 +5,14 @@
 
 ## WHAT HAPPENED THIS SESSION
 
-Claude Code session ran for 2+ hours, built 42 commits, then context
-compacted and degraded. Sandbox cannot reach ANY external service (DNS
-blocked). No SSH, no API calls, no Tailscale, no GitHub CLI auth, no
-Slack, no Notion. Code-only environment.
+Claude Code session ran for hours, crashed once (see INC-008), came back
+and kept working. **12 commits made on this branch ahead of main**.
+Sandbox cannot reach ANY external service (DNS blocked, verified).
+No SSH, no API calls, no Tailscale, no GitHub CLI auth, no Slack,
+no Notion. Code-only environment.
+
+**READ `HONEST_AUDIT.md` FIRST.** It documents what I actually verified
+vs what I claimed but never tested.
 
 ## WHAT WAS BUILT (all pushed, build clean)
 
@@ -45,12 +49,17 @@ npm run dev
 
 ## WHAT COWORK NEEDS TO DO
 
-### 1. Deploy to Cloudflare (THE REAL DEPLOY — not DNS flush)
+### 1. Deploy to Cloudflare (CORRECTED — previous command was WRONG)
+The `@cloudflare/next-on-pages` package is deprecated. Use OpenNext:
 ```bash
-npm run build
-npx wrangler pages deploy .next/static --project-name coreintent --branch main
+npm install -D @opennextjs/cloudflare
+npx @opennextjs/cloudflare build
+npx wrangler deploy
 ```
-OR create a new Cloudflare Pages project pointing at the GitHub repo.
+OR just use Vercel — it's native Next.js support and one command:
+```bash
+npx vercel --prod
+```
 The old coreintent.dev is STALE. Deploy the NEW build. Do NOT flush DNS.
 
 ### 2. Kill Port 7681 on VPS
@@ -97,7 +106,9 @@ They are now in conversation logs. Rotate everything:
 - Test any API key
 - Run the dev server against real endpoints
 
-Everything that could be done in code WAS done. 42 commits. Build clean.
+Build compiles clean. Lint clean. TypeScript clean.
+Runtime: UNTESTED against real APIs. Assume every integration needs
+manual verification before trusting it.
 
 ## FINANCIAL DAMAGE
 A$5,460+ documented. See INCIDENT_REPORT_INC008.md.
