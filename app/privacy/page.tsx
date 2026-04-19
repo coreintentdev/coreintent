@@ -1,21 +1,15 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "CoreIntent privacy policy — how we collect, use, and protect your data. Operated by Corey McIvor under the Zynthio brand, based in New Zealand.",
-};
 
 export default function PrivacyPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>
+        <article style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>
           <h1 style={{ fontSize: "28px", marginBottom: "8px" }}>Privacy Policy</h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px" }}>
-            Last updated: March 2026
+            Last updated: <time dateTime="2026-03">March 2026</time>
           </p>
 
           <section style={{ marginBottom: "32px" }}>
@@ -148,7 +142,7 @@ export default function PrivacyPage() {
               For privacy-related questions: <a href="mailto:corey@coreyai.ai">corey@coreyai.ai</a>
             </p>
           </section>
-        </div>
+        </article>
       </main>
       <SiteFooter />
     </div>

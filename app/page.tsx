@@ -259,9 +259,18 @@ export default function Home() {
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
 
+      <noscript>
+        <div style={{ padding: "48px 24px", textAlign: "center", maxWidth: "800px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "28px", marginBottom: "12px" }}>CoreIntent — Agentic AI Trading Engine</h2>
+          <p>Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok &amp; Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio.</p>
+          <p style={{ marginTop: "12px" }}><a href="/pricing">View Competitions</a> | <a href="/stack">View Stack</a> | <a href="/demo">Try Demo</a></p>
+        </div>
+      </noscript>
+
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
         <section
+          aria-label="Hero — CoreIntent AI Trading Engine"
           style={{
             padding: "48px 24px 40px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
@@ -317,7 +326,8 @@ export default function Home() {
                 minHeight: "1.3em",
               }}
             >
-              <TypeWriter />
+              <span className="sr-only">CoreIntent — Agentic AI Trading Engine | Three AI Models, One Signal, Zero Subscriptions</span>
+              <span aria-hidden="true"><TypeWriter /></span>
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
               The agentic AI trading engine that replaces subscriptions with competitions
@@ -560,7 +570,8 @@ export default function Home() {
       )}
 
       {/* Tab bar */}
-      <div
+      <nav
+        aria-label="Content tabs"
         style={{
           display: "flex",
           alignItems: "center",
@@ -589,7 +600,7 @@ export default function Home() {
             {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
           </button>
         ))}
-      </div>
+      </nav>
 
       {/* Main content */}
       <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>

@@ -142,8 +142,12 @@ else
   log_fail "Twitter card meta tags MISSING"
 fi
 
-# robots.txt
-[ -f "public/robots.txt" ] && log_pass "robots.txt exists" || log_fail "robots.txt MISSING"
+# robots.txt (static) or app/robots.ts (dynamic)
+if [ -f "public/robots.txt" ] || [ -f "app/robots.ts" ]; then
+  log_pass "robots.txt configured (static or dynamic)"
+else
+  log_fail "robots.txt MISSING"
+fi
 
 # sitemap
 if [ -f "app/sitemap.ts" ] || [ -f "public/sitemap.xml" ]; then
@@ -159,12 +163,14 @@ else
   log_warn "No favicon found"
 fi
 
-# Page-level metadata
-for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
-  if [ -f "$page" ] && grep -q "metadata" "$page" 2>/dev/null; then
-    log_pass "Page metadata: $page"
+# Page-level metadata (in page.tsx or layout.tsx)
+for dir in app/privacy app/terms app/disclaimer; do
+  page="$dir/page.tsx"
+  layout="$dir/layout.tsx"
+  if ([ -f "$page" ] && grep -q "metadata" "$page" 2>/dev/null) || ([ -f "$layout" ] && grep -q "metadata" "$layout" 2>/dev/null); then
+    log_pass "Page metadata: $dir"
   elif [ -f "$page" ]; then
-    log_warn "No page-level metadata: $page"
+    log_warn "No page-level metadata: $dir"
   fi
 done
 
