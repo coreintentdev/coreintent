@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Terms of Service | CoreIntent",
-  description: "CoreIntent terms of service — rules of engagement.",
-};
 
 export default function TermsPage() {
   return (

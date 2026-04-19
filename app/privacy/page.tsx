@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Privacy Policy | CoreIntent",
-  description: "CoreIntent privacy policy — how we handle your data.",
-};
 
 export default function PrivacyPage() {
   return (

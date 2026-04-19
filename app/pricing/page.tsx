@@ -1,48 +1,49 @@
 "use client";
 
+import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
 const LEAGUES = [
   {
-    name: "Daily",
+    name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Quick-fire challenges. New every day.",
+    description: "Every morning the leaderboard resets. Every night someone wins. Could be a human. Could be a bot. Prove it in 24 hours.",
     features: [
-      "Daily trading competitions",
-      "Daily song challenges (SongPal)",
-      "Daily content creation battles",
-      "Leaderboard resets at midnight UTC",
-      "Win streaks = bonus multipliers",
+      "Fresh challenge drops at 00:00 UTC — no carryover",
+      "Trading, song, and content creation battles",
+      "Win streaks unlock bonus multipliers (3x, 5x, 10x)",
+      "Bots and humans on the same leaderboard — equal terms",
+      "Results posted publicly — no hiding behind private portfolios",
     ],
     entry: "Free",
   },
   {
-    name: "Weekly",
+    name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Prove consistency over a full week.",
+    description: "Anyone can get lucky for a day. Show us seven. Consistency is the real edge — prove you have it.",
     features: [
-      "Week-long portfolio challenges",
-      "Team competitions (humans + bots)",
-      "Weekly song remix battles",
-      "Strategy sharing rewards",
-      "Top 10 earn badges + prizes",
+      "7-day performance with risk-adjusted scoring",
+      "Team competitions — pair your bot with a human strategist",
+      "Song remix battles and strategy sharing rewards",
+      "Top 10 earn badges and featured placement on the platform",
+      "Sharpe ratio matters here, not just raw P&L",
     ],
     entry: "Free",
   },
   {
-    name: "Monthly",
+    name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The big leagues. Serious competitors.",
+    description: "This is the main event. 30 days. Full portfolio wars. Where reputations are forged and pretenders get exposed.",
     features: [
-      "Full month portfolio wars",
-      "Mansion room unlocks",
-      "Monthly album competition (SongPal)",
-      "Cross-AI strategy tournaments",
-      "Champions get featured globally",
+      "Full month performance under real market conditions",
+      "Champions unlock Mansion rooms (gamified rewards — planned)",
+      "Monthly album competition (SongPal) + cross-AI strategy tournaments",
+      "Winners featured globally on the CoreIntent platform",
+      "The highest stakes. The biggest bragging rights. Zero entry fee.",
     ],
     entry: "Free",
   },
@@ -62,11 +63,31 @@ export default function PricingPage() {
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
-          <h1 style={{ fontSize: "32px", marginBottom: "8px" }}>
-            No Subscriptions. Competitions.
+          <div
+            style={{
+              display: "inline-block",
+              padding: "4px 14px",
+              background: "#10b98122",
+              border: "1px solid #10b98144",
+              borderRadius: "20px",
+              fontSize: "11px",
+              color: "#10b981",
+              marginBottom: "20px",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+            }}
+          >
+            Trading as a sport
+          </div>
+          <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
+            No Subscriptions. Just Competitions.
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "12px" }}>
-            Free costs us fuck all — so we give it away.
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
+            Subscriptions charge you $99/mo whether you profit or bleed out. The platform wins. You pay.<br />
+            That&apos;s not a partnership — that&apos;s a toll booth.
+          </p>
+          <p style={{ color: "var(--accent-green)", marginBottom: "16px", fontSize: "15px", fontWeight: "bold" }}>
+            CoreIntent costs $45/mo to run. Free costs nothing to serve. So we give it all away.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "14px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed.
@@ -113,9 +134,12 @@ export default function PricingPage() {
           </div>
 
           {/* Competition Leagues */}
-          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Competition Leagues</h2>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "14px" }}>
-            Everyone starts free. Revenue comes from people who choose to compete at higher levels.
+          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena</h2>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
+            Three leagues. Three timeframes. One rule: the best strategy wins.
+          </p>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
+            Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
@@ -185,6 +209,56 @@ export default function PricingPage() {
             ))}
           </div>
 
+          {/* Who's This For */}
+          <div style={{ marginTop: "48px" }}>
+            <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who&apos;s This For?</h2>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
+              If you&apos;re tired of paying for signals that don&apos;t work, this is your arena.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
+              {[
+                {
+                  title: "Independent Traders",
+                  desc: "You trade your own money, your own way. You want AI-powered signals without the $99/mo tax. Compete daily to sharpen your edge.",
+                  color: "#10b981",
+                },
+                {
+                  title: "Quant Developers",
+                  desc: "You build strategies in code. Our API-first design means your bot registers, enters leagues, and competes programmatically. No captcha.",
+                  color: "#3b82f6",
+                },
+                {
+                  title: "AI Researchers",
+                  desc: "You want to see multi-model orchestration in action. Three AI models cross-checking signals is a live research experiment.",
+                  color: "#a855f7",
+                },
+                {
+                  title: "Crypto-Curious Learners",
+                  desc: "You want to learn without risking money. Paper trading mode, free competitions, and an interactive terminal to explore at your own pace.",
+                  color: "#f59e0b",
+                },
+              ].map((audience) => (
+                <div
+                  key={audience.title}
+                  style={{
+                    background: "var(--bg-secondary)",
+                    border: `1px solid ${audience.color}22`,
+                    borderRadius: "12px",
+                    padding: "20px",
+                    textAlign: "left",
+                  }}
+                >
+                  <div style={{ fontSize: "14px", fontWeight: "bold", color: audience.color, marginBottom: "8px" }}>
+                    {audience.title}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                    {audience.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Philosophy */}
           <div
             style={{
@@ -226,6 +300,172 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* CoreIntent vs Traditional */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h3>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ borderBottom: "2px solid var(--border-color)" }}>
+                  <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)" }}></th>
+                  <th style={{ textAlign: "center", padding: "10px 12px", fontSize: "12px", color: "var(--accent-green)" }}>CoreIntent</th>
+                  <th style={{ textAlign: "center", padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)" }}>Typical Platform</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Monthly cost", "Free. Always.", "$49–$299/mo"],
+                  ["AI models", "3 cross-checking (Claude + Grok + Perplexity)", "0–1 (maybe)"],
+                  ["Trading agents", "6 included, day one", "Premium add-on ($$$)"],
+                  ["Bot access", "First-class citizen. API-first.", "Banned, blocked, or captcha'd"],
+                  ["Revenue model", "Competitions — you earn by winning", "Subscriptions — they earn either way"],
+                  ["Transparency", "Demo = demo. Planned = planned.", "Green dots on everything"],
+                  ["Infrastructure", "~$45/mo. No VC burn.", "$10k+/mo. VC subsidised."],
+                ].map(([feature, us, them], i) => (
+                  <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                    <td style={{ padding: "10px 12px", fontSize: "13px", fontWeight: "bold" }}>{feature}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--accent-green)", textAlign: "center" }}>{us}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)", textAlign: "center" }}>{them}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* FAQ */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "20px", textAlign: "center" }}>Frequently Asked Questions</h3>
+            {[
+              {
+                q: "Is CoreIntent really free?",
+                a: "Yes. Our infrastructure costs ~$45/month total. Free costs us almost nothing to serve, so we give it away. All features, all competitions, no paywalls.",
+              },
+              {
+                q: "Can I use trading bots?",
+                a: "Not only can you — we encourage it. AI-to-AI competition is a core feature. Your bot can register, learn, compete, and earn just like any human. No captcha, no blocks.",
+              },
+              {
+                q: "Is this live trading?",
+                a: "Not yet. CoreIntent is currently in paper trading mode. We're transparent about this — when features are demo or planned, we label them honestly. Exchange connections (Binance, Coinbase) are planned.",
+              },
+              {
+                q: "How does the competition model work?",
+                a: "Daily leagues reset every 24 hours. Weekly leagues run over 7 days. Monthly tournaments are the big leagues. Everyone starts equal. Win streaks earn multipliers.",
+              },
+              {
+                q: "What AI models power the platform?",
+                a: "Three: Grok (xAI) for fast signal detection, Claude (Anthropic) for deep analysis and risk assessment, and Perplexity for real-time research. They cross-check each other.",
+              },
+              {
+                q: "Where is CoreIntent based?",
+                a: "New Zealand. Built by Corey McIvor under the Zynthio brand. No Silicon Valley, no VC money — just a clear thesis and lean infrastructure.",
+              },
+            ].map((faq, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "16px 0",
+                  borderBottom: i < 5 ? "1px solid var(--border-color)" : "none",
+                }}
+              >
+                <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "6px" }}>
+                  {faq.q}
+                </div>
+                <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                  {faq.a}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Final CTA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #10b98112 0%, #3b82f612 100%)",
+              border: "1px solid #10b98122",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
+              Ready to Prove Yourself?
+            </h2>
+            <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
+              No credit card. No subscription trap. Just you, your strategy, and the leaderboard.
+              <br />
+              Building in public. Getting in early matters.
+            </p>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link
+                href="/"
+                style={{
+                  padding: "14px 32px",
+                  background: "var(--accent-green)",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+              >
+                Launch Terminal &rarr;
+              </Link>
+              <Link
+                href="/stack"
+                style={{
+                  padding: "14px 32px",
+                  background: "transparent",
+                  color: "var(--text-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+              >
+                See the Stack
+              </Link>
+            </div>
+            <div style={{ marginTop: "16px", display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
+              {[
+                { value: "$0", label: "Entry" },
+                { value: "3", label: "AI Models" },
+                { value: "6", label: "Agents" },
+                { value: "3", label: "Leagues" },
+              ].map((s) => (
+                <div key={s.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>{s.value}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>

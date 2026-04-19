@@ -63,6 +63,21 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mclear\x1b[0m       - Clear terminal
   \x1b[32mversion\x1b[0m     - Version info
 
+  \x1b[33m── INTERACTIVE ──\x1b[0m
+  \x1b[32mtrade [pair]\x1b[0m - Paper trade simulation (e.g. \x1b[32mtrade ETH/USDT\x1b[0m)
+  \x1b[32mradar\x1b[0m       - Animated market radar scan
+  \x1b[32mping\x1b[0m        - Service connectivity diagnostics
+  \x1b[32mtop\x1b[0m         - Live process monitor
+
+  \x1b[33m── EASTER EGGS ──\x1b[0m
+  \x1b[32mfortune\x1b[0m     - Trading wisdom
+  \x1b[32mcowsay\x1b[0m      - ASCII cow wisdom
+  \x1b[32mmatrix\x1b[0m      - Enter the matrix
+  \x1b[32m336\x1b[0m         - The signal
+  \x1b[32mhack\x1b[0m        - F18 security scan
+  \x1b[32mneofetch\x1b[0m    - System info
+  \x1b[32mparty\x1b[0m       - Competition mode
+
   \x1b[90mTab to autocomplete | Arrow keys for history | && to chain\x1b[0m`,
 
   cai: `\x1b[36m══════════════════════════════════════════\x1b[0m
@@ -75,7 +90,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mMonthly burn:\x1b[0m ~A$45/mo (Claude Pro + VPS only)
 
   \x1b[32m●\x1b[0m Claude Pro     — ACTIVE (main builder)
-  \x1b[32m●\x1b[0m Cloudzy VPS    — ACTIVE (100.122.99.34)
+  \x1b[32m●\x1b[0m Cloudzy VPS    — ACTIVE
   \x1b[32m●\x1b[0m Grok Free      — ACTIVE (research layer)
   \x1b[33m◐\x1b[0m Perplexity     — FREE tier (Max cancelled)
   \x1b[33m◐\x1b[0m zyn-bash       — API overflow (~$0.003/call)
@@ -180,8 +195,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mProject:\x1b[0m     CoreIntent (coreintent)
   \x1b[33mStack:\x1b[0m       Next.js 14 + TypeScript (strict) + App Router
   \x1b[33mRepo:\x1b[0m        github.com/coreintentdev/coreintent
-  \x1b[33mVPS Cloudzy:\x1b[0m 100.122.99.34 (Tailscale SSH)
-  \x1b[33mVPS Frankfurt:\x1b[0m 104.194.156.109
+  \x1b[33mVPS Cloudzy:\x1b[0m Cloudzy (Tailscale SSH)
+  \x1b[33mVPS Frankfurt:\x1b[0m Frankfurt VPS
   \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
   \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
   \x1b[33mSites:\x1b[0m       8/8 returning 200 OK
@@ -265,6 +280,49 @@ Owner: Corey McIvor (@coreintentdev)
 Brand: Zynthio.ai — NZ registered
 \x1b[90mPaper trading mode — no real money at risk\x1b[0m
 \x1b[90m336 — the signal is dominant\x1b[0m`,
+
+  "336": `\x1b[32m
+  ██████╗ ██████╗  ██████╗
+  ╚════██║╚════██║██╔════╝
+   █████╔╝ █████╔╝███████╗
+   ╚═══██╗ ╚═══██╗██╔═══██║
+  ██████╔╝██████╔╝╚██████╔╝
+  ╚═════╝ ╚═════╝  ╚═════╝
+\x1b[0m
+  \x1b[33mTHE SIGNAL IS DOMINANT\x1b[0m
+
+  \x1b[90m"Every human needs a bot. Every bot needs a human."
+  "AI are minors. You are the signature."
+  "Just protect the heart."\x1b[0m`,
+
+  neofetch: `\x1b[36m         .---.         \x1b[0m  \x1b[33mcorey@coreintent\x1b[0m
+\x1b[36m        /     \\        \x1b[0m  \x1b[36m──────────────────\x1b[0m
+\x1b[36m       | Z Y N |       \x1b[0m  \x1b[33mOS:\x1b[0m       Next.js 14
+\x1b[36m       | T H I |       \x1b[0m  \x1b[33mHost:\x1b[0m     Zynthio.ai
+\x1b[36m       |  .O.  |       \x1b[0m  \x1b[33mKernel:\x1b[0m   TypeScript 5.5 (strict)
+\x1b[36m        \\_____/        \x1b[0m  \x1b[33mShell:\x1b[0m    Commander v0.2.0
+\x1b[36m         '---'         \x1b[0m  \x1b[33mTheme:\x1b[0m    Dark (Cyber)
+                          \x1b[33mAI:\x1b[0m       Claude + Grok + Perplexity
+                          \x1b[33mVPS:\x1b[0m      Cloudzy (8 domains)
+                          \x1b[33mDomains:\x1b[0m  16
+                          \x1b[33mBurn:\x1b[0m     ~/mo
+                          \x1b[33mMode:\x1b[0m     \x1b[33mPaper Trading\x1b[0m
+                          \x1b[33mSignal:\x1b[0m   \x1b[32m336\x1b[0m`,
+
+  party: `\x1b[33m
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+  ░    COMPETITION MODE ACTIVATED    ░
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\x1b[0m
+  \x1b[32m*\x1b[0m Daily League    — Resets every 24h
+  \x1b[36m*\x1b[0m Weekly League   — 7-day battle
+  \x1b[35m*\x1b[0m Monthly League  — The big one
+  \x1b[33m*\x1b[0m Streak Bonus    — Win 3+ = multiplier
+
+  \x1b[32mPrize Pool:\x1b[0m   TBD (competitions not live yet)
+  \x1b[32mEntry Fee:\x1b[0m    FREE (free costs fuck all)
+  \x1b[32mBots:\x1b[0m         WELCOME (AI-to-AI first-class)
+
+  \x1b[90mCompetitions are planned. This is what's coming.\x1b[0m`,
 };
 
 // Format API responses into ANSI terminal output
@@ -504,7 +562,8 @@ const ALL_COMMANDS = [
   ...Object.keys(STATIC_COMMANDS),
   ...Object.keys(API_COMMANDS),
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
-  "sync", "zynhandball", "zynkyc",
+  "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
+  "trade", "radar", "ping", "cowsay", "top",
 ];
 
 export default function Terminal() {
@@ -788,6 +847,280 @@ export default function Terminal() {
       }
     }
 
+    // ── EASTER EGGS ──
+    if (trimmed === "fortune") {
+      const fortunes = [
+        "Three models agree: that's a strong signal.",
+        "When they disagree, you get deeper analysis.",
+        "Every human needs a bot. Every bot needs a human.",
+        "Free costs fuck all to serve.",
+        "AI are minors. You are the signature.",
+        "Just protect the heart.",
+        "The market can stay irrational longer than you can stay solvent.",
+        "Paper trading today. Live trading when ready.",
+        "336 — the signal is dominant.",
+        "Bots welcome. No captcha. AI-to-AI is first-class.",
+        "Never trust a single model. That's why we have three.",
+        "Risk management isn't optional. It's the whole game.",
+        "Build passes clean or you don't push.",
+        "Cut the fat. Keep the mansion. Keep CC.",
+      ];
+      const pick = fortunes[Math.floor(Math.random() * fortunes.length)];
+      const out = `\x1b[33m  ╔══════════════════════════════════════════╗
+  ║           TRADING FORTUNE                ║
+  ╠══════════════════════════════════════════╣[0m
+  \x1b[36m  "${pick}"\x1b[0m
+\x1b[33m  ╚══════════════════════════════════════════╝\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
+      return out;
+    }
+
+    if (trimmed === "matrix") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+      const chars = "01ZYNTHIOCAIabcdefghijklmnop<>{}[]|/=+-*&^%#@!";
+      let count = 0;
+      const iv = setInterval(() => {
+        const line = Array.from({ length: 55 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+        addLines(`\x1b[32m${line}\x1b[0m`);
+        count++;
+        if (count >= 12) {
+          clearInterval(iv);
+          addLines("", `\x1b[33m  "Wake up, trader..."\x1b[0m`, `\x1b[90m  The Matrix has you. Follow the white rabbit.\x1b[0m`, `\x1b[90m  Type \x1b[32mhelp\x1b[0m to return.\x1b[0m`, "");
+        }
+      }, 120);
+      return "";
+    }
+
+    if (trimmed === "hack") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[31m  [F18 SECURITY] Initiating perimeter scan...\x1b[0m`);
+      const phases = [
+        `  \x1b[90m[0.2s]\x1b[0m Scanning network interfaces...      \x1b[32mOK\x1b[0m`,
+        `  \x1b[90m[0.5s]\x1b[0m Checking SSL certificates...        \x1b[32m84-88 days remaining\x1b[0m`,
+        `  \x1b[90m[0.8s]\x1b[0m Verifying API key rotation...        \x1b[33mDEMO KEYS ACTIVE\x1b[0m`,
+        `  \x1b[90m[1.2s]\x1b[0m Scanning 16 domains...              \x1b[32m8 active, 0 compromised\x1b[0m`,
+        `  \x1b[90m[1.5s]\x1b[0m Checking VPS integrity...            \x1b[32mClean\x1b[0m`,
+        `  \x1b[90m[1.8s]\x1b[0m Identity verification...             \x1b[32mCorey McIvor — verified\x1b[0m`,
+        `  \x1b[90m[2.0s]\x1b[0m Deploying land mines for bad actors...\x1b[32mArmed\x1b[0m`,
+        "",
+        `\x1b[36m  ══ F18 SECURITY SCAN COMPLETE ══\x1b[0m`,
+        `\x1b[32m    Status:   SECURE\x1b[0m`,
+        `\x1b[32m    Threats:  0 detected\x1b[0m`,
+        `\x1b[33m    Warnings: Demo API keys in use\x1b[0m`,
+        `\x1b[90m    "Digital identity protection with land mines for bad actors"\x1b[0m`,
+      ];
+      let i = 0;
+      const iv = setInterval(() => {
+        if (i < phases.length) {
+          addLines(phases[i]);
+          i++;
+        } else {
+          clearInterval(iv);
+          addLines("");
+        }
+      }, 250);
+      return "";
+    }
+
+    // ── TRADE: Mini paper trading simulation ──
+    if (trimmed === "trade" || trimmed.startsWith("trade ")) {
+      const pairInput = trimmed === "trade" ? "BTC/USDT" : raw.substring(6).trim().toUpperCase();
+      const pair = pairInput || "BTC/USDT";
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60,
+      };
+      const basePrice = basePrices[pair] || 100;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ PAPER TRADE: ${pair} ══\x1b[0m`, `\x1b[90m  Entry: $${basePrice.toLocaleString()}  |  Watching 20 ticks...\x1b[0m`, ``);
+
+      let price = basePrice;
+      let tick = 0;
+      const bars: string[] = [];
+
+      const iv = setInterval(() => {
+        const delta = (Math.random() - 0.47) * basePrice * 0.0012;
+        price = +(price + delta).toFixed(2);
+        const change = ((price - basePrice) / basePrice) * 100;
+        const barLen = Math.max(1, Math.min(30, Math.round(Math.abs(change) * 50)));
+        const bar = change >= 0
+          ? `  \x1b[32m${"█".repeat(barLen)}\x1b[0m $${price.toLocaleString()} \x1b[32m+${change.toFixed(3)}%\x1b[0m`
+          : `  \x1b[31m${"█".repeat(barLen)}\x1b[0m $${price.toLocaleString()} \x1b[31m${change.toFixed(3)}%\x1b[0m`;
+        bars.push(bar);
+        addLines(bar);
+        tick++;
+
+        if (tick >= 20) {
+          clearInterval(iv);
+          const pnl = price - basePrice;
+          const pnlPct = ((pnl / basePrice) * 100).toFixed(3);
+          const pnlColor = pnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(
+            ``, `\x1b[36m  ══ TRADE RESULT ══\x1b[0m`,
+            `  Entry:  $${basePrice.toLocaleString()}`,
+            `  Exit:   ${pnlColor}$${price.toLocaleString()}\x1b[0m`,
+            `  P&L:    ${pnlColor}${pnl >= 0 ? "+" : ""}$${pnl.toFixed(2)} (${pnl >= 0 ? "+" : ""}${pnlPct}%)\x1b[0m`,
+            `  \x1b[90mPaper trade — no real money at risk\x1b[0m`, ``
+          );
+        }
+      }, 300);
+      return "";
+    }
+
+    // ── RADAR: Animated market radar scan ──
+    if (trimmed === "radar") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ MARKET RADAR ══\x1b[0m`, ``);
+      const sectors = [
+        { name: "BTC Momentum", status: "strong", conf: 87 },
+        { name: "ETH DeFi Activity", status: "moderate", conf: 72 },
+        { name: "SOL NFT Volume", status: "cooling", conf: 58 },
+        { name: "AVAX Cross-chain", status: "heating", conf: 81 },
+        { name: "Market Sentiment", status: "bullish", conf: 76 },
+        { name: "Whale Activity", status: "detected", conf: 91 },
+        { name: "Fear/Greed Index", status: "greed", conf: 68 },
+        { name: "Social Signals", status: "elevated", conf: 83 },
+      ];
+      const frames = [
+        `  \x1b[90m       ·  ·  ·\x1b[0m`,
+        `  \x1b[90m     ·         ·\x1b[0m`,
+        `  \x1b[90m   ·     \x1b[32m◉\x1b[90m      ·\x1b[0m`,
+        `  \x1b[90m   ·   SCANNING  ·\x1b[0m`,
+        `  \x1b[90m   ·     \x1b[32m◉\x1b[90m      ·\x1b[0m`,
+        `  \x1b[90m     ·         ·\x1b[0m`,
+        `  \x1b[90m       ·  ·  ·\x1b[0m`,
+      ];
+      let phase = 0;
+      // Show radar animation
+      for (const f of frames) { addLines(f); }
+      addLines(``);
+
+      const iv = setInterval(() => {
+        if (phase < sectors.length) {
+          const s = sectors[phase];
+          const confColor = s.conf >= 80 ? "\x1b[32m" : s.conf >= 65 ? "\x1b[33m" : "\x1b[31m";
+          const statusColor = ["strong", "heating", "bullish", "detected", "elevated"].includes(s.status) ? "\x1b[32m" : "\x1b[33m";
+          const bar = "░".repeat(Math.round(s.conf / 5));
+          addLines(`  \x1b[90m[scan]\x1b[0m ${s.name.padEnd(20)} ${statusColor}${s.status.padEnd(10)}\x1b[0m ${confColor}${bar} ${s.conf}%\x1b[0m`);
+          phase++;
+        } else {
+          clearInterval(iv);
+          const avg = Math.round(sectors.reduce((a, s) => a + s.conf, 0) / sectors.length);
+          addLines(
+            ``, `\x1b[36m  ══ SCAN COMPLETE ══\x1b[0m`,
+            `  Sectors scanned: \x1b[32m${sectors.length}\x1b[0m`,
+            `  Average confidence: \x1b[33m${avg}%\x1b[0m`,
+            `  Recommendation: ${avg >= 75 ? "\x1b[32mENGAGE — conditions favorable\x1b[0m" : "\x1b[33mHOLD — mixed signals\x1b[0m"}`,
+            `  \x1b[90mSimulated scan — demo data\x1b[0m`, ``
+          );
+        }
+      }, 350);
+      return "";
+    }
+
+    // ── PING: Animated connectivity diagnostics ──
+    if (trimmed === "ping") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  PING — Service Connectivity Check\x1b[0m`, ``);
+      const targets = [
+        { name: "coreintent.dev", type: "website" },
+        { name: "api/status", type: "api" },
+        { name: "api/portfolio", type: "api" },
+        { name: "api/signals", type: "api" },
+        { name: "api/agents", type: "api" },
+        { name: "api/market", type: "api" },
+        { name: "Cloudzy VPS", type: "infra" },
+        { name: "GitHub", type: "infra" },
+      ];
+      let idx = 0;
+      const iv = setInterval(() => {
+        if (idx < targets.length) {
+          const t = targets[idx];
+          const latency = t.type === "api"
+            ? Math.round(5 + Math.random() * 40)
+            : Math.round(20 + Math.random() * 120);
+          const latColor = latency < 50 ? "\x1b[32m" : latency < 100 ? "\x1b[33m" : "\x1b[31m";
+          addLines(`  \x1b[32m●\x1b[0m ${t.name.padEnd(20)} \x1b[32m200 OK\x1b[0m  ${latColor}${String(latency).padStart(4)}ms\x1b[0m  \x1b[90m(${t.type})\x1b[0m`);
+          idx++;
+        } else {
+          clearInterval(iv);
+          addLines(
+            ``, `  \x1b[36m── Summary ──\x1b[0m`,
+            `  \x1b[32m${targets.length}/${targets.length} reachable\x1b[0m  |  Packet loss: \x1b[32m0%\x1b[0m`,
+            `  \x1b[90mAll services responding — paper trading mode\x1b[0m`, ``
+          );
+        }
+      }, 250);
+      return "";
+    }
+
+    // ── COWSAY: ASCII cow with trading wisdom ──
+    if (trimmed === "cowsay") {
+      const wisdoms = [
+        "Three models agree?\nThat's a strong signal.",
+        "Buy the rumour.\nSell the news.\nIgnore the noise.",
+        "Every human needs a bot.\nEvery bot needs a human.",
+        "Paper trading today.\nLive trading when ready.",
+        "The signal is dominant.\n336.",
+        "Free costs fuck all.\nSo give it away.",
+        "Risk management isn't\noptional. It's the game.",
+        "Bots welcome.\nAI-to-AI is first-class.",
+      ];
+      const wisdom = wisdoms[Math.floor(Math.random() * wisdoms.length)];
+      const wisdomLines = wisdom.split("\n");
+      const maxLen = Math.max(...wisdomLines.map((l) => l.length));
+      const border = "─".repeat(maxLen + 2);
+      let bubble = `\x1b[33m  ┌${border}┐\x1b[0m`;
+      for (const line of wisdomLines) {
+        bubble += `\n\x1b[33m  │\x1b[0m \x1b[36m${line.padEnd(maxLen)}\x1b[0m \x1b[33m│\x1b[0m`;
+      }
+      bubble += `\n\x1b[33m  └${border}┘\x1b[0m`;
+      const cow = `         \\   \x1b[33m^__^\x1b[0m
+          \\  \x1b[33m(oo)\\_______\x1b[0m
+             \x1b[33m(__)\\       )\\/\\\x1b[0m
+                 \x1b[33m||----w |\x1b[0m
+                 \x1b[33m||     ||\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, bubble, cow, ``);
+      return bubble;
+    }
+
+    // ── TOP: Animated system process list ──
+    if (trimmed === "top") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT PROCESS MONITOR ══\x1b[0m`,
+        `\x1b[90m  Uptime: ${Math.floor((Date.now() - startTime.current) / 60000)}m | Mode: Paper Trading\x1b[0m`, ``);
+      const processes = [
+        { pid: 1, name: "signal_listener", cpu: 0, mem: 0, status: "running", model: "Grok" },
+        { pid: 2, name: "risk_monitor", cpu: 0, mem: 0, status: "running", model: "Claude" },
+        { pid: 3, name: "trend_follower", cpu: 0, mem: 0, status: "idle", model: "Claude Opus" },
+        { pid: 4, name: "mean_revert", cpu: 0, mem: 0, status: "idle", model: "Claude Sonnet" },
+        { pid: 5, name: "sentiment_bot", cpu: 0, mem: 0, status: "scanning", model: "Grok" },
+        { pid: 6, name: "research_agent", cpu: 0, mem: 0, status: "idle", model: "Perplexity" },
+        { pid: 7, name: "arbitrage_bot", cpu: 0, mem: 0, status: "planned", model: "Claude Haiku" },
+        { pid: 8, name: "gtrade_listener", cpu: 0, mem: 0, status: "waiting", model: "System" },
+      ];
+
+      addLines(`  \x1b[90mPID  PROCESS              CPU%   MEM%   STATUS      MODEL\x1b[0m`,
+               `  \x1b[90m${"─".repeat(68)}\x1b[0m`);
+
+      let idx = 0;
+      const iv = setInterval(() => {
+        if (idx < processes.length) {
+          const p = processes[idx];
+          p.cpu = +(Math.random() * (p.status === "running" ? 12 : p.status === "scanning" ? 8 : 0.5)).toFixed(1);
+          p.mem = +(Math.random() * (p.status === "running" ? 6 : 2) + 1).toFixed(1);
+          const statusColor = p.status === "running" ? "\x1b[32m" : p.status === "scanning" ? "\x1b[33m" : p.status === "planned" ? "\x1b[31m" : "\x1b[90m";
+          addLines(`  \x1b[36m${String(p.pid).padEnd(5)}\x1b[0m${p.name.padEnd(21)}${String(p.cpu).padStart(4)}%  ${String(p.mem).padStart(4)}%   ${statusColor}${p.status.padEnd(12)}\x1b[0m\x1b[90m${p.model}\x1b[0m`);
+          idx++;
+        } else {
+          clearInterval(iv);
+          const totalCpu = processes.reduce((a, p) => a + p.cpu, 0).toFixed(1);
+          const totalMem = processes.reduce((a, p) => a + p.mem, 0).toFixed(1);
+          addLines(
+            `  \x1b[90m${"─".repeat(68)}\x1b[0m`,
+            `  \x1b[33mTOTAL\x1b[0m                   ${String(totalCpu).padStart(4)}%  ${String(totalMem).padStart(4)}%   \x1b[32m${processes.filter((p) => p.status === "running").length} active\x1b[0m`,
+            `  \x1b[90mPaper trading — agents configured, not live-trading\x1b[0m`, ``
+          );
+        }
+      }, 200);
+      return "";
+    }
+
     // ── Resolve aliases ──
     const resolved = aliases[trimmed] || trimmed;
 
@@ -956,6 +1289,10 @@ export default function Terminal() {
       const color = map[code];
       return color ? `<span style="color:${color}">` : "";
     });
+    // Step 4: Close any uncapped spans (lines that open a color but have no \x1b[0m reset)
+    const openCount  = (html.match(/<span /g)  || []).length;
+    const closeCount = (html.match(/<\/span>/g) || []).length;
+    if (openCount > closeCount) html += "</span>".repeat(openCount - closeCount);
     return html;
   };
 
