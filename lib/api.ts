@@ -189,7 +189,8 @@ export function validateEnum<T extends string>(
 }
 
 // ---------------------------------------------------------------------------
-// Rate limiting — structure ready, implementation pending KV store
+// Rate limiting — in-memory implementation (single-instance / VPS).
+// Replace rateLimitStore with Cloudflare KV or Upstash Redis for multi-instance.
 // ---------------------------------------------------------------------------
 
 export interface RateLimitConfig {
@@ -201,9 +202,7 @@ export interface RateLimitConfig {
 
 /**
  * Per-route rate limit budgets.
- * TODO: implement checkRateLimit(ip, route) once Cloudflare KV or Upstash Redis is wired in.
- *       When triggered, call tooManyRequests() from lib/api.ts.
- * AI routes are deliberately tight — each call costs real money.
+ * AI routes are deliberately tight — each live call costs real money.
  */
 export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   default:  { windowMs: 60_000, max: 60 },
@@ -214,3 +213,50 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
 };
+
+/** Sliding-window rate limit state. Module-level — survives warm restarts. */
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+
+/**
+ * Extract the real client IP from a request.
+ * Reads x-forwarded-for (Cloudflare/Vercel) then x-real-ip, falls back to loopback.
+ */
+export function getClientIp(req: import("next/server").NextRequest): string {
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "127.0.0.1"
+  );
+}
+
+/**
+ * Enforce a sliding-window rate limit for the given IP and route key.
+ *
+ * Returns a 429 NextResponse when the budget is exceeded, or null when the
+ * request is allowed. Routes should return immediately when non-null.
+ *
+ * @example
+ * const limited = checkRateLimit(getClientIp(req), "research");
+ * if (limited) return limited;
+ */
+export function checkRateLimit(
+  ip: string,
+  routeKey: string
+): NextResponse<ApiResponse<null>> | null {
+  const config  = RATE_LIMITS[routeKey] ?? RATE_LIMITS.default;
+  const storeKey = `${routeKey}:${ip}`;
+  const now      = Date.now();
+  const entry    = rateLimitStore.get(storeKey);
+
+  if (!entry || now >= entry.resetAt) {
+    rateLimitStore.set(storeKey, { count: 1, resetAt: now + config.windowMs });
+    return null;
+  }
+
+  if (entry.count >= config.max) {
+    return tooManyRequests(Math.ceil((entry.resetAt - now) / 1000));
+  }
+
+  entry.count++;
+  return null;
+}
