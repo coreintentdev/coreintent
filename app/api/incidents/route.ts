@@ -76,6 +76,38 @@ const INCIDENTS: Incident[] = [
     message: "Marketing plan still references Jan 17 launch date and old Free/Pro/Enterprise pricing model. 70+ days past launch date. Plan needs full rewrite to match competition/league model decided March 23.",
     autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-008",
+    service: "Cursor Desktop Client",
+    status: "detected",
+    severity: "major",
+    message: "Cursor desktop chat lost user input (~6 attached images + a long paragraph) during composer submission. Session also reported ERROR_UNAUTHORIZED 'Follow-up blocked' (Request ID: 269e9c4f-f124-4ff3-9e6c-e0cf81798b06) and an earlier internal error (Request ID: ffcd98c5-788c-43bc-80d2-38327bd23166). Suspected client-side auth/session expiry with no draft autosave, causing total input loss. Reported by Corey directly. Mitigation: keep using Cursor Cloud Agents for long-running work since they survive desktop client crashes.",
+    autoUpdate: true,
+    detectedAt: "2026-04-18T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-009",
+    service: "Cursor Desktop Client",
+    status: "detected",
+    severity: "major",
+    message:
+      "Composer agent queue repeatedly fails on submit_now with AgentQueueMutationError: followupId not found (recurring). Request IDs from Corey: 16f2f060-54d2-4e28-a09e-1bd1282942db, f3e8e0c3-19fe-4232-ba88-48dcdadfeeb2, 3f4c5bb6-0723-40b2-ba21-117b2e106501. Prior related: INC-008 (auth / input loss). Leaves queued user messages stuck; same class of client-side reliability failure.",
+    autoUpdate: true,
+    detectedAt: "2026-04-18T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-010",
+    service: "Local Workspace Scale",
+    status: "detected",
+    severity: "major",
+    message:
+      "Workspace reported as 100,000+ files — too heavy for IDE indexing, agent context, and reliable Composer queue behavior. Not acceptable as a single open folder for day-to-day dev. Mitigation: open only the app repo root in Cursor; keep bulk archives/VPS mirrors/Downloads outside the workspace or use ZynRip (scripts/zynrip-organize.sh) to consolidate under a structured tree and point the IDE at the lean project only.",
+    autoUpdate: true,
+    detectedAt: "2026-04-18T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 const MONITORED_SERVICES: MonitoredService[] = [

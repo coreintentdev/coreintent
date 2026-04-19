@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Sat Apr 18 04:53:10 UTC 2026
+Generated: Mon Mar 30 20:11:33 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 29
+- INFO: Routes found: 22
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -28,9 +28,9 @@ Generated: Sat Apr 18 04:53:10 UTC 2026
 - PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- WARN: No page-level metadata: app/privacy/page.tsx
-- WARN: No page-level metadata: app/terms/page.tsx
-- WARN: No page-level metadata: app/disclaimer/page.tsx
+- PASS: Page metadata: app/privacy/page.tsx
+- PASS: Page metadata: app/terms/page.tsx
+- PASS: Page metadata: app/disclaimer/page.tsx
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -39,7 +39,7 @@ Generated: Sat Apr 18 04:53:10 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1347:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:143:    \x1b[33m◐\x1b[0m Terminal uses dangerouslySetInnerHTML (XSS risk)
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -49,25 +49,22 @@ Generated: Sat Apr 18 04:53:10 UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 4 files
+- PASS: next/link used in 2 files
 
 ## 7. Truth Check
-- WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:110:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:111:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:112:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
-- PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 12 API routes contain demo/hardcoded data
+- INFO: 5 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
+- PASS: ARIA attributes found (6 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
+- PASS: xterm package is used
+- INFO: Using Next.js 14
 
 ## 10. VPS & Deployment
 - PASS: VPS script exists: scripts/risk_monitor.ts
@@ -85,8 +82,8 @@ Generated: Sat Apr 18 04:53:10 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 49 |
+| PASS | 52 |
 | FAIL | 0 |
-| WARN | 5 |
+| WARN | 1 |
 
-**Audit Score: 90%** (49/54 checks passed)
+**Audit Score: 98%** (52/53 checks passed)
