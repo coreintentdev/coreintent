@@ -28,6 +28,158 @@ const CHART_Y = [
   40, 20, 35, 25, 45, 30, 50, 35, 20, 28,
 ];
 
+const DEBATES = [
+  [
+    { model: "Grok", color: "#ef4444", text: "BTC showing bullish divergence on 4H. RSI recovering from oversold. Entry looks clean — 87% confidence." },
+    { model: "Claude", color: "#a855f7", text: "Hold on — volume is declining on this bounce. Previous resistance at $68,200 hasn't been tested. Risk/reward is thin." },
+    { model: "Perplexity", color: "#3b82f6", text: "Latest Fed minutes suggest no rate cut until Q3. Institutional inflows slowed 12% this week per CoinShares data." },
+    { model: "Grok", color: "#ef4444", text: "Fair points. Adjusting confidence from 87% to 72%. Still long-biased but smaller position." },
+    { model: "Claude", color: "#a855f7", text: "Agreed — wait for clean break above $68,200 with volume confirmation. Setting alert." },
+    { model: "Engine", color: "#10b981", text: "DECISION: HOLD. Consensus incomplete. Alert set at $68,200 breakout with volume > 1.5x avg." },
+  ],
+  [
+    { model: "Grok", color: "#ef4444", text: "SOL breaking out of descending wedge on high volume. NFT activity spiking across Tensor." },
+    { model: "Claude", color: "#a855f7", text: "Pattern confirmed. Fibonacci extension targets $158. Risk/reward 3.2:1 at current levels." },
+    { model: "Perplexity", color: "#3b82f6", text: "Solana ecosystem TVL up 23% this month. Jupiter DEX volume hit ATH yesterday. Fundamentals support it." },
+    { model: "Grok", color: "#ef4444", text: "All three aligned. Confidence: 91%. This is the signal." },
+    { model: "Claude", color: "#a855f7", text: "Concur. Position size: 8% of portfolio. Stop loss at $134.50 (-5.8%)." },
+    { model: "Engine", color: "#10b981", text: "DECISION: LONG SOL/USDT. Consensus: 91%. Entry: $142.80. Target: $158.00. Stop: $134.50." },
+  ],
+];
+
+function AIDebate() {
+  const [messages, setMessages] = useState<Array<{ model: string; color: string; text: string }>>([]);
+  const [debateIdx, setDebateIdx] = useState(0);
+  const [typing, setTyping] = useState(false);
+
+  useEffect(() => {
+    const debate = DEBATES[debateIdx % DEBATES.length];
+    setMessages([]);
+    let idx = 0;
+
+    const addNext = () => {
+      if (idx >= debate.length) {
+        setTyping(false);
+        const timeout = setTimeout(() => setDebateIdx((prev) => prev + 1), 8000);
+        return () => clearTimeout(timeout);
+      }
+      setTyping(true);
+      const delay = setTimeout(() => {
+        setMessages((prev) => [...prev, debate[idx]]);
+        setTyping(false);
+        idx++;
+        setTimeout(addNext, 800);
+      }, 1800);
+      return () => clearTimeout(delay);
+    };
+
+    const start = setTimeout(addNext, 1000);
+    return () => clearTimeout(start);
+  }, [debateIdx]);
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2
+        style={{
+          fontSize: "12px",
+          textTransform: "uppercase",
+          color: "var(--text-secondary)",
+          letterSpacing: "0.5px",
+          marginBottom: "12px",
+        }}
+      >
+        AI Model Debate
+        <span style={{ marginLeft: "8px", fontSize: "10px", color: "var(--accent-green)" }}>LIVE</span>
+      </h2>
+      <div
+        style={{
+          background: "var(--bg-secondary)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          padding: "20px",
+          minHeight: "280px",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "11px",
+            color: "var(--text-secondary)",
+            marginBottom: "16px",
+            padding: "8px 12px",
+            background: "var(--bg-primary)",
+            borderRadius: "6px",
+            borderLeft: "3px solid var(--accent-blue)",
+          }}
+        >
+          Three models. One trade decision. Watch them argue.
+        </div>
+
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            className="signal-flash"
+            style={{
+              display: "flex",
+              gap: "12px",
+              marginBottom: "12px",
+              padding: "10px 14px",
+              background: m.model === "Engine" ? "#10b98112" : "var(--bg-primary)",
+              borderRadius: "8px",
+              borderLeft: `3px solid ${m.color}`,
+            }}
+          >
+            <div
+              style={{
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                background: `${m.color}22`,
+                border: `1px solid ${m.color}44`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "11px",
+                fontWeight: "bold",
+                color: m.color,
+                flexShrink: 0,
+              }}
+            >
+              {m.model[0]}
+            </div>
+            <div>
+              <div style={{ fontSize: "12px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>
+                {m.model}
+              </div>
+              <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5" }}>
+                {m.text}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {typing && (
+          <div style={{ padding: "10px 14px", display: "flex", gap: "12px", alignItems: "center" }}>
+            <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ color: "var(--text-secondary)", fontSize: "10px" }}>AI</span>
+            </div>
+            <div>
+              <span className="typing-dot" />
+              <span className="typing-dot" />
+              <span className="typing-dot" />
+            </div>
+          </div>
+        )}
+
+        {messages.length === 0 && !typing && (
+          <div style={{ textAlign: "center", padding: "40px 0", color: "var(--text-secondary)", fontSize: "12px" }}>
+            Debate starting...
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function DemoPage() {
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
@@ -495,6 +647,9 @@ export default function DemoPage() {
               </div>
             </section>
           </div>
+
+          {/* ═══ AI DEBATE ═══ */}
+          <AIDebate />
 
           {/* ═══ CTA ═══ */}
           <section

@@ -65,9 +65,14 @@ const STATIC_COMMANDS: Record<string, string> = {
 
   \x1b[33m── INTERACTIVE ──\x1b[0m
   \x1b[32mtrade [pair]\x1b[0m - Paper trade simulation (e.g. \x1b[32mtrade ETH/USDT\x1b[0m)
+  \x1b[32mstonks [pair]\x1b[0m- Sparkline chart (e.g. \x1b[32mstonks SOL/USDT\x1b[0m)
   \x1b[32mradar\x1b[0m       - Animated market radar scan
   \x1b[32mping\x1b[0m        - Service connectivity diagnostics
   \x1b[32mtop\x1b[0m         - Live process monitor
+  \x1b[32mleaderboard\x1b[0m - Competition standings (alias: \x1b[32mlb\x1b[0m)
+  \x1b[32mbattle\x1b[0m      - Watch AI models debate a trade
+  \x1b[32mscan\x1b[0m        - Full system scan with progress
+  \x1b[32mweather\x1b[0m     - Market weather forecast
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -77,6 +82,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mhack\x1b[0m        - F18 security scan
   \x1b[32mneofetch\x1b[0m    - System info
   \x1b[32mparty\x1b[0m       - Competition mode
+  \x1b[32msudo\x1b[0m        - Nice try
+  \x1b[32mrickroll\x1b[0m    - You know what this is
 
   \x1b[90mTab to autocomplete | Arrow keys for history | && to chain\x1b[0m`,
 
@@ -308,6 +315,19 @@ Brand: Zynthio.ai — NZ registered
                           \x1b[33mBurn:\x1b[0m     ~/mo
                           \x1b[33mMode:\x1b[0m     \x1b[33mPaper Trading\x1b[0m
                           \x1b[33mSignal:\x1b[0m   \x1b[32m336\x1b[0m`,
+
+  sudo: `\x1b[31m  Permission denied.\x1b[0m
+  \x1b[90mNice try. This isn't Linux — it's the Zynthio Trading Engine.\x1b[0m
+  \x1b[90mCorey McIvor is the only root user here.\x1b[0m
+  \x1b[33m  336 — the signal is dominant\x1b[0m`,
+
+  rickroll: `\x1b[36m  ══ INCOMING TRANSMISSION ══\x1b[0m
+  \x1b[33m  Never gonna give you up\x1b[0m
+  \x1b[33m  Never gonna let you down\x1b[0m
+  \x1b[33m  Never gonna run around\x1b[0m
+  \x1b[33m  and desert you\x1b[0m
+  \x1b[90m  ...you just got rickrolled by a trading engine.\x1b[0m
+  \x1b[90m  Type \x1b[32mhelp\x1b[0m for actual commands.\x1b[0m`,
 
   party: `\x1b[33m
   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -564,6 +584,8 @@ const ALL_COMMANDS = [
   "clear", "ask", "watch", "grep", "export", "history", "alias", "aliases", "time", "audit",
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
   "trade", "radar", "ping", "cowsay", "top",
+  "stonks", "leaderboard", "lb", "battle", "scan", "weather",
+  "sudo", "rickroll",
 ];
 
 export default function Terminal() {
@@ -1119,6 +1141,199 @@ export default function Terminal() {
         }
       }, 200);
       return "";
+    }
+
+    // ── STONKS: Sparkline chart ──
+    if (trimmed === "stonks" || trimmed.startsWith("stonks ")) {
+      const pair = trimmed === "stonks" ? "BTC/USDT" : raw.substring(7).trim().toUpperCase() || "BTC/USDT";
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60,
+      };
+      const startPrice = basePrices[pair] || 100;
+      const blocks = "\u2581\u2582\u2583\u2584\u2585\u2586\u2587\u2588";
+      let price = startPrice;
+      const hist: number[] = [];
+      for (let i = 0; i < 50; i++) {
+        price += (Math.random() - 0.47) * startPrice * 0.003;
+        hist.push(price);
+      }
+      const min = Math.min(...hist);
+      const max = Math.max(...hist);
+      const range = max - min || 1;
+      const spark = hist.map((p) => {
+        const idx = Math.min(7, Math.round(((p - min) / range) * 7));
+        return p >= startPrice ? `\x1b[32m${blocks[idx]}\x1b[0m` : `\x1b[31m${blocks[idx]}\x1b[0m`;
+      }).join("");
+
+      const endPrice = hist[hist.length - 1];
+      const changePct = ((endPrice - startPrice) / startPrice * 100).toFixed(2);
+      const cc = Number(changePct) >= 0 ? "\x1b[32m" : "\x1b[31m";
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ STONKS — ${pair} 1H ══\x1b[0m`, ``);
+
+      const statsLines = [
+        `  ${spark}`,
+        ``,
+        `  \x1b[90mOpen:\x1b[0m  $${Math.round(startPrice).toLocaleString()}    \x1b[90mHigh:\x1b[0m $${Math.round(max).toLocaleString()}`,
+        `  \x1b[90mClose:\x1b[0m $${Math.round(endPrice).toLocaleString()}    \x1b[90mLow:\x1b[0m  $${Math.round(min).toLocaleString()}`,
+        `  \x1b[90mChange:\x1b[0m ${cc}${Number(changePct) >= 0 ? "+" : ""}${changePct}%\x1b[0m`,
+        ``,
+        `  \x1b[90mPaper trading — simulated sparkline data\x1b[0m`,
+      ];
+
+      let si = 0;
+      const siv = setInterval(() => {
+        if (si < statsLines.length) { addLines(statsLines[si]); si++; }
+        else { clearInterval(siv); addLines(``); }
+      }, 120);
+      return "";
+    }
+
+    // ── LEADERBOARD: Competition standings ──
+    if (trimmed === "leaderboard" || trimmed === "lb") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ WEEKLY COMPETITION — LEADERBOARD ══\x1b[0m`,
+        `\x1b[90m  Paper trading league — demo standings\x1b[0m`, ``);
+
+      const players = [
+        { rank: 1, name: "AlphaStrat_v7", type: "Bot", pnl: 2847, trades: 142, win: 73 },
+        { rank: 2, name: "Priya S.", type: "Human", pnl: 2341, trades: 38, win: 71 },
+        { rank: 3, name: "NightOwl_Bot", type: "Bot", pnl: 1892, trades: 267, win: 62 },
+        { rank: 4, name: "Jordan K.", type: "Human", pnl: 1456, trades: 24, win: 67 },
+        { rank: 5, name: "TrendRider", type: "Bot", pnl: 1203, trades: 89, win: 59 },
+        { rank: 6, name: "Alex R.", type: "Human", pnl: 987, trades: 31, win: 65 },
+        { rank: 7, name: "DegenBot_42", type: "Bot", pnl: -234, trades: 412, win: 48 },
+        { rank: 8, name: "You", type: "Human", pnl: 0, trades: 0, win: 0 },
+      ];
+
+      addLines(
+        `  \x1b[90m  #   Name              Type     P&L         Trades  Win%\x1b[0m`,
+        `  \x1b[90m  ${"─".repeat(62)}\x1b[0m`
+      );
+
+      let li = 0;
+      const liv = setInterval(() => {
+        if (li < players.length) {
+          const p = players[li];
+          const medal = p.rank <= 3 ? `\x1b[33m[${["1st", "2nd", "3rd"][p.rank - 1]}]\x1b[0m` : `  ${String(p.rank).padStart(2)}. `;
+          const pnlColor = p.pnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+          const pnlStr = `${p.pnl >= 0 ? "+" : ""}$${p.pnl.toLocaleString()}`;
+          const nameColor = p.name === "You" ? "\x1b[33m" : "";
+          const nameEnd = p.name === "You" ? "\x1b[0m" : "";
+          addLines(`  ${medal} ${nameColor}${p.name.padEnd(16)}${nameEnd} \x1b[90m${p.type.padEnd(8)}\x1b[0m ${pnlColor}${pnlStr.padStart(10)}\x1b[0m  ${String(p.trades).padStart(6)}   ${p.win > 0 ? `${p.win}%` : "\x1b[90m—\x1b[0m"}`);
+          li++;
+        } else {
+          clearInterval(liv);
+          addLines(
+            `  \x1b[90m  ${"─".repeat(62)}\x1b[0m`, ``,
+            `  \x1b[33mPrize pool:\x1b[0m TBD — competitions not live yet`,
+            `  \x1b[90mFree entry. Bots welcome. Best strategy wins.\x1b[0m`, ``
+          );
+        }
+      }, 200);
+      return "";
+    }
+
+    // ── BATTLE: AI model debate simulation ──
+    if (trimmed === "battle") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ AI MODEL BATTLE ══\x1b[0m`,
+        `\x1b[90m  Three models. One trade. Who's right?\x1b[0m`,
+        `\x1b[90m  Subject: BTC/USDT entry at $67,420\x1b[0m`, ``);
+
+      const exchanges = [
+        { model: "Grok", c: "\x1b[31m", text: "Bullish divergence on 4H RSI. Volume spike on last 3 candles. Entry looks clean — 87% confidence." },
+        { model: "Claude", c: "\x1b[35m", text: "Hold on — volume is declining on this bounce. Resistance at $68,200 untested. Risk/reward only 1.8:1." },
+        { model: "Perplexity", c: "\x1b[34m", text: "Fed minutes released 2h ago — no rate cut signal. Institutional inflows down 12% per CoinShares weekly." },
+        { model: "Grok", c: "\x1b[31m", text: "Fair points. Adjusting confidence from 87% to 72%. Still long-biased but smaller position." },
+        { model: "Claude", c: "\x1b[35m", text: "Better. Wait for clean break above $68,200 with volume > 1.5x average before entering." },
+        { model: "Engine", c: "\x1b[32m", text: "VERDICT: HOLD. Consensus incomplete (2/3). Alert set at $68,200 breakout + volume confirmation." },
+      ];
+
+      let bi = 0;
+      const biv = setInterval(() => {
+        if (bi < exchanges.length) {
+          const e = exchanges[bi];
+          const prefix = e.model === "Engine" ? `  \x1b[36m══\x1b[0m` : `  \x1b[90m>\x1b[0m`;
+          addLines(`${prefix} ${e.c}${e.model}:\x1b[0m ${e.text}`);
+          bi++;
+        } else {
+          clearInterval(biv);
+          addLines(``, `  \x1b[90mThis is how three-model consensus works. Disagreement = dig deeper.\x1b[0m`, ``);
+        }
+      }, 1500);
+      return "";
+    }
+
+    // ── SCAN: Full system scan with progress ──
+    if (trimmed === "scan") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ FULL SYSTEM SCAN ══\x1b[0m`, ``);
+
+      const checks = [
+        { name: "Next.js Build", status: "PASS" },
+        { name: "TypeScript Strict", status: "PASS" },
+        { name: "API Routes (12)", status: "PASS" },
+        { name: "XSS Hardening", status: "PASS" },
+        { name: "ANSI Sanitization", status: "PASS" },
+        { name: "CSP Headers", status: "PASS" },
+        { name: "SSL Certificates", status: "PASS" },
+        { name: "Domain Resolution", status: "PASS" },
+        { name: "VPS Connectivity", status: "WARN" },
+        { name: "Exchange APIs", status: "SKIP" },
+        { name: "Database Layer", status: "SKIP" },
+        { name: "Authentication", status: "SKIP" },
+      ];
+
+      let sci = 0;
+      const sciv = setInterval(() => {
+        if (sci < checks.length) {
+          const c = checks[sci];
+          const icon = c.status === "PASS" ? "\x1b[32m\u2713 PASS\x1b[0m" :
+                       c.status === "WARN" ? "\x1b[33m! WARN\x1b[0m" :
+                       "\x1b[90m\u25CB SKIP\x1b[0m";
+          const filled = Math.round(((sci + 1) / checks.length) * 20);
+          const bar = `\x1b[36m${"█".repeat(filled)}${"░".repeat(20 - filled)}\x1b[0m`;
+          const pct = Math.round(((sci + 1) / checks.length) * 100);
+          addLines(`  ${icon}  ${c.name.padEnd(20)}  ${bar} ${pct}%`);
+          sci++;
+        } else {
+          clearInterval(sciv);
+          const passed = checks.filter((c) => c.status === "PASS").length;
+          const warned = checks.filter((c) => c.status === "WARN").length;
+          const skipped = checks.filter((c) => c.status === "SKIP").length;
+          addLines(
+            ``, `\x1b[36m  ══ SCAN COMPLETE ══\x1b[0m`,
+            `  \x1b[32mPassed: ${passed}\x1b[0m  |  \x1b[33mWarnings: ${warned}\x1b[0m  |  \x1b[90mSkipped: ${skipped}\x1b[0m`,
+            `  \x1b[90mSkipped items are planned but not yet built\x1b[0m`, ``
+          );
+        }
+      }, 200);
+      return "";
+    }
+
+    // ── WEATHER: Market weather report ──
+    if (trimmed === "weather") {
+      const conditions = [
+        { icon: "\x1b[33m*\x1b[0m", name: "Bullish Sunshine", temp: "+3.2%", desc: "Clear skies. Models aligned. High confidence signals across the board." },
+        { icon: "\x1b[34m~\x1b[0m", name: "Bearish Storm", temp: "-2.8%", desc: "Turbulence detected. Multiple resistance levels ahead. Reduce exposure." },
+        { icon: "\x1b[90m#\x1b[0m", name: "Sideways Fog", temp: "+0.4%", desc: "Low visibility. Mixed signals from all three models. Wait for clarity." },
+        { icon: "\x1b[31m!\x1b[0m", name: "Volatility Tornado", temp: "+8.7%", desc: "Extreme conditions! High reward, equally high risk. Size accordingly." },
+        { icon: "\x1b[36m.\x1b[0m", name: "Recovery Drizzle", temp: "+1.1%", desc: "Gentle recovery underway. Volume returning slowly. Cautious optimism." },
+      ];
+      const w = conditions[Math.floor(Math.random() * conditions.length)];
+      const out = `\x1b[36m  ══ MARKET WEATHER REPORT ══\x1b[0m
+
+  ${w.icon}  \x1b[33m${w.name}\x1b[0m  |  Forecast: \x1b[32m${w.temp}\x1b[0m
+
+  ${w.desc}
+
+  \x1b[90mGrok:\x1b[0m     Sentiment scan... \x1b[32mcomplete\x1b[0m
+  \x1b[90mClaude:\x1b[0m   Risk assessment... \x1b[32mcomplete\x1b[0m
+  \x1b[90mPerplexity:\x1b[0m News analysis...  \x1b[32mcomplete\x1b[0m
+
+  \x1b[90mForecast generated from three-model consensus. Not financial advice.\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
+      return out;
     }
 
     // ── Resolve aliases ──

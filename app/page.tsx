@@ -105,6 +105,114 @@ function TypeWriter() {
   return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
 }
 
+/* ─── Market Ticker ─── */
+function MarketTicker() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 2000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const base = [
+    { s: "BTC", p: 67420, c: "#f7931a" },
+    { s: "ETH", p: 3285, c: "#627eea" },
+    { s: "SOL", p: 142.8, c: "#14f195" },
+    { s: "AVAX", p: 35.6, c: "#e84142" },
+    { s: "DOT", p: 7.42, c: "#e6007a" },
+    { s: "LINK", p: 14.8, c: "#2a5ada" },
+    { s: "MATIC", p: 0.72, c: "#8247e5" },
+    { s: "ADA", p: 0.45, c: "#0033ad" },
+    { s: "DOGE", p: 0.083, c: "#c2a633" },
+    { s: "UNI", p: 7.89, c: "#ff007a" },
+  ];
+
+  const items = base.map((t) => {
+    const seed = t.s.charCodeAt(0) + t.s.charCodeAt(1);
+    const delta = Math.sin(tick * 0.4 + seed * 0.7) * t.p * 0.003;
+    const price = t.p + delta;
+    const change = (delta / t.p) * 100;
+    const dec = t.p < 1 ? 4 : t.p < 100 ? 2 : 0;
+    return { s: t.s, price, change, c: t.c, dec };
+  });
+
+  const doubled = [...items, ...items];
+
+  return (
+    <div
+      style={{
+        overflow: "hidden",
+        borderBottom: "1px solid var(--border-color)",
+        background: "var(--bg-primary)",
+        padding: "8px 0",
+      }}
+    >
+      <div className="ticker-track">
+        {doubled.map((t, i) => (
+          <span
+            key={`${t.s}-${i}`}
+            style={{
+              display: "inline-flex",
+              gap: "8px",
+              alignItems: "center",
+              fontSize: "12px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ color: t.c, fontWeight: "bold" }}>{t.s}</span>
+            <span style={{ color: "var(--text-primary)" }}>
+              ${t.price.toLocaleString("en-US", { minimumFractionDigits: t.dec, maximumFractionDigits: t.dec })}
+            </span>
+            <span
+              style={{
+                color: t.change >= 0 ? "#10b981" : "#ef4444",
+                fontSize: "11px",
+              }}
+            >
+              {t.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(t.change).toFixed(2)}%
+            </span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating Particles ─── */
+function HeroParticles() {
+  const [dots] = useState(() =>
+    Array.from({ length: 18 }, (_, i) => ({
+      size: 2 + (i % 3),
+      left: (i * 7 + 13) % 100,
+      top: (i * 11 + 7) % 100,
+      opacity: 0.1 + (i % 4) * 0.05,
+      dur: 5 + (i % 5) * 2,
+      delay: (i % 7) * 0.8,
+      color: ["#10b981", "#3b82f6", "#a855f7"][i % 3],
+    }))
+  );
+
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+      {dots.map((d, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            width: d.size,
+            height: d.size,
+            borderRadius: "50%",
+            background: d.color,
+            opacity: d.opacity,
+            left: `${d.left}%`,
+            top: `${d.top}%`,
+            animation: `float ${d.dur}s ease-in-out ${d.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ─── Domain Portfolio ─── */
 const DOMAINS = [
   { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
@@ -271,6 +379,8 @@ export default function Home() {
             overflow: "hidden",
           }}
         >
+          <div className="grid-bg" />
+          <HeroParticles />
           <button
             onClick={() => setShowHero(false)}
             aria-label="Dismiss hero section"
@@ -558,6 +668,8 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      <MarketTicker />
 
       {/* Tab bar */}
       <div
