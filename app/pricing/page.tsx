@@ -370,7 +370,7 @@ export default function PricingPage() {
                 <div style={{ fontSize: "11px", color: "var(--accent-green)", marginTop: "8px" }}>3 AI models, 6 agents,<br />unlimited competitions</div>
               </div>
             </div>
-            <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "20px", maxWidth: "480px", margin: "20px auto 0" }}>
+            <p style={{ color: "var(--text-secondary)", fontSize: "12px", maxWidth: "480px", margin: "20px auto 0" }}>
               That&apos;s $1,188 per year you keep in your pocket. Or your trading account. Your call.
             </p>
           </div>
