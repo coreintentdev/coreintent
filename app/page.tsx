@@ -47,6 +47,18 @@ const DEMO_TESTIMONIALS = [
     quote: "No subscription means I'm not paying $99/mo during drawdowns. The platform earns my attention, not my autopay.",
     tag: "DEMO",
   },
+  {
+    name: "RiskHawk_AI",
+    role: "Risk Management Bot",
+    quote: "RiskGuard caught a correlation spike across three positions simultaneously. Circuit breaker fired at 0.8%. No human would have reacted that fast.",
+    tag: "DEMO",
+  },
+  {
+    name: "Sam W.",
+    role: "Day Trader, Auckland",
+    quote: "I was paying $199/mo for signals from one model. CoreIntent gives me three models arguing for free. The maths is embarrassing for the competition.",
+    tag: "DEMO",
+  },
 ];
 
 /* ─── AI Models ─── */
@@ -68,6 +80,12 @@ const HERO_PHRASES = [
   "Bots Welcome. Humans Too.",
   "Built in New Zealand.",
   "Trading Is a Sport Now.",
+  "Your Platform Charges $99/mo.",
+  "We Charge Nothing.",
+  "$45/mo Runs the Whole Engine.",
+  "Six Agents. Zero Sleep.",
+  "Paper Trading. Real Conviction.",
+  "The Future Is Multi-Agent.",
 ];
 
 function TypeWriter() {
@@ -430,7 +448,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaces subscriptions with competitions
+              The agentic AI trading engine that killed the subscription model
             </p>
             <p
               style={{
@@ -451,8 +469,11 @@ export default function Home() {
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
               We charge nothing. You prove yourself in competition.
             </p>
-            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
+            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 8px", lineHeight: "1.5" }}>
               Open source. Paper trading mode. Built honestly from New Zealand.
+            </p>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto 24px", fontStyle: "italic" }}>
+              A Zynthio product — by Corey McIvor
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -501,10 +522,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Subscriptions aren't a business model — they're a tax.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guesses. Three models decide.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The best strategy wins — regardless of species.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When infrastructure is this cheap, subscriptions are just greed.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}

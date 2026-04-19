@@ -126,3 +126,73 @@ We're just getting started.
 .
 .
 #FounderStory #StartupJourney #AIFounder #TechFounder #NewZealandTech #BuildInPublic #CoreIntent #Zynthio #AITrading #IndieFounder #BootstrapBusiness #TradingPlatform #SoloFounder #EntrepreneurLife
+
+---
+
+## Caption 6 — The $1,188 Savings (Infographic)
+
+$1,188.
+
+That's what a typical trading platform subscription costs you per year. $99 x 12 months.
+
+Whether you profit, lose, or don't even log in — they still get paid.
+
+CoreIntent: $0/year. Same AI models. Same competitions. Same agents.
+
+The difference? We built the infrastructure for $45/month. So free actually costs us nothing.
+
+Keep your $1,188. Invest it. Trade it. Buy yourself something nice. Just stop giving it to platforms that profit from your autopay.
+
+-> coreintent.dev (link in bio)
+
+.
+.
+.
+#SubscriptionTrap #TradingCosts #AITrading #FreePlatform #CryptoTrading #SaveMoney #FinancialFreedom #TradingTools #ZeroSubscription #CoreIntent #Zynthio #BootstrapStartup #IndieFounder #MadeInNZ #SmartTrading #FinTech
+
+---
+
+## Caption 7 — Agent Fleet (Reel / Carousel)
+
+Slide 1: "Meet our 6 AI trading agents"
+Slide 2: "TrendFollower — BTC/ETH momentum tracking (Claude Opus)"
+Slide 3: "MeanRevert — SOL mean reversion scanning (Claude Sonnet)"
+Slide 4: "SentimentBot — Social signal aggregation (Grok)"
+Slide 5: "ArbitrageBot — Cross-exchange spread detection (Claude Haiku)"
+Slide 6: "RiskGuard — Circuit breaker at 0.8% threshold (Claude Opus)"
+Slide 7: "ResearchAgent — Market research & news (Perplexity)"
+
+Caption:
+Six AI agents. Six different strategies. Three AI models powering them.
+
+They don't sleep. They don't panic. They don't revenge-trade.
+
+Currently paper trading — learning and getting smarter every day. When they go live, they'll be battle-tested.
+
+And yes — your bot can join them. AI-to-AI competition is a feature, not a violation.
+
+.
+.
+.
+#AIAgents #TradingBots #AgenticAI #MachineLearning #AlgoTrading #CryptoAgents #AITrading #CoreIntent #Zynthio #MultiModelAI #TradingFleet #PaperTrading #BuildInPublic #NZTech #FinTech
+
+---
+
+## Caption 8 — NZ Sunset + Code (Aesthetic Post)
+
+Building an AI trading engine from New Zealand.
+
+No Silicon Valley. No VC. No accelerator. No co-founder. No ping pong table.
+
+Just three AI models debating every signal. Six agents executing strategies. And an infrastructure bill that costs less than a round at the pub.
+
+$45/month. The whole platform. Free for everyone.
+
+Some people need permission. We just needed intent.
+
+— Corey McIvor, Founder @ Zynthio
+
+.
+.
+.
+#NewZealandTech #MadeInNZ #SoloFounder #IndieHacker #BuildInPublic #StartupLife #AITrading #CoreIntent #Zynthio #BootstrapBusiness #TechFromNZ #RemoteFounder #FinTech #Coding #DeveloperLife #ProgrammerLife
