@@ -214,8 +214,28 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   autosave: { windowMs: 60_000, max: 60 },
 };
 
-/** Sliding-window rate limit state. Module-level — survives warm restarts. */
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+/**
+ * True sliding-window log: stores an array of request timestamps per key.
+ * Memory is bounded by max requests per window per IP (at most 60 entries for
+ * the default budget). Module-level — survives warm restarts.
+ */
+const rateLimitStore = new Map<string, number[]>();
+
+/** Largest windowMs across all routes — used to bound the cleanup sweep. */
+const MAX_WINDOW_MS = Math.max(...Object.values(RATE_LIMITS).map((c) => c.windowMs));
+
+let lastCleanupAt = Date.now();
+const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // sweep every 5 minutes
+
+/** Delete store entries whose newest timestamp is outside the max window. */
+function pruneExpiredEntries(): void {
+  const cutoff = Date.now() - MAX_WINDOW_MS;
+  for (const [key, timestamps] of rateLimitStore) {
+    if (timestamps.length === 0 || timestamps[timestamps.length - 1] <= cutoff) {
+      rateLimitStore.delete(key);
+    }
+  }
+}
 
 /**
  * Extract the real client IP from a request.
@@ -230,7 +250,12 @@ export function getClientIp(req: import("next/server").NextRequest): string {
 }
 
 /**
- * Enforce a sliding-window rate limit for the given IP and route key.
+ * Enforce a true sliding-window rate limit for the given IP and route key.
+ *
+ * Stores per-IP request timestamps; only requests within the last windowMs
+ * count toward the budget. This prevents the fixed-window burst problem where
+ * a client could fire max requests at the end of one window and max more at
+ * the start of the next.
  *
  * Returns a 429 NextResponse when the budget is exceeded, or null when the
  * request is allowed. Routes should return immediately when non-null.
@@ -243,20 +268,30 @@ export function checkRateLimit(
   ip: string,
   routeKey: string
 ): NextResponse<ApiResponse<null>> | null {
-  const config  = RATE_LIMITS[routeKey] ?? RATE_LIMITS.default;
+  const config   = RATE_LIMITS[routeKey] ?? RATE_LIMITS.default;
   const storeKey = `${routeKey}:${ip}`;
   const now      = Date.now();
-  const entry    = rateLimitStore.get(storeKey);
 
-  if (!entry || now >= entry.resetAt) {
-    rateLimitStore.set(storeKey, { count: 1, resetAt: now + config.windowMs });
-    return null;
+  // Periodic sweep to prevent unbounded memory growth from unique IPs.
+  if (now - lastCleanupAt > CLEANUP_INTERVAL_MS) {
+    pruneExpiredEntries();
+    lastCleanupAt = now;
   }
 
-  if (entry.count >= config.max) {
-    return tooManyRequests(Math.ceil((entry.resetAt - now) / 1000));
+  const windowStart = now - config.windowMs;
+  const timestamps  = rateLimitStore.get(storeKey) ?? [];
+
+  // Discard timestamps that have fallen outside the sliding window.
+  const recent = timestamps.filter((t) => t > windowStart);
+
+  if (recent.length >= config.max) {
+    // Tell the client how long until the oldest request ages out.
+    const retryAfter = Math.ceil((recent[0] + config.windowMs - now) / 1000);
+    rateLimitStore.set(storeKey, recent);
+    return tooManyRequests(Math.max(1, retryAfter));
   }
 
-  entry.count++;
+  recent.push(now);
+  rateLimitStore.set(storeKey, recent);
   return null;
 }
