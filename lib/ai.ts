@@ -15,6 +15,67 @@ export interface AIResponse {
   live: boolean;
 }
 
+/** Which of the 8 orchestra API keys are configured (never exposes secret values). */
+export interface AiKeyStatus {
+  grok: boolean;
+  claude: boolean;
+  perplexity: boolean;
+  gemini: boolean;
+  groq: boolean;
+  deepseek: boolean;
+  mistral: boolean;
+  openrouter: boolean;
+}
+
+export function getAiKeyStatus(): AiKeyStatus {
+  const ok = (key: string | undefined, placeholder: string) =>
+    Boolean(key && key !== placeholder);
+  return {
+    grok: ok(process.env.GROK_API_KEY, "xai-xxx"),
+    claude: ok(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
+    perplexity: ok(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+    gemini: ok(process.env.GEMINI_API_KEY, "gemini-xxx"),
+    groq: ok(process.env.GROQ_API_KEY, "groq-xxx"),
+    deepseek: ok(process.env.DEEPSEEK_API_KEY, "deepseek-xxx"),
+    mistral: ok(process.env.MISTRAL_API_KEY, "mistral-xxx"),
+    openrouter: ok(process.env.OPENROUTER_API_KEY, "openrouter-xxx"),
+  };
+}
+
+const DEFAULT_COMPAT_TIMEOUT_MS = 30_000;
+const CLAUDE_TIMEOUT_MS = 30_000;
+const GEMINI_TIMEOUT_MS = 30_000;
+
+function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number
+): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, { ...init, signal: controller.signal }).finally(() =>
+    clearTimeout(timer)
+  );
+}
+
+function classifyFetchError(e: unknown, source: string, model: string): AIResponse {
+  if (e instanceof DOMException && e.name === "AbortError") {
+    return {
+      source,
+      model,
+      content: `[TIMEOUT] ${source} request exceeded ${DEFAULT_COMPAT_TIMEOUT_MS / 1000}s.`,
+      live: false,
+    };
+  }
+  const msg = e instanceof Error ? e.message : String(e);
+  return {
+    source,
+    model,
+    content: `[NETWORK ERROR] ${msg}`,
+    live: false,
+  };
+}
+
 // ── Generic OpenAI-compatible caller ──────────────────────────────
 async function callOpenAICompatible(opts: {
   source: string;
@@ -24,34 +85,51 @@ async function callOpenAICompatible(opts: {
   model: string;
   prompt: string;
   maxTokens?: number;
+  timeoutMs?: number;
 }): Promise<AIResponse> {
   const key = process.env[opts.keyEnvVar];
   if (!key || key === opts.demoKey) {
     return { source: opts.source, model: `${opts.source}-demo`, content: `[DEMO] ${opts.source} response for: ${opts.prompt}`, live: false };
   }
 
-  const res = await fetch(`${opts.baseUrl}/chat/completions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model: opts.model,
-      messages: [{ role: "user", content: opts.prompt }],
-      max_tokens: opts.maxTokens || 1024,
-    }),
-  });
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_COMPAT_TIMEOUT_MS;
 
-  if (!res.ok) {
-    const err = await res.text();
-    return { source: opts.source, model: opts.model, content: `[ERROR] ${err}`, live: false };
+  try {
+    const res = await fetchWithTimeout(
+      `${opts.baseUrl}/chat/completions`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+        body: JSON.stringify({
+          model: opts.model,
+          messages: [{ role: "user", content: opts.prompt }],
+          max_tokens: opts.maxTokens || 1024,
+        }),
+      },
+      timeoutMs
+    );
+
+    if (!res.ok) {
+      const err = await res.text();
+      const rate = res.status === 429;
+      return {
+        source: opts.source,
+        model: opts.model,
+        content: rate ? `[RATE LIMIT] ${err}` : `[ERROR] ${err}`,
+        live: false,
+      };
+    }
+
+    const data = await res.json();
+    return {
+      source: opts.source,
+      model: data.model || opts.model,
+      content: data.choices?.[0]?.message?.content || "",
+      live: true,
+    };
+  } catch (e) {
+    return classifyFetchError(e, opts.source, opts.model);
   }
-
-  const data = await res.json();
-  return {
-    source: opts.source,
-    model: data.model || opts.model,
-    content: data.choices?.[0]?.message?.content || "",
-    live: true,
-  };
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -74,33 +152,46 @@ export async function callClaude(prompt: string, system?: string): Promise<AIRes
     return { source: "claude", model: "claude-demo", content: `[DEMO] Claude response for: ${prompt}`, live: false };
   }
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": key,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1024,
-      system: system || "You are CoreIntent, an AI trading assistant. Be concise and direct.",
-      messages: [{ role: "user", content: prompt }],
-    }),
-  });
+  try {
+    const res = await fetchWithTimeout(
+      "https://api.anthropic.com/v1/messages",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1024,
+          system: system || "You are CoreIntent, an AI trading assistant. Be concise and direct.",
+          messages: [{ role: "user", content: prompt }],
+        }),
+      },
+      CLAUDE_TIMEOUT_MS
+    );
 
-  if (!res.ok) {
-    const err = await res.text();
-    return { source: "claude", model: "claude-sonnet-4-6", content: `[ERROR] ${err}`, live: false };
+    if (!res.ok) {
+      const err = await res.text();
+      return {
+        source: "claude",
+        model: "claude-sonnet-4-6",
+        content: res.status === 429 ? `[RATE LIMIT] ${err}` : `[ERROR] ${err}`,
+        live: false,
+      };
+    }
+
+    const data = await res.json();
+    return {
+      source: "claude",
+      model: data.model || "claude-sonnet-4-6",
+      content: data.content?.[0]?.text || "",
+      live: true,
+    };
+  } catch (e) {
+    return classifyFetchError(e, "claude", "claude-sonnet-4-6");
   }
-
-  const data = await res.json();
-  return {
-    source: "claude",
-    model: data.model || "claude-sonnet-4-6",
-    content: data.content?.[0]?.text || "",
-    live: true,
-  };
 }
 
 // --- PERPLEXITY — Research, fact-checking ---
@@ -127,23 +218,33 @@ export async function callGemini(prompt: string, system?: string): Promise<AIRes
     body.systemInstruction = { parts: [{ text: system }] };
   }
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
-    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }
-  );
+  try {
+    const res = await fetchWithTimeout(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) },
+      GEMINI_TIMEOUT_MS
+    );
 
-  if (!res.ok) {
-    const err = await res.text();
-    return { source: "gemini", model: "gemini-2.0-flash", content: `[ERROR] ${err}`, live: false };
+    if (!res.ok) {
+      const err = await res.text();
+      return {
+        source: "gemini",
+        model: "gemini-2.0-flash",
+        content: res.status === 429 ? `[RATE LIMIT] ${err}` : `[ERROR] ${err}`,
+        live: false,
+      };
+    }
+
+    const data = await res.json();
+    return {
+      source: "gemini",
+      model: data.modelVersion || "gemini-2.0-flash",
+      content: data.candidates?.[0]?.content?.parts?.[0]?.text || "",
+      live: true,
+    };
+  } catch (e) {
+    return classifyFetchError(e, "gemini", "gemini-2.0-flash");
   }
-
-  const data = await res.json();
-  return {
-    source: "gemini",
-    model: data.modelVersion || "gemini-2.0-flash",
-    content: data.candidates?.[0]?.content?.parts?.[0]?.text || "",
-    live: true,
-  };
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -207,17 +308,44 @@ export async function orchestrate(task: OrchestratorTask, prompt: string) {
   }
 }
 
+const MODEL_CALL_TIMEOUT_MS = 30_000;
+
+/** Caps wall-clock wait per model when running parallel compares (fetch timeouts still apply first). */
+export function raceAiResponse(
+  p: Promise<AIResponse>,
+  meta: { source: string; model: string }
+): Promise<AIResponse> {
+  return Promise.race([
+    p,
+    new Promise<AIResponse>((resolve) =>
+      setTimeout(
+        () =>
+          resolve({
+            source: meta.source,
+            model: meta.model,
+            content: `[TIMEOUT] ${meta.source} exceeded ${MODEL_CALL_TIMEOUT_MS / 1000}s.`,
+            live: false,
+          }),
+        MODEL_CALL_TIMEOUT_MS
+      )
+    ),
+  ]);
+}
+
 // Fire all 8 models in parallel
 export async function compareAll(prompt: string, system?: string) {
   const results = await Promise.allSettled([
-    callGrok(prompt),
-    callClaude(prompt, system),
-    callPerplexity(prompt),
-    callGemini(prompt, system),
-    callGroq(prompt),
-    callDeepSeek(prompt),
-    callMistral(prompt),
-    callOpenRouter(prompt),
+    raceAiResponse(callGrok(prompt), { source: "grok", model: "grok-3" }),
+    raceAiResponse(callClaude(prompt, system), { source: "claude", model: "claude-sonnet-4-6" }),
+    raceAiResponse(callPerplexity(prompt), { source: "perplexity", model: "sonar-pro" }),
+    raceAiResponse(callGemini(prompt, system), { source: "gemini", model: "gemini-2.0-flash" }),
+    raceAiResponse(callGroq(prompt), { source: "groq", model: "llama-3.3-70b-versatile" }),
+    raceAiResponse(callDeepSeek(prompt), { source: "deepseek", model: "deepseek-chat" }),
+    raceAiResponse(callMistral(prompt), { source: "mistral", model: "mistral-large-latest" }),
+    raceAiResponse(callOpenRouter(prompt), {
+      source: "openrouter",
+      model: "meta-llama/llama-3.3-70b-instruct:free",
+    }),
   ]);
 
   const names = ["grok", "claude", "perplexity", "gemini", "groq", "deepseek", "mistral", "openrouter"] as const;
@@ -236,10 +364,10 @@ export async function compareAll(prompt: string, system?: string) {
 // Fire only primary 4 (for lighter compare)
 export async function comparePrimary(prompt: string, system?: string) {
   const results = await Promise.allSettled([
-    callGrok(prompt),
-    callClaude(prompt, system),
-    callPerplexity(prompt),
-    callGemini(prompt, system),
+    raceAiResponse(callGrok(prompt), { source: "grok", model: "grok-3" }),
+    raceAiResponse(callClaude(prompt, system), { source: "claude", model: "claude-sonnet-4-6" }),
+    raceAiResponse(callPerplexity(prompt), { source: "perplexity", model: "sonar-pro" }),
+    raceAiResponse(callGemini(prompt, system), { source: "gemini", model: "gemini-2.0-flash" }),
   ]);
 
   const names = ["grok", "claude", "perplexity", "gemini"] as const;

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   return NextResponse.json({
+    mode: "demo",
+    note: "Hardcoded data — not connected to a live exchange or signal engine.",
     signals: [
       { id: 1, pair: "BTC/USD", direction: "long", confidence: 0.87, source: "TrendFollower", timestamp: new Date().toISOString() },
       { id: 2, pair: "ETH/USD", direction: "long", confidence: 0.79, source: "MeanRevert", timestamp: new Date().toISOString() },

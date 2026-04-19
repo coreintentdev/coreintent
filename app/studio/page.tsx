@@ -1,7 +1,43 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, Component, type ErrorInfo, type ReactNode } from "react";
 import SiteNav from "@/components/SiteNav";
+
+const STUDIO_FETCH_MS = 120_000;
+
+class StudioErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null as Error | null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("StudioErrorBoundary:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ padding: 24, color: "var(--text-primary)", background: "var(--bg-primary)", minHeight: "100vh" }}>
+          <SiteNav />
+          <p style={{ marginTop: 24 }}>Something broke in AI Studio.</p>
+          <pre style={{ whiteSpace: "pre-wrap", fontSize: 12, color: "var(--text-secondary)" }}>
+            {this.state.error.message}
+          </pre>
+          <button
+            type="button"
+            onClick={() => this.setState({ error: null })}
+            style={{ marginTop: 16, padding: "8px 16px", cursor: "pointer" }}
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 type Model = "grok" | "claude" | "perplexity" | "gemini" | "groq" | "deepseek" | "mistral" | "openrouter" | "primary" | "all";
 
@@ -42,7 +78,7 @@ const MODELS: { id: Model; label: string; desc: string; color: string; group: "p
 const ALL_MODEL_KEYS = ["grok", "claude", "perplexity", "gemini", "groq", "deepseek", "mistral", "openrouter"];
 const PRIMARY_MODEL_KEYS = ["grok", "claude", "perplexity", "gemini"];
 
-export default function StudioPage() {
+function StudioPageInner() {
   const [model, setModel] = useState<Model>("grok");
   const [input, setInput] = useState("");
   const [systemPrompt, setSystemPrompt] = useState("You are CoreIntent, an AI trading assistant built by Corey McIvor. Be concise and direct.");
@@ -79,8 +115,11 @@ export default function StudioPage() {
     setInput("");
     setLoading(true);
 
+    let fetchTimer: number | undefined;
     try {
       const isCompare = model === "all" || model === "primary";
+      const controller = new AbortController();
+      fetchTimer = window.setTimeout(() => controller.abort(), STUDIO_FETCH_MS);
       const res = await fetch("/api/studio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,6 +129,7 @@ export default function StudioPage() {
           system: systemPrompt || undefined,
           compare: isCompare ? (model === "all" ? "all" : "primary") : undefined,
         }),
+        signal: controller.signal,
       });
 
       const data = await res.json();
@@ -116,13 +156,17 @@ export default function StudioPage() {
         setMessages((prev) => [...prev, assistantMsg]);
       }
     } catch (err) {
+      const aborted = err instanceof DOMException && err.name === "AbortError";
       const errorMsg: Message = {
         id: crypto.randomUUID(),
         role: "assistant",
-        content: `[ERROR] ${err instanceof Error ? err.message : "Network error"}`,
+        content: aborted
+          ? `[TIMEOUT] Request exceeded ${STUDIO_FETCH_MS / 1000}s. Try a shorter prompt or a single model.`
+          : `[ERROR] ${err instanceof Error ? err.message : "Network error"}`,
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
+      if (fetchTimer !== undefined) window.clearTimeout(fetchTimer);
       setLoading(false);
       inputRef.current?.focus();
     }
@@ -279,9 +323,10 @@ export default function StudioPage() {
               <div style={{ textAlign: "center", marginTop: "120px", color: "var(--text-secondary)" }}>
                 <div style={{ fontSize: "48px", marginBottom: "16px", opacity: 0.3 }}>Z</div>
                 <h3 style={{ fontWeight: "normal", marginBottom: "8px" }}>Zynthio AI Studio</h3>
-                <p style={{ fontSize: "13px", maxWidth: "400px", margin: "0 auto" }}>
-                  Select a model and start chatting. &quot;Compare All&quot; sends your prompt to
-                  Grok, Claude, and Perplexity simultaneously.
+                <p style={{ fontSize: "13px", maxWidth: "440px", margin: "0 auto", lineHeight: 1.5 }}>
+                  Select a model and start chatting. &quot;Compare 8&quot; runs all eight models in parallel
+                  (Grok, Claude, Perplexity, Gemini, Groq, DeepSeek, Mistral, OpenRouter). &quot;Compare 4&quot; uses
+                  the primary orchestra only (Grok, Claude, Perplexity, Gemini).
                 </p>
                 <div style={{ marginTop: "24px", display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
                   {[
@@ -451,8 +496,10 @@ export default function StudioPage() {
                 </div>
                 <span>
                   {model === "all"
-                    ? model === "all" ? "Querying all 8 models..." : "Querying 4 primary models..."
-                    : `${selectedModel.label} is thinking...`}
+                    ? "Querying all 8 models..."
+                    : model === "primary"
+                      ? "Querying 4 primary models..."
+                      : `${selectedModel.label} is thinking...`}
                 </span>
               </div>
             )}
@@ -525,5 +572,13 @@ export default function StudioPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function StudioPage() {
+  return (
+    <StudioErrorBoundary>
+      <StudioPageInner />
+    </StudioErrorBoundary>
   );
 }

@@ -20,7 +20,9 @@ export async function GET() {
     holdings: enriched,
     totalValue,
     currency: "USD",
-    mode: "paper_trading",
+    mode: "demo",
+    note: "Hardcoded portfolio — not connected to a live exchange or wallet.",
+    paperTradingLabel: "paper_trading",
     timestamp: new Date().toISOString(),
   });
 }

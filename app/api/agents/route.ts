@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   return NextResponse.json({
+    mode: "demo",
+    note: "Hardcoded agent list — agents are not running against live infrastructure in this build.",
     agents: [
       { name: "TrendFollower", model: "claude-opus-4-6", status: "active", task: "BTC/ETH momentum", uptime: 3600 },
       { name: "MeanRevert", model: "claude-sonnet-4-6", status: "active", task: "SOL mean reversion", uptime: 3500 },

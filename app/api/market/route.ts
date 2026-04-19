@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   return NextResponse.json({
+    mode: "demo",
+    note: "Hardcoded data — not connected to live exchange feeds.",
     pairs: [
       { symbol: "BTC/USD", price: 62900, change24h: 2.4, volume: 28_400_000_000, high: 63500, low: 61200 },
       { symbol: "ETH/USD", price: 1882, change24h: 1.8, volume: 12_100_000_000, high: 1910, low: 1850 },
