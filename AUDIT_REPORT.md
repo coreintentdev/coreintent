@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Sat Apr 18 04:53:10 UTC 2026
+Generated: Sun Apr 19 03:00:41 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -28,9 +28,9 @@ Generated: Sat Apr 18 04:53:10 UTC 2026
 - PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- WARN: No page-level metadata: app/privacy/page.tsx
-- WARN: No page-level metadata: app/terms/page.tsx
-- WARN: No page-level metadata: app/disclaimer/page.tsx
+- PASS: Page metadata: app/privacy/page.tsx
+- PASS: Page metadata: app/terms/page.tsx
+- PASS: Page metadata: app/disclaimer/page.tsx
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -85,8 +85,8 @@ Generated: Sat Apr 18 04:53:10 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 49 |
+| PASS | 52 |
 | FAIL | 0 |
-| WARN | 5 |
+| WARN | 2 |
 
-**Audit Score: 90%** (49/54 checks passed)
+**Audit Score: 96%** (52/54 checks passed)
