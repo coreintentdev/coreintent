@@ -89,6 +89,16 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-03-24T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-008",
+    service: "Cursor Desktop Client",
+    status: "detected",
+    severity: "major",
+    message: "Cursor desktop chat lost user input (~6 attached images + a long paragraph) during composer submission. Session also reported ERROR_UNAUTHORIZED 'Follow-up blocked' (Request ID: 269e9c4f-f124-4ff3-9e6c-e0cf81798b06) and an earlier internal error (Request ID: ffcd98c5-788c-43bc-80d2-38327bd23166). Suspected client-side auth/session expiry with no draft autosave, causing total input loss. Reported by Corey directly. Mitigation: keep using Cursor Cloud Agents for long-running work since they survive desktop client crashes.",
+    autoUpdate: true,
+    detectedAt: "2026-04-18T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
