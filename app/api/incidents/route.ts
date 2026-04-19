@@ -86,6 +86,28 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-18T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-009",
+    service: "Cursor Desktop Client",
+    status: "detected",
+    severity: "major",
+    message:
+      "Composer agent queue repeatedly fails on submit_now with AgentQueueMutationError: followupId not found (recurring). Example Request IDs from Corey: 16f2f060-54d2-4e28-a09e-1bd1282942db, f3e8e0c3-19fe-4232-ba88-48dcdadfeeb2. Prior related: INC-008 (auth / input loss). Leaves queued user messages stuck; same class of client-side reliability failure.",
+    autoUpdate: true,
+    detectedAt: "2026-04-18T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-010",
+    service: "Local Workspace Scale",
+    status: "detected",
+    severity: "major",
+    message:
+      "Workspace reported as 100,000+ files — too heavy for IDE indexing, agent context, and reliable Composer queue behavior. Not acceptable as a single open folder for day-to-day dev. Mitigation: open only the app repo root in Cursor; keep bulk archives/VPS mirrors/Downloads outside the workspace or use ZynRip (scripts/zynrip-organize.sh) to consolidate under a structured tree and point the IDE at the lean project only.",
+    autoUpdate: true,
+    detectedAt: "2026-04-18T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 const MONITORED_SERVICES: MonitoredService[] = [
