@@ -110,3 +110,65 @@
 
 **CTA (25-30s):**
 "Follow for updates. coreintent.dev"
+
+---
+
+## Script 6 — "$1,188 Per Year" (Money Shock)
+
+**Hook (0-3s):** "Your trading platform subscription costs you $1,188 a year. And you're probably still losing money."
+
+**Body (3-25s):**
+"$99 a month. Every month. Win, lose, or don't even log in."
+
+"That's $1,188 a year in guaranteed losses before you place a single trade."
+
+"CoreIntent costs exactly zero. Three AI models — Grok, Claude, Perplexity — arguing about your trades. Six AI agents. Daily competitions."
+
+"Our infrastructure? $45 a month. Total. When it costs that little to run, charging subscriptions is just greed."
+
+"Keep your $1,188. We'll keep building."
+
+**CTA (25-30s):**
+"coreintent.dev — zero subscriptions, zero excuses."
+
+---
+
+## Script 7 — "Built From New Zealand" (Founder Story)
+
+**Hook (0-3s):** "I built an AI trading platform from New Zealand with no VC, no co-founder, and $45 a month."
+
+**Body (3-25s):**
+"No San Francisco. No ping pong table. No $5,000 office."
+
+"Just me, three AI models, and a thesis: if your platform costs $45 a month to run, why are you charging $99?"
+
+"So I stopped. CoreIntent is free. Competitions, not subscriptions."
+
+"Grok catches the signal. Claude double-checks. Perplexity fact-checks the news. And they argue with each other before you see anything."
+
+"Six AI agents trading paper money, getting smarter every day."
+
+**CTA (25-30s):**
+"Built honestly. Built from NZ. coreintent.dev"
+
+---
+
+## Script 8 — "The Disagreement Signal" (Educational)
+
+**Hook (0-3s):** "The most valuable trading signal isn't when AI models agree — it's when they disagree."
+
+**Body (3-25s):**
+"Think about it. One model says buy. That's a coin flip with extra steps."
+
+"Two models say buy? Slightly better. But which one would you trust if they disagreed?"
+
+"Three models is where it gets interesting."
+
+"At CoreIntent: Grok says 'BTC is about to move.' Claude says 'The on-chain data disagrees.' Perplexity says 'Breaking news changes everything.'"
+
+"When all three agree: strong signal. When they split: proceed with caution. When they all disagree: sit out."
+
+"That tension between models? That's not a bug. That's your edge."
+
+**CTA (25-30s):**
+"Three models. One signal. Zero subscriptions. coreintent.dev"

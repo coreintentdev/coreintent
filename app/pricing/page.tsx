@@ -86,11 +86,14 @@ export default function PricingPage() {
             Subscriptions charge you $99/mo whether you profit or bleed out. The platform wins. You pay.<br />
             That&apos;s not a partnership — that&apos;s a toll booth.
           </p>
-          <p style={{ color: "var(--accent-green)", marginBottom: "16px", fontSize: "15px", fontWeight: "bold" }}>
+          <p style={{ color: "var(--accent-green)", marginBottom: "8px", fontSize: "15px", fontWeight: "bold" }}>
             CoreIntent costs $45/mo to run. Free costs nothing to serve. So we give it all away.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "14px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed.
+          </p>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "12px", fontStyle: "italic" }}>
+            A Zynthio product — built in New Zealand by Corey McIvor
           </p>
 
           {/* How It Works */}
@@ -340,6 +343,36 @@ export default function PricingPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* The Math */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #ef444412 0%, #f59e0b12 100%)",
+              border: "1px solid #ef444422",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ marginBottom: "16px", color: "#ef4444" }}>Do the Maths</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "24px", alignItems: "center", maxWidth: "600px", margin: "0 auto" }}>
+              <div>
+                <div style={{ fontSize: "28px", fontWeight: "bold", color: "#ef4444" }}>$1,188</div>
+                <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginTop: "4px" }}>Typical platform<br />$99/mo x 12 months</div>
+                <div style={{ fontSize: "11px", color: "#ef4444", marginTop: "8px" }}>Charged whether you<br />profit or not</div>
+              </div>
+              <div style={{ fontSize: "24px", color: "var(--text-secondary)" }}>vs</div>
+              <div>
+                <div style={{ fontSize: "28px", fontWeight: "bold", color: "var(--accent-green)" }}>$0</div>
+                <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginTop: "4px" }}>CoreIntent<br />Forever</div>
+                <div style={{ fontSize: "11px", color: "var(--accent-green)", marginTop: "8px" }}>3 AI models, 6 agents,<br />unlimited competitions</div>
+              </div>
+            </div>
+            <p style={{ color: "var(--text-secondary)", fontSize: "12px", maxWidth: "480px", margin: "20px auto 0" }}>
+              That&apos;s $1,188 per year you keep in your pocket. Or your trading account. Your call.
+            </p>
           </div>
 
           {/* FAQ */}

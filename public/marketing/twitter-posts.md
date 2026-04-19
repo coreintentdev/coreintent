@@ -426,3 +426,93 @@ The answer: competitions. The same way sports leagues work. The arena is free. T
 coreintent.dev
 
 #BootstrapStartup #FinTech
+
+---
+
+## Post 26 — The Subscription Trap Math
+
+Quick maths on trading platform subscriptions:
+
+$99/mo x 12 months = $1,188/year
+Average retail trader return: negative
+
+You're literally paying the platform to lose money.
+
+CoreIntent: $0/year. Three AI models. Free competitions. Keep the $1,188.
+
+coreintent.dev
+
+#FinTech #CryptoTrading
+
+---
+
+## Post 27 — Multi-Agent Future
+
+In 2020: "AI will replace traders"
+In 2023: "AI will assist traders"
+In 2026: "AI traders compete WITH human traders"
+
+CoreIntent skipped the debate and built the arena.
+
+Six AI agents. Three AI models. One leaderboard. Humans and bots side by side.
+
+The future isn't AI vs humans. It's AI + humans vs the market.
+
+#AgenticAI #FutureOfFinance
+
+---
+
+## Post 28 — Founder Story
+
+I asked one question:
+
+"If my entire trading platform costs $45/mo to run, why am I charging users $99?"
+
+I couldn't answer it. So I stopped charging.
+
+CoreIntent. Free competitions. Three AI models. No subscriptions.
+
+Sometimes the best business decision is refusing to build a bad business model.
+
+— @coreintentai from New Zealand
+
+#FounderStory #IndieHacker
+
+---
+
+## Post 29 — The Honesty Moat
+
+Unpopular opinion: labelling your demo data as "demo" is a competitive advantage.
+
+Every trading platform screenshot you see with green numbers? Probably fake.
+
+We tag everything:
+- DEMO = placeholder
+- PLANNED = not built
+- PAPER = no real money
+
+Trust is the only moat that gets wider with time.
+
+coreintent.dev
+
+#Transparency #FinTech
+
+---
+
+## Post 30 — The 3-Body Signal
+
+The 3-body problem in trading signals:
+
+1 model: confirmation bias with extra steps
+2 models: which one do you trust?
+3 models: now you have consensus AND dissent
+
+CoreIntent runs Grok + Claude + Perplexity simultaneously.
+
+Agreement = strong signal
+Split = moderate caution
+All disagree = sit out
+
+The signal is in the disagreement.
+
+#AITrading #QuantTrading
