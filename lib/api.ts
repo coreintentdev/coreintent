@@ -215,7 +215,21 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
 };
 
 /** Sliding-window rate limit state. Module-level — survives warm restarts. */
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+const rateLimitStore = new Map<string, { timestamps: number[]; windowMs: number }>();
+const RATE_LIMIT_CLEANUP_INTERVAL_MS = 60_000;
+let nextRateLimitCleanupAt = Date.now() + RATE_LIMIT_CLEANUP_INTERVAL_MS;
+
+function pruneExpiredRateLimitEntries(now: number): void {
+  for (const [storeKey, entry] of rateLimitStore) {
+    const windowStart = now - entry.windowMs;
+    while (entry.timestamps.length > 0 && entry.timestamps[0] <= windowStart) {
+      entry.timestamps.shift();
+    }
+    if (entry.timestamps.length === 0) {
+      rateLimitStore.delete(storeKey);
+    }
+  }
+}
 
 /**
  * Extract the real client IP from a request.
@@ -246,17 +260,29 @@ export function checkRateLimit(
   const config  = RATE_LIMITS[routeKey] ?? RATE_LIMITS.default;
   const storeKey = `${routeKey}:${ip}`;
   const now      = Date.now();
-  const entry    = rateLimitStore.get(storeKey);
 
-  if (!entry || now >= entry.resetAt) {
-    rateLimitStore.set(storeKey, { count: 1, resetAt: now + config.windowMs });
+  if (now >= nextRateLimitCleanupAt) {
+    pruneExpiredRateLimitEntries(now);
+    nextRateLimitCleanupAt = now + RATE_LIMIT_CLEANUP_INTERVAL_MS;
+  }
+
+  const entry = rateLimitStore.get(storeKey);
+  if (!entry) {
+    rateLimitStore.set(storeKey, { timestamps: [now], windowMs: config.windowMs });
     return null;
   }
 
-  if (entry.count >= config.max) {
-    return tooManyRequests(Math.ceil((entry.resetAt - now) / 1000));
+  entry.windowMs = config.windowMs;
+  const windowStart = now - entry.windowMs;
+  while (entry.timestamps.length > 0 && entry.timestamps[0] <= windowStart) {
+    entry.timestamps.shift();
   }
 
-  entry.count++;
+  if (entry.timestamps.length >= config.max) {
+    const retryAfterMs = entry.timestamps[0] + entry.windowMs - now;
+    return tooManyRequests(Math.max(1, Math.ceil(retryAfterMs / 1000)));
+  }
+
+  entry.timestamps.push(now);
   return null;
 }
