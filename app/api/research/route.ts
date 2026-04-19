@@ -10,8 +10,8 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { callAllAIs, callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
+import { ok, err, preflight, serverError, validateString, validateEnum, checkRateLimit, getClientIp } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -29,38 +29,40 @@ const IDENTITY = {
   domain:  "coreintent.dev",
 } as const;
 
-const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
+const VALID_TASKS: readonly ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const limited = checkRateLimit(getClientIp(req), "research");
+  if (limited) return limited;
+
   try {
-    const [perplexityResult, grokResult, claudeResult] = await Promise.all([
-      callPerplexity(
+    const { grok, claude, perplexity, allLive, allValid } = await callAllAIs({
+      perplexity:
         `Search for "${IDENTITY.name}" OR "${IDENTITY.project}" OR "${IDENTITY.domain}" OR "${IDENTITY.twitter}". ` +
         `Find mentions, profiles, articles, or social media posts. ` +
-        `What is the current web presence of this person and project?`
-      ),
-      callGrok(
+        `What is the current web presence of this person and project?`,
+      grok:
         `Search X/Twitter for ${IDENTITY.twitter} and CoreIntent. ` +
         `Latest activity? Any mentions? Overall sentiment? ` +
-        `Are there any impersonation attempts on this account?`
-      ),
-      callClaude(
+        `Are there any impersonation attempts on this account?`,
+      claude:
         `You are analyzing the digital twin of Corey McIvor (${IDENTITY.handle}), creator of ${IDENTITY.project}. ` +
         `Summarize the current project state, identify the top 3 risks to the digital identity, ` +
         `and suggest 3 immediate actions to strengthen online presence and protect the brand.`,
-        "You are CoreIntent's self-awareness module. Be precise, honest, and direct."
-      ),
-    ]);
+      systems: {
+        claude: "You are CoreIntent's self-awareness module. Be precise, honest, and direct.",
+      },
+    });
 
     return ok({
       identity: IDENTITY,
       research: {
-        webPresence:     { ...perplexityResult, purpose: "Web presence scan",        contentValid: validateAiContent(perplexityResult) },
-        socialSentiment: { ...grokResult,       purpose: "X/Twitter monitoring",     contentValid: validateAiContent(grokResult)       },
-        selfAnalysis:    { ...claudeResult,     purpose: "Threat & brand analysis",  contentValid: validateAiContent(claudeResult)     },
+        webPresence:     { ...perplexity, purpose: "Web presence scan",       contentValid: validateAiContent(perplexity) },
+        socialSentiment: { ...grok,       purpose: "X/Twitter monitoring",    contentValid: validateAiContent(grok)       },
+        selfAnalysis:    { ...claude,     purpose: "Threat & brand analysis", contentValid: validateAiContent(claude)     },
       },
-      allLive:  perplexityResult.live && grokResult.live && claudeResult.live,
-      allValid: validateAiContent(perplexityResult) && validateAiContent(grokResult) && validateAiContent(claudeResult),
+      allLive,
+      allValid,
       timestamp: new Date().toISOString(),
     });
   } catch (e) {
@@ -69,6 +71,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = checkRateLimit(getClientIp(req), "research");
+  if (limited) return limited;
+
   let body: Partial<ResearchRequest>;
   try {
     body = (await req.json()) as Partial<ResearchRequest>;
@@ -79,9 +84,7 @@ export async function POST(req: NextRequest) {
   const topic = validateString(body.topic, 1000);
   if (!topic) return err("topic is required and must be 1000 characters or fewer", 400);
 
-  const task: ResearchTask = VALID_TASKS.includes(body.task as ResearchTask)
-    ? (body.task as ResearchTask)
-    : "research";
+  const task: ResearchTask = validateEnum(body.task, VALID_TASKS) ?? "research";
 
   try {
     type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;

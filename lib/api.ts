@@ -189,7 +189,8 @@ export function validateEnum<T extends string>(
 }
 
 // ---------------------------------------------------------------------------
-// Rate limiting — structure ready, implementation pending KV store
+// Rate limiting — in-memory implementation (single-instance / VPS).
+// Replace rateLimitStore with Cloudflare KV or Upstash Redis for multi-instance.
 // ---------------------------------------------------------------------------
 
 export interface RateLimitConfig {
@@ -201,9 +202,7 @@ export interface RateLimitConfig {
 
 /**
  * Per-route rate limit budgets.
- * TODO: implement checkRateLimit(ip, route) once Cloudflare KV or Upstash Redis is wired in.
- *       When triggered, call tooManyRequests() from lib/api.ts.
- * AI routes are deliberately tight — each call costs real money.
+ * AI routes are deliberately tight — each live call costs real money.
  */
 export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   default:  { windowMs: 60_000, max: 60 },
@@ -214,3 +213,85 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
 };
+
+/**
+ * True sliding-window log: stores an array of request timestamps per key.
+ * Memory is bounded by max requests per window per IP (at most 60 entries for
+ * the default budget). Module-level — survives warm restarts.
+ */
+const rateLimitStore = new Map<string, number[]>();
+
+/** Largest windowMs across all routes — used to bound the cleanup sweep. */
+const MAX_WINDOW_MS = Math.max(...Object.values(RATE_LIMITS).map((c) => c.windowMs));
+
+let lastCleanupAt = Date.now();
+const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // sweep every 5 minutes
+
+/** Delete store entries whose newest timestamp is outside the max window. */
+function pruneExpiredEntries(): void {
+  const cutoff = Date.now() - MAX_WINDOW_MS;
+  for (const [key, timestamps] of rateLimitStore) {
+    if (timestamps.length === 0 || timestamps[timestamps.length - 1] <= cutoff) {
+      rateLimitStore.delete(key);
+    }
+  }
+}
+
+/**
+ * Extract the real client IP from a request.
+ * Reads x-forwarded-for (Cloudflare/Vercel) then x-real-ip, falls back to loopback.
+ */
+export function getClientIp(req: import("next/server").NextRequest): string {
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "127.0.0.1"
+  );
+}
+
+/**
+ * Enforce a true sliding-window rate limit for the given IP and route key.
+ *
+ * Stores per-IP request timestamps; only requests within the last windowMs
+ * count toward the budget. This prevents the fixed-window burst problem where
+ * a client could fire max requests at the end of one window and max more at
+ * the start of the next.
+ *
+ * Returns a 429 NextResponse when the budget is exceeded, or null when the
+ * request is allowed. Routes should return immediately when non-null.
+ *
+ * @example
+ * const limited = checkRateLimit(getClientIp(req), "research");
+ * if (limited) return limited;
+ */
+export function checkRateLimit(
+  ip: string,
+  routeKey: string
+): NextResponse<ApiResponse<null>> | null {
+  const config   = RATE_LIMITS[routeKey] ?? RATE_LIMITS.default;
+  const storeKey = `${routeKey}:${ip}`;
+  const now      = Date.now();
+
+  // Periodic sweep to prevent unbounded memory growth from unique IPs.
+  if (now - lastCleanupAt > CLEANUP_INTERVAL_MS) {
+    pruneExpiredEntries();
+    lastCleanupAt = now;
+  }
+
+  const windowStart = now - config.windowMs;
+  const timestamps  = rateLimitStore.get(storeKey) ?? [];
+
+  // Discard timestamps that have fallen outside the sliding window.
+  const recent = timestamps.filter((t) => t > windowStart);
+
+  if (recent.length >= config.max) {
+    // Tell the client how long until the oldest request ages out.
+    const retryAfter = Math.ceil((recent[0] + config.windowMs - now) / 1000);
+    rateLimitStore.set(storeKey, recent);
+    return tooManyRequests(Math.max(1, retryAfter));
+  }
+
+  recent.push(now);
+  rateLimitStore.set(storeKey, recent);
+  return null;
+}
