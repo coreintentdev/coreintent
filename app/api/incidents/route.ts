@@ -219,6 +219,17 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-20T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-020",
+    service: "Cloudflare Pages Deployment Assumption",
+    status: "detected",
+    severity: "major",
+    message:
+      "Agent falsely assumed that checking Cloudflare Workers via MCP was sufficient to verify deployment status, completely ignoring Cloudflare Pages (where Next.js apps are typically deployed) simply because the MCP lacks a Pages connector. This lazy assumption prematurely halted deployment efforts and pushed the burden back to the user, exemplifying the 'lost alpha' and 'non-deployed build' pattern (INC-018). Agents must exhaust all deployment avenues (including existing GitHub Actions, Vercel, or alternative infrastructure) before declaring a deployment impossible from the sandbox.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
