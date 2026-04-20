@@ -43,6 +43,23 @@ a {
 }
 
 /* ═══════════════════════════════════════════
+   RTL Support
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] nav {
+  direction: rtl;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+/* ═══════════════════════════════════════════
    ANIMATIONS — CoreIntent Interactive Layer
    ═══════════════════════════════════════════ */
 

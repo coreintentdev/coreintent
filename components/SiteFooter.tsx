@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function SiteFooter() {
+  const t = useTranslations("footer");
+
   return (
     <footer
       style={{
@@ -33,10 +38,8 @@ export default function SiteFooter() {
           >
             CoreIntent
           </div>
-          <p>Agentic AI Trading Engine</p>
-          <p style={{ marginTop: "4px" }}>
-            Built by Corey McIvor | Zynthio.ai
-          </p>
+          <p>{t("tagline")}</p>
+          <p style={{ marginTop: "4px" }}>{t("builtBy")}</p>
         </div>
 
         <nav
@@ -44,36 +47,72 @@ export default function SiteFooter() {
           aria-label="Footer navigation"
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Product
+            <span
+              style={{
+                fontWeight: "bold",
+                color: "var(--text-primary)",
+                marginBottom: "4px",
+              }}
+            >
+              {t("product")}
             </span>
-            <Link href="/" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+            <Link
+              href="/"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+            >
               Terminal
             </Link>
-            <Link href="/stack" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+            <Link
+              href="/stack"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+            >
               Stack
             </Link>
-            <Link href="/pricing" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Pricing
+            <Link
+              href="/pricing"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+            >
+              {t("product") === "Producto" ? "Precios" : "Pricing"}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Legal
+            <span
+              style={{
+                fontWeight: "bold",
+                color: "var(--text-primary)",
+                marginBottom: "4px",
+              }}
+            >
+              {t("legal")}
             </span>
-            <Link href="/privacy" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Privacy Policy
+            <Link
+              href="/privacy"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+            >
+              {t("privacy")}
             </Link>
-            <Link href="/terms" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terms of Service
+            <Link
+              href="/terms"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+            >
+              {t("terms")}
             </Link>
-            <Link href="/disclaimer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Disclaimer
+            <Link
+              href="/disclaimer"
+              style={{ color: "var(--text-secondary)", textDecoration: "none" }}
+            >
+              {t("disclaimer")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Connect
+            <span
+              style={{
+                fontWeight: "bold",
+                color: "var(--text-primary)",
+                marginBottom: "4px",
+              }}
+            >
+              {t("connect")}
             </span>
             <a
               href="https://github.com/coreintentdev"
@@ -98,7 +137,7 @@ export default function SiteFooter() {
               style={{ color: "var(--text-secondary)", textDecoration: "none" }}
               aria-label="Email CoreIntent"
             >
-              Contact
+              {t("contact")}
             </a>
           </div>
         </nav>
@@ -116,11 +155,10 @@ export default function SiteFooter() {
           gap: "8px",
         }}
       >
-        <small>&copy; {new Date().getFullYear()} Corey McIvor. All rights reserved.</small>
         <small>
-          Trading cryptocurrency involves significant risk. Past performance does
-          not guarantee future results. Paper trading mode.
+          {t("copyright", { year: new Date().getFullYear().toString() })}
         </small>
+        <small>{t("riskDisclaimer")}</small>
       </div>
     </footer>
   );
