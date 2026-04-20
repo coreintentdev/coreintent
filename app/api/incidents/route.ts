@@ -170,7 +170,7 @@ const INCIDENTS: Incident[] = [
     status: "detected",
     severity: "major",
     message:
-      "User terminal sequence showed two linked blockers while trying to run ZynRip and pull updates: (1) running zynthio-tools script without ZYN_RIP_SRC set (expected script guard), then (2) running `git pull origin claude/check-coreintent-builds-JTrDd` inside ~/Desktop/zynthio-tools, which failed with `fatal: couldn't find remote ref ...` because that branch exists in coreintent repo, not zynthio-tools. Mitigation: for CoreIntent updates run pull in coreintent clone; for zynthio-tools pull its own default/main branch and set ZYN_RIP_SRC before running organize script.",
+      "User terminal sequence showed two linked blockers while trying to run ZynRip and pull updates: (1) running zynthio-tools script without ZYN_RIP_SRC set (expected script guard), then (2) running `git pull origin claude/check-coreintent-builds-JTrDd` inside ~/Desktop/zynthio-tools, which failed with `fatal: couldn't find remote ref ...` because that branch exists in coreintent repo, not zynthio-tools. Then (3) exporting ZYN_RIP_SRC and running `bash scripts/zynrip-organize.sh` failed with `No such file or directory`, suggesting either a path/copy-paste glitch on macOS or the script missing in that exact directory context. Mitigation: for CoreIntent updates run pull in coreintent clone; for zynthio-tools pull its own default/main branch and ensure you are in the directory containing the `scripts/` folder before running.",
     autoUpdate: true,
     detectedAt: "2026-04-20T00:00:00Z",
     updatedAt: new Date().toISOString(),
