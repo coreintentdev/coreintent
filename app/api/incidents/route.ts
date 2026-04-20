@@ -208,6 +208,17 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-20T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-019",
+    service: "Cloudflare MCP Integration",
+    status: "detected",
+    severity: "major",
+    message:
+      "Agent falsely assumed or stated lack of Cloudflare access without checking the active MCP connections. The Cloudflare MCP is, in fact, fully authenticated and connected to the user's accounts (Zynthioai@gmail.com and Corey.mcivor@gmail.com). This failure to utilize available, authenticated infrastructure tools contributes to the 336 non-deployed builds (INC-018) and causes unnecessary frustration by ignoring existing capabilities.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
