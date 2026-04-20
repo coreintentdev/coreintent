@@ -32,21 +32,37 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Terms of Service",
+          item: "https://coreintent.dev/terms",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "Terms of Service",
-      item: "https://coreintent.dev/terms",
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/terms",
+      name: "Terms of Service — Platform Rules & Conditions",
+      description:
+        "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
+      url: "https://coreintent.dev/terms",
+      inLanguage: "en-NZ",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      dateModified: "2026-03-01",
+      publisher: { "@type": "Organization", "@id": "https://zynthio.ai/#organization" },
     },
   ],
 };
@@ -60,7 +76,7 @@ export default function TermsLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
     </>

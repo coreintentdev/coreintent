@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "CoreIntent terms of service — your agreement to use the platform. Operated by Corey McIvor under the Zynthio brand, based in New Zealand.",
-};
 
 export default function TermsPage() {
   return (

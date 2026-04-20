@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Mon Apr 20 04:04:44 UTC 2026
+Generated: Mon Apr 20 04:42:46 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 29
+- INFO: Routes found: 30
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -28,9 +28,9 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 - PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- PASS: Page metadata: app/privacy/page.tsx
-- PASS: Page metadata: app/terms/page.tsx
-- PASS: Page metadata: app/disclaimer/page.tsx
+- PASS: Page metadata: app/privacy
+- PASS: Page metadata: app/terms
+- PASS: Page metadata: app/disclaimer
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -53,9 +53,9 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:218:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:219:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:220:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:220:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:221:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:222:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -64,7 +64,7 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
+- PASS: ARIA attributes found (14 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
