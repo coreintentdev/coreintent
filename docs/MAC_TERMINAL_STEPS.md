@@ -1,37 +1,32 @@
 # Mac Terminal Steps
 
-It looks like you accidentally pasted the incident JSON code directly into your terminal prompt, which is why it looked like broken code. 
+Ah, looking at your Desktop, you don't have the `coreintent` folder cloned locally yet! Since you are working in a Cursor Cloud Workspace, the code lives in the cloud, not on your Mac.
 
-To get everything working, you just need to be in the right folder. You have two different folders on your Mac:
-1. **`coreintent`** (This is where the new code and the new ZynRip v3 script live)
-2. **`zynthio-tools`** (This is where you were getting the `ZYN_RIP_SRC` errors)
+Because the repository is private, you need to clone it to your Mac to run the new script.
 
-Here are the exact commands to copy and paste into your terminal, one by one.
+Here are the exact commands to copy and paste into your local Mac terminal:
 
-### 1. Pull the new code
-Copy and paste this block to go to the right folder and pull the updates:
-
+### 1. Clone the repo to your Desktop
 ```bash
-cd ~/Desktop/coreintent
-git fetch origin
-git checkout claude/check-coreintent-builds-JTrDd
-git pull origin claude/check-coreintent-builds-JTrDd
+cd ~/Desktop
+git clone https://github.com/coreintentdev/coreintent.git
 ```
 
-### 2. Run the new ZynRip (v3)
-The newly fixed ZynRip script that works on Mac is inside the `coreintent` folder. 
-
-Copy and paste this to run a dry-run:
-
+### 2. Go into the folder and get the right branch
 ```bash
-cd ~/Desktop/coreintent
+cd coreintent
+git fetch origin
+git checkout claude/check-coreintent-builds-JTrDd
+```
+
+### 3. Run the new ZynRip (v3)
+Copy and paste this to run a dry-run:
+```bash
 bash scripts/zynrip-organize.sh
 ```
 
-### 3. Apply ZynRip
+### 4. Apply ZynRip
 If the dry-run output looks correct, copy and paste this to actually move the files and generate the MAP:
-
 ```bash
-cd ~/Desktop/coreintent
 bash scripts/zynrip-organize.sh --apply --yes
 ```
