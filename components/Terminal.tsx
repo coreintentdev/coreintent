@@ -818,35 +818,39 @@ export default function Terminal() {
     }
   };
 
-  // Convert ANSI escape codes to colored HTML spans.
-  // Security: HTML is escaped FIRST, then only safe ANSI codes are converted to spans.
-  // Only known color codes in the allowlist produce HTML tags — everything else is stripped.
-  const ansiToHtml = (text: string) => {
-    const map: Record<string, string> = {
-      "30": "#1e1e2e", "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
-      "34": "#3b82f6", "35": "#a855f7", "36": "#06b6d4", "37": "#e2e8f0",
-      "90": "#64748b",
-    };
-    // Step 1: Escape all HTML entities (prevents XSS from any source)
-    let html = text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-    // Step 2: Strip any ANSI sequences that aren't simple color codes
-    html = html.replace(/\x1b\[[0-9;]*[A-Za-z]/g, (match) => {
-      // Only allow SGR sequences (ending in 'm') through to the next step
-      if (match.endsWith("m")) return match;
-      return "";
-    });
-    // Step 3: Convert known ANSI color codes to safe spans
-    html = html.replace(/\x1b\[(\d+)m/g, (_match, code) => {
-      if (code === "0") return "</span>";
-      const color = map[code];
-      return color ? `<span style="color:${color}">` : "";
-    });
-    return html;
+  const ANSI_COLORS: Record<string, string> = {
+    "30": "#1e1e2e", "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
+    "34": "#3b82f6", "35": "#a855f7", "36": "#06b6d4", "37": "#e2e8f0",
+    "90": "#64748b",
+  };
+
+  const ansiToReact = (text: string): React.ReactNode[] => {
+    const parts: React.ReactNode[] = [];
+    const ansiRe = /\x1b\[([0-9;]*[A-Za-z])/g;
+    let lastIdx = 0;
+    let color: string | null = null;
+    let key = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = ansiRe.exec(text)) !== null) {
+      if (match.index > lastIdx) {
+        const chunk = text.slice(lastIdx, match.index);
+        parts.push(color ? <span key={key++} style={{ color }}>{chunk}</span> : chunk);
+      }
+      lastIdx = ansiRe.lastIndex;
+
+      const seq = match[1];
+      if (!seq.endsWith("m")) continue;
+      const code = seq.slice(0, -1);
+      if (code === "0") { color = null; continue; }
+      color = ANSI_COLORS[code] ?? color;
+    }
+
+    if (lastIdx < text.length) {
+      const chunk = text.slice(lastIdx);
+      parts.push(color ? <span key={key++} style={{ color }}>{chunk}</span> : chunk);
+    }
+    return parts;
   };
 
   return (
@@ -897,7 +901,7 @@ export default function Terminal() {
         }}
       >
         {lines.map((line, i) => (
-          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+          <div key={i}>{ansiToReact(line)}</div>
         ))}
 
         {/* Input line */}

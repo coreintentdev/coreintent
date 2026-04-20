@@ -9,11 +9,11 @@ const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
 type Tab = "terminal" | "dashboard" | "agents" | "zynrip" | "docs";
 
-/* ─── Domain Portfolio ─── */
+/* ─── Domain Portfolio — "registered" = DNS owned, not serving current build ─── */
 const DOMAINS = [
-  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  { domain: "coreyai.ai", role: "Personal AI brand", status: "registered" },
+  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "registered" },
+  { domain: "coreintent.dev", role: "Dev hub / this site", status: "registered" },
   { domain: "mosoko.ai", role: "AI marketplace", status: "parked" },
   { domain: "kervalon.ai", role: "AI security / F18", status: "parked" },
   { domain: "zyncontext.ai", role: "AI context management", status: "parked" },
@@ -21,8 +21,8 @@ const DOMAINS = [
   { domain: "coreylive.com", role: "Live streaming", status: "parked" },
   { domain: "coreylive.ai", role: "AI live content", status: "parked" },
   { domain: "pelicancharters.ai", role: "Pete's business", status: "parked" },
-  { domain: "discoversanjuandelsur.com", role: "Client site", status: "active" },
-  { domain: "discoversjds.com", role: "Client site alias", status: "active" },
+  { domain: "discoversanjuandelsur.com", role: "Client site", status: "live" },
+  { domain: "discoversjds.com", role: "Client site alias", status: "live" },
   { domain: "zynthio.com", role: "Zynthio alt", status: "parked" },
   { domain: "theripper.ai", role: "Data extraction tool", status: "planned" },
   { domain: "macthezipper.ai", role: "Compression tool", status: "planned" },
@@ -139,7 +139,8 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
 /* ─── Helpers ─── */
 function statusDot(status: string) {
   const colors: Record<string, string> = {
-    active: "#10b981",
+    live: "#10b981",
+    registered: "#f59e0b",
     planned: "#3b82f6",
     parked: "#64748b",
   };
