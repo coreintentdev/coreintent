@@ -1,36 +1,33 @@
 # CoreIntent Audit Report
-Generated: Mon Apr 20 04:04:44 UTC 2026
+Generated: Mon Apr 20 04:43:13 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 29
+- INFO: Routes found: 22
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
 ## 2. Pages
-- PASS: Page exists: app/page.tsx
-- PASS: Page exists: app/pricing/page.tsx
-- PASS: Page exists: app/stack/page.tsx
-- PASS: Page exists: app/privacy/page.tsx
-- PASS: Page exists: app/terms/page.tsx
-- PASS: Page exists: app/disclaimer/page.tsx
+- **FAIL:** Page missing: app/page.tsx
+- **FAIL:** Page missing: app/pricing/page.tsx
+- **FAIL:** Page missing: app/stack/page.tsx
+- **FAIL:** Page missing: app/privacy/page.tsx
+- **FAIL:** Page missing: app/terms/page.tsx
+- **FAIL:** Page missing: app/disclaimer/page.tsx
 
 ## 3. Legal Compliance
-- PASS: Privacy policy page exists
-- PASS: Terms of service page exists
-- PASS: Disclaimer page exists
+- **FAIL:** Privacy policy MISSING (CRITICAL for trading platform)
+- **FAIL:** Terms of service MISSING (CRITICAL)
+- **FAIL:** Disclaimer MISSING (CRITICAL for crypto)
 - PASS: Risk warnings found in codebase
 - PASS: NZ jurisdiction referenced
 
 ## 4. SEO & Meta Tags
-- PASS: OpenGraph meta tags configured
-- PASS: Twitter card meta tags configured
+- **FAIL:** OpenGraph meta tags MISSING
+- **FAIL:** Twitter card meta tags MISSING
 - PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- PASS: Page metadata: app/privacy/page.tsx
-- PASS: Page metadata: app/terms/page.tsx
-- PASS: Page metadata: app/disclaimer/page.tsx
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -39,33 +36,19 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1562:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1569:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
 - PASS: Shared SiteFooter component exists
-- PASS: Shared nav/footer used: app/pricing/page.tsx
-- PASS: Shared nav/footer used: app/stack/page.tsx
-- PASS: Shared nav/footer used: app/privacy/page.tsx
-- PASS: Shared nav/footer used: app/terms/page.tsx
-- PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 4 files
+- PASS: next/link used in 2 files
 
 ## 7. Truth Check
-- WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:218:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:219:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:220:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
-- PASS: Honest label 'planned' found in pages
-- PASS: Honest label 'ready' found in pages
-- PASS: Honest label 'paper' found in pages
-- PASS: Honest label 'demo' found in pages
-- PASS: Honest label 'alpha' found in pages
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
-- PASS: HTML lang attribute set
+- PASS: ARIA attributes found (14 instances)
+- **FAIL:** HTML lang attribute missing
 
 ## 9. Dependencies
 
@@ -85,8 +68,8 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
-| FAIL | 0 |
-| WARN | 2 |
+| PASS | 27 |
+| FAIL | 12 |
+| WARN | 1 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 67%** (27/40 checks passed)

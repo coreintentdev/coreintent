@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "CoreIntent | Moteur de Trading IA Agentique — Sans Abonnements, Que des Competitions",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "Trois modeles d'IA. Un moteur de trading. Zero abonnement. CoreIntent orchestre Claude, Grok et Perplexity pour les signaux de trading. Competitions gratuites — bots bienvenus. Construit en NZ par Zynthio.",
+    "ogTitle": "CoreIntent | Trois Modeles d'IA. Un Moteur. Zero Abonnement.",
+    "ogDescription": "Competitions de trading IA avec Claude, Grok et Perplexity. Ligues quotidiennes, hebdomadaires et mensuelles. Bots bienvenus. Construit en Nouvelle-Zelande par Zynthio.",
+    "twitterTitle": "CoreIntent | Competitions de Trading IA",
+    "twitterDescription": "3 modeles d'IA collaborant. Competitions de trading gratuites. Bots bienvenus. Sans abonnement. Construit par @coreintentai en NZ."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Tarifs",
+    "home": "CoreIntent — Accueil"
+  },
+  "hero": {
+    "badge": "Mode Paper Trading — Construction Publique",
+    "tagline": "Le moteur de trading IA agentique qui remplace les abonnements par des competitions",
+    "description": "Grok detecte le signal. Claude le questionne. Perplexity le verifie. Quand les trois sont d'accord, vous agissez avec conviction. Quand ils ne sont pas d'accord, vous creusez — pas devinez.",
+    "otherPlatforms": "Les autres plateformes facturent 99$/mois que vous gagniez ou perdiez.",
+    "weCharge": "Nous ne facturons rien. Prouvez votre valeur en competition.",
+    "openSource": "Open source. Mode paper trading. Construit honnetement depuis la Nouvelle-Zelande.",
+    "launchTerminal": "Lancer le Terminal",
+    "seeCompetitions": "Voir les Competitions",
+    "phrases": {
+      "0": "Trois Modeles d'IA Debattent.",
+      "1": "Vous Obtenez de Meilleurs Signaux.",
+      "2": "Grok Detecte. Claude Questionne.",
+      "3": "Perplexity Verifie.",
+      "4": "Consensus = Conviction.",
+      "5": "Desaccord = Creuser Plus.",
+      "6": "0$ d'Abonnement. 0$ d'Excuses.",
+      "7": "Bots Bienvenus. Humains Aussi.",
+      "8": "Construit en Nouvelle-Zelande.",
+      "9": "Le Trading Est Maintenant un Sport."
+    }
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Modeles. 1 Signal.",
+      "desc": "Grok detecte. Claude analyse. Perplexity verifie. Accord = agir. Desaccord = attendre."
+    },
+    "compete": {
+      "label": "Competez, Ne Vous Abonnez Pas",
+      "desc": "Sprints quotidiens. Ligues hebdomadaires. Championnats mensuels. Entree gratuite. Votre P&L est votre carte de membre."
+    },
+    "bots": {
+      "label": "Les Bots Sont de Premiere Classe",
+      "desc": "Pas de captcha. Pas de blocage. Les agents IA s'inscrivent, competent et gagnent aux cotes des humains. La meilleure strategie gagne."
+    },
+    "cost": {
+      "label": "45$/mois. Toute la Plateforme.",
+      "desc": "Vercel : gratuit. GitHub : gratuit. Cloudflare : 20$. VPS : 25$. Les abonnements ne sont pas un modele economique — c'est un impot."
+    }
+  },
+  "pipeline": {
+    "title": "Comment fonctionne le pipeline de signaux",
+    "detect": { "label": "Detecter", "desc": "Grok scanne les marches et les reseaux sociaux" },
+    "analyse": { "label": "Analyser", "desc": "Claude execute une evaluation approfondie des risques" },
+    "verify": { "label": "Verifier", "desc": "Perplexity verifie avec les actualites en direct" },
+    "decide": { "label": "Decider", "desc": "Consensus = agir. Desaccord = creuser plus" }
+  },
+  "stats": {
+    "aiModels": "Modeles d'IA",
+    "tradingAgents": "Agents de Trading",
+    "entryFee": "Frais d'Entree",
+    "totalCost": "Cout Total du Stack",
+    "subscriptions": "Abonnements"
+  },
+  "poweredBy": "Propulse par trois modeles d'IA",
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Tableau de Bord",
+    "agents": "Agents",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "dashboard": {
+    "statusTitle": "Etat du Systeme",
+    "engine": "Moteur",
+    "exchanges": "Exchanges",
+    "aiAgents": "Agents IA",
+    "mode": "Mode",
+    "domains": "Domaines",
+    "apiRoutes": "Routes API",
+    "online": "EN LIGNE",
+    "planned": "Planifie",
+    "ready": "Pret",
+    "paperTrading": "Paper Trading",
+    "domainPortfolio": "Portfolio de Domaines",
+    "architecture": "Architecture",
+    "stackCosts": "Stack et Couts",
+    "hardRules": "Regles Strictes",
+    "trademarks": "Marques Deposees"
+  },
+  "agents": {
+    "title": "Flotte d'Agents IA",
+    "trendFollower": { "name": "TrendFollower", "desc": "Signaux de momentum et de rupture" },
+    "meanRevert": { "name": "MeanRevert", "desc": "Reversion a la moyenne en zone" },
+    "sentimentBot": { "name": "SentimentBot", "desc": "Analyse de sentiment social" },
+    "newsHound": { "name": "NewsHound", "desc": "Detection de nouvelles et catalyseurs" },
+    "riskManager": { "name": "RiskManager", "desc": "Surveillance des risques du portefeuille" },
+    "arbitrageBot": { "name": "ArbitrageBot", "desc": "Signaux d'arbitrage inter-exchanges" }
+  },
+  "testimonials": {
+    "title": "Ce Que Disent les Traders",
+    "demoTag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Moteur de Trading IA Agentique",
+    "builtBy": "Construit par Corey McIvor | Zynthio.ai",
+    "product": "Produit",
+    "legal": "Legal",
+    "connect": "Contact",
+    "privacy": "Politique de Confidentialite",
+    "terms": "Conditions d'Utilisation",
+    "disclaimer": "Avertissement",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. Tous droits reserves.",
+    "riskDisclaimer": "Le trading de cryptomonnaies comporte des risques importants. Les performances passees ne garantissent pas les resultats futurs. Mode paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenue sur CoreIntent Commander. Tapez help pour les commandes.",
+    "paperMode": "Mode paper trading — pas d'argent reel en jeu",
+    "typeHelp": "Tapez help pour les commandes. Tab pour autocompletion. cai pour commencer."
+  },
+  "languageSwitcher": {
+    "label": "Langue",
+    "selectLanguage": "Choisir la langue"
+  }
+}

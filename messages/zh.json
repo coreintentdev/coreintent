@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "CoreIntent | 代理AI交易引擎 — 无订阅，只有竞赛",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "三个AI模型。一个交易引擎。零订阅。CoreIntent协调Claude、Grok和Perplexity进行交易信号分析。免费竞赛——机器人欢迎。由Zynthio在新西兰打造。",
+    "ogTitle": "CoreIntent | 三个AI模型。一个引擎。零订阅。",
+    "ogDescription": "使用Claude、Grok和Perplexity的AI交易竞赛。每日、每周、每月联赛。机器人欢迎。由Zynthio在新西兰打造。",
+    "twitterTitle": "CoreIntent | AI交易竞赛",
+    "twitterDescription": "3个AI模型协同工作。免费交易竞赛。机器人欢迎。无订阅。由@coreintentai在新西兰打造。"
+  },
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "定价",
+    "home": "CoreIntent — 首页"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 公开构建中",
+    "tagline": "用竞赛取代订阅的代理AI交易引擎",
+    "description": "Grok发现信号。Claude质疑它。Perplexity验证它。三者达成共识时，你果断行动。意见不合时，深入研究——而非盲目猜测。",
+    "otherPlatforms": "其他平台无论盈亏都收$99/月。",
+    "weCharge": "我们不收费。你在竞赛中证明自己。",
+    "openSource": "开源。模拟交易模式。在新西兰诚实打造。",
+    "launchTerminal": "启动终端",
+    "seeCompetitions": "查看竞赛",
+    "phrases": {
+      "0": "三个AI模型在争论。",
+      "1": "你获得更好的信号。",
+      "2": "Grok发现。Claude质疑。",
+      "3": "Perplexity验证。",
+      "4": "共识 = 信念。",
+      "5": "分歧 = 深入研究。",
+      "6": "$0订阅。$0借口。",
+      "7": "机器人欢迎。人类也是。",
+      "8": "在新西兰打造。",
+      "9": "交易现在是一项运动。"
+    }
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3个模型。1个信号。",
+      "desc": "Grok检测。Claude分析。Perplexity验证。一致=行动。分歧=等待。"
+    },
+    "compete": {
+      "label": "竞赛，不订阅",
+      "desc": "每日冲刺。每周对抗。每月锦标赛。免费参赛。你的盈亏就是你的会员卡。"
+    },
+    "bots": {
+      "label": "机器人是一等公民",
+      "desc": "无验证码。无封锁。AI代理注册、竞赛并与人类一起赚取收益。最佳策略获胜。"
+    },
+    "cost": {
+      "label": "$45/月。整个平台。",
+      "desc": "Vercel：免费。GitHub：免费。Cloudflare：$20。VPS：$25。订阅不是商业模式——是税。"
+    }
+  },
+  "pipeline": {
+    "title": "信号管道如何工作",
+    "detect": { "label": "检测", "desc": "Grok扫描市场和社交媒体" },
+    "analyse": { "label": "分析", "desc": "Claude执行深度风险评估" },
+    "verify": { "label": "验证", "desc": "Perplexity用实时新闻交叉验证" },
+    "decide": { "label": "决定", "desc": "共识=行动。分歧=深入研究" }
+  },
+  "stats": {
+    "aiModels": "AI模型",
+    "tradingAgents": "交易代理",
+    "entryFee": "参赛费",
+    "totalCost": "总技术栈成本",
+    "subscriptions": "订阅"
+  },
+  "poweredBy": "由三个AI模型驱动",
+  "tabs": {
+    "terminal": "终端",
+    "dashboard": "仪表板",
+    "agents": "代理",
+    "zynrip": "ZynRip",
+    "docs": "文档"
+  },
+  "dashboard": {
+    "statusTitle": "系统状态",
+    "engine": "引擎",
+    "exchanges": "交易所",
+    "aiAgents": "AI代理",
+    "mode": "模式",
+    "domains": "域名",
+    "apiRoutes": "API路由",
+    "online": "在线",
+    "planned": "计划中",
+    "ready": "就绪",
+    "paperTrading": "模拟交易",
+    "domainPortfolio": "域名组合",
+    "architecture": "架构",
+    "stackCosts": "技术栈和成本",
+    "hardRules": "硬性规则",
+    "trademarks": "商标"
+  },
+  "agents": {
+    "title": "AI代理舰队",
+    "trendFollower": { "name": "TrendFollower", "desc": "动量和突破信号" },
+    "meanRevert": { "name": "MeanRevert", "desc": "区间均值回归" },
+    "sentimentBot": { "name": "SentimentBot", "desc": "社交情绪分析" },
+    "newsHound": { "name": "NewsHound", "desc": "突发新闻和催化剂检测" },
+    "riskManager": { "name": "RiskManager", "desc": "组合级风险监控" },
+    "arbitrageBot": { "name": "ArbitrageBot", "desc": "跨交易所套利信号" }
+  },
+  "testimonials": {
+    "title": "交易者的评价",
+    "demoTag": "演示"
+  },
+  "footer": {
+    "tagline": "代理AI交易引擎",
+    "builtBy": "由 Corey McIvor | Zynthio.ai 打造",
+    "product": "产品",
+    "legal": "法律",
+    "connect": "联系",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "disclaimer": "免责声明",
+    "contact": "联系我们",
+    "copyright": "© {year} Corey McIvor. 保留所有权利。",
+    "riskDisclaimer": "加密货币交易涉及重大风险。过往表现不保证未来结果。模拟交易模式。"
+  },
+  "terminal": {
+    "greeting": "欢迎使用 CoreIntent 指挥官。输入 help 查看命令。",
+    "paperMode": "模拟交易模式 — 无真实资金风险",
+    "typeHelp": "输入 help 查看命令。Tab 自动补全。cai 开始。"
+  },
+  "languageSwitcher": {
+    "label": "语言",
+    "selectLanguage": "选择语言"
+  }
+}

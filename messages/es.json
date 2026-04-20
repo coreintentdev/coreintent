@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agentica — Sin Suscripciones, Solo Competencias",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para senales de trading. Competencias gratuitas — bots bienvenidos. Creado en NZ por Zynthio.",
+    "ogTitle": "CoreIntent | Tres Modelos de IA. Un Motor. Cero Suscripciones.",
+    "ogDescription": "Competencias de trading con IA usando Claude, Grok y Perplexity. Ligas diarias, semanales y mensuales. Bots bienvenidos. Creado en Nueva Zelanda por Zynthio.",
+    "twitterTitle": "CoreIntent | Competencias de Trading con IA",
+    "twitterDescription": "3 modelos de IA trabajando juntos. Competencias de trading gratuitas. Bots bienvenidos. Sin suscripciones. Creado por @coreintentai en NZ."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precios",
+    "home": "CoreIntent — Inicio"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construyendo en Publico",
+    "tagline": "El motor de trading con IA agentica que reemplaza suscripciones por competencias",
+    "description": "Grok detecta la senal. Claude la cuestiona. Perplexity la verifica. Cuando los tres estan de acuerdo, actuas con conviccion. Cuando no, investigas mas — no adivinas mas.",
+    "otherPlatforms": "Otras plataformas cobran $99/mes ganes o pierdas.",
+    "weCharge": "Nosotros no cobramos nada. Demuestras tu valor en competencia.",
+    "openSource": "Codigo abierto. Modo paper trading. Construido con honestidad desde Nueva Zelanda.",
+    "launchTerminal": "Abrir Terminal",
+    "seeCompetitions": "Ver las Competencias",
+    "phrases": {
+      "0": "Tres Modelos de IA Debaten.",
+      "1": "Tu Obtienes Mejores Senales.",
+      "2": "Grok Detecta. Claude Cuestiona.",
+      "3": "Perplexity Verifica.",
+      "4": "Consenso = Conviccion.",
+      "5": "Desacuerdo = Investigar Mas.",
+      "6": "$0 Suscripciones. $0 Excusas.",
+      "7": "Bots Bienvenidos. Humanos Tambien.",
+      "8": "Construido en Nueva Zelanda.",
+      "9": "El Trading Ahora es un Deporte."
+    }
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Modelos. 1 Senal.",
+      "desc": "Grok detecta. Claude analiza. Perplexity verifica. Acuerdo = actuar. Desacuerdo = esperar."
+    },
+    "compete": {
+      "label": "Compite, No Te Suscribas",
+      "desc": "Sprints diarios. Ligas semanales. Campeonatos mensuales. Entrada gratuita. Tu P&L es tu tarjeta de membresia."
+    },
+    "bots": {
+      "label": "Los Bots Son de Primera",
+      "desc": "Sin captcha. Sin bloqueos. Los agentes IA se registran, compiten y ganan junto a los humanos. La mejor estrategia gana."
+    },
+    "cost": {
+      "label": "$45/mes. Toda la Plataforma.",
+      "desc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. Las suscripciones no son un modelo de negocio — son un impuesto."
+    }
+  },
+  "pipeline": {
+    "title": "Como funciona el pipeline de senales",
+    "detect": { "label": "Detectar", "desc": "Grok escanea mercados y redes sociales" },
+    "analyse": { "label": "Analizar", "desc": "Claude ejecuta evaluacion profunda de riesgo" },
+    "verify": { "label": "Verificar", "desc": "Perplexity verifica con noticias en vivo" },
+    "decide": { "label": "Decidir", "desc": "Consenso = actuar. Desacuerdo = investigar mas" }
+  },
+  "stats": {
+    "aiModels": "Modelos de IA",
+    "tradingAgents": "Agentes de Trading",
+    "entryFee": "Cuota de Entrada",
+    "totalCost": "Costo Total del Stack",
+    "subscriptions": "Suscripciones"
+  },
+  "poweredBy": "Impulsado por tres modelos de IA",
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Panel",
+    "agents": "Agentes",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "dashboard": {
+    "statusTitle": "Estado del Sistema",
+    "engine": "Motor",
+    "exchanges": "Exchanges",
+    "aiAgents": "Agentes IA",
+    "mode": "Modo",
+    "domains": "Dominios",
+    "apiRoutes": "Rutas API",
+    "online": "EN LINEA",
+    "planned": "Planificado",
+    "ready": "Listo",
+    "paperTrading": "Paper Trading",
+    "domainPortfolio": "Portafolio de Dominios",
+    "architecture": "Arquitectura",
+    "stackCosts": "Stack y Costos",
+    "hardRules": "Reglas Estrictas",
+    "trademarks": "Marcas Registradas"
+  },
+  "agents": {
+    "title": "Flota de Agentes IA",
+    "trendFollower": { "name": "TrendFollower", "desc": "Senales de momentum y ruptura" },
+    "meanRevert": { "name": "MeanRevert", "desc": "Reversion a la media en rangos" },
+    "sentimentBot": { "name": "SentimentBot", "desc": "Analisis de sentimiento social" },
+    "newsHound": { "name": "NewsHound", "desc": "Noticias de ultimo momento y catalizadores" },
+    "riskManager": { "name": "RiskManager", "desc": "Monitoreo de riesgo del portafolio" },
+    "arbitrageBot": { "name": "ArbitrageBot", "desc": "Senales de arbitraje entre exchanges" }
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen los Traders",
+    "demoTag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agentica",
+    "builtBy": "Creado por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "privacy": "Politica de Privacidad",
+    "terms": "Terminos de Servicio",
+    "disclaimer": "Descargo de Responsabilidad",
+    "contact": "Contacto",
+    "copyright": "© {year} Corey McIvor. Todos los derechos reservados.",
+    "riskDisclaimer": "El trading de criptomonedas implica riesgo significativo. El rendimiento pasado no garantiza resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenido a CoreIntent Commander. Escribe help para comandos.",
+    "paperMode": "Modo paper trading — sin dinero real en riesgo",
+    "typeHelp": "Escribe help para comandos. Tab para autocompletar. cai para comenzar."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "selectLanguage": "Seleccionar idioma"
+  }
+}

@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { getTerminalGreeting, getTimezone, formatDateTime, type Locale } from "@/lib/i18n";
 
-const WELCOME_BANNER = `\x1b[36m
+function buildWelcomeBanner(locale: Locale): string {
+  const greeting = getTerminalGreeting(locale);
+  const tz = getTimezone(locale);
+  const timestamp = new Date().toLocaleString(locale === "mi" ? "en-NZ" : locale, { timeZone: tz });
+
+  return `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
@@ -11,10 +17,11 @@ const WELCOME_BANNER = `\x1b[36m
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 \x1b[0m
 \x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
+\x1b[90m${greeting}\x1b[0m
 Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[90m${timestamp}\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -588,7 +595,7 @@ const ALL_COMMANDS = [
   "sudo", "rickroll",
 ];
 
-export default function Terminal() {
+export default function Terminal({ locale = "en" as Locale }: { locale?: Locale }) {
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -603,8 +610,8 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(locale)]);
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

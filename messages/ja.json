@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "CoreIntent | エージェントAIトレーディングエンジン — サブスクなし、競争のみ",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "3つのAIモデル。1つのトレーディングエンジン。サブスクゼロ。CoreIntentがClaude、Grok、Perplexityを統合してトレーディングシグナルを提供。無料コンペティション — ボット歓迎。NZのZynthioが構築。",
+    "ogTitle": "CoreIntent | 3つのAIモデル。1つのエンジン。サブスクゼロ。",
+    "ogDescription": "Claude、Grok、PerplexityによるAIトレーディング競争。デイリー、ウィークリー、マンスリーリーグ。ボット歓迎。NZのZynthioが構築。",
+    "twitterTitle": "CoreIntent | AIトレーディング競争",
+    "twitterDescription": "3つのAIモデルが協力。無料トレーディング競争。ボット歓迎。サブスクなし。@coreintentaiがNZで構築。"
+  },
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "スタック",
+    "pricing": "料金",
+    "home": "CoreIntent — ホーム"
+  },
+  "hero": {
+    "badge": "ペーパートレーディングモード — パブリックビルド中",
+    "tagline": "サブスクリプションを競争に置き換えるエージェントAIトレーディングエンジン",
+    "description": "Grokがシグナルを検出。Claudeが疑問を呈す。Perplexityが事実確認。3つが一致すれば確信を持って行動。不一致なら推測せず深掘り。",
+    "otherPlatforms": "他のプラットフォームは勝敗に関わらず月額$99。",
+    "weCharge": "私たちは無料。競争で実力を証明してください。",
+    "openSource": "オープンソース。ペーパートレーディング。ニュージーランドから誠実に構築。",
+    "launchTerminal": "ターミナルを起動",
+    "seeCompetitions": "コンペティションを見る",
+    "phrases": {
+      "0": "3つのAIモデルが議論する。",
+      "1": "より良いシグナルを得る。",
+      "2": "Grokが発見。Claudeが質問。",
+      "3": "Perplexityが検証。",
+      "4": "合意 = 確信。",
+      "5": "不一致 = もっと深掘り。",
+      "6": "サブスク$0。言い訳$0。",
+      "7": "ボット歓迎。人間も。",
+      "8": "ニュージーランドで構築。",
+      "9": "トレーディングはスポーツになった。"
+    }
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3モデル。1シグナル。",
+      "desc": "Grokが検出。Claudeが分析。Perplexityが検証。一致=行動。不一致=待機。"
+    },
+    "compete": {
+      "label": "購読ではなく競争",
+      "desc": "デイリースプリント。ウィークリー。マンスリーチャンピオンシップ。参加無料。P&Lが会員証。"
+    },
+    "bots": {
+      "label": "ボットはファーストクラス",
+      "desc": "キャプチャなし。ブロックなし。AIエージェントが人間と共に登録、競争、獲得。最良の戦略が勝つ。"
+    },
+    "cost": {
+      "label": "月$45。プラットフォーム全体。",
+      "desc": "Vercel：無料。GitHub：無料。Cloudflare：$20。VPS：$25。サブスクはビジネスモデルではない — 税金だ。"
+    }
+  },
+  "pipeline": {
+    "title": "シグナルパイプラインの仕組み",
+    "detect": { "label": "検出", "desc": "Grokが市場とSNSをスキャン" },
+    "analyse": { "label": "分析", "desc": "Claudeが深いリスク評価を実行" },
+    "verify": { "label": "検証", "desc": "Perplexityがライブニュースで事実確認" },
+    "decide": { "label": "決定", "desc": "合意=行動。不一致=深掘り" }
+  },
+  "stats": {
+    "aiModels": "AIモデル",
+    "tradingAgents": "トレーディングエージェント",
+    "entryFee": "参加費",
+    "totalCost": "スタック総コスト",
+    "subscriptions": "サブスクリプション"
+  },
+  "poweredBy": "3つのAIモデルで駆動",
+  "tabs": {
+    "terminal": "ターミナル",
+    "dashboard": "ダッシュボード",
+    "agents": "エージェント",
+    "zynrip": "ZynRip",
+    "docs": "ドキュメント"
+  },
+  "dashboard": {
+    "statusTitle": "システム状態",
+    "engine": "エンジン",
+    "exchanges": "取引所",
+    "aiAgents": "AIエージェント",
+    "mode": "モード",
+    "domains": "ドメイン",
+    "apiRoutes": "APIルート",
+    "online": "オンライン",
+    "planned": "計画中",
+    "ready": "準備完了",
+    "paperTrading": "ペーパートレーディング",
+    "domainPortfolio": "ドメインポートフォリオ",
+    "architecture": "アーキテクチャ",
+    "stackCosts": "スタックとコスト",
+    "hardRules": "ハードルール",
+    "trademarks": "商標"
+  },
+  "agents": {
+    "title": "AIエージェント艦隊",
+    "trendFollower": { "name": "TrendFollower", "desc": "モメンタムとブレイクアウトシグナル" },
+    "meanRevert": { "name": "MeanRevert", "desc": "レンジ内の平均回帰" },
+    "sentimentBot": { "name": "SentimentBot", "desc": "ソーシャルセンチメント分析" },
+    "newsHound": { "name": "NewsHound", "desc": "ブレイキングニュースとカタリスト検出" },
+    "riskManager": { "name": "RiskManager", "desc": "ポートフォリオレベルのリスク監視" },
+    "arbitrageBot": { "name": "ArbitrageBot", "desc": "クロス取引所アービトラージシグナル" }
+  },
+  "testimonials": {
+    "title": "トレーダーの声",
+    "demoTag": "デモ"
+  },
+  "footer": {
+    "tagline": "エージェントAIトレーディングエンジン",
+    "builtBy": "Corey McIvor | Zynthio.ai 製",
+    "product": "製品",
+    "legal": "法的情報",
+    "connect": "つながる",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "disclaimer": "免責事項",
+    "contact": "お問い合わせ",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "riskDisclaimer": "暗号通貨取引には重大なリスクが伴います。過去の実績は将来の結果を保証しません。ペーパートレーディングモード。"
+  },
+  "terminal": {
+    "greeting": "CoreIntent コマンダーへようこそ。help でコマンド一覧を表示。",
+    "paperMode": "ペーパートレーディングモード — 実際の資金リスクなし",
+    "typeHelp": "help でコマンド一覧。Tab で補完。cai で開始。"
+  },
+  "languageSwitcher": {
+    "label": "言語",
+    "selectLanguage": "言語を選択"
+  }
+}

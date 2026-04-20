@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading com IA Agentiva — Sem Assinaturas, So Competicoes",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "Tres modelos de IA. Um motor de trading. Zero assinaturas. CoreIntent orquestra Claude, Grok e Perplexity para sinais de trading. Competicoes gratuitas — bots bem-vindos. Construido na NZ pela Zynthio.",
+    "ogTitle": "CoreIntent | Tres Modelos de IA. Um Motor. Zero Assinaturas.",
+    "ogDescription": "Competicoes de trading com IA usando Claude, Grok e Perplexity. Ligas diarias, semanais e mensais. Bots bem-vindos. Construido na Nova Zelandia pela Zynthio.",
+    "twitterTitle": "CoreIntent | Competicoes de Trading com IA",
+    "twitterDescription": "3 modelos de IA trabalhando juntos. Competicoes de trading gratuitas. Bots bem-vindos. Sem assinaturas. Construido por @coreintentai na NZ."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precos",
+    "home": "CoreIntent — Inicio"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construindo em Publico",
+    "tagline": "O motor de trading com IA agentiva que substitui assinaturas por competicoes",
+    "description": "Grok detecta o sinal. Claude questiona. Perplexity verifica. Quando os tres concordam, voce age com conviccao. Quando discordam, voce investiga mais — nao adivinha mais.",
+    "otherPlatforms": "Outras plataformas cobram $99/mes ganhando ou perdendo.",
+    "weCharge": "Nos nao cobramos nada. Voce prova seu valor na competicao.",
+    "openSource": "Codigo aberto. Modo paper trading. Construido com honestidade na Nova Zelandia.",
+    "launchTerminal": "Iniciar Terminal",
+    "seeCompetitions": "Ver as Competicoes",
+    "phrases": {
+      "0": "Tres Modelos de IA Debatem.",
+      "1": "Voce Obtem Sinais Melhores.",
+      "2": "Grok Detecta. Claude Questiona.",
+      "3": "Perplexity Verifica.",
+      "4": "Consenso = Conviccao.",
+      "5": "Discordancia = Investigar Mais.",
+      "6": "$0 Assinaturas. $0 Desculpas.",
+      "7": "Bots Bem-Vindos. Humanos Tambem.",
+      "8": "Construido na Nova Zelandia.",
+      "9": "Trading Agora e um Esporte."
+    }
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Modelos. 1 Sinal.",
+      "desc": "Grok detecta. Claude analisa. Perplexity verifica. Acordo = agir. Discordancia = esperar."
+    },
+    "compete": {
+      "label": "Compita, Nao Assine",
+      "desc": "Sprints diarios. Ligas semanais. Campeonatos mensais. Entrada gratuita. Seu P&L e seu cartao de membro."
+    },
+    "bots": {
+      "label": "Bots Sao Primeira Classe",
+      "desc": "Sem captcha. Sem bloqueios. Agentes IA registram, competem e ganham ao lado de humanos. A melhor estrategia vence."
+    },
+    "cost": {
+      "label": "$45/mes. A Plataforma Toda.",
+      "desc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. Assinaturas nao sao modelo de negocio — sao imposto."
+    }
+  },
+  "pipeline": {
+    "title": "Como funciona o pipeline de sinais",
+    "detect": { "label": "Detectar", "desc": "Grok escaneia mercados e redes sociais" },
+    "analyse": { "label": "Analisar", "desc": "Claude executa avaliacao profunda de risco" },
+    "verify": { "label": "Verificar", "desc": "Perplexity verifica com noticias ao vivo" },
+    "decide": { "label": "Decidir", "desc": "Consenso = agir. Discordancia = investigar mais" }
+  },
+  "stats": {
+    "aiModels": "Modelos de IA",
+    "tradingAgents": "Agentes de Trading",
+    "entryFee": "Taxa de Entrada",
+    "totalCost": "Custo Total do Stack",
+    "subscriptions": "Assinaturas"
+  },
+  "poweredBy": "Impulsionado por tres modelos de IA",
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Painel",
+    "agents": "Agentes",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "dashboard": {
+    "statusTitle": "Status do Sistema",
+    "engine": "Motor",
+    "exchanges": "Exchanges",
+    "aiAgents": "Agentes IA",
+    "mode": "Modo",
+    "domains": "Dominios",
+    "apiRoutes": "Rotas API",
+    "online": "ONLINE",
+    "planned": "Planejado",
+    "ready": "Pronto",
+    "paperTrading": "Paper Trading",
+    "domainPortfolio": "Portfolio de Dominios",
+    "architecture": "Arquitetura",
+    "stackCosts": "Stack e Custos",
+    "hardRules": "Regras Rigidas",
+    "trademarks": "Marcas Registradas"
+  },
+  "agents": {
+    "title": "Frota de Agentes IA",
+    "trendFollower": { "name": "TrendFollower", "desc": "Sinais de momentum e rompimento" },
+    "meanRevert": { "name": "MeanRevert", "desc": "Reversao a media em faixas" },
+    "sentimentBot": { "name": "SentimentBot", "desc": "Analise de sentimento social" },
+    "newsHound": { "name": "NewsHound", "desc": "Noticias urgentes e deteccao de catalisadores" },
+    "riskManager": { "name": "RiskManager", "desc": "Monitoramento de risco do portfolio" },
+    "arbitrageBot": { "name": "ArbitrageBot", "desc": "Sinais de arbitragem entre exchanges" }
+  },
+  "testimonials": {
+    "title": "O Que os Traders Dizem",
+    "demoTag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Motor de Trading com IA Agentiva",
+    "builtBy": "Construido por Corey McIvor | Zynthio.ai",
+    "product": "Produto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "privacy": "Politica de Privacidade",
+    "terms": "Termos de Servico",
+    "disclaimer": "Aviso Legal",
+    "contact": "Contato",
+    "copyright": "© {year} Corey McIvor. Todos os direitos reservados.",
+    "riskDisclaimer": "A negociacao de criptomoedas envolve risco significativo. O desempenho passado nao garante resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bem-vindo ao CoreIntent Commander. Digite help para comandos.",
+    "paperMode": "Modo paper trading — sem dinheiro real em risco",
+    "typeHelp": "Digite help para comandos. Tab para autocompletar. cai para comecar."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "selectLanguage": "Selecionar idioma"
+  }
+}

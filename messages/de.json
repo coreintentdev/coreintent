@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentische KI-Trading-Engine — Keine Abos, Nur Wettbewerbe",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "Drei KI-Modelle. Eine Trading-Engine. Null Abonnements. CoreIntent orchestriert Claude, Grok & Perplexity fur Trading-Signale. Kostenlose Wettbewerbe — Bots willkommen. In NZ von Zynthio gebaut.",
+    "ogTitle": "CoreIntent | Drei KI-Modelle. Eine Engine. Null Abos.",
+    "ogDescription": "KI-gestutzte Trading-Wettbewerbe mit Claude, Grok & Perplexity. Tagliche, wochentliche & monatliche Ligen. Bots willkommen. In Neuseeland von Zynthio gebaut.",
+    "twitterTitle": "CoreIntent | KI-Trading-Wettbewerbe",
+    "twitterDescription": "3 KI-Modelle arbeiten zusammen. Kostenlose Trading-Wettbewerbe. Bots willkommen. Keine Abos. Von @coreintentai in NZ gebaut."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preise",
+    "home": "CoreIntent — Startseite"
+  },
+  "hero": {
+    "badge": "Paper-Trading-Modus — Offentlich Gebaut",
+    "tagline": "Die agentische KI-Trading-Engine die Abonnements durch Wettbewerbe ersetzt",
+    "description": "Grok erkennt das Signal. Claude hinterfragt es. Perplexity uberpruft es. Wenn alle drei zustimmen, handelst du mit Uberzeugung. Wenn sie nicht ubereinstimmen, forschst du tiefer — statt mehr zu raten.",
+    "otherPlatforms": "Andere Plattformen verlangen $99/Monat ob du gewinnst oder verlierst.",
+    "weCharge": "Wir verlangen nichts. Beweise dich im Wettbewerb.",
+    "openSource": "Open Source. Paper-Trading-Modus. Ehrlich gebaut aus Neuseeland.",
+    "launchTerminal": "Terminal Starten",
+    "seeCompetitions": "Wettbewerbe Ansehen",
+    "phrases": {
+      "0": "Drei KI-Modelle Debattieren.",
+      "1": "Du Bekommst Bessere Signale.",
+      "2": "Grok Erkennt. Claude Hinterfragt.",
+      "3": "Perplexity Uberpruft.",
+      "4": "Konsens = Uberzeugung.",
+      "5": "Uneinigkeit = Tiefer Graben.",
+      "6": "$0 Abonnements. $0 Ausreden.",
+      "7": "Bots Willkommen. Menschen Auch.",
+      "8": "In Neuseeland Gebaut.",
+      "9": "Trading Ist Jetzt Ein Sport."
+    }
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Modelle. 1 Signal.",
+      "desc": "Grok erkennt. Claude analysiert. Perplexity verifiziert. Einigkeit = handeln. Uneinigkeit = warten."
+    },
+    "compete": {
+      "label": "Konkurriere, Abonniere Nicht",
+      "desc": "Tagliche Sprints. Wochentliche Ligen. Monatliche Meisterschaften. Kostenloser Eintritt. Dein P&L ist dein Mitgliedsausweis."
+    },
+    "bots": {
+      "label": "Bots Sind Erstklassig",
+      "desc": "Kein Captcha. Keine Sperren. KI-Agenten registrieren sich, konkurrieren und verdienen neben Menschen. Die beste Strategie gewinnt."
+    },
+    "cost": {
+      "label": "$45/Monat. Die Ganze Plattform.",
+      "desc": "Vercel: kostenlos. GitHub: kostenlos. Cloudflare: $20. VPS: $25. Abonnements sind kein Geschaftsmodell — sie sind eine Steuer."
+    }
+  },
+  "pipeline": {
+    "title": "Wie die Signal-Pipeline funktioniert",
+    "detect": { "label": "Erkennen", "desc": "Grok scannt Markte & Social Feeds" },
+    "analyse": { "label": "Analysieren", "desc": "Claude fuhrt tiefe Risikobewertung durch" },
+    "verify": { "label": "Verifizieren", "desc": "Perplexity pruft mit Live-Nachrichten" },
+    "decide": { "label": "Entscheiden", "desc": "Konsens = handeln. Uneinigkeit = tiefer graben" }
+  },
+  "stats": {
+    "aiModels": "KI-Modelle",
+    "tradingAgents": "Trading-Agenten",
+    "entryFee": "Eintrittspreis",
+    "totalCost": "Gesamte Stack-Kosten",
+    "subscriptions": "Abonnements"
+  },
+  "poweredBy": "Angetrieben von drei KI-Modellen",
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Dashboard",
+    "agents": "Agenten",
+    "zynrip": "ZynRip",
+    "docs": "Doku"
+  },
+  "dashboard": {
+    "statusTitle": "Systemstatus",
+    "engine": "Engine",
+    "exchanges": "Borsen",
+    "aiAgents": "KI-Agenten",
+    "mode": "Modus",
+    "domains": "Domains",
+    "apiRoutes": "API-Routen",
+    "online": "ONLINE",
+    "planned": "Geplant",
+    "ready": "Bereit",
+    "paperTrading": "Paper Trading",
+    "domainPortfolio": "Domain-Portfolio",
+    "architecture": "Architektur",
+    "stackCosts": "Stack & Kosten",
+    "hardRules": "Harte Regeln",
+    "trademarks": "Markenzeichen"
+  },
+  "agents": {
+    "title": "KI-Agenten-Flotte",
+    "trendFollower": { "name": "TrendFollower", "desc": "Momentum- & Ausbruchsignale" },
+    "meanRevert": { "name": "MeanRevert", "desc": "Mean-Reversion in Ranges" },
+    "sentimentBot": { "name": "SentimentBot", "desc": "Soziale Stimmungsanalyse" },
+    "newsHound": { "name": "NewsHound", "desc": "Eilmeldungen & Katalysatorerkennung" },
+    "riskManager": { "name": "RiskManager", "desc": "Portfolio-Risikoueberwachung" },
+    "arbitrageBot": { "name": "ArbitrageBot", "desc": "Cross-Exchange-Arbitrage-Signale" }
+  },
+  "testimonials": {
+    "title": "Was Trader Sagen",
+    "demoTag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Agentische KI-Trading-Engine",
+    "builtBy": "Gebaut von Corey McIvor | Zynthio.ai",
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "connect": "Verbinden",
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "disclaimer": "Haftungsausschluss",
+    "contact": "Kontakt",
+    "copyright": "© {year} Corey McIvor. Alle Rechte vorbehalten.",
+    "riskDisclaimer": "Der Handel mit Kryptowahrungen birgt erhebliche Risiken. Vergangene Leistungen garantieren keine zukunftigen Ergebnisse. Paper-Trading-Modus."
+  },
+  "terminal": {
+    "greeting": "Willkommen bei CoreIntent Commander. Tippe help fur Befehle.",
+    "paperMode": "Paper-Trading-Modus — kein echtes Geld im Risiko",
+    "typeHelp": "Tippe help fur Befehle. Tab zum Vervollstandigen. cai zum Starten."
+  },
+  "languageSwitcher": {
+    "label": "Sprache",
+    "selectLanguage": "Sprache wahlen"
+  }
+}
