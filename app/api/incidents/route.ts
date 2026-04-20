@@ -109,6 +109,50 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-03-24T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-010",
+    service: "IDE Chat Context Limits",
+    status: "detected",
+    severity: "major",
+    message:
+      "Composer/chat context meter reported ~94%+ usage while coordinating zynthio-tools + CoreIntent + Drive handover. A single thread cannot mathematically hold full Drive contents, 100k+ workspace files, and all repo history — verified limitation, not full-fidelity recall. Mitigation documented in-repo: docs/GOOGLE_DRIVE_RESEARCH_HANDOVER.md (research-only corpus handover to NotebookLM/Gemini with Drive sources); docs/SESSION-HANDOVER-2026-04-19.md for git state. Corey: happy with honest limits; wants bulk knowledge indexed outside Cursor then summarized back.",
+    autoUpdate: true,
+    detectedAt: "2026-04-19T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-011",
+    service: "Cursor Desktop Client",
+    status: "detected",
+    severity: "major",
+    message:
+      "Pattern: internal error / queue failures under heavy Composer use (followupId not found, generic internal errors) alongside high context utilization. Client-side reliability; mitigation: new chat, smaller workspace root, Cloud Agents for long jobs, paste excerpts not whole drives.",
+    autoUpdate: true,
+    detectedAt: "2026-04-19T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-012",
+    service: "zynthio-tools ZynRip pipeline",
+    status: "detected",
+    severity: "minor",
+    message:
+      "scripts/zynrip-organize.sh in ~/Desktop/zynthio-tools refuses to run until ZYN_RIP_SRC points at an existing raw rip folder (e.g. rips/2026-...). Expected behaviour — user must export/create rip first, then export ZYN_RIP_SRC=... && bash scripts/zynrip-organize.sh. Separate from CoreIntent repo script variant.",
+    autoUpdate: true,
+    detectedAt: "2026-04-19T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-013",
+    service: "Local Workspace Scale",
+    status: "detected",
+    severity: "major",
+    message:
+      "Very large combined folders (six-figure file counts, multiple copies, unmerged tools repos) make IDE indexing and AI-assisted navigation harder — looks like \"bulk file city\" and invites keyword fishing instead of MAP-first workflows. Mitigation: open lean repo root only; complete ZynRip MAP passes; use Google/NotebookLM for corpus-wide scan; feed agents excerpts + paths not whole trees.",
+    autoUpdate: true,
+    detectedAt: "2026-04-19T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
