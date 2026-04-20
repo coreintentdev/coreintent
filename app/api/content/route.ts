@@ -10,7 +10,7 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
+import { ok, err, preflight, validateString, validateEnum, validatePositiveInt, checkRateLimit, getClientIp } from "@/lib/api";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
@@ -96,6 +96,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = checkRateLimit(getClientIp(req), "content");
+  if (limited) return limited;
+
   let body: Partial<ContentRequest>;
   try {
     body = (await req.json()) as Partial<ContentRequest>;

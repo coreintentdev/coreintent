@@ -10,8 +10,8 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callGrok, callClaudeOpus, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { callAllAIs, callClaudeOpus, callPerplexity, callGrok, validateAiContent } from "@/lib/ai";
+import { ok, err, preflight, serverError, validateString, validateEnum, checkRateLimit, getClientIp } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -28,22 +28,23 @@ const PROTECTED_ASSETS = {
   customTools: ["The Ripper", "Mac the Zipper", "PDF Plumber", "SongPal"],
 } as const;
 
-const VALID_TYPES: ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
+const VALID_TYPES: readonly ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const limited = checkRateLimit(getClientIp(req), "protect");
+  if (limited) return limited;
+
   try {
-    const [impersonationScan, webScan, threatAnalysis] = await Promise.all([
-      callGrok(
+    const { grok, claude, perplexity, allLive, allValid } = await callAllAIs({
+      grok:
         `Scan X/Twitter for accounts impersonating or copying: ${PROTECTED_ASSETS.socials.join(", ")}. ` +
         `Check for unauthorized use of these names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
-        `Report any suspicious accounts or copycat activity. Be specific.`
-      ),
-      callPerplexity(
+        `Report any suspicious accounts or copycat activity. Be specific.`,
+      perplexity:
         `Search the web for unauthorized use of these brands and names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
         `Check for typosquatting near: ${PROTECTED_ASSETS.domains.join(", ")}. ` +
-        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`
-      ),
-      callClaudeOpus(
+        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`,
+      claude:
         `Assess the digital identity protection status for:\n` +
         `Names: ${PROTECTED_ASSETS.names.join(", ")}\n` +
         `Domains: ${PROTECTED_ASSETS.domains.join(", ")}\n` +
@@ -51,19 +52,20 @@ export async function GET() {
         `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
         `Reason through the threat landscape step by step. ` +
         `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
-        "You are the F18 Security AI for CoreIntent. Protect the digital identity. Reason step by step. Be specific and actionable."
-      ),
-    ]);
+      systems: {
+        claude: "You are the F18 Security AI for CoreIntent. Protect the digital identity. Reason step by step. Be specific and actionable.",
+      },
+    });
 
     return ok({
       protectedAssets: PROTECTED_ASSETS,
       scan: {
-        impersonation:    { ...impersonationScan, purpose: "Fast X/Twitter scan",             contentValid: validateAiContent(impersonationScan) },
-        webPresence:      { ...webScan,           purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(webScan)           },
-        threatAssessment: { ...threatAnalysis,    purpose: "Risk analysis & recommendations", contentValid: validateAiContent(threatAnalysis)     },
+        impersonation:    { ...grok,       purpose: "Fast X/Twitter scan",             contentValid: validateAiContent(grok)       },
+        webPresence:      { ...perplexity, purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(perplexity) },
+        threatAssessment: { ...claude,     purpose: "Risk analysis & recommendations", contentValid: validateAiContent(claude)     },
       },
-      allLive:  impersonationScan.live && webScan.live && threatAnalysis.live,
-      allValid: validateAiContent(impersonationScan) && validateAiContent(webScan) && validateAiContent(threatAnalysis),
+      allLive,
+      allValid,
       landmines: {
         status:   "armed",
         coverage: PROTECTED_ASSETS.names.length + PROTECTED_ASSETS.domains.length + PROTECTED_ASSETS.socials.length,
@@ -76,6 +78,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = checkRateLimit(getClientIp(req), "protect");
+  if (limited) return limited;
+
   let body: Partial<ProtectRequest>;
   try {
     body = (await req.json()) as Partial<ProtectRequest>;
@@ -86,9 +91,7 @@ export async function POST(req: NextRequest) {
   const check = validateString(body.check, 500);
   if (!check) return err("check is required and must be 500 characters or fewer", 400);
 
-  const type: ThreatCheckType = VALID_TYPES.includes(body.type as ThreatCheckType)
-    ? (body.type as ThreatCheckType)
-    : "general";
+  const type: ThreatCheckType = validateEnum(body.type, VALID_TYPES) ?? "general";
 
   try {
     type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaudeOpus>;

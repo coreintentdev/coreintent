@@ -495,6 +495,59 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
 }
 
 // ---------------------------------------------------------------------------
+// PARALLEL ORCHESTRATION — call all three AIs in one shot
+// ---------------------------------------------------------------------------
+
+/** Individual prompts and optional system overrides for a parallel AI call. */
+export interface AllAIPrompts {
+  grok:       string;
+  claude:     string;
+  perplexity: string;
+  systems?: {
+    grok?:       string;
+    claude?:     string;
+    perplexity?: string;
+  };
+}
+
+/** Consolidated result from all three AI providers running in parallel. */
+export interface AllAIResults {
+  grok:       AIResponse;
+  claude:     AIResponse;
+  perplexity: AIResponse;
+  /** true when every provider returned a live (non-demo) response. */
+  allLive:  boolean;
+  /** true when every provider returned non-empty content. */
+  allValid: boolean;
+}
+
+/**
+ * Run all three AI providers in parallel and return their results together.
+ * Handles errors per-provider — one failure does not block the others.
+ *
+ * @example
+ * const { grok, claude, perplexity, allLive } = await callAllAIs({
+ *   grok:       "Summarise BTC sentiment on X today",
+ *   claude:     "Perform risk analysis for CoreIntent",
+ *   perplexity: "Find recent CoreIntent mentions on the web",
+ * });
+ */
+export async function callAllAIs(prompts: AllAIPrompts): Promise<AllAIResults> {
+  const [grok, claude, perplexity] = await Promise.all([
+    callGrok(prompts.grok, prompts.systems?.grok),
+    callClaude(prompts.claude, prompts.systems?.claude),
+    callPerplexity(prompts.perplexity, prompts.systems?.perplexity),
+  ]);
+  return {
+    grok,
+    claude,
+    perplexity,
+    allLive:  grok.live  && claude.live  && perplexity.live,
+    allValid: validateAiContent(grok) && validateAiContent(claude) && validateAiContent(perplexity),
+  };
+}
+
+// ---------------------------------------------------------------------------
 // RESPONSE VALIDATION
 // ---------------------------------------------------------------------------
 
