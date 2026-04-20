@@ -175,6 +175,17 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-20T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-016",
+    service: "Claude Desktop Environment Setup",
+    status: "detected",
+    severity: "major",
+    message:
+      "User experienced persistent frustration and blockers due to executing commands in the wrong repository context (zynthio-tools vs coreintent) and pasting JSON into the terminal. The separation between the Cloud Workspace (where the agent operates) and the local macOS Desktop (where the user operates) caused significant friction. Mitigation: Created a dedicated, copy-paste ready `docs/CLAUDE_DESKTOP_HANDOVER.md` focused exclusively on the exact commands needed to sync the local environment with the cloud progress.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
