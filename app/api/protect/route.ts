@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
+import { callPerplexity, callGrok, callClaudeOpus, validateAiContent } from "@/lib/ai";
 import { ok, err, preflight, serverError, validateString } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
@@ -43,14 +43,15 @@ export async function GET() {
         `Check for typosquatting near: ${PROTECTED_ASSETS.domains.join(", ")}. ` +
         `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`
       ),
-      callClaude(
+      callClaudeOpus(
         `Assess the digital identity protection status for:\n` +
         `Names: ${PROTECTED_ASSETS.names.join(", ")}\n` +
         `Domains: ${PROTECTED_ASSETS.domains.join(", ")}\n` +
         `Socials: ${PROTECTED_ASSETS.socials.join(", ")}\n` +
         `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
+        `Reason through the threat landscape step by step. ` +
         `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
-        "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable."
+        "You are the F18 Security AI for CoreIntent. Protect the digital identity. Reason step by step. Be specific and actionable."
       ),
     ]);
 
@@ -90,7 +91,7 @@ export async function POST(req: NextRequest) {
     : "general";
 
   try {
-    type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaude>;
+    type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaudeOpus>;
     const scanMap: Record<ThreatCheckType, ScanFn> = {
       impersonation: () => callGrok(
         `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +
@@ -100,10 +101,11 @@ export async function POST(req: NextRequest) {
         `Is the domain "${check}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
         `Check registration date, content, and stated intent.`
       ),
-      threat: () => callClaude(
+      threat: () => callClaudeOpus(
         `Assess this as a potential threat to CoreIntent's digital identity: "${check}". ` +
+        `Reason through attack vectors step by step. ` +
         `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
-        "You are the F18 Security AI for CoreIntent. Be specific and actionable."
+        "You are the F18 Security AI for CoreIntent. Reason step by step. Be specific and actionable."
       ),
       general: () => callPerplexity(
         `Does "${check}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`

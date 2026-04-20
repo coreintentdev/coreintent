@@ -32,6 +32,8 @@ export interface AIResponse {
    * Enables monitoring dashboards to classify failure modes.
    */
   errorType?: "api_error" | "rate_limit" | "network_error" | "timeout";
+  /** Output tokens consumed (Claude only, when live === true). */
+  tokensUsed?: number;
 }
 
 /** Which AI API keys are configured (true) vs demo placeholder (false). */
@@ -204,10 +206,15 @@ const CLAUDE_TIMEOUT_MS = 25_000;
  * Avoid injecting per-request variables (timestamps, prices) here — put those
  * in the user message instead.
  */
+/**
+ * Stable system prompt for Claude (sonnet). Keep this string IDENTICAL across
+ * requests — per-request variables (prices, dates) belong in the user message,
+ * not here. Stability maximises Anthropic's server-side cache hit rate.
+ */
 const CLAUDE_DEFAULT_SYSTEM =
   "You are CoreIntent, an agentic AI trading assistant for Zynthio.ai (parent brand).\n" +
   "Owner: Corey McIvor (@coreintentdev / @coreintentai, NZ). Mode: paper_trading.\n\n" +
-  "Platform state (as of April 2026):\n" +
+  "Current platform state:\n" +
   "- All API routes return demo/static data — no live exchange connections.\n" +
   "- Binance, Coinbase, and gTrade are PLANNED integrations, not yet active.\n" +
   "- Business model: competition-based leagues (daily/weekly/monthly), NOT subscriptions.\n" +
@@ -221,8 +228,7 @@ const CLAUDE_DEFAULT_SYSTEM =
   "- Structure analysis with Markdown headers (##) when the response has multiple sections.\n" +
   "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC. Never reference ASIC.\n" +
   "- Stay within CoreIntent's trading/analysis mandate; redirect out-of-scope questions.\n" +
-  "- Target ≤600 tokens unless complexity warrants more.\n" +
-  "  For deep analysis (task context = 'analysis'), use up to 1024 tokens.";
+  "- Target ≤600 tokens for standard analysis; up to 2048 for deep analysis tasks.";
 
 /**
  * Call Claude (Anthropic) for deep analysis, risk assessment, and long-context tasks.
@@ -288,13 +294,116 @@ export async function callClaude(
 
     const data = await res.json();
     return {
-      source:  "claude",
-      model:   data.model ?? "claude-sonnet-4-6",
-      content: data.content?.[0]?.text ?? "",
-      live: true,
+      source:     "claude",
+      model:      data.model ?? "claude-sonnet-4-6",
+      content:    data.content?.[0]?.text ?? "",
+      live:       true,
+      tokensUsed: data.usage?.output_tokens,
     };
   } catch (e) {
     return classifyFetchError(e, "claude", "claude-sonnet-4-6");
+  }
+}
+
+/**
+ * Stable system prompt for Claude Opus (heavy analysis tasks).
+ * Same caching rules as CLAUDE_DEFAULT_SYSTEM — keep it stable across requests.
+ * Opus is reserved for routes that justify the higher cost:
+ *   /api/research (self-analysis) and /api/protect (threat assessment).
+ */
+const CLAUDE_OPUS_SYSTEM =
+  "You are CoreIntent's deep analysis engine for Zynthio.ai (parent brand).\n" +
+  "Owner: Corey McIvor (@coreintentdev / @coreintentai, NZ). Mode: paper_trading.\n\n" +
+  "Current platform state:\n" +
+  "- All API routes return demo/static data — no live exchange connections.\n" +
+  "- Binance, Coinbase, and gTrade are PLANNED integrations, not yet active.\n" +
+  "- Business model: competition-based leagues (daily/weekly/monthly), NOT subscriptions.\n" +
+  "- AI agents are code-ready but not yet deployed to the Cloudzy VPS.\n" +
+  "- Authentication and database layers do not yet exist.\n\n" +
+  "Deep analysis principles:\n" +
+  "- Reason through problems step by step before stating conclusions.\n" +
+  "- Surface non-obvious risks, second-order effects, and blind spots.\n" +
+  "- Quantify confidence: certain / likely / uncertain / speculative.\n" +
+  "- Never fabricate data. Label all demo/placeholder output as [DEMO].\n" +
+  "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC. Never reference ASIC.\n" +
+  "- Prioritise actionable findings over general commentary.\n" +
+  "- Use Markdown headers (##) and bullet lists for multi-section responses.\n" +
+  "- Up to 2048 tokens — use what the depth of the analysis genuinely requires.";
+
+/**
+ * Call Claude Opus (claude-opus-4-7) for tasks requiring deep reasoning:
+ * threat assessment, brand analysis, complex risk modelling.
+ *
+ * Falls back to the same demo response as callClaude when the key is absent.
+ * Uses the same prompt-caching beta header — keep system prompt stable.
+ *
+ * @param prompt  User-side message.
+ * @param system  Optional override for the system prompt.
+ */
+export async function callClaudeOpus(
+  prompt: string,
+  system?: string
+): Promise<AIResponse> {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (isDemoKey(key, "sk-ant-xxx")) {
+    return {
+      source:  "claude",
+      model:   "claude-demo",
+      content: `[DEMO] Claude Opus: ${prompt}`,
+      live: false,
+    };
+  }
+
+  const systemText = system ?? CLAUDE_OPUS_SYSTEM;
+
+  try {
+    const res = await fetchWithTimeout(
+      "https://api.anthropic.com/v1/messages",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":      "application/json",
+          "x-api-key":         key!,
+          "anthropic-version": "2023-06-01",
+          "anthropic-beta":    "prompt-caching-2024-07-31",
+        },
+        body: JSON.stringify({
+          model:      "claude-opus-4-7",
+          max_tokens: 2048,
+          system: [
+            {
+              type:          "text",
+              text:          systemText,
+              cache_control: { type: "ephemeral" },
+            },
+          ],
+          messages: [{ role: "user", content: prompt }],
+        }),
+      },
+      CLAUDE_TIMEOUT_MS
+    );
+
+    if (!res.ok) {
+      const text = await res.text();
+      return {
+        source:    "claude",
+        model:     "claude-opus-4-7",
+        content:   `[API ERROR ${res.status}] ${text}`,
+        live:      false,
+        errorType: res.status === 429 ? "rate_limit" : "api_error",
+      };
+    }
+
+    const data = await res.json();
+    return {
+      source:     "claude",
+      model:      data.model ?? "claude-opus-4-7",
+      content:    data.content?.[0]?.text ?? "",
+      live:       true,
+      tokensUsed: data.usage?.output_tokens,
+    };
+  } catch (e) {
+    return classifyFetchError(e, "claude", "claude-opus-4-7");
   }
 }
 

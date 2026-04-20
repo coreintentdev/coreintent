@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
+import { callPerplexity, callClaude, callClaudeOpus, callGrok, validateAiContent } from "@/lib/ai";
 import { ok, err, preflight, serverError, validateString } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
@@ -44,11 +44,11 @@ export async function GET() {
         `Latest activity? Any mentions? Overall sentiment? ` +
         `Are there any impersonation attempts on this account?`
       ),
-      callClaude(
+      callClaudeOpus(
         `You are analyzing the digital twin of Corey McIvor (${IDENTITY.handle}), creator of ${IDENTITY.project}. ` +
         `Summarize the current project state, identify the top 3 risks to the digital identity, ` +
         `and suggest 3 immediate actions to strengthen online presence and protect the brand.`,
-        "You are CoreIntent's self-awareness module. Be precise, honest, and direct."
+        "You are CoreIntent's self-awareness module. Be precise, honest, and direct. Reason step by step before stating conclusions."
       ),
     ]);
 
@@ -84,10 +84,10 @@ export async function POST(req: NextRequest) {
     : "research";
 
   try {
-    type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;
+    type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callClaudeOpus | typeof callGrok>;
     const taskMap: Record<ResearchTask, TaskFn> = {
       research:  () => callPerplexity(topic),
-      analysis:  () => callClaude(topic),
+      analysis:  () => callClaudeOpus(topic),
       signal:    () => callGrok(topic),
       sentiment: () => callGrok(`Analyze market and social sentiment for: ${topic}`),
     };

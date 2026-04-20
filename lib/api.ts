@@ -70,6 +70,11 @@ export function serverError(detail?: unknown): NextResponse<ApiResponse<null>> {
   return err("Internal server error. Please try again.", 500);
 }
 
+/** 400 Bad Request — invalid or missing input from the caller. */
+export function badRequest(message: string): NextResponse<ApiResponse<null>> {
+  return err(message, 400);
+}
+
 /** 404 Not Found. */
 export function notFound(message = "Not found"): NextResponse<ApiResponse<null>> {
   return err(message, 404);

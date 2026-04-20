@@ -5,9 +5,13 @@
  * Only signals at or above minConfidence are surfaced to the UI.
  * SOL/USD short is intentionally below minConfidence — shown for transparency.
  *
+ * Query params:
+ *   ?pair=BTC/USD  — filter to a specific pair (case-insensitive, URL-encoded)
+ *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight, serverError } from "@/lib/api";
+import { NextRequest } from "next/server";
+import { ok, err, preflight, serverError } from "@/lib/api";
 
 interface Signal {
   id:         number;
@@ -52,16 +56,27 @@ const SIGNAL_TEMPLATES: SignalTemplate[] = [
   { id: 3, pair: "SOL/USD", direction: "short", confidence: 0.62, source: "SentimentBot"  },
 ];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const pairFilter = searchParams.get("pair")?.toUpperCase() ?? null;
+
+    if (pairFilter !== null) {
+      const knownPairs = SIGNAL_TEMPLATES.map((t) => t.pair.toUpperCase());
+      if (!knownPairs.includes(pairFilter)) {
+        return err(`Unknown pair "${pairFilter}". Available: ${SIGNAL_TEMPLATES.map((t) => t.pair).join(", ")}`, 400);
+      }
+    }
+
     const now = new Date().toISOString();
     const allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));
+    const filtered = pairFilter ? allSignals.filter((s) => s.pair.toUpperCase() === pairFilter) : allSignals;
 
     const data: SignalsResponse = {
-      signals:       allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE),
+      signals:       filtered.filter((s) => s.confidence >= MIN_CONFIDENCE),
       minConfidence: MIN_CONFIDENCE,
-      totalActive:   allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
-      totalPending:  allSignals.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
+      totalActive:   filtered.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
+      totalPending:  filtered.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
       mode:          "demo",
       timestamp:     now,
     };
