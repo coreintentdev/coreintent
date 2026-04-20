@@ -68,6 +68,10 @@ const HERO_PHRASES = [
   "Bots Welcome. Humans Too.",
   "Built in New Zealand.",
   "Trading Is a Sport Now.",
+  "One Model Guesses. Three Debate.",
+  "$45/mo Runs the Whole Engine.",
+  "Your Bot. Their Bot. Best Wins.",
+  "Paper Trading. Real Ambition.",
 ];
 
 function TypeWriter() {
@@ -430,7 +434,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaces subscriptions with competitions
+              The agentic AI trading engine that replaced subscriptions with competitions
             </p>
             <p
               style={{
@@ -451,8 +455,11 @@ export default function Home() {
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
               We charge nothing. You prove yourself in competition.
             </p>
+            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
+              Built by traders who got tired of paying for signals that don&apos;t work.
+            </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand.
+              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -501,10 +508,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Subscriptions aren't a business model — they're a tax.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. The arena is free — the competition is where value gets created.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins — regardless of who or what runs it.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your costs are this low, charging subscriptions isn't a business model — it's greed.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -663,6 +670,39 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+            {/* Why CoreIntent — Differentiator */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Why CoreIntent
+              </div>
+              <div
+                style={{
+                  padding: "24px",
+                  background: "linear-gradient(135deg, #10b98108 0%, #3b82f608 100%)",
+                  border: "1px solid #10b98118",
+                  borderRadius: "10px",
+                  textAlign: "left",
+                }}
+              >
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                  {[
+                    { them: "One model guessing", us: "Three models debating" },
+                    { them: "$99/mo whether you win or lose", us: "$0 — compete to prove your edge" },
+                    { them: "Bots banned, captcha'd, blocked", us: "Bots are first-class competitors" },
+                    { them: "Green dots on everything", us: "Demo labelled demo. Planned labelled planned." },
+                    { them: "$10k/mo infrastructure, VC-subsidised", us: "$45/mo total. No VC. No burn rate." },
+                    { them: "Subscription revenue = misaligned incentives", us: "Competition revenue = aligned incentives" },
+                  ].map((row) => (
+                    <div key={row.us} style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "8px 0" }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: "11px", color: "#ef4444", textDecoration: "line-through", marginBottom: "4px" }}>{row.them}</div>
+                        <div style={{ fontSize: "12px", color: "var(--accent-green)", fontWeight: "bold" }}>{row.us}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

@@ -126,3 +126,72 @@ We're just getting started.
 .
 .
 #FounderStory #StartupJourney #AIFounder #TechFounder #NewZealandTech #BuildInPublic #CoreIntent #Zynthio #AITrading #IndieFounder #BootstrapBusiness #TradingPlatform #SoloFounder #EntrepreneurLife
+
+---
+
+## Caption 6 — Disagreement Signal (Reel/Short)
+
+The most expensive word in trading: "probably."
+
+"Probably going up." "Probably a good entry." "Probably nothing."
+
+At CoreIntent, three AI models replace "probably" with a debate.
+
+Grok: "Signal detected."
+Claude: "Risk doesn't justify the position."
+Perplexity: "Macro headwinds in 6 hours."
+
+Result? We wait. The trade we didn't take saved more than the trade we would've lost.
+
+Disagreement isn't failure. It's a feature.
+
+.
+.
+.
+#TradingMindset #RiskManagement #AITrading #CoreIntent #TradingSignals #CryptoTrading #MultiModelAI #AgenticAI #SmartMoney #DontGuess #BuildInPublic #FinTech
+
+---
+
+## Caption 7 — The vs. Comparison (Carousel)
+
+Slide 1: "CoreIntent vs Every Other Trading Platform"
+Slide 2: "THEM: $99/month subscription | US: $0 — free competitions"
+Slide 3: "THEM: 1 AI model (maybe) | US: 3 models cross-checking each other"
+Slide 4: "THEM: Bots banned | US: Bots are first-class competitors"
+Slide 5: "THEM: Green dots on everything | US: Demo labelled demo, planned labelled planned"
+Slide 6: "THEM: $10k/mo infrastructure | US: $45/mo total"
+Slide 7: "Different incentives. Different outcomes. coreintent.dev"
+
+Caption:
+We didn't set out to be different. We set out to be honest.
+
+Turns out, in this industry, that's radical enough.
+
+Three AI models. Free competitions. Bots welcome. Paper trading mode — building openly, launching when it's ready.
+
+.
+.
+.
+#CoreIntent #AITrading #CryptoTrading #FinTech #TradingPlatform #Vs #Comparison #HonestTech #Transparency #MadeInNZ #ZynthioAI #BuildInPublic #IndieHacker #AgenticAI
+
+---
+
+## Caption 8 — Signal Pipeline Infographic
+
+Swipe to see how a single CoreIntent signal gets generated:
+
+1. DETECT — Grok scans markets + social feeds in real-time
+2. ANALYSE — Claude runs deep risk assessment + strategy validation
+3. VERIFY — Perplexity fact-checks against live news + macro data
+4. DECIDE — Consensus = act. Disagreement = dig deeper.
+
+Four steps. Three models. One signal you can actually trust.
+
+No single model gets final say. No signal ships without peer review.
+
+This is how trading intelligence should work.
+
+.
+.
+.
+#AISignals #TradingPipeline #CoreIntent #MultiModel #SignalProcessing #CryptoSignals #AIArchitecture #TradingStrategy #MachineLearning #AgenticAI #FinTech #NZTech #BuildInPublic

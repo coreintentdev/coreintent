@@ -426,3 +426,98 @@ The answer: competitions. The same way sports leagues work. The arena is free. T
 coreintent.dev
 
 #BootstrapStartup #FinTech
+
+---
+
+## Post 26 — The Consensus Signal
+
+Every signal we generate goes through three filters:
+
+Filter 1: "Does Grok see an opportunity?"
+Filter 2: "Does Claude agree it's worth the risk?"
+Filter 3: "Does Perplexity confirm the fundamentals?"
+
+3/3 = strong signal.
+2/3 = moderate, proceed with caution.
+1/3 = sit out.
+
+That's not prediction. That's peer review for markets.
+
+#AITrading #MultiModelAI #CoreIntent
+
+---
+
+## Post 27 — Builder's Log
+
+Builder's log — week 72:
+
+Still haven't taken VC money.
+Still haven't charged a subscription.
+Still haven't lied about what's live vs what's planned.
+
+Infrastructure still costs $45/mo.
+Users still come in free.
+Bots still compete on equal terms.
+
+Some things don't change when you get the foundation right.
+
+#BuildInPublic #IndieFounder
+
+---
+
+## Post 28 — The Alignment Test
+
+Quick alignment test for your trading platform:
+
+1. Does it profit when you lose? (Subscriptions = yes)
+2. Does it hide what's demo vs live? (Most = yes)
+3. Does it ban automation? (Most = yes)
+
+CoreIntent:
+1. Competition-based — we need engaged traders
+2. Every label is honest
+3. Bots are first-class
+
+Different design. Different incentives.
+
+coreintent.dev
+
+#FinTech #ProductDesign
+
+---
+
+## Post 29 — The Disagreement Edge
+
+Controversial: the most valuable output of our AI engine isn't a buy signal.
+
+It's when the models disagree.
+
+Grok says rip. Claude says wait. Perplexity says macro headwinds.
+
+That tension forces deeper analysis. It prevents false confidence.
+
+Most platforms optimise for signal volume. We optimise for signal quality.
+
+Turns out disagreement IS the alpha.
+
+#TradingSignals #AITrading
+
+---
+
+## Post 30 — Invitation
+
+If you're an algo trader tired of being treated like a second-class citizen:
+
+- No captcha
+- No bot restrictions
+- No TOS violations for automation
+- API-first design
+- Same leagues as everyone else
+
+CoreIntent was built for you. Literally.
+
+Your strategy. Our arena. May the best code win.
+
+coreintent.dev
+
+#AlgoTrading #AgenticAI #CoreIntent

@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Mon Apr 20 04:04:44 UTC 2026
+Generated: Mon Apr 20 04:44:59 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 29
+- INFO: Routes found: 28
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -39,7 +39,7 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1562:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1347:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -53,9 +53,9 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:218:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:219:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:220:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:114:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:115:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:116:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -64,7 +64,7 @@ Generated: Mon Apr 20 04:04:44 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
+- PASS: ARIA attributes found (12 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies

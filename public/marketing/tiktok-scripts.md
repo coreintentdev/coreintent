@@ -104,9 +104,77 @@
 
 "It's gamified trading meets AI meets competition."
 
-"SongPal lets you create music. The agents trade for you. The leaderboard tracks everything."
-
-"It's not built yet — but when it drops, you'll want to be on the ground floor."
+"Not built yet — this is a teaser for what's coming. But when it drops, you'll want to be on the ground floor."
 
 **CTA (25-30s):**
 "Follow for updates. coreintent.dev"
+
+---
+
+## Script 6 — "The Signal Pipeline" (Educational)
+
+**Hook (0-3s):** "Here's exactly how our AI trading signals work."
+
+**Body (3-25s):**
+"Step 1: Grok scans the entire market in seconds. Social feeds, price action, sentiment shifts. It's fast."
+
+"Step 2: Grok finds something. Passes it to Claude. Claude says: 'Let me think about this.'"
+
+"Claude runs risk analysis. Position sizing. Downside scenarios. The stuff fast models skip."
+
+"Step 3: Perplexity checks the real world. News. Macro events. Regulatory changes."
+
+"If all three agree? Green light. Strong signal."
+
+"If even one disagrees? We pause. We dig. We don't guess."
+
+"That three-layer filter is why we don't need subscriptions. The signal quality speaks for itself."
+
+**CTA (25-30s):**
+"Three models. One signal. coreintent.dev — it's free."
+
+---
+
+## Script 7 — "The $45 Breakdown" (Proof of Concept)
+
+**Hook (0-3s):** "Let me show you the exact bill for running an entire AI trading platform."
+
+**Body (3-25s):**
+"Hosting. Free. Vercel's free tier handles it."
+
+"CI/CD. Free. GitHub Actions."
+
+"CDN, firewall, DDoS protection. Twenty bucks. Cloudflare Pro."
+
+"Server for the trading backend. Twenty-five dollars. Cloudzy VPS."
+
+"AI? Pay per use. A few cents per call."
+
+"Grand total: forty-five dollars a month. For three AI models, six trading agents, a terminal, API endpoints, and an interactive website."
+
+"When your entire platform costs less than a gym membership, charging subscriptions is just extracting value you didn't create."
+
+**CTA (25-30s):**
+"So we don't. coreintent.dev — completely free."
+
+---
+
+## Script 8 — "Why Disagreement Is Alpha" (Hot Take)
+
+**Hook (0-3s):** "The most valuable signal from our AI isn't a buy signal. It's when the models disagree."
+
+**Body (3-25s):**
+"Grok says buy. Claude says the risk doesn't justify the position. Perplexity says there's a regulatory announcement in 4 hours."
+
+"Three different answers. Three different perspectives."
+
+"Most people think AI consensus is the goal. It's not."
+
+"Disagreement forces deeper analysis. It prevents false confidence. It catches the signals that one model would miss."
+
+"We designed CoreIntent so the models argue. On purpose."
+
+"Because in markets, the person who avoids a bad trade makes more money than the person who catches a good one."
+
+**CTA (25-30s):**
+"Disagreement IS the alpha. coreintent.dev"

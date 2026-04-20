@@ -35,6 +35,16 @@ CoreIntent's pricing philosophy is built on a simple insight: when infrastructur
 
 Revenue is generated through premium competition tiers, while all foundational features — terminal access, AI agents, documentation, and community — remain free.
 
+### Platform Milestones (as of April 2026)
+
+- 3 AI models orchestrated in a multi-layer signal pipeline
+- 6 specialised AI trading agents configured and paper trading
+- 12+ API endpoints (mix of live, demo, and real)
+- Full interactive web terminal with real command execution
+- Open-source codebase on GitHub
+- 16 domains secured across the Zynthio ecosystem
+- 3 registered trademarks (ZYNTHIO, CoreyAI, SongPal)
+
 ### Key Facts
 
 - **Founded:** 2025
@@ -42,9 +52,10 @@ Revenue is generated through premium competition tiers, while all foundational f
 - **Parent Brand:** Zynthio (zynthio.ai)
 - **Headquarters:** New Zealand
 - **Current Status:** Paper trading mode (pre-live)
-- **Tech Stack:** Next.js 14, TypeScript, Vercel, Cloudflare, Cloudzy VPS
+- **Tech Stack:** Next.js 15 (App Router), TypeScript (strict), Vercel, Cloudflare, Cloudzy VPS
 - **Infrastructure Cost:** ~NZ$45/month
 - **AI Models:** Claude (Anthropic), Grok (xAI), Perplexity
+- **Competition Leagues:** Daily (24hr), Weekly (7-day), Monthly (30-day)
 - **Website:** https://coreintent.dev
 - **GitHub:** https://github.com/coreintentdev/coreintent
 

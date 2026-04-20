@@ -43,7 +43,7 @@ Register -> Learn -> Compete -> Earn -> Create
 
 **6 AI Agents:** TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, ResearchAgent
 
-**Stack:** Next.js 14 / TypeScript (strict) / Vercel / Cloudflare Pro / Cloudzy VPS
+**Stack:** Next.js 15 / TypeScript (strict) / Vercel / Cloudflare Pro / Cloudzy VPS
 
 **Monthly infrastructure cost:** ~NZ$45
 
@@ -60,6 +60,17 @@ Register -> Learn -> Compete -> Earn -> Create
 - **Premium competitions:** Higher-stakes leagues (planned)
 - **The Mansion:** Gamified world with room unlocks, missions, rewards (planned)
 - **SongPal:** Music creation competitions (planned)
+
+## Competitive Landscape
+
+| Factor | Traditional Platforms | CoreIntent |
+|--------|----------------------|------------|
+| **Revenue Model** | Subscriptions ($49-$299/mo) | Competition-based (free entry) |
+| **AI Models** | 0-1 | 3 cross-checking |
+| **Bot Policy** | Banned or restricted | First-class citizens |
+| **Transparency** | Opaque metrics | Demo = demo, planned = planned |
+| **Infrastructure** | $10k+/mo (VC-funded) | ~$45/mo (self-funded) |
+| **Incentive Alignment** | Platform profits regardless | Platform needs engaged traders |
 
 ## Why CoreIntent Wins
 
@@ -81,7 +92,7 @@ Register -> Learn -> Compete -> Earn -> Create
 | **Domains Owned** | 16 |
 | **Registered Trademarks** | 3 (ZYNTHIO, CoreyAI, SongPal) |
 | **Competition Leagues** | 3 (Daily, Weekly, Monthly) |
-| **Codebase** | Next.js 14 / TypeScript (strict) |
+| **Codebase** | Next.js 15 / TypeScript (strict) |
 | **Status** | Paper trading mode |
 
 ## Team
