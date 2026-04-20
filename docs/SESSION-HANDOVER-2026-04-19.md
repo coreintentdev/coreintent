@@ -4,7 +4,7 @@
 
 - **Remote:** `github.com/coreintentdev/coreintent`
 - **Branch:** `claude/check-coreintent-builds-JTrDd` (tracking `origin`)
-- **Latest commit on this branch:** `606457a` — *Honest demo APIs, 8-model status/connections, Studio timeouts and UI fixes*
+- **Latest commits:** includes honest APIs/Studio (`606457a`), Google handover doc, session handover, **INC-010–014** (see `git log -5`). Pull **HEAD** — do not rely on this doc’s old SHA alone.
 
 ```bash
 git fetch origin
@@ -73,9 +73,15 @@ Optional: `./scripts/audit.sh` if present and executable.
 
 ## Related docs in repo
 
+- **`docs/TODO_MASTER.md`** — consolidated task list (product, ZynRip, deploy, vendors).
+- **`docs/GOOGLE_DRIVE_RESEARCH_HANDOVER.md`** — paste into NotebookLM/Gemini; includes **incident summary for Google** (no chat rehash).
 - `COWORK_HANDOVER.md` — April 14, 2026 Cowork / deploy / keys context (**read for deploy commands and caveats**; rotate any keys that were ever pasted in chat).
 - `docs/SESSION-HANDOVER-2026-03-23.md` — older session thread.
 - `HONEST_AUDIT.md` / incident docs — if present on branch, read before claiming “connected” or “live.”
+
+### INC-014 (expectations)
+
+ZynRip / session files **do not** auto-append to `/api/incidents` today — incidents are **maintained in code** until automation ships. See `docs/TODO_MASTER.md` backlog item.
 
 ## Next actions (suggested)
 

@@ -153,6 +153,17 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-19T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-014",
+    service: "Product Expectations vs Implementation",
+    status: "detected",
+    severity: "major",
+    message:
+      "Expectation mismatch: docs or session text implied ZynRip / local session files could \"auto-report\" incidents into CoreIntent — the app does NOT watch claudsession.txt or Desktop; incidents in /api/incidents are code-curated unless POST + notification layer exists. Repeated argumentative tone in AI sessions plus moderation flows that echo verbatim harmful text back as feedback feels like renewed harm, not duty of care. Google handover (docs/GOOGLE_DRIVE_RESEARCH_HANDOVER.md) updated to carry incident summary for research-only Drive scan without re-litigating chat fights. Follow-up: optional automation (file watcher or MAP hook → POST /api/incidents) is backlog, not shipped.",
+    autoUpdate: true,
+    detectedAt: "2026-04-19T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
