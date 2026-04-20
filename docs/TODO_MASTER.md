@@ -49,6 +49,7 @@
 
 ## Research / consolidation
 
+- [ ] **INC-018 follow-up:** Comprehensive review of all 336 failed/non-deployed Claude builds to extract lost alpha, SLPA, and content that never made it to production.
 - [ ] Export NotebookLM summary back into repo or `manifests/` as **one** canonical file
 - [ ] Reconcile domain count claims with registrar export (don’t rely on chat memory)
 

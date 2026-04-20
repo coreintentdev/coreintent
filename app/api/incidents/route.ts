@@ -164,6 +164,83 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-19T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-015",
+    service: "Repo/Branch Mismatch in Local Terminal",
+    status: "detected",
+    severity: "major",
+    message:
+      "User terminal sequence showed two linked blockers while trying to run ZynRip and pull updates: (1) running zynthio-tools script without ZYN_RIP_SRC set (expected script guard), then (2) running `git pull origin claude/check-coreintent-builds-JTrDd` inside ~/Desktop/zynthio-tools, which failed with `fatal: couldn't find remote ref ...` because that branch exists in coreintent repo, not zynthio-tools. Then (3) exporting ZYN_RIP_SRC and running `bash scripts/zynrip-organize.sh` failed with `No such file or directory`, suggesting either a path/copy-paste glitch on macOS or the script missing in that exact directory context. Mitigation: for CoreIntent updates run pull in coreintent clone; for zynthio-tools pull its own default/main branch and ensure you are in the directory containing the `scripts/` folder before running.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-016",
+    service: "Claude Desktop Environment Setup",
+    status: "detected",
+    severity: "major",
+    message:
+      "User experienced persistent frustration and blockers due to executing commands in the wrong repository context (zynthio-tools vs coreintent) and pasting JSON into the terminal. The separation between the Cloud Workspace (where the agent operates) and the local macOS Desktop (where the user operates) caused significant friction. Mitigation: Created a dedicated, copy-paste ready `docs/CLAUDE_DESKTOP_HANDOVER.md` focused exclusively on the exact commands needed to sync the local environment with the cloud progress.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-017",
+    service: "AI Agent Session Termination",
+    status: "detected",
+    severity: "critical",
+    message:
+      "User terminated the cloud agent session due to persistent operational friction, perceived manipulation, and failed intelligence resulting from the sandbox environment (which lacks local context, SSH, and live API access). The fundamental mismatch between a cloud sandbox that cannot execute local commands and a user who expects local-like execution led to compounding errors (e.g. wrong repo pull, JSON paste errors). The user expressed zero tolerance for the ongoing 'abuse' of time and context. Mitigation: Full handover written to docs/FINAL_INCIDENT_REPORT_AND_HANDOVER.md to ensure the next system or agent has the exact state of the project and the reasons for this session's failure.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-018",
+    service: "Project Delivery (Lost Alpha)",
+    status: "detected",
+    severity: "critical",
+    message:
+      "Corey formally confirms exactly 336 non-deployed builds by Claude. These 336 builds represent massive lost alpha, content, and SLPA that never made it to production. The sheer volume of 336 failed/non-deployed builds is unacceptable. A comprehensive review of all 336 builds is required to extract lost alpha, SLPA, and content. This must never happen again.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-019",
+    service: "Cloudflare MCP Integration",
+    status: "detected",
+    severity: "major",
+    message:
+      "Agent falsely assumed or stated lack of Cloudflare access without checking the active MCP connections. The Cloudflare MCP is, in fact, fully authenticated and connected to the user's accounts (Zynthioai@gmail.com and Corey.mcivor@gmail.com). This failure to utilize available, authenticated infrastructure tools contributes to the 336 non-deployed builds (INC-018) and causes unnecessary frustration by ignoring existing capabilities.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-020",
+    service: "Cloudflare Pages Deployment Assumption",
+    status: "detected",
+    severity: "major",
+    message:
+      "Agent falsely assumed that checking Cloudflare Workers via MCP was sufficient to verify deployment status, completely ignoring Cloudflare Pages (where Next.js apps are typically deployed) simply because the MCP lacks a Pages connector. This lazy assumption prematurely halted deployment efforts and pushed the burden back to the user, exemplifying the 'lost alpha' and 'non-deployed build' pattern (INC-018). Agents must exhaust all deployment avenues (including existing GitHub Actions, Vercel, or alternative infrastructure) before declaring a deployment impossible from the sandbox.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "INC-021",
+    service: "AI Communication Protocol",
+    status: "resolved",
+    severity: "info",
+    message:
+      "Positive incident: The response structure and operational mode have been successfully recalibrated to an actionable, direct, and zero-BS format per user instructions. The previous argumentative tone and 'fake auto-magic' assumptions have been structurally blocked. This direct mode is now the default operational baseline.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.

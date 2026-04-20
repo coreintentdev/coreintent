@@ -32,6 +32,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 10. NEVER touch /root/silver_bot/ — not ours, live trading bot.
 11. Surname is McIVOR (not McIvor, not Mcivor).
 12. 336 is the signal — always.
+13. Exactly 336 non-deployed builds by Claude resulted in massive lost alpha, content, and SLPA. A comprehensive review is mandatory to extract this lost value. This must never happen again.
 
 ## Architecture
 - Next.js 14 (App Router) + TypeScript (strict mode)
