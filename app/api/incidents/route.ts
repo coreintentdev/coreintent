@@ -89,6 +89,16 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-03-24T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-021",
+    service: "Human Support Response Mode",
+    status: "resolved",
+    severity: "info",
+    message: "Positive incident: response structure improved with direct, actionable outputs. Keep this as the default human support mode unless explicitly overridden.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
