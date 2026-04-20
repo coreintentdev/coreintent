@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Disclaimer",
-  description: "CoreIntent risk disclaimer — cryptocurrency trading involves substantial risk. Paper trading only. Not financial advice. Based in New Zealand.",
-};
 
 export default function DisclaimerPage() {
   return (

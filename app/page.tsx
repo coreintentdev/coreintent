@@ -139,6 +139,8 @@ function MarketTicker() {
 
   return (
     <div
+      role="marquee"
+      aria-label="Simulated cryptocurrency price ticker (demo data)"
       style={{
         overflow: "hidden",
         borderBottom: "1px solid var(--border-color)",
@@ -370,6 +372,7 @@ export default function Home() {
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
         <section
+          aria-label="CoreIntent — Agentic AI Trading Engine"
           style={{
             padding: "48px 24px 40px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
@@ -710,6 +713,7 @@ export default function Home() {
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
         {tab === "dashboard" && (
           <div style={{ overflow: "auto", height: "100%" }}>
+            <h2 className="sr-only">Dashboard</h2>
             {/* Status cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", marginBottom: "24px" }}>
               {STATUS_CARDS.map((card) => (
@@ -848,6 +852,7 @@ export default function Home() {
         {/* ═══════════════════════ AGENTS ═══════════════════════ */}
         {tab === "agents" && (
           <div style={{ overflow: "auto", height: "100%" }}>
+            <h2 className="sr-only">Agents</h2>
             <h3 style={sectionTitle}>AI Agent Fleet</h3>
             <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
               Paper trading mode — agents are configured but not live-trading.

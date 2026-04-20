@@ -33,21 +33,45 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "The Stack",
+          item: "https://coreintent.dev/stack",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "The Stack",
-      item: "https://coreintent.dev/stack",
+      "@type": "TechArticle",
+      headline: "CoreIntent Technology Stack — AI Services, Infrastructure & Architecture",
+      description:
+        "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure.",
+      url: "https://coreintent.dev/stack",
+      author: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      publisher: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      about: [
+        { "@type": "Thing", name: "Claude AI", description: "Deep analysis & risk assessment" },
+        { "@type": "Thing", name: "Grok AI", description: "Fast signal detection & sentiment" },
+        { "@type": "Thing", name: "Perplexity AI", description: "Real-time research & news" },
+      ],
     },
   ],
 };
@@ -61,7 +85,7 @@ export default function StackLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
     </>
