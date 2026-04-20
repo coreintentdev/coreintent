@@ -197,6 +197,17 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-04-20T00:00:00Z",
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: "INC-018",
+    service: "Project Delivery (Lost Alpha)",
+    status: "detected",
+    severity: "critical",
+    message:
+      "Corey formally confirms exactly 336 non-deployed builds by Claude. These 336 builds represent massive lost alpha, content, and SLPA that never made it to production. The sheer volume of 336 failed/non-deployed builds is unacceptable. A comprehensive review of all 336 builds is required to extract lost alpha, SLPA, and content. This must never happen again.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // REAL status — no more lies. Show what's actually connected.
