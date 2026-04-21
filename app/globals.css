@@ -361,6 +361,131 @@ a {
   animation: signalFlash 0.5s ease both;
 }
 
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 3 Micro-interactions
+   ═══════════════════════════════════════════ */
+
+/* ─── Scroll Reveal ─── */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.reveal-up {
+  animation: revealUp 0.6s ease both;
+}
+
+.reveal-scale {
+  animation: revealScale 0.5s ease both;
+}
+
+/* Staggered children — apply to parent, children get sequential delays */
+.stagger-children > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.16s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.32s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.40s; }
+
+/* ─── Neon Border Glow ─── */
+@keyframes borderGlow {
+  0%, 100% { border-color: #10b98133; box-shadow: 0 0 8px #10b98111; }
+  50% { border-color: #10b98166; box-shadow: 0 0 20px #10b98122, 0 0 40px #10b98108; }
+}
+
+.neon-border {
+  border: 1px solid #10b98133;
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+/* ─── Pulse Ring ─── */
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pulse-ring {
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+/* ─── Hover Lift with Glow ─── */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 12px rgba(16, 185, 129, 0.08);
+}
+
+/* ─── Text Shimmer ─── */
+@keyframes textShimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    #10b981 40%,
+    #3b82f6 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textShimmer 3s linear infinite;
+}
+
+/* ─── Data Point Blink ─── */
+@keyframes dataBlink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0.3; }
+}
+
+.data-blink {
+  animation: dataBlink 3s ease-in-out infinite;
+}
+
+/* ─── Signal Pulse (colored) ─── */
+.signal-pulse-green::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1px solid #10b981;
+  animation: ripple 2.5s ease-out infinite;
+  pointer-events: none;
+}
+
+.signal-pulse-blue::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1px solid #3b82f6;
+  animation: ripple 2.5s ease-out infinite;
+  pointer-events: none;
+}
+
+.signal-pulse-red::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1px solid #ef4444;
+  animation: ripple 2.5s ease-out infinite;
+  pointer-events: none;
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {

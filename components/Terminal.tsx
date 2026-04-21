@@ -74,6 +74,13 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mscan\x1b[0m        - Full system scan with progress
   \x1b[32mweather\x1b[0m     - Market weather forecast
 
+  \x1b[33m── VISUAL ──\x1b[0m
+  \x1b[32mchart [pair]\x1b[0m - ASCII candlestick chart (e.g. \x1b[32mchart ETH/USDT\x1b[0m)
+  \x1b[32mwarp\x1b[0m        - Hyperspeed visual effect
+  \x1b[32mfire\x1b[0m        - Portfolio on fire animation
+  \x1b[32mglitch\x1b[0m      - System glitch effect
+  \x1b[32msnake\x1b[0m       - Snake Trader mini-game (arrow keys!)
+
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
   \x1b[32mcowsay\x1b[0m      - ASCII cow wisdom
@@ -585,6 +592,7 @@ const ALL_COMMANDS = [
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
   "trade", "radar", "ping", "cowsay", "top",
   "stonks", "leaderboard", "lb", "battle", "scan", "weather",
+  "warp", "glitch", "chart", "fire", "snake",
   "sudo", "rickroll",
 ];
 
@@ -599,6 +607,7 @@ export default function Terminal() {
   const [tabMatches, setTabMatches] = useState<string[]>([]);
   const [tabIdx, setTabIdx] = useState(0);
   const watchRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const snakeCleanupRef = useRef<(() => void) | null>(null);
   const startTime = useRef(Date.now());
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -613,10 +622,11 @@ export default function Terminal() {
     }
   }, [lines]);
 
-  // Cleanup watch on unmount
+  // Cleanup watch and snake game on unmount
   useEffect(() => {
     return () => {
       if (watchRef.current) clearInterval(watchRef.current);
+      if (snakeCleanupRef.current) snakeCleanupRef.current();
     };
   }, []);
 
@@ -1334,6 +1344,303 @@ export default function Terminal() {
   \x1b[90mForecast generated from three-model consensus. Not financial advice.\x1b[0m`;
       addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
       return out;
+    }
+
+    // ── WARP: Visual hyperspeed effect ──
+    if (trimmed === "warp") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ INITIATING WARP DRIVE ══\x1b[0m`, ``);
+      const phases = [
+        { text: `  \x1b[90m[engines]\x1b[0m Spooling quantum cores...`, delay: 300 },
+        { text: `  \x1b[90m[nav]\x1b[0m     Calculating route to mainnet...`, delay: 600 },
+        { text: `  \x1b[33m  ⚠ WARNING: Exceeding paper trading speed limits\x1b[0m`, delay: 900 },
+      ];
+      for (const p of phases) {
+        setTimeout(() => addLines(p.text), p.delay);
+      }
+      let warpTick = 0;
+      const warpIv = setInterval(() => {
+        if (warpTick < 8) {
+          const density = Math.min(warpTick + 1, 6);
+          const stars = Array.from({ length: 55 }, () => {
+            const r = Math.random();
+            if (r < density * 0.08) return "\x1b[36m━\x1b[0m";
+            if (r < density * 0.12) return "\x1b[34m─\x1b[0m";
+            if (r < density * 0.14) return "\x1b[32m*\x1b[0m";
+            return " ";
+          }).join("");
+          addLines(stars);
+          warpTick++;
+        } else {
+          clearInterval(warpIv);
+          addLines(
+            ``,
+            `\x1b[32m  ██████╗  █████╗ ██████╗ ██████╗ ██╗██╗   ██╗███████╗██████╗\x1b[0m`,
+            `\x1b[32m  ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║██║   ██║██╔════╝██╔══██╗\x1b[0m`,
+            `\x1b[32m  ███████║██████╔╝██████╔╝██║  ██║██║╚██╗ ██╔╝█████╗  ██║  ██║\x1b[0m`,
+            `\x1b[32m  ██╔══██║██╔══██╗██╔══██╗██║  ██║██║ ╚████╔╝ ██╔══╝  ██║  ██║\x1b[0m`,
+            `\x1b[32m  ██║  ██║██║  ██║██║  ██║██████╔╝██║  ╚██╔╝  ███████╗██████╔╝\x1b[0m`,
+            `\x1b[32m  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝   ╚═╝   ╚══════╝╚═════╝\x1b[0m`,
+            ``,
+            `  \x1b[36mDestination:\x1b[0m  Mainnet (ETA: when it's ready)`,
+            `  \x1b[36mSpeed:\x1b[0m        Ludicrous`,
+            `  \x1b[36mPassengers:\x1b[0m   3 AI models, 1 human, unlimited bots`,
+            `  \x1b[90mPaper trading — but dreaming at warp speed\x1b[0m`, ``
+          );
+        }
+      }, 150);
+      return "";
+    }
+
+    // ── GLITCH: Visual glitch effect ──
+    if (trimmed === "glitch") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+      const glitchChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?~`";
+      const messages = [
+        "COREINTENT TRADING ENGINE v0.2.0",
+        "PAPER TRADING MODE ACTIVE",
+        "THREE MODELS. ONE DECISION.",
+        "THE SIGNAL IS DOMINANT.",
+      ];
+      let gi = 0;
+      const giv = setInterval(() => {
+        if (gi < 16) {
+          if (gi % 4 < 3) {
+            const msg = messages[Math.floor(gi / 4) % messages.length];
+            const glitched = msg.split("").map((ch) =>
+              Math.random() < 0.3 ? glitchChars[Math.floor(Math.random() * glitchChars.length)] : ch
+            ).join("");
+            const color = ["\x1b[31m", "\x1b[32m", "\x1b[36m", "\x1b[33m"][Math.floor(Math.random() * 4)];
+            addLines(`  ${color}${glitched}\x1b[0m`);
+          } else {
+            const msg = messages[Math.floor(gi / 4) % messages.length];
+            addLines(`  \x1b[32m${msg}\x1b[0m`);
+          }
+          gi++;
+        } else {
+          clearInterval(giv);
+          addLines(``, `  \x1b[90mSystem stabilized. Reality restored.\x1b[0m`, ``);
+        }
+      }, 100);
+      return "";
+    }
+
+    // ── CHART: Animated ASCII candlestick chart ──
+    if (trimmed === "chart" || trimmed.startsWith("chart ")) {
+      const pair = trimmed === "chart" ? "BTC/USDT" : raw.substring(6).trim().toUpperCase() || "BTC/USDT";
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60,
+      };
+      const base = basePrices[pair] || 100;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ CANDLESTICK CHART — ${pair} 4H ══\x1b[0m`, ``);
+
+      const candles: { o: number; h: number; l: number; c: number }[] = [];
+      let p = base;
+      for (let i = 0; i < 24; i++) {
+        const o = p;
+        const moves = [
+          (Math.random() - 0.48) * base * 0.008,
+          (Math.random() - 0.48) * base * 0.008,
+          (Math.random() - 0.48) * base * 0.008,
+        ];
+        const h = Math.max(o, o + Math.max(...moves) + base * 0.002);
+        const l = Math.min(o, o + Math.min(...moves) - base * 0.002);
+        const c = o + moves.reduce((a, b) => a + b, 0);
+        candles.push({ o, h, l, c });
+        p = c;
+      }
+
+      const allVals = candles.flatMap((c) => [c.h, c.l]);
+      const chartMin = Math.min(...allVals);
+      const chartMax = Math.max(...allVals);
+      const range = chartMax - chartMin || 1;
+      const rows = 12;
+
+      const grid: string[][] = Array.from({ length: rows }, () => Array(24).fill(" "));
+      for (let col = 0; col < 24; col++) {
+        const c = candles[col];
+        const bodyTop = Math.max(c.o, c.c);
+        const bodyBot = Math.min(c.o, c.c);
+        const bull = c.c >= c.o;
+
+        for (let row = 0; row < rows; row++) {
+          const priceAtRow = chartMax - (row / (rows - 1)) * range;
+          if (priceAtRow <= c.h && priceAtRow >= c.l) {
+            if (priceAtRow <= bodyTop && priceAtRow >= bodyBot) {
+              grid[row][col] = bull ? "G" : "R";
+            } else {
+              grid[row][col] = "|";
+            }
+          }
+        }
+      }
+
+      let ci = 0;
+      const civ = setInterval(() => {
+        if (ci < rows) {
+          const priceLabel = (chartMax - (ci / (rows - 1)) * range).toFixed(0);
+          const rowStr = grid[ci].map((cell) => {
+            if (cell === "G") return "\x1b[32m█\x1b[0m";
+            if (cell === "R") return "\x1b[31m█\x1b[0m";
+            if (cell === "|") return "\x1b[90m│\x1b[0m";
+            return " ";
+          }).join("");
+          addLines(`  \x1b[90m${priceLabel.padStart(7)}\x1b[0m \x1b[90m│\x1b[0m ${rowStr}`);
+          ci++;
+        } else {
+          clearInterval(civ);
+          const lastCandle = candles[candles.length - 1];
+          const changePct = ((lastCandle.c - base) / base * 100).toFixed(2);
+          const cc = Number(changePct) >= 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(
+            `  \x1b[90m        └${"─".repeat(24)}\x1b[0m`,
+            ``,
+            `  \x1b[90mPeriod:\x1b[0m 24 candles (4H)    \x1b[90mChange:\x1b[0m ${cc}${Number(changePct) >= 0 ? "+" : ""}${changePct}%\x1b[0m`,
+            `  \x1b[90mHigh:\x1b[0m   $${Math.round(chartMax).toLocaleString()}         \x1b[90mLow:\x1b[0m    $${Math.round(chartMin).toLocaleString()}`,
+            `  \x1b[90mPaper trading — simulated candlestick data\x1b[0m`, ``
+          );
+        }
+      }, 80);
+      return "";
+    }
+
+    // ── FIRE: Animated ASCII fire effect ──
+    if (trimmed === "fire") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[33m  ══ PORTFOLIO ON FIRE ══\x1b[0m`, ``);
+      const W = 40;
+      const H = 10;
+      const heat: number[][] = Array.from({ length: H }, () => Array(W).fill(0));
+      let frame = 0;
+      const fireIv = setInterval(() => {
+        for (let x = 0; x < W; x++) heat[H - 1][x] = Math.random() > 0.4 ? 3 + Math.floor(Math.random() * 3) : 0;
+        for (let y = 0; y < H - 1; y++) {
+          for (let x = 0; x < W; x++) {
+            const below = heat[y + 1]?.[x] || 0;
+            const bl = heat[y + 1]?.[x - 1] || 0;
+            const br = heat[y + 1]?.[x + 1] || 0;
+            heat[y][x] = Math.max(0, Math.floor((below + bl + br) / 3.2 - 0.2));
+          }
+        }
+        const chars = [" ", "\x1b[90m.\x1b[0m", "\x1b[31m*\x1b[0m", "\x1b[31m#\x1b[0m", "\x1b[33m@\x1b[0m", "\x1b[33m$\x1b[0m"];
+        const line = heat[H - 2].map((v) => chars[Math.min(v, chars.length - 1)]).join("");
+        addLines(`  ${line}`);
+        frame++;
+        if (frame >= 12) {
+          clearInterval(fireIv);
+          addLines(``, `  \x1b[32m+47.3% this week\x1b[0m \x1b[90m(simulated — paper trading)\x1b[0m`, ``);
+        }
+      }, 120);
+      return "";
+    }
+
+    // ── SNAKE: Mini trading snake game ──
+    if (trimmed === "snake") {
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ SNAKE TRADER ══\x1b[0m`,
+        `\x1b[90m  Catch the coins! Use arrow keys to steer.\x1b[0m`,
+        `\x1b[90m  30s timer. Collect 10 coins to win.\x1b[0m`, ``
+      );
+
+      const W = 20, H = 10;
+      let snake = [{ x: 10, y: 5 }];
+      let dir = { x: 1, y: 0 };
+      let coin = { x: Math.floor(Math.random() * (W - 2)) + 1, y: Math.floor(Math.random() * (H - 2)) + 1 };
+      let score = 0;
+      let gameOver = false;
+
+      const render = () => {
+        const grid: string[][] = Array.from({ length: H }, () => Array(W).fill(" "));
+        for (let x = 0; x < W; x++) { grid[0][x] = "─"; grid[H - 1][x] = "─"; }
+        for (let y = 0; y < H; y++) { grid[y][0] = "│"; grid[y][W - 1] = "│"; }
+        grid[0][0] = "┌"; grid[0][W - 1] = "┐"; grid[H - 1][0] = "└"; grid[H - 1][W - 1] = "┘";
+        grid[coin.y][coin.x] = "$";
+        snake.forEach((s, i) => {
+          if (s.x >= 0 && s.x < W && s.y >= 0 && s.y < H) grid[s.y][s.x] = i === 0 ? "@" : "o";
+        });
+
+        const display = grid.map((row) => {
+          return "  " + row.map((cell) => {
+            if (cell === "$") return "\x1b[33m$\x1b[0m";
+            if (cell === "@") return "\x1b[32m@\x1b[0m";
+            if (cell === "o") return "\x1b[32mo\x1b[0m";
+            return `\x1b[90m${cell}\x1b[0m`;
+          }).join("");
+        });
+        addLines(...display, `  \x1b[33mScore: ${score}\x1b[0m  \x1b[90m| Coins = profit, walls = liquidation\x1b[0m`);
+      };
+
+      render();
+
+      let snakeCleanupFn: (() => void) | null = null;
+      const snakeIv = setInterval(() => {
+        if (gameOver) { clearInterval(snakeIv); return; }
+        const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+        if (head.x <= 0 || head.x >= W - 1 || head.y <= 0 || head.y >= H - 1 ||
+            snake.some((s) => s.x === head.x && s.y === head.y)) {
+          if (snakeCleanupFn) snakeCleanupFn();
+          addLines(
+            ``, `\x1b[31m  ══ LIQUIDATED ══\x1b[0m`,
+            `  \x1b[33mFinal Score: ${score}\x1b[0m (${score} coins collected)`,
+            `  \x1b[90mType "snake" to try again\x1b[0m`, ``
+          );
+          return;
+        }
+
+        snake.unshift(head);
+        if (head.x === coin.x && head.y === coin.y) {
+          score++;
+          coin = { x: Math.floor(Math.random() * (W - 4)) + 2, y: Math.floor(Math.random() * (H - 4)) + 2 };
+          if (score >= 10) {
+            if (snakeCleanupFn) snakeCleanupFn();
+            addLines(
+              ``, `\x1b[32m  ══ YOU WIN! ══\x1b[0m`,
+              `  \x1b[33mScore: ${score}\x1b[0m — Diamond hands!`,
+              `  \x1b[90mType "snake" to play again\x1b[0m`, ``
+            );
+            return;
+          }
+        } else {
+          snake.pop();
+        }
+        render();
+      }, 400);
+
+      const snakeKeyHandler = (e: KeyboardEvent) => {
+        if (gameOver) {
+          document.removeEventListener("keydown", snakeKeyHandler);
+          return;
+        }
+        const arrowKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+        if (arrowKeys.includes(e.key)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        if (e.key === "ArrowUp" && dir.y !== 1) dir = { x: 0, y: -1 };
+        if (e.key === "ArrowDown" && dir.y !== -1) dir = { x: 0, y: 1 };
+        if (e.key === "ArrowLeft" && dir.x !== 1) dir = { x: -1, y: 0 };
+        if (e.key === "ArrowRight" && dir.x !== -1) dir = { x: 1, y: 0 };
+      };
+      document.addEventListener("keydown", snakeKeyHandler);
+
+      const cleanup = () => {
+        gameOver = true;
+        clearInterval(snakeIv);
+        document.removeEventListener("keydown", snakeKeyHandler);
+        snakeCleanupRef.current = null;
+        snakeCleanupFn = null;
+      };
+      snakeCleanupFn = cleanup;
+      snakeCleanupRef.current = cleanup;
+
+      setTimeout(() => {
+        if (!gameOver) {
+          cleanup();
+          addLines(``, `\x1b[33m  Game timed out (30s). Score: ${score}\x1b[0m`, ``);
+        }
+      }, 30000);
+
+      return "";
     }
 
     // ── Resolve aliases ──
