@@ -76,9 +76,7 @@ export const metadata: Metadata = {
     "AI crypto trading",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
-  },
+  verification: {},
 };
 
 const jsonLd = {
@@ -114,11 +112,24 @@ const jsonLd = {
       "@type": "Organization",
       "@id": "https://zynthio.ai/#organization",
       name: "Zynthio",
+      alternateName: "Zynthio.ai",
       url: "https://zynthio.ai",
-      logo: "https://coreintent.dev/opengraph-image.png",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
+      },
+      foundingLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "NZ",
+        },
       },
       areaServed: {
         "@type": "Country",
@@ -128,6 +139,11 @@ const jsonLd = {
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
       ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer support",
+      },
     },
     {
       "@type": "WebApplication",
@@ -137,9 +153,12 @@ const jsonLd = {
       description:
         "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
       applicationCategory: "FinanceApplication",
+      applicationSubCategory: "Trading Platform",
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
+      inLanguage: "en-NZ",
+      isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
         price: "0",
@@ -163,6 +182,12 @@ const jsonLd = {
         "AI agent fleet",
         "Bot-friendly competitions",
       ],
+      screenshot: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
     },
     {
       "@type": "WebSite",
@@ -170,6 +195,7 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      inLanguage: "en-NZ",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",

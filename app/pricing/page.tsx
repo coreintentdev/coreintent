@@ -147,7 +147,7 @@ export default function PricingPage() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {LEAGUES.map((league) => (
-              <div
+              <article
                 key={league.name}
                 style={{
                   background: "var(--bg-secondary)",
@@ -160,6 +160,7 @@ export default function PricingPage() {
                 }}
               >
                 <div
+                  aria-hidden="true"
                   style={{
                     fontSize: "28px",
                     fontWeight: "bold",
@@ -169,9 +170,9 @@ export default function PricingPage() {
                 >
                   {league.icon}
                 </div>
-                <h2 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
+                <h3 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
                   {league.name}
-                </h2>
+                </h3>
                 <p
                   style={{
                     fontSize: "13px",
@@ -208,13 +209,13 @@ export default function PricingPage() {
                 <div style={{ fontSize: "14px", fontWeight: "bold", color: league.color }}>
                   Entry: {league.entry}
                 </div>
-              </div>
+              </article>
             ))}
           </div>
 
           {/* Who's This For */}
           <div style={{ marginTop: "48px" }}>
-            <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who&apos;s This For?</h2>
+            <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who Is This For?</h2>
             <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
               If you&apos;re tired of paying for signals that don&apos;t work, this is your arena.
             </p>

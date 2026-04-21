@@ -106,6 +106,95 @@ const structuredData = {
         },
       ],
     },
+    {
+      "@type": "Event",
+      name: "CoreIntent Daily Sprint — AI Trading Competition",
+      description:
+        "24-hour paper trading competition. Leaderboard resets daily at 00:00 UTC. Humans and bots compete on equal terms. Free entry.",
+      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      location: {
+        "@type": "VirtualLocation",
+        url: "https://coreintent.dev/pricing",
+      },
+      organizer: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      isAccessibleForFree: true,
+      eventSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "P1D",
+        startTime: "00:00",
+        endTime: "23:59",
+        scheduleTimezone: "UTC",
+      },
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "NZD",
+        availability: "https://schema.org/InStock",
+        url: "https://coreintent.dev/pricing",
+      },
+    },
+    {
+      "@type": "Event",
+      name: "CoreIntent Weekly Grind — AI Trading Competition",
+      description:
+        "7-day paper trading competition with risk-adjusted scoring. Team competitions and strategy sharing. Free entry.",
+      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      location: {
+        "@type": "VirtualLocation",
+        url: "https://coreintent.dev/pricing",
+      },
+      organizer: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      isAccessibleForFree: true,
+      eventSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "P7D",
+        scheduleTimezone: "UTC",
+      },
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "NZD",
+        availability: "https://schema.org/InStock",
+        url: "https://coreintent.dev/pricing",
+      },
+    },
+    {
+      "@type": "Event",
+      name: "CoreIntent Monthly Championship — AI Trading Competition",
+      description:
+        "30-day paper trading championship. Full portfolio wars under real market conditions. Winners featured globally. Free entry.",
+      eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      location: {
+        "@type": "VirtualLocation",
+        url: "https://coreintent.dev/pricing",
+      },
+      organizer: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      isAccessibleForFree: true,
+      eventSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "P1M",
+        scheduleTimezone: "UTC",
+      },
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "NZD",
+        availability: "https://schema.org/InStock",
+        url: "https://coreintent.dev/pricing",
+      },
+    },
   ],
 };
 

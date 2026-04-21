@@ -32,21 +32,36 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Disclaimer",
+          item: "https://coreintent.dev/disclaimer",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "Disclaimer",
-      item: "https://coreintent.dev/disclaimer",
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/disclaimer",
+      url: "https://coreintent.dev/disclaimer",
+      name: "Disclaimer — Risk Warnings & Legal Information",
+      description:
+        "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      dateModified: "2026-03-01",
+      inLanguage: "en-NZ",
     },
   ],
 };
@@ -60,7 +75,7 @@ export default function DisclaimerLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
     </>

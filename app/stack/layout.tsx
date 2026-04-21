@@ -33,21 +33,66 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "The Stack",
+          item: "https://coreintent.dev/stack",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "The Stack",
-      item: "https://coreintent.dev/stack",
+      "@type": "TechArticle",
+      headline: "The Stack — AI Services, Infrastructure & Architecture",
+      description:
+        "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure.",
+      url: "https://coreintent.dev/stack",
+      author: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      publisher: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      mainEntityOfPage: "https://coreintent.dev/stack",
+      about: [
+        {
+          "@type": "SoftwareApplication",
+          name: "Grok",
+          applicationCategory: "AI Signal Detection",
+          operatingSystem: "Web",
+          creator: { "@type": "Organization", name: "xAI" },
+        },
+        {
+          "@type": "SoftwareApplication",
+          name: "Claude",
+          applicationCategory: "AI Deep Analysis",
+          operatingSystem: "Web",
+          creator: { "@type": "Organization", name: "Anthropic" },
+        },
+        {
+          "@type": "SoftwareApplication",
+          name: "Perplexity",
+          applicationCategory: "AI Research",
+          operatingSystem: "Web",
+          creator: { "@type": "Organization", name: "Perplexity AI" },
+        },
+      ],
+      proficiencyLevel: "Expert",
+      inLanguage: "en-NZ",
     },
   ],
 };
@@ -61,7 +106,7 @@ export default function StackLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
     </>
