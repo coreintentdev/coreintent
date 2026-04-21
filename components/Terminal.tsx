@@ -607,6 +607,7 @@ export default function Terminal() {
   const [tabMatches, setTabMatches] = useState<string[]>([]);
   const [tabIdx, setTabIdx] = useState(0);
   const watchRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const snakeCleanupRef = useRef<(() => void) | null>(null);
   const startTime = useRef(Date.now());
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -621,10 +622,11 @@ export default function Terminal() {
     }
   }, [lines]);
 
-  // Cleanup watch on unmount
+  // Cleanup watch and snake game on unmount
   useEffect(() => {
     return () => {
       if (watchRef.current) clearInterval(watchRef.current);
+      if (snakeCleanupRef.current) snakeCleanupRef.current();
     };
   }, []);
 
@@ -1519,7 +1521,7 @@ export default function Terminal() {
           }
         }
         const chars = [" ", "\x1b[90m.\x1b[0m", "\x1b[31m*\x1b[0m", "\x1b[31m#\x1b[0m", "\x1b[33m@\x1b[0m", "\x1b[33m$\x1b[0m"];
-        const line = heat[1].map((v) => chars[Math.min(v, chars.length - 1)]).join("");
+        const line = heat[H - 2].map((v) => chars[Math.min(v, chars.length - 1)]).join("");
         addLines(`  ${line}`);
         frame++;
         if (frame >= 12) {
@@ -1535,8 +1537,8 @@ export default function Terminal() {
       addLines(
         `\x1b[32m❯\x1b[0m ${cmd}`,
         `\x1b[36m  ══ SNAKE TRADER ══\x1b[0m`,
-        `\x1b[90m  Catch the coins! Arrow keys to move, or type: up/down/left/right\x1b[0m`,
-        `\x1b[90m  Type "quit" to exit the game\x1b[0m`, ``
+        `\x1b[90m  Catch the coins! Use arrow keys to steer.\x1b[0m`,
+        `\x1b[90m  30s timer. Collect 10 coins to win.\x1b[0m`, ``
       );
 
       const W = 20, H = 10;
@@ -1569,14 +1571,14 @@ export default function Terminal() {
 
       render();
 
+      let snakeCleanupFn: (() => void) | null = null;
       const snakeIv = setInterval(() => {
         if (gameOver) { clearInterval(snakeIv); return; }
         const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
         if (head.x <= 0 || head.x >= W - 1 || head.y <= 0 || head.y >= H - 1 ||
             snake.some((s) => s.x === head.x && s.y === head.y)) {
-          gameOver = true;
-          clearInterval(snakeIv);
+          if (snakeCleanupFn) snakeCleanupFn();
           addLines(
             ``, `\x1b[31m  ══ LIQUIDATED ══\x1b[0m`,
             `  \x1b[33mFinal Score: ${score}\x1b[0m (${score} coins collected)`,
@@ -1590,8 +1592,7 @@ export default function Terminal() {
           score++;
           coin = { x: Math.floor(Math.random() * (W - 4)) + 2, y: Math.floor(Math.random() * (H - 4)) + 2 };
           if (score >= 10) {
-            gameOver = true;
-            clearInterval(snakeIv);
+            if (snakeCleanupFn) snakeCleanupFn();
             addLines(
               ``, `\x1b[32m  ══ YOU WIN! ══\x1b[0m`,
               `  \x1b[33mScore: ${score}\x1b[0m — Diamond hands!`,
@@ -1605,11 +1606,15 @@ export default function Terminal() {
         render();
       }, 400);
 
-      const origKeyDown = inputRef.current?.onkeydown;
       const snakeKeyHandler = (e: KeyboardEvent) => {
         if (gameOver) {
           document.removeEventListener("keydown", snakeKeyHandler);
           return;
+        }
+        const arrowKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+        if (arrowKeys.includes(e.key)) {
+          e.preventDefault();
+          e.stopPropagation();
         }
         if (e.key === "ArrowUp" && dir.y !== 1) dir = { x: 0, y: -1 };
         if (e.key === "ArrowDown" && dir.y !== -1) dir = { x: 0, y: 1 };
@@ -1618,14 +1623,21 @@ export default function Terminal() {
       };
       document.addEventListener("keydown", snakeKeyHandler);
 
+      const cleanup = () => {
+        gameOver = true;
+        clearInterval(snakeIv);
+        document.removeEventListener("keydown", snakeKeyHandler);
+        snakeCleanupRef.current = null;
+        snakeCleanupFn = null;
+      };
+      snakeCleanupFn = cleanup;
+      snakeCleanupRef.current = cleanup;
+
       setTimeout(() => {
         if (!gameOver) {
-          gameOver = true;
-          clearInterval(snakeIv);
-          document.removeEventListener("keydown", snakeKeyHandler);
+          cleanup();
           addLines(``, `\x1b[33m  Game timed out (30s). Score: ${score}\x1b[0m`, ``);
         }
-        document.removeEventListener("keydown", snakeKeyHandler);
       }, 30000);
 
       return "";
