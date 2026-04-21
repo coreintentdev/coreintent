@@ -347,6 +347,152 @@ function statusDot(status: string) {
   return colors[status] || "#64748b";
 }
 
+/* ─── Signal Flow Visualizer ─── */
+function SignalFlowViz() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [signalLog, setSignalLog] = useState<{ text: string; color: string; time: string }[]>([]);
+
+  useEffect(() => {
+    const steps = [
+      { text: "Grok detected RSI divergence on BTC/USDT 4H", color: "#ef4444", source: "GROK" },
+      { text: "Volume spike: 2.3x average on last 3 candles", color: "#ef4444", source: "GROK" },
+      { text: "Claude analysing risk/reward at $67,420 entry", color: "#a855f7", source: "CLAUDE" },
+      { text: "Resistance at $68,200 — R:R ratio 1.8:1", color: "#a855f7", source: "CLAUDE" },
+      { text: "Perplexity: Fed minutes show no rate cut signal", color: "#3b82f6", source: "PPLX" },
+      { text: "CoinShares: institutional inflows down 12%", color: "#3b82f6", source: "PPLX" },
+      { text: "ENGINE: Consensus incomplete (2/3). HOLD.", color: "#10b981", source: "ENGINE" },
+      { text: "Alert set: $68,200 breakout + volume confirm", color: "#10b981", source: "ENGINE" },
+    ];
+
+    let idx = 0;
+    const iv = setInterval(() => {
+      const step = steps[idx % steps.length];
+      const now = new Date().toLocaleTimeString("en-NZ", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+      setSignalLog((prev) => [...prev.slice(-6), { text: `[${step.source}] ${step.text}`, color: step.color, time: now }]);
+      setActiveStep(Math.floor((idx % steps.length) / 2));
+      idx++;
+    }, 2500);
+    return () => clearInterval(iv);
+  }, []);
+
+  const nodes = [
+    { label: "Grok", sub: "Detect", color: "#ef4444", x: 10 },
+    { label: "Claude", sub: "Analyse", color: "#a855f7", x: 33 },
+    { label: "Perplexity", sub: "Verify", color: "#3b82f6", x: 56 },
+    { label: "Engine", sub: "Decide", color: "#10b981", x: 79 },
+  ];
+
+  return (
+    <div>
+      {/* Node Flow */}
+      <div style={{ position: "relative", height: "100px", marginBottom: "24px" }}>
+        {/* Connection lines */}
+        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} viewBox="0 0 100 50" preserveAspectRatio="none">
+          {[0, 1, 2].map((i) => (
+            <line
+              key={i}
+              x1={nodes[i].x + 6} y1={25}
+              x2={nodes[i + 1].x - 2} y2={25}
+              stroke={activeStep > i ? nodes[i + 1].color : "#1e293b"}
+              strokeWidth="0.4"
+              strokeDasharray="2 1.5"
+              className="arch-flow-line"
+              style={{ opacity: activeStep > i ? 1 : 0.3, transition: "opacity 0.5s ease, stroke 0.5s ease" }}
+            />
+          ))}
+          {/* Pulse dot on active connection */}
+          {activeStep > 0 && activeStep < 4 && (
+            <circle r="1" fill={nodes[activeStep].color} opacity="0.8">
+              <animateMotion
+                dur="1.2s"
+                repeatCount="indefinite"
+                path={`M${nodes[activeStep - 1].x + 6},25 L${nodes[activeStep].x - 2},25`}
+              />
+            </circle>
+          )}
+        </svg>
+
+        {/* Nodes */}
+        {nodes.map((node, i) => (
+          <div
+            key={node.label}
+            style={{
+              position: "absolute",
+              left: `${node.x}%`,
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              textAlign: "center",
+              transition: "transform 0.3s ease",
+            }}
+          >
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                background: activeStep === i ? node.color + "28" : "#0a0e17",
+                border: `2px solid ${activeStep >= i ? node.color : "#1e293b"}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 6px",
+                fontSize: "18px",
+                fontWeight: "bold",
+                color: node.color,
+                transition: "all 0.5s ease",
+                boxShadow: activeStep === i ? `0 0 20px ${node.color}44` : "none",
+              }}
+              className={activeStep === i ? "animate-pulse" : ""}
+            >
+              {node.label[0]}
+            </div>
+            <div style={{ fontSize: "11px", fontWeight: "bold", color: activeStep >= i ? node.color : "var(--text-secondary)", transition: "color 0.5s ease" }}>
+              {node.label}
+            </div>
+            <div style={{ fontSize: "9px", color: "var(--text-secondary)" }}>{node.sub}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Live Signal Log */}
+      <div
+        style={{
+          background: "var(--bg-terminal)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+          padding: "12px 16px",
+          maxHeight: "220px",
+          overflow: "hidden",
+          fontFamily: "inherit",
+          fontSize: "12px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981", display: "inline-block", animation: "pulse 2s ease-in-out infinite" }} />
+          <span style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Live Signal Feed — Demo</span>
+        </div>
+        {signalLog.length === 0 ? (
+          <div style={{ color: "var(--text-secondary)", fontStyle: "italic" }}>Waiting for signals...</div>
+        ) : (
+          signalLog.map((entry, i) => (
+            <div
+              key={`${entry.time}-${i}`}
+              className="signal-flash"
+              style={{
+                padding: "3px 0",
+                borderBottom: i < signalLog.length - 1 ? "1px solid #1e293b44" : "none",
+              }}
+            >
+              <span style={{ color: "var(--text-secondary)", marginRight: "8px" }}>{entry.time}</span>
+              <span style={{ color: entry.color }}>{entry.text}</span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
 const cardStyle: React.CSSProperties = {
   padding: "16px",
   background: "var(--bg-secondary)",
@@ -515,11 +661,13 @@ export default function Home() {
               ].map((prop) => (
                 <div
                   key={prop.label}
+                  className="card-glow hover-lift"
                   style={{
                     padding: "16px",
                     background: "var(--bg-secondary)",
                     border: "1px solid var(--border-color)",
                     borderRadius: "8px",
+                    borderTop: `2px solid ${prop.color}44`,
                   }}
                 >
                   <div style={{ fontSize: "13px", fontWeight: "bold", color: prop.color, marginBottom: "4px" }}>
@@ -546,6 +694,7 @@ export default function Home() {
                 ].map((s, i) => (
                   <div key={s.step} style={{ display: "flex", alignItems: "center" }}>
                     <div
+                      className="hover-lift"
                       style={{
                         padding: "14px 18px",
                         background: "var(--bg-primary)",
@@ -604,6 +753,7 @@ export default function Home() {
                 {AI_MODELS.map((m) => (
                   <div
                     key={m.name}
+                    className="card-glow hover-lift"
                     style={{
                       padding: "20px 16px",
                       background: "var(--bg-primary)",
@@ -1082,6 +1232,83 @@ npm run build           # Production build`}
           </div>
         )}
       </main>
+
+      {/* ═══════════════════════ LIVE SIGNAL FLOW VISUALIZER ═══════════════════════ */}
+      <section
+        style={{
+          padding: "48px 24px",
+          background: "linear-gradient(180deg, var(--bg-primary) 0%, #0d1420 100%)",
+          borderTop: "1px solid var(--border-color)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div className="grid-bg" />
+        <div style={{ maxWidth: "900px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
+            <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px" }}>
+              Live Signal Flow
+            </div>
+            <h2
+              className="gradient-text-animated"
+              style={{
+                fontSize: "clamp(22px, 3vw, 32px)",
+                fontWeight: "bold",
+                background: "linear-gradient(90deg, #10b981, #3b82f6, #a855f7, #10b981)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Watch the Engine Think
+            </h2>
+          </div>
+          <SignalFlowViz />
+        </div>
+      </section>
+
+      {/* ═══════════════════════ TRY THE TERMINAL ═══════════════════════ */}
+      <section
+        style={{
+          padding: "48px 24px",
+          background: "var(--bg-secondary)",
+          borderTop: "1px solid var(--border-color)",
+          position: "relative",
+        }}
+      >
+        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "24px" }}>
+            <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px" }}>
+              Hands On
+            </div>
+            <h2 style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "8px" }}>
+              Try the <span className="neon-green">Terminal</span>
+            </h2>
+            <p style={{ fontSize: "13px", color: "var(--text-secondary)", maxWidth: "500px", margin: "0 auto" }}>
+              Type <code style={{ color: "var(--accent-green)", background: "#10b98115", padding: "2px 6px", borderRadius: "4px" }}>help</code> for commands. Try{" "}
+              <code style={{ color: "#f59e0b", background: "#f59e0b15", padding: "2px 6px", borderRadius: "4px" }}>battle</code>,{" "}
+              <code style={{ color: "#a855f7", background: "#a855f715", padding: "2px 6px", borderRadius: "4px" }}>snake</code>, or{" "}
+              <code style={{ color: "#3b82f6", background: "#3b82f615", padding: "2px 6px", borderRadius: "4px" }}>warp</code>.
+            </p>
+          </div>
+          <div
+            style={{
+              height: "420px",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 0 40px rgba(16, 185, 129, 0.08), 0 8px 32px rgba(0, 0, 0, 0.4)",
+              border: "1px solid #10b98133",
+            }}
+          >
+            <Terminal />
+          </div>
+          <div style={{ textAlign: "center", marginTop: "16px" }}>
+            <span style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
+              45+ commands &middot; Tab to autocomplete &middot; Arrow keys for history &middot; && to chain
+            </span>
+          </div>
+        </div>
+      </section>
 
       {/* Status bar */}
       <footer
