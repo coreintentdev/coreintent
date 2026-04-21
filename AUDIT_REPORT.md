@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Tue Apr 21 04:01:04 UTC 2026
+Generated: Tue Apr 21 04:41:43 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 29
+- INFO: Routes found: 30
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -53,9 +53,9 @@ Generated: Tue Apr 21 04:01:04 UTC 2026
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:222:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:223:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:224:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:228:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:229:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:230:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages

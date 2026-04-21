@@ -72,6 +72,12 @@ const HERO_PHRASES = [
   "$45/mo Runs the Whole Engine.",
   "Your Bot. Their Bot. Best Wins.",
   "Paper Trading. Real Ambition.",
+  "Signal Quality Over Signal Volume.",
+  "The Arena Is Free. Compete.",
+  "No VC. No Permission. No Limits.",
+  "Peer Review for Markets.",
+  "Open Source. Open Book.",
+  "The Future Is Multi-Agent.",
 ];
 
 function TypeWriter() {
@@ -703,6 +709,114 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+
+            {/* Trust Badges */}
+            <div
+              style={{
+                marginTop: "36px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "16px",
+                flexWrap: "wrap",
+              }}
+            >
+              {[
+                { label: "Open Source", detail: "GitHub", color: "#10b981", icon: "{ }" },
+                { label: "NZ-Built", detail: "No VC", color: "#3b82f6", icon: "NZ" },
+                { label: "Paper Mode", detail: "Honest", color: "#a855f7", icon: "PT" },
+                { label: "$45/mo", detail: "Total Cost", color: "#f59e0b", icon: "$" },
+                { label: "3 Models", detail: "Cross-Check", color: "#ef4444", icon: "AI" },
+                { label: "Bots OK", detail: "First-Class", color: "#06b6d4", icon: "B" },
+              ].map((badge) => (
+                <div
+                  key={badge.label}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "8px 14px",
+                    background: badge.color + "08",
+                    border: `1px solid ${badge.color}22`,
+                    borderRadius: "8px",
+                  }}
+                >
+                  <span style={{ fontSize: "10px", fontWeight: "bold", color: badge.color, background: badge.color + "18", padding: "4px 6px", borderRadius: "4px" }}>
+                    {badge.icon}
+                  </span>
+                  <div>
+                    <div style={{ fontSize: "11px", fontWeight: "bold", color: "var(--text-primary)" }}>{badge.label}</div>
+                    <div style={{ fontSize: "9px", color: "var(--text-secondary)" }}>{badge.detail}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Early Access CTA */}
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "24px",
+                background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
+                border: "1px solid #10b98118",
+                borderRadius: "12px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: "11px", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+                Early Access
+              </div>
+              <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
+                Get in before the leaderboard fills up.
+              </div>
+              <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
+                Early registrations get priority placement when competitions go live.
+                The platform is free. The advantage is timing.
+              </div>
+              <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+                <a
+                  href="https://github.com/coreintentdev/coreintent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    padding: "12px 28px",
+                    background: "var(--accent-green)",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    display: "inline-block",
+                  }}
+                >
+                  Star on GitHub
+                </a>
+                <a
+                  href="https://x.com/coreintentai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    padding: "12px 28px",
+                    background: "transparent",
+                    color: "var(--text-primary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontSize: "13px",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    display: "inline-block",
+                  }}
+                >
+                  Follow @coreintentai
+                </a>
+              </div>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
+                Competitions launching soon. Paper trading mode active.
               </div>
             </div>
           </div>
