@@ -159,9 +159,10 @@ else
   log_warn "No favicon found"
 fi
 
-# Page-level metadata
+# Page-level metadata (check page.tsx or its co-located layout.tsx)
 for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
-  if [ -f "$page" ] && grep -q "metadata" "$page" 2>/dev/null; then
+  layout="$(dirname "$page")/layout.tsx"
+  if [ -f "$page" ] && (grep -q "metadata" "$page" 2>/dev/null || ([ -f "$layout" ] && grep -q "metadata" "$layout" 2>/dev/null)); then
     log_pass "Page metadata: $page"
   elif [ -f "$page" ]; then
     log_warn "No page-level metadata: $page"
