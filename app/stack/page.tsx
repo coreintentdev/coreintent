@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -58,6 +59,203 @@ const EXCHANGES = [
   { name: "gTrade", status: "planned", pairs: "50+", type: "DeFi (Polygon/Arbitrum)" },
 ];
 
+/* ─── Architecture Diagram Nodes ─── */
+const ARCH_NODES = [
+  { id: "grok", label: "Grok", role: "Fast Signals", color: "#ef4444", x: 100, y: 60 },
+  { id: "claude", label: "Claude", role: "Deep Analysis", color: "#a855f7", x: 300, y: 60 },
+  { id: "perplexity", label: "Perplexity", role: "Research", color: "#3b82f6", x: 500, y: 60 },
+  { id: "engine", label: "Engine", role: "Orchestrator", color: "#10b981", x: 300, y: 180 },
+  { id: "risk", label: "RiskGuard", role: "Circuit Breaker", color: "#f59e0b", x: 100, y: 180 },
+  { id: "terminal", label: "Terminal", role: "Commander", color: "#06b6d4", x: 500, y: 180 },
+  { id: "exchange", label: "Exchanges", role: "Planned", color: "#64748b", x: 200, y: 290 },
+  { id: "vps", label: "VPS", role: "Cloudzy", color: "#10b981", x: 400, y: 290 },
+];
+
+const ARCH_CONNECTIONS = [
+  { from: "grok", to: "engine", label: "signals" },
+  { from: "claude", to: "engine", label: "analysis" },
+  { from: "perplexity", to: "engine", label: "research" },
+  { from: "engine", to: "risk", label: "risk check" },
+  { from: "engine", to: "terminal", label: "commands" },
+  { from: "engine", to: "exchange", label: "orders" },
+  { from: "engine", to: "vps", label: "deploy" },
+  { from: "risk", to: "engine", label: "limits" },
+];
+
+function ArchitectureDiagram() {
+  const [activeNode, setActiveNode] = useState<string | null>(null);
+  const [pulsePhase, setPulsePhase] = useState(0);
+
+  useEffect(() => {
+    const iv = setInterval(() => setPulsePhase((p) => (p + 1) % ARCH_CONNECTIONS.length), 800);
+    return () => clearInterval(iv);
+  }, []);
+
+  const nodeMap = Object.fromEntries(ARCH_NODES.map((n) => [n.id, n]));
+
+  return (
+    <div
+      style={{
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border-color)",
+        borderRadius: "10px",
+        padding: "24px",
+        marginBottom: "40px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ fontSize: "10px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "16px" }}>
+        Interactive Architecture — Click nodes to explore
+        <span
+          className="animate-pulse"
+          style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }}
+        />
+      </div>
+
+      <svg viewBox="0 0 600 340" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
+        <defs>
+          <filter id="nodeGlow">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Connection lines */}
+        {ARCH_CONNECTIONS.map((conn, i) => {
+          const from = nodeMap[conn.from];
+          const to = nodeMap[conn.to];
+          if (!from || !to) return null;
+          const isActive = i === pulsePhase || activeNode === conn.from || activeNode === conn.to;
+          return (
+            <g key={`${conn.from}-${conn.to}`}>
+              <line
+                x1={from.x}
+                y1={from.y}
+                x2={to.x}
+                y2={to.y}
+                stroke={isActive ? "#10b981" : "var(--border-color)"}
+                strokeWidth={isActive ? 2 : 1}
+                className={isActive ? "arch-flow-line" : ""}
+                style={{
+                  transition: "stroke 0.3s, stroke-width 0.3s",
+                  opacity: isActive ? 1 : 0.4,
+                }}
+              />
+              {isActive && (
+                <text
+                  x={(from.x + to.x) / 2}
+                  y={(from.y + to.y) / 2 - 6}
+                  textAnchor="middle"
+                  fill="#10b981"
+                  fontSize="8"
+                  fontFamily="inherit"
+                >
+                  {conn.label}
+                </text>
+              )}
+            </g>
+          );
+        })}
+
+        {/* Nodes */}
+        {ARCH_NODES.map((node) => {
+          const isActive = activeNode === node.id;
+          return (
+            <g
+              key={node.id}
+              className="arch-node"
+              onClick={() => setActiveNode(isActive ? null : node.id)}
+              style={{ cursor: "pointer" }}
+            >
+              {/* Outer glow ring */}
+              {isActive && (
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r="32"
+                  fill="none"
+                  stroke={node.color}
+                  strokeWidth="1"
+                  opacity="0.3"
+                  className="arch-node-circle"
+                  style={{ color: node.color }}
+                />
+              )}
+              {/* Node circle */}
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r="24"
+                fill={isActive ? node.color + "33" : node.color + "18"}
+                stroke={node.color}
+                strokeWidth={isActive ? 2 : 1}
+                filter={isActive ? "url(#nodeGlow)" : undefined}
+                style={{ transition: "all 0.3s ease" }}
+              />
+              {/* Label */}
+              <text
+                x={node.x}
+                y={node.y - 2}
+                textAnchor="middle"
+                fill={node.color}
+                fontSize="10"
+                fontWeight="bold"
+                fontFamily="inherit"
+              >
+                {node.label}
+              </text>
+              <text
+                x={node.x}
+                y={node.y + 10}
+                textAnchor="middle"
+                fill="#94a3b8"
+                fontSize="7"
+                fontFamily="inherit"
+              >
+                {node.role}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Node detail panel */}
+      {activeNode && (() => {
+        const node = nodeMap[activeNode];
+        if (!node) return null;
+        const conns = ARCH_CONNECTIONS.filter((c) => c.from === activeNode || c.to === activeNode);
+        return (
+          <div
+            className="animate-fade-in"
+            style={{
+              marginTop: "12px",
+              padding: "12px 16px",
+              background: "var(--bg-primary)",
+              border: `1px solid ${node.color}44`,
+              borderRadius: "8px",
+              borderLeft: `3px solid ${node.color}`,
+            }}
+          >
+            <div style={{ fontSize: "14px", fontWeight: "bold", color: node.color, marginBottom: "4px" }}>
+              {node.label} — {node.role}
+            </div>
+            <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
+              Connections: {conns.map((c) => {
+                const other = c.from === activeNode ? c.to : c.from;
+                return `${nodeMap[other]?.label} (${c.label})`;
+              }).join(" · ")}
+            </div>
+          </div>
+        );
+      })()}
+    </div>
+  );
+}
+
 export default function StackPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -69,6 +267,9 @@ export default function StackPage() {
             Full API orchestra powering CoreIntent / Zynthio
           </p>
 
+          {/* Architecture Diagram */}
+          <ArchitectureDiagram />
+
           {/* AI Services */}
           <h2 style={{ fontSize: "14px", textTransform: "uppercase", color: "var(--text-secondary)", marginBottom: "16px" }}>
             AI Services
@@ -77,6 +278,7 @@ export default function StackPage() {
             {AI_SERVICES.map((svc) => (
               <div
                 key={svc.name}
+                className="card-hover"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -114,6 +316,7 @@ export default function StackPage() {
             {EXCHANGES.map((ex) => (
               <div
                 key={ex.name}
+                className="card-hover"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -151,6 +354,7 @@ export default function StackPage() {
             {PLATFORMS.map((p) => (
               <div
                 key={p.name}
+                className="card-hover"
                 style={{
                   display: "flex",
                   alignItems: "center",

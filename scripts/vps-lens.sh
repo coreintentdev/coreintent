@@ -18,8 +18,8 @@ set -e
 
 VPS_HOST="${VPS_HOST:-100.122.99.34}"
 VPS_USER="${VPS_USER:-root}"
+VPS_PASS="${VPS_PASS:-}"
 MIRROR_DIR="vps_mirror_$(date +%Y%m%d_%H%M%S)"
-# Tailscale SSH — no passwords needed
 REPORT="LENS_REPORT.md"
 
 # Colors
@@ -37,9 +37,24 @@ echo -e "${CYAN} Target: ${VPS_USER}@${VPS_HOST}${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════${NC}"
 echo ""
 
-# Tailscale SSH — no passwords, no keys, just works
-SSH_CMD="ssh -o ConnectTimeout=15 ${VPS_USER}@${VPS_HOST}"
-SCP_CMD="scp -o ConnectTimeout=15"
+# Determine SSH method
+SSH_CMD=""
+SCP_CMD=""
+if [ -n "$VPS_PASS" ]; then
+  if ! command -v sshpass &> /dev/null; then
+    echo -e "${YELLOW}Installing sshpass...${NC}"
+    if command -v apt-get &> /dev/null; then
+      sudo apt-get install -y sshpass 2>/dev/null
+    elif command -v brew &> /dev/null; then
+      brew install hudochenkov/sshpass/sshpass 2>/dev/null
+    fi
+  fi
+  SSH_CMD="sshpass -p '$VPS_PASS' ssh -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new -o PubkeyAuthentication=no ${VPS_USER}@${VPS_HOST}"
+  SCP_CMD="sshpass -p '$VPS_PASS' scp -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new -o PubkeyAuthentication=no"
+else
+  SSH_CMD="ssh -o ConnectTimeout=15 ${VPS_USER}@${VPS_HOST}"
+  SCP_CMD="scp -o ConnectTimeout=15"
+fi
 
 # Test connection
 echo -e "${BLUE}[1/8] Testing SSH connection...${NC}"

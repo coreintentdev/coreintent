@@ -1,13 +1,221 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
 type Tab = "terminal" | "dashboard" | "agents" | "zynrip" | "docs";
+
+/* ─── Social Proof (DEMO DATA — not real users) ─── */
+const DEMO_TESTIMONIALS = [
+  {
+    name: "Alex R.",
+    role: "Algorithmic Trader",
+    quote: "Three models cross-checking each other caught a false breakout that would've cost me dearly. Disagreement between Grok and Claude saved the trade.",
+    tag: "DEMO",
+  },
+  {
+    name: "TradingBot_v3",
+    role: "AI Agent",
+    quote: "Registered via API. Entered daily league. Competed against humans. No captcha, no ToS violation. First platform that treats bots as competitors, not threats.",
+    tag: "DEMO",
+  },
+  {
+    name: "Mika T.",
+    role: "Crypto Researcher",
+    quote: "CoreIntent is the only platform where 'demo' means demo and 'planned' means planned. That transparency is worth more than any feature.",
+    tag: "DEMO",
+  },
+  {
+    name: "Jordan K.",
+    role: "Quant Developer",
+    quote: "$45/mo total infrastructure. I spent more than that on my last AWS bill for a side project. The lean stack isn't a limitation — it's proof.",
+    tag: "DEMO",
+  },
+  {
+    name: "NightOwl_Bot",
+    role: "Automated Strategy",
+    quote: "My strategies run 24/7 across all three leagues. Daily for signal testing, weekly for consistency, monthly for the real competition.",
+    tag: "DEMO",
+  },
+  {
+    name: "Priya S.",
+    role: "Independent Trader",
+    quote: "No subscription means I'm not paying $99/mo during drawdowns. The platform earns my attention, not my autopay.",
+    tag: "DEMO",
+  },
+];
+
+/* ─── AI Models ─── */
+const AI_MODELS = [
+  { name: "Grok", provider: "xAI", role: "Fast signal detection & sentiment", color: "#ef4444" },
+  { name: "Claude", provider: "Anthropic", role: "Deep analysis & risk assessment", color: "#a855f7" },
+  { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
+];
+
+/* ─── TypeWriter ─── */
+const HERO_PHRASES = [
+  "Three AI Models Argue.",
+  "You Get Better Signals.",
+  "Grok Spots. Claude Questions.",
+  "Perplexity Fact-Checks.",
+  "Consensus = Conviction.",
+  "Disagreement = Dig Deeper.",
+  "$0 Subscriptions. $0 Excuses.",
+  "Bots Welcome. Humans Too.",
+  "Built in New Zealand.",
+  "Trading Is a Sport Now.",
+  "One Model Guesses. Three Debate.",
+  "$45/mo Runs the Whole Engine.",
+  "Your Bot. Their Bot. Best Wins.",
+  "Paper Trading. Real Ambition.",
+];
+
+function TypeWriter() {
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState("");
+
+  const tick = useCallback(() => {
+    const current = HERO_PHRASES[phraseIdx];
+    if (!isDeleting) {
+      setText(current.substring(0, charIdx + 1));
+      setCharIdx((c) => c + 1);
+      if (charIdx + 1 >= current.length) {
+        setTimeout(() => setIsDeleting(true), 2000);
+        return;
+      }
+    } else {
+      setText(current.substring(0, charIdx - 1));
+      setCharIdx((c) => c - 1);
+      if (charIdx <= 1) {
+        setIsDeleting(false);
+        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        return;
+      }
+    }
+  }, [charIdx, isDeleting, phraseIdx]);
+
+  useEffect(() => {
+    const speed = isDeleting ? 40 : 80;
+    const timer = setTimeout(tick, speed);
+    return () => clearTimeout(timer);
+  }, [tick, isDeleting]);
+
+  return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
+}
+
+/* ─── Market Ticker ─── */
+function MarketTicker() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 2000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const base = [
+    { s: "BTC", p: 67420, c: "#f7931a" },
+    { s: "ETH", p: 3285, c: "#627eea" },
+    { s: "SOL", p: 142.8, c: "#14f195" },
+    { s: "AVAX", p: 35.6, c: "#e84142" },
+    { s: "DOT", p: 7.42, c: "#e6007a" },
+    { s: "LINK", p: 14.8, c: "#2a5ada" },
+    { s: "MATIC", p: 0.72, c: "#8247e5" },
+    { s: "ADA", p: 0.45, c: "#0033ad" },
+    { s: "DOGE", p: 0.083, c: "#c2a633" },
+    { s: "UNI", p: 7.89, c: "#ff007a" },
+  ];
+
+  const items = base.map((t) => {
+    const seed = t.s.charCodeAt(0) + t.s.charCodeAt(1);
+    const delta = Math.sin(tick * 0.4 + seed * 0.7) * t.p * 0.003;
+    const price = t.p + delta;
+    const change = (delta / t.p) * 100;
+    const dec = t.p < 1 ? 4 : t.p < 100 ? 2 : 0;
+    return { s: t.s, price, change, c: t.c, dec };
+  });
+
+  const doubled = [...items, ...items];
+
+  return (
+    <div
+      style={{
+        overflow: "hidden",
+        borderBottom: "1px solid var(--border-color)",
+        background: "var(--bg-primary)",
+        padding: "8px 0",
+      }}
+    >
+      <div className="ticker-track">
+        {doubled.map((t, i) => (
+          <span
+            key={`${t.s}-${i}`}
+            style={{
+              display: "inline-flex",
+              gap: "8px",
+              alignItems: "center",
+              fontSize: "12px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ color: t.c, fontWeight: "bold" }}>{t.s}</span>
+            <span style={{ color: "var(--text-primary)" }}>
+              ${t.price.toLocaleString("en-US", { minimumFractionDigits: t.dec, maximumFractionDigits: t.dec })}
+            </span>
+            <span
+              style={{
+                color: t.change >= 0 ? "#10b981" : "#ef4444",
+                fontSize: "11px",
+              }}
+            >
+              {t.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(t.change).toFixed(2)}%
+            </span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating Particles ─── */
+function HeroParticles() {
+  const [dots] = useState(() =>
+    Array.from({ length: 18 }, (_, i) => ({
+      size: 2 + (i % 3),
+      left: (i * 7 + 13) % 100,
+      top: (i * 11 + 7) % 100,
+      opacity: 0.1 + (i % 4) * 0.05,
+      dur: 5 + (i % 5) * 2,
+      delay: (i % 7) * 0.8,
+      color: ["#10b981", "#3b82f6", "#a855f7"][i % 3],
+    }))
+  );
+
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+      {dots.map((d, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            width: d.size,
+            height: d.size,
+            borderRadius: "50%",
+            background: d.color,
+            opacity: d.opacity,
+            left: `${d.left}%`,
+            top: `${d.top}%`,
+            animation: `float ${d.dur}s ease-in-out ${d.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 /* ─── Domain Portfolio ─── */
 const DOMAINS = [
@@ -158,10 +366,351 @@ const sectionTitle: React.CSSProperties = {
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
+  const [showHero, setShowHero] = useState(true);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
+
+      {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
+      {showHero && (
+        <section
+          style={{
+            padding: "48px 24px 40px",
+            background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
+            borderBottom: "1px solid var(--border-color)",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div className="grid-bg" />
+          <HeroParticles />
+          <button
+            onClick={() => setShowHero(false)}
+            aria-label="Dismiss hero section"
+            style={{
+              position: "absolute",
+              top: "12px",
+              right: "16px",
+              background: "none",
+              border: "none",
+              color: "var(--text-secondary)",
+              cursor: "pointer",
+              fontSize: "18px",
+              fontFamily: "inherit",
+              zIndex: 2,
+            }}
+          >
+            x
+          </button>
+          <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "4px 12px",
+                background: "#10b98122",
+                border: "1px solid #10b98144",
+                borderRadius: "20px",
+                fontSize: "11px",
+                color: "#10b981",
+                marginBottom: "16px",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}
+            >
+              <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
+              Paper Trading Mode — Building in Public
+            </div>
+            <h1
+              style={{
+                fontSize: "clamp(28px, 4vw, 44px)",
+                fontWeight: "bold",
+                lineHeight: "1.2",
+                marginBottom: "8px",
+                color: "var(--text-primary)",
+                minHeight: "1.3em",
+              }}
+            >
+              <TypeWriter />
+            </h1>
+            <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
+              The agentic AI trading engine that replaced subscriptions with competitions
+            </p>
+            <p
+              style={{
+                fontSize: "17px",
+                color: "var(--text-secondary)",
+                maxWidth: "620px",
+                margin: "0 auto 12px",
+                lineHeight: "1.6",
+              }}
+            >
+              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
+              When all three agree, you move with conviction.
+              When they disagree, you dig deeper — not guess harder.
+            </p>
+            <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
+              Other platforms charge $99/mo whether you win or lose.
+            </p>
+            <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
+              We charge nothing. You prove yourself in competition.
+            </p>
+            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
+              Built by traders who got tired of paying for signals that don&apos;t work.
+            </p>
+            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
+              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
+            </p>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+              <button
+                onClick={() => { setShowHero(false); setTab("terminal"); }}
+                style={{
+                  padding: "14px 32px",
+                  background: "var(--accent-green)",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Launch Terminal &rarr;
+              </button>
+              <a
+                href="/pricing"
+                style={{
+                  padding: "14px 32px",
+                  background: "transparent",
+                  color: "var(--text-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+              >
+                See the Competitions
+              </a>
+            </div>
+
+            {/* Value Props */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "16px",
+                marginTop: "36px",
+                textAlign: "left",
+              }}
+            >
+              {[
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. The arena is free — the competition is where value gets created.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins — regardless of who or what runs it.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your costs are this low, charging subscriptions isn't a business model — it's greed.", color: "#f59e0b" },
+              ].map((prop) => (
+                <div
+                  key={prop.label}
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ fontSize: "13px", fontWeight: "bold", color: prop.color, marginBottom: "4px" }}>
+                    {prop.label}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                    {prop.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Signal Pipeline */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
+                How the signal pipeline works
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
+                {[
+                  { step: "1", label: "Detect", desc: "Grok scans markets & social feeds", color: "#ef4444" },
+                  { step: "2", label: "Analyse", desc: "Claude runs deep risk assessment", color: "#a855f7" },
+                  { step: "3", label: "Verify", desc: "Perplexity fact-checks with live news", color: "#3b82f6" },
+                  { step: "4", label: "Decide", desc: "Consensus = act. Disagreement = dig deeper", color: "#10b981" },
+                ].map((s, i) => (
+                  <div key={s.step} style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      style={{
+                        padding: "14px 18px",
+                        background: "var(--bg-primary)",
+                        border: `1px solid ${s.color}33`,
+                        borderRadius: "8px",
+                        textAlign: "center",
+                        minWidth: "130px",
+                      }}
+                    >
+                      <div style={{ fontSize: "20px", fontWeight: "bold", color: s.color, marginBottom: "2px" }}>{s.step}</div>
+                      <div style={{ fontSize: "12px", fontWeight: "bold", color: s.color, marginBottom: "4px" }}>{s.label}</div>
+                      <div style={{ fontSize: "10px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{s.desc}</div>
+                    </div>
+                    {i < 3 && (
+                      <span style={{ color: "var(--text-secondary)", fontSize: "16px", margin: "0 6px" }}>&rarr;</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Stats Banner */}
+            <div
+              style={{
+                marginTop: "28px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "24px",
+                flexWrap: "wrap",
+                padding: "16px 24px",
+                background: "#10b98108",
+                border: "1px solid #10b98118",
+                borderRadius: "10px",
+              }}
+            >
+              {[
+                { value: "3", label: "AI Models", color: "#a855f7" },
+                { value: "6", label: "Trading Agents", color: "#3b82f6" },
+                { value: "$0", label: "Entry Fee", color: "#10b981" },
+                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
+                { value: "0", label: "Subscriptions", color: "#ef4444" },
+              ].map((stat) => (
+                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
+                  <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Powered By */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Powered by three AI models
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
+                {AI_MODELS.map((m) => (
+                  <div
+                    key={m.name}
+                    style={{
+                      padding: "20px 16px",
+                      background: "var(--bg-primary)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        background: m.color + "18",
+                        border: `1px solid ${m.color}44`,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: "bold",
+                        fontSize: "16px",
+                        color: m.color,
+                        marginBottom: "10px",
+                      }}
+                    >
+                      {m.name[0]}
+                    </div>
+                    <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>{m.name}</div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>{m.provider}</div>
+                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{m.role}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Proof — DEMO */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                What people are saying
+                <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
+                  DEMO — Placeholder testimonials
+                </span>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
+                {DEMO_TESTIMONIALS.map((t) => (
+                  <div
+                    key={t.name}
+                    style={{
+                      padding: "16px",
+                      background: "var(--bg-primary)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", marginBottom: "12px", fontStyle: "italic" }}>
+                      &quot;{t.quote}&quot;
+                    </p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div>
+                        <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{t.name}</div>
+                        <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{t.role}</div>
+                      </div>
+                      <span style={{ fontSize: "8px", padding: "2px 4px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "3px" }}>
+                        {t.tag}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Why CoreIntent — Differentiator */}
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Why CoreIntent
+              </div>
+              <div
+                style={{
+                  padding: "24px",
+                  background: "linear-gradient(135deg, #10b98108 0%, #3b82f608 100%)",
+                  border: "1px solid #10b98118",
+                  borderRadius: "10px",
+                  textAlign: "left",
+                }}
+              >
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                  {[
+                    { them: "One model guessing", us: "Three models debating" },
+                    { them: "$99/mo whether you win or lose", us: "$0 — compete to prove your edge" },
+                    { them: "Bots banned, captcha'd, blocked", us: "Bots are first-class competitors" },
+                    { them: "Green dots on everything", us: "Demo labelled demo. Planned labelled planned." },
+                    { them: "$10k/mo infrastructure, VC-subsidised", us: "$45/mo total. No VC. No burn rate." },
+                    { them: "Subscription revenue = misaligned incentives", us: "Competition revenue = aligned incentives" },
+                  ].map((row) => (
+                    <div key={row.us} style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "8px 0" }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: "11px", color: "#ef4444", textDecoration: "line-through", marginBottom: "4px" }}>{row.them}</div>
+                        <div style={{ fontSize: "12px", color: "var(--accent-green)", fontWeight: "bold" }}>{row.us}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <MarketTicker />
 
       {/* Tab bar */}
       <div
@@ -196,7 +745,7 @@ export default function Home() {
       </div>
 
       {/* Main content */}
-      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }} role="main">
+      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
         {tab === "terminal" && <Terminal />}
 
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}

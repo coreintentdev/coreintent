@@ -28,7 +28,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 8. Run `./scripts/audit.sh` after making changes to verify nothing broke.
 
 ## Architecture
-- Next.js 14 (App Router) + TypeScript (strict mode)
+- Next.js 15 (App Router) + TypeScript (strict mode)
 - 6 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer
 - 14 API routes in app/api/
 - AI service layer: lib/ai.ts (Grok, Claude, Perplexity with graceful fallback)

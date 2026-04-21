@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Mon Apr 13 07:57:56 PM UTC 2026
+Generated: Tue Apr 21 04:01:04 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 23
+- INFO: Routes found: 29
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -39,7 +39,7 @@ Generated: Mon Apr 13 07:57:56 PM UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:900:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1562:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -49,26 +49,25 @@ Generated: Mon Apr 13 07:57:56 PM UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 2 files
+- PASS: next/link used in 4 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:14:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:15:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:16:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:222:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:223:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:224:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
 - PASS: Honest label 'demo' found in pages
 - PASS: Honest label 'alpha' found in pages
-- INFO: 7 API routes contain demo/hardcoded data
+- INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (6 instances)
+- PASS: ARIA attributes found (10 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
-- INFO: Using Next.js 14
 
 ## 10. VPS & Deployment
 - PASS: VPS script exists: scripts/risk_monitor.ts
@@ -78,7 +77,6 @@ Generated: Mon Apr 13 07:57:56 PM UTC 2026
 - PASS: Deploy script exists: scripts/deploy-vercel.sh
 - PASS: Deploy script exists: scripts/deploy-all.sh
 - PASS: Executable: scripts/deploy-all.sh
-- PASS: Executable: scripts/deploy-vds.sh
 - PASS: Executable: scripts/deploy-vercel.sh
 - PASS: Executable: scripts/deploy-vps.sh
 
@@ -87,8 +85,8 @@ Generated: Mon Apr 13 07:57:56 PM UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 53 |
+| PASS | 52 |
 | FAIL | 0 |
 | WARN | 2 |
 
-**Audit Score: 96%** (53/55 checks passed)
+**Audit Score: 96%** (52/54 checks passed)

@@ -3,8 +3,8 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Disclaimer | CoreIntent",
-  description: "CoreIntent trading and AI disclaimers.",
+  title: "Disclaimer",
+  description: "CoreIntent risk disclaimer — cryptocurrency trading involves substantial risk. Paper trading only. Not financial advice. Based in New Zealand.",
 };
 
 export default function DisclaimerPage() {
@@ -87,7 +87,7 @@ export default function DisclaimerPage() {
               Alpha Software
             </h2>
             <p style={{ color: "var(--text-secondary)" }}>
-              CoreIntent is in alpha (v0.1.0-alpha). Features may break, change, or be
+              CoreIntent is in alpha (v0.2.0-alpha). Features may break, change, or be
               removed without notice. Data may be lost. This is early-stage software
               under active development.
             </p>
