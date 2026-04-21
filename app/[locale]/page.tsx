@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslation } from "@/lib/i18n-context";
+import { formatCurrency, formatNumber } from "@/lib/format";
+import type { Locale } from "@/lib/i18n-config";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -111,6 +114,7 @@ function TypeWriter() {
 
 /* ─── Market Ticker ─── */
 function MarketTicker() {
+  const { locale } = useTranslation();
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setTick((t) => t + 1), 2000);
@@ -164,7 +168,7 @@ function MarketTicker() {
           >
             <span style={{ color: t.c, fontWeight: "bold" }}>{t.s}</span>
             <span style={{ color: "var(--text-primary)" }}>
-              ${t.price.toLocaleString("en-US", { minimumFractionDigits: t.dec, maximumFractionDigits: t.dec })}
+              {formatCurrency(t.price, locale as Locale)}
             </span>
             <span
               style={{
@@ -363,6 +367,7 @@ const sectionTitle: React.CSSProperties = {
 };
 
 export default function Home() {
+  const { t, locale } = useTranslation();
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
@@ -419,7 +424,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -434,7 +439,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaced subscriptions with competitions
+              {t("hero.subtitle")}
             </p>
             <p
               style={{
@@ -445,21 +450,19 @@ export default function Home() {
                 lineHeight: "1.6",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
+              {t("hero.chargeOthers")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
+              {t("hero.chargeUs")}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
+              {t("hero.builtBy")}
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
+              {t("hero.openSource")}
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -476,10 +479,10 @@ export default function Home() {
                   cursor: "pointer",
                 }}
               >
-                Launch Terminal &rarr;
+                {t("hero.launchTerminal")} &rarr;
               </button>
               <a
-                href="/pricing"
+                href={`/${locale}/pricing`}
                 style={{
                   padding: "14px 32px",
                   background: "transparent",
@@ -493,7 +496,7 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                {t("hero.seeCompetitions")}
               </a>
             </div>
 
@@ -508,10 +511,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins — regardless of who or what runs it.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your costs are this low, charging subscriptions isn't a business model — it's greed.", color: "#f59e0b" },
+                { label: t("valueProps.threeModels.label"), desc: t("valueProps.threeModels.desc"), color: "#a855f7" },
+                { label: t("valueProps.compete.label"), desc: t("valueProps.compete.desc"), color: "#10b981" },
+                { label: t("valueProps.bots.label"), desc: t("valueProps.bots.desc"), color: "#3b82f6" },
+                { label: t("valueProps.cost.label"), desc: t("valueProps.cost.desc"), color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -535,14 +538,14 @@ export default function Home() {
             {/* Signal Pipeline */}
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
-                How the signal pipeline works
+                {t("pipeline.title")}
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
                 {[
-                  { step: "1", label: "Detect", desc: "Grok scans markets & social feeds", color: "#ef4444" },
-                  { step: "2", label: "Analyse", desc: "Claude runs deep risk assessment", color: "#a855f7" },
-                  { step: "3", label: "Verify", desc: "Perplexity fact-checks with live news", color: "#3b82f6" },
-                  { step: "4", label: "Decide", desc: "Consensus = act. Disagreement = dig deeper", color: "#10b981" },
+                  { step: "1", label: t("pipeline.detect"), desc: t("pipeline.detectDesc"), color: "#ef4444" },
+                  { step: "2", label: t("pipeline.analyse"), desc: t("pipeline.analyseDesc"), color: "#a855f7" },
+                  { step: "3", label: t("pipeline.verify"), desc: t("pipeline.verifyDesc"), color: "#3b82f6" },
+                  { step: "4", label: t("pipeline.decide"), desc: t("pipeline.decideDesc"), color: "#10b981" },
                 ].map((s, i) => (
                   <div key={s.step} style={{ display: "flex", alignItems: "center" }}>
                     <div
@@ -582,11 +585,11 @@ export default function Home() {
               }}
             >
               {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
+                { value: "3", label: t("stats.aiModels"), color: "#a855f7" },
+                { value: "6", label: t("stats.tradingAgents"), color: "#3b82f6" },
+                { value: "$0", label: t("stats.entryFee"), color: "#10b981" },
+                { value: "$45/mo", label: t("stats.totalStackCost"), color: "#f59e0b" },
+                { value: "0", label: t("stats.subscriptions"), color: "#ef4444" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
                   <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
@@ -598,7 +601,7 @@ export default function Home() {
             {/* Powered By */}
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Powered by three AI models
+                {t("poweredBy")}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
@@ -640,9 +643,9 @@ export default function Home() {
             {/* Social Proof — DEMO */}
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                What people are saying
+                {t("socialProof.title")}
                 <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
-                  DEMO — Placeholder testimonials
+                  {t("socialProof.demoLabel")}
                 </span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
@@ -675,7 +678,7 @@ export default function Home() {
             {/* Why CoreIntent — Differentiator */}
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Why CoreIntent
+                {t("whyCoreIntent.title")}
               </div>
               <div
                 style={{
@@ -688,12 +691,12 @@ export default function Home() {
               >
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   {[
-                    { them: "One model guessing", us: "Three models debating" },
-                    { them: "$99/mo whether you win or lose", us: "$0 — compete to prove your edge" },
-                    { them: "Bots banned, captcha'd, blocked", us: "Bots are first-class competitors" },
-                    { them: "Green dots on everything", us: "Demo labelled demo. Planned labelled planned." },
-                    { them: "$10k/mo infrastructure, VC-subsidised", us: "$45/mo total. No VC. No burn rate." },
-                    { them: "Subscription revenue = misaligned incentives", us: "Competition revenue = aligned incentives" },
+                    { them: t("whyCoreIntent.them1"), us: t("whyCoreIntent.us1") },
+                    { them: t("whyCoreIntent.them2"), us: t("whyCoreIntent.us2") },
+                    { them: t("whyCoreIntent.them3"), us: t("whyCoreIntent.us3") },
+                    { them: t("whyCoreIntent.them4"), us: t("whyCoreIntent.us4") },
+                    { them: t("whyCoreIntent.them5"), us: t("whyCoreIntent.us5") },
+                    { them: t("whyCoreIntent.them6"), us: t("whyCoreIntent.us6") },
                   ].map((row) => (
                     <div key={row.us} style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "8px 0" }}>
                       <div style={{ flex: 1 }}>
@@ -722,11 +725,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tabKey) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tabKey}
+            onClick={() => setTab(tabKey)}
+            aria-pressed={tab === tabKey}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -734,11 +737,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tabKey ? "var(--accent-green)" : "transparent",
+              color: tab === tabKey ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {t(`tabs.${tabKey}`)}
           </button>
         ))}
       </div>
@@ -765,7 +768,7 @@ export default function Home() {
             </div>
 
             {/* Domain Portfolio */}
-            <h3 style={sectionTitle}>Domain Portfolio ({DOMAINS.length})</h3>
+            <h3 style={sectionTitle}>{t("dashboard.domainPortfolio")} ({DOMAINS.length})</h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "8px", marginBottom: "24px" }}>
               {DOMAINS.map((d) => (
                 <div
@@ -803,7 +806,7 @@ export default function Home() {
             </div>
 
             {/* Architecture */}
-            <h3 style={sectionTitle}>Architecture</h3>
+            <h3 style={sectionTitle}>{t("dashboard.architecture")}</h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px", marginBottom: "24px" }}>
               {ARCHITECTURE.map((a) => (
                 <div key={a.name} style={{ ...cardStyle, textAlign: "center" }}>
@@ -830,7 +833,7 @@ export default function Home() {
             </div>
 
             {/* Stack & Costs */}
-            <h3 style={sectionTitle}>Stack &amp; Costs (~$45/mo)</h3>
+            <h3 style={sectionTitle}>{t("dashboard.stackCosts")}</h3>
             <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "24px" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
@@ -851,7 +854,7 @@ export default function Home() {
             </table>
 
             {/* TM Portfolio */}
-            <h3 style={sectionTitle}>Trademark Portfolio</h3>
+            <h3 style={sectionTitle}>{t("dashboard.trademarkPortfolio")}</h3>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "24px" }}>
               {TRADEMARKS.map((tm) => (
                 <div key={tm.mark} style={{ ...cardStyle, display: "flex", alignItems: "center", gap: "12px" }}>
@@ -865,7 +868,7 @@ export default function Home() {
             </div>
 
             {/* Hard Rules */}
-            <h3 style={sectionTitle}>Hard Rules</h3>
+            <h3 style={sectionTitle}>{t("dashboard.hardRules")}</h3>
             <div style={{ ...cardStyle, marginBottom: "24px" }}>
               {HARD_RULES.map((rule, i) => (
                 <div
@@ -888,9 +891,9 @@ export default function Home() {
         {/* ═══════════════════════ AGENTS ═══════════════════════ */}
         {tab === "agents" && (
           <div style={{ overflow: "auto", height: "100%" }}>
-            <h3 style={sectionTitle}>AI Agent Fleet</h3>
+            <h3 style={sectionTitle}>{t("agents.title")}</h3>
             <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-              Paper trading mode — agents are configured but not live-trading.
+              {t("agents.subtitle")}
             </p>
             {[
               { name: "TrendFollower", model: "Claude Opus", status: "ready", task: "BTC/ETH momentum tracking" },
@@ -1097,7 +1100,7 @@ npm run build           # Production build`}
         }}
       >
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>{t("statusBar.paperTrading")} | v0.2.0-alpha</span>
       </footer>
     </div>
   );

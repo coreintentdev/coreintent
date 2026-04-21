@@ -1,8 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from "@/lib/i18n-context";
+import { localeHtmlLang, type Locale } from "@/lib/i18n-config";
 
-const WELCOME_BANNER = `\x1b[36m
+const LOCALE_GREETINGS: Record<string, string> = {
+  en: "Welcome",
+  es: "Bienvenido",
+  mi: "Nau mai",
+  zh: "欢迎",
+  ja: "ようこそ",
+  pt: "Bem-vindo",
+  fr: "Bienvenue",
+  de: "Willkommen",
+  ar: "أهلاً",
+  hi: "स्वागत",
+};
+
+function makeWelcomeBanner(locale: Locale, t: (key: string) => string): string {
+  const greeting = LOCALE_GREETINGS[locale] || "Welcome";
+  const htmlLang = localeHtmlLang[locale] || "en-NZ";
+  const timeStr = new Date().toLocaleString(htmlLang, { timeZone: "Pacific/Auckland" });
+  return `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
@@ -10,11 +29,12 @@ const WELCOME_BANNER = `\x1b[36m
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 \x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[33m${t("terminal.welcome")}\x1b[0m
+\x1b[32m${greeting}!\x1b[0m \x1b[90m${t("terminal.greeting")}\x1b[0m
+${t("terminal.helpPrompt").replace("help", "\x1b[32mhelp\x1b[0m").replace("cai", "\x1b[32mcai\x1b[0m")}
+\x1b[90m${timeStr} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -589,6 +609,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { locale, t } = useTranslation();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -603,8 +624,8 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([makeWelcomeBanner(locale, t)]);
+  }, [locale, t]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

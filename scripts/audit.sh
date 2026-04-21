@@ -84,7 +84,7 @@ echo "## 2. Pages" >> "$REPORT"
 echo ""
 echo "--- PAGE CHECK ---"
 
-for page in app/page.tsx app/pricing/page.tsx app/stack/page.tsx app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+for page in "app/[locale]/page.tsx" "app/[locale]/pricing/page.tsx" "app/[locale]/stack/page.tsx" "app/[locale]/privacy/page.tsx" "app/[locale]/terms/page.tsx" "app/[locale]/disclaimer/page.tsx"; do
   if [ -f "$page" ]; then
     log_pass "Page exists: $page"
   else
@@ -101,9 +101,9 @@ echo "## 3. Legal Compliance" >> "$REPORT"
 echo ""
 echo "--- LEGAL CHECK ---"
 
-[ -f "app/privacy/page.tsx" ] && log_pass "Privacy policy page exists" || log_fail "Privacy policy MISSING (CRITICAL for trading platform)"
-[ -f "app/terms/page.tsx" ] && log_pass "Terms of service page exists" || log_fail "Terms of service MISSING (CRITICAL)"
-[ -f "app/disclaimer/page.tsx" ] && log_pass "Disclaimer page exists" || log_fail "Disclaimer MISSING (CRITICAL for crypto)"
+[ -f "app/[locale]/privacy/page.tsx" ] && log_pass "Privacy policy page exists" || log_fail "Privacy policy MISSING (CRITICAL for trading platform)"
+[ -f "app/[locale]/terms/page.tsx" ] && log_pass "Terms of service page exists" || log_fail "Terms of service MISSING (CRITICAL)"
+[ -f "app/[locale]/disclaimer/page.tsx" ] && log_pass "Disclaimer page exists" || log_fail "Disclaimer MISSING (CRITICAL for crypto)"
 
 # Check for risk warnings
 if grep -rq "not financial advice\|significant risk\|past performance" app/ 2>/dev/null; then
@@ -129,14 +129,14 @@ echo ""
 echo "--- SEO CHECK ---"
 
 # OG tags
-if grep -q "openGraph" app/layout.tsx 2>/dev/null; then
+if grep -rq "openGraph" app/layout.tsx "app/[locale]/layout.tsx" 2>/dev/null; then
   log_pass "OpenGraph meta tags configured"
 else
   log_fail "OpenGraph meta tags MISSING"
 fi
 
 # Twitter cards
-if grep -q "twitter" app/layout.tsx 2>/dev/null; then
+if grep -rq "twitter" app/layout.tsx "app/[locale]/layout.tsx" 2>/dev/null; then
   log_pass "Twitter card meta tags configured"
 else
   log_fail "Twitter card meta tags MISSING"
@@ -160,7 +160,7 @@ else
 fi
 
 # Page-level metadata (check page.tsx or its co-located layout.tsx)
-for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+for page in "app/[locale]/privacy/page.tsx" "app/[locale]/terms/page.tsx" "app/[locale]/disclaimer/page.tsx"; do
   layout="$(dirname "$page")/layout.tsx"
   if [ -f "$page" ] && (grep -q "metadata" "$page" 2>/dev/null || ([ -f "$layout" ] && grep -q "metadata" "$layout" 2>/dev/null)); then
     log_pass "Page metadata: $page"
@@ -245,7 +245,7 @@ echo "--- NAV/FOOTER CHECK ---"
 [ -f "components/SiteFooter.tsx" ] && log_pass "Shared SiteFooter component exists" || log_fail "No shared footer component"
 
 # Check pages use shared nav
-for page in app/pricing/page.tsx app/stack/page.tsx app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+for page in "app/[locale]/pricing/page.tsx" "app/[locale]/stack/page.tsx" "app/[locale]/privacy/page.tsx" "app/[locale]/terms/page.tsx" "app/[locale]/disclaimer/page.tsx"; do
   if [ -f "$page" ]; then
     if grep -q "SiteNav\|SiteFooter" "$page" 2>/dev/null; then
       log_pass "Shared nav/footer used: $page"
@@ -318,7 +318,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en' app/layout.tsx 2>/dev/null; then
+if grep -q 'lang' app/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"

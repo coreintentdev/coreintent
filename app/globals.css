@@ -361,6 +361,28 @@ a {
   animation: signalFlash 0.5s ease both;
 }
 
+/* ─── RTL Support ─── */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .ticker-track {
+  direction: ltr;
+}
+
+[dir="rtl"] nav {
+  direction: rtl;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] header nav {
+  flex-direction: row-reverse;
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {
