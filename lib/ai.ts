@@ -398,9 +398,63 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
  *
  * @example
  * const result = await callGrok(prompt);
- * if (!validateAiContent(result)) return err("AI returned empty response", 502);
+ * if (!validateAiContent(result)) return gatewayError("AI returned empty response");
  */
 export function validateAiContent(response: AIResponse): boolean {
   return Boolean(response.content?.trim());
+}
+
+// ---------------------------------------------------------------------------
+// PARALLEL ORCHESTRATION
+// ---------------------------------------------------------------------------
+
+/** Prompts for a three-way parallel AI call. */
+export interface ParallelAIPrompts {
+  grok:       string;
+  perplexity: string;
+  claude:     string;
+  /** Optional system-prompt overrides per model. */
+  systems?: {
+    grok?:       string;
+    perplexity?: string;
+    claude?:     string;
+  };
+}
+
+/** Results from a three-way parallel AI call with pre-computed aggregate flags. */
+export interface ParallelAIResults {
+  grok:       AIResponse;
+  perplexity: AIResponse;
+  claude:     AIResponse;
+  /** true when all three live API calls succeeded. */
+  allLive:  boolean;
+  /** true when all three responses contain non-empty content. */
+  allValid: boolean;
+}
+
+/**
+ * Call all three AIs in parallel with distinct prompts.
+ * Pre-computes allLive and allValid so callers avoid repeating the boolean chain.
+ * Every underlying call falls back gracefully — this function never rejects.
+ *
+ * Use this for routes that need input from all three models simultaneously
+ * (e.g. /api/protect GET, /api/research GET). For single-model calls use
+ * callGrok / callClaude / callPerplexity directly.
+ */
+export async function callAIsParallel(
+  prompts: ParallelAIPrompts
+): Promise<ParallelAIResults> {
+  const [grok, perplexity, claude] = await Promise.all([
+    callGrok(prompts.grok,             prompts.systems?.grok),
+    callPerplexity(prompts.perplexity, prompts.systems?.perplexity),
+    callClaude(prompts.claude,         prompts.systems?.claude),
+  ]);
+  return {
+    grok,
+    perplexity,
+    claude,
+    allLive:  grok.live  && perplexity.live  && claude.live,
+    allValid: validateAiContent(grok) && validateAiContent(perplexity) && validateAiContent(claude),
+  };
 }
 

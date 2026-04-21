@@ -10,8 +10,8 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { callAIsParallel, callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -33,34 +33,33 @@ const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentimen
 
 export async function GET() {
   try {
-    const [perplexityResult, grokResult, claudeResult] = await Promise.all([
-      callPerplexity(
+    const results = await callAIsParallel({
+      perplexity:
         `Search for "${IDENTITY.name}" OR "${IDENTITY.project}" OR "${IDENTITY.domain}" OR "${IDENTITY.twitter}". ` +
         `Find mentions, profiles, articles, or social media posts. ` +
-        `What is the current web presence of this person and project?`
-      ),
-      callGrok(
+        `What is the current web presence of this person and project?`,
+      grok:
         `Search X/Twitter for ${IDENTITY.twitter} and CoreIntent. ` +
         `Latest activity? Any mentions? Overall sentiment? ` +
-        `Are there any impersonation attempts on this account?`
-      ),
-      callClaude(
+        `Are there any impersonation attempts on this account?`,
+      claude:
         `You are analyzing the digital twin of Corey McIvor (${IDENTITY.handle}), creator of ${IDENTITY.project}. ` +
         `Summarize the current project state, identify the top 3 risks to the digital identity, ` +
         `and suggest 3 immediate actions to strengthen online presence and protect the brand.`,
-        "You are CoreIntent's self-awareness module. Be precise, honest, and direct."
-      ),
-    ]);
+      systems: {
+        claude: "You are CoreIntent's self-awareness module. Be precise, honest, and direct.",
+      },
+    });
 
     return ok({
       identity: IDENTITY,
       research: {
-        webPresence:     { ...perplexityResult, purpose: "Web presence scan",        contentValid: validateAiContent(perplexityResult) },
-        socialSentiment: { ...grokResult,       purpose: "X/Twitter monitoring",     contentValid: validateAiContent(grokResult)       },
-        selfAnalysis:    { ...claudeResult,     purpose: "Threat & brand analysis",  contentValid: validateAiContent(claudeResult)     },
+        webPresence:     { ...results.perplexity, purpose: "Web presence scan",       contentValid: validateAiContent(results.perplexity) },
+        socialSentiment: { ...results.grok,       purpose: "X/Twitter monitoring",    contentValid: validateAiContent(results.grok)       },
+        selfAnalysis:    { ...results.claude,     purpose: "Threat & brand analysis", contentValid: validateAiContent(results.claude)     },
       },
-      allLive:  perplexityResult.live && grokResult.live && claudeResult.live,
-      allValid: validateAiContent(perplexityResult) && validateAiContent(grokResult) && validateAiContent(claudeResult),
+      allLive:   results.allLive,
+      allValid:  results.allValid,
       timestamp: new Date().toISOString(),
     });
   } catch (e) {
@@ -73,11 +72,11 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<ResearchRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const topic = validateString(body.topic, 1000);
-  if (!topic) return err("topic is required and must be 1000 characters or fewer", 400);
+  if (!topic) return badRequest("topic is required and must be 1000 characters or fewer");
 
   const task: ResearchTask = VALID_TASKS.includes(body.task as ResearchTask)
     ? (body.task as ResearchTask)
@@ -94,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     const result = await taskMap[task]();
     if (!validateAiContent(result)) {
-      return err("AI returned an empty response", 502);
+      return gatewayError("AI returned an empty response");
     }
 
     return ok({ topic, task, result, timestamp: new Date().toISOString() });

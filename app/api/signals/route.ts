@@ -56,12 +56,13 @@ export async function GET() {
   try {
     const now = new Date().toISOString();
     const allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));
+    const signals = allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE);
 
     const data: SignalsResponse = {
-      signals:       allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE),
+      signals,
       minConfidence: MIN_CONFIDENCE,
-      totalActive:   allSignals.filter((s) => s.confidence >= MIN_CONFIDENCE).length,
-      totalPending:  allSignals.filter((s) => s.confidence <  MIN_CONFIDENCE).length,
+      totalActive:   signals.length,
+      totalPending:  allSignals.length - signals.length,
       mode:          "demo",
       timestamp:     now,
     };

@@ -85,6 +85,18 @@ export function forbidden(message = "Forbidden"): NextResponse<ApiResponse<null>
   return err(message, 403);
 }
 
+/** 400 Bad Request — validation failure shorthand. */
+export function badRequest(message: string): NextResponse<ApiResponse<null>> {
+  return err(message, 400);
+}
+
+/** 502 Bad Gateway — AI or upstream service returned an unexpected response. */
+export function gatewayError(
+  message = "Upstream service returned an invalid response"
+): NextResponse<ApiResponse<null>> {
+  return err(message, 502);
+}
+
 /**
  * 429 Too Many Requests.
  * @param retryAfterSeconds How long the caller should wait before retrying.

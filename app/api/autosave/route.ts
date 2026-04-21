@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.autosave in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, preflight, validateString, validateEnum } from "@/lib/api";
 
 type BackendKey = "primary" | "docs" | "files" | "cache" | "links" | "state";
 type SaveType   = "link" | "doc" | "state" | "command" | "config" | "signal" | "agent";
@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<SaveRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const VALID_SAVE_TYPES: readonly SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
   if (body.content !== undefined) {
     const content = validateString(body.content, 10_000);
     if (content === null) {
-      return err("content must be a string of 10,000 characters or fewer", 400);
+      return badRequest("content must be a string of 10,000 characters or fewer");
     }
   }
 

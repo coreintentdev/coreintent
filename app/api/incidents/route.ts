@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, validateString } from "@/lib/api";
 
 type IncidentStatus   = "detected" | "investigating" | "mitigating" | "resolved";
 type IncidentSeverity = "critical" | "major" | "minor" | "info";
@@ -120,17 +120,17 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<NewIncidentRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const service = validateString(body.service, 200);
-  if (!service) return err("service is required and must be 200 characters or fewer", 400);
+  if (!service) return badRequest("service is required and must be 200 characters or fewer");
 
   const message = validateString(body.message, 5000);
-  if (!message) return err("message is required and must be 5000 characters or fewer", 400);
+  if (!message) return badRequest("message is required and must be 5000 characters or fewer");
 
   if (!body.severity || !VALID_SEVERITIES.includes(body.severity)) {
-    return err(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`, 400);
+    return badRequest(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`);
   }
 
   const incident: Incident = {

@@ -29,6 +29,17 @@ interface MarketResponse {
   timestamp:      string;
 }
 
+/** Derive the Fear & Greed sentiment label from the 0–100 index value. */
+function fearGreedSentiment(index: number): FearGreedSentiment {
+  if (index <= 20) return "extreme_fear";
+  if (index <= 40) return "fear";
+  if (index <= 60) return "neutral";
+  if (index <= 80) return "greed";
+  return "extreme_greed";
+}
+
+const FEAR_GREED_INDEX = 58;
+
 export async function GET() {
   try {
     const data: MarketResponse = {
@@ -39,8 +50,8 @@ export async function GET() {
         { symbol: "BNB/USD",  price: 305,   change24h:  0.3, volume:    850_000_000, high: 308,   low: 300   },
         { symbol: "AVAX/USD", price: 14.5,  change24h: -1.2, volume:    320_000_000, high: 15.1,  low: 14.2  },
       ],
-      fearGreedIndex: 58,
-      sentiment:      "neutral",
+      fearGreedIndex: FEAR_GREED_INDEX,
+      sentiment:      fearGreedSentiment(FEAR_GREED_INDEX),
       mode:           "demo",
       timestamp:      new Date().toISOString(),
     };

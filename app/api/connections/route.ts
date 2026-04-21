@@ -21,9 +21,13 @@ interface Exchange {
 }
 
 interface InfraService {
-  status: string;
-  role:   string;
-  [key: string]: unknown;
+  status:     string;
+  role:       string;
+  host?:      string;
+  plan?:      string;
+  repos?:     number;
+  tasks?:     number;
+  completed?: number;
 }
 
 interface Tool {
