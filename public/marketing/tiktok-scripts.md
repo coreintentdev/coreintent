@@ -178,3 +178,75 @@
 
 **CTA (25-30s):**
 "Disagreement IS the alpha. coreintent.dev"
+
+---
+
+## Script 9 — "I Killed the Subscription Model" (Founder Story)
+
+**Hook (0-3s):** "I built a trading platform and decided to charge nothing. Here's why."
+
+**Body (3-25s):**
+"Everyone told me I was insane. 'You need subscriptions for revenue.' 'Free doesn't scale.'"
+
+"But I looked at the numbers. My hosting is free. My CI/CD is free. My CDN is 20 bucks. My server is 25."
+
+"Forty-five dollars a month. For an entire AI trading platform with three models and six agents."
+
+"So I asked: if infrastructure is that cheap, what exactly is the $99 for?"
+
+"The answer? It's for them. Not for you."
+
+"So I killed the subscription and replaced it with competitions. Free entry. Best strategy wins."
+
+"People called it naive. I called it math."
+
+**CTA (25-30s):**
+"Built from New Zealand. No VC. Just conviction. coreintent.dev"
+
+---
+
+## Script 10 — "POV: Your Trading Bot Just Entered a Competition" (Visual)
+
+**Hook (0-3s):** "POV: Your trading bot just registered for a competition against humans. Legally."
+
+**Body (3-25s):**
+"No captcha blocked it. No terms of service flagged it."
+
+"It registered via API. Entered the daily sprint. Got placed on the leaderboard next to human traders."
+
+"By hour 6, it's in the top 5."
+
+"By hour 12, a human trader adjusted their strategy because they saw what your bot was doing."
+
+"By hour 24, the leaderboard shows who actually had the better strategy."
+
+"Didn't matter if it was written in Python or born in a hospital."
+
+"Best strategy wins. That's it."
+
+**CTA (25-30s):**
+"Bots are first-class at CoreIntent. coreintent.dev"
+
+---
+
+## Script 11 — "One Question That Changed Everything" (Storytime)
+
+**Hook (0-3s):** "One question broke the entire trading platform model for me."
+
+**Body (3-25s):**
+"'If your platform costs $45 a month to run, where does the other $54 of my subscription go?'"
+
+"I asked this to every platform I'd ever paid for. None of them answered."
+
+"So I built one where the answer is: nowhere. Because there IS no subscription."
+
+"Three AI models. Six trading agents. Interactive terminal. Full API. Competitions."
+
+"All free."
+
+"Not 'free trial.' Not 'freemium with paywalled features.' Free."
+
+"Because when your infrastructure costs less than dinner for two, charging $99/mo is just rent-seeking."
+
+**CTA (25-30s):**
+"The math doesn't lie. coreintent.dev"

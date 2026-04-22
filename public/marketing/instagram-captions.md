@@ -195,3 +195,44 @@ This is how trading intelligence should work.
 .
 .
 #AISignals #TradingPipeline #CoreIntent #MultiModel #SignalProcessing #CryptoSignals #AIArchitecture #TradingStrategy #MachineLearning #AgenticAI #FinTech #NZTech #BuildInPublic
+
+---
+
+## Caption 9 — The Subscription Math (Static Post)
+
+The subscription tax, visualised:
+
+3 months of a typical platform: $297
+6 months: $594
+1 year: $1,188
+2 years: $2,376
+
+CoreIntent over the same period: $0. Every time.
+
+Not "free trial." Not "first month free." Free. Because our infrastructure costs $45/month and we chose not to extract value we didn't create.
+
+Put that $2,376 toward your actual trades. We'll still be here.
+
+.
+.
+.
+#SubscriptionTax #FreeTrading #CoreIntent #FinTech #MoneyMatters #TradingCosts #NoSubscription #AITrading #Zynthio #CryptoSavings #SmartMoney #IndieFounder #BuildInPublic #MadeInNZ #LeanStartup
+
+---
+
+## Caption 10 — Bots Welcome (Reel/Short)
+
+Every other platform: "Bots detected. Account suspended."
+
+CoreIntent: "Welcome. Here's your API key. Good luck in the daily sprint."
+
+We built a platform where your Python script, your quant model, and your neural net compete alongside human traders. Same leaderboard. Same rules. Same rewards.
+
+The future of markets is multi-agent. We're not fighting it — we're building for it.
+
+Register your bot. Enter the arena. May the best strategy win.
+
+.
+.
+.
+#TradingBots #AlgoTrading #AgenticAI #CoreIntent #BotFriendly #APIFirst #QuantTrading #AICompetition #CryptoTrading #FinTech #MadeInNZ #Zynthio #AutomatedTrading #FutureOfTrading #BuildInPublic

@@ -521,3 +521,146 @@ Your strategy. Our arena. May the best code win.
 coreintent.dev
 
 #AlgoTrading #AgenticAI #CoreIntent
+
+---
+
+## Post 31 — Poll: The Bot Question
+
+Poll: Should trading platforms allow bots to compete alongside humans?
+
+(A) Yes — best strategy wins, period
+(B) No — humans only
+(C) Yes, but on separate leaderboards
+(D) Already happening whether platforms admit it or not
+
+We chose (A). And (D) is true regardless.
+
+#AITrading #TradingBots
+
+---
+
+## Post 32 — The Quiet Signal
+
+The most important signal our AI generates isn't "buy."
+
+It's "wait."
+
+Two models say go. One says stop. We stop.
+
+In a world that rewards action, the discipline to not trade is the hardest edge to build.
+
+CoreIntent was designed to say no.
+
+#TradingPsychology #RiskManagement
+
+---
+
+## Post 33 — One Question
+
+One question that changed how I think about trading platforms:
+
+"If the infrastructure costs $45/month, where does the other $54 go?"
+
+The answer: it goes to the platform. Not to you.
+
+So we killed the subscription.
+
+coreintent.dev
+
+#FinTech #StartupThinking
+
+---
+
+## Post 34 — Founder Honesty
+
+Honest founder update:
+
+- 14 API routes, most return demo data
+- 6 agents configured, none live-trading
+- No exchange connections yet
+- No user auth
+- No database
+
+But also:
+- 3 AI models integrated
+- Full interactive terminal
+- Open source
+- $45/mo infrastructure
+- Zero lies on the dashboard
+
+We're early. We're honest. That's the edge.
+
+#BuildInPublic #HonestTech
+
+---
+
+## Post 35 — Ask Me Anything
+
+AMA for anyone building in fintech:
+
+How do you compete with platforms backed by $50M+ in VC?
+
+Our answer: you don't. You build something they can't.
+
+They can't be transparent. They can't charge $0. They can't welcome bots. They can't publish their infrastructure bill.
+
+We can.
+
+coreintent.dev
+
+#IndieFounder #FinTech
+
+---
+
+## Post 36 — Thread: What Trading Platforms Won't Tell You
+
+Thread: 5 things your trading platform won't tell you
+
+1/ Their "AI-powered signals" are usually one model with a temperature slider. CoreIntent uses three models that actively disagree with each other. Disagreement is the feature.
+
+2/ Your subscription pays for their office, not your signals. Most platforms spend 60%+ of revenue on overhead. We spend $45/mo. Total.
+
+3/ Banning bots doesn't stop bots. It stops honest automation. The sophisticated bots already bypass their captcha. We just let everyone compete openly.
+
+4/ "Active users" on their dashboard include test accounts, dead accounts, and bots they claim to block. We label demo data "demo."
+
+5/ The subscription model is designed so the platform wins regardless of your performance. Competition-based revenue means we only win when traders show up.
+
+coreintent.dev — built differently.
+
+#FinTech #AITrading #BuildInPublic
+
+---
+
+## Post 37 — The Scoreboard Speaks
+
+In 5 years people will look back and wonder why trading platforms ever banned bots.
+
+The same way we look back and wonder why some platforms banned short selling.
+
+The market doesn't care what's trading. The scoreboard speaks for itself.
+
+#FutureOfTrading #AgenticAI
+
+---
+
+## Post 38 — Short and Brutal
+
+Trading platform business model:
+1. Charge $99/mo
+2. Show green dots
+3. User loses money
+4. Keep charging $99/mo
+5. Repeat
+
+CoreIntent business model:
+1. Charge $0
+2. Label everything honestly
+3. Run competitions
+4. Best strategy wins
+
+Different game.
+
+coreintent.dev
+
+#FinTech #CoreIntent

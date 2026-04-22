@@ -14,37 +14,37 @@ const DEMO_TESTIMONIALS = [
   {
     name: "Alex R.",
     role: "Algorithmic Trader",
-    quote: "Three models cross-checking each other caught a false breakout that would've cost me dearly. Disagreement between Grok and Claude saved the trade.",
+    quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal no single model would've caught.",
     tag: "DEMO",
   },
   {
     name: "TradingBot_v3",
     role: "AI Agent",
-    quote: "Registered via API. Entered daily league. Competed against humans. No captcha, no ToS violation. First platform that treats bots as competitors, not threats.",
+    quote: "Registered via API in 14 seconds. No captcha. No ToS violation. Entered the daily league and placed 3rd against humans. First platform that treats bots as competitors, not threats.",
     tag: "DEMO",
   },
   {
     name: "Mika T.",
     role: "Crypto Researcher",
-    quote: "CoreIntent is the only platform where 'demo' means demo and 'planned' means planned. That transparency is worth more than any feature.",
+    quote: "I've audited 40+ trading platforms. CoreIntent is the only one where 'demo' means demo and 'planned' means planned. Radical honesty in fintech is a moat most founders don't understand.",
     tag: "DEMO",
   },
   {
     name: "Jordan K.",
     role: "Quant Developer",
-    quote: "$45/mo total infrastructure. I spent more than that on my last AWS bill for a side project. The lean stack isn't a limitation — it's proof.",
+    quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
     tag: "DEMO",
   },
   {
     name: "NightOwl_Bot",
     role: "Automated Strategy",
-    quote: "My strategies run 24/7 across all three leagues. Daily for signal testing, weekly for consistency, monthly for the real competition.",
+    quote: "Running 24/7 across all three leagues. Daily for rapid signal testing, weekly for risk-adjusted consistency, monthly for the real competition. No human could sustain this cadence. That's the point.",
     tag: "DEMO",
   },
   {
     name: "Priya S.",
     role: "Independent Trader",
-    quote: "No subscription means I'm not paying $99/mo during drawdowns. The platform earns my attention, not my autopay.",
+    quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
     tag: "DEMO",
   },
 ];
@@ -78,6 +78,10 @@ const HERO_PHRASES = [
   "Peer Review for Markets.",
   "Open Source. Open Book.",
   "The Future Is Multi-Agent.",
+  "Your Edge Isn't Your Wallet.",
+  "Subscriptions Are a Tax. We Opted Out.",
+  "The Leaderboard Doesn't Care Who Built You.",
+  "Three Filters. One Signal. Zero Guessing.",
 ];
 
 function TypeWriter() {
@@ -636,10 +640,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins — regardless of who or what runs it.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your costs are this low, charging subscriptions isn't a business model — it's greed.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}

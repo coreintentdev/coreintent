@@ -9,9 +9,9 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
-    description: "Every morning the leaderboard resets. Every night someone wins. Could be a human. Could be a bot. No carryover, no safety net — prove your edge in 24 hours or start fresh tomorrow.",
+    description: "Leaderboard resets at midnight UTC. By morning, someone won. Could be a quant in Tokyo. Could be a bot in a data centre. No carryover, no safety net — 24 hours to prove your edge or start fresh.",
     features: [
-      "Fresh challenge drops at 00:00 UTC — no carryover",
+      "Fresh challenge drops at 00:00 UTC — clean slate daily",
       "Trading, song, and content creation battles",
       "Win streaks unlock bonus multipliers (3x, 5x, 10x)",
       "Bots and humans on the same leaderboard — equal terms",
@@ -23,13 +23,13 @@ const LEAGUES = [
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
-    description: "Anyone can get lucky for a day. Show us seven. Consistency separates traders from gamblers — this league proves which one you are.",
+    description: "Anyone can get lucky for a day. Show us seven. Consistency separates traders from gamblers. Sharpe ratio matters here, not just raw P&L — this league proves which one you are.",
     features: [
       "7-day performance with risk-adjusted scoring",
       "Team competitions — pair your bot with a human strategist",
       "Song remix battles and strategy sharing rewards",
       "Top 10 earn badges and featured placement on the platform",
-      "Sharpe ratio matters here, not just raw P&L",
+      "Drawdown penalties — surviving the dips matters as much as catching the rips",
     ],
     entry: "Free",
   },
@@ -37,13 +37,13 @@ const LEAGUES = [
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
-    description: "The main event. 30 days. Full portfolio wars. This is where reputations are forged, pretenders get exposed, and the best strategy — human or bot — takes the crown.",
+    description: "The main event. 30 days. Full portfolio wars. This is where reputations are forged, pretenders get exposed, and the best strategy — human or bot — takes the crown. Zero entry fee.",
     features: [
       "Full month performance under real market conditions",
       "Champions unlock Mansion rooms (gamified rewards — planned)",
       "Monthly album competition (SongPal) + cross-AI strategy tournaments",
       "Winners featured globally on the CoreIntent platform",
-      "The highest stakes. The biggest bragging rights. Zero entry fee.",
+      "The highest stakes. The biggest bragging rights. Still free.",
     ],
     entry: "Free",
   },
@@ -83,14 +83,15 @@ export default function PricingPage() {
             No Subscriptions. Just Competitions.
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            Subscriptions charge you $99/mo whether you profit or bleed out. The platform wins. You pay.<br />
-            That&apos;s not a partnership — that&apos;s a toll booth.
+            You pay $99/mo. You lose money. They still get paid.<br />
+            That&apos;s not alignment — that&apos;s indifference with a billing cycle.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "8px", fontSize: "15px", fontWeight: "bold" }}>
-            CoreIntent costs $45/mo to run. Free costs nothing to serve. So we give it all away.
+            CoreIntent costs $45/mo to run. When your marginal cost per user is near zero,
+            subscriptions aren&apos;t a business model — they&apos;re a tax.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
-            Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it in the arena.
+            Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it against everyone else — human or bot.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "13px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed. No credit card. No catch.
@@ -330,12 +331,12 @@ export default function PricingPage() {
                 {[
                   ["Monthly cost", "Free. Always.", "$49–$299/mo"],
                   ["AI models", "3 cross-checking (Claude + Grok + Perplexity)", "0–1 (maybe)"],
-                  ["Trading agents", "6 included, day one", "Premium add-on ($$$)"],
-                  ["Bot access", "First-class citizen. API-first.", "Banned, blocked, or captcha'd"],
-                  ["Revenue model", "Competitions — aligned incentives", "Subscriptions — they profit from your losses"],
-                  ["Transparency", "Demo = demo. Planned = planned.", "Green dots on everything"],
-                  ["Infrastructure", "~$45/mo. No VC burn.", "$10k+/mo. VC subsidised."],
-                  ["Signal quality", "Multi-model consensus (3 filters)", "Single model output (1 guess)"],
+                  ["Trading agents", "6 included from day one", "Premium add-on ($$$)"],
+                  ["Bot policy", "First-class citizen. API-first. No captcha.", "Banned, blocked, or captcha'd"],
+                  ["Revenue model", "Competitions — we need engaged traders", "Subscriptions — they profit whether you win or lose"],
+                  ["Transparency", "Demo = demo. Planned = planned.", "Green dots on services that aren't connected"],
+                  ["Infrastructure", "~$45/mo. Self-funded. No burn rate.", "$10k+/mo. VC-subsidised. Clock ticking."],
+                  ["Signal quality", "Multi-model consensus (3 filters)", "Single model, single point of failure"],
                 ].map(([feature, us, them], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
                     <td style={{ padding: "10px 12px", fontSize: "13px", fontWeight: "bold" }}>{feature}</td>
@@ -523,12 +524,12 @@ export default function PricingPage() {
             }}
           >
             <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
-              Ready to Prove Yourself?
+              The Arena Is Open.
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
-              No credit card. No subscription trap. No &quot;free trial&quot; that auto-charges.
+              No credit card. No subscription trap. No &quot;free trial&quot; that silently converts to $99/mo.
               <br />
-              Just you, your strategy, and the leaderboard. Getting in early matters.
+              Just you, your strategy, and the leaderboard. Early registration gets priority placement.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
