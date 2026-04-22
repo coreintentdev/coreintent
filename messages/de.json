@@ -50,6 +50,6 @@
   "tabs": { "terminal": "Terminal", "dashboard": "Dashboard", "agents": "Agenten", "zynrip": "ZynRip", "docs": "Doku" },
   "dashboard": { "domainPortfolio": "Domain-Portfolio", "architecture": "Architektur", "stackCosts": "Stack & Kosten (~$45/Monat)", "trademarkPortfolio": "Marken-Portfolio", "hardRules": "Harte Regeln" },
   "agents": { "title": "KI-Agenten-Flotte", "subtitle": "Paper-Trading-Modus — Agenten konfiguriert, aber nicht live." },
-  "footer": { "product": "Produkt", "legal": "Rechtliches", "connect": "Kontakt", "tagline": "Agentische KI-Trading-Engine", "builtBy": "Gebaut von Corey McIvor | Zynthio.ai", "copyright": "Corey McIvor. Alle Rechte vorbehalten.", "risk": "Kryptohandel birgt erhebliche Risiken. Vergangene Ergebnisse garantieren keine zukünftigen Erträge. Paper-Trading-Modus." },
+  "footer": { "product": "Produkt", "legal": "Rechtliches", "privacy": "Datenschutzrichtlinie", "terms": "Nutzungsbedingungen", "disclaimer": "Haftungsausschluss", "connect": "Kontakt", "tagline": "Agentische KI-Trading-Engine", "builtBy": "Gebaut von Corey McIvor | Zynthio.ai", "copyright": "Corey McIvor. Alle Rechte vorbehalten.", "risk": "Kryptohandel birgt erhebliche Risiken. Vergangene Ergebnisse garantieren keine zukünftigen Erträge. Paper-Trading-Modus." },
   "terminal": { "greeting": "Willkommen bei Zynthio Commander", "paperMode": "Paper-Trading-Modus — kein echtes Geld im Risiko", "helpHint": "Tippe help für Befehle. Tab zum Vervollständigen. cai zum Starten." }
 }

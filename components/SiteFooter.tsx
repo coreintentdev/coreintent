@@ -66,13 +66,13 @@ export default function SiteFooter() {
               {t("footer.legal")}
             </span>
             <Link href={`/${locale}/privacy`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Privacy Policy
+              {t("footer.privacy")}
             </Link>
             <Link href={`/${locale}/terms`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terms of Service
+              {t("footer.terms")}
             </Link>
             <Link href={`/${locale}/disclaimer`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Disclaimer
+              {t("footer.disclaimer")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>

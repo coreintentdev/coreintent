@@ -50,6 +50,6 @@
   "tabs": { "terminal": "الطرفية", "dashboard": "لوحة التحكم", "agents": "الوكلاء", "zynrip": "ZynRip", "docs": "الوثائق" },
   "dashboard": { "domainPortfolio": "محفظة النطاقات", "architecture": "البنية", "stackCosts": "البنية والتكاليف (~$45/شهر)", "trademarkPortfolio": "محفظة العلامات التجارية", "hardRules": "القواعد الصارمة" },
   "agents": { "title": "أسطول وكلاء AI", "subtitle": "وضع التداول الورقي — الوكلاء مُعدّون لكن ليسوا في تداول حي." },
-  "footer": { "product": "المنتج", "legal": "قانوني", "connect": "تواصل", "tagline": "محرك تداول الذكاء الاصطناعي", "builtBy": "بناه Corey McIvor | Zynthio.ai", "copyright": "Corey McIvor. جميع الحقوق محفوظة.", "risk": "تداول العملات المشفرة ينطوي على مخاطر كبيرة. الأداء السابق لا يضمن النتائج المستقبلية. وضع التداول الورقي." },
+  "footer": { "product": "المنتج", "legal": "قانوني", "privacy": "سياسة الخصوصية", "terms": "شروط الخدمة", "disclaimer": "إخلاء المسؤولية", "connect": "تواصل", "tagline": "محرك تداول الذكاء الاصطناعي", "builtBy": "بناه Corey McIvor | Zynthio.ai", "copyright": "Corey McIvor. جميع الحقوق محفوظة.", "risk": "تداول العملات المشفرة ينطوي على مخاطر كبيرة. الأداء السابق لا يضمن النتائج المستقبلية. وضع التداول الورقي." },
   "terminal": { "greeting": "مرحباً بك في Zynthio Commander", "paperMode": "وضع التداول الورقي — لا أموال حقيقية في خطر", "helpHint": "اكتب help للأوامر. Tab للإكمال التلقائي. cai للبدء." }
 }

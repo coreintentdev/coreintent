@@ -531,9 +531,9 @@ export default function Home() {
                 </span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
-                {DEMO_TESTIMONIALS.map((t) => (
+                {DEMO_TESTIMONIALS.map((testimonial) => (
                   <div
-                    key={t.name}
+                    key={testimonial.name}
                     style={{
                       padding: "16px",
                       background: "var(--bg-primary)",
@@ -542,15 +542,15 @@ export default function Home() {
                     }}
                   >
                     <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", marginBottom: "12px", fontStyle: "italic" }}>
-                      &quot;{t.quote}&quot;
+                      &quot;{testimonial.quote}&quot;
                     </p>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div>
-                        <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{t.name}</div>
-                        <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{t.role}</div>
+                        <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{testimonial.name}</div>
+                        <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{testimonial.role}</div>
                       </div>
                       <span style={{ fontSize: "8px", padding: "2px 4px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "3px" }}>
-                        {t.tag}
+                        {testimonial.tag}
                       </span>
                     </div>
                   </div>

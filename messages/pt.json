@@ -50,6 +50,6 @@
   "tabs": { "terminal": "Terminal", "dashboard": "Painel", "agents": "Agentes", "zynrip": "ZynRip", "docs": "Docs" },
   "dashboard": { "domainPortfolio": "Portfólio de Domínios", "architecture": "Arquitetura", "stackCosts": "Stack e Custos (~$45/mês)", "trademarkPortfolio": "Portfólio de Marcas", "hardRules": "Regras Rígidas" },
   "agents": { "title": "Frota de Agentes IA", "subtitle": "Modo paper trading — agentes configurados mas não operando ao vivo." },
-  "footer": { "product": "Produto", "legal": "Legal", "connect": "Conectar", "tagline": "Motor de Trading com IA Agente", "builtBy": "Criado por Corey McIvor | Zynthio.ai", "copyright": "Corey McIvor. Todos os direitos reservados.", "risk": "Trading de criptomoedas envolve risco significativo. Desempenho passado não garante resultados futuros. Modo paper trading." },
+  "footer": { "product": "Produto", "legal": "Legal", "privacy": "Política de Privacidade", "terms": "Termos de Serviço", "disclaimer": "Aviso Legal", "connect": "Conectar", "tagline": "Motor de Trading com IA Agente", "builtBy": "Criado por Corey McIvor | Zynthio.ai", "copyright": "Corey McIvor. Todos os direitos reservados.", "risk": "Trading de criptomoedas envolve risco significativo. Desempenho passado não garante resultados futuros. Modo paper trading." },
   "terminal": { "greeting": "Bem-vindo ao Zynthio Commander", "paperMode": "Modo paper trading — sem dinheiro real em risco", "helpHint": "Digite help para comandos. Tab para autocompletar. cai para iniciar." }
 }

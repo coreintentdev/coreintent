@@ -50,6 +50,6 @@
   "tabs": { "terminal": "ターミナル", "dashboard": "ダッシュボード", "agents": "エージェント", "zynrip": "ZynRip", "docs": "ドキュメント" },
   "dashboard": { "domainPortfolio": "ドメインポートフォリオ", "architecture": "アーキテクチャ", "stackCosts": "スタック＆コスト (~月$45)", "trademarkPortfolio": "商標ポートフォリオ", "hardRules": "ハードルール" },
   "agents": { "title": "AIエージェント艦隊", "subtitle": "ペーパートレーディングモード — エージェントは設定済みだが実取引なし。" },
-  "footer": { "product": "プロダクト", "legal": "法的情報", "connect": "つながる", "tagline": "エージェントAIトレーディングエンジン", "builtBy": "Corey McIvor制作 | Zynthio.ai", "copyright": "Corey McIvor. 全著作権所有。", "risk": "暗号資産取引には重大なリスクが伴います。過去の実績は将来の結果を保証しません。ペーパートレーディングモード。" },
+  "footer": { "product": "プロダクト", "legal": "法的情報", "privacy": "プライバシーポリシー", "terms": "利用規約", "disclaimer": "免責事項", "connect": "つながる", "tagline": "エージェントAIトレーディングエンジン", "builtBy": "Corey McIvor制作 | Zynthio.ai", "copyright": "Corey McIvor. 全著作権所有。", "risk": "暗号資産取引には重大なリスクが伴います。過去の実績は将来の結果を保証しません。ペーパートレーディングモード。" },
   "terminal": { "greeting": "Zynthio Commanderへようこそ", "paperMode": "ペーパートレーディングモード — 実資金リスクなし", "helpHint": "help でコマンド一覧。Tabで補完。cai で開始。" }
 }

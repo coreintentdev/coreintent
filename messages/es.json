@@ -108,6 +108,9 @@
   "footer": {
     "product": "Producto",
     "legal": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "disclaimer": "Descargo de Responsabilidad",
     "connect": "Conectar",
     "tagline": "Motor de Trading con IA Agéntica",
     "builtBy": "Creado por Corey McIvor | Zynthio.ai",

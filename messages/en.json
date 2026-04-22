@@ -108,6 +108,9 @@
   "footer": {
     "product": "Product",
     "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
     "connect": "Connect",
     "tagline": "Agentic AI Trading Engine",
     "builtBy": "Built by Corey McIvor | Zynthio.ai",

@@ -56,6 +56,6 @@
   "tabs": { "terminal": "终端", "dashboard": "仪表板", "agents": "代理", "zynrip": "ZynRip", "docs": "文档" },
   "dashboard": { "domainPortfolio": "域名组合", "architecture": "架构", "stackCosts": "技术栈与成本 (~$45/月)", "trademarkPortfolio": "商标组合", "hardRules": "硬性规则" },
   "agents": { "title": "AI代理舰队", "subtitle": "模拟交易模式 — 代理已配置但未实盘交易。" },
-  "footer": { "product": "产品", "legal": "法律", "connect": "联系", "tagline": "智能体AI交易引擎", "builtBy": "由Corey McIvor打造 | Zynthio.ai", "copyright": "Corey McIvor. 保留所有权利。", "risk": "加密货币交易涉及重大风险。过往表现不保证未来结果。模拟交易模式。" },
+  "footer": { "product": "产品", "legal": "法律", "privacy": "隐私政策", "terms": "服务条款", "disclaimer": "免责声明", "connect": "联系", "tagline": "智能体AI交易引擎", "builtBy": "由Corey McIvor打造 | Zynthio.ai", "copyright": "Corey McIvor. 保留所有权利。", "risk": "加密货币交易涉及重大风险。过往表现不保证未来结果。模拟交易模式。" },
   "terminal": { "greeting": "欢迎来到Zynthio Commander", "paperMode": "模拟交易模式 — 没有真实资金风险", "helpHint": "输入 help 查看命令。Tab自动补全。cai 开始。" }
 }
