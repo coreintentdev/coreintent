@@ -368,6 +368,128 @@ const sectionTitle: React.CSSProperties = {
   marginBottom: "12px",
 };
 
+/* ─── Animated Signal Pipeline ─── */
+const PIPELINE_STEPS = [
+  { label: "Detect", model: "Grok", color: "#ef4444", status: ["Scanning X feeds...", "RSI divergence found", "Signal: LONG 87%"] },
+  { label: "Analyse", model: "Claude", color: "#a855f7", status: ["Running risk model...", "R:R 2.4:1 acceptable", "Conf adjusted: 79%"] },
+  { label: "Verify", model: "Perplexity", color: "#3b82f6", status: ["Checking live news...", "No negative catalysts", "Research conf: 82%"] },
+  { label: "Decide", model: "Engine", color: "#10b981", status: ["Computing consensus...", "3/3 models agree", "EXECUTE: LONG BTC"] },
+];
+
+function SignalPipeline() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [statusIdx, setStatusIdx] = useState(0);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setStatusIdx((prev) => {
+        if (prev >= 2) {
+          setActiveStep((s) => (s + 1) % 4);
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 1200);
+    return () => clearInterval(iv);
+  }, []);
+
+  return (
+    <div style={{ marginTop: "36px" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
+        Live signal pipeline
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+      </div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
+        {PIPELINE_STEPS.map((s, i) => {
+          const isActive = i === activeStep;
+          const isPast = i < activeStep;
+          return (
+            <div key={s.label} style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  padding: "14px 18px",
+                  background: isActive ? `${s.color}12` : "var(--bg-primary)",
+                  border: `1px solid ${isActive ? s.color : isPast ? `${s.color}66` : `${s.color}22`}`,
+                  borderRadius: "8px",
+                  textAlign: "center",
+                  minWidth: "140px",
+                  transition: "all 0.4s ease",
+                  boxShadow: isActive ? `0 0 20px ${s.color}25` : "none",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {isActive && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "2px",
+                    background: `linear-gradient(90deg, transparent, ${s.color}, transparent)`,
+                    animation: "shimmer 1.5s ease infinite",
+                  }} />
+                )}
+                <div style={{ fontSize: "11px", fontWeight: "bold", color: isActive || isPast ? s.color : `${s.color}88`, marginBottom: "2px", transition: "color 0.4s ease" }}>
+                  {s.model}
+                </div>
+                <div style={{ fontSize: "13px", fontWeight: "bold", color: isActive || isPast ? s.color : `${s.color}66`, marginBottom: "6px", transition: "color 0.4s ease" }}>
+                  {s.label}
+                </div>
+                <div style={{
+                  fontSize: "10px",
+                  color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+                  lineHeight: "1.4",
+                  minHeight: "14px",
+                  transition: "color 0.3s ease",
+                }}>
+                  {isActive ? s.status[statusIdx] : isPast ? s.status[2] : " "}
+                </div>
+                {(isActive || isPast) && (
+                  <div style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: isPast ? s.color : s.color,
+                    margin: "6px auto 0",
+                    animation: isActive ? "pulse 1s ease-in-out infinite" : "none",
+                    opacity: isPast ? 0.6 : 1,
+                  }} />
+                )}
+              </div>
+              {i < 3 && (
+                <div style={{ display: "flex", alignItems: "center", margin: "0 4px", position: "relative" }}>
+                  <div style={{
+                    width: "24px",
+                    height: "2px",
+                    background: i < activeStep ? PIPELINE_STEPS[i].color : "var(--border-color)",
+                    transition: "background 0.4s ease",
+                    position: "relative",
+                  }}>
+                    {i === activeStep && statusIdx === 2 && (
+                      <div style={{
+                        position: "absolute",
+                        right: "-3px",
+                        top: "-3px",
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        background: PIPELINE_STEPS[i].color,
+                        boxShadow: `0 0 8px ${PIPELINE_STEPS[i].color}`,
+                        animation: "pulse 0.5s ease-in-out",
+                      }} />
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -538,40 +660,8 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Signal Pipeline */}
-            <div style={{ marginTop: "36px" }}>
-              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
-                How the signal pipeline works
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
-                {[
-                  { step: "1", label: "Detect", desc: "Grok scans markets & social feeds", color: "#ef4444" },
-                  { step: "2", label: "Analyse", desc: "Claude runs deep risk assessment", color: "#a855f7" },
-                  { step: "3", label: "Verify", desc: "Perplexity fact-checks with live news", color: "#3b82f6" },
-                  { step: "4", label: "Decide", desc: "Consensus = act. Disagreement = dig deeper", color: "#10b981" },
-                ].map((s, i) => (
-                  <div key={s.step} style={{ display: "flex", alignItems: "center" }}>
-                    <div
-                      style={{
-                        padding: "14px 18px",
-                        background: "var(--bg-primary)",
-                        border: `1px solid ${s.color}33`,
-                        borderRadius: "8px",
-                        textAlign: "center",
-                        minWidth: "130px",
-                      }}
-                    >
-                      <div style={{ fontSize: "20px", fontWeight: "bold", color: s.color, marginBottom: "2px" }}>{s.step}</div>
-                      <div style={{ fontSize: "12px", fontWeight: "bold", color: s.color, marginBottom: "4px" }}>{s.label}</div>
-                      <div style={{ fontSize: "10px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{s.desc}</div>
-                    </div>
-                    {i < 3 && (
-                      <span style={{ color: "var(--text-secondary)", fontSize: "16px", margin: "0 6px" }}>&rarr;</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* Animated Signal Pipeline */}
+            <SignalPipeline />
 
             {/* Stats Banner */}
             <div

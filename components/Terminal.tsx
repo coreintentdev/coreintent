@@ -73,6 +73,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mbattle\x1b[0m      - Watch AI models debate a trade
   \x1b[32mscan\x1b[0m        - Full system scan with progress
   \x1b[32mweather\x1b[0m     - Market weather forecast
+  \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
+  \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -585,6 +587,7 @@ const ALL_COMMANDS = [
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
   "trade", "radar", "ping", "cowsay", "top",
   "stonks", "leaderboard", "lb", "battle", "scan", "weather",
+  "challenge", "warp", "buy", "sell", "hold", "quit",
   "sudo", "rickroll",
 ];
 
@@ -601,6 +604,20 @@ export default function Terminal() {
   const watchRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTime = useRef(Date.now());
   const inputRef = useRef<HTMLInputElement>(null);
+  const gameRef = useRef<{
+    round: number;
+    score: number;
+    streak: number;
+    bestStreak: number;
+    scenarios: Array<{
+      pair: string;
+      price: number;
+      move: number;
+      rsi: number;
+      volume: string;
+      grokSays: string;
+    }>;
+  } | null>(null);
 
   useEffect(() => {
     setLines([WELCOME_BANNER]);
@@ -1311,6 +1328,98 @@ export default function Terminal() {
       return "";
     }
 
+    // ── CHALLENGE: Speed trading game ──
+    if (trimmed === "challenge") {
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT", "LINK/USDT"];
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60, "LINK/USDT": 14.80,
+      };
+      const grokHints = ["BULLISH", "BEARISH", "NEUTRAL", "UNCERTAIN", "STRONG BUY", "CAUTION"];
+      const scenarios = Array.from({ length: 10 }, (_, i) => {
+        const pair = pairs[i % pairs.length];
+        const base = basePrices[pair];
+        return {
+          pair,
+          price: +(base + (Math.random() - 0.5) * base * 0.02).toFixed(2),
+          move: +((Math.random() - 0.42) * 4).toFixed(2),
+          rsi: Math.round(30 + Math.random() * 50),
+          volume: (["LOW", "MEDIUM", "HIGH", "EXTREME"] as const)[Math.floor(Math.random() * 4)],
+          grokSays: grokHints[Math.floor(Math.random() * grokHints.length)],
+        };
+      });
+
+      gameRef.current = { round: 0, score: 0, streak: 0, bestStreak: 0, scenarios };
+      const first = scenarios[0];
+      const rsiColor = first.rsi > 70 ? "\x1b[31m" : first.rsi < 30 ? "\x1b[32m" : "\x1b[33m";
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  SPEED TRADING CHALLENGE\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  10 rounds. Read the signals. Make the call.`,
+        `  \x1b[90mType BUY, SELL, or HOLD each round. QUIT to exit.\x1b[0m`, ``,
+        `\x1b[36m  ── Round 1/${scenarios.length} ──\x1b[0m  Score: \x1b[32m0\x1b[0m`,
+        `  \x1b[33m${first.pair}\x1b[0m @ $${first.price.toLocaleString()}  |  RSI: ${rsiColor}${first.rsi}\x1b[0m  |  Vol: ${first.volume}  |  Grok: \x1b[33m${first.grokSays}\x1b[0m`,
+        `  \x1b[90m→ Type\x1b[0m \x1b[32mBUY\x1b[0m\x1b[90m,\x1b[0m \x1b[31mSELL\x1b[0m\x1b[90m, or\x1b[0m \x1b[33mHOLD\x1b[0m`
+      );
+      return "";
+    }
+
+    // ── WARP: AI pipeline trace ──
+    if (trimmed === "warp") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ SIGNAL PIPELINE — LIVE TRACE ══\x1b[0m`,
+        `\x1b[90m  Tracing signal: BTC/USDT breakout @ $67,420\x1b[0m`, ``);
+
+      const steps = [
+        `  \x1b[33m◐\x1b[0m  \x1b[31mGROK\x1b[0m scanning X feeds + order books...`,
+        `  \x1b[32m●\x1b[0m  RSI divergence detected on 4H`,
+        `  \x1b[32m●\x1b[0m  Volume spike: 2.3x average`,
+        `  \x1b[32m●\x1b[0m  Social sentiment: 84% bullish`,
+        `  \x1b[31m→\x1b[0m  Grok signal: \x1b[32mLONG\x1b[0m conf: \x1b[32m87%\x1b[0m`,
+        `     \x1b[90m▼ forwarding to Claude...\x1b[0m`,
+        ``,
+        `  \x1b[33m◐\x1b[0m  \x1b[35mCLAUDE\x1b[0m running deep analysis...`,
+        `  \x1b[32m●\x1b[0m  Risk/reward: 2.4:1 — acceptable`,
+        `  \x1b[33m!\x1b[0m  Resistance at $68,200 untested`,
+        `  \x1b[32m●\x1b[0m  Pattern: inverse H&S (textbook)`,
+        `  \x1b[35m→\x1b[0m  Claude adjusted conf: \x1b[33m79%\x1b[0m (added caution)`,
+        `     \x1b[90m▼ forwarding to Perplexity...\x1b[0m`,
+        ``,
+        `  \x1b[33m◐\x1b[0m  \x1b[34mPERPLEXITY\x1b[0m fact-checking live sources...`,
+        `  \x1b[32m●\x1b[0m  No negative news in last 4 hours`,
+        `  \x1b[32m●\x1b[0m  Whale accumulation confirmed (Glassnode)`,
+        `  \x1b[33m!\x1b[0m  Fed meeting in 18h — mild caution`,
+        `  \x1b[34m→\x1b[0m  Research conf: \x1b[32m82%\x1b[0m`,
+        `     \x1b[90m▼ computing consensus...\x1b[0m`,
+        ``,
+        `  \x1b[36m╔══════════════════════════════════════╗\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  \x1b[32m■\x1b[0m \x1b[36mENGINE DECISION\x1b[0m                  \x1b[36m║\x1b[0m`,
+        `  \x1b[36m╠══════════════════════════════════════╣\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  Action:     \x1b[32mLONG BTC/USDT\x1b[0m        \x1b[36m║\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  Consensus:  \x1b[32m3/3 AGREE\x1b[0m            \x1b[36m║\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  Confidence: \x1b[32m83%\x1b[0m (weighted avg)   \x1b[36m║\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  Entry:      $67,420              \x1b[36m║\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  Stop:       $64,050 (-5%)        \x1b[36m║\x1b[0m`,
+        `  \x1b[36m║\x1b[0m  Target:     $77,530 (+15%)       \x1b[36m║\x1b[0m`,
+        `  \x1b[36m╚══════════════════════════════════════╝\x1b[0m`,
+        ``,
+        `  \x1b[90mPipeline: 2.4s | 3-model consensus | Paper trading demo\x1b[0m`,
+      ];
+
+      let si = 0;
+      const siv = setInterval(() => {
+        if (si < steps.length) {
+          addLines(steps[si]);
+          si++;
+        } else {
+          clearInterval(siv);
+          addLines(``);
+        }
+      }, 150);
+      return "";
+    }
+
     // ── WEATHER: Market weather report ──
     if (trimmed === "weather") {
       const conditions = [
@@ -1387,11 +1496,99 @@ export default function Terminal() {
 
   // Process command with && chaining support
   const processCommand = useCallback(async (cmd: string) => {
+    const game = gameRef.current;
+    if (game) {
+      const choice = cmd.trim().toLowerCase();
+      if (choice === "quit" || choice === "q") {
+        gameRef.current = null;
+        addLines(`\x1b[33mChallenge abandoned.\x1b[0m`, ``);
+        return;
+      }
+      if (!["buy", "sell", "hold", "b", "s", "h"].includes(choice)) {
+        addLines(`\x1b[31mType BUY, SELL, or HOLD (or QUIT to exit)\x1b[0m`);
+        return;
+      }
+      const action = choice[0] === "b" ? "buy" : choice[0] === "s" ? "sell" : "hold";
+      const scenario = game.scenarios[game.round];
+      const move = scenario.move;
+      const newPrice = +(scenario.price * (1 + move / 100)).toFixed(2);
+
+      let points = 0;
+      let verdict = "";
+      if (action === "buy" && move > 0.3) {
+        points = Math.round(move * 100);
+        verdict = `\x1b[32m✓ GOOD BUY!\x1b[0m Price surged +${move.toFixed(2)}%`;
+      } else if (action === "sell" && move < -0.3) {
+        points = Math.round(Math.abs(move) * 100);
+        verdict = `\x1b[32m✓ GOOD SELL!\x1b[0m Dodged a ${move.toFixed(2)}% drop`;
+      } else if (action === "hold" && Math.abs(move) <= 0.3) {
+        points = 30;
+        verdict = `\x1b[32m✓ SMART HOLD.\x1b[0m Choppy market (${move >= 0 ? "+" : ""}${move.toFixed(2)}%)`;
+      } else if (action === "buy" && move < -0.3) {
+        points = -Math.round(Math.abs(move) * 60);
+        verdict = `\x1b[31m✗ BAD BUY.\x1b[0m Price dropped ${move.toFixed(2)}%`;
+      } else if (action === "sell" && move > 0.3) {
+        points = -Math.round(move * 40);
+        verdict = `\x1b[31m✗ MISSED RALLY.\x1b[0m Price pumped +${move.toFixed(2)}%`;
+      } else {
+        verdict = `\x1b[33m~ FLAT.\x1b[0m Price moved ${move >= 0 ? "+" : ""}${move.toFixed(2)}%`;
+      }
+
+      game.score += points;
+      if (points > 0) {
+        game.streak++;
+        game.bestStreak = Math.max(game.bestStreak, game.streak);
+      } else {
+        game.streak = 0;
+      }
+
+      const streakText = game.streak >= 3 ? ` \x1b[33m[${game.streak}x STREAK]\x1b[0m` : "";
+      const pointsText = points > 0 ? `\x1b[32m+${points}\x1b[0m` : points < 0 ? `\x1b[31m${points}\x1b[0m` : `\x1b[90m+0\x1b[0m`;
+
+      addLines(
+        `  ${verdict}  ${pointsText} pts${streakText}`,
+        `  $${scenario.price.toLocaleString()} → $${newPrice.toLocaleString()}`,
+        ``
+      );
+
+      game.round++;
+
+      if (game.round >= game.scenarios.length) {
+        gameRef.current = null;
+        const rank = game.score >= 700
+          ? "\x1b[33m1st\x1b[0m — AlphaStrat_v7 territory"
+          : game.score >= 500
+            ? "\x1b[32m3rd\x1b[0m — Solid trader"
+            : game.score >= 200
+              ? "\x1b[36m5th\x1b[0m — Room to improve"
+              : "\x1b[31m8th\x1b[0m — More practice needed";
+        addLines(
+          `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+          `\x1b[36m  CHALLENGE COMPLETE\x1b[0m`,
+          `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+          `  Score:       ${game.score >= 0 ? "\x1b[32m" : "\x1b[31m"}${game.score} pts\x1b[0m`,
+          `  Best Streak: \x1b[33m${game.bestStreak}x\x1b[0m`,
+          `  League Rank: ${rank}`,
+          `  \x1b[90mPaper trading challenge — real leagues coming soon\x1b[0m`, ``
+        );
+        return;
+      }
+
+      const next = game.scenarios[game.round];
+      const rsiColor = next.rsi > 70 ? "\x1b[31m" : next.rsi < 30 ? "\x1b[32m" : "\x1b[33m";
+      addLines(
+        `\x1b[36m  ── Round ${game.round + 1}/${game.scenarios.length} ──\x1b[0m  Score: ${game.score >= 0 ? "\x1b[32m" : "\x1b[31m"}${game.score}\x1b[0m`,
+        `  \x1b[33m${next.pair}\x1b[0m @ $${next.price.toLocaleString()}  |  RSI: ${rsiColor}${next.rsi}\x1b[0m  |  Vol: ${next.volume}  |  Grok: \x1b[33m${next.grokSays}\x1b[0m`,
+        `  \x1b[90m→ Type\x1b[0m \x1b[32mBUY\x1b[0m\x1b[90m,\x1b[0m \x1b[31mSELL\x1b[0m\x1b[90m, or\x1b[0m \x1b[33mHOLD\x1b[0m`
+      );
+      return;
+    }
+
     const parts = cmd.split("&&").map((s) => s.trim()).filter(Boolean);
     for (const part of parts) {
       await execSingle(part);
     }
-  }, [execSingle]);
+  }, [execSingle, addLines]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
