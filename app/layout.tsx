@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { i18nConfig, getDirection } from "@/lib/i18n-config";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,9 +11,6 @@ export const metadata: Metadata = {
   description:
     "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio.",
   metadataBase: new URL("https://coreintent.dev"),
-  alternates: {
-    canonical: "https://coreintent.dev",
-  },
   openGraph: {
     type: "website",
     locale: "en_NZ",
@@ -76,9 +75,6 @@ export const metadata: Metadata = {
     "AI crypto trading",
   ],
   category: "Finance",
-  other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
-  },
 };
 
 const jsonLd = {
@@ -140,6 +136,7 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
+      inLanguage: i18nConfig.locales,
       offers: {
         "@type": "Offer",
         price: "0",
@@ -186,13 +183,32 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const locale = headersList.get("x-locale") || i18nConfig.defaultLocale;
+  const dir = getDirection(locale);
+
   return (
-    <html lang="en">
+    <html lang={locale} dir={dir}>
+      <head>
+        {i18nConfig.locales.map((loc) => (
+          <link
+            key={loc}
+            rel="alternate"
+            hrefLang={loc}
+            href={`https://coreintent.dev/${loc}`}
+          />
+        ))}
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href="https://coreintent.dev/en"
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"

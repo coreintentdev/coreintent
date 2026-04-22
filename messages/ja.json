@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "title": "CoreIntent | エージェントAIトレーディングエンジン — サブスク不要、競争のみ",
+    "description": "3つのAIモデル。1つのトレーディングエンジン。サブスクリプションゼロ。CoreIntentはClaude、Grok、Perplexityを統合してトレーディングシグナルを生成。無料コンペ——ボット歓迎。NZのZynthioが構築。"
+  },
+  "nav": { "terminal": "ターミナル", "demo": "デモ", "stack": "スタック", "pricing": "料金", "language": "言語" },
+  "hero": {
+    "badge": "ペーパートレーディングモード — 公開開発中",
+    "tagline": "サブスクリプションをコンペティションに置き換えたエージェントAIトレーディングエンジン",
+    "description": "Grokがシグナルを検出。Claudeが疑問を投げかける。Perplexityが事実確認。3つが一致すれば、確信を持って行動。不一致なら、より深く掘り下げる。",
+    "otherPlatforms": "他のプラットフォームは勝っても負けても月額$99。",
+    "weCharge": "私たちは無料。コンペで実力を証明してください。",
+    "builtBy": "効かないシグナルに金を払うのに疲れたトレーダーが構築。",
+    "openSource": "オープンソース。ペーパートレーディング。NZのZynthioが誠実に構築。",
+    "launchTerminal": "ターミナル起動",
+    "seeCompetitions": "コンペを見る",
+    "earlyAccess": "先行アクセス",
+    "earlyAccessTitle": "ランキングが埋まる前に参加しよう。",
+    "earlyAccessDesc": "早期登録者はコンペ開始時に優先配置されます。プラットフォームは無料。アドバンテージはタイミング。",
+    "starOnGithub": "GitHubでスター",
+    "followUs": "@coreintentaiをフォロー",
+    "competitionsLaunching": "コンペまもなく開始。ペーパートレーディングモード稼働中。"
+  },
+  "valueProps": {
+    "threeModels": { "label": "3モデル。1シグナル。", "desc": "Grokが検出。Claudeが分析。Perplexityが検証。合意=行動。不一致=待機。" },
+    "compete": { "label": "競争せよ、購読するな", "desc": "デイリースプリント。ウィークリー。マンスリーチャンピオンシップ。無料参加。P&Lが会員証。" },
+    "bots": { "label": "ボットは一級市民", "desc": "CAPTCHAなし。ブロックなし。AIエージェントが登録・競争・人間と共に稼ぐ。" },
+    "cost": { "label": "月$45。プラットフォーム全体。", "desc": "Vercel: 無料。GitHub: 無料。Cloudflare: $20。VPS: $25。" }
+  },
+  "pipeline": {
+    "title": "シグナルパイプラインの仕組み",
+    "step1": { "label": "検出", "desc": "Grokが市場とSNSをスキャン" },
+    "step2": { "label": "分析", "desc": "Claudeが深いリスク評価を実行" },
+    "step3": { "label": "検証", "desc": "Perplexityがリアルタイムニュースで確認" },
+    "step4": { "label": "決定", "desc": "合意=行動。不一致=深掘り" }
+  },
+  "stats": { "aiModels": "AIモデル", "tradingAgents": "トレーディングエージェント", "entryFee": "参加費", "totalStackCost": "総コスト", "subscriptions": "サブスク" },
+  "poweredBy": "3つのAIモデルで稼働",
+  "testimonials": { "title": "ユーザーの声", "demoLabel": "デモ — サンプル" },
+  "whyCoreintent": {
+    "title": "なぜCoreIntentか",
+    "them1": "1モデルが推測", "us1": "3モデルが議論",
+    "them2": "勝敗関係なく月$99", "us2": "$0 — 競争で優位性を証明",
+    "them3": "ボット禁止・CAPTCHA・ブロック", "us3": "ボットは一級競争者",
+    "them4": "すべてにグリーンドット", "us4": "デモはデモ。計画は計画。",
+    "them5": "月$10k VCインフラ", "us5": "月$45全部。VCなし。",
+    "them6": "サブスク収益=インセンティブ不一致", "us6": "競争収益=インセンティブ一致"
+  },
+  "badges": { "openSource": "オープンソース", "nzBuilt": "NZ製", "paperMode": "ペーパーモード", "totalCost": "月$45", "models": "3モデル", "botsOk": "ボットOK" },
+  "tabs": { "terminal": "ターミナル", "dashboard": "ダッシュボード", "agents": "エージェント", "zynrip": "ZynRip", "docs": "ドキュメント" },
+  "dashboard": { "domainPortfolio": "ドメインポートフォリオ", "architecture": "アーキテクチャ", "stackCosts": "スタック＆コスト (~月$45)", "trademarkPortfolio": "商標ポートフォリオ", "hardRules": "ハードルール" },
+  "agents": { "title": "AIエージェント艦隊", "subtitle": "ペーパートレーディングモード — エージェントは設定済みだが実取引なし。" },
+  "footer": { "product": "プロダクト", "legal": "法的情報", "connect": "つながる", "tagline": "エージェントAIトレーディングエンジン", "builtBy": "Corey McIvor制作 | Zynthio.ai", "copyright": "Corey McIvor. 全著作権所有。", "risk": "暗号資産取引には重大なリスクが伴います。過去の実績は将来の結果を保証しません。ペーパートレーディングモード。" },
+  "terminal": { "greeting": "Zynthio Commanderへようこそ", "paperMode": "ペーパートレーディングモード — 実資金リスクなし", "helpHint": "help でコマンド一覧。Tabで補完。cai で開始。" }
+}

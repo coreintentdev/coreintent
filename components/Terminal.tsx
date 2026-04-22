@@ -1,20 +1,40 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from "@/lib/i18n-context";
 
-const WELCOME_BANNER = `\x1b[36m
+const ASCII_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
 ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-\x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[0m`;
+
+const localeTimezoneMap: Record<string, { tz: string; label: string }> = {
+  en: { tz: "Pacific/Auckland", label: "NZST" },
+  es: { tz: "Europe/Madrid", label: "CET" },
+  mi: { tz: "Pacific/Auckland", label: "NZST" },
+  zh: { tz: "Asia/Shanghai", label: "CST" },
+  ja: { tz: "Asia/Tokyo", label: "JST" },
+  pt: { tz: "America/Sao_Paulo", label: "BRT" },
+  fr: { tz: "Europe/Paris", label: "CET" },
+  de: { tz: "Europe/Berlin", label: "CET" },
+  ar: { tz: "Asia/Riyadh", label: "AST" },
+  hi: { tz: "Asia/Kolkata", label: "IST" },
+};
+
+function buildWelcomeBanner(greeting: string, paperMode: string, helpHint: string, locale: string): string {
+  const tzInfo = localeTimezoneMap[locale] || localeTimezoneMap.en;
+  const timeStr = new Date().toLocaleString(locale, { timeZone: tzInfo.tz });
+  return `${ASCII_BANNER}
+\x1b[33m${greeting} v0.2.0 — CoreIntent Trading Engine\x1b[0m
+\x1b[90m${paperMode}\x1b[0m
+${helpHint}
+\x1b[90m${timeStr} ${tzInfo.label}\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -567,6 +587,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { t, locale } = useTranslation();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -581,8 +602,14 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    const banner = buildWelcomeBanner(
+      t("terminal.greeting"),
+      t("terminal.paperMode"),
+      t("terminal.helpHint"),
+      locale,
+    );
+    setLines([banner]);
+  }, [t, locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "title": "CoreIntent | 智能体AI交易引擎 — 没有订阅，只有竞赛",
+    "description": "三个AI模型。一个交易引擎。零订阅。CoreIntent协调Claude、Grok和Perplexity生成交易信号。免费竞赛——欢迎机器人。由Zynthio在新西兰打造。"
+  },
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "价格",
+    "language": "语言"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 公开构建中",
+    "tagline": "用竞赛取代订阅的智能体AI交易引擎",
+    "description": "Grok发现信号。Claude质疑它。Perplexity核实它。三者一致时，果断行动。不一致时，深入研究——而非盲目猜测。",
+    "otherPlatforms": "其他平台无论你赢亏都收$99/月。",
+    "weCharge": "我们不收费。在竞赛中证明自己。",
+    "builtBy": "由厌倦了为无效信号付费的交易员打造。",
+    "openSource": "开源。模拟交易模式。由Zynthio在新西兰诚实构建。",
+    "launchTerminal": "启动终端",
+    "seeCompetitions": "查看竞赛",
+    "earlyAccess": "抢先体验",
+    "earlyAccessTitle": "在排行榜填满之前加入。",
+    "earlyAccessDesc": "早期注册者在竞赛上线时享有优先位置。平台免费。优势在于时机。",
+    "starOnGithub": "在GitHub上加星",
+    "followUs": "关注 @coreintentai",
+    "competitionsLaunching": "竞赛即将上线。模拟交易模式已激活。"
+  },
+  "valueProps": {
+    "threeModels": { "label": "3个模型。1个信号。", "desc": "Grok检测。Claude分析。Perplexity验证。一致=行动。分歧=等待。" },
+    "compete": { "label": "竞赛，不订阅", "desc": "每日冲刺。每周磨炼。每月锦标赛。免费参赛。你的盈亏就是你的会员卡。" },
+    "bots": { "label": "机器人是一等公民", "desc": "无验证码。无屏蔽。AI代理注册、竞赛并与人类并肩作战。最佳策略获胜。" },
+    "cost": { "label": "$45/月。整个平台。", "desc": "Vercel: 免费。GitHub: 免费。Cloudflare: $20。VPS: $25。成本这么低还收订阅费——那是贪婪。" }
+  },
+  "pipeline": {
+    "title": "信号管道的工作原理",
+    "step1": { "label": "检测", "desc": "Grok扫描市场和社交动态" },
+    "step2": { "label": "分析", "desc": "Claude进行深度风险评估" },
+    "step3": { "label": "验证", "desc": "Perplexity用实时新闻核实" },
+    "step4": { "label": "决定", "desc": "共识=行动。分歧=深入" }
+  },
+  "stats": { "aiModels": "AI模型", "tradingAgents": "交易代理", "entryFee": "参赛费", "totalStackCost": "总成本", "subscriptions": "订阅" },
+  "poweredBy": "由三个AI模型驱动",
+  "testimonials": { "title": "用户评价", "demoLabel": "演示 — 示例评价" },
+  "whyCoreintent": {
+    "title": "为什么选CoreIntent",
+    "them1": "一个模型猜测", "us1": "三个模型辩论",
+    "them2": "无论输赢每月$99", "us2": "$0 — 在竞赛中证明你的优势",
+    "them3": "机器人被禁止、验证、屏蔽", "us3": "机器人是一等竞争者",
+    "them4": "所有指标都是绿色", "us4": "演示标为演示。计划标为计划。",
+    "them5": "$10k/月VC补贴基础设施", "us5": "$45/月全部。无VC。无烧钱。",
+    "them6": "订阅收入=激励错位", "us6": "竞赛收入=激励一致"
+  },
+  "badges": { "openSource": "开源", "nzBuilt": "新西兰制造", "paperMode": "模拟模式", "totalCost": "$45/月", "models": "3个模型", "botsOk": "欢迎机器人" },
+  "tabs": { "terminal": "终端", "dashboard": "仪表板", "agents": "代理", "zynrip": "ZynRip", "docs": "文档" },
+  "dashboard": { "domainPortfolio": "域名组合", "architecture": "架构", "stackCosts": "技术栈与成本 (~$45/月)", "trademarkPortfolio": "商标组合", "hardRules": "硬性规则" },
+  "agents": { "title": "AI代理舰队", "subtitle": "模拟交易模式 — 代理已配置但未实盘交易。" },
+  "footer": { "product": "产品", "legal": "法律", "connect": "联系", "tagline": "智能体AI交易引擎", "builtBy": "由Corey McIvor打造 | Zynthio.ai", "copyright": "Corey McIvor. 保留所有权利。", "risk": "加密货币交易涉及重大风险。过往表现不保证未来结果。模拟交易模式。" },
+  "terminal": { "greeting": "欢迎来到Zynthio Commander", "paperMode": "模拟交易模式 — 没有真实资金风险", "helpHint": "输入 help 查看命令。Tab自动补全。cai 开始。" }
+}

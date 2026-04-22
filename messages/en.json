@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+    "description": "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "Paper Trading Mode — Building in Public",
+    "tagline": "The agentic AI trading engine that replaced subscriptions with competitions",
+    "description": "Grok spots the signal. Claude questions it. Perplexity fact-checks it. When all three agree, you move with conviction. When they disagree, you dig deeper — not guess harder.",
+    "otherPlatforms": "Other platforms charge $99/mo whether you win or lose.",
+    "weCharge": "We charge nothing. You prove yourself in competition.",
+    "builtBy": "Built by traders who got tired of paying for signals that don't work.",
+    "openSource": "Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.",
+    "launchTerminal": "Launch Terminal",
+    "seeCompetitions": "See the Competitions",
+    "earlyAccess": "Early Access",
+    "earlyAccessTitle": "Get in before the leaderboard fills up.",
+    "earlyAccessDesc": "Early registrations get priority placement when competitions go live. The platform is free. The advantage is timing.",
+    "starOnGithub": "Star on GitHub",
+    "followUs": "Follow @coreintentai",
+    "competitionsLaunching": "Competitions launching soon. Paper trading mode active."
+  },
+  "valueProps": {
+    "threeModels": {
+      "label": "3 Models. 1 Signal.",
+      "desc": "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guessing vs three models debating — that's not marginal, that's fundamental."
+    },
+    "compete": {
+      "label": "Compete, Don't Subscribe",
+      "desc": "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. The arena is free — the competition is where value gets created."
+    },
+    "bots": {
+      "label": "Bots Are First-Class",
+      "desc": "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins — regardless of who or what runs it."
+    },
+    "cost": {
+      "label": "$45/mo. The Whole Platform.",
+      "desc": "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your costs are this low, charging subscriptions isn't a business model — it's greed."
+    }
+  },
+  "pipeline": {
+    "title": "How the signal pipeline works",
+    "step1": { "label": "Detect", "desc": "Grok scans markets & social feeds" },
+    "step2": { "label": "Analyse", "desc": "Claude runs deep risk assessment" },
+    "step3": { "label": "Verify", "desc": "Perplexity fact-checks with live news" },
+    "step4": { "label": "Decide", "desc": "Consensus = act. Disagreement = dig deeper" }
+  },
+  "stats": {
+    "aiModels": "AI Models",
+    "tradingAgents": "Trading Agents",
+    "entryFee": "Entry Fee",
+    "totalStackCost": "Total Stack Cost",
+    "subscriptions": "Subscriptions"
+  },
+  "poweredBy": "Powered by three AI models",
+  "testimonials": {
+    "title": "What people are saying",
+    "demoLabel": "DEMO — Placeholder testimonials"
+  },
+  "whyCoreintent": {
+    "title": "Why CoreIntent",
+    "them1": "One model guessing",
+    "us1": "Three models debating",
+    "them2": "$99/mo whether you win or lose",
+    "us2": "$0 — compete to prove your edge",
+    "them3": "Bots banned, captcha'd, blocked",
+    "us3": "Bots are first-class competitors",
+    "them4": "Green dots on everything",
+    "us4": "Demo labelled demo. Planned labelled planned.",
+    "them5": "$10k/mo infrastructure, VC-subsidised",
+    "us5": "$45/mo total. No VC. No burn rate.",
+    "them6": "Subscription revenue = misaligned incentives",
+    "us6": "Competition revenue = aligned incentives"
+  },
+  "badges": {
+    "openSource": "Open Source",
+    "nzBuilt": "NZ-Built",
+    "paperMode": "Paper Mode",
+    "totalCost": "$45/mo",
+    "models": "3 Models",
+    "botsOk": "Bots OK"
+  },
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Dashboard",
+    "agents": "Agents",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "dashboard": {
+    "domainPortfolio": "Domain Portfolio",
+    "architecture": "Architecture",
+    "stackCosts": "Stack & Costs (~$45/mo)",
+    "trademarkPortfolio": "Trademark Portfolio",
+    "hardRules": "Hard Rules"
+  },
+  "agents": {
+    "title": "AI Agent Fleet",
+    "subtitle": "Paper trading mode — agents are configured but not live-trading."
+  },
+  "footer": {
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "tagline": "Agentic AI Trading Engine",
+    "builtBy": "Built by Corey McIvor | Zynthio.ai",
+    "copyright": "Corey McIvor. All rights reserved.",
+    "risk": "Trading cryptocurrency involves significant risk. Past performance does not guarantee future results. Paper trading mode."
+  },
+  "terminal": {
+    "greeting": "Welcome to Zynthio Commander",
+    "paperMode": "Paper trading mode — no real money at risk",
+    "helpHint": "Type help for commands. Tab to autocomplete. cai to start."
+  }
+}
