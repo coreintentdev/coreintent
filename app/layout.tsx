@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -215,6 +222,19 @@ const jsonLd = {
         "query-input": "required name=search_term_string",
       },
     },
+    {
+      "@type": "SiteNavigationElement",
+      name: "Main Navigation",
+      hasPart: [
+        { "@type": "WebPage", name: "Terminal", url: "https://coreintent.dev" },
+        { "@type": "WebPage", name: "Demo", url: "https://coreintent.dev/demo" },
+        { "@type": "WebPage", name: "Stack", url: "https://coreintent.dev/stack" },
+        { "@type": "WebPage", name: "Competitions", url: "https://coreintent.dev/pricing" },
+        { "@type": "WebPage", name: "Privacy Policy", url: "https://coreintent.dev/privacy" },
+        { "@type": "WebPage", name: "Terms of Service", url: "https://coreintent.dev/terms" },
+        { "@type": "WebPage", name: "Disclaimer", url: "https://coreintent.dev/disclaimer" },
+      ],
+    },
   ],
 };
 
@@ -224,11 +244,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-NZ">
+    <html lang="en-NZ" className={jetbrainsMono.variable}>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         {children}
       </body>

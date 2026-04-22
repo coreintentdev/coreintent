@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy — How We Handle Your Data",
   description:
-    "CoreIntent privacy policy — how we handle your data. Operated by Corey McIvor / Zynthio under New Zealand law. NZ Privacy Act 2020 compliant.",
+    "CoreIntent privacy policy — how we collect, use, and protect your data. NZ Privacy Act 2020 compliant. Operated by Corey McIvor / Zynthio under New Zealand law.",
   alternates: {
     canonical: "https://coreintent.dev/privacy",
   },
