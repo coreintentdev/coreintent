@@ -1,0 +1,399 @@
+#!/usr/bin/env node
+/**
+ * cai — CoreIntent Desktop Commander
+ * Local CLI for managing the stack from your Mac.
+ * Bridges what the web terminal can't: SSH, file ops, VDS management.
+ *
+ * Install: chmod +x scripts/cai && ln -sf $(pwd)/scripts/cai /usr/local/bin/cai
+ * Usage:   cai <command>
+ *
+ * This runs on YOUR machine — not in a sandbox, not in a browser.
+ * Full access to SSH, filesystem, and all your local tools.
+ */
+
+const { execSync, spawn } = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const readline = require("readline");
+
+const VERSION = "1.0.0";
+const VDS_HOST = process.env.VDS_HOST || process.env.VPS_HOST || "100.122.99.34";
+const VDS_USER = process.env.VDS_USER || process.env.VPS_USER || "root";
+
+const CYAN = "\x1b[36m";
+const GREEN = "\x1b[32m";
+const YELLOW = "\x1b[33m";
+const RED = "\x1b[31m";
+const DIM = "\x1b[90m";
+const RESET = "\x1b[0m";
+const BOLD = "\x1b[1m";
+
+function print(msg) { console.log(msg); }
+function cyan(msg) { return `${CYAN}${msg}${RESET}`; }
+function green(msg) { return `${GREEN}${msg}${RESET}`; }
+function yellow(msg) { return `${YELLOW}${msg}${RESET}`; }
+function red(msg) { return `${RED}${msg}${RESET}`; }
+function dim(msg) { return `${DIM}${msg}${RESET}`; }
+
+function run(cmd, opts = {}) {
+  try {
+    return execSync(cmd, { encoding: "utf-8", stdio: opts.silent ? "pipe" : "inherit", ...opts }).trim();
+  } catch (e) {
+    if (opts.silent) return "";
+    throw e;
+  }
+}
+
+function ssh(cmd) {
+  return run(`ssh -o ConnectTimeout=10 ${VDS_USER}@${VDS_HOST} "${cmd.replace(/"/g, '\\"')}"`, { silent: true });
+}
+
+const BANNER = `${CYAN}
+ ██████╗ █████╗ ██╗
+██╔════╝██╔══██╗██║
+██║     ███████║██║
+██║     ██╔══██║██║
+╚██████╗██║  ██║██║
+ ╚═════╝╚═╝  ╚═╝╚═╝${RESET}
+${YELLOW}CoreIntent Desktop Commander v${VERSION}${RESET}
+${DIM}Local CLI — full access, no sandbox${RESET}
+`;
+
+const COMMANDS = {
+  help: () => {
+    print(BANNER);
+    print(`
+${YELLOW}── VDS MANAGEMENT ──${RESET}
+  ${green("cai status")}        Check VDS services (PM2, Nginx, disk)
+  ${green("cai logs [svc]")}    Stream PM2 logs (web, risk, signals, gtrade)
+  ${green("cai restart [svc]")} Restart service (or 'all')
+  ${green("cai ssh")}           Open SSH session to VDS
+  ${green("cai deploy")}        Run full VDS deployment
+  ${green("cai health")}        Full VDS health check
+
+${YELLOW}── DATA MANAGEMENT ──${RESET}
+  ${green("cai find-creds")}    Scan Mac for VPS credentials, SSH keys, .env files
+  ${green("cai pull")}          Pull state files from VDS (amnesia shield)
+  ${green("cai push-env")}      Push local .env to VDS
+  ${green("cai lens")}          Run VPS Lens (full audit + mirror)
+  ${green("cai rip")}           Run ZynRip Organize (sort Desktop)
+  ${green("cai tracks")}        Count Suno tracks in Music/
+
+${YELLOW}── DEVELOPMENT ──${RESET}
+  ${green("cai dev")}           Start local dev server
+  ${green("cai build")}         Build + lint + typecheck
+  ${green("cai audit")}         Run full audit
+  ${green("cai test-api")}      Hit all API routes
+
+${YELLOW}── CONTEXT ──${RESET}
+  ${green("cai whoami")}        Identity check
+  ${green("cai handover")}      Generate session handover
+  ${green("cai context")}       Show ZynContext (assumption blocker)
+
+${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
+`);
+  },
+
+  status: () => {
+    print(cyan("═══ VDS Status ═══"));
+    try {
+      print(ssh("pm2 list 2>/dev/null || echo 'PM2 not running'"));
+      print("");
+      print(cyan("Disk:"));
+      print(ssh("df -h / | tail -1"));
+      print(cyan("Memory:"));
+      print(ssh("free -h | grep Mem"));
+      print(cyan("Uptime:"));
+      print(ssh("uptime -p 2>/dev/null || uptime"));
+      print(cyan("Nginx:"));
+      print(ssh("systemctl is-active nginx 2>/dev/null || echo 'not running'"));
+    } catch {
+      print(red(`Cannot connect to ${VDS_HOST}`));
+    }
+  },
+
+  logs: (args) => {
+    const svc = args[0] || "coreintent-web";
+    const name = svc === "web" ? "coreintent-web"
+      : svc === "risk" ? "coreintent-risk"
+      : svc === "signals" ? "coreintent-signals"
+      : svc === "gtrade" ? "coreintent-gtrade"
+      : svc;
+    print(dim(`Streaming logs for ${name}... (Ctrl+C to stop)`));
+    const child = spawn("ssh", ["-o", "ConnectTimeout=10", `${VDS_USER}@${VDS_HOST}`, `pm2 logs ${name} --lines 50`], { stdio: "inherit" });
+    child.on("error", () => print(red("SSH connection failed")));
+  },
+
+  restart: (args) => {
+    const svc = args[0] || "all";
+    print(cyan(`Restarting ${svc}...`));
+    print(ssh(`pm2 restart ${svc}`));
+    print(green("Done."));
+  },
+
+  ssh: () => {
+    print(dim(`Connecting to ${VDS_USER}@${VDS_HOST}...`));
+    spawn("ssh", [`${VDS_USER}@${VDS_HOST}`], { stdio: "inherit" });
+  },
+
+  deploy: () => {
+    print(cyan("Running VDS consolidation deploy..."));
+    run("bash scripts/deploy-vds.sh");
+  },
+
+  health: () => {
+    print(cyan("═══ VDS Health Check ═══"));
+    try {
+      print(cyan("\nServices:"));
+      print(ssh("pm2 jlist 2>/dev/null | node -e \"const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));d.forEach(p=>console.log('  '+(p.pm2_env.status==='online'?'\\x1b[32m●':'\\x1b[31m○')+'\\x1b[0m '+p.name+' — '+p.pm2_env.status))\" 2>/dev/null || pm2 list 2>/dev/null || echo 'PM2 not installed'"));
+      print(cyan("\nPorts listening:"));
+      print(ssh("ss -tlnp 2>/dev/null | grep -E ':(80|443|3000) ' || echo 'None on 80/443/3000'"));
+      print(cyan("\nSSL certs:"));
+      print(ssh("certbot certificates 2>/dev/null | grep -E 'Domains|Expiry' || echo 'No certs'"));
+      print(cyan("\nDisk:"));
+      print(ssh("df -h / | tail -1"));
+      print(cyan("\nFirewall:"));
+      print(ssh("ufw status 2>/dev/null | head -5 || echo 'UFW not active'"));
+    } catch {
+      print(red(`Cannot connect to ${VDS_HOST}`));
+    }
+  },
+
+  pull: () => {
+    print(cyan("Pulling state files from VDS..."));
+    const dir = `vds_state_${new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19)}`;
+    run(`mkdir -p ${dir}`);
+    const files = [
+      "/root/zynthio/SESSION_STATE.md",
+      "/root/zynthio/MASTER_HANDOVER.md",
+      "/root/zynthio/MASTER_INDEX.md",
+      "/root/zynthio/TODO_MASTER_LIVE.md",
+      "/root/zynthio/COREY_WORDS.md",
+      "/root/zynthio/CONTENT_INTEL.md",
+    ];
+    for (const f of files) {
+      const name = path.basename(f);
+      try {
+        run(`scp -o ConnectTimeout=10 ${VDS_USER}@${VDS_HOST}:${f} ${dir}/`, { silent: true });
+        print(green(`  Pulled: ${name}`));
+      } catch {
+        print(yellow(`  Not found: ${name}`));
+      }
+    }
+    print(`\nState files in: ${green(dir)}/`);
+    print(dim("Feed these to your next AI session as amnesia shield."));
+  },
+
+  "push-env": () => {
+    if (!fs.existsSync(".env")) {
+      print(red("No .env file found in project root."));
+      return;
+    }
+    print(cyan("Pushing .env to VDS..."));
+    run(`scp -o ConnectTimeout=10 .env ${VDS_USER}@${VDS_HOST}:/root/coreintent/.env`);
+    print(green("Done. Restart services: cai restart all"));
+  },
+
+  "find-creds": () => {
+    print(cyan("Scanning for VPS credentials..."));
+    run("bash scripts/find-vps-creds.sh");
+  },
+
+  lens: () => {
+    print(cyan("Running VPS Lens..."));
+    run("bash scripts/vps-lens.sh");
+  },
+
+  rip: () => {
+    print(cyan("Running ZynRip Organize..."));
+    run("bash scripts/zynrip-organize.sh");
+  },
+
+  tracks: (args) => {
+    const home = process.env.HOME || "/Users/coreymcivor";
+    const searchDirs = [
+      path.join(home, "Music"),
+      path.join(home, "Desktop/ZYNTHIO_MASTER/03_SONGPAL/suno_tracks"),
+      path.join(home, "Downloads/Suno"),
+      path.join(home, "Downloads/suno"),
+      path.join(home, "Documents/Suno"),
+      path.join(home, "Documents/Music"),
+    ];
+
+    const extensions = ["mp3", "wav", "m4a", "flac", "aac", "ogg", "mp4", "webm"];
+    const extPattern = extensions.map(e => `-name "*.${e}"`).join(" -o ");
+    let totalTracks = 0;
+    const allFiles = [];
+
+    print(cyan("═══ Suno Track Scan ═══"));
+    for (const dir of searchDirs) {
+      if (fs.existsSync(dir)) {
+        const result = run(`find "${dir}" -type f \\( ${extPattern} \\) 2>/dev/null`, { silent: true });
+        const files = result.split("\n").filter(Boolean);
+        totalTracks += files.length;
+        allFiles.push(...files);
+        print(`  ${green(String(files.length).padStart(5))} tracks in ${dim(dir)}`);
+      }
+    }
+    print(`\n  ${green(String(totalTracks))} total tracks found`);
+
+    if (args.includes("--push")) {
+      const base = process.env.APP_URL || "http://localhost:3000";
+      print(cyan(`\nPushing ${totalTracks} tracks to ${base}/api/music...`));
+      const tracks = allFiles.map(f => ({
+        filename: path.basename(f),
+        title: path.basename(f, path.extname(f)).replace(/[-_]/g, " "),
+        source: f.toLowerCase().includes("suno") ? "suno" : "original",
+      }));
+
+      const batchSize = 100;
+      for (let i = 0; i < tracks.length; i += batchSize) {
+        const batch = tracks.slice(i, i + batchSize);
+        try {
+          const res = run(`curl -s -X POST ${base}/api/music -H "Content-Type: application/json" -d '${JSON.stringify({ tracks: batch })}'`, { silent: true });
+          const data = JSON.parse(res);
+          print(`  Batch ${Math.floor(i / batchSize) + 1}: ${green(String(data.added))} added (total: ${data.total})`);
+        } catch (e) {
+          print(red(`  Batch failed: ${e}`));
+        }
+      }
+      print(green(`\nDone. ${totalTracks} tracks pushed to /api/music`));
+    } else {
+      print(dim("\nTo push to API: cai tracks --push"));
+    }
+  },
+
+  dev: () => {
+    print(cyan("Starting dev server..."));
+    run("npm run dev");
+  },
+
+  build: () => {
+    print(cyan("═══ Build + Lint + Typecheck ═══"));
+    print(cyan("\nLint:"));
+    run("npm run lint");
+    print(cyan("\nTypecheck:"));
+    run("npx tsc --noEmit");
+    print(cyan("\nBuild:"));
+    run("npm run build");
+    print(green("\nAll checks pass."));
+  },
+
+  audit: () => {
+    print(cyan("Running audit..."));
+    run("bash scripts/audit.sh");
+  },
+
+  "test-api": () => {
+    const base = "http://localhost:3000";
+    const routes = [
+      "status", "portfolio", "signals", "agents", "market",
+      "connections", "incidents", "autosave", "notes", "content",
+    ];
+    print(cyan("═══ API Route Test ═══"));
+    for (const r of routes) {
+      try {
+        const code = run(`curl -s -o /dev/null -w "%{http_code}" ${base}/api/${r}`, { silent: true });
+        const icon = code === "200" ? green("●") : red("○");
+        print(`  ${icon} /api/${r} — ${code}`);
+      } catch {
+        print(`  ${red("○")} /api/${r} — UNREACHABLE`);
+      }
+    }
+  },
+
+  whoami: () => {
+    print(`
+${cyan("═══ WHOAMI ═══")}
+  ${BOLD}Name:${RESET}     Corey McIvor
+  ${BOLD}Handles:${RESET}  @coreintentdev / @coreintentai
+  ${BOLD}Contact:${RESET}  corey@coreyai.ai
+  ${BOLD}Based in:${RESET} New Zealand
+  ${BOLD}Brand:${RESET}    Zynthio.ai (parent)
+  ${BOLD}Engine:${RESET}   CoreIntent v0.2.0-alpha
+  ${BOLD}VDS:${RESET}      ${VDS_USER}@${VDS_HOST}
+  ${BOLD}Signal:${RESET}   336
+${dim("Human in the loop. Always.")}
+`);
+  },
+
+  handover: () => {
+    const ts = new Date().toISOString();
+    const handover = `# SESSION HANDOVER — ${ts}
+## Generated by cai Desktop Commander
+
+**VDS:** ${VDS_USER}@${VDS_HOST}
+**Repo:** github.com/coreintentdev/coreintent
+**Stack:** Next.js 14 + TypeScript (strict) + App Router
+
+## Rules for Next Session
+1. READ before you write
+2. NEVER say "connected" unless verified
+3. All API routes return DEMO data — label honestly
+4. NZ-first for legal/business (NEVER Australia)
+5. Build passes clean or you don't push
+6. Emotion blocker ON — Corey is direct, NZ style, always happy
+7. Assumption blocker ON — if unsure, ask or research, never fabricate
+
+## Key Files on VDS
+- /root/zynthio/SESSION_STATE.md
+- /root/zynthio/MASTER_HANDOVER.md
+- /root/zynthio/COREY_WORDS.md
+- /root/zynthio/CONTENT_INTEL.md
+
+## 336 — the signal is dominant
+`;
+    const filename = `HANDOVER_${ts.replace(/[:.]/g, "-").slice(0, 19)}.md`;
+    fs.writeFileSync(filename, handover);
+    print(green(`Handover saved: ${filename}`));
+    print(dim("Feed this to your next AI session."));
+  },
+
+  context: () => {
+    print(`
+${cyan("═══ ZynContext — Active Filters ═══")}
+
+  ${GREEN}● EMOTION BLOCKER${RESET}    ${dim("ON — INC-008")}
+    Corey is happy. NZ direct. No assumed frustration.
+    "fuck you cunt" = friendly. Read tone from content, not words.
+    INC-008: AI projected frustration onto Corey. Never repeat.
+
+  ${GREEN}● ASSUMPTION BLOCKER${RESET} ${dim("ON")}
+    If you don't know → research or ask.
+    Never fabricate data, status, or connections.
+    CLAUDE.md and AGENTS.md are ground truth.
+
+  ${GREEN}● BS FILTER${RESET}          ${dim("ON")}
+    "I can't" is not a solution. Find the path.
+    If sandbox blocks you, say what to run locally.
+    If API missing, build it. If data missing, rip it.
+
+  ${GREEN}● CONTEXT SYNC${RESET}       ${dim("ON")}
+    State files on VDS: /root/zynthio/
+    Local: ~/Desktop/ZYNTHIO_MASTER/
+    Repo: github.com/coreintentdev/coreintent
+    Pull: ${green("cai pull")} | Push: ${green("cai deploy")}
+
+  ${YELLOW}● KYC${RESET}               ${dim("Know Your Corey")}
+    Owner: Corey McIvor, NZ
+    Wife: Michelle, Daughter: Ruby (~14), Son: Wesley
+    Hannah is NOT his child. Never list as daughter.
+    Best friend: Ben Innes (Perth)
+    Signal: 336
+
+${dim("ZynContext = the amnesia shield for every AI session.")}
+`);
+  },
+};
+
+// ═══ Entry Point ═══
+const args = process.argv.slice(2);
+const cmd = args[0] || "help";
+const cmdArgs = args.slice(1);
+
+if (COMMANDS[cmd]) {
+  COMMANDS[cmd](cmdArgs);
+} else {
+  print(red(`Unknown command: ${cmd}`));
+  print(dim("Run 'cai help' for available commands."));
+}

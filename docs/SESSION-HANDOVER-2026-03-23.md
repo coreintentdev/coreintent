@@ -20,7 +20,7 @@
 - `/pricing` — Free/Pro/Enterprise (NEEDS REWRITE to competition model)
 - `/stack` — Full API orchestra with cost breakdown
 
-### API Routes (10)
+### API Routes (12)
 - `/api/status` — Engine health, exchanges, circuit breakers
 - `/api/portfolio` — Holdings, P&L
 - `/api/signals` — Trading signals with confidence scores

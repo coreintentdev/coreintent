@@ -43,6 +43,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32msignals\x1b[0m     - Trading signals \x1b[90m(live)\x1b[0m
   \x1b[32mincidents\x1b[0m   - Service incidents \x1b[90m(live)\x1b[0m
   \x1b[32mprotect\x1b[0m     - F18 security \x1b[90m(live)\x1b[0m
+  \x1b[32mmusic\x1b[0m       - SongPal track catalog \x1b[90m(live)\x1b[0m
+  \x1b[32mzyncontext\x1b[0m  - ZynContext filters \x1b[90m(live)\x1b[0m
 
   \x1b[33m── COMMANDER ──\x1b[0m
   \x1b[32mask <question>\x1b[0m  - Ask the AI orchestra anything \x1b[90m(live)\x1b[0m
@@ -117,7 +119,9 @@ const STATIC_COMMANDS: Record<string, string> = {
                        Good research but deaf ears without CC feedback
   \x1b[33m◐\x1b[0m \x1b[33mPerplexity\x1b[0m      3 free Pro searches/day (Max cancelled)
                        Was 9 connectors — now export-only
-  \x1b[33m◐\x1b[0m \x1b[33mGemini\x1b[0m          Gmail/Drive scanning (planned)
+  \x1b[32m●\x1b[0m \x1b[33mProton\x1b[0m          Mail (imported, encrypted)
+  \x1b[32m●\x1b[0m \x1b[33mSuno API\x1b[0m        Paid music generation (suno.api.com)
+  \x1b[32m●\x1b[0m \x1b[33mGoogle Drive\x1b[0m    Via Claude/Perplexity desktop app auth
   \x1b[33m◐\x1b[0m \x1b[33mzyn-bash\x1b[0m        API overflow: Sonnet $0.003, Opus $0.015
 
   \x1b[90mBots welcome. No captcha. AI-to-AI is first-class.\x1b[0m`,
@@ -150,6 +154,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m Cloudzy VPS       ~$15/mo    ACTIVE
 
   \x1b[33mFREE / ALREADY PAID:\x1b[0m
+    \x1b[32m●\x1b[0m Proton Mail/Drive ACTIVE     All accounts imported, encrypted
     \x1b[32m●\x1b[0m Cloudflare Pages  FREE       16 sites deployed
     \x1b[32m●\x1b[0m GitHub            FREE       coreintentdev repos
     \x1b[32m●\x1b[0m Linear            FREE       31 issues
@@ -177,14 +182,14 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[32mBUILT & WORKING:\x1b[0m
     \x1b[32m●\x1b[0m 6 pages: / /pricing /stack /privacy /terms /disclaimer
-    \x1b[32m●\x1b[0m 10 API routes (returning demo data)
+    \x1b[32m●\x1b[0m 14 API routes (returning demo data)
     \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
     \x1b[32m●\x1b[0m 8 domains live, all returning 200
     \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)
     \x1b[32m●\x1b[0m cai CLI on VPS with full session state
 
   \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
-    \x1b[33m◐\x1b[0m All 12 API routes return demo data (keys not set)
+    \x1b[33m◐\x1b[0m All 14 API routes return demo data (keys not set)
     \x1b[32m●\x1b[0m Terminal XSS hardened (ansiToHtml sanitized)
     \x1b[32m●\x1b[0m Commander mode: tab complete, watch, ask AI, chaining
 
@@ -204,8 +209,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mProject:\x1b[0m     CoreIntent (coreintent)
   \x1b[33mStack:\x1b[0m       Next.js 14 + TypeScript (strict) + App Router
   \x1b[33mRepo:\x1b[0m        github.com/coreintentdev/coreintent
-  \x1b[33mVPS Cloudzy:\x1b[0m Cloudzy (Tailscale SSH)
-  \x1b[33mVPS Frankfurt:\x1b[0m Frankfurt VPS
+  \x1b[33mVDS Primary:\x1b[0m  100.121.107.112 (Tailscale SSH)
+  \x1b[33mVPS Cloudzy:\x1b[0m 100.122.99.34 (migrating → VDS)
+  \x1b[33mVPS Frankfurt:\x1b[0m 104.194.156.109 (migrating → VDS)
   \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
   \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
   \x1b[33mSites:\x1b[0m       8/8 returning 200 OK
@@ -261,7 +267,9 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m Claude Pro      — Main builder (A$30/mo)
     \x1b[32m●\x1b[0m Grok Free       — Research, 60 threads active
     \x1b[33m◐\x1b[0m Perplexity Free — 3 Pro searches/day (Max cancelled)
-    \x1b[33m◐\x1b[0m Gemini          — Gmail/Drive (planned, not active)
+    \x1b[32m●\x1b[0m Proton          — Mail (encrypted, active)
+    \x1b[32m●\x1b[0m Suno API        — Paid, music generation
+    \x1b[32m●\x1b[0m Google Drive    — Via desktop app auth
     \x1b[33m◐\x1b[0m zyn-bash        — API overflow (Sonnet/Opus)
 
   \x1b[33mExchanges:\x1b[0m
@@ -567,6 +575,37 @@ function formatSync(data: Record<string, unknown>): string {
 }
 
 // API-powered commands: endpoint + formatter
+function formatMusic(data: Record<string, unknown>): string {
+  const count = data.count as number || 0;
+  const sources = data.sources as Record<string, number> | undefined;
+  let out = `\x1b[36mSongPal — Music Catalog\x1b[0m`;
+  out += `\n  Total tracks: \x1b[32m${count}\x1b[0m`;
+  if (sources) {
+    out += `\n  Suno:     ${sources.suno || 0}`;
+    out += `\n  Original: ${sources.original || 0}`;
+    out += `\n  Other:    ${sources.other || 0}`;
+  }
+  out += `\n\n  ${data.note || ""}`;
+  if (count === 0) {
+    out += `\n\n  \x1b[33mTo load tracks from your Mac:\x1b[0m`;
+    out += `\n    \x1b[32mcai tracks --push\x1b[0m  (scans Music/ + ZYNTHIO_MASTER/ and pushes to API)`;
+  }
+  return out;
+}
+
+function formatContext(data: Record<string, unknown>): string {
+  const filters = data.filters as Record<string, Record<string, unknown>> | undefined;
+  let out = `\x1b[36m═══ ZynContext — Active Filters ═══\x1b[0m`;
+  if (filters) {
+    for (const [name, filter] of Object.entries(filters)) {
+      const active = filter.active ? "\x1b[32m● ON\x1b[0m" : "\x1b[31m○ OFF\x1b[0m";
+      out += `\n  ${active}  ${name}`;
+    }
+  }
+  out += `\n\n  \x1b[90mGET /api/context for full payload. POST to run BS filter.\x1b[0m`;
+  return out;
+}
+
 const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<string, unknown>) => string }> = {
   status:    { endpoint: "/api/status",    format: formatStatus },
   portfolio: { endpoint: "/api/portfolio", format: formatPortfolio },
@@ -577,6 +616,8 @@ const API_COMMANDS: Record<string, { endpoint: string; format: (data: Record<str
   protect:   { endpoint: "/api/protect",   format: formatProtect },
   save:      { endpoint: "/api/autosave",  format: formatSave },
   master:    { endpoint: "/api/sync",      format: formatSync },
+  music:     { endpoint: "/api/music",     format: formatMusic },
+  zyncontext: { endpoint: "/api/context",  format: formatContext },
 };
 
 // All known command names for tab completion

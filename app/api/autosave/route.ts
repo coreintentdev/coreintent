@@ -29,7 +29,7 @@ interface BackendResult {
 const SAVE_BACKENDS: Record<BackendKey, string> = {
   primary: "github",         // Free — commit to repo
   docs:    "notion",         // Free tier — knowledge base
-  files:   "google_drive",   // 15GB free — Gemini scans them too
+  files:   "google_drive",   // Via Claude/Perplexity desktop app auth
   cache:   "cloudflare_kv",  // Free tier — 100k reads/day
   links:   "repo_json",      // Free — JSON file in the repo
   state:   "local_storage",  // Free — browser-side
@@ -40,8 +40,8 @@ const OUTSOURCE_MAP: Record<string, { to: string; cost: string; why: string }> =
   content_drafts:    { to: "grok_pro",              cost: "near-free",              why: "bulk draft generation, fast output"  },
   content_polish:    { to: "claude_api",            cost: "~$0.01/request",         why: "best quality for final copy"         },
   research:          { to: "perplexity_max",        cost: "$20/mo flat",            why: "unlimited searches, 9 connectors"   },
-  email_scan:        { to: "gemini",                cost: "free (Gmail built-in)",  why: "auto-categorize, summarize"          },
-  drive_scan:        { to: "gemini",                cost: "free (Drive built-in)",  why: "index & find lost files"             },
+  email_scan:        { to: "proton_mail",           cost: "Proton plan",            why: "encrypted, private, all accounts imported" },
+  drive_scan:        { to: "google_drive",          cost: "free",                   why: "via Claude/Perplexity desktop app auth"   },
   cdn_security:      { to: "cloudflare_pro",        cost: "$20/mo",                 why: "replaces $200+/mo of separate WAF/DDoS" },
   hosting:           { to: "vercel_hobby",          cost: "$0",                     why: "free for personal projects"          },
   ci_cd:             { to: "github_actions",        cost: "$0",                     why: "2000 min/mo free"                   },
@@ -53,6 +53,7 @@ const OUTSOURCE_MAP: Record<string, { to: string; cost: string; why: string }> =
   data_extraction:   { to: "the_ripper",            cost: "$0",                     why: "custom built"                       },
   pdf_parsing:       { to: "pdf_plumber",           cost: "$0",                     why: "custom built"                       },
   ai_context_sync:   { to: "ai_to_ai_transfer",     cost: "$0",                     why: "share context between models via weblinks" },
+  music:             { to: "suno_api",              cost: "pay-per-use",            why: "paid API via suno.api.com"           },
 };
 
 const SERVICES_REPLACED = [
@@ -63,8 +64,8 @@ const SERVICES_REPLACED = [
   { replaced: "Project management tool",   saved: "$10/mo",  with: "Linear free"                 },
   { replaced: "Docs platform",            saved: "$8/mo",   with: "Notion free"                 },
   { replaced: "Multiple AI subscriptions", saved: "$100/mo", with: "Grok via X Premium+ ($16)"  },
-  { replaced: "Email assistant",           saved: "$15/mo",  with: "Gemini (free in Gmail)"      },
-  { replaced: "File search tool",          saved: "$10/mo",  with: "Gemini (free in Drive)"      },
+  { replaced: "Email assistant",           saved: "$15/mo",  with: "Proton Mail (encrypted, imported)" },
+  { replaced: "File search tool",          saved: "$10/mo",  with: "Google Drive (desktop app auth)"   },
 ];
 
 const TOTAL_MONTHLY_COST = 66;
@@ -102,8 +103,8 @@ export async function GET() {
     recovery: {
       description: "Find lost stuff via unconventional paths",
       methods: [
-        "Google Drive version history (30 days)",
-        "Gmail search (everything is an email trail)",
+        "Google Drive version history (via desktop app auth)",
+        "Proton Mail search (everything is an email trail)",
         "GitHub commit history (every save is recoverable)",
         "Perplexity re-research (re-find anything you found before)",
         "Cloudflare analytics (see what was accessed when)",

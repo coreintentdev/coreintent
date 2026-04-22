@@ -74,11 +74,16 @@ export async function GET() {
     };
 
     const infrastructure: ConnectionsResponse["infrastructure"] = {
-      vps:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"     },
-      cloudflare: { status: "active", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"       },
-      github:     { status: "active", repos: 5,        role: "CI/CD, source control"     },
-      linear:     { status: "active", tasks: 26, completed: 3, role: "Project management" },
-      notion:     { status: "active", role: "Documentation"                               },
+      vds:          { status: "live",      host: "VDS Primary", ip: "100.121.107.112", role: "Consolidated trading engine + web", tailscale: true },
+      vps_cloudzy:  { status: "migrating", host: "Cloudzy",     ip: "100.122.99.34",   role: "Legacy — migrating to VDS" },
+      vps_frankfurt:{ status: "migrating", host: "Frankfurt",   ip: "104.194.156.109", role: "Legacy — migrating to VDS" },
+      proton:       { status: "active",    role: "Email (all accounts imported to Proton Mail)" },
+      googleDrive:  { status: "active",    role: "Via Claude/Perplexity desktop app auth" },
+      suno:         { status: "active",    role: "Paid API — suno.api.com, wired in lib/ai.ts" },
+      cloudflare:   { status: "active",    plan: "Pro", role: "CDN, WAF, DDoS, DNS" },
+      github:       { status: "active",    repos: 5,    role: "CI/CD, source control" },
+      linear:       { status: "active",    tasks: 26, completed: 3, role: "Project management" },
+      notion:       { status: "active",    role: "Documentation" },
     };
 
     const tools: ConnectionsResponse["tools"] = {
@@ -86,7 +91,7 @@ export async function GET() {
       macTheZipper: { status: "ready",   role: "Compression & packaging"       },
       pdfPlumber:   { status: "ready",   role: "Document parsing"              },
       aiTransfer:   { status: "ready",   role: "Cross-model context pipeline"  },
-      songpal:      { status: "planned", role: "Music layer (Corey originals)" },
+      songpal:      { status: "active",  role: "Music layer — Suno paid API"   },
       f18:          { status: "ready",   role: "Digital identity protection"   },
     };
 

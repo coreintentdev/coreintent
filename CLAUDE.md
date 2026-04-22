@@ -22,7 +22,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
-5. Deploy files immediately — VPS, GitHub, Google Drive.
+5. Deploy files immediately — VPS, GitHub, Proton Drive.
 6. Build passes clean or you don't push.
 7. If you see fake/demo data, label it honestly. Don't hide behind green dots.
 8. Run `./scripts/audit.sh` after making changes to verify nothing broke.
@@ -37,10 +37,15 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Audit: scripts/audit.sh
 - VPS Lens: scripts/vps-lens.sh
 
-## VPS
-- Cloudzy: 100.122.99.34
+## VDS / VPS
+- VDS Primary: 100.121.107.112 (consolidation target, Tailscale SSH)
+- Cloudzy VPS: 100.122.99.34 (legacy, migrating to VDS)
+- Frankfurt VPS: 104.194.156.109 (legacy, migrating to VDS)
+- All connected via Tailscale — no passwords needed
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+- Desktop CLI: ~/Desktop/zynthio-tools/bin/cai (110 APIs, takes priority over repo scripts)
+- Data flow: Mac (ZYNTHIO_MASTER) → sync payloads → VDS /root/zynthio/
+- This repo = scripts + manifests only, NOT bulk vault data
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
@@ -55,7 +60,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - No user authentication yet
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI (potential XSS)
-- xterm packages in package.json but not actually used
+- No .cursorrules file exists — cursor configuration is in CLAUDE.md and AGENTS.md only
 
 ## Family (NEVER fabricate)
 - Michelle (wife), Ruby (~14, daughter), Wesley (son)
