@@ -30,7 +30,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 ## Architecture
 - Next.js 15 (App Router) + TypeScript (strict mode)
 - 6 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer
-- 10 API routes in app/api/
+- 14 API routes in app/api/
 - AI service layer: lib/ai.ts (Grok, Claude, Perplexity with graceful fallback)
 - VPS scripts: scripts/risk_monitor.ts, signal_listener.ts, gtrade_listener.ts
 - Deploy scripts: scripts/deploy-vercel.sh, deploy-vps.sh, deploy-all.sh
