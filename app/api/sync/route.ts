@@ -15,7 +15,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString, validateNumber, validateBoolean } from "@/lib/api";
+import { ok, badRequest, preflight, validateString, validateBoolean } from "@/lib/api";
 
 type Channel = "web" | "desktop";
 
@@ -120,7 +120,10 @@ export async function POST(req: NextRequest) {
   }
 
   const source          = (body.source === "desktop" ? "desktop" : "web") as Channel;
-  const confidence      = validateNumber(body.confidence, 0, 1) ?? DEFAULT_CONFIDENCE;
+  // Clamp rather than reject out-of-range values: -0.5 → 0 (triggers KYC), not DEFAULT_CONFIDENCE (bypasses it).
+  const confidence      = typeof body.confidence === "number" && Number.isFinite(body.confidence)
+    ? Math.min(1, Math.max(0, body.confidence))
+    : DEFAULT_CONFIDENCE;
   const contextComplete = validateBoolean(body.contextComplete) ?? true;
   const target          = classifyTarget(body);
   const needsKyc        = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
