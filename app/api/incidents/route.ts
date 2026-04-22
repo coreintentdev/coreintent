@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, validateString, validateEnum } from "@/lib/api";
 
 type IncidentStatus   = "detected" | "investigating" | "mitigating" | "resolved";
 type IncidentSeverity = "critical" | "major" | "minor" | "info";
@@ -96,7 +96,7 @@ const MONITORED_SERVICES: MonitoredService[] = [
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },
 ];
 
-const VALID_SEVERITIES: IncidentSeverity[] = ["critical", "major", "minor", "info"];
+const VALID_SEVERITIES = ["critical", "major", "minor", "info"] as const satisfies readonly IncidentSeverity[];
 
 export async function GET() {
   return ok({
@@ -129,14 +129,13 @@ export async function POST(req: NextRequest) {
   const message = validateString(body.message, 5000);
   if (!message) return badRequest("message is required and must be 5000 characters or fewer");
 
-  if (!body.severity || !VALID_SEVERITIES.includes(body.severity)) {
-    return badRequest(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`);
-  }
+  const severity = validateEnum(body.severity, VALID_SEVERITIES);
+  if (!severity) return badRequest(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`);
 
   const incident: Incident = {
     id:         `INC-${Date.now()}`,
     service,
-    severity:   body.severity,
+    severity,
     status:     "detected",
     message,
     autoUpdate: true,

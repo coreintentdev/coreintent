@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callAIsParallel, callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
-import { ok, badRequest, gatewayError, preflight, serverError, validateString } from "@/lib/api";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -29,7 +29,7 @@ const IDENTITY = {
   domain:  "coreintent.dev",
 } as const;
 
-const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
+const VALID_TASKS = ["research", "analysis", "signal", "sentiment"] as const satisfies readonly ResearchTask[];
 
 export async function GET() {
   try {
@@ -78,9 +78,7 @@ export async function POST(req: NextRequest) {
   const topic = validateString(body.topic, 1000);
   if (!topic) return badRequest("topic is required and must be 1000 characters or fewer");
 
-  const task: ResearchTask = VALID_TASKS.includes(body.task as ResearchTask)
-    ? (body.task as ResearchTask)
-    : "research";
+  const task = validateEnum(body.task, VALID_TASKS) ?? "research";
 
   try {
     type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;

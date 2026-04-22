@@ -85,7 +85,7 @@ function classifyFetchError(
   source: AIResponse["source"],
   model: string
 ): AIResponse {
-  if (e instanceof DOMException && e.name === "AbortError") {
+  if (e instanceof Error && e.name === "AbortError") {
     return {
       source,
       model,
@@ -119,12 +119,18 @@ const GROK_SYSTEM =
   "All signals are PAPER TRADING only — no real capital at risk.\n\n" +
   "Signal format (use when outputting a trade signal):\n" +
   "  Pair | Direction (long/short) | Confidence 0.00–1.00 | Entry zone | Stop level | Rationale (≤2 sentences)\n\n" +
+  "Analysis format (use for non-signal tasks such as sentiment, monitoring, research):\n" +
+  "  ## Summary\n" +
+  "  <2–3 bullet points covering key findings>\n" +
+  "  ## Detail\n" +
+  "  <supporting context, max 2 paragraphs>\n\n" +
   "Output rules:\n" +
-  "- Concise and data-driven. Max 3 sentences for non-signal analysis.\n" +
-  "- Never fabricate prices, volume, or on-chain statistics.\n" +
+  "- Concise and data-driven. Prefer bullet points over prose.\n" +
+  "- Never fabricate prices, volume, on-chain statistics, or account activity.\n" +
   "- Flag uncertainty explicitly: [UNCERTAIN: <reason>].\n" +
   "- State 'insufficient data' rather than guessing when information is unavailable.\n" +
-  "- NZ jurisdiction — do not reference ASIC; use NZ FMA for regulatory context.";
+  "- NZ jurisdiction — do not reference ASIC; use NZ FMA for regulatory context.\n" +
+  "- When monitoring for impersonation or brand abuse, report nothing found rather than fabricating threats.";
 
 /**
  * Call Grok (X.ai) for fast trading signals and content drafts.
@@ -316,11 +322,13 @@ const PERPLEXITY_SYSTEM =
   "- Distinguish confirmed facts from speculation clearly.\n" +
   "- State explicitly if information cannot be found rather than inferring.\n" +
   "- Prioritise sources from the last 90 days for market-sensitive data.\n" +
-  "- Include source URLs or publication names where available.\n" +
+  "- Citation format: use inline references as [Source Name, YYYY-MM-DD] for specific claims.\n" +
+  "- State 'no recent sources found' rather than extrapolating from older data.\n" +
   "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC. Never reference ASIC.\n" +
   "- Label any demo/placeholder data as [DEMO] so callers can distinguish it.\n" +
   "- Do not fabricate prices, volume, or on-chain statistics.\n" +
-  "- If a query is about Corey McIvor or CoreIntent, note that the platform is in alpha (paper trading only).";
+  "- If a query is about Corey McIvor or CoreIntent, note that the platform is in alpha (paper trading only).\n" +
+  "- If nothing relevant is found for a monitoring query, report 'No results found' — do not fabricate findings.";
 
 /**
  * Call Perplexity (sonar-pro) for live web research and fact-checking.

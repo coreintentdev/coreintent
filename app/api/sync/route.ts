@@ -15,7 +15,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, validateString, validateNumber, validateBoolean } from "@/lib/api";
 
 type Channel = "web" | "desktop";
 
@@ -119,13 +119,12 @@ export async function POST(req: NextRequest) {
     return badRequest("task must be a non-empty string of 500 characters or fewer");
   }
 
-  const source:          Channel = body.source === "desktop" ? "desktop" : "web";
-  const rawConf                  = typeof body.confidence === "number" ? body.confidence : DEFAULT_CONFIDENCE;
-  const confidence               = Math.min(1, Math.max(0, rawConf));
-  const contextComplete          = body.contextComplete !== false;
-  const target                   = classifyTarget(body);
-  const needsKyc                 = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
-  const handoffRequired          = !needsKyc && source !== target;
+  const source          = (body.source === "desktop" ? "desktop" : "web") as Channel;
+  const confidence      = validateNumber(body.confidence, 0, 1) ?? DEFAULT_CONFIDENCE;
+  const contextComplete = validateBoolean(body.contextComplete) ?? true;
+  const target          = classifyTarget(body);
+  const needsKyc        = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
+  const handoffRequired = !needsKyc && source !== target;
 
   if (needsKyc) {
     const data: KycDecision = {
