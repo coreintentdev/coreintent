@@ -50,7 +50,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues
-- All 10 API routes return hardcoded demo data
+- All 14 API routes return hardcoded demo data
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer
