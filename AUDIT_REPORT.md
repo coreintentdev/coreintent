@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 23 04:03:13 UTC 2026
+Generated: Thu Apr 23 04:41:22 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -53,9 +53,9 @@ Generated: Thu Apr 23 04:03:13 UTC 2026
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:232:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:233:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:234:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:244:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:245:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:246:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
