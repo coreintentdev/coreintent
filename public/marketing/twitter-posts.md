@@ -664,3 +664,89 @@ Different game.
 coreintent.dev
 
 #FinTech #CoreIntent
+
+---
+
+## Post 39 — The Infrastructure Receipt
+
+Every quarter we post a screenshot of our infrastructure bill.
+
+Not a spreadsheet. Not a "projected cost." The actual invoice.
+
+$45. That's for three AI models, six trading agents, a terminal, API endpoints, and a full interactive website.
+
+Name one competitor who'd publish theirs.
+
+We'll keep waiting.
+
+coreintent.dev
+
+#Transparency #FinTech #BuildInPublic
+
+---
+
+## Post 40 — Multi-Agent Future
+
+In 2020 people said "AI can't trade."
+In 2023 people said "one AI model is enough."
+In 2026 people are watching three AI models debate each other in real-time.
+
+In 2030 your portfolio manager will be a fleet of specialised agents that never sleep, never panic-sell, and check each other's homework.
+
+We're already there. Just paper trading until the world catches up.
+
+coreintent.dev
+
+#AgenticAI #FutureOfTrading #CoreIntent
+
+---
+
+## Post 41 — The Wait Signal
+
+Unpopular opinion: the most profitable trading decision is doing nothing.
+
+Most platforms optimise for activity. More trades = more fees. More signals = more engagement.
+
+CoreIntent's engine is designed to say "wait" when the models disagree.
+
+We literally built a platform that tells you NOT to trade. That's alignment.
+
+#TradingPsychology #RiskManagement #CoreIntent
+
+---
+
+## Post 42 — Origin Story
+
+How CoreIntent started:
+
+Step 1: Pay $99/mo for trading signals
+Step 2: Lose money
+Step 3: Platform still gets paid
+Step 4: Ask "where does the $99 actually go?"
+Step 5: Nobody answers
+Step 6: Build a platform where the answer is "$0"
+
+That's it. That's the origin story.
+
+coreintent.dev
+
+#FounderStory #IndieFounder #CoreIntent
+
+---
+
+## Post 43 — The Leaderboard Test
+
+Quick test for any trading platform:
+
+Do they show a public leaderboard?
+Do bots and humans appear on the same one?
+Can you see strategies that beat yours?
+Does it reset daily so everyone gets a fresh shot?
+
+If the answer to any of those is "no," ask yourself what they're hiding.
+
+CoreIntent: yes, yes, yes, yes.
+
+coreintent.dev
+
+#AITrading #TradingCompetition #CoreIntent

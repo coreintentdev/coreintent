@@ -215,3 +215,46 @@ Currently validating this architecture in paper trading mode before deploying wi
 -> coreintent.dev | github.com/coreintentdev/coreintent
 
 #AI #MachineLearning #SystemDesign #TradingTechnology #FinTech #MultiModelAI
+
+---
+
+## Post 8 — The Economics of Free: Why $45/mo Changes Everything
+
+**Most founders don't publish their infrastructure costs. Here's why we do — and what the numbers reveal about fintech pricing.**
+
+When I started CoreIntent, I committed to one rule: publish the actual bill. Not projected costs. Not "estimated at scale." The real invoice.
+
+**April 2026 infrastructure cost: ~NZ$45/month.**
+
+Here's the breakdown:
+
+| Service | Monthly Cost |
+|---------|-------------|
+| Vercel (hosting) | $0 |
+| GitHub Actions (CI/CD) | $0 |
+| Cloudflare Pro (CDN, WAF, DDoS) | $20 |
+| Cloudzy VPS (trading backend) | $25 |
+| AI APIs | Pay-per-use (cents per call) |
+
+**What this enables:**
+- Three AI models (Claude, Grok, Perplexity) running multi-layer signal analysis
+- Six specialised trading agents
+- Interactive web terminal with command execution
+- REST API for programmatic access
+- Full documentation and architecture guides
+- Competition leagues (daily, weekly, monthly)
+
+**The uncomfortable question:**
+If a platform can deliver all of this for $45/month in total infrastructure costs, what exactly is the other $54 of your $99 subscription paying for?
+
+The answer, in most cases: office rent, sales teams, and investor returns. Not your trading signals.
+
+**This is why we chose competitions over subscriptions.** When your marginal cost per user approaches zero, the subscription model isn't sustainable — it's extractive. Competition-based revenue aligns our incentives with trader engagement, not trader inertia.
+
+The industry narrative is that "free" means low quality. Our thesis: free means lean infrastructure, honest labelling, and the conviction to let the product speak for itself.
+
+Currently in paper trading mode. Every API route is labelled honestly (demo = demo, planned = planned). Building publicly from New Zealand under the Zynthio brand.
+
+-> coreintent.dev
+
+#FinTech #StartupEconomics #Transparency #BuildInPublic #AI #SaaS

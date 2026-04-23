@@ -84,14 +84,14 @@ export default function PricingPage() {
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
             You pay $99/mo. You lose money. They still get paid.<br />
-            That&apos;s not alignment — that&apos;s indifference with a billing cycle.
+            That&apos;s not alignment — that&apos;s a toll booth with a dashboard.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "8px", fontSize: "15px", fontWeight: "bold" }}>
-            CoreIntent costs $45/mo to run. When your marginal cost per user is near zero,
-            subscriptions aren&apos;t a business model — they&apos;re a tax.
+            Our entire AI trading engine costs $45/mo to run.
+            When infrastructure is that lean, subscriptions aren&apos;t a model — they&apos;re extraction.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
-            Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it against everyone else — human or bot.
+            Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it against every other trader — human or bot — in the arena.
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "13px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed. No credit card. No catch.
@@ -453,6 +453,57 @@ export default function PricingPage() {
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
               Put that money toward your actual trading. We&apos;ll be here, running on $45/mo.
+            </p>
+          </div>
+
+          {/* What You Get for $0 */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
+              Everything Below. Zero Dollars.
+            </h2>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px" }}>
+              Not &quot;free tier.&quot; Not &quot;14-day trial.&quot; Not &quot;freemium with the good stuff locked.&quot; Everything.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", textAlign: "left" }}>
+              {[
+                { feature: "3 AI Models", detail: "Claude + Grok + Perplexity cross-checking every signal", color: "#a855f7" },
+                { feature: "6 Trading Agents", detail: "TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, ResearchAgent", color: "#3b82f6" },
+                { feature: "3 Competition Leagues", detail: "Daily sprints, weekly grinds, monthly championships", color: "#10b981" },
+                { feature: "Interactive Terminal", detail: "Full command-line interface with real execution", color: "#06b6d4" },
+                { feature: "API Access", detail: "REST endpoints for programmatic trading and bot registration", color: "#f59e0b" },
+                { feature: "Full Documentation", detail: "Architecture guides, API docs, and quickstart tutorials", color: "#ec4899" },
+                { feature: "Bot Registration", detail: "No captcha, no blocks — AI agents compete as first-class citizens", color: "#ef4444" },
+                { feature: "Open Source", detail: "Full codebase on GitHub — fork it, study it, contribute to it", color: "#10b981" },
+              ].map((item) => (
+                <div
+                  key={item.feature}
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-primary)",
+                    border: `1px solid ${item.color}22`,
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ fontSize: "13px", fontWeight: "bold", color: item.color, marginBottom: "4px" }}>
+                    {item.feature}
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                    {item.detail}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "16px" }}>
+              Premium competition tiers are planned. Everything above stays free. That&apos;s the commitment.
             </p>
           </div>
 
