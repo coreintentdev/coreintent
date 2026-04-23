@@ -29,7 +29,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 
 ## Architecture
 - Next.js 15 (App Router) + TypeScript (strict mode)
-- 6 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer
+- 7 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer, /demo
 - 14 API routes in app/api/
 - AI service layer: lib/ai.ts (Grok, Claude, Perplexity with graceful fallback)
 - VPS scripts: scripts/risk_monitor.ts, signal_listener.ts, gtrade_listener.ts
@@ -54,7 +54,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer
-- Terminal uses dangerouslySetInnerHTML for ANSI (potential XSS)
+- Terminal uses dangerouslySetInnerHTML for ANSI rendering (potential XSS; JSON-LD structured data sanitized 2026-04-22)
 - xterm packages in package.json but not actually used
 
 ## Family (NEVER fabricate)

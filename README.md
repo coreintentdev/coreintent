@@ -51,6 +51,7 @@ npm run dev             # http://localhost:3000
 | Route | What |
 |-------|------|
 | `/api/status` | Engine health |
+| `/api/health` | App health check |
 | `/api/portfolio` | Holdings & P&L |
 | `/api/signals` | Trading signals |
 | `/api/agents` | AI agent fleet |
@@ -60,10 +61,14 @@ npm run dev             # http://localhost:3000
 | `/api/autosave` | On-the-fly persistence |
 | `/api/research` | AI research about you |
 | `/api/protect` | Digital identity protection |
+| `/api/connections` | API connection status |
+| `/api/notes` | Session notes & annotations |
+| `/api/sync` | Data sync |
 
 ## Pages
 
 - `/` — Terminal + Dashboard + Agents + Docs
+- `/demo` — Interactive live demo
 - `/pricing` — Competitions & earning model
 - `/stack` — Full API orchestra & cost breakdown
 
