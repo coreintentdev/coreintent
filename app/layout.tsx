@@ -209,6 +209,8 @@ const jsonLd = {
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
+      datePublished: "2026-03-01",
+      dateModified: "2026-04-23",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -220,6 +222,34 @@ const jsonLd = {
           urlTemplate: "https://coreintent.dev/?q={search_term_string}",
         },
         "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/#homepage",
+      url: "https://coreintent.dev",
+      name: "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      description:
+        "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome.",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      about: { "@id": "https://coreintent.dev/#application" },
+      datePublished: "2026-03-01",
+      dateModified: "2026-04-23",
+      inLanguage: "en-NZ",
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://coreintent.dev",
+          },
+        ],
       },
     },
     {

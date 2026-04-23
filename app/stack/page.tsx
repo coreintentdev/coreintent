@@ -113,7 +113,7 @@ function ArchitectureDiagram() {
         />
       </div>
 
-      <svg viewBox="0 0 600 340" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
+      <svg viewBox="0 0 600 340" role="img" aria-label="CoreIntent architecture diagram showing Grok, Claude, Perplexity AI models connected to the trading engine, risk guard, terminal, exchanges, and VPS" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
         <defs>
           <filter id="nodeGlow">
             <feGaussianBlur stdDeviation="3" result="blur" />

@@ -44,7 +44,25 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/api/",
       },
       {
+        userAgent: "Applebot",
+        allow: "/",
+        disallow: "/api/",
+      },
+      {
+        userAgent: "ClaudeBot",
+        allow: "/",
+        disallow: "/api/",
+      },
+      {
         userAgent: "MJ12bot",
+        disallow: "/",
+      },
+      {
+        userAgent: "AhrefsBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "SemrushBot",
         disallow: "/",
       },
     ],
