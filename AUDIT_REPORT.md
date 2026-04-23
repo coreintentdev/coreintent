@@ -1,11 +1,10 @@
 # CoreIntent Audit Report
-Generated: Wed Apr 22 04:45:06 UTC 2026
+Generated: Thu Apr 23 03:45:03 UTC 2026
 
 ## 1. Build
-- PASS: npm run build succeeds
-- INFO: Routes found: 31
-- PASS: TypeScript compiles (strict mode)
-- PASS: ESLint passes
+- **FAIL:** npm run build FAILS — see /tmp/coreintent_build.log (env-only: node_modules not installed in sandbox)
+- **FAIL:** TypeScript errors found (env-only: tsc not available without node_modules)
+- WARN: ESLint warnings or errors
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -85,8 +84,8 @@ Generated: Wed Apr 22 04:45:06 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
-| FAIL | 0 |
-| WARN | 2 |
+| PASS | 49 |
+| FAIL | 2 |
+| WARN | 3 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 90%** (49/54 checks passed — 2 FAILs are environment-only: node_modules not installed in sandbox)
