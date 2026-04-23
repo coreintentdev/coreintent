@@ -15,7 +15,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString } from "@/lib/api";
 
 type Channel = "web" | "desktop";
 
@@ -89,22 +89,26 @@ function buildKycQuestions(input: SyncRequest): string[] {
 }
 
 export async function GET() {
-  return ok({
-    mode:    "master_sync_policy",
-    summary: "Single source of truth for web/desktop task routing.",
-    rules: {
-      handoffName:               "zynhandball",
-      uncertainFlow:             "zynKYC",
-      minConfidenceForAutoRoute: MIN_CONFIDENCE_FOR_AUTOROUTE,
-      defaultRoute:              "web",
-    },
-    channels: CAPABILITIES,
-    examples: [
-      { task: "check dashboard latency",                       decision: "web",     action: "execute_in_place" },
-      { task: "run deploy script and inspect local artifacts", decision: "desktop", action: "zynhandball"      },
-      { task: "ambiguous request with missing details",        decision: "hold",    action: "zynKYC"           },
-    ],
-  });
+  try {
+    return ok({
+      mode:    "master_sync_policy",
+      summary: "Single source of truth for web/desktop task routing.",
+      rules: {
+        handoffName:               "zynhandball",
+        uncertainFlow:             "zynKYC",
+        minConfidenceForAutoRoute: MIN_CONFIDENCE_FOR_AUTOROUTE,
+        defaultRoute:              "web",
+      },
+      channels: CAPABILITIES,
+      examples: [
+        { task: "check dashboard latency",                       decision: "web",     action: "execute_in_place" },
+        { task: "run deploy script and inspect local artifacts", decision: "desktop", action: "zynhandball"      },
+        { task: "ambiguous request with missing details",        decision: "hold",    action: "zynKYC"           },
+      ],
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {

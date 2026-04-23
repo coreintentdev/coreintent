@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString } from "@/lib/api";
 
 type IncidentStatus   = "detected" | "investigating" | "mitigating" | "resolved";
 type IncidentSeverity = "critical" | "major" | "minor" | "info";
@@ -99,20 +99,24 @@ const MONITORED_SERVICES: MonitoredService[] = [
 const VALID_SEVERITIES: IncidentSeverity[] = ["critical", "major", "minor", "info"];
 
 export async function GET() {
-  return ok({
-    incidents: INCIDENTS,
-    services:  MONITORED_SERVICES,
-    autoUpdate: {
-      enabled:   true,
-      channels:  ["slack", "email", "x_dm"],
-      frequency: "on_change",
-    },
-    summary: {
-      total:        MONITORED_SERVICES.length,
-      operational:  MONITORED_SERVICES.filter((s) => s.status === "operational").length,
-      degraded:     MONITORED_SERVICES.filter((s) => s.status === "degraded").length,
-    },
-  });
+  try {
+    return ok({
+      incidents: INCIDENTS,
+      services:  MONITORED_SERVICES,
+      autoUpdate: {
+        enabled:   true,
+        channels:  ["slack", "email", "x_dm"],
+        frequency: "on_change",
+      },
+      summary: {
+        total:        MONITORED_SERVICES.length,
+        operational:  MONITORED_SERVICES.filter((s) => s.status === "operational").length,
+        degraded:     MONITORED_SERVICES.filter((s) => s.status === "degraded").length,
+      },
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {

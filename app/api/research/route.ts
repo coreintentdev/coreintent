@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callClaude, callGrok, validateAiContent, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     : "research";
 
   try {
-    type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;
+    type TaskFn = () => Promise<AIResponse>;
     const taskMap: Record<ResearchTask, TaskFn> = {
       research:  () => callPerplexity(topic),
       analysis:  () => callClaude(topic),

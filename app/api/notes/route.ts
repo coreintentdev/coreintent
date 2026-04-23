@@ -12,7 +12,7 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString } from "@/lib/api";
 
 interface Note {
   id:        number;
@@ -37,12 +37,16 @@ const publicNotes: Note[] = [];
 let nextId = 1;
 
 export async function GET() {
-  const data: NotesListResponse = {
-    notes: publicNotes,
-    count: publicNotes.length,
-    info:  "Public notes only. Private notes are not accessible via this endpoint.",
-  };
-  return ok(data);
+  try {
+    const data: NotesListResponse = {
+      notes: publicNotes,
+      count: publicNotes.length,
+      info:  "Public notes only. Private notes are not accessible via this endpoint.",
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {

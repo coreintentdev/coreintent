@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
     : "general";
 
   try {
-    type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaude>;
+    type ScanFn = () => Promise<AIResponse>;
     const scanMap: Record<ThreatCheckType, ScanFn> = {
       impersonation: () => callGrok(
         `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +

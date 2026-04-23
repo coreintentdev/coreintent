@@ -10,7 +10,7 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
@@ -82,17 +82,21 @@ const TEMPLATES: Record<ContentType, object> = {
 };
 
 export async function GET() {
-  return ok({
-    availableTypes: VALID_TYPES,
-    templates:      TEMPLATES,
-    bulkLimits:     BULK_LIMITS,
-    aiPipeline: {
-      draft:    "Grok Pro (fast, cheap)",
-      refine:   "Claude (quality polish)",
-      research: "Perplexity Max (live facts)",
-      schedule: "X Premium+ API",
-    },
-  });
+  try {
+    return ok({
+      availableTypes: VALID_TYPES,
+      templates:      TEMPLATES,
+      bulkLimits:     BULK_LIMITS,
+      aiPipeline: {
+        draft:    "Grok Pro (fast, cheap)",
+        refine:   "Claude (quality polish)",
+        research: "Perplexity Max (live facts)",
+        schedule: "X Premium+ API",
+      },
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {

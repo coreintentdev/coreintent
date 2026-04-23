@@ -130,10 +130,15 @@ const GROK_SYSTEM =
  * Call Grok (X.ai) for fast trading signals and content drafts.
  * Falls back gracefully when the API key is absent or the call fails.
  *
- * @param prompt  User-side message.
- * @param system  Optional override for the system prompt.
+ * @param prompt   User-side message.
+ * @param system   Optional override for the system prompt.
+ * @param options  Optional overrides (e.g. maxTokens for cost control).
  */
-export async function callGrok(prompt: string, system?: string): Promise<AIResponse> {
+export async function callGrok(
+  prompt: string,
+  system?: string,
+  options?: { maxTokens?: number }
+): Promise<AIResponse> {
   const key = process.env.GROK_API_KEY;
   if (isDemoKey(key, "xai-xxx")) {
     return {
@@ -159,7 +164,7 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
             { role: "system", content: system ?? GROK_SYSTEM },
             { role: "user",   content: prompt },
           ],
-          max_tokens: 1000,
+          max_tokens: options?.maxTokens ?? 1000,
           temperature: 0.3,
         }),
       },
@@ -230,10 +235,12 @@ const CLAUDE_DEFAULT_SYSTEM =
  *
  * @param prompt   User-side message.
  * @param system   Optional override for the system prompt. Caching still applies.
+ * @param options  Optional overrides (e.g. maxTokens for cost control).
  */
 export async function callClaude(
   prompt: string,
-  system?: string
+  system?: string,
+  options?: { maxTokens?: number }
 ): Promise<AIResponse> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (isDemoKey(key, "sk-ant-xxx")) {
@@ -261,7 +268,7 @@ export async function callClaude(
         },
         body: JSON.stringify({
           model:      "claude-sonnet-4-6",
-          max_tokens: 1024,
+          max_tokens: options?.maxTokens ?? 1024,
           system: [
             {
               type:          "text",
@@ -328,8 +335,13 @@ const PERPLEXITY_SYSTEM =
  *
  * @param query   The research query.
  * @param system  Optional override for the system prompt. Defaults to PERPLEXITY_SYSTEM.
+ * @param options Optional overrides (e.g. maxTokens for cost control).
  */
-export async function callPerplexity(query: string, system?: string): Promise<AIResponse> {
+export async function callPerplexity(
+  query: string,
+  system?: string,
+  options?: { maxTokens?: number }
+): Promise<AIResponse> {
   const key = process.env.PERPLEXITY_API_KEY;
   if (isDemoKey(key, "pplx-xxx")) {
     return {
@@ -355,7 +367,7 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
             { role: "system", content: system ?? PERPLEXITY_SYSTEM },
             { role: "user",   content: query },
           ],
-          max_tokens:  1024,
+          max_tokens:  options?.maxTokens ?? 1024,
           temperature: 0.2,
         }),
       },
@@ -404,6 +416,21 @@ export function validateAiContent(response: AIResponse): boolean {
   return Boolean(response.content?.trim());
 }
 
+/**
+ * Returns true when the response is both live (not demo/fallback) AND contains
+ * non-empty content. Use when you need to confirm a real API response before
+ * persisting or acting on the result.
+ *
+ * Use validateAiContent() instead when demo fallbacks are acceptable.
+ *
+ * @example
+ * const result = await callClaude(prompt);
+ * if (!isLiveAndValid(result)) return gatewayError("Live AI response required");
+ */
+export function isLiveAndValid(response: AIResponse): boolean {
+  return response.live && validateAiContent(response);
+}
+
 // ---------------------------------------------------------------------------
 // PARALLEL ORCHESTRATION
 // ---------------------------------------------------------------------------
@@ -418,6 +445,12 @@ export interface ParallelAIPrompts {
     grok?:       string;
     perplexity?: string;
     claude?:     string;
+  };
+  /** Optional per-model max_tokens overrides for cost control. */
+  maxTokens?: {
+    grok?:       number;
+    perplexity?: number;
+    claude?:     number;
   };
 }
 
@@ -445,9 +478,9 @@ export async function callAIsParallel(
   prompts: ParallelAIPrompts
 ): Promise<ParallelAIResults> {
   const [grok, perplexity, claude] = await Promise.all([
-    callGrok(prompts.grok,             prompts.systems?.grok),
-    callPerplexity(prompts.perplexity, prompts.systems?.perplexity),
-    callClaude(prompts.claude,         prompts.systems?.claude),
+    callGrok(prompts.grok,             prompts.systems?.grok,       { maxTokens: prompts.maxTokens?.grok }),
+    callPerplexity(prompts.perplexity, prompts.systems?.perplexity, { maxTokens: prompts.maxTokens?.perplexity }),
+    callClaude(prompts.claude,         prompts.systems?.claude,     { maxTokens: prompts.maxTokens?.claude }),
   ]);
   return {
     grok,

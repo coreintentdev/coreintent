@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.autosave in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type BackendKey = "primary" | "docs" | "files" | "cache" | "links" | "state";
 type SaveType   = "link" | "doc" | "state" | "command" | "config" | "signal" | "agent";
@@ -70,46 +70,50 @@ const SERVICES_REPLACED = [
 const TOTAL_MONTHLY_COST = 66;
 
 export async function GET() {
-  const totalSaved = SERVICES_REPLACED.reduce((sum, r) => {
-    const match = r.saved.match(/\d+/);
-    return sum + (match ? parseInt(match[0]) : 0);
-  }, 0);
+  try {
+    const totalSaved = SERVICES_REPLACED.reduce((sum, r) => {
+      const match = r.saved.match(/\d+/);
+      return sum + (match ? parseInt(match[0]) : 0);
+    }, 0);
 
-  return ok({
-    autosave: {
-      enabled:     true,
-      saveOnEvery: ["command", "config_change", "trade_signal", "agent_event", "link_share"],
-      backends:    SAVE_BACKENDS,
-    },
-    outsourceMap: OUTSOURCE_MAP,
-    costAnalysis: {
-      currentMonthly:       `~$${TOTAL_MONTHLY_COST}`,
-      equivalentIfSeparate: `~$${TOTAL_MONTHLY_COST + totalSaved}`,
-      monthlySavings:       `~$${totalSaved}`,
-      annualSavings:        `~$${totalSaved * 12}`,
-      servicesReplaced:     SERVICES_REPLACED,
-    },
-    weblinks: {
-      description: "Share integration via URL — no auth, no setup, just a link",
-      uses: [
-        "Share AI context between Claude/Grok/Perplexity sessions",
-        "Send terminal state to collaborators",
-        "Link Google Drive docs directly into workflows",
-        "Quick-share incident reports",
-        "Integration via URL params (backwards-compatible discovery)",
-      ],
-    },
-    recovery: {
-      description: "Find lost stuff via unconventional paths",
-      methods: [
-        "Google Drive version history (30 days)",
-        "Gmail search (everything is an email trail)",
-        "GitHub commit history (every save is recoverable)",
-        "Perplexity re-research (re-find anything you found before)",
-        "Cloudflare analytics (see what was accessed when)",
-      ],
-    },
-  });
+    return ok({
+      autosave: {
+        enabled:     true,
+        saveOnEvery: ["command", "config_change", "trade_signal", "agent_event", "link_share"],
+        backends:    SAVE_BACKENDS,
+      },
+      outsourceMap: OUTSOURCE_MAP,
+      costAnalysis: {
+        currentMonthly:       `~$${TOTAL_MONTHLY_COST}`,
+        equivalentIfSeparate: `~$${TOTAL_MONTHLY_COST + totalSaved}`,
+        monthlySavings:       `~$${totalSaved}`,
+        annualSavings:        `~$${totalSaved * 12}`,
+        servicesReplaced:     SERVICES_REPLACED,
+      },
+      weblinks: {
+        description: "Share integration via URL — no auth, no setup, just a link",
+        uses: [
+          "Share AI context between Claude/Grok/Perplexity sessions",
+          "Send terminal state to collaborators",
+          "Link Google Drive docs directly into workflows",
+          "Quick-share incident reports",
+          "Integration via URL params (backwards-compatible discovery)",
+        ],
+      },
+      recovery: {
+        description: "Find lost stuff via unconventional paths",
+        methods: [
+          "Google Drive version history (30 days)",
+          "Gmail search (everything is an email trail)",
+          "GitHub commit history (every save is recoverable)",
+          "Perplexity re-research (re-find anything you found before)",
+          "Cloudflare analytics (see what was accessed when)",
+        ],
+      },
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
