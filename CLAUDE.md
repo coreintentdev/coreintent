@@ -56,6 +56,9 @@ Based in: New Zealand (NEVER register anything in Australia)
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI rendering (potential XSS; JSON-LD structured data sanitized 2026-04-22)
 - xterm packages in package.json but not actually used
+- `security/remove-runtime-fingerprint` branch — unreviewed security fix, needs PR + merge
+- `security/sanitize-api-error-leakage` branch — unreviewed security fix, needs PR + merge
+- 61 non-main branches as of 2026-04-24 — SEO/marketing/i18n sprawl; mass cleanup needed
 
 ## Family (NEVER fabricate)
 - Michelle (wife), Ruby (~14, daughter), Wesley (son)
