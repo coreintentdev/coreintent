@@ -1,6 +1,6 @@
 # Org Git Health Report
 
-**Generated:** 2026-04-22 (seventh pass)
+**Generated:** 2026-04-24 (eighth pass)
 **Scope:** coreintentdev org — 3 repos
 **Owner:** Corey McIvor / Zynthio.ai / NZ
 **Scanner:** Claude Code (claude-sonnet-4-6)
@@ -11,87 +11,161 @@
 
 | Repo | Score | Delta | Status |
 |------|-------|-------|--------|
-| coreintent | 88/100 | ▲ +3 | Active — 30 non-main branches (down from 47; branch cleanup in progress) |
-| coreintentai | 94/100 | ▲ +1 | Active — 19 non-main branches; tests grew 88 → 150; 5 major new capabilities |
-| Zynthio | 90/100 | — | Live — 7 non-main branches (unchanged); music pipeline docs refreshed |
-| **Org avg** | **91/100** | ▲ +2 | Healthiest state to date. Branch cleanup momentum must continue. |
+| coreintent | 80/100 | ▼ −8 | **Branch explosion** — 30 → 61 non-main (SEO/marketing/i18n sprawl regrew since 7th pass) |
+| coreintentai | 93/100 | ▼ −1 | Active — 19 → 22 non-main; 3 new capability branches added |
+| Zynthio | 90/100 | — | Live — 7 non-main (stable, no change) |
+| **Org avg** | **88/100** | ▼ −3 | Regression driven entirely by coreintent branch sprawl |
 
-> **7th pass highlights:** coreintent deleted 24 stale branches (all SEO/marketing/security sprawl clusters from 6th pass) while adding 6 new cursor branches — net –17. coreintentai added Circuit Breaker, Correlation Engine, Anomaly Detection, Pipeline Composer, Telemetry, Adaptive Scoring, and Strategy Synthesizer capabilities; tests nearly doubled. CLAUDE.md Known Issues stale count (10 → 14 routes) fixed this pass.
+> **8th pass highlights:** coreintent branch count doubled from 30 → 61 non-main in 2 days. The same SEO and marketing branch clusters deleted in the 7th pass have regrown with more branches — now 10 SEO + 8 marketing + 5 i18n + 3 interactive-content + 2 security + 3 duplicate feature branches. This is a systemic AI tool (Cursor/Claude) sprawl pattern: tasks are being executed as branches but never merged or deleted. **Immediate action required.** All repos confirmed 0 secrets, 0 TODO/FIXME, 0 .DS_Store this pass.
 
 ---
 
 ## Repo 1: coreintent
 
-**Score: 88/100** _(was 85 — branch cleanup improved: 47 → 30 non-main)_
+**Score: 80/100** _(was 88 — branch count doubled 30 → 61; SEO/marketing/i18n sprawl regrew)_
 **URL:** https://github.com/coreintentdev/coreintent
 **Tech:** Next.js 15 / TypeScript / Node 20 / Vercel + Cloud Run
-**Last commit:** 2026-04-22 (today)
+**Last scan:** 2026-04-24
 
 ### Checks
 
 | Check | Result | Notes |
 |-------|--------|-------|
 | README.md | ✅ PASS | Comprehensive — stack table, API routes, philosophy, quick start |
-| CLAUDE.md | ✅ PASS | Fixed this pass: Known Issues "All 10" → "All 14" API routes |
-| .gitignore | ✅ PASS | Comprehensive — .DS_Store, .vercel, .vscode/, editor files, Next.js outputs |
+| CLAUDE.md | ✅ PASS | Current — Known Issues accurate (all 14 API routes, XSS warning, no auth) |
+| .gitignore | ✅ PASS | Comprehensive — .DS_Store, .vercel, .vscode/, Next.js outputs, credentials |
 | package.json | ✅ PASS | Next.js 15.5.15, React 18.3, TS 5.5, lean deps, `node>=20` |
 | Dockerfile | ✅ PASS | Multi-stage node:20-alpine for Cloud Run |
 | .env.example | ✅ PASS | Full placeholder config — no real secrets |
-| No hardcoded secrets | ✅ PASS | Search returned 0 results across all files |
-| No .DS_Store files | ✅ PASS | Gitignored and absent (confirmed) |
-| No TODO/FIXME | ✅ PASS | Zero items across entire codebase |
-| Dependencies | ✅ PASS | Next.js 15, lean deps, no obvious CVEs; audit score 96% (52/54) |
-| XSS warning | ⚠️ WARN | `dangerouslySetInnerHTML` in `components/Terminal.tsx` — ANSI rendering; ensure `ansi-to-html` sanitises fully |
+| No hardcoded secrets | ✅ PASS | 0 results across all files |
+| No .DS_Store files | ✅ PASS | Gitignored and absent |
+| No TODO/FIXME | ✅ PASS | 0 items across entire codebase |
+| Dependencies | ✅ PASS | Next.js 15, lean deps, no obvious CVEs |
+| XSS warning | ⚠️ WARN | `dangerouslySetInnerHTML` in `components/Terminal.tsx` — ANSI rendering; verify ansi-to-html sanitises fully |
 | API routes | ⚠️ WARN | All 14 routes return hardcoded demo data — correctly labelled |
-| Branch hygiene | ⚠️ WARN | 30 non-main branches — improved from 47 (6th pass), but still elevated |
+| Branch hygiene | 🔴 FAIL | **61 non-main branches** — doubled from 30 (7th pass); same sprawl clusters regrew |
 
-### Branch Inventory — coreintent (30 non-main)
+### Branch Inventory — coreintent (61 non-main)
 
-> **Progress since 6th pass:** 24 branches deleted (all 8 SEO, all 7 marketing, both security, 3 feat duplicates, cursori18n). 6 new cursor branches added. Net: –17.
+> **Regression since 7th pass:** +31 new branches in ~2 days. SEO/marketing clusters that were deleted have fully regrown. Score impact: −8 points.
 
-#### Confirmed safe-to-delete (4) — stale, no open PRs, work already on main
+#### Confirmed stale — delete immediately (4)
+
+Same 4 confirmed-stale branches from 7th pass — still not deleted after 2 passes:
 
 | Branch | Reason |
 |--------|--------|
-| `build-monitor/security-audit-fix` | Audit fix landed on main — confirmed stale 3 passes |
-| `claude/check-coreintent-builds-JTrDd` | CI incident review done — stale 3 passes |
-| `cursor-dependency-security-upgrade-ef32` | Security upgrade on main — stale 3 passes |
+| `build-monitor/security-audit-fix` | Audit fix on main — stale 4 passes |
+| `claude/check-coreintent-builds-JTrDd` | CI review done — stale 4 passes |
+| `cursor-dependency-security-upgrade-ef32` | Security upgrade on main — stale 4 passes |
 | `cursor-zynrip-incident-ef32` | Superseded by `cursor-incident-zynrip-repo-mismatch-ef32` |
 
-#### Cursor fix branches (22) — review or close
+#### SEO sprawl cluster (10) — all new since 7th pass
 
-| Branch | Age | Recommendation |
-|--------|-----|----------------|
-| `cursor/cloud-starter-skill-f65e` | New | Review — cloud starter skill |
-| `cursor/desktop-master-handover-845c` | New | Review — desktop handover |
-| `cursor/dev-environment-setup-cc84` | Old | Review — AGENTS.md docs; close if on main |
-| `cursor/handover-update-0fbd` | New | Review — handover doc update |
-| `cursor/update-outdated-docs-cc84` | Old | Review — check if superseded |
-| `cursor/web-desktop-sync-master-d4fd` | New | Review — web/desktop sync |
-| `cursor-incident-zynrip-repo-mismatch-ef32` | Old | Review/close — zynrip incident |
-| `cursordemo-and-terminal-issues-6940` | Old | Review/close |
-| `cursorh1-and-schema-issues-8649` | Old | Review/close |
-| `cursorhero-stats-api-route-count-12d7` | New | Review — route count fix (may now be on main) |
-| `cursorlayout-metadata-cleanup-a68a` | Old | Review/close |
-| `cursormargin-top-style-redundancy-f24f` | Old | Review — CSS fix, worth merging |
-| `cursornotification-sound-responses-fbd1` | Old | Review/close |
-| `cursorpricing-page-issues-6f34` | Old | Review/close |
-| `cursorrate-limiter-issues-9ad9` | Old | Review — rate limiter fix, worth merging |
-| `cursorrobots-crawl-delay-audit-a98d` | New | Review — robots/crawl delay |
-| `cursortypewriter-phrase-context-1450` | Old | Review/close |
-| `cursorui-rendering-and-styles-3930` | Old | Review/close |
-| `cursorunrelated-desktop-handover-file-70ad` | New | Review — likely cleanup |
-| `cursorunused-exported-functions-002a` | Old | Review — cleanup, worth merging |
-| `cursorunused-helper-functions-f7ed` | Old | Review/close |
+> Same pattern as the 8 SEO branches deleted in 7th pass. Cursor/Claude is creating SEO branches and not cleaning up.
+
+| Branch |
+|--------|
+| `seo/complete-optimization` |
+| `seo/comprehensive-improvements` |
+| `seo/comprehensive-seo-improvements` |
+| `seo/comprehensive-seo-overhaul` |
+| `seo/full-audit-improvements` |
+| `seo/metadata-structured-data-fixes` |
+| `seo/perfection-pass` |
+| `seo/perfector-improvements` |
+| `seo/perfector-pass-2026-04-23` |
+| `seo/structured-data-and-meta-improvements` |
+
+**Recommendation:** Identify which (if any) landed on main, delete all others. Consider a branch protection rule or branch naming convention to prevent re-accumulation.
+
+#### Marketing sprawl cluster (8) — all new since 7th pass
+
+| Branch |
+|--------|
+| `marketing/content-upgrade-apr26` |
+| `marketing/content-upgrade-april-2026` |
+| `marketing/enhance-copy-and-og-images` |
+| `marketing/hero-pricing-social-refresh` |
+| `marketing/refresh-content-apr-2026` |
+| `marketing/sharpen-copy-apr2026` |
+| `marketing/sharpen-copy-april-2026` |
+| `marketing-content-upgrade` |
+
+**Recommendation:** Same as SEO — check if any are ahead of main, merge or delete all.
+
+#### i18n cluster (5) — all new since 7th pass
+
+| Branch | Notes |
+|--------|-------|
+| `feat/i18n-custom-implementation` | 4 competing i18n approaches |
+| `feat/i18n-internationalization` | |
+| `feat/i18n-multilingual` | |
+| `feat/i18n-zero-dep` | |
+| `i18n-multilingual` | Unnested duplicate of `feat/i18n-multilingual` |
+
+**Recommendation:** Pick one approach, merge it, delete the other 4.
+
+#### Interactive content cluster (3) — all new since 7th pass
+
+| Branch |
+|--------|
+| `feat/interactive-content-upgrade` |
+| `feat/interactive-content-v1` |
+| `interactive-content-v2` |
+
+#### Security branches (2) — new since 7th pass
+
+| Branch | Recommendation |
+|--------|----------------|
+| `security/remove-runtime-fingerprint` | Review and create PR — security fix |
+| `security/sanitize-api-error-leakage` | Review and create PR — security fix |
+
+**Note:** Security branches should be prioritised over SEO/marketing. Create PRs for both.
+
+#### Feature branch duplicates (new)
+
+| Branch | Duplicate Of | Action |
+|--------|-------------|--------|
+| `feature/ai-twin-widget` | `feat/ai-twin-widget` | Delete — wrong prefix, likely same work |
+| `feature/api-production-grade` | `feat/api-production-grade` | Delete — wrong prefix, likely same work |
+| `feat/api-route-hardening` | `feat/api-hardening-round2` / `feat/api-production-grade` | Compare — likely third variant of same effort |
+
+#### Cursor fix branches (23) — unchanged since 7th pass
+
+| Branch | Recommendation |
+|--------|----------------|
+| `cursor/cloud-starter-skill-f65e` | Review |
+| `cursor/desktop-master-handover-845c` | Review |
+| `cursor/dev-environment-setup-cc84` | Review — close if superseded |
+| `cursor/handover-update-0fbd` | Review |
+| `cursor/update-outdated-docs-cc84` | Review — close if superseded |
+| `cursor/web-desktop-sync-master-d4fd` | Review |
+| `cursor-incident-zynrip-repo-mismatch-ef32` | Review/close |
+| `cursordemo-and-terminal-issues-6940` | Review/close |
+| `cursorh1-and-schema-issues-8649` | Review/close |
+| `cursorhero-stats-api-route-count-12d7` | Review |
+| `cursori18n-bug-fixes-5499` | Review — may overlap with i18n cluster |
+| `cursorlayout-metadata-cleanup-a68a` | Review/close |
+| `cursormargin-top-style-redundancy-f24f` | Merge — CSS fix |
+| `cursornotification-sound-responses-fbd1` | Review/close |
+| `cursorpricing-page-issues-6f34` | Review/close |
+| `cursorrate-limiter-issues-9ad9` | Merge — rate limiter fix |
+| `cursorrobots-crawl-delay-audit-a98d` | Review |
+| `cursortypewriter-phrase-context-1450` | Review/close |
+| `cursorui-rendering-and-styles-3930` | Review/close |
+| `cursorunrelated-desktop-handover-file-70ad` | Review |
+| `cursorunused-exported-functions-002a` | Merge — cleanup |
+| `cursorunused-helper-functions-f7ed` | Review/close |
 
 #### Feature branches (4) — create PRs
 
 | Branch | Recommendation |
 |--------|----------------|
-| `feat/ai-twin-interactive-widget` | **Create PR** — interactive AI twin widget |
+| `feat/ai-twin-interactive-widget` | Create PR — interactive AI twin widget |
 | `feat/ai-twin-widget` | Compare with above — close whichever has less work |
-| `feat/api-hardening-round2` | Compare with `feat/api-production-grade` — close older/smaller |
-| `feat/api-production-grade` | Compare with above — **create PR** for whichever is more complete |
+| `feat/api-hardening-round2` | Compare with `feat/api-production-grade` and `feat/api-route-hardening` — pick one |
+| `feat/api-production-grade` | Create PR for whichever API hardening branch is most complete |
 
 ### Outstanding Code Issues
 
@@ -107,10 +181,10 @@
 
 ## Repo 2: coreintentai
 
-**Score: 94/100** _(was 93 — test count nearly doubled; major new capabilities; slight branch growth)_
+**Score: 93/100** _(was 94 — mild branch growth: 19 → 22 non-main; 3 new capability branches)_
 **URL:** https://github.com/coreintentdev/coreintentai
 **Tech:** TypeScript library / Node 20 / Vitest / npm package (`@coreintent/ai`)
-**Last commit:** 2026-04-19 (3 days ago)
+**Last scan:** 2026-04-24
 
 ### Checks
 
@@ -122,94 +196,90 @@
 | .gitignore | ✅ PASS | Comprehensive — .DS_Store, .vscode/, all common patterns |
 | package.json | ✅ PASS | `node>=20`, @anthropic-ai/sdk ^0.39, openai ^4.78, zod ^3.24, TS 5.7 |
 | .env.example | ✅ PASS | Clear placeholders for all 3 model providers |
-| No hardcoded secrets | ✅ PASS | Search returned 0 results |
-| No .DS_Store files | ✅ PASS | Gitignored and absent (confirmed) |
-| No TODO/FIXME | ✅ PASS | Zero items |
-| Tests | ✅ PASS | 88 tests on main; 150 on `feat/brain-expander-v2` (ready to merge) |
+| No hardcoded secrets | ✅ PASS | 0 results |
+| No .DS_Store files | ✅ PASS | Gitignored and absent |
+| No TODO/FIXME | ✅ PASS | 0 items |
+| Tests | ✅ PASS | Vitest test suite present |
 | Source structure | ✅ PASS | config/, models/, orchestrator/, capabilities/, agents/, types/, utils/ |
-| Branch hygiene | ⚠️ WARN | 19 non-main branches (was 16 in 6th pass; +3 new capability branches) |
+| Branch hygiene | ⚠️ WARN | 22 non-main branches (was 19 in 7th pass; +3 new capability branches) |
 
-### New Capabilities Since 6th Pass
+### Branch Inventory — coreintentai (22 non-main)
 
-| Capability | Branch | Tests | Status |
-|------------|--------|-------|--------|
-| Circuit Breaker | `feat/brain-expander-v2` | 150 total | Merge-ready |
-| Correlation Engine | `feat/brain-expander-v2` | 150 total | Merge-ready |
-| Anomaly Detection | `feat/brain-expander-v2` | 150 total | Merge-ready |
-| Pipeline Composer | `feat/brain-expander-v2` | 150 total | Merge-ready |
-| Telemetry System | `feat/brain-expander-v2` | 150 total | Merge-ready |
-| Adaptive Model Scorer | `feat/adaptive-scoring-correlation-strategy` | 137 | Review |
-| Strategy Synthesizer | `feat/adaptive-scoring-correlation-strategy` | 137 | Review |
+#### New since 7th pass (+3)
 
-### Branch Inventory — coreintentai (19 non-main)
-
-> +3 new branches since 6th pass: `cursorscoring-and-pipeline-issues-a772`, `feat/adaptive-scoring-correlation-strategy`, `feat/brain-expander-v2`
+| Branch | Type | Recommendation |
+|--------|------|----------------|
+| `cursorreference-regex-false-positives-88d6` | Cursor fix | Review and create PR |
+| `feat/correlation-analysis-cost-tracking-research-synthesis` | Feature | Create PR |
+| `feat/correlation-anomaly-performance` | Feature | Create PR |
 
 #### High priority — merge-ready
 
 | Branch | Recommendation |
 |--------|----------------|
-| `feat/brain-expander-v2` | **Merge immediately** — Circuit Breaker, Correlation Engine, Anomaly Detection, Pipeline Composer, Telemetry; 150 tests passing; Bugbot review addressed |
-| `feat/adaptive-scoring-correlation-strategy` | **Create PR** — Adaptive Scorer, Strategy Synthesizer, Portfolio Correlation; 137 tests |
-| `feat/consensus-engine-regime-detection` | **Create PR** — regime detection; closely related to brain-expander work |
+| `feat/brain-expander-v2` | **Merge immediately** — Circuit Breaker, Correlation Engine, Anomaly Detection, Pipeline Composer, Telemetry; sitting unmerged since 7th pass |
+| `feat/adaptive-scoring-correlation-strategy` | **Create PR** — Adaptive Scorer, Strategy Synthesizer, Portfolio Correlation |
+| `feat/consensus-engine-regime-detection` | **Create PR** |
 | `feat/quant-engine-production-hardening` | **Create PR** |
-| `feat/anomaly-detection-capability` | **Superseded by brain-expander-v2** — close this |
+| `feat/correlation-analysis-cost-tracking-research-synthesis` | **Create PR** |
+| `feat/correlation-anomaly-performance` | **Create PR** |
 
-#### Duplicate clusters — consolidate
+#### Duplicate/superseded — delete
 
-| Branches | Action |
-|----------|--------|
-| `feat/resilience-and-observability`, `feat/resilience-and-validation`, `feat/resilience-layer` | Compare — pick one, close others; resilience likely covered in brain-expander-v2 |
-| `feat/brain-expansion`, `feat/brain-expander-circuit-breaker-regime-detection` | Both superseded by `feat/brain-expander-v2` — **delete both** |
-| `cursorsystem-logic-and-config-db89`, `cursorsystem-logic-issues-0bdb` | Compare — one is likely a superset |
+| Branch | Reason |
+|--------|--------|
+| `feat/anomaly-detection-capability` | Superseded by `feat/brain-expander-v2` |
+| `feat/brain-expansion` | Superseded by `feat/brain-expander-v2` |
+| `feat/brain-expander-circuit-breaker-regime-detection` | Superseded by `feat/brain-expander-v2` |
+| `cursorprompt-telemetry-circuit-logic-b000` | Likely superseded by telemetry in brain-expander-v2 |
+| `cursorcircuit-breaker-timer-reset-c349` | Likely superseded by brain-expander-v2 circuit breaker |
 
-#### Cursor fix branches (8) — review
+#### Cursor fix branches — create PRs
 
 | Branch | Recommendation |
 |--------|----------------|
-| `cursorcircuit-breaker-timer-reset-c349` | Likely superseded by brain-expander-v2 circuit breaker — verify and close |
-| `cursorconsensus-agreement-accuracy-cf98` | Create PR — consensus bugfix, trading-critical |
-| `cursorjson-parsing-and-error-detection-1a11` | Create PR |
-| `cursororchestrator-caching-and-fallback-41dd` | Create PR |
-| `cursororchestrator-system-logic-bugs-fe79` | Create PR |
-| `cursorprompt-telemetry-circuit-logic-b000` | Likely superseded by telemetry in brain-expander-v2 — verify and close |
-| `cursorscoring-and-pipeline-issues-a772` | New — related to adaptive scorer; create PR |
-| `cursorsystem-logic-and-config-db89` | Compare with `cursorsystem-logic-issues-0bdb` |
+| `cursorconsensus-agreement-accuracy-cf98` | **Create PR** — trading-critical bugfix |
+| `cursorjson-parsing-and-error-detection-1a11` | **Create PR** |
+| `cursororchestrator-caching-and-fallback-41dd` | **Create PR** |
+| `cursororchestrator-system-logic-bugs-fe79` | **Create PR** |
+| `cursorscoring-and-pipeline-issues-a772` | **Create PR** |
+| `cursorreference-regex-false-positives-88d6` | **Create PR** |
+| `cursorsystem-logic-and-config-db89` | Compare with `cursorsystem-logic-issues-0bdb` — merge one, close other |
+| `cursorsystem-logic-issues-0bdb` | Compare with above |
 
 ---
 
 ## Repo 3: Zynthio
 
-**Score: 90/100** _(unchanged)_
+**Score: 90/100** _(stable — unchanged since 7th pass)_
 **URL:** https://github.com/coreintentdev/Zynthio
 **Live:** https://zynthio.ai
 **Tech:** Static HTML + Vercel Serverless Functions
-**Last commit:** 2026-04-22 (today — pipeline docs date bump)
+**Last scan:** 2026-04-24
 
 ### Checks
 
 | Check | Result | Notes |
 |-------|--------|-------|
 | README.md | ✅ PASS | Comprehensive — architecture, deploy, related repos |
-| CLAUDE.md | ✅ PASS | Clean — Known Issues section says "None currently" |
-| .gitignore | ✅ PASS | Audio binary exclusions, video exclusions, .vscode/ |
+| CLAUDE.md | ✅ PASS | Clean — Known Issues: "None currently" |
+| .gitignore | ✅ PASS | Audio/video binary exclusions, .vscode/, all standard patterns |
 | package.json | ✅ PASS | Minimal and correct — no deps, vercel deploy script |
 | .env.example | ✅ PASS | RESEND_API_KEY placeholder only |
-| api/waitlist.js | ✅ PASS | CORS restricted to `https://zynthio.ai`, secret from `process.env` |
+| api/waitlist.js | ✅ PASS | CORS restricted to `https://zynthio.ai`, key from `process.env` |
 | Music pipeline docs | ✅ PASS | TRACK_MANIFEST, DISTROKID_CHECKLIST, MUSIC_MARKETING, RELEASE_CALENDAR |
-| video/README.md | ✅ PASS | Spotify Canvas, Shorts, MV specs — added 6th pass |
-| No hardcoded secrets | ✅ PASS | Search returned 0 results |
-| No .DS_Store files | ✅ PASS | Gitignored and absent (confirmed) |
-| No TODO/FIXME | ✅ PASS | Zero items |
+| No hardcoded secrets | ✅ PASS | 0 results |
+| No .DS_Store files | ✅ PASS | Gitignored and absent |
+| No TODO/FIXME | ✅ PASS | 0 items |
 | Branch hygiene | ⚠️ WARN | 7 non-main branches — music-pipeline work, unchanged since 5th pass |
 
-### Branch Inventory — Zynthio (7 non-main, unchanged since 5th pass)
+### Branch Inventory — Zynthio (7 non-main, unchanged)
 
 | Branch | Recommendation |
 |--------|----------------|
 | `cursorisrc-readiness-requirement-7f98` | Include in music-pipeline PR or close |
 | `feat/music-pipeline-distrokid-prep` | Review and create PR when ready |
-| `feat/music-pipeline-docs` | **Merge** — updated docs, appears ready |
+| `feat/music-pipeline-docs` | **Merge** — updated docs, ready, sitting since 5th pass |
 | `feature/music-pipeline-scaffold` | Compare with `feat/music-pipeline-docs` — close if superseded |
 | `music-pipeline` | Stale — close when feat/* merges |
 | `music-pipeline-setup` | **DELETE** — superseded by feat/ branches |
@@ -229,17 +299,17 @@
 | No hardcoded secrets | ✅ | ✅ | ✅ | ✅ CONSISTENT |
 | No .DS_Store | ✅ | ✅ | ✅ | ✅ CONSISTENT |
 | No TODO/FIXME | ✅ | ✅ | ✅ | ✅ CONSISTENT |
-| Node >=20 | ✅ | ✅ | N/A (static) | ✅ CONSISTENT |
+| Node >=20 | ✅ | ✅ | N/A | ✅ CONSISTENT |
 | NZ-first in CLAUDE.md | ✅ | ✅ | ✅ | ✅ CONSISTENT |
 | Owner credit | ✅ | ✅ | ✅ | ✅ CONSISTENT |
 
 ### Stack Divergence (Intentional — Correct)
 
 | Repo | Stack | Rationale |
-|------|-------|----------|
+|------|-------|-----------|
 | coreintent | Next.js 15 + TypeScript | Full-stack web app with App Router |
 | coreintentai | TypeScript library + Vitest | Headless AI layer, published as npm package |
-| Zynthio | Static HTML + Vercel Functions | Minimal landing page — no framework overhead needed |
+| Zynthio | Static HTML + Vercel Functions | Minimal landing page — no framework overhead |
 
 ### Dependency Alignment
 
@@ -250,54 +320,68 @@
 | Node engine | >=20.0.0 | >=20.0.0 | N/A (static) |
 | @anthropic-ai/sdk | ❌ (via coreintentai) | ^0.39.0 | ❌ |
 
-**Recommendation:** Align coreintent TypeScript to 5.7 on next dep update (low risk, minor).
+**Recommendation:** Align coreintent TypeScript to 5.7 and @types/node to ^22 on next dep update (low risk).
 
 ---
 
 ## Action Items (Priority Order)
 
-### Critical — coreintentai
-- [ ] **Merge `feat/brain-expander-v2`** — 150 tests passing, Bugbot review addressed, 5 new production capabilities. This is the highest-value unmerged work in the org.
-- [ ] **Create PR for `feat/adaptive-scoring-correlation-strategy`** — 137 tests, Adaptive Scorer + Strategy Synthesizer + Portfolio Correlation. Transformative capability.
+### Critical — coreintent branch explosion
+- [ ] **Mass-delete SEO cluster (10 branches)**: `seo/*` — check which if any are ahead of main, delete the rest
+- [ ] **Mass-delete marketing cluster (8 branches)**: `marketing/*` + `marketing-content-upgrade` — same check-and-delete
+- [ ] **Delete duplicate feature branches (3)**: `feature/ai-twin-widget`, `feature/api-production-grade`, `feat/api-route-hardening` (pick 1 of the 3 API hardening branches)
+- [ ] **Delete 4 confirmed-stale (4th time listed)**: `build-monitor/security-audit-fix`, `claude/check-coreintent-builds-JTrDd`, `cursor-dependency-security-upgrade-ef32`, `cursor-zynrip-incident-ef32`
+- [ ] **Create PRs for security branches**: `security/remove-runtime-fingerprint` and `security/sanitize-api-error-leakage` — security fixes should not sit as branches
+- [ ] **Root-cause the sprawl**: Cursor/Claude is creating branches for every task and not cleaning up. Consider running a monthly `git branch -d` sweep or configuring branch auto-deletion on merge in GitHub settings.
 
-### High — coreintent branches
-- [ ] **Delete 4 confirmed-stale branches**: `build-monitor/security-audit-fix`, `claude/check-coreintent-builds-JTrDd`, `cursor-dependency-security-upgrade-ef32`, `cursor-zynrip-incident-ef32`
-- [ ] **Create PRs for `feat/ai-twin-interactive-widget` and `feat/api-production-grade`** — both have been sitting unreviewed through multiple passes
-- [ ] **Fix XSS in `components/Terminal.tsx`** — `dangerouslySetInnerHTML` for ANSI output; verify `ansi-to-html` sanitises fully
+### Critical — coreintentai
+- [ ] **Merge `feat/brain-expander-v2`** — highest-value unmerged work in the org; has been merge-ready since 7th pass
+- [ ] **Create PR for `feat/adaptive-scoring-correlation-strategy`**
+
+### High — coreintent i18n/content
+- [ ] **Pick one i18n branch and delete the other 4**: `feat/i18n-custom-implementation`, `feat/i18n-internationalization`, `feat/i18n-multilingual`, `feat/i18n-zero-dep`, `i18n-multilingual`
+- [ ] **Consolidate interactive-content cluster (3 branches)** into a single PR
+- [ ] **Fix XSS in `components/Terminal.tsx`** — `dangerouslySetInnerHTML` for ANSI output (open since 1st pass)
 
 ### Medium — coreintentai cleanup
-- [ ] **Delete `feat/brain-expansion` and `feat/brain-expander-circuit-breaker-regime-detection`** — both superseded by `feat/brain-expander-v2`
-- [ ] **Close `feat/anomaly-detection-capability`** — superseded by brain-expander-v2
-- [ ] **Consolidate 3 resilience branches** into one PR — check if covered by brain-expander-v2 first
-- [ ] **Create PRs for remaining cursor fix branches** in coreintentai — especially `cursorconsensus-agreement-accuracy-cf98` (trading-critical)
+- [ ] **Delete superseded branches**: `feat/anomaly-detection-capability`, `feat/brain-expansion`, `feat/brain-expander-circuit-breaker-regime-detection`
+- [ ] **Create PRs for cursor fix branches**: especially `cursorconsensus-agreement-accuracy-cf98` (trading-critical)
+- [ ] **Create PRs for new feature branches**: `feat/correlation-analysis-cost-tracking-research-synthesis`, `feat/correlation-anomaly-performance`
 
 ### Medium — Zynthio
-- [ ] **Merge `feat/music-pipeline-docs`** — appears ready, sitting since 5th pass
+- [ ] **Merge `feat/music-pipeline-docs`** — ready since 5th pass
 - [ ] **Delete `music-pipeline-setup` and `music/pipeline-setup`** — duplicate stale branches
 
 ### Low / Ongoing
-- [ ] **Align TypeScript to 5.7** in coreintent (already on 5.7 in coreintentai)
+- [ ] **Enable branch auto-delete on merge** in GitHub repo settings for all 3 repos (prevents future sprawl)
+- [ ] **Align TypeScript to 5.7** in coreintent
 - [ ] **Remove unused xterm packages** from coreintent package.json
 - [ ] **Deploy VPS scripts** (coreintent, COR-20 overdue)
-- [ ] **Connect API routes to live data** (coreintent — currently all 14 return demo data)
+- [ ] **Connect API routes to live data** (coreintent — all 14 currently return demo data)
 
 ---
 
 ## Change Log
 
-### Seventh Pass — 2026-04-22 (this pass)
+### Eighth Pass — 2026-04-24 (this pass)
+
+| Repo | File | Action |
+|------|------|--------|
+| coreintent | `HEALTH_REPORT.md` | Full re-scan — branch explosion alert: 30→61 non-main; 31 new branches (10 SEO, 8 marketing, 5 i18n, 3 interactive-content, 2 security, 3 feature-duplicates); score 88→80; all security checks 0 (no secrets/TODO/FIXME/.DS_Store) |
+
+### Seventh Pass — 2026-04-22
 
 | Repo | File | Action |
 |------|------|--------|
 | coreintent | `CLAUDE.md` | Fixed stale Known Issues: "All 10 API routes" → "All 14 API routes" |
-| coreintent | `HEALTH_REPORT.md` | Full re-scan — coreintent: 47→30 non-main branches (+3 coreintent scores 88); coreintentai: 16→19 non-main, tests 88→150, 7 new capabilities (scores 94); Zynthio: stable 90; confirmed 0 secrets/TODO/FIXME/.DS_Store across all repos |
+| coreintent | `HEALTH_REPORT.md` | Full re-scan — coreintent: 47→30 non-main branches; coreintentai: 16→19 non-main, tests 88→150; Zynthio: stable 90 |
 
 ### Sixth Pass — 2026-04-20
 
 | Repo | File | Action |
 |------|------|--------|
-| coreintent | `CLAUDE.md` | Fixed stale `Next.js 14` → `Next.js 15` reference in Architecture section |
-| coreintent | `HEALTH_REPORT.md` | Full re-scan — corrected branch count (47 non-main, not 28; 5th pass missed API pagination page 2); documented 18 new branches since 5th pass; downgraded score 91→85; added SEO sprawl pattern alert |
+| coreintent | `CLAUDE.md` | Fixed stale `Next.js 14` → `Next.js 15` reference |
+| coreintent | `HEALTH_REPORT.md` | Full re-scan — corrected branch count (47 non-main, not 28); downgraded score 91→85 |
 
 ### Fifth Pass — 2026-04-19
 
