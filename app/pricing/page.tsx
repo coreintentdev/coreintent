@@ -482,7 +482,7 @@ export default function PricingPage() {
             <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>
               First movers get first-mover advantages.
             </h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "12px", marginTop: "16px", maxWidth: "600px", margin: "16px auto 0" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "12px", maxWidth: "600px", margin: "16px auto 0" }}>
               {[
                 { label: "Priority Placement", desc: "Early accounts get featured when leagues launch", color: "#10b981" },
                 { label: "Founding Status", desc: "Permanent founding member badge on your profile", color: "#a855f7" },
