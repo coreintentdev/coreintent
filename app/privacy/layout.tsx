@@ -58,10 +58,19 @@ const structuredData = {
       url: "https://coreintent.dev/privacy",
       name: "Privacy Policy — How We Handle Your Data",
       description:
-        "CoreIntent privacy policy — how we handle your data. NZ Privacy Act 2020 compliant.",
+        "CoreIntent privacy policy — how we collect, use, and protect your data. NZ Privacy Act 2020 compliant. Operated by Corey McIvor / Zynthio under New Zealand law.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
+      datePublished: "2026-03-01",
       dateModified: "2026-03-01",
+      lastReviewed: "2026-04-24",
       inLanguage: "en-NZ",
+      about: {
+        "@type": "Thing",
+        name: "Data Privacy",
+        description: "How CoreIntent handles personal data under NZ Privacy Act 2020, Australian Privacy Act 1988, GDPR, and CCPA.",
+      },
+      author: { "@type": "Person", "@id": "https://coreintent.dev/#person" },
+      publisher: { "@type": "Organization", "@id": "https://zynthio.ai/#organization" },
     },
   ],
 };

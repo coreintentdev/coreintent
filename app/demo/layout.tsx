@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/demo/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Interactive Demo — AI Trading Simulation",
+        alt: "CoreIntent Interactive Demo — Watch AI Models Debate Trades in Real-Time",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Watch Grok, Claude & Perplexity debate trades live. Paper trading simulation — free to try.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/demo/opengraph-image"],
   },
 };
 
@@ -59,10 +59,17 @@ const structuredData = {
       url: "https://coreintent.dev/demo",
       name: "Interactive Demo — Live AI Trading Simulation",
       description:
-        "Experience CoreIntent's multi-AI trading engine in action with simulated data and real architecture.",
+        "Experience CoreIntent's multi-AI trading engine in action. Watch Grok, Claude & Perplexity debate trades in real-time with simulated data and production architecture.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
-      dateModified: "2026-04-22",
+      datePublished: "2026-04-01",
+      dateModified: "2026-04-24",
       inLanguage: "en-NZ",
+      author: { "@type": "Person", "@id": "https://coreintent.dev/#person" },
+      publisher: { "@type": "Organization", "@id": "https://zynthio.ai/#organization" },
+      mainEntity: {
+        "@type": "SoftwareApplication",
+        "@id": "https://coreintent.dev/#application",
+      },
     },
   ],
 };
