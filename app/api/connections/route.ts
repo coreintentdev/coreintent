@@ -7,6 +7,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { ok, preflight, serverError } from "@/lib/api";
+import { getAiKeyStatus } from "@/lib/ai";
 
 interface AIService {
   status: "keyed" | "demo";
@@ -39,25 +40,22 @@ interface ConnectionsResponse {
   summary:        { total: number; live: number; demo: number; planned: number; ready: number };
 }
 
-function keyStatus(key: string | undefined, placeholder: string): "keyed" | "demo" {
-  return key && key !== placeholder ? "keyed" : "demo";
-}
-
 export async function GET() {
   try {
+    const keys = getAiKeyStatus();
     const ai: ConnectionsResponse["ai"] = {
       grok: {
-        status: keyStatus(process.env.GROK_API_KEY, "xai-xxx"),
+        status: keys.grok       ? "keyed" : "demo",
         model:  "grok-3",
         role:   "Signal detection, fast, near-free via X Premium+",
       },
       claude: {
-        status: keyStatus(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
+        status: keys.claude     ? "keyed" : "demo",
         model:  "claude-sonnet-4-6",
         role:   "Deep analysis, risk assessment, orchestration",
       },
       perplexity: {
-        status: keyStatus(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+        status: keys.perplexity ? "keyed" : "demo",
         model:  "sonar-pro",
         role:   "Research, 9 connectors, fact-checking",
       },

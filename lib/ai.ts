@@ -133,13 +133,25 @@ const GROK_SYSTEM =
  * @param prompt  User-side message.
  * @param system  Optional override for the system prompt.
  */
-export async function callGrok(prompt: string, system?: string): Promise<AIResponse> {
+/**
+ * Call Grok (X.ai) for fast trading signals and content drafts.
+ * Falls back gracefully when the API key is absent or the call fails.
+ *
+ * @param prompt     User-side message.
+ * @param system     Optional override for the system prompt.
+ * @param maxTokens  Optional token cap for cost control (default 1000).
+ */
+export async function callGrok(
+  prompt: string,
+  system?: string,
+  maxTokens = 1000,
+): Promise<AIResponse> {
   const key = process.env.GROK_API_KEY;
   if (isDemoKey(key, "xai-xxx")) {
     return {
       source: "grok",
       model:  "grok-demo",
-      content: `[DEMO] Grok: ${prompt}`,
+      content: "[DEMO] No GROK_API_KEY configured. Set the env var to enable live Grok calls.",
       live: false,
     };
   }
@@ -159,7 +171,7 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
             { role: "system", content: system ?? GROK_SYSTEM },
             { role: "user",   content: prompt },
           ],
-          max_tokens: 1000,
+          max_tokens: maxTokens,
           temperature: 0.3,
         }),
       },
@@ -167,11 +179,13 @@ export async function callGrok(prompt: string, system?: string): Promise<AIRespo
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      // Consume body to prevent connection leak; never forward raw upstream errors to clients.
+      const body = await res.text().catch(() => "");
+      console.error(`[CoreIntent/ai] Grok HTTP ${res.status}:`, body.slice(0, 200));
       return {
         source: "grok",
         model:  "grok-3",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: `[API ERROR] Grok returned HTTP ${res.status}.`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
@@ -228,19 +242,24 @@ const CLAUDE_DEFAULT_SYSTEM =
  * Call Claude (Anthropic) for deep analysis, risk assessment, and long-context tasks.
  * Enables prompt caching on the system prompt to reduce API cost.
  *
- * @param prompt   User-side message.
- * @param system   Optional override for the system prompt. Caching still applies.
+ * Keep CLAUDE_DEFAULT_SYSTEM stable between requests to maximise cache hits.
+ * Inject per-request variables (prices, timestamps) in the user message, not here.
+ *
+ * @param prompt     User-side message.
+ * @param system     Optional override for the system prompt. Caching still applies.
+ * @param maxTokens  Optional token cap for cost control (default 1024).
  */
 export async function callClaude(
   prompt: string,
-  system?: string
+  system?: string,
+  maxTokens = 1024,
 ): Promise<AIResponse> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (isDemoKey(key, "sk-ant-xxx")) {
     return {
       source:  "claude",
       model:   "claude-demo",
-      content: `[DEMO] Claude: ${prompt}`,
+      content: "[DEMO] No ANTHROPIC_API_KEY configured. Set the env var to enable live Claude calls.",
       live: false,
     };
   }
@@ -253,15 +272,15 @@ export async function callClaude(
       {
         method: "POST",
         headers: {
-          "Content-Type":    "application/json",
-          "x-api-key":       key!,
+          "Content-Type":      "application/json",
+          "x-api-key":         key!,
           "anthropic-version": "2023-06-01",
-          // Enable server-side prompt caching for the system message
-          "anthropic-beta":  "prompt-caching-2024-07-31",
+          // Server-side prompt caching — cuts cost on repeated calls with the same system prompt.
+          "anthropic-beta":    "prompt-caching-2024-07-31",
         },
         body: JSON.stringify({
           model:      "claude-sonnet-4-6",
-          max_tokens: 1024,
+          max_tokens: maxTokens,
           system: [
             {
               type:          "text",
@@ -276,11 +295,12 @@ export async function callClaude(
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      const body = await res.text().catch(() => "");
+      console.error(`[CoreIntent/ai] Claude HTTP ${res.status}:`, body.slice(0, 200));
       return {
         source:  "claude",
         model:   "claude-sonnet-4-6",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: `[API ERROR] Claude returned HTTP ${res.status}.`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
@@ -326,16 +346,21 @@ const PERPLEXITY_SYSTEM =
  * Call Perplexity (sonar-pro) for live web research and fact-checking.
  * Falls back gracefully when the API key is absent or the call fails.
  *
- * @param query   The research query.
- * @param system  Optional override for the system prompt. Defaults to PERPLEXITY_SYSTEM.
+ * @param query      The research query.
+ * @param system     Optional override for the system prompt.
+ * @param maxTokens  Optional token cap for cost control (default 1024).
  */
-export async function callPerplexity(query: string, system?: string): Promise<AIResponse> {
+export async function callPerplexity(
+  query: string,
+  system?: string,
+  maxTokens = 1024,
+): Promise<AIResponse> {
   const key = process.env.PERPLEXITY_API_KEY;
   if (isDemoKey(key, "pplx-xxx")) {
     return {
       source:  "perplexity",
       model:   "perplexity-demo",
-      content: `[DEMO] Perplexity: ${query}`,
+      content: "[DEMO] No PERPLEXITY_API_KEY configured. Set the env var to enable live Perplexity calls.",
       live: false,
     };
   }
@@ -355,7 +380,7 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
             { role: "system", content: system ?? PERPLEXITY_SYSTEM },
             { role: "user",   content: query },
           ],
-          max_tokens:  1024,
+          max_tokens:  maxTokens,
           temperature: 0.2,
         }),
       },
@@ -363,11 +388,12 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      const body = await res.text().catch(() => "");
+      console.error(`[CoreIntent/ai] Perplexity HTTP ${res.status}:`, body.slice(0, 200));
       return {
         source:  "perplexity",
         model:   "sonar-pro",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: `[API ERROR] Perplexity returned HTTP ${res.status}.`,
         live: false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
@@ -402,5 +428,74 @@ export async function callPerplexity(query: string, system?: string): Promise<AI
  */
 export function validateAiContent(response: AIResponse): boolean {
   return Boolean(response.content?.trim());
+}
+
+/**
+ * Returns true when the response is both live (not demo/fallback) AND non-empty.
+ * Use when you need to confirm a real API response before persisting or acting on it.
+ * Use validateAiContent() instead when demo fallbacks are acceptable.
+ */
+export function isLiveAndValid(response: AIResponse): boolean {
+  return response.live && validateAiContent(response);
+}
+
+// ---------------------------------------------------------------------------
+// PARALLEL ORCHESTRATION
+// ---------------------------------------------------------------------------
+
+/** Prompts for a three-way parallel AI call. */
+export interface ParallelAIPrompts {
+  grok:       string;
+  perplexity: string;
+  claude:     string;
+  /** Optional system-prompt overrides per model. */
+  systems?: {
+    grok?:       string;
+    perplexity?: string;
+    claude?:     string;
+  };
+  /** Optional per-model token budget overrides for cost control. */
+  maxTokens?: {
+    grok?:       number;
+    perplexity?: number;
+    claude?:     number;
+  };
+}
+
+/** Results from a three-way parallel AI call with pre-computed aggregate flags. */
+export interface ParallelAIResults {
+  grok:       AIResponse;
+  perplexity: AIResponse;
+  claude:     AIResponse;
+  /** true when all three live API calls succeeded. */
+  allLive:  boolean;
+  /** true when all three responses contain non-empty content. */
+  allValid: boolean;
+}
+
+/**
+ * Call all three AIs in parallel with distinct prompts.
+ * Pre-computes allLive and allValid so callers avoid repeating the boolean chain.
+ * Every underlying call falls back gracefully — this function never rejects.
+ *
+ * Use this for routes that need input from all three models simultaneously
+ * (e.g. /api/protect GET, /api/research GET). For single-model calls use
+ * callGrok / callClaude / callPerplexity directly.
+ */
+export async function callAIsParallel(
+  prompts: ParallelAIPrompts
+): Promise<ParallelAIResults> {
+  const [grok, perplexity, claude] = await Promise.all([
+    callGrok(prompts.grok,       prompts.systems?.grok,       prompts.maxTokens?.grok),
+    callPerplexity(prompts.perplexity, prompts.systems?.perplexity, prompts.maxTokens?.perplexity),
+    callClaude(prompts.claude,   prompts.systems?.claude,     prompts.maxTokens?.claude),
+  ]);
+  return {
+    grok,
+    perplexity,
+    claude,
+    allLive:  grok.live  && perplexity.live  && claude.live,
+    allValid: validateAiContent(grok) && validateAiContent(perplexity) && validateAiContent(claude),
+  };
 }
 

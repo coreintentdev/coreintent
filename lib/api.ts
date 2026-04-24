@@ -70,6 +70,11 @@ export function serverError(detail?: unknown): NextResponse<ApiResponse<null>> {
   return err("Internal server error. Please try again.", 500);
 }
 
+/** 400 Bad Request — validation failure shorthand. */
+export function badRequest(message: string): NextResponse<ApiResponse<null>> {
+  return err(message, 400);
+}
+
 /** 404 Not Found. */
 export function notFound(message = "Not found"): NextResponse<ApiResponse<null>> {
   return err(message, 404);
@@ -97,6 +102,13 @@ export function tooManyRequests(retryAfterSeconds = 60): NextResponse<ApiRespons
       headers: { ...CORS_HEADERS, "Retry-After": String(retryAfterSeconds) },
     }
   );
+}
+
+/** 502 Bad Gateway — AI or upstream service returned an unexpected response. */
+export function gatewayError(
+  message = "Upstream service returned an invalid response"
+): NextResponse<ApiResponse<null>> {
+  return err(message, 502);
 }
 
 /**

@@ -10,7 +10,7 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
@@ -100,18 +100,18 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<ContentRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const type = validateEnum(body.type, VALID_TYPES);
-  if (!type) return err(`type must be one of: ${VALID_TYPES.join(", ")}`, 400);
+  if (!type) return badRequest(`type must be one of: ${VALID_TYPES.join(", ")}`);
 
   const topic = validateString(body.topic, 500);
-  if (!topic) return err("topic is required and must be 500 characters or fewer", 400);
+  if (!topic) return badRequest("topic is required and must be 500 characters or fewer");
 
   const count = validatePositiveInt(body.count ?? 1, BULK_LIMITS[type]);
   if (count === null) {
-    return err(`count must be an integer between 1 and ${BULK_LIMITS[type]} for type "${type}"`, 400);
+    return badRequest(`count must be an integer between 1 and ${BULK_LIMITS[type]} for type "${type}"`);
   }
 
   const tone = validateEnum(body.tone, VALID_TONES) ?? "technical";

@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type IncidentStatus   = "detected" | "investigating" | "mitigating" | "resolved";
 type IncidentSeverity = "critical" | "major" | "minor" | "info";
@@ -96,23 +96,27 @@ const MONITORED_SERVICES: MonitoredService[] = [
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },
 ];
 
-const VALID_SEVERITIES: IncidentSeverity[] = ["critical", "major", "minor", "info"];
+const VALID_SEVERITIES = ["critical", "major", "minor", "info"] as const satisfies IncidentSeverity[];
 
 export async function GET() {
-  return ok({
-    incidents: INCIDENTS,
-    services:  MONITORED_SERVICES,
-    autoUpdate: {
-      enabled:   true,
-      channels:  ["slack", "email", "x_dm"],
-      frequency: "on_change",
-    },
-    summary: {
-      total:        MONITORED_SERVICES.length,
-      operational:  MONITORED_SERVICES.filter((s) => s.status === "operational").length,
-      degraded:     MONITORED_SERVICES.filter((s) => s.status === "degraded").length,
-    },
-  });
+  try {
+    return ok({
+      incidents: INCIDENTS,
+      services:  MONITORED_SERVICES,
+      autoUpdate: {
+        enabled:   true,
+        channels:  ["slack", "email", "x_dm"],
+        frequency: "on_change",
+      },
+      summary: {
+        total:        MONITORED_SERVICES.length,
+        operational:  MONITORED_SERVICES.filter((s) => s.status === "operational").length,
+        degraded:     MONITORED_SERVICES.filter((s) => s.status === "degraded").length,
+      },
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -120,23 +124,22 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<NewIncidentRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const service = validateString(body.service, 200);
-  if (!service) return err("service is required and must be 200 characters or fewer", 400);
+  if (!service) return badRequest("service is required and must be 200 characters or fewer");
 
   const message = validateString(body.message, 5000);
-  if (!message) return err("message is required and must be 5000 characters or fewer", 400);
+  if (!message) return badRequest("message is required and must be 5000 characters or fewer");
 
-  if (!body.severity || !VALID_SEVERITIES.includes(body.severity)) {
-    return err(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`, 400);
-  }
+  const severity = validateEnum(body.severity, VALID_SEVERITIES);
+  if (!severity) return badRequest(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`);
 
   const incident: Incident = {
     id:         `INC-${Date.now()}`,
     service,
-    severity:   body.severity,
+    severity,
     status:     "detected",
     message,
     autoUpdate: true,

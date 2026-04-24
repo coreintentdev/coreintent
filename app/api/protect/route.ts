@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -28,7 +28,7 @@ const PROTECTED_ASSETS = {
   customTools: ["The Ripper", "Mac the Zipper", "PDF Plumber", "SongPal"],
 } as const;
 
-const VALID_TYPES: ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
+const VALID_TYPES = ["impersonation", "domain", "threat", "general"] as const satisfies ThreatCheckType[];
 
 export async function GET() {
   try {
@@ -79,15 +79,13 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<ProtectRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const check = validateString(body.check, 500);
-  if (!check) return err("check is required and must be 500 characters or fewer", 400);
+  if (!check) return badRequest("check is required and must be 500 characters or fewer");
 
-  const type: ThreatCheckType = VALID_TYPES.includes(body.type as ThreatCheckType)
-    ? (body.type as ThreatCheckType)
-    : "general";
+  const type: ThreatCheckType = validateEnum(body.type, VALID_TYPES) ?? "general";
 
   try {
     type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaude>;
@@ -112,7 +110,7 @@ export async function POST(req: NextRequest) {
 
     const result = await scanMap[type]();
     if (!validateAiContent(result)) {
-      return err("AI returned an empty response", 502);
+      return gatewayError("AI returned an empty response");
     }
 
     return ok({ check, type, result, timestamp: new Date().toISOString() });

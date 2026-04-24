@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { ok, err, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -29,7 +29,7 @@ const IDENTITY = {
   domain:  "coreintent.dev",
 } as const;
 
-const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
+const VALID_TASKS = ["research", "analysis", "signal", "sentiment"] as const satisfies ResearchTask[];
 
 export async function GET() {
   try {
@@ -73,15 +73,13 @@ export async function POST(req: NextRequest) {
   try {
     body = (await req.json()) as Partial<ResearchRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const topic = validateString(body.topic, 1000);
-  if (!topic) return err("topic is required and must be 1000 characters or fewer", 400);
+  if (!topic) return badRequest("topic is required and must be 1000 characters or fewer");
 
-  const task: ResearchTask = VALID_TASKS.includes(body.task as ResearchTask)
-    ? (body.task as ResearchTask)
-    : "research";
+  const task: ResearchTask = validateEnum(body.task, VALID_TASKS) ?? "research";
 
   try {
     type TaskFn = () => ReturnType<typeof callPerplexity | typeof callClaude | typeof callGrok>;
@@ -94,7 +92,7 @@ export async function POST(req: NextRequest) {
 
     const result = await taskMap[task]();
     if (!validateAiContent(result)) {
-      return err("AI returned an empty response", 502);
+      return gatewayError("AI returned an empty response");
     }
 
     return ok({ topic, task, result, timestamp: new Date().toISOString() });
