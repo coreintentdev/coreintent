@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Fri Apr 24 03:55:04 UTC 2026
+Generated: Fri Apr 24 04:39:54 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 31
+- INFO: Routes found: 33
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -64,7 +64,7 @@ Generated: Fri Apr 24 03:55:04 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
+- PASS: ARIA attributes found (13 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
