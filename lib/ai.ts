@@ -130,13 +130,6 @@ const GROK_SYSTEM =
  * Call Grok (X.ai) for fast trading signals and content drafts.
  * Falls back gracefully when the API key is absent or the call fails.
  *
- * @param prompt  User-side message.
- * @param system  Optional override for the system prompt.
- */
-/**
- * Call Grok (X.ai) for fast trading signals and content drafts.
- * Falls back gracefully when the API key is absent or the call fails.
- *
  * @param prompt     User-side message.
  * @param system     Optional override for the system prompt.
  * @param maxTokens  Optional token cap for cost control (default 1000).
@@ -428,74 +421,5 @@ export async function callPerplexity(
  */
 export function validateAiContent(response: AIResponse): boolean {
   return Boolean(response.content?.trim());
-}
-
-/**
- * Returns true when the response is both live (not demo/fallback) AND non-empty.
- * Use when you need to confirm a real API response before persisting or acting on it.
- * Use validateAiContent() instead when demo fallbacks are acceptable.
- */
-export function isLiveAndValid(response: AIResponse): boolean {
-  return response.live && validateAiContent(response);
-}
-
-// ---------------------------------------------------------------------------
-// PARALLEL ORCHESTRATION
-// ---------------------------------------------------------------------------
-
-/** Prompts for a three-way parallel AI call. */
-export interface ParallelAIPrompts {
-  grok:       string;
-  perplexity: string;
-  claude:     string;
-  /** Optional system-prompt overrides per model. */
-  systems?: {
-    grok?:       string;
-    perplexity?: string;
-    claude?:     string;
-  };
-  /** Optional per-model token budget overrides for cost control. */
-  maxTokens?: {
-    grok?:       number;
-    perplexity?: number;
-    claude?:     number;
-  };
-}
-
-/** Results from a three-way parallel AI call with pre-computed aggregate flags. */
-export interface ParallelAIResults {
-  grok:       AIResponse;
-  perplexity: AIResponse;
-  claude:     AIResponse;
-  /** true when all three live API calls succeeded. */
-  allLive:  boolean;
-  /** true when all three responses contain non-empty content. */
-  allValid: boolean;
-}
-
-/**
- * Call all three AIs in parallel with distinct prompts.
- * Pre-computes allLive and allValid so callers avoid repeating the boolean chain.
- * Every underlying call falls back gracefully — this function never rejects.
- *
- * Use this for routes that need input from all three models simultaneously
- * (e.g. /api/protect GET, /api/research GET). For single-model calls use
- * callGrok / callClaude / callPerplexity directly.
- */
-export async function callAIsParallel(
-  prompts: ParallelAIPrompts
-): Promise<ParallelAIResults> {
-  const [grok, perplexity, claude] = await Promise.all([
-    callGrok(prompts.grok,       prompts.systems?.grok,       prompts.maxTokens?.grok),
-    callPerplexity(prompts.perplexity, prompts.systems?.perplexity, prompts.maxTokens?.perplexity),
-    callClaude(prompts.claude,   prompts.systems?.claude,     prompts.maxTokens?.claude),
-  ]);
-  return {
-    grok,
-    perplexity,
-    claude,
-    allLive:  grok.live  && perplexity.live  && claude.live,
-    allValid: validateAiContent(grok) && validateAiContent(perplexity) && validateAiContent(claude),
-  };
 }
 

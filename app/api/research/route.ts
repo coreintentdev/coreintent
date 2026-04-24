@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callPerplexity, callClaude, callGrok, validateAiContent } from "@/lib/ai";
-import { ok, err, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
