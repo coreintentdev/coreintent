@@ -1,10 +1,11 @@
 # CoreIntent Audit Report
-Generated: Fri Apr 24 04:38:07 UTC 2026
+Generated: Fri Apr 24 04:55:56 AM UTC 2026
 
 ## 1. Build
-- **FAIL:** npm run build FAILS — see /tmp/coreintent_build.log
-- **FAIL:** TypeScript errors found
-- WARN: ESLint warnings or errors
+- PASS: npm run build succeeds
+- INFO: Routes found: 28
+- PASS: TypeScript compiles (strict mode)
+- PASS: ESLint passes
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -38,7 +39,7 @@ Generated: Fri Apr 24 04:38:07 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1759:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:1347:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -52,9 +53,9 @@ Generated: Fri Apr 24 04:38:07 UTC 2026
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:232:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:233:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:234:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:110:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:111:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:112:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -63,7 +64,7 @@ Generated: Fri Apr 24 04:38:07 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
+- PASS: ARIA attributes found (12 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
@@ -84,8 +85,8 @@ Generated: Fri Apr 24 04:38:07 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 49 |
-| FAIL | 2 |
-| WARN | 3 |
+| PASS | 52 |
+| FAIL | 0 |
+| WARN | 2 |
 
-**Audit Score: 90%** (49/54 checks passed)
+**Audit Score: 96%** (52/54 checks passed)
