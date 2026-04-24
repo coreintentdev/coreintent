@@ -361,6 +361,98 @@ a {
   animation: signalFlash 0.5s ease both;
 }
 
+/* ─── Glitch Text Effect ─── */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 2px); }
+}
+
+@keyframes glitchClip {
+  0% { clip-path: inset(0 0 85% 0); }
+  10% { clip-path: inset(15% 0 60% 0); }
+  20% { clip-path: inset(50% 0 20% 0); }
+  30% { clip-path: inset(80% 0 0 0); }
+  40% { clip-path: inset(10% 0 70% 0); }
+  50% { clip-path: inset(40% 0 30% 0); }
+  60% { clip-path: inset(70% 0 10% 0); }
+  70% { clip-path: inset(20% 0 55% 0); }
+  80% { clip-path: inset(60% 0 15% 0); }
+  90% { clip-path: inset(5% 0 80% 0); }
+  100% { clip-path: inset(0 0 85% 0); }
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  color: #ef4444;
+  animation: glitchClip 3s linear infinite, glitch 0.3s linear infinite;
+  opacity: 0.7;
+}
+
+.glitch-text::after {
+  color: #3b82f6;
+  animation: glitchClip 3s linear infinite reverse, glitch 0.3s linear infinite reverse;
+  opacity: 0.7;
+}
+
+/* ─── Energy Pulse Ring ─── */
+@keyframes energyPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.energy-pulse {
+  animation: energyPulse 2s ease-out infinite;
+}
+
+/* ─── Holo Scan Border ─── */
+@keyframes holoScan {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+.holo-border {
+  position: relative;
+}
+
+.holo-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    #10b98144 25%,
+    #3b82f644 50%,
+    #a855f744 75%,
+    transparent 100%
+  );
+  background-size: 100% 200%;
+  animation: holoScan 4s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {

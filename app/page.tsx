@@ -191,38 +191,65 @@ function MarketTicker() {
   );
 }
 
-/* ─── Floating Particles ─── */
-function HeroParticles() {
-  const [dots] = useState(() =>
-    Array.from({ length: 18 }, (_, i) => ({
-      size: 2 + (i % 3),
-      left: (i * 7 + 13) % 100,
-      top: (i * 11 + 7) % 100,
-      opacity: 0.1 + (i % 4) * 0.05,
-      dur: 5 + (i % 5) * 2,
-      delay: (i % 7) * 0.8,
-      color: ["#10b981", "#3b82f6", "#a855f7"][i % 3],
-    }))
-  );
+/* ─── Neural Network Background ─── */
+function NeuralNetwork() {
+  const [pulse, setPulse] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setPulse((p) => (p + 1) % 100), 80);
+    return () => clearInterval(iv);
+  }, []);
+
+  const nodes = [
+    { id: "grok", x: 80, y: 60, r: 18, color: "#ef4444", label: "G" },
+    { id: "claude", x: 80, y: 160, r: 18, color: "#a855f7", label: "C" },
+    { id: "perplexity", x: 80, y: 260, r: 18, color: "#3b82f6", label: "P" },
+    { id: "h1", x: 250, y: 110, r: 10, color: "#10b981", label: "" },
+    { id: "h2", x: 250, y: 210, r: 10, color: "#10b981", label: "" },
+    { id: "engine", x: 420, y: 160, r: 22, color: "#10b981", label: "E" },
+    { id: "signal", x: 540, y: 160, r: 14, color: "#f59e0b", label: "S" },
+  ];
+
+  const edges = [
+    [0, 3], [0, 4], [1, 3], [1, 4], [2, 3], [2, 4],
+    [3, 5], [4, 5], [5, 6],
+  ];
 
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      {dots.map((d, i) => (
-        <div
-          key={i}
-          style={{
-            position: "absolute",
-            width: d.size,
-            height: d.size,
-            borderRadius: "50%",
-            background: d.color,
-            opacity: d.opacity,
-            left: `${d.left}%`,
-            top: `${d.top}%`,
-            animation: `float ${d.dur}s ease-in-out ${d.delay}s infinite`,
-          }}
-        />
-      ))}
+      <svg viewBox="0 0 620 320" style={{ width: "100%", height: "100%", opacity: 0.5 }}>
+        <defs>
+          {nodes.map((n) => (
+            <radialGradient key={n.id} id={`ng-${n.id}`}>
+              <stop offset="0%" stopColor={n.color} stopOpacity={0.6} />
+              <stop offset="100%" stopColor={n.color} stopOpacity={0} />
+            </radialGradient>
+          ))}
+        </defs>
+        {edges.map(([a, b], i) => {
+          const n1 = nodes[a];
+          const n2 = nodes[b];
+          const progress = ((pulse + i * 12) % 60) / 60;
+          const px = n1.x + (n2.x - n1.x) * progress;
+          const py = n1.y + (n2.y - n1.y) * progress;
+          return (
+            <g key={`e-${i}`}>
+              <line x1={n1.x} y1={n1.y} x2={n2.x} y2={n2.y} stroke={n1.color} strokeOpacity={0.15} strokeWidth={1} />
+              <circle cx={px} cy={py} r={3} fill={n1.color} opacity={0.7 + Math.sin(pulse * 0.1 + i) * 0.3} />
+            </g>
+          );
+        })}
+        {nodes.map((n) => (
+          <g key={n.id}>
+            <circle cx={n.x} cy={n.y} r={n.r * 2} fill={`url(#ng-${n.id})`} opacity={0.3 + Math.sin(pulse * 0.05) * 0.1} />
+            <circle cx={n.x} cy={n.y} r={n.r} fill="none" stroke={n.color} strokeWidth={1.5} opacity={0.6} />
+            {n.label && (
+              <text x={n.x} y={n.y + 4} textAnchor="middle" fill={n.color} fontSize={11} fontWeight="bold" fontFamily="monospace">
+                {n.label}
+              </text>
+            )}
+          </g>
+        ))}
+      </svg>
     </div>
   );
 }
@@ -516,7 +543,7 @@ export default function Home() {
           }}
         >
           <div className="grid-bg" />
-          <HeroParticles />
+          <NeuralNetwork />
           <button
             onClick={() => setShowHero(false)}
             aria-label="Dismiss hero section"

@@ -76,6 +76,13 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
 
+  \x1b[33m── EXPERIENCES ──\x1b[0m
+  \x1b[32mspeedtest\x1b[0m   - Network speed diagnostics
+  \x1b[32mlore\x1b[0m        - The CoreIntent origin story
+  \x1b[32mzen\x1b[0m         - Trading koan for the soul
+  \x1b[32mfire\x1b[0m        - ASCII fire simulation
+  \x1b[32mabout\x1b[0m       - Platform summary & how it works
+
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
   \x1b[32mcowsay\x1b[0m      - ASCII cow wisdom
@@ -589,6 +596,7 @@ const ALL_COMMANDS = [
   "stonks", "leaderboard", "lb", "battle", "scan", "weather",
   "challenge", "warp", "buy", "sell", "hold", "quit",
   "sudo", "rickroll",
+  "speedtest", "lore", "zen", "fire", "about",
 ];
 
 export default function Terminal() {
@@ -1418,6 +1426,166 @@ export default function Terminal() {
         }
       }, 150);
       return "";
+    }
+
+    // ── SPEEDTEST: Simulated network speed test ──
+    if (trimmed === "speedtest") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT SPEED TEST ══\x1b[0m`,
+        `\x1b[90m  Testing connection to AI models...\x1b[0m`, ``);
+
+      const tests = [
+        { name: "Grok API", latency: 42, speed: 180 },
+        { name: "Claude API", latency: 88, speed: 245 },
+        { name: "Perplexity API", latency: 65, speed: 160 },
+        { name: "Market Feed", latency: 12, speed: 890 },
+        { name: "VPS (Cloudzy)", latency: 31, speed: 520 },
+      ];
+      let ti = 0;
+      const tiv = setInterval(() => {
+        if (ti < tests.length) {
+          const t = tests[ti];
+          const jitter = Math.floor(Math.random() * 20) - 10;
+          const lat = t.latency + jitter;
+          const spd = t.speed + Math.floor(Math.random() * 50);
+          const barLen = Math.min(20, Math.round(spd / 50));
+          const bar = "\x1b[32m" + "█".repeat(barLen) + "\x1b[90m" + "░".repeat(20 - barLen) + "\x1b[0m";
+          const latColor = lat < 50 ? "\x1b[32m" : lat < 100 ? "\x1b[33m" : "\x1b[31m";
+          addLines(`  ${bar}  \x1b[36m${t.name.padEnd(16)}\x1b[0m ${latColor}${lat}ms\x1b[0m  \x1b[32m${spd} Mbps\x1b[0m`);
+          ti++;
+        } else {
+          clearInterval(tiv);
+          addLines(``, `  \x1b[32m✓\x1b[0m All endpoints reachable. Avg latency: \x1b[32m${Math.round(tests.reduce((a, t) => a + t.latency, 0) / tests.length)}ms\x1b[0m`,
+            `  \x1b[90mSimulated diagnostics — demo mode\x1b[0m`, ``);
+        }
+      }, 400);
+      return "";
+    }
+
+    // ── LORE: CoreIntent origin story ──
+    if (trimmed === "lore") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ THE COREINTENT CHRONICLES ══\x1b[0m`, ``);
+
+      const chapters = [
+        [`\x1b[33m  Chapter 1: The Problem\x1b[0m`,
+         `  \x1b[90mEvery trading platform charged $99/mo for signals\x1b[0m`,
+         `  \x1b[90mthat worked 40% of the time. One model guessing.\x1b[0m`,
+         `  \x1b[90mNo accountability. No competition. Just extraction.\x1b[0m`, ``],
+        [`\x1b[33m  Chapter 2: The Idea\x1b[0m`,
+         `  \x1b[90mWhat if three AI models argued about every signal?\x1b[0m`,
+         `  \x1b[90mGrok spots. Claude questions. Perplexity fact-checks.\x1b[0m`,
+         `  \x1b[90mConsensus = conviction. Disagreement = dig deeper.\x1b[0m`, ``],
+        [`\x1b[33m  Chapter 3: The Build\x1b[0m`,
+         `  \x1b[90mNew Zealand. Solo founder. $45/mo infrastructure.\x1b[0m`,
+         `  \x1b[90mNo VC. No permission. No burn rate. Just building.\x1b[0m`,
+         `  \x1b[90mBots welcome. Humans too. The arena is free.\x1b[0m`, ``],
+        [`\x1b[33m  Chapter 4: The Signal\x1b[0m`,
+         `  \x1b[32m  ███ 336 ███\x1b[0m`,
+         `  \x1b[90mTrading is a sport now. Compete, don't subscribe.\x1b[0m`,
+         `  \x1b[90mThe leaderboard doesn't care who built you.\x1b[0m`, ``],
+      ];
+
+      const allStoryLines = chapters.flat();
+      let li = 0;
+      const liv = setInterval(() => {
+        if (li < allStoryLines.length) {
+          addLines(allStoryLines[li]);
+          li++;
+        } else {
+          clearInterval(liv);
+          addLines(`  \x1b[36m— fin —\x1b[0m`, ``);
+        }
+      }, 200);
+      return "";
+    }
+
+    // ── ZEN: Trading koan ──
+    if (trimmed === "zen") {
+      const koans = [
+        "The trader who chases every signal catches none.",
+        "Three models agree — but the market has no models.",
+        "Your edge is not your wallet. It is your patience.",
+        "A green candle and a red candle are the same candle.",
+        "The bot that wins today was written by the human who lost yesterday.",
+        "Consensus is not certainty. Certainty is not profit.",
+        "The best trade is sometimes no trade at all.",
+        "When all indicators align, ask: what am I not seeing?",
+      ];
+      const koan = koans[Math.floor(Math.random() * koans.length)];
+      const width = Math.max(koan.length + 4, 50);
+      const pad = " ".repeat(Math.floor((width - koan.length) / 2));
+      const out = `\x1b[36m  ${"─".repeat(width)}\x1b[0m
+\x1b[36m  │\x1b[0m${pad}\x1b[33m${koan}\x1b[0m${" ".repeat(width - koan.length - pad.length)}\x1b[36m│\x1b[0m
+\x1b[36m  ${"─".repeat(width)}\x1b[0m
+  \x1b[90m— trading koan #${Math.floor(Math.random() * 999) + 1}\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``, out, ``);
+      return out;
+    }
+
+    // ── FIRE: ASCII fire simulation ──
+    if (trimmed === "fire") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ FIRE SIMULATION ══\x1b[0m`, ``);
+
+      const W = 50;
+      const H = 8;
+      const chars = " .:-=+*#%@";
+      const colors = ["\x1b[90m", "\x1b[31m", "\x1b[33m", "\x1b[33m", "\x1b[32m"];
+      let frame = 0;
+      const buf: number[][] = Array.from({ length: H }, () => Array(W).fill(0));
+
+      const fiv = setInterval(() => {
+        for (let x = 0; x < W; x++) buf[H - 1][x] = Math.random() > 0.4 ? Math.floor(Math.random() * 9) + 1 : 0;
+        for (let y = 0; y < H - 1; y++) {
+          for (let x = 0; x < W; x++) {
+            const sum = (buf[y + 1][(x - 1 + W) % W] || 0) + (buf[y + 1][x] || 0) + (buf[y + 1][(x + 1) % W] || 0) + (buf[y + 1][x] || 0);
+            buf[y][x] = Math.max(0, Math.floor(sum / 4) - (Math.random() > 0.7 ? 1 : 0));
+          }
+        }
+        const frameLines: string[] = [];
+        for (let y = 0; y < H; y++) {
+          let row = "  ";
+          for (let x = 0; x < W; x++) {
+            const v = buf[y][x];
+            const ci = Math.min(colors.length - 1, Math.floor(v / 2));
+            row += colors[ci] + chars[v] + "\x1b[0m";
+          }
+          frameLines.push(row);
+        }
+        addLines(...frameLines, ``);
+        frame++;
+        if (frame >= 6) {
+          clearInterval(fiv);
+          addLines(`  \x1b[90mFire simulation complete — 6 frames rendered\x1b[0m`, ``);
+        }
+      }, 300);
+      return "";
+    }
+
+    // ── ABOUT: Platform summary ──
+    if (trimmed === "about") {
+      const out = `\x1b[36m  ══ ABOUT COREINTENT ══\x1b[0m
+
+  \x1b[33mWhat:\x1b[0m  Agentic AI trading engine with multi-model consensus
+  \x1b[33mWho:\x1b[0m   Built by Corey McIvor (@coreintentdev) from New Zealand
+  \x1b[33mParent:\x1b[0m Zynthio.ai
+
+  \x1b[36mHow It Works:\x1b[0m
+  \x1b[90m  1.\x1b[0m \x1b[31mGrok\x1b[0m scans social feeds + technicals → spots the signal
+  \x1b[90m  2.\x1b[0m \x1b[35mClaude\x1b[0m runs deep risk analysis → questions everything
+  \x1b[90m  3.\x1b[0m \x1b[34mPerplexity\x1b[0m checks live news → fact-checks the thesis
+  \x1b[90m  4.\x1b[0m \x1b[32mEngine\x1b[0m computes consensus → EXECUTE or HOLD
+
+  \x1b[36mKey Facts:\x1b[0m
+  \x1b[32m•\x1b[0m $0 entry — competitions, not subscriptions
+  \x1b[32m•\x1b[0m $45/mo total infrastructure cost
+  \x1b[32m•\x1b[0m Bots are first-class competitors
+  \x1b[32m•\x1b[0m Paper trading mode — building in public
+  \x1b[32m•\x1b[0m Open source on GitHub
+
+  \x1b[90mType 'demo' to see it in action, or 'help' for all commands.\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
+      return out;
     }
 
     // ── WEATHER: Market weather report ──

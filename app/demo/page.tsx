@@ -180,6 +180,130 @@ function AIDebate() {
   );
 }
 
+/* ─── Order Book + Neural Activity ─── */
+function OrderBookAndNeural() {
+  const [book, setBook] = useState(() => generateBook());
+  const [neuralPulse, setNeuralPulse] = useState(0);
+
+  useEffect(() => {
+    const iv = setInterval(() => setBook(generateBook()), 800);
+    return () => clearInterval(iv);
+  }, []);
+
+  useEffect(() => {
+    const iv = setInterval(() => setNeuralPulse((p) => (p + 1) % 100), 100);
+    return () => clearInterval(iv);
+  }, []);
+
+  const spread = (book.asks[0].price - book.bids[0].price).toFixed(2);
+
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "40px" }}>
+      {/* Order Book */}
+      <section>
+        <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+          Order Book (Simulated)
+          <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+        </h2>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", color: "var(--text-secondary)", marginBottom: "8px", textTransform: "uppercase" }}>
+            <span>Price</span><span>Size</span><span>Total</span>
+          </div>
+          {book.asks.slice().reverse().map((o, i) => (
+            <div key={`a${i}`} style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", padding: "2px 0", position: "relative" }}>
+              <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${(o.total / book.maxTotal) * 100}%`, background: "#ef444412", borderRadius: "2px" }} />
+              <span style={{ color: "#ef4444", zIndex: 1 }}>${o.price.toLocaleString()}</span>
+              <span style={{ color: "var(--text-secondary)", zIndex: 1 }}>{o.size.toFixed(4)}</span>
+              <span style={{ color: "var(--text-secondary)", zIndex: 1 }}>{o.total.toFixed(4)}</span>
+            </div>
+          ))}
+          <div style={{ textAlign: "center", padding: "6px 0", fontSize: "13px", fontWeight: "bold", color: "#10b981", borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)", margin: "4px 0" }}>
+            Spread: ${spread}
+          </div>
+          {book.bids.map((o, i) => (
+            <div key={`b${i}`} style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", padding: "2px 0", position: "relative" }}>
+              <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: `${(o.total / book.maxTotal) * 100}%`, background: "#10b98112", borderRadius: "2px" }} />
+              <span style={{ color: "#10b981", zIndex: 1 }}>${o.price.toLocaleString()}</span>
+              <span style={{ color: "var(--text-secondary)", zIndex: 1 }}>{o.size.toFixed(4)}</span>
+              <span style={{ color: "var(--text-secondary)", zIndex: 1 }}>{o.total.toFixed(4)}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Neural Activity */}
+      <section>
+        <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+          Neural Activity
+        </h2>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <svg viewBox="0 0 300 200" style={{ width: "100%", height: "auto" }}>
+            {[
+              { label: "Grok", x: 60, y: 50, color: "#ef4444" },
+              { label: "Claude", x: 60, y: 150, color: "#a855f7" },
+              { label: "Perplexity", x: 240, y: 50, color: "#3b82f6" },
+              { label: "Consensus", x: 240, y: 150, color: "#10b981" },
+            ].map((node, ni) => {
+              const connections = ni < 3 ? [3] : [];
+              return (
+                <g key={node.label}>
+                  {connections.map((ci) => {
+                    const target = [{ x: 60, y: 50 }, { x: 60, y: 150 }, { x: 240, y: 50 }, { x: 240, y: 150 }][ci];
+                    const progress = ((neuralPulse + ni * 25) % 50) / 50;
+                    const px = node.x + (target.x - node.x) * progress;
+                    const py = node.y + (target.y - node.y) * progress;
+                    return (
+                      <g key={`c${ni}-${ci}`}>
+                        <line x1={node.x} y1={node.y} x2={target.x} y2={target.y} stroke={node.color} strokeOpacity={0.2} strokeWidth={1} />
+                        <circle cx={px} cy={py} r={3} fill={node.color} opacity={0.8} />
+                      </g>
+                    );
+                  })}
+                  <circle cx={node.x} cy={node.y} r={20} fill="none" stroke={node.color} strokeWidth={1.5} opacity={0.5 + Math.sin(neuralPulse * 0.08 + ni) * 0.3} />
+                  <circle cx={node.x} cy={node.y} r={8} fill={node.color} opacity={0.3} />
+                  <text x={node.x} y={node.y + 36} textAnchor="middle" fill={node.color} fontSize={9} fontFamily="monospace">{node.label}</text>
+                </g>
+              );
+            })}
+          </svg>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginTop: "8px" }}>
+            {["Grok", "Claude", "Perplexity", "Engine"].map((name, i) => {
+              const colors = ["#ef4444", "#a855f7", "#3b82f6", "#10b981"];
+              const activity = 40 + Math.sin(neuralPulse * 0.06 + i * 1.5) * 30 + Math.random() * 10;
+              return (
+                <div key={name} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "9px", color: colors[i], marginBottom: "4px" }}>{name}</div>
+                  <div style={{ height: "4px", background: "var(--bg-primary)", borderRadius: "2px", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${activity}%`, background: colors[i], borderRadius: "2px", transition: "width 0.3s ease" }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function generateBook() {
+  const mid = 67420 + (Math.random() - 0.5) * 200;
+  const asks: Array<{ price: number; size: number; total: number }> = [];
+  const bids: Array<{ price: number; size: number; total: number }> = [];
+  let askTotal = 0;
+  let bidTotal = 0;
+  for (let i = 0; i < 8; i++) {
+    const askSize = +(Math.random() * 2 + 0.1).toFixed(4);
+    askTotal += askSize;
+    asks.push({ price: +(mid + (i + 1) * 5 + Math.random() * 3).toFixed(2), size: askSize, total: +askTotal.toFixed(4) });
+    const bidSize = +(Math.random() * 2 + 0.1).toFixed(4);
+    bidTotal += bidSize;
+    bids.push({ price: +(mid - (i + 1) * 5 - Math.random() * 3).toFixed(2), size: bidSize, total: +bidTotal.toFixed(4) });
+  }
+  const maxTotal = Math.max(askTotal, bidTotal);
+  return { asks, bids, maxTotal };
+}
+
 export default function DemoPage() {
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
@@ -647,6 +771,9 @@ export default function DemoPage() {
               </div>
             </section>
           </div>
+
+          {/* ═══ ORDER BOOK & NEURAL ACTIVITY ═══ */}
+          <OrderBookAndNeural />
 
           {/* ═══ AI DEBATE ═══ */}
           <AIDebate />
