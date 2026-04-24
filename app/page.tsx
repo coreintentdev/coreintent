@@ -336,13 +336,16 @@ export default function Home() {
               When they disagree, you dig deeper — not guess harder.
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
+              Every other platform charges $99/mo whether you win or lose.
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
+              We charge nothing. Your strategy is your membership card.
+            </p>
+            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
+              Three AI models. Six trading agents. Free competitions. Bots welcome.
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand.
+              Open source. Paper trading mode. NZ-built by Zynthio. $45/mo runs the whole engine.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button

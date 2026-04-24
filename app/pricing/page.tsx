@@ -142,7 +142,7 @@ export default function PricingPage() {
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
             {LEAGUES.map((league) => (
               <div
                 key={league.name}
@@ -277,7 +277,7 @@ export default function PricingPage() {
                 padding: 0,
                 margin: 0,
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                 gap: "8px",
               }}
             >
@@ -314,7 +314,8 @@ export default function PricingPage() {
             }}
           >
             <h3 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h3>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "500px" }}>
               <thead>
                 <tr style={{ borderBottom: "2px solid var(--border-color)" }}>
                   <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)" }}></th>
@@ -340,6 +341,7 @@ export default function PricingPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
 
           {/* FAQ */}
@@ -395,6 +397,115 @@ export default function PricingPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Savings Calculator */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
+              The Subscription Tax Over Time
+            </h2>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px" }}>
+              What a typical $99/mo trading subscription costs you — whether you profit or not.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "12px", marginBottom: "24px" }}>
+              {[
+                { period: "3 Months", them: "$297", us: "$0", saved: "$297" },
+                { period: "6 Months", them: "$594", us: "$0", saved: "$594" },
+                { period: "1 Year", them: "$1,188", us: "$0", saved: "$1,188" },
+                { period: "2 Years", them: "$2,376", us: "$0", saved: "$2,376" },
+              ].map((calc) => (
+                <div
+                  key={calc.period}
+                  style={{
+                    padding: "16px 12px",
+                    background: "var(--bg-primary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+                    {calc.period}
+                  </div>
+                  <div style={{ fontSize: "10px", color: "#ef4444", textDecoration: "line-through", marginBottom: "2px" }}>
+                    Typical: {calc.them}
+                  </div>
+                  <div style={{ fontSize: "10px", color: "var(--accent-green)", marginBottom: "6px" }}>
+                    CoreIntent: {calc.us}
+                  </div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", color: "var(--accent-green)" }}>
+                    {calc.saved} saved
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
+              Put that money toward your actual trading. We&apos;ll be here, running on $45/mo.
+            </p>
+          </div>
+
+          {/* Early Mover */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "linear-gradient(135deg, #f59e0b08 0%, #10b98108 100%)",
+              border: "1px solid #f59e0b22",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                padding: "4px 12px",
+                background: "#f59e0b18",
+                border: "1px solid #f59e0b33",
+                borderRadius: "20px",
+                fontSize: "10px",
+                color: "#f59e0b",
+                marginBottom: "12px",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}
+            >
+              Early Access
+            </div>
+            <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>
+              First movers get first-mover advantages.
+            </h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "12px", marginTop: "16px", maxWidth: "600px", margin: "16px auto 0" }}>
+              {[
+                { label: "Priority Placement", desc: "Early accounts get featured when leagues launch", color: "#10b981" },
+                { label: "Founding Status", desc: "Permanent founding member badge on your profile", color: "#a855f7" },
+                { label: "Shape the Product", desc: "Direct input on features, leagues, and roadmap", color: "#3b82f6" },
+              ].map((perk) => (
+                <div
+                  key={perk.label}
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-secondary)",
+                    border: `1px solid ${perk.color}22`,
+                    borderRadius: "8px",
+                    textAlign: "left",
+                  }}
+                >
+                  <div style={{ fontSize: "12px", fontWeight: "bold", color: perk.color, marginBottom: "4px" }}>{perk.label}</div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{perk.desc}</div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
+              Competitions launching soon. The platform is free — the timing is the advantage.
+            </p>
           </div>
 
           {/* Final CTA */}

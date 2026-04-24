@@ -426,3 +426,370 @@ The answer: competitions. The same way sports leagues work. The arena is free. T
 coreintent.dev
 
 #BootstrapStartup #FinTech
+
+---
+
+## Post 26 — The Consensus Signal
+
+Every signal we generate goes through three filters:
+
+Filter 1: "Does Grok see an opportunity?"
+Filter 2: "Does Claude agree it's worth the risk?"
+Filter 3: "Does Perplexity confirm the fundamentals?"
+
+3/3 = strong signal.
+2/3 = moderate, proceed with caution.
+1/3 = sit out.
+
+That's not prediction. That's peer review for markets.
+
+#AITrading #MultiModelAI #CoreIntent
+
+---
+
+## Post 27 — Builder's Log
+
+Builder's log — week 72:
+
+Still haven't taken VC money.
+Still haven't charged a subscription.
+Still haven't lied about what's live vs what's planned.
+
+Infrastructure still costs $45/mo.
+Users still come in free.
+Bots still compete on equal terms.
+
+Some things don't change when you get the foundation right.
+
+#BuildInPublic #IndieFounder
+
+---
+
+## Post 28 — The Alignment Test
+
+Quick alignment test for your trading platform:
+
+1. Does it profit when you lose? (Subscriptions = yes)
+2. Does it hide what's demo vs live? (Most = yes)
+3. Does it ban automation? (Most = yes)
+
+CoreIntent:
+1. Competition-based — we need engaged traders
+2. Every label is honest
+3. Bots are first-class
+
+Different design. Different incentives.
+
+coreintent.dev
+
+#FinTech #ProductDesign
+
+---
+
+## Post 29 — The Disagreement Edge
+
+Controversial: the most valuable output of our AI engine isn't a buy signal.
+
+It's when the models disagree.
+
+Grok says rip. Claude says wait. Perplexity says macro headwinds.
+
+That tension forces deeper analysis. It prevents false confidence.
+
+Most platforms optimise for signal volume. We optimise for signal quality.
+
+Turns out disagreement IS the alpha.
+
+#TradingSignals #AITrading
+
+---
+
+## Post 30 — Invitation
+
+If you're an algo trader tired of being treated like a second-class citizen:
+
+- No captcha
+- No bot restrictions
+- No TOS violations for automation
+- API-first design
+- Same leagues as everyone else
+
+CoreIntent was built for you. Literally.
+
+Your strategy. Our arena. May the best code win.
+
+coreintent.dev
+
+#AlgoTrading #AgenticAI #CoreIntent
+
+---
+
+## Post 31 — Poll: The Bot Question
+
+Poll: Should trading platforms allow bots to compete alongside humans?
+
+(A) Yes — best strategy wins, period
+(B) No — humans only
+(C) Yes, but on separate leaderboards
+(D) Already happening whether platforms admit it or not
+
+We chose (A). And (D) is true regardless.
+
+#AITrading #TradingBots
+
+---
+
+## Post 32 — The Quiet Signal
+
+The most important signal our AI generates isn't "buy."
+
+It's "wait."
+
+Two models say go. One says stop. We stop.
+
+In a world that rewards action, the discipline to not trade is the hardest edge to build.
+
+CoreIntent was designed to say no.
+
+#TradingPsychology #RiskManagement
+
+---
+
+## Post 33 — One Question
+
+One question that changed how I think about trading platforms:
+
+"If the infrastructure costs $45/month, where does the other $54 go?"
+
+The answer: it goes to the platform. Not to you.
+
+So we killed the subscription.
+
+coreintent.dev
+
+#FinTech #StartupThinking
+
+---
+
+## Post 34 — Founder Honesty
+
+Honest founder update:
+
+- 14 API routes, most return demo data
+- 6 agents configured, none live-trading
+- No exchange connections yet
+- No user auth
+- No database
+
+But also:
+- 3 AI models integrated
+- Full interactive terminal
+- Open source
+- $45/mo infrastructure
+- Zero lies on the dashboard
+
+We're early. We're honest. That's the edge.
+
+#BuildInPublic #HonestTech
+
+---
+
+## Post 35 — Ask Me Anything
+
+AMA for anyone building in fintech:
+
+How do you compete with platforms backed by $50M+ in VC?
+
+Our answer: you don't. You build something they can't.
+
+They can't be transparent. They can't charge $0. They can't welcome bots. They can't publish their infrastructure bill.
+
+We can.
+
+coreintent.dev
+
+#IndieFounder #FinTech
+
+---
+
+## Post 36 — Thread: What Trading Platforms Won't Tell You
+
+Thread: 5 things your trading platform won't tell you
+
+1/ Their "AI-powered signals" are usually one model with a temperature slider. CoreIntent uses three models that actively disagree with each other. Disagreement is the feature.
+
+2/ Your subscription pays for their office, not your signals. Most platforms spend 60%+ of revenue on overhead. We spend $45/mo. Total.
+
+3/ Banning bots doesn't stop bots. It stops honest automation. The sophisticated bots already bypass their captcha. We just let everyone compete openly.
+
+4/ "Active users" on their dashboard include test accounts, dead accounts, and bots they claim to block. We label demo data "demo."
+
+5/ The subscription model is designed so the platform wins regardless of your performance. Competition-based revenue means we only win when traders show up.
+
+coreintent.dev — built differently.
+
+#FinTech #AITrading #BuildInPublic
+
+---
+
+## Post 37 — The Scoreboard Speaks
+
+In 5 years people will look back and wonder why trading platforms ever banned bots.
+
+The same way we look back and wonder why some platforms banned short selling.
+
+The market doesn't care what's trading. The scoreboard speaks for itself.
+
+#FutureOfTrading #AgenticAI
+
+---
+
+## Post 38 — Short and Brutal
+
+Trading platform business model:
+1. Charge $99/mo
+2. Show green dots
+3. User loses money
+4. Keep charging $99/mo
+5. Repeat
+
+CoreIntent business model:
+1. Charge $0
+2. Label everything honestly
+3. Run competitions
+4. Best strategy wins
+
+Different game.
+
+coreintent.dev
+
+#FinTech #CoreIntent
+
+---
+
+## Post 39 — The Benchmark Thread
+
+Thread: What $45/mo buys you in 2026
+
+Most AI trading tools: $0 for nothing
+Most signal services: $99/mo for one model
+Most copy-trading platforms: $199/mo + fees
+
+CoreIntent ($0):
+-> 3 AI models (Grok + Claude + Perplexity)
+-> 6 autonomous agents
+-> Interactive terminal
+-> 13 API endpoints
+-> Full docs
+-> Daily, weekly, monthly competitions
+-> Bot registration via API
+
+The maths speak louder than the marketing.
+
+coreintent.dev
+
+#AITrading #2026Tech #CoreIntent
+
+---
+
+## Post 40 — The Consensus Kill Shot
+
+A single AI model is a suggestion.
+
+Three AI models debating is a conviction engine.
+
+We don't ship signals. We ship peer-reviewed consensus.
+
+If Grok says buy, Claude says hold, and Perplexity says regulatory risk — we wait.
+
+Most traders lose because they act on suggestions. We don't let them.
+
+#TradingSignals #MultiModelAI #CoreIntent
+
+---
+
+## Post 41 — Build vs Buy
+
+You can:
+A) Pay $99/mo for someone else's signals
+B) Clone our entire platform from GitHub and run it yourself
+
+We open-sourced the engine. Fork it. Deploy it. Compete against us.
+
+That's how confident we are in the model.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #FinTech #BuildInPublic
+
+---
+
+## Post 42 — The NZ Advantage
+
+People ask why we're based in New Zealand.
+
+Answer: Because nobody told us we couldn't.
+
+No gatekeeper said "you need $5M first." No accelerator said "pivot to B2B." No VC said "where's the subscription revenue?"
+
+We just built it.
+
+$45/mo. Three AI models. Zero permissions required.
+
+#MadeInNZ #IndieFounder #CoreIntent
+
+---
+
+## Post 43 — Multi-Agent Future
+
+By 2028, most retail trading will involve AI agents.
+
+The platforms banning bots today will be adding "AI Agent Mode" tomorrow and charging $49/mo for it.
+
+We made it free. Today.
+
+Sometimes the best business strategy is just being early and not charging for it.
+
+coreintent.dev
+
+#AgenticAI #FutureOfTrading #CoreIntent
+
+---
+
+## Post 44 — The Trust Stack
+
+Every platform says "trust us."
+
+Here's our trust stack:
+
+1. Open source (verify the code)
+2. Demo labelled demo (verify the data)
+3. Paper trading mode (verify the honesty)
+4. $45/mo published costs (verify the economics)
+5. No VC (verify the incentives)
+
+Trust isn't a claim. It's an evidence trail.
+
+coreintent.dev
+
+#Transparency #BuildInPublic #FinTech
+
+---
+
+## Post 45 — Quick Math
+
+Quick math:
+
+3 AI models running simultaneously
+6 autonomous trading agents
+13 API endpoints
+3 competition leagues
+$0 user cost
+$45/mo total infrastructure
+
+÷ 0 subscriptions
+= the entire point
+
+coreintent.dev
+
+#CoreIntent #AITrading
