@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/stack/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Technology Stack — Claude, Grok & Perplexity",
+        alt: "CoreIntent Technology Stack — Claude, Grok & Perplexity AI Orchestration",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Claude + Grok + Perplexity — the multi-AI stack powering CoreIntent trading engine.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/stack/opengraph-image"],
   },
 };
 
@@ -67,6 +67,8 @@ const structuredData = {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
       },
+      datePublished: "2026-03-15",
+      dateModified: "2026-04-24",
       mainEntityOfPage: "https://coreintent.dev/stack",
       about: [
         {

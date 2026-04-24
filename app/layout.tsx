@@ -201,6 +201,15 @@ const jsonLd = {
         width: 1200,
         height: 630,
       },
+      copyrightHolder: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      copyrightYear: 2026,
+      countryOfOrigin: {
+        "@type": "Country",
+        name: "New Zealand",
+      },
     },
     {
       "@type": "WebSite",

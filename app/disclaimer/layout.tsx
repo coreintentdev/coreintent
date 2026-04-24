@@ -58,10 +58,26 @@ const structuredData = {
       url: "https://coreintent.dev/disclaimer",
       name: "Disclaimer — Risk Warnings & Legal Information",
       description:
-        "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
+        "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading. Alpha software notice.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
+      datePublished: "2026-03-01",
       dateModified: "2026-03-01",
+      lastReviewed: "2026-04-24",
       inLanguage: "en-NZ",
+      about: [
+        {
+          "@type": "Thing",
+          name: "Trading Risk Warning",
+          description: "Cryptocurrency trading involves substantial risk of loss. Past performance is not indicative of future results.",
+        },
+        {
+          "@type": "Thing",
+          name: "AI Limitations",
+          description: "AI models (Claude, Grok, Perplexity) can produce inaccurate or misleading results and have no special predictive ability.",
+        },
+      ],
+      author: { "@type": "Person", "@id": "https://coreintent.dev/#person" },
+      publisher: { "@type": "Organization", "@id": "https://zynthio.ai/#organization" },
     },
   ],
 };

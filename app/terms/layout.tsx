@@ -60,8 +60,17 @@ const structuredData = {
       description:
         "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
+      datePublished: "2026-03-01",
       dateModified: "2026-03-01",
+      lastReviewed: "2026-04-24",
       inLanguage: "en-NZ",
+      about: {
+        "@type": "Thing",
+        name: "Terms of Service",
+        description: "Platform rules, competition guidelines, account policies, and legal conditions for CoreIntent AI trading competitions.",
+      },
+      author: { "@type": "Person", "@id": "https://coreintent.dev/#person" },
+      publisher: { "@type": "Organization", "@id": "https://zynthio.ai/#organization" },
     },
   ],
 };
