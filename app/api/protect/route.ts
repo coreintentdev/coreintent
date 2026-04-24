@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
+import { callPerplexity, callGrok, callClaude, callAIsParallel, isLiveAndValid, validateAiContent } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
@@ -32,37 +32,36 @@ const VALID_TYPES = ["impersonation", "domain", "threat", "general"] as const sa
 
 export async function GET() {
   try {
-    const [impersonationScan, webScan, threatAnalysis] = await Promise.all([
-      callGrok(
+    const results = await callAIsParallel({
+      grok:
         `Scan X/Twitter for accounts impersonating or copying: ${PROTECTED_ASSETS.socials.join(", ")}. ` +
         `Check for unauthorized use of these names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
-        `Report any suspicious accounts or copycat activity. Be specific.`
-      ),
-      callPerplexity(
+        `Report any suspicious accounts or copycat activity. Be specific.`,
+      perplexity:
         `Search the web for unauthorized use of these brands and names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
         `Check for typosquatting near: ${PROTECTED_ASSETS.domains.join(", ")}. ` +
-        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`
-      ),
-      callClaude(
+        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`,
+      claude:
         `Assess the digital identity protection status for:\n` +
         `Names: ${PROTECTED_ASSETS.names.join(", ")}\n` +
         `Domains: ${PROTECTED_ASSETS.domains.join(", ")}\n` +
         `Socials: ${PROTECTED_ASSETS.socials.join(", ")}\n` +
         `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
         `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
-        "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable."
-      ),
-    ]);
+      systems: {
+        claude: "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable.",
+      },
+    });
 
     return ok({
       protectedAssets: PROTECTED_ASSETS,
       scan: {
-        impersonation:    { ...impersonationScan, purpose: "Fast X/Twitter scan",             contentValid: validateAiContent(impersonationScan) },
-        webPresence:      { ...webScan,           purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(webScan)           },
-        threatAssessment: { ...threatAnalysis,    purpose: "Risk analysis & recommendations", contentValid: validateAiContent(threatAnalysis)     },
+        impersonation:    { ...results.grok,       purpose: "Fast X/Twitter scan",             contentValid: isLiveAndValid(results.grok)       },
+        webPresence:      { ...results.perplexity, purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(results.perplexity) },
+        threatAssessment: { ...results.claude,     purpose: "Risk analysis & recommendations", contentValid: validateAiContent(results.claude)     },
       },
-      allLive:  impersonationScan.live && webScan.live && threatAnalysis.live,
-      allValid: validateAiContent(impersonationScan) && validateAiContent(webScan) && validateAiContent(threatAnalysis),
+      allLive:  results.allLive,
+      allValid: results.allValid,
       landmines: {
         status:   "armed",
         coverage: PROTECTED_ASSETS.names.length + PROTECTED_ASSETS.domains.length + PROTECTED_ASSETS.socials.length,

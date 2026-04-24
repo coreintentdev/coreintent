@@ -130,13 +130,6 @@ const GROK_SYSTEM =
  * Call Grok (X.ai) for fast trading signals and content drafts.
  * Falls back gracefully when the API key is absent or the call fails.
  *
- * @param prompt  User-side message.
- * @param system  Optional override for the system prompt.
- */
-/**
- * Call Grok (X.ai) for fast trading signals and content drafts.
- * Falls back gracefully when the API key is absent or the call fails.
- *
  * @param prompt     User-side message.
  * @param system     Optional override for the system prompt.
  * @param maxTokens  Optional token cap for cost control (default 1000).
