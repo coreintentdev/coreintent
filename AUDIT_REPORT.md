@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Sat Apr 25 03:55:54 UTC 2026
+Generated: Sat Apr 25 04:33:41 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 31
+- INFO: Routes found: 33
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
@@ -49,13 +49,13 @@ Generated: Sat Apr 25 03:55:54 UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 4 files
+- PASS: next/link used in 5 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:259:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:260:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:261:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:260:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:261:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:262:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -64,7 +64,7 @@ Generated: Sat Apr 25 03:55:54 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (10 instances)
+- PASS: ARIA attributes found (12 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
