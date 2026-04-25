@@ -5,6 +5,136 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Link from "next/link";
 
+/* ─── Scroll Reveal ─── */
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add("revealed"); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+}
+
+function ScrollReveal({ children }: { children: React.ReactNode }) {
+  const ref = useScrollReveal();
+  return <div ref={ref} className="scroll-reveal">{children}</div>;
+}
+
+/* ─── Model Agreement Matrix ─── */
+function ModelAgreement() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 2000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const models = ["Grok", "Claude", "Perplexity"];
+  const colors = ["#ef4444", "#a855f7", "#3b82f6"];
+  const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+
+  const signals = pairs.map((pair, pi) => {
+    const seed = pi * 7 + tick;
+    return {
+      pair,
+      models: models.map((_, mi) => {
+        const val = Math.sin(seed * 0.3 + mi * 2.1) * 0.5 + 0.5;
+        return val > 0.55 ? "LONG" as const : val < 0.45 ? "SHORT" as const : "HOLD" as const;
+      }),
+    };
+  });
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2
+        style={{
+          fontSize: "12px",
+          textTransform: "uppercase",
+          color: "var(--text-secondary)",
+          letterSpacing: "0.5px",
+          marginBottom: "12px",
+        }}
+      >
+        Model Agreement Matrix
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+      </h2>
+      <div
+        style={{
+          background: "var(--bg-secondary)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          padding: "20px",
+          overflow: "auto",
+        }}
+      >
+        <div style={{ display: "grid", gridTemplateColumns: "100px repeat(3, 1fr) 80px", gap: "8px", alignItems: "center" }}>
+          <div style={{ fontSize: "10px", color: "var(--text-secondary)" }} />
+          {models.map((m, i) => (
+            <div key={m} style={{ textAlign: "center", fontSize: "11px", fontWeight: "bold", color: colors[i] }}>{m}</div>
+          ))}
+          <div style={{ textAlign: "center", fontSize: "10px", color: "var(--text-secondary)" }}>CONSENSUS</div>
+
+          {signals.map((sig) => {
+            const agreement = sig.models.every((m) => m === sig.models[0]);
+            const majority = sig.models.filter((m) => m === sig.models[0]).length >= 2
+              || sig.models.filter((m) => m === "LONG").length >= 2
+              || sig.models.filter((m) => m === "SHORT").length >= 2;
+            return (
+              <div key={sig.pair} style={{ display: "contents" }}>
+                <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{sig.pair}</div>
+                {sig.models.map((signal, mi) => {
+                  const bg = signal === "LONG" ? "#10b98118" : signal === "SHORT" ? "#ef444418" : "#f59e0b18";
+                  const color = signal === "LONG" ? "#10b981" : signal === "SHORT" ? "#ef4444" : "#f59e0b";
+                  return (
+                    <div
+                      key={mi}
+                      style={{
+                        textAlign: "center",
+                        padding: "6px 8px",
+                        background: bg,
+                        borderRadius: "6px",
+                        fontSize: "11px",
+                        fontWeight: "bold",
+                        color,
+                        transition: "all 0.5s ease",
+                        border: `1px solid ${color}33`,
+                      }}
+                    >
+                      {signal === "LONG" ? "▲" : signal === "SHORT" ? "▼" : "●"} {signal}
+                    </div>
+                  );
+                })}
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    color: agreement ? "#10b981" : majority ? "#f59e0b" : "#ef4444",
+                    padding: "6px",
+                    background: agreement ? "#10b98112" : majority ? "#f59e0b12" : "#ef444412",
+                    borderRadius: "6px",
+                    transition: "all 0.5s ease",
+                  }}
+                >
+                  {agreement ? "3/3" : majority ? "2/3" : "SPLIT"}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ marginTop: "12px", fontSize: "10px", color: "var(--text-secondary)", textAlign: "center" }}>
+          Models update independently. Green = consensus. Yellow = majority. Red = split decision.
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── DEMO DATA — Simulated, not real trading ─── */
 
 const TOKENS = [
@@ -591,6 +721,7 @@ export default function DemoPage() {
           </section>
 
           {/* ═══ SIGNAL FEED + CHART ═══ */}
+          <ScrollReveal>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "40px" }}>
             {/* Signals */}
             <section>
@@ -771,12 +902,22 @@ export default function DemoPage() {
               </div>
             </section>
           </div>
+          </ScrollReveal>
+
+          {/* ═══ MODEL AGREEMENT MATRIX ═══ */}
+          <ScrollReveal>
+          <ModelAgreement />
+          </ScrollReveal>
 
           {/* ═══ ORDER BOOK & NEURAL ACTIVITY ═══ */}
+          <ScrollReveal>
           <OrderBookAndNeural />
+          </ScrollReveal>
 
           {/* ═══ AI DEBATE ═══ */}
+          <ScrollReveal>
           <AIDebate />
+          </ScrollReveal>
 
           {/* ═══ CTA ═══ */}
           <section

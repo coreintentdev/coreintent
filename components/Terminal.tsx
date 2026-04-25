@@ -76,6 +76,11 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
 
+  \x1b[33m── ANALYTICS ──\x1b[0m
+  \x1b[32mheatmap\x1b[0m     - Crypto correlation matrix (animated)
+  \x1b[32mbacktest\x1b[0m    - Run a strategy backtest simulation
+  \x1b[32mpulse\x1b[0m       - Engine vitals heartbeat monitor
+
   \x1b[33m── EXPERIENCES ──\x1b[0m
   \x1b[32mspeedtest\x1b[0m   - Network speed diagnostics
   \x1b[32mlore\x1b[0m        - The CoreIntent origin story
@@ -597,6 +602,7 @@ const ALL_COMMANDS = [
   "challenge", "warp", "buy", "sell", "hold", "quit",
   "sudo", "rickroll",
   "speedtest", "lore", "zen", "fire", "about",
+  "heatmap", "backtest", "pulse",
 ];
 
 export default function Terminal() {
@@ -1425,6 +1431,206 @@ export default function Terminal() {
           addLines(``);
         }
       }, 150);
+      return "";
+    }
+
+    // ── HEATMAP: Crypto correlation heatmap ──
+    if (trimmed === "heatmap") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ CRYPTO CORRELATION HEATMAP ══\x1b[0m`,
+        `\x1b[90m  30-day rolling correlation between assets\x1b[0m`, ``);
+
+      const assets = ["BTC", "ETH", "SOL", "AVAX", "LINK", "DOT"];
+      const correlations: number[][] = [];
+      for (let i = 0; i < assets.length; i++) {
+        correlations[i] = [];
+        for (let j = 0; j < assets.length; j++) {
+          if (i === j) {
+            correlations[i][j] = 1.0;
+          } else if (correlations[j]?.[i] !== undefined) {
+            correlations[i][j] = correlations[j][i];
+          } else {
+            const base = 0.3 + Math.random() * 0.5;
+            const noise = (Math.random() - 0.5) * 0.3;
+            correlations[i][j] = +Math.max(-0.5, Math.min(0.98, base + noise)).toFixed(2);
+          }
+        }
+      }
+
+      const header = `  \x1b[90m${" ".repeat(7)}\x1b[0m` + assets.map(a => `\x1b[33m${a.padStart(6)}\x1b[0m`).join(" ");
+      addLines(header);
+
+      let rowIdx = 0;
+      const hiv = setInterval(() => {
+        if (rowIdx < assets.length) {
+          let row = `  \x1b[33m${assets[rowIdx].padEnd(6)}\x1b[0m `;
+          for (let j = 0; j < assets.length; j++) {
+            const v = correlations[rowIdx][j];
+            let color: string;
+            let block: string;
+            if (v >= 0.9) { color = "\x1b[32m"; block = "██████"; }
+            else if (v >= 0.7) { color = "\x1b[32m"; block = "████░░"; }
+            else if (v >= 0.5) { color = "\x1b[33m"; block = "███░░░"; }
+            else if (v >= 0.3) { color = "\x1b[33m"; block = "██░░░░"; }
+            else if (v >= 0) { color = "\x1b[90m"; block = "█░░░░░"; }
+            else { color = "\x1b[31m"; block = "░░░░░░"; }
+            row += `${color}${block}\x1b[0m `;
+          }
+          addLines(row);
+          rowIdx++;
+        } else {
+          clearInterval(hiv);
+          addLines(``,
+            `  \x1b[90mScale:\x1b[0m \x1b[31m░░░\x1b[0m -0.5  \x1b[90m█░░\x1b[0m 0.0  \x1b[33m██░\x1b[0m 0.5  \x1b[32m███\x1b[0m 0.8  \x1b[32m████\x1b[0m 1.0`,
+            ``,
+            `  \x1b[36mInsight:\x1b[0m ${
+              correlations[0][2] > 0.7
+                ? "BTC-SOL correlation elevated — risk of correlated drawdown"
+                : correlations[0][1] > 0.8
+                  ? "BTC-ETH tightly coupled — diversification benefit limited"
+                  : "Asset correlations moderate — diversification working"
+            }`,
+            `  \x1b[90mSimulated correlations — demo data\x1b[0m`, ``
+          );
+        }
+      }, 180);
+      return "";
+    }
+
+    // ── BACKTEST: Strategy backtesting simulation ──
+    if (trimmed === "backtest" || trimmed.startsWith("backtest ")) {
+      const strategyInput = trimmed === "backtest" ? "momentum" : raw.substring(9).trim().toLowerCase();
+      const strategy = strategyInput || "momentum";
+      const strategies: Record<string, { name: string; desc: string; winRate: number; bias: number }> = {
+        momentum: { name: "Momentum Rider", desc: "Buy breakouts, ride trends, trail stops", winRate: 0.62, bias: 0.015 },
+        mean: { name: "Mean Reversion", desc: "Fade extremes, target the mean", winRate: 0.68, bias: 0.008 },
+        sentiment: { name: "Sentiment Alpha", desc: "Trade social sentiment spikes", winRate: 0.55, bias: 0.022 },
+      };
+      const strat = strategies[strategy] || strategies.momentum;
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ BACKTEST: ${strat.name.toUpperCase()} ══\x1b[0m`,
+        `\x1b[90m  Strategy: ${strat.desc}\x1b[0m`,
+        `\x1b[90m  Period: 30 days | Pair: BTC/USDT | Start: $10,000\x1b[0m`, ``);
+
+      let equity = 10000;
+      let maxEquity = 10000;
+      let maxDD = 0;
+      let wins = 0;
+      let losses = 0;
+      let day = 0;
+      const totalDays = 30;
+      const equityHistory: number[] = [10000];
+
+      const btiv = setInterval(() => {
+        if (day < totalDays) {
+          day++;
+          const isTradeDay = Math.random() < 0.5;
+          if (isTradeDay) {
+            const win = Math.random() < strat.winRate;
+            const magnitude = (Math.random() * 300 + 50) * (1 + strat.bias * 10);
+            const pnl = win ? +magnitude.toFixed(0) : -Math.round(magnitude * 0.6);
+            equity += pnl;
+            if (win) wins++; else losses++;
+            maxEquity = Math.max(maxEquity, equity);
+            const dd = ((maxEquity - equity) / maxEquity) * 100;
+            maxDD = Math.max(maxDD, dd);
+
+            const barMax = 30;
+            const barLen = Math.max(1, Math.min(barMax, Math.round((equity / 14000) * barMax)));
+            const barColor = pnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+            const action = pnl >= 0 ? "\x1b[32mWIN \x1b[0m" : "\x1b[31mLOSS\x1b[0m";
+            addLines(`  \x1b[90mDay ${String(day).padStart(2)}\x1b[0m ${action} ${barColor}${"█".repeat(barLen)}${"░".repeat(barMax - barLen)}\x1b[0m $${equity.toLocaleString()} ${pnl >= 0 ? `\x1b[32m+${pnl}\x1b[0m` : `\x1b[31m${pnl}\x1b[0m`}`);
+          } else {
+            addLines(`  \x1b[90mDay ${String(day).padStart(2)} ──── no signal ────\x1b[0m`);
+          }
+          equityHistory.push(equity);
+        } else {
+          clearInterval(btiv);
+          const totalPnl = equity - 10000;
+          const totalReturn = ((totalPnl / 10000) * 100).toFixed(1);
+          const winRate = wins + losses > 0 ? ((wins / (wins + losses)) * 100).toFixed(0) : "0";
+          const sharpe = (totalPnl / (maxDD > 0 ? maxDD * 100 : 100) * 1.5 + Math.random() * 0.5).toFixed(2);
+
+          const blocks = "▁▂▃▄▅▆▇█";
+          const eMin = Math.min(...equityHistory);
+          const eMax = Math.max(...equityHistory);
+          const eRange = eMax - eMin || 1;
+          const spark = equityHistory.map((e) => {
+            const idx = Math.min(7, Math.round(((e - eMin) / eRange) * 7));
+            return e >= 10000 ? `\x1b[32m${blocks[idx]}\x1b[0m` : `\x1b[31m${blocks[idx]}\x1b[0m`;
+          }).join("");
+
+          const pnlColor = totalPnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(``,
+            `  \x1b[36m══ BACKTEST RESULTS ══\x1b[0m`,
+            `  Equity curve: ${spark}`,
+            ``,
+            `  \x1b[33mStrategy:\x1b[0m    ${strat.name}`,
+            `  \x1b[33mFinal Equity:\x1b[0m ${pnlColor}$${equity.toLocaleString()}\x1b[0m`,
+            `  \x1b[33mReturn:\x1b[0m      ${pnlColor}${totalPnl >= 0 ? "+" : ""}$${totalPnl.toLocaleString()} (${totalPnl >= 0 ? "+" : ""}${totalReturn}%)\x1b[0m`,
+            `  \x1b[33mTrades:\x1b[0m      ${wins + losses} (\x1b[32m${wins}W\x1b[0m / \x1b[31m${losses}L\x1b[0m)`,
+            `  \x1b[33mWin Rate:\x1b[0m    ${winRate}%`,
+            `  \x1b[33mMax Drawdown:\x1b[0m \x1b[31m-${maxDD.toFixed(1)}%\x1b[0m`,
+            `  \x1b[33mSharpe Ratio:\x1b[0m ${Number(sharpe) > 1 ? "\x1b[32m" : "\x1b[33m"}${sharpe}\x1b[0m`,
+            ``,
+            `  \x1b[90mStrategies: momentum | mean | sentiment\x1b[0m`,
+            `  \x1b[90mSimulated backtest — past performance is not indicative of future results\x1b[0m`, ``
+          );
+        }
+      }, 120);
+      return "";
+    }
+
+    // ── PULSE: Engine heartbeat monitor ──
+    if (trimmed === "pulse") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ ENGINE PULSE — VITAL SIGNS ══\x1b[0m`,
+        `\x1b[90m  Monitoring CoreIntent heartbeat...\x1b[0m`, ``);
+
+      const heartChars = "·-~=≈≋█▓▒░";
+      let frame = 0;
+      const totalFrames = 8;
+
+      const pulseIv = setInterval(() => {
+        if (frame < totalFrames) {
+          const W = 50;
+          let ecg = "  ";
+          for (let x = 0; x < W; x++) {
+            const phase = (x + frame * 7) / W * Math.PI * 4;
+            const heartbeat = Math.sin(phase) * 0.3
+              + (Math.abs(((x + frame * 7) % 12) - 6) < 2 ? Math.sin(phase * 3) * 0.8 : 0)
+              + (Math.abs(((x + frame * 7) % 12) - 5) < 1 ? -0.5 : 0);
+            const norm = Math.max(0, Math.min(9, Math.round((heartbeat + 1) * 4.5)));
+            const c = heartChars[norm];
+            if (norm >= 7) ecg += `\x1b[32m${c}\x1b[0m`;
+            else if (norm >= 4) ecg += `\x1b[36m${c}\x1b[0m`;
+            else ecg += `\x1b[90m${c}\x1b[0m`;
+          }
+          addLines(ecg);
+          frame++;
+        } else {
+          clearInterval(pulseIv);
+          const bpm = 60 + Math.floor(Math.random() * 20);
+          const signalLatency = 12 + Math.floor(Math.random() * 30);
+          const modelSync = 94 + Math.floor(Math.random() * 6);
+          const riskLevel = Math.random() > 0.7 ? "ELEVATED" : "NOMINAL";
+          const riskColor = riskLevel === "NOMINAL" ? "\x1b[32m" : "\x1b[33m";
+
+          addLines(``,
+            `  \x1b[36m┌─────────────────────────────────────────┐\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[32m♥\x1b[0m  Engine Heartbeat     \x1b[32m${bpm} BPM\x1b[0m        \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m⚡\x1b[0m Signal Latency      \x1b[32m${signalLatency}ms\x1b[0m          \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m◉\x1b[0m  Model Sync          \x1b[32m${modelSync}%\x1b[0m           \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m▲\x1b[0m  Risk Level          ${riskColor}${riskLevel}\x1b[0m       \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m⊞\x1b[0m  Circuit Breaker     \x1b[32mARMED\x1b[0m          \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m↺\x1b[0m  Last Signal         \x1b[90m${Math.floor(Math.random() * 45) + 5}s ago\x1b[0m        \x1b[36m│\x1b[0m`,
+            `  \x1b[36m└─────────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mAll vitals ${riskLevel === "NOMINAL" ? "normal" : "within tolerance"}. Paper trading mode.\x1b[0m`, ``
+          );
+        }
+      }, 200);
       return "";
     }
 

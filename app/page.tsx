@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -55,6 +55,92 @@ const AI_MODELS = [
   { name: "Claude", provider: "Anthropic", role: "Deep analysis & risk assessment", color: "#a855f7" },
   { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
 ];
+
+/* ─── Particle Field Background ─── */
+function ParticleField() {
+  const particles = Array.from({ length: 24 }, (_, i) => ({
+    id: i,
+    left: `${(i * 4.17 + (i % 3) * 11) % 100}%`,
+    top: `${(i * 7.3 + (i % 5) * 13) % 100}%`,
+    size: 1.5 + (i % 4) * 0.8,
+    duration: 10 + (i % 7) * 3,
+    delay: (i % 5) * 2.5,
+    driftX: (i % 2 === 0 ? 1 : -1) * (20 + (i % 6) * 12),
+    driftY: -(30 + (i % 4) * 20),
+    color: ["#10b981", "#3b82f6", "#a855f7", "#06b6d4"][i % 4],
+    opacity: 0.15 + (i % 3) * 0.1,
+  }));
+
+  return (
+    <div className="particle-field">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="particle-dot"
+          style={{
+            left: p.left,
+            top: p.top,
+            width: p.size,
+            height: p.size,
+            background: p.color,
+            "--duration": `${p.duration}s`,
+            "--delay": `${p.delay}s`,
+            "--drift-x": `${p.driftX}px`,
+            "--drift-y": `${p.driftY}px`,
+            "--particle-opacity": `${p.opacity}`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ─── Scroll Reveal Hook ─── */
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add("revealed"); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+}
+
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useScrollReveal();
+  return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
+}
+
+/* ─── Engine Heartbeat ─── */
+function EngineHeartbeat() {
+  const [beat, setBeat] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setBeat((b) => b + 1), 2000);
+    return () => clearInterval(iv);
+  }, []);
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+      <div
+        className="engine-heartbeat"
+        key={beat}
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          background: "#10b981",
+        }}
+      />
+      <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
+        ENGINE ALIVE
+      </span>
+    </div>
+  );
+}
 
 /* ─── TypeWriter ─── */
 const HERO_PHRASES = [
@@ -543,6 +629,7 @@ export default function Home() {
           }}
         >
           <div className="grid-bg" />
+          <ParticleField />
           <NeuralNetwork />
           <button
             onClick={() => setShowHero(false)}
@@ -563,6 +650,9 @@ export default function Home() {
             x
           </button>
           <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+            <div style={{ marginBottom: "12px" }}>
+              <EngineHeartbeat />
+            </div>
             <div
               style={{
                 display: "inline-block",
@@ -657,6 +747,7 @@ export default function Home() {
             </div>
 
             {/* Value Props */}
+            <ScrollReveal>
             <div
               style={{
                 display: "grid",
@@ -674,6 +765,7 @@ export default function Home() {
               ].map((prop) => (
                 <div
                   key={prop.label}
+                  className="card-hover-glow"
                   style={{
                     padding: "16px",
                     background: "var(--bg-secondary)",
@@ -690,9 +782,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            </ScrollReveal>
 
             {/* Animated Signal Pipeline */}
+            <ScrollReveal>
             <SignalPipeline />
+            </ScrollReveal>
 
             {/* Stats Banner */}
             <div
@@ -723,6 +818,7 @@ export default function Home() {
             </div>
 
             {/* Powered By */}
+            <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 Powered by three AI models
@@ -731,6 +827,7 @@ export default function Home() {
                 {AI_MODELS.map((m) => (
                   <div
                     key={m.name}
+                    className="card-hover-glow"
                     style={{
                       padding: "20px 16px",
                       background: "var(--bg-primary)",
@@ -763,8 +860,10 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Social Proof — DEMO */}
+            <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 What people are saying
@@ -799,7 +898,9 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
             {/* Why CoreIntent — Differentiator */}
+            <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 Why CoreIntent
@@ -832,6 +933,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Trust Badges */}
             <div

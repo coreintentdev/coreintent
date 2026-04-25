@@ -453,6 +453,154 @@ a {
   pointer-events: none;
 }
 
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 3 Animations
+   ═══════════════════════════════════════════ */
+
+/* ─── Scroll Reveal ─── */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.scroll-reveal.revealed {
+  animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.scroll-reveal.revealed:nth-child(2) { animation-delay: 0.08s; }
+.scroll-reveal.revealed:nth-child(3) { animation-delay: 0.16s; }
+.scroll-reveal.revealed:nth-child(4) { animation-delay: 0.24s; }
+.scroll-reveal.revealed:nth-child(5) { animation-delay: 0.32s; }
+.scroll-reveal.revealed:nth-child(6) { animation-delay: 0.40s; }
+
+/* ─── Floating Particle Field ─── */
+@keyframes particleDrift {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.3);
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.3);
+  }
+  100% {
+    transform: translate(var(--drift-x, 40px), var(--drift-y, -60px)) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: particleDrift var(--duration, 12s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ─── Engine Heartbeat Indicator ─── */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  15% {
+    transform: scale(1.15);
+    box-shadow: 0 0 12px 4px rgba(16, 185, 129, 0.3);
+  }
+  30% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.1);
+  }
+  45% {
+    transform: scale(1.08);
+    box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.2);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+.engine-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* ─── Value Prop Cards Glow Sweep ─── */
+@keyframes glowSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.card-hover-glow {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.05) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-hover-glow:hover {
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.12), 0 0 0 1px rgba(16, 185, 129, 0.08);
+}
+
+.card-hover-glow:hover::before {
+  opacity: 1;
+  animation: glowSweep 2s ease infinite;
+}
+
+/* ─── Stat Counter ─── */
+@keyframes countIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stat-count-in {
+  animation: countIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {
