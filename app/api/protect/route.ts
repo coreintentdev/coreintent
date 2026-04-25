@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, type AIResponse } from "@/lib/ai";
-import { ok, badRequest, gatewayError, preflight, serverError, validateString } from "@/lib/api";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -84,9 +84,7 @@ export async function POST(req: NextRequest) {
   const check = validateString(body.check, 500);
   if (!check) return badRequest("check is required and must be 500 characters or fewer");
 
-  const type: ThreatCheckType = VALID_TYPES.includes(body.type as ThreatCheckType)
-    ? (body.type as ThreatCheckType)
-    : "general";
+  const type = validateEnum(body.type, VALID_TYPES) ?? "general";
 
   try {
     type ScanFn = () => Promise<AIResponse>;
