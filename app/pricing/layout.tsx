@@ -7,6 +7,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://coreintent.dev/pricing",
   },
+  keywords: [
+    "free trading competitions",
+    "AI trading leagues",
+    "daily trading competition",
+    "weekly trading league",
+    "monthly trading championship",
+    "paper trading competition",
+    "bot trading competition",
+    "no subscription trading",
+    "crypto competition free",
+    "AI trading arena",
+  ],
   openGraph: {
     title: "Competitions & Leagues — Free AI Trading Competitions",
     description:
@@ -15,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/pricing/opengraph-image",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "CoreIntent — Free AI Trading Competitions. No Subscriptions.",
@@ -29,7 +41,7 @@ export const metadata: Metadata = {
       "Free AI trading competitions — daily, weekly, monthly leagues. No subscriptions. Bots welcome.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/pricing/opengraph-image"],
+    images: ["/opengraph-image.png"],
   },
 };
 

@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://coreintent.dev/privacy",
   },
+  keywords: [
+    "CoreIntent privacy policy",
+    "NZ Privacy Act 2020",
+    "data protection New Zealand",
+    "AI trading privacy",
+    "Zynthio privacy",
+  ],
   openGraph: {
     title: "Privacy Policy — How We Handle Your Data | CoreIntent",
     description:
@@ -60,6 +67,7 @@ const structuredData = {
       description:
         "CoreIntent privacy policy — how we handle your data. NZ Privacy Act 2020 compliant.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
+      datePublished: "2026-03-01",
       dateModified: "2026-03-01",
       inLanguage: "en-NZ",
     },

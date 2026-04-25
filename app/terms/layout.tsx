@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://coreintent.dev/terms",
   },
+  keywords: [
+    "CoreIntent terms of service",
+    "AI trading platform rules",
+    "trading competition terms",
+    "New Zealand law trading",
+    "Zynthio terms",
+  ],
   openGraph: {
     title: "Terms of Service — Platform Rules & Conditions | CoreIntent",
     description:
@@ -60,6 +67,7 @@ const structuredData = {
       description:
         "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
+      datePublished: "2026-03-01",
       dateModified: "2026-03-01",
       inLanguage: "en-NZ",
     },

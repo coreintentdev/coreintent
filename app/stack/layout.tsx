@@ -7,6 +7,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://coreintent.dev/stack",
   },
+  keywords: [
+    "AI orchestration stack",
+    "multi-model AI architecture",
+    "Claude Grok Perplexity",
+    "trading infrastructure",
+    "AI trading technology",
+    "Cloudflare Vercel VPS",
+    "agentic AI stack",
+    "trading engine architecture",
+    "multi-agent trading system",
+  ],
   openGraph: {
     title: "The Stack — AI Services, Infrastructure & Architecture",
     description:
@@ -68,6 +79,8 @@ const structuredData = {
         "@id": "https://zynthio.ai/#organization",
       },
       mainEntityOfPage: "https://coreintent.dev/stack",
+      datePublished: "2026-03-01",
+      dateModified: "2026-04-25",
       about: [
         {
           "@type": "SoftwareApplication",

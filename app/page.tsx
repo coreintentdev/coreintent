@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import Link from "next/link";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -1421,7 +1422,7 @@ npm run build           # Production build`}
       </main>
 
       {/* Status bar */}
-      <footer
+      <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -1432,10 +1433,23 @@ npm run build           # Production build`}
           color: "var(--text-secondary)",
           background: "var(--bg-secondary)",
         }}
+        role="status"
       >
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
         <span>Paper Trading Mode | v0.2.0-alpha</span>
-      </footer>
+      </div>
+
+      {/* SEO footer — internal links for crawlers */}
+      <nav aria-label="Site links" style={{ padding: "12px 24px", borderTop: "1px solid var(--border-color)", background: "var(--bg-secondary)", fontSize: "11px", display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
+        <Link href="/demo" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>Demo</Link>
+        <Link href="/stack" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>Stack</Link>
+        <Link href="/pricing" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>Competitions</Link>
+        <Link href="/privacy" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>Privacy</Link>
+        <Link href="/terms" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>Terms</Link>
+        <Link href="/disclaimer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>Disclaimer</Link>
+        <a href="https://github.com/coreintentdev" target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>GitHub</a>
+        <a href="https://x.com/coreintentai" target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>X</a>
+      </nav>
     </div>
   );
 }

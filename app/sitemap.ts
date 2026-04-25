@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://coreintent.dev";
-  const now = new Date("2026-04-22");
+  const now = new Date("2026-04-25");
 
   return [
     {
