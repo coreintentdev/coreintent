@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoreIntent Newsletter #001 — Three Models. One Signal. Zero Subscriptions.</title>
+  <!--
+    CoreIntent / Zynthio — Newsletter Issue #001
+    =============================================
+    First issue: Platform announcement and launch.
+    NOTE: Demo data is labelled honestly throughout.
+  -->
+  <style>
+    body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+    .email-body { background-color: #0a0e17; }
+    .email-container { max-width: 600px; margin: 0 auto; background-color: #111827; }
+    .header { background-color: #0a0e17; padding: 32px 24px; text-align: center; border-bottom: 1px solid #1e293b; }
+    .header h1 { color: #10b981; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 24px; margin: 0 0 4px 0; letter-spacing: 1px; }
+    .header p { color: #94a3b8; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 12px; margin: 0; }
+    .content { padding: 32px 24px; font-family: 'JetBrains Mono', 'Courier New', monospace; }
+    .section { margin-bottom: 32px; }
+    .section-label { color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .section h2 { color: #e2e8f0; font-size: 18px; margin: 0 0 12px 0; }
+    .section p { color: #94a3b8; font-size: 13px; line-height: 1.6; margin: 0 0 12px 0; }
+    .highlight-box { background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; margin: 16px 0; }
+    .highlight-box h3 { color: #10b981; font-size: 14px; margin: 0 0 8px 0; }
+    .highlight-box p { color: #94a3b8; font-size: 12px; line-height: 1.5; margin: 0; }
+    .stat-label { color: #94a3b8; font-size: 12px; }
+    .stat-value { color: #10b981; font-size: 12px; font-weight: bold; }
+    .cta-button { display: inline-block; background-color: #10b981; color: #0a0e17 !important; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 14px; font-weight: bold; padding: 12px 32px; border-radius: 6px; text-decoration: none; margin: 8px 0; }
+    .agent-card { background-color: #0a0e17; border: 1px solid #1e293b; border-radius: 6px; padding: 12px 16px; margin: 8px 0; }
+    .agent-name { color: #e2e8f0; font-size: 13px; font-weight: bold; }
+    .agent-status { color: #3b82f6; font-size: 10px; text-transform: uppercase; }
+    .agent-task { color: #94a3b8; font-size: 11px; margin-top: 4px; }
+    .divider { border: none; border-top: 1px solid #1e293b; margin: 24px 0; }
+    .footer { background-color: #0a0e17; padding: 24px; text-align: center; border-top: 1px solid #1e293b; }
+    .footer p { color: #64748b; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 10px; line-height: 1.6; margin: 0 0 8px 0; }
+    .footer a { color: #3b82f6; text-decoration: none; }
+    .demo-badge { display: inline-block; background-color: #f59e0b22; color: #f59e0b; font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    @media screen and (max-width: 640px) {
+      .email-container { width: 100% !important; }
+      .content { padding: 24px 16px !important; }
+      .header { padding: 24px 16px !important; }
+    }
+  </style>
+</head>
+<body>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" class="email-body">
+    <tr>
+      <td align="center" style="padding: 24px 12px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="email-container" style="width: 600px;">
+
+          <!-- HEADER -->
+          <tr>
+            <td class="header">
+              <h1>CoreIntent</h1>
+              <p>Agentic AI Trading Engine | Zynthio</p>
+            </td>
+          </tr>
+
+          <!-- HERO SECTION -->
+          <tr>
+            <td class="content">
+              <div class="section">
+                <div class="section-label">// issue #001 &mdash; launch</div>
+                <h2 style="color: #10b981; font-size: 22px;">Three Models Argue. You Get Better Signals.</h2>
+                <p>CoreIntent is live in paper trading mode. Three AI models &mdash; Grok, Claude, and Perplexity &mdash; cross-check every signal before it reaches you. No subscriptions. Free competitions. Bots welcome. Built from New Zealand by Zynthio.</p>
+                <p>This is the first issue of the CoreIntent newsletter. Here's what's live, what's coming, and why we built it differently.</p>
+                <a href="https://coreintent.dev" class="cta-button">Open Terminal</a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- PLATFORM STATS -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// engine status</div>
+                <div class="highlight-box">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">Engine</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-value">ONLINE</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">Mode</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">Paper Trading</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">AI Models</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-value">3 Active</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-label">Agents</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span class="stat-value">6 Configured</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0;">
+                        <span class="stat-label">Infrastructure</span>
+                      </td>
+                      <td align="right" style="padding: 6px 0;">
+                        <span class="stat-value">~$45/mo</span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- WHY WE BUILT THIS -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// the thesis</div>
+                <h2>Why CoreIntent Exists</h2>
+                <p>Most trading platforms charge $99/month whether you profit or not. The platform wins either way. That's not alignment &mdash; that's indifference with a billing cycle.</p>
+                <p>We asked a simple question: if the infrastructure costs $45/month, where does the other $54 go? The answer: to the platform. Not to you.</p>
+                <p>So we killed the subscription and replaced it with competitions. Free entry. Best strategy wins. Bots and humans compete on equal terms.</p>
+
+                <div class="highlight-box">
+                  <h3>The Multi-Model Difference</h3>
+                  <p>Single-model trading is an expensive coin flip. CoreIntent uses three AI models that actively disagree with each other:</p>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top: 12px;">
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #ef4444; font-size: 12px; font-weight: bold;">Grok (xAI)</span>
+                        <span style="color: #94a3b8; font-size: 11px; margin-left: 8px;">Fast signal detection &amp; sentiment</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #a855f7; font-size: 12px; font-weight: bold;">Claude (Anthropic)</span>
+                        <span style="color: #94a3b8; font-size: 11px; margin-left: 8px;">Deep analysis &amp; risk assessment</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">Perplexity</span>
+                        <span style="color: #94a3b8; font-size: 11px; margin-left: 8px;">Real-time research &amp; news</span>
+                      </td>
+                    </tr>
+                  </table>
+                  <p style="margin-top: 12px;">Consensus = strong signal. Disagreement = deeper analysis. The tension between models IS the edge.</p>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- AGENT SPOTLIGHT -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// agent fleet</div>
+                <h2>Six Agents, Six Strategies</h2>
+                <p>Each agent specialises in a different approach. All paper trading. All learning. None are live-trading yet &mdash; we label this honestly.</p>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">TrendFollower</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">BTC/ETH momentum tracking | Claude Opus</span></td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">MeanRevert</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">SOL mean reversion scanning | Claude Sonnet</span></td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">SentimentBot</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">Social signal aggregation | Grok</span></td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="agent-card">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td><span class="agent-name">RiskGuard</span></td>
+                      <td align="right"><span class="agent-status">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><span class="agent-task">Circuit breaker monitoring (0.8% threshold) | Claude Opus</span></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- COMPETITION LEAGUES -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// competitions <span class="demo-badge" style="margin-left: 8px;">Launching Soon</span></div>
+                <h2>Pick Your Arena</h2>
+                <p>Three leagues. Free entry. Bots compete alongside humans. The leaderboard doesn't care who built you.</p>
+
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="padding: 16px; background-color: #0a0e17; border: 1px solid #10b98133; border-radius: 6px; text-align: center;" width="33%">
+                      <div style="color: #10b981; font-size: 24px; font-weight: bold;">24H</div>
+                      <div style="color: #e2e8f0; font-size: 13px; font-weight: bold;">Daily Sprint</div>
+                      <div style="color: #94a3b8; font-size: 10px; margin-top: 4px;">Leaderboard resets daily</div>
+                    </td>
+                    <td width="8"></td>
+                    <td style="padding: 16px; background-color: #0a0e17; border: 1px solid #3b82f633; border-radius: 6px; text-align: center;" width="33%">
+                      <div style="color: #3b82f6; font-size: 24px; font-weight: bold;">7D</div>
+                      <div style="color: #e2e8f0; font-size: 13px; font-weight: bold;">Weekly Grind</div>
+                      <div style="color: #94a3b8; font-size: 10px; margin-top: 4px;">Risk-adjusted scoring</div>
+                    </td>
+                    <td width="8"></td>
+                    <td style="padding: 16px; background-color: #0a0e17; border: 1px solid #a855f733; border-radius: 6px; text-align: center;" width="33%">
+                      <div style="color: #a855f7; font-size: 24px; font-weight: bold;">30D</div>
+                      <div style="color: #e2e8f0; font-size: 13px; font-weight: bold;">Championship</div>
+                      <div style="color: #94a3b8; font-size: 10px; margin-top: 4px;">Full portfolio wars</div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <!-- WHAT'S NEXT -->
+          <tr>
+            <td class="content" style="padding-top: 0;">
+              <div class="section">
+                <div class="section-label">// on the roadmap</div>
+                <h2>What's Coming</h2>
+                <div class="highlight-box">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td style="padding: 8px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">PLANNED</span>
+                        <span style="color: #94a3b8; font-size: 12px; margin-left: 8px;">Exchange connections (Binance, Coinbase)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">PLANNED</span>
+                        <span style="color: #94a3b8; font-size: 12px; margin-left: 8px;">The Mansion &mdash; gamified trading world with room unlocks</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 0; border-bottom: 1px solid #1e293b;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">PLANNED</span>
+                        <span style="color: #94a3b8; font-size: 12px; margin-left: 8px;">Live trading with real funds (after paper trading validation)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 0;">
+                        <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">PLANNED</span>
+                        <span style="color: #94a3b8; font-size: 12px; margin-left: 8px;">User authentication and persistent accounts</span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <p style="color: #64748b; font-size: 10px; margin-top: 8px;">All planned features are labelled honestly. Nothing ships until it's ready.</p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td class="content" style="padding-top: 0; text-align: center;">
+              <hr class="divider">
+              <p style="color: #e2e8f0; font-size: 16px; font-weight: bold; margin-bottom: 4px;">The Arena Is Open.</p>
+              <p style="color: #94a3b8; font-size: 12px; margin-bottom: 16px;">No subscriptions. No captcha. No credit card. Early registration gets priority placement when competitions go live.</p>
+              <a href="https://coreintent.dev" class="cta-button">Launch CoreIntent</a>
+              <p style="color: #64748b; font-size: 11px; margin-top: 16px;">Three AI models. Free competitions. Bots welcome.</p>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td class="footer">
+              <p style="color: #94a3b8; font-size: 11px;">CoreIntent | Zynthio</p>
+              <p>
+                <a href="https://coreintent.dev">Website</a> &nbsp;|&nbsp;
+                <a href="https://github.com/coreintentdev/coreintent">GitHub</a> &nbsp;|&nbsp;
+                <a href="https://twitter.com/coreintentai">X/Twitter</a>
+              </p>
+              <p style="margin-top: 12px;">
+                Built by Corey McIvor in New Zealand<br>
+                Parent brand: <a href="https://zynthio.ai">Zynthio.ai</a>
+              </p>
+              <hr class="divider" style="margin: 16px 0;">
+              <p style="font-size: 9px;">
+                CoreIntent is in paper trading mode. No real funds are traded.<br>
+                Trading cryptocurrency involves significant risk.<br>
+                Past performance does not guarantee future results.<br>
+                <a href="https://coreintent.dev/disclaimer">Full Disclaimer</a> | <a href="https://coreintent.dev/privacy">Privacy Policy</a> | <a href="[UNSUBSCRIBE_URL]">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

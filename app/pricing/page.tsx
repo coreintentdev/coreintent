@@ -142,7 +142,7 @@ export default function PricingPage() {
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
             {LEAGUES.map((league) => (
               <div
                 key={league.name}
@@ -334,8 +334,8 @@ export default function PricingPage() {
                 ].map(([feature, us, them], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
                     <td style={{ padding: "10px 12px", fontSize: "13px", fontWeight: "bold" }}>{feature}</td>
-                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--accent-green)", textAlign: "center" }}>{us}</td>
-                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)", textAlign: "center" }}>{them}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "var(--accent-green)", textAlign: "center", background: "#10b98108" }}>{us}</td>
+                    <td style={{ padding: "10px 12px", fontSize: "12px", color: "#ef4444", textAlign: "center", textDecoration: "line-through", opacity: 0.7 }}>{them}</td>
                   </tr>
                 ))}
               </tbody>

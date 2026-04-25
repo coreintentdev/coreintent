@@ -320,7 +320,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaces subscriptions with competitions
+              The agentic AI trading engine where three models debate every signal
             </p>
             <p
               style={{
