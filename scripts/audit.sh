@@ -84,7 +84,7 @@ echo "## 2. Pages" >> "$REPORT"
 echo ""
 echo "--- PAGE CHECK ---"
 
-for page in app/page.tsx app/pricing/page.tsx app/stack/page.tsx app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+for page in "app/[locale]/page.tsx" "app/[locale]/pricing/page.tsx" "app/[locale]/stack/page.tsx" "app/[locale]/privacy/page.tsx" "app/[locale]/terms/page.tsx" "app/[locale]/disclaimer/page.tsx"; do
   if [ -f "$page" ]; then
     log_pass "Page exists: $page"
   else
@@ -101,9 +101,9 @@ echo "## 3. Legal Compliance" >> "$REPORT"
 echo ""
 echo "--- LEGAL CHECK ---"
 
-[ -f "app/privacy/page.tsx" ] && log_pass "Privacy policy page exists" || log_fail "Privacy policy MISSING (CRITICAL for trading platform)"
-[ -f "app/terms/page.tsx" ] && log_pass "Terms of service page exists" || log_fail "Terms of service MISSING (CRITICAL)"
-[ -f "app/disclaimer/page.tsx" ] && log_pass "Disclaimer page exists" || log_fail "Disclaimer MISSING (CRITICAL for crypto)"
+[ -f "app/[locale]/privacy/page.tsx" ] && log_pass "Privacy policy page exists" || log_fail "Privacy policy MISSING (CRITICAL for trading platform)"
+[ -f "app/[locale]/terms/page.tsx" ] && log_pass "Terms of service page exists" || log_fail "Terms of service MISSING (CRITICAL)"
+[ -f "app/[locale]/disclaimer/page.tsx" ] && log_pass "Disclaimer page exists" || log_fail "Disclaimer MISSING (CRITICAL for crypto)"
 
 # Check for risk warnings
 if grep -rq "not financial advice\|significant risk\|past performance" app/ 2>/dev/null; then
@@ -129,14 +129,14 @@ echo ""
 echo "--- SEO CHECK ---"
 
 # OG tags
-if grep -q "openGraph" app/layout.tsx 2>/dev/null; then
+if grep -q "openGraph" "app/[locale]/layout.tsx" 2>/dev/null; then
   log_pass "OpenGraph meta tags configured"
 else
   log_fail "OpenGraph meta tags MISSING"
 fi
 
 # Twitter cards
-if grep -q "twitter" app/layout.tsx 2>/dev/null; then
+if grep -q "twitter" "app/[locale]/layout.tsx" 2>/dev/null; then
   log_pass "Twitter card meta tags configured"
 else
   log_fail "Twitter card meta tags MISSING"
@@ -164,7 +164,7 @@ else
 fi
 
 # Page-level metadata (check page.tsx or its co-located layout.tsx)
-for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+for page in "app/[locale]/privacy/page.tsx" "app/[locale]/terms/page.tsx" "app/[locale]/disclaimer/page.tsx"; do
   layout="$(dirname "$page")/layout.tsx"
   if [ -f "$page" ] && (grep -q "metadata" "$page" 2>/dev/null || ([ -f "$layout" ] && grep -q "metadata" "$layout" 2>/dev/null)); then
     log_pass "Page metadata: $page"
@@ -249,7 +249,7 @@ echo "--- NAV/FOOTER CHECK ---"
 [ -f "components/SiteFooter.tsx" ] && log_pass "Shared SiteFooter component exists" || log_fail "No shared footer component"
 
 # Check pages use shared nav
-for page in app/pricing/page.tsx app/stack/page.tsx app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+for page in "app/[locale]/pricing/page.tsx" "app/[locale]/stack/page.tsx" "app/[locale]/privacy/page.tsx" "app/[locale]/terms/page.tsx" "app/[locale]/disclaimer/page.tsx"; do
   if [ -f "$page" ]; then
     if grep -q "SiteNav\|SiteFooter" "$page" 2>/dev/null; then
       log_pass "Shared nav/footer used: $page"
@@ -278,7 +278,7 @@ echo "--- TRUTH CHECK ---"
 
 # Check for misleading status words in pages
 for word in '"connected"' '"active"' '"running"' '"live"'; do
-  MATCHES=$(grep -rn "$word" app/page.tsx app/stack/page.tsx app/pricing/page.tsx 2>/dev/null | grep -v "// " | grep -v "comment" || true)
+  MATCHES=$(grep -rn "$word" "app/[locale]/page.tsx" "app/[locale]/stack/page.tsx" "app/[locale]/pricing/page.tsx" 2>/dev/null | grep -v "// " | grep -v "comment" || true)
   if [ -n "$MATCHES" ]; then
     log_warn "Potentially misleading status '$word' found in pages"
     echo "$MATCHES" | head -3 | while read -r line; do
@@ -290,7 +290,7 @@ done
 
 # Check for honest labels
 for word in "planned" "ready" "paper" "demo" "alpha"; do
-  if grep -rqi "$word" app/page.tsx app/stack/page.tsx 2>/dev/null; then
+  if grep -rqi "$word" "app/[locale]/page.tsx" "app/[locale]/stack/page.tsx" 2>/dev/null; then
     log_pass "Honest label '$word' found in pages"
   fi
 done
@@ -322,8 +322,8 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en' app/layout.tsx 2>/dev/null; then
-  log_pass "HTML lang attribute set"
+if grep -q 'lang=' "app/[locale]/layout.tsx" 2>/dev/null; then
+  log_pass "HTML lang attribute set (dynamic per locale)"
 else
   log_fail "HTML lang attribute missing"
 fi

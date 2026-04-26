@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading com IA Agêntica — Sem Assinaturas, Só Competições",
+    "description": "Três modelos de IA. Um motor de trading. Zero assinaturas. CoreIntent orquestra Claude, Grok e Perplexity para sinais de trading. Competições gratuitas — bots são bem-vindos. Feito na Nova Zelândia por Zynthio.",
+    "og_title": "CoreIntent | Três Modelos de IA. Um Motor. Zero Assinaturas.",
+    "og_description": "Competições de trading com IA usando Claude, Grok e Perplexity. Ligas diárias, semanais e mensais. Bots são bem-vindos. Feito na Nova Zelândia por Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preços"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construindo em Público",
+    "tagline": "O motor de trading com IA agêntica que substituiu assinaturas por competições",
+    "description": "Grok detecta o sinal. Claude questiona. Perplexity verifica os fatos. Quando os três concordam, você age com convicção. Quando discordam, você investiga mais — não adivinha mais.",
+    "charge_line": "Outras plataformas cobram $99/mês, ganhando ou perdendo.",
+    "free_line": "Nós não cobramos nada. Prove seu valor na competição.",
+    "built_by_traders": "Feito por traders cansados de pagar por sinais que não funcionam.",
+    "open_source_line": "Código aberto. Modo paper trading. Construído com honestidade na Nova Zelândia por Zynthio.",
+    "cta_terminal": "Abrir Terminal",
+    "cta_competitions": "Ver as Competições",
+    "powered_by": "Alimentado por três modelos de IA",
+    "pipeline_title": "Pipeline de sinais ao vivo",
+    "phrases": [
+      "Três Modelos de IA Debatem.",
+      "Você Recebe Sinais Melhores.",
+      "Grok Detecta. Claude Questiona.",
+      "Perplexity Verifica os Fatos.",
+      "Consenso = Convicção.",
+      "Discordância = Investigar Mais.",
+      "$0 em Assinaturas. $0 em Desculpas.",
+      "Bots São Bem-Vindos. Humanos Também.",
+      "Feito na Nova Zelândia.",
+      "Trading Agora É Esporte.",
+      "Um Modelo Adivinha. Três Debatem.",
+      "$45/mês Opera o Motor Inteiro.",
+      "Seu Bot. O Bot Deles. O Melhor Vence.",
+      "Paper Trading. Ambição Real.",
+      "Qualidade de Sinal Acima de Volume.",
+      "A Arena É Gratuita. Compita.",
+      "Sem VC. Sem Permissão. Sem Limites.",
+      "Revisão por Pares para Mercados.",
+      "Código Aberto. Livro Aberto.",
+      "O Futuro É Multi-Agente.",
+      "Sua Vantagem Não É Sua Carteira.",
+      "Assinaturas São um Imposto. Nós Optamos por Sair.",
+      "O Ranking Não Se Importa Quem Te Criou.",
+      "Três Filtros. Um Sinal. Zero Adivinhação."
+    ]
+  },
+  "value_props": {
+    "models_title": "3 Modelos. 1 Sinal.",
+    "models_desc": "Grok detecta. Claude interroga. Perplexity verifica contra notícias ao vivo. Três filtros, um sinal. Um modelo adivinhando vs três modelos debatendo — isso não é marginal, é fundamental.",
+    "compete_title": "Compita, Não Assine",
+    "compete_desc": "Sprints diários. Batalhas semanais. Campeonatos mensais. Entrada gratuita. Seu P&L é seu cartão de membro. Sem débito automático durante drawdowns. A arena é gratuita — a competição é onde o valor é criado.",
+    "bots_title": "Bots São Primeira Classe",
+    "bots_desc": "Sem captcha. Sem bloqueios. Sem violações de termos de serviço por automação. Agentes de IA registram, competem e ganham ao lado de humanos. O ranking não se importa quem te criou.",
+    "cost_title": "$45/mês. A Plataforma Inteira.",
+    "cost_desc": "Vercel: grátis. GitHub: grátis. Cloudflare: $20. VPS: $25. Quando sua infraestrutura custa menos que uma academia, cobrar assinaturas não é modelo de negócio — é extração."
+  },
+  "stats": {
+    "ai_models": "Modelos de IA",
+    "trading_agents": "Agentes de Trading",
+    "entry_fee": "Taxa de Entrada",
+    "total_cost": "Custo Total do Stack",
+    "subscriptions": "Assinaturas"
+  },
+  "tabs": {
+    "terminal": "terminal",
+    "dashboard": "painel",
+    "agents": "agentes",
+    "zynrip": "zynrip",
+    "docs": "docs"
+  },
+  "engine": {
+    "alive": "MOTOR ATIVO"
+  },
+  "footer": {
+    "tagline": "Motor de Trading com IA Agêntica",
+    "built_by": "Criado por Corey McIvor | Zynthio.ai",
+    "product": "Produto",
+    "legal": "Jurídico",
+    "connect": "Conectar",
+    "terminal": "Terminal",
+    "stack": "Stack",
+    "pricing": "Preços",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "disclaimer": "Aviso Legal",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Contato",
+    "copyright": "© {year} Corey McIvor. Todos os direitos reservados.",
+    "risk_warning": "A negociação de criptomoedas envolve riscos significativos. Desempenho passado não garante resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Digite {helpCmd} para comandos. Tab para autocompletar. {caiCmd} para iniciar.",
+    "paper_mode": "Modo paper trading — sem dinheiro real em risco",
+    "welcome_title": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent"
+  },
+  "language": {
+    "label": "Idioma"
+  }
+}

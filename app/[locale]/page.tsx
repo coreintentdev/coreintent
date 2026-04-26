@@ -2,8 +2,13 @@
 
 import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { Link } from "@/i18n/navigation";
+import { formatNumber } from "@/lib/formatting";
+import type { Locale } from "@/i18n/config";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -117,7 +122,7 @@ function ScrollReveal({ children, className = "" }: { children: React.ReactNode;
 }
 
 /* ─── Engine Heartbeat ─── */
-function EngineHeartbeat() {
+function EngineHeartbeat({ label }: { label: string }) {
   const [beat, setBeat] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setBeat((b) => b + 1), 2000);
@@ -136,48 +141,21 @@ function EngineHeartbeat() {
         }}
       />
       <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
-        ENGINE ALIVE
+        {label}
       </span>
     </div>
   );
 }
 
 /* ─── TypeWriter ─── */
-const HERO_PHRASES = [
-  "Three AI Models Argue.",
-  "You Get Better Signals.",
-  "Grok Spots. Claude Questions.",
-  "Perplexity Fact-Checks.",
-  "Consensus = Conviction.",
-  "Disagreement = Dig Deeper.",
-  "$0 Subscriptions. $0 Excuses.",
-  "Bots Welcome. Humans Too.",
-  "Built in New Zealand.",
-  "Trading Is a Sport Now.",
-  "One Model Guesses. Three Debate.",
-  "$45/mo Runs the Whole Engine.",
-  "Your Bot. Their Bot. Best Wins.",
-  "Paper Trading. Real Ambition.",
-  "Signal Quality Over Signal Volume.",
-  "The Arena Is Free. Compete.",
-  "No VC. No Permission. No Limits.",
-  "Peer Review for Markets.",
-  "Open Source. Open Book.",
-  "The Future Is Multi-Agent.",
-  "Your Edge Isn't Your Wallet.",
-  "Subscriptions Are a Tax. We Opted Out.",
-  "The Leaderboard Doesn't Care Who Built You.",
-  "Three Filters. One Signal. Zero Guessing.",
-];
-
-function TypeWriter() {
+function TypeWriter({ phrases }: { phrases: string[] }) {
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
 
   const tick = useCallback(() => {
-    const current = HERO_PHRASES[phraseIdx];
+    const current = phrases[phraseIdx];
     if (!isDeleting) {
       setText(current.substring(0, charIdx + 1));
       setCharIdx((c) => c + 1);
@@ -190,11 +168,11 @@ function TypeWriter() {
       setCharIdx((c) => c - 1);
       if (charIdx <= 1) {
         setIsDeleting(false);
-        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        setPhraseIdx((p) => (p + 1) % phrases.length);
         return;
       }
     }
-  }, [charIdx, isDeleting, phraseIdx]);
+  }, [charIdx, isDeleting, phraseIdx, phrases]);
 
   useEffect(() => {
     const speed = isDeleting ? 40 : 80;
@@ -206,7 +184,7 @@ function TypeWriter() {
 }
 
 /* ─── Market Ticker ─── */
-function MarketTicker() {
+function MarketTicker({ locale }: { locale: Locale }) {
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setTick((t) => t + 1), 2000);
@@ -226,13 +204,13 @@ function MarketTicker() {
     { s: "UNI", p: 7.89, c: "#ff007a" },
   ];
 
-  const items = base.map((t) => {
-    const seed = t.s.charCodeAt(0) + t.s.charCodeAt(1);
-    const delta = Math.sin(tick * 0.4 + seed * 0.7) * t.p * 0.003;
-    const price = t.p + delta;
-    const change = (delta / t.p) * 100;
-    const dec = t.p < 1 ? 4 : t.p < 100 ? 2 : 0;
-    return { s: t.s, price, change, c: t.c, dec };
+  const items = base.map((tk) => {
+    const seed = tk.s.charCodeAt(0) + tk.s.charCodeAt(1);
+    const delta = Math.sin(tick * 0.4 + seed * 0.7) * tk.p * 0.003;
+    const price = tk.p + delta;
+    const change = (delta / tk.p) * 100;
+    const dec = tk.p < 1 ? 4 : tk.p < 100 ? 2 : 0;
+    return { s: tk.s, price, change, c: tk.c, dec };
   });
 
   const doubled = [...items, ...items];
@@ -247,9 +225,9 @@ function MarketTicker() {
       }}
     >
       <div className="ticker-track">
-        {doubled.map((t, i) => (
+        {doubled.map((tk, i) => (
           <span
-            key={`${t.s}-${i}`}
+            key={`${tk.s}-${i}`}
             style={{
               display: "inline-flex",
               gap: "8px",
@@ -258,17 +236,17 @@ function MarketTicker() {
               whiteSpace: "nowrap",
             }}
           >
-            <span style={{ color: t.c, fontWeight: "bold" }}>{t.s}</span>
+            <span style={{ color: tk.c, fontWeight: "bold" }}>{tk.s}</span>
             <span style={{ color: "var(--text-primary)" }}>
-              ${t.price.toLocaleString("en-US", { minimumFractionDigits: t.dec, maximumFractionDigits: t.dec })}
+              ${formatNumber(tk.price, locale, { minimumFractionDigits: tk.dec, maximumFractionDigits: tk.dec })}
             </span>
             <span
               style={{
-                color: t.change >= 0 ? "#10b981" : "#ef4444",
+                color: tk.change >= 0 ? "#10b981" : "#ef4444",
                 fontSize: "11px",
               }}
             >
-              {t.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(t.change).toFixed(2)}%
+              {tk.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(tk.change).toFixed(2)}%
             </span>
           </span>
         ))}
@@ -493,7 +471,7 @@ const PIPELINE_STEPS = [
   { label: "Decide", model: "Engine", color: "#10b981", status: ["Computing consensus...", "3/3 models agree", "EXECUTE: LONG BTC"] },
 ];
 
-function SignalPipeline() {
+function SignalPipeline({ title }: { title: string }) {
   const [activeStep, setActiveStep] = useState(0);
   const [statusIdx, setStatusIdx] = useState(0);
 
@@ -513,7 +491,7 @@ function SignalPipeline() {
   return (
     <div style={{ marginTop: "36px" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
-        Live signal pipeline
+        {title}
         <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
@@ -611,6 +589,9 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const t = useTranslations();
+  const locale = useLocale() as Locale;
+  const heroPhrases = t.raw("hero.phrases") as string[];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -651,7 +632,7 @@ export default function Home() {
           </button>
           <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
             <div style={{ marginBottom: "12px" }}>
-              <EngineHeartbeat />
+              <EngineHeartbeat label={t("engine.alive")} />
             </div>
             <div
               style={{
@@ -668,7 +649,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -680,10 +661,10 @@ export default function Home() {
                 minHeight: "1.3em",
               }}
             >
-              <TypeWriter />
+              <TypeWriter phrases={heroPhrases} />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaced subscriptions with competitions
+              {t("hero.tagline")}
             </p>
             <p
               style={{
@@ -694,21 +675,19 @@ export default function Home() {
                 lineHeight: "1.6",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
+              {t("hero.charge_line")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
+              {t("hero.free_line")}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
+              {t("hero.built_by_traders")}
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
+              {t("hero.open_source_line")}
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -725,9 +704,9 @@ export default function Home() {
                   cursor: "pointer",
                 }}
               >
-                Launch Terminal &rarr;
+                {t("hero.cta_terminal")} &rarr;
               </button>
-              <a
+              <Link
                 href="/pricing"
                 style={{
                   padding: "14px 32px",
@@ -742,8 +721,8 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
-              </a>
+                {t("hero.cta_competitions")}
+              </Link>
             </div>
 
             {/* Value Props */}
@@ -758,10 +737,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction.", color: "#f59e0b" },
+                { label: t("value_props.models_title"), desc: t("value_props.models_desc"), color: "#a855f7" },
+                { label: t("value_props.compete_title"), desc: t("value_props.compete_desc"), color: "#10b981" },
+                { label: t("value_props.bots_title"), desc: t("value_props.bots_desc"), color: "#3b82f6" },
+                { label: t("value_props.cost_title"), desc: t("value_props.cost_desc"), color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -786,7 +765,7 @@ export default function Home() {
 
             {/* Animated Signal Pipeline */}
             <ScrollReveal>
-            <SignalPipeline />
+            <SignalPipeline title={t("hero.pipeline_title")} />
             </ScrollReveal>
 
             {/* Stats Banner */}
@@ -804,11 +783,11 @@ export default function Home() {
               }}
             >
               {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
+                { value: "3", label: t("stats.ai_models"), color: "#a855f7" },
+                { value: "6", label: t("stats.trading_agents"), color: "#3b82f6" },
+                { value: "$0", label: t("stats.entry_fee"), color: "#10b981" },
+                { value: "$45/mo", label: t("stats.total_cost"), color: "#f59e0b" },
+                { value: "0", label: t("stats.subscriptions"), color: "#ef4444" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
                   <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
@@ -821,7 +800,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Powered by three AI models
+                {t("hero.powered_by")}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
@@ -872,9 +851,9 @@ export default function Home() {
                 </span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
-                {DEMO_TESTIMONIALS.map((t) => (
+                {DEMO_TESTIMONIALS.map((tm) => (
                   <div
-                    key={t.name}
+                    key={tm.name}
                     style={{
                       padding: "16px",
                       background: "var(--bg-primary)",
@@ -883,15 +862,15 @@ export default function Home() {
                     }}
                   >
                     <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", marginBottom: "12px", fontStyle: "italic" }}>
-                      &quot;{t.quote}&quot;
+                      &quot;{tm.quote}&quot;
                     </p>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div>
-                        <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{t.name}</div>
-                        <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{t.role}</div>
+                        <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{tm.name}</div>
+                        <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{tm.role}</div>
                       </div>
                       <span style={{ fontSize: "8px", padding: "2px 4px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "3px" }}>
-                        {t.tag}
+                        {tm.tag}
                       </span>
                     </div>
                   </div>
@@ -1046,7 +1025,7 @@ export default function Home() {
         </section>
       )}
 
-      <MarketTicker />
+      <MarketTicker locale={locale} />
 
       {/* Tab bar */}
       <div
@@ -1059,11 +1038,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tb) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tb}
+            onClick={() => setTab(tb)}
+            aria-pressed={tab === tb}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -1071,11 +1050,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tb ? "var(--accent-green)" : "transparent",
+              color: tab === tb ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {tb === "zynrip" ? "ZynRip" : tb.charAt(0).toUpperCase() + tb.slice(1)}
           </button>
         ))}
       </div>

@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+    "description": "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio.",
+    "og_title": "CoreIntent | Three AI Models. One Engine. Zero Subscriptions.",
+    "og_description": "AI-powered trading competitions with Claude, Grok & Perplexity. Daily, weekly & monthly leagues. Bots welcome. Built in New Zealand by Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing"
+  },
+  "hero": {
+    "badge": "Paper Trading Mode — Building in Public",
+    "tagline": "The agentic AI trading engine that replaced subscriptions with competitions",
+    "description": "Grok spots the signal. Claude questions it. Perplexity fact-checks it. When all three agree, you move with conviction. When they disagree, you dig deeper — not guess harder.",
+    "charge_line": "Other platforms charge $99/mo whether you win or lose.",
+    "free_line": "We charge nothing. You prove yourself in competition.",
+    "built_by_traders": "Built by traders who got tired of paying for signals that don't work.",
+    "open_source_line": "Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.",
+    "cta_terminal": "Launch Terminal",
+    "cta_competitions": "See the Competitions",
+    "powered_by": "Powered by three AI models",
+    "pipeline_title": "Live signal pipeline",
+    "phrases": [
+      "Three AI Models Argue.",
+      "You Get Better Signals.",
+      "Grok Spots. Claude Questions.",
+      "Perplexity Fact-Checks.",
+      "Consensus = Conviction.",
+      "Disagreement = Dig Deeper.",
+      "$0 Subscriptions. $0 Excuses.",
+      "Bots Welcome. Humans Too.",
+      "Built in New Zealand.",
+      "Trading Is a Sport Now.",
+      "One Model Guesses. Three Debate.",
+      "$45/mo Runs the Whole Engine.",
+      "Your Bot. Their Bot. Best Wins.",
+      "Paper Trading. Real Ambition.",
+      "Signal Quality Over Signal Volume.",
+      "The Arena Is Free. Compete.",
+      "No VC. No Permission. No Limits.",
+      "Peer Review for Markets.",
+      "Open Source. Open Book.",
+      "The Future Is Multi-Agent.",
+      "Your Edge Isn't Your Wallet.",
+      "Subscriptions Are a Tax. We Opted Out.",
+      "The Leaderboard Doesn't Care Who Built You.",
+      "Three Filters. One Signal. Zero Guessing."
+    ]
+  },
+  "value_props": {
+    "models_title": "3 Models. 1 Signal.",
+    "models_desc": "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.",
+    "compete_title": "Compete, Don't Subscribe",
+    "compete_desc": "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.",
+    "bots_title": "Bots Are First-Class",
+    "bots_desc": "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.",
+    "cost_title": "$45/mo. The Whole Platform.",
+    "cost_desc": "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction."
+  },
+  "stats": {
+    "ai_models": "AI Models",
+    "trading_agents": "Trading Agents",
+    "entry_fee": "Entry Fee",
+    "total_cost": "Total Stack Cost",
+    "subscriptions": "Subscriptions"
+  },
+  "tabs": {
+    "terminal": "terminal",
+    "dashboard": "dashboard",
+    "agents": "agents",
+    "zynrip": "zynrip",
+    "docs": "docs"
+  },
+  "engine": {
+    "alive": "ENGINE ALIVE"
+  },
+  "footer": {
+    "tagline": "Agentic AI Trading Engine",
+    "built_by": "Built by Corey McIvor | Zynthio.ai",
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "terminal": "Terminal",
+    "stack": "Stack",
+    "pricing": "Pricing",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "risk_warning": "Trading cryptocurrency involves significant risk. Past performance does not guarantee future results. Paper trading mode."
+  },
+  "terminal": {
+    "greeting": "Type {helpCmd} for commands. Tab to autocomplete. {caiCmd} to start.",
+    "paper_mode": "Paper trading mode — no real money at risk",
+    "welcome_title": "Zynthio.ai Commander v0.2.0 — CoreIntent Trading Engine"
+  },
+  "language": {
+    "label": "Language"
+  }
+}

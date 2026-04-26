@@ -1,20 +1,35 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { formatDate, getLocaleTag } from "@/lib/formatting";
+import type { Locale } from "@/i18n/config";
 
-const WELCOME_BANNER = `\x1b[36m
+const ASCII_ART = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
 ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-\x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[0m`;
+
+function buildWelcomeBanner(
+  title: string,
+  paperMode: string,
+  greeting: string,
+  locale: Locale,
+): string {
+  const tag = getLocaleTag(locale);
+  const dateStr = new Date().toLocaleString(tag, { timeZone: "Pacific/Auckland" });
+  return `${ASCII_ART}
+\x1b[33m${title}\x1b[0m
+\x1b[90m${paperMode}\x1b[0m
+${greeting}
+\x1b[90m${dateStr} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -632,10 +647,21 @@ export default function Terminal() {
       grokSays: string;
     }>;
   } | null>(null);
+  const t = useTranslations("terminal");
+  const locale = useLocale() as Locale;
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    const banner = buildWelcomeBanner(
+      t("welcome_title"),
+      t("paper_mode"),
+      t("greeting", {
+        helpCmd: "\x1b[32mhelp\x1b[0m",
+        caiCmd: "\x1b[32mcai\x1b[0m",
+      }),
+      locale,
+    );
+    setLines([banner]);
+  }, [t, locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

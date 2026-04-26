@@ -607,3 +607,23 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ─── RTL Support ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] nav {
+  direction: rtl;
+}
+
+[dir="rtl"] pre,
+[dir="rtl"] code,
+[dir="rtl"] .terminal-input {
+  direction: ltr;
+  text-align: left;
+}
