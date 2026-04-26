@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/demo/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Interactive Demo — AI Trading Simulation",
+        alt: "CoreIntent Interactive Demo — AI Trading Engine Simulation",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Watch Grok, Claude & Perplexity debate trades live. Paper trading simulation — free to try.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/demo/opengraph-image"],
   },
 };
 
@@ -61,7 +61,7 @@ const structuredData = {
       description:
         "Experience CoreIntent's multi-AI trading engine in action with simulated data and real architecture.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
-      dateModified: "2026-04-22",
+      dateModified: "2026-04-26",
       inLanguage: "en-NZ",
     },
   ],
