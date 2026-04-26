@@ -47,7 +47,7 @@ export default function SiteNav() {
           v0.2.0-alpha | Zynthio.ai
         </span>
       </Link>
-      <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
+      <nav style={{ display: "flex", gap: "4px", alignItems: "center" }} aria-label="Main navigation">
         {NAV_LINKS.map((link) => (
           <Link
             key={link.href}
@@ -67,6 +67,14 @@ export default function SiteNav() {
             {link.label}
           </Link>
         ))}
+        <button
+          className="nav-cmd-hint"
+          onClick={() => {
+            document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
+          }}
+        >
+          <span style={{ opacity: 0.6 }}>⌘K</span>
+        </button>
       </nav>
     </header>
   );
