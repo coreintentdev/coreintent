@@ -7,7 +7,7 @@ import { useLocale } from "next-intl";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { Link } from "@/i18n/navigation";
-import { formatNumber } from "@/lib/formatting";
+import { formatNumber, formatPercent } from "@/lib/formatting";
 import type { Locale } from "@/i18n/config";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
@@ -246,7 +246,7 @@ function MarketTicker({ locale }: { locale: Locale }) {
                 fontSize: "11px",
               }}
             >
-              {tk.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(tk.change).toFixed(2)}%
+              {tk.change >= 0 ? "\u25B2" : "\u25BC"} {formatPercent(Math.abs(tk.change), locale)}
             </span>
           </span>
         ))}
@@ -1054,7 +1054,7 @@ export default function Home() {
               color: tab === tb ? "#000" : "var(--text-secondary)",
             }}
           >
-            {tb === "zynrip" ? "ZynRip" : tb.charAt(0).toUpperCase() + tb.slice(1)}
+            {t(`tabs.${tb}`)}
           </button>
         ))}
       </div>

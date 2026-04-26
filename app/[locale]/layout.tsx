@@ -5,6 +5,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { rtlLocales, locales, type Locale } from "@/i18n/config";
+import { getLocaleTag } from "@/lib/formatting";
 import "../globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -39,7 +40,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_NZ" : locale,
+      locale: getLocaleTag(locale as Locale).replace("-", "_"),
       url: `https://coreintent.dev/${locale}`,
       siteName: "CoreIntent",
       title: t("og_title"),
