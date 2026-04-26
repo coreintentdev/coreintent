@@ -39,7 +39,14 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_NZ" : locale,
+      locale: (() => {
+        const ogMap: Record<string, string> = {
+          en: "en_NZ", es: "es_ES", mi: "mi_NZ", zh: "zh_CN",
+          ja: "ja_JP", pt: "pt_BR", fr: "fr_FR", de: "de_DE",
+          ar: "ar_SA", hi: "hi_IN",
+        };
+        return ogMap[locale] ?? locale;
+      })(),
       url: `https://coreintent.dev/${locale}`,
       siteName: "CoreIntent",
       title: t("og_title"),
