@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Sun Apr 26 03:54:44 UTC 2026
+Generated: Sun Apr 26 04:33:56 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 31
+- INFO: Routes found: 35
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
