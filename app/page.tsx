@@ -976,6 +976,50 @@ export default function Home() {
               ))}
             </div>
 
+            {/* Platform Proof — Hard Numbers */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "20px 24px",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "10px",
+              }}
+            >
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "14px" }}>
+                Platform proof — verified numbers
+                <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#10b98122", color: "#10b981", borderRadius: "4px", fontSize: "9px" }}>
+                  LIVE
+                </span>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "12px" }}>
+                {[
+                  { value: "32,503", label: "Files on VPS", color: "#3b82f6" },
+                  { value: "16", label: "Domains Secured", color: "#ec4899" },
+                  { value: "3", label: "Registered Trademarks", color: "#f59e0b" },
+                  { value: "14", label: "API Endpoints", color: "#06b6d4" },
+                  { value: "~$45/mo", label: "Total Infrastructure", color: "#10b981" },
+                  { value: "100%", label: "Open Source", color: "#a855f7" },
+                ].map((metric) => (
+                  <div
+                    key={metric.label}
+                    style={{
+                      padding: "12px",
+                      background: "var(--bg-primary)",
+                      border: `1px solid ${metric.color}18`,
+                      borderRadius: "8px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div style={{ fontSize: "20px", fontWeight: "bold", color: metric.color }}>{metric.value}</div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "2px" }}>{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            </ScrollReveal>
+
             {/* Early Access CTA */}
             <div
               style={{
