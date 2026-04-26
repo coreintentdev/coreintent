@@ -259,12 +259,12 @@ for page in "app/[locale]/pricing/page.tsx" "app/[locale]/stack/page.tsx" "app/[
   fi
 done
 
-# Internal links (next/link usage)
-LINK_COUNT=$(grep -rn "from \"next/link\"" app/ components/ 2>/dev/null | wc -l)
+# Internal links (next/link or i18n/navigation Link usage)
+LINK_COUNT=$(grep -rn 'from "next/link"\|from "@/i18n/navigation"' app/ components/ 2>/dev/null | wc -l)
 if [ "$LINK_COUNT" -gt 0 ]; then
-  log_pass "next/link used in $LINK_COUNT files"
+  log_pass "Link component used in $LINK_COUNT files"
 else
-  log_fail "next/link not used anywhere (no internal navigation)"
+  log_fail "Link component not used anywhere (no internal navigation)"
 fi
 
 echo "" >> "$REPORT"
