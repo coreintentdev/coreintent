@@ -49,7 +49,7 @@ const ZYNCONTEXT = {
       active: true,
       sources: {
         repo: "github.com/coreintentdev/coreintent — scripts + manifests only, not vault data",
-        vds: "100.121.107.112 (ZYN_VDS_HOST) — consolidation target, Tailscale SSH",
+        vds: "5.189.143.170 (Contabo VDS S, $51.04/mo) — primary, Tailscale SSH",
         local: "~/Desktop/ZYNTHIO_MASTER/ + ~/Desktop/zynthio-tools/ (110-API CLI)",
         desktopCli: "~/Desktop/zynthio-tools/bin/cai — takes priority over repo scripts/cai-cloud",
         stateFiles: [

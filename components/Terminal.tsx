@@ -207,9 +207,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mProject:\x1b[0m     CoreIntent (coreintent)
   \x1b[33mStack:\x1b[0m       Next.js 14 + TypeScript (strict) + App Router
   \x1b[33mRepo:\x1b[0m        github.com/coreintentdev/coreintent
-  \x1b[33mVDS Primary:\x1b[0m  100.121.107.112 (Tailscale SSH)
-  \x1b[33mVPS Cloudzy:\x1b[0m 100.122.99.34 (migrating → VDS)
-  \x1b[33mVPS Frankfurt:\x1b[0m 104.194.156.109 (migrating → VDS)
+  \x1b[33mVDS Primary:\x1b[0m  5.189.143.170 (Contabo VDS S, Tailscale SSH)
+  \x1b[33mVPS Kept:\x1b[0m     161.97.89.49 (Contabo VPS 20, $7/mo)
+  \x1b[33mVPS Cancelled:\x1b[0m 84.247.137.105 (ends Apr 2027)
   \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
   \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
   \x1b[33mSites:\x1b[0m       8/8 returning 200 OK

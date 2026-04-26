@@ -90,7 +90,7 @@ const INCIDENTS: Incident[] = [
 
 const MONITORED_SERVICES: MonitoredService[] = [
   { name: "CoreIntent Engine",    status: "operational",    uptime: "99.9%", note: "Build passes, app runs" },
-  { name: "VDS Primary",          status: "operational",    uptime: "99%",   note: "100.121.107.112 — consolidation target, Tailscale SSH" },
+  { name: "Contabo VDS S",        status: "operational",    uptime: "99%",   note: "5.189.143.170 — primary, $51.04/mo, Ubuntu 24.04, Tailscale SSH" },
   { name: "Proton Mail",          status: "operational",    uptime: "99%",   note: "All email accounts imported to Proton" },
   { name: "Google Drive",         status: "operational",    uptime: "99%",   note: "Via Claude/Perplexity desktop app auth" },
   { name: "Suno API",             status: "operational",    uptime: "99%",   note: "Paid API via suno.api.com — wired in lib/ai.ts" },
@@ -102,8 +102,8 @@ const MONITORED_SERVICES: MonitoredService[] = [
   { name: "Perplexity API",       status: "ready",          uptime: "0%",    note: "Code wired in lib/ai.ts — needs API key to go live" },
   { name: "OpenClaw",             status: "degraded",       uptime: "0%",    note: "Frequently crashing, unknown service" },
   { name: "Cloudflare CDN",       status: "not_configured", uptime: "0%",    note: "Pro plan — not configured for coreintent.dev" },
-  { name: "Cloudzy VPS",          status: "migrating",      uptime: "0%",    note: "Legacy — migrating to VDS 100.121.107.112" },
-  { name: "Frankfurt VPS",        status: "migrating",      uptime: "0%",    note: "Legacy — migrating to VDS 100.121.107.112" },
+  { name: "Contabo VPS 20",       status: "operational",    uptime: "99%",   note: "161.97.89.49 — kept, $7/mo, paid to Apr 2027" },
+  { name: "Contabo VPS 30",       status: "cancelled",      uptime: "0%",    note: "84.247.137.105 — cancelled, ends Apr 2027" },
   { name: "X Premium+ API",       status: "not_configured", uptime: "0%",    note: "Account exists — API not wired" },
   { name: "Linear",               status: "operational",    uptime: "N/A",   note: "26 tasks, 3 completed, no cross-links" },
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },

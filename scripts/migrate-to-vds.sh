@@ -14,7 +14,7 @@
 
 set -e
 
-VDS_HOST="${ZYN_VDS_HOST:-${VDS_HOST:-100.121.107.112}}"
+VDS_HOST="${ZYN_VDS_HOST:-${VDS_HOST:-5.189.143.170}}"
 VDS_USER="${VDS_USER:-root}"
 
 # All existing VPS instances to migrate FROM (via Tailscale)
@@ -23,8 +23,8 @@ if [ -n "$ZYN_SOURCES" ]; then
   IFS=' ' read -ra SOURCES <<< "$ZYN_SOURCES"
 else
   SOURCES=(
-    "root@100.122.99.34"     # Cloudzy
-    "root@104.194.156.109"   # Frankfurt
+    "root@161.97.89.49"      # Contabo VPS 20 NVMe (kept, $7/mo)
+    "root@84.247.137.105"    # Contabo VPS 30 NVMe (cancelled Apr 2027)
   )
 fi
 

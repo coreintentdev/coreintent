@@ -14,7 +14,7 @@
 
 set -e
 
-VDS_HOST="${ZYN_VDS_HOST:-${VDS_HOST:-100.121.107.112}}"
+VDS_HOST="${ZYN_VDS_HOST:-${VDS_HOST:-5.189.143.170}}"
 VDS_USER="${VDS_USER:-root}"
 REMOTE_DIR="/root/coreintent"
 DOMAIN="${DOMAIN:-coreintent.dev}"

@@ -37,11 +37,11 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Audit: scripts/audit.sh
 - VPS Lens: scripts/vps-lens.sh
 
-## VDS / VPS
-- VDS Primary: 100.121.107.112 (consolidation target, Tailscale SSH)
-- Cloudzy VPS: 100.122.99.34 (legacy, migrating to VDS)
-- Frankfurt VPS: 104.194.156.109 (legacy, migrating to VDS)
-- All connected via Tailscale — no passwords needed
+## VDS / VPS (Contabo — Hub Europe)
+- VDS Primary: 5.189.143.170 (Virtual Dedicated Server S, $51.04/mo, Ubuntu 24.04)
+- VPS Kept: 161.97.89.49 (Cloud VPS 20 NVMe, $7/mo, paid to Apr 2027)
+- VPS Cancelled: 84.247.137.105 (Cloud VPS 30 NVMe, $13.20/mo, cancelled Apr 2027)
+- All connected via Tailscale — no passwords needed for SSH
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
 - Desktop CLI: ~/Desktop/zynthio-tools/bin/cai (110 APIs, takes priority over repo scripts)
 - Data flow: Mac (ZYNTHIO_MASTER) → sync payloads → VDS /root/zynthio/

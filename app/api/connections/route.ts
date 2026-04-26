@@ -70,9 +70,9 @@ export async function GET() {
     };
 
     const infrastructure: ConnectionsResponse["infrastructure"] = {
-      vds:          { status: "live",      host: "VDS Primary", ip: "100.121.107.112", role: "Consolidated trading engine + web", tailscale: true },
-      vps_cloudzy:  { status: "migrating", host: "Cloudzy",     ip: "100.122.99.34",   role: "Legacy — migrating to VDS" },
-      vps_frankfurt:{ status: "migrating", host: "Frankfurt",   ip: "104.194.156.109", role: "Legacy — migrating to VDS" },
+      vds:          { status: "live",      host: "Contabo VDS S", ip: "5.189.143.170",  role: "Primary — trading engine + web", tailscale: true },
+      vps_kept:     { status: "active",    host: "Contabo VPS 20", ip: "161.97.89.49", role: "$7/mo, paid to Apr 2027" },
+      vps_cancelled:{ status: "cancelled", host: "Contabo VPS 30", ip: "84.247.137.105", role: "Ends Apr 2027" },
       proton:       { status: "active",    role: "Email (all accounts imported to Proton Mail)" },
       googleDrive:  { status: "active",    role: "Via Claude/Perplexity desktop app auth" },
       suno:         { status: "active",    role: "Paid API — suno.api.com, wired in lib/ai.ts" },
