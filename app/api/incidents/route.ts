@@ -147,6 +147,8 @@ export async function POST(req: NextRequest) {
     updatedAt:  new Date().toISOString(),
   };
 
+  INCIDENTS.push(incident);
+
   return ok({
     incident,
     notifications: { slack: "queued", email: "queued", x_dm: "queued" },

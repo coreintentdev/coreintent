@@ -104,6 +104,17 @@ function classifyFetchError(
   };
 }
 
+/**
+ * Map an HTTP error status to a safe, non-leaking error message.
+ * Never expose raw upstream response bodies — they may contain internal API details.
+ */
+function sanitizeApiError(status: number, source: AIResponse["source"]): string {
+  if (status === 429) return `[RATE LIMITED] ${source} API is throttling requests. Retry shortly.`;
+  if (status === 401 || status === 403) return `[AUTH ERROR ${status}] ${source} API key is invalid or lacks permission.`;
+  if (status >= 500) return `[UPSTREAM ERROR ${status}] ${source} API returned a server error.`;
+  return `[API ERROR ${status}] ${source} API returned an unexpected response.`;
+}
+
 // ---------------------------------------------------------------------------
 // GROK — via X.ai — Fast signals, near-free with X Premium+
 // ---------------------------------------------------------------------------
@@ -172,12 +183,11 @@ export async function callGrok(
     );
 
     if (!res.ok) {
-      const text = await res.text();
       return {
-        source: "grok",
-        model:  "grok-3",
-        content: `[API ERROR ${res.status}] ${text}`,
-        live: false,
+        source:    "grok",
+        model:     "grok-3",
+        content:   sanitizeApiError(res.status, "grok"),
+        live:      false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
     }
@@ -283,12 +293,11 @@ export async function callClaude(
     );
 
     if (!res.ok) {
-      const text = await res.text();
       return {
-        source:  "claude",
-        model:   "claude-sonnet-4-6",
-        content: `[API ERROR ${res.status}] ${text}`,
-        live: false,
+        source:    "claude",
+        model:     "claude-sonnet-4-6",
+        content:   sanitizeApiError(res.status, "claude"),
+        live:      false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
     }
@@ -375,12 +384,11 @@ export async function callPerplexity(
     );
 
     if (!res.ok) {
-      const text = await res.text();
       return {
-        source:  "perplexity",
-        model:   "sonar-pro",
-        content: `[API ERROR ${res.status}] ${text}`,
-        live: false,
+        source:    "perplexity",
+        model:     "sonar-pro",
+        content:   sanitizeApiError(res.status, "perplexity"),
+        live:      false,
         errorType: res.status === 429 ? "rate_limit" : "api_error",
       };
     }
@@ -396,6 +404,56 @@ export async function callPerplexity(
     return classifyFetchError(e, "perplexity", "sonar-pro");
   }
 }
+
+// ---------------------------------------------------------------------------
+// SPECIALIZED SYSTEM PROMPTS (exported for route reuse)
+// ---------------------------------------------------------------------------
+
+/**
+ * Grok system prompt for X/Twitter security monitoring.
+ * Use when scanning for impersonation, brand abuse, or copycat accounts.
+ * Pass as the `system` arg to callGrok() — overrides GROK_SYSTEM.
+ */
+export const GROK_SECURITY_SYSTEM =
+  "You are CoreIntent's security monitoring AI for Zynthio.ai.\n" +
+  "Your role: detect impersonation, brand abuse, and digital identity threats on X/Twitter.\n\n" +
+  "Output format (one line per finding):\n" +
+  "  Account/Entity | Threat Type | Risk (none/low/medium/high/critical) | Recommended Action\n\n" +
+  "Output rules:\n" +
+  "- Never fabricate threats. State 'no threats found' when nothing is detected.\n" +
+  "- Flag uncertainty: [UNCERTAIN: <reason>].\n" +
+  "- NZ jurisdiction — use NZ FMA for regulatory context. Never reference ASIC.";
+
+/**
+ * Grok system prompt for content drafting (tweets, threads, announcements).
+ * Pass as the `system` arg to callGrok() when generating content, not signals.
+ */
+export const GROK_CONTENT_SYSTEM =
+  "You are CoreIntent's content drafting AI for Zynthio.ai.\n" +
+  "Draft concise, engaging content for trading and tech audiences.\n\n" +
+  "Output rules:\n" +
+  "- Match the requested tone exactly: technical / hype / educational / community.\n" +
+  "- Stay on-brand: AI trading, paper trading mode, competition leagues.\n" +
+  "- Never fabricate prices, statistics, or market data.\n" +
+  "- Label all demo/placeholder values as [DEMO].\n" +
+  "- NZ-based platform — avoid AU-specific regulatory references.";
+
+/**
+ * Claude system prompt for security threat and IP risk assessment (F18 Security Layer).
+ * Pass as the `system` arg to callClaude() for protect/threat routes.
+ * Keep stable between requests to benefit from prompt caching.
+ */
+export const CLAUDE_RISK_SYSTEM =
+  "You are the F18 Security AI for CoreIntent (Zynthio.ai, paper trading mode, NZ).\n" +
+  "Your role: assess digital identity threats, IP risks, and brand protection needs.\n\n" +
+  "Assessment format (one entry per risk):\n" +
+  "  Risk | Severity (low/medium/high/critical) | Evidence | Recommended Action\n\n" +
+  "Output rules:\n" +
+  "- Only report verified or highly probable risks.\n" +
+  "- Flag unverified claims: [UNVERIFIED: <source>].\n" +
+  "- Be specific and actionable — no vague recommendations.\n" +
+  "- List risks in order of severity (critical first).\n" +
+  "- NZ jurisdiction — use NZ FMA. Never reference ASIC.";
 
 // ---------------------------------------------------------------------------
 // RESPONSE VALIDATION

@@ -27,10 +27,12 @@ export interface ApiResponse<T = unknown> {
 // ---------------------------------------------------------------------------
 
 /**
- * CORS headers applied to all API responses.
+ * CORS + security headers applied to all API responses.
  * Set ALLOWED_ORIGIN env var to a specific domain in production
  * (e.g. "https://coreintent.dev"). Defaults to "*" for dev.
  * X-Request-ID is exposed so browser clients can read it for tracing.
+ *
+ * Security headers here are defense-in-depth alongside middleware.ts.
  */
 export const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Origin":   process.env.ALLOWED_ORIGIN ?? "*",
@@ -38,6 +40,9 @@ export const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Headers":  "Content-Type, Authorization, X-Requested-With",
   "Access-Control-Expose-Headers": "X-Request-ID",
   "Access-Control-Max-Age":        "86400",
+  "X-Content-Type-Options":        "nosniff",
+  "X-Frame-Options":               "DENY",
+  "Referrer-Policy":               "strict-origin-when-cross-origin",
 };
 
 /** Generate a unique request trace ID for each response. */
@@ -227,8 +232,6 @@ export interface RateLimitConfig {
 
 /**
  * Per-route rate limit budgets.
- * TODO: implement checkRateLimit(ip, route) once Cloudflare KV or Upstash Redis is wired in.
- *       When triggered, call tooManyRequests() from lib/api.ts.
  * AI routes are deliberately tight — each call costs real money.
  */
 export const RATE_LIMITS: Record<string, RateLimitConfig> = {
@@ -240,3 +243,19 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
 };
+
+/**
+ * Rate limit check — no-op stub until Cloudflare KV or Upstash Redis is wired in.
+ * Call at the start of each route handler; return tooManyRequests() if limited.
+ *
+ * @example
+ * const limit = await checkRateLimit(req.headers.get("x-forwarded-for") ?? "anon", "ai");
+ * if (limit.limited) return tooManyRequests(limit.retryAfter);
+ */
+export async function checkRateLimit(
+  _ip: string,
+  _route: keyof typeof RATE_LIMITS | "default" = "default"
+): Promise<{ limited: boolean; retryAfter?: number }> {
+  // TODO: wire to Cloudflare KV or Upstash Redis when persistence layer is ready.
+  return { limited: false };
+}

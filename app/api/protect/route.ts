@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, type AIResponse } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
@@ -49,7 +49,8 @@ export async function GET() {
         `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
         `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
       systems: {
-        claude: "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable.",
+        grok:   GROK_SECURITY_SYSTEM,
+        claude: CLAUDE_RISK_SYSTEM,
       },
     });
 
@@ -91,7 +92,8 @@ export async function POST(req: NextRequest) {
     const scanMap: Record<ThreatCheckType, ScanFn> = {
       impersonation: () => callGrok(
         `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +
-        `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`
+        `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`,
+        GROK_SECURITY_SYSTEM
       ),
       domain: () => callPerplexity(
         `Is the domain "${check}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
@@ -100,7 +102,7 @@ export async function POST(req: NextRequest) {
       threat: () => callClaude(
         `Assess this as a potential threat to CoreIntent's digital identity: "${check}". ` +
         `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
-        "You are the F18 Security AI for CoreIntent. Be specific and actionable."
+        CLAUDE_RISK_SYSTEM
       ),
       general: () => callPerplexity(
         `Does "${check}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
