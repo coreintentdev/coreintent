@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Sun Apr 26 04:48:51 UTC 2026
+Generated: Sun Apr 26 05:00:47 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -49,7 +49,7 @@ Generated: Sun Apr 26 04:48:51 UTC 2026
 - PASS: Shared nav/footer used: app/[locale]/privacy/page.tsx
 - PASS: Shared nav/footer used: app/[locale]/terms/page.tsx
 - PASS: Shared nav/footer used: app/[locale]/disclaimer/page.tsx
-- PASS: next/link used in 2 files
+- PASS: Link component used in 6 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
