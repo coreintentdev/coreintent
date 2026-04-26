@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -57,6 +58,40 @@ const STEPS = [
   { step: "5", label: "Create", desc: "Make songs, content, strategies. Your digital twin.", color: "#ef4444" },
 ];
 
+function FoundingCounter() {
+  const [count, setCount] = useState(0);
+  const target = 336;
+  useEffect(() => {
+    if (count >= target) return;
+    const step = Math.max(1, Math.floor((target - count) / 20));
+    const timer = setTimeout(() => setCount((c) => Math.min(c + step, target)), 40);
+    return () => clearTimeout(timer);
+  }, [count]);
+
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "12px",
+        padding: "10px 20px",
+        background: "#f59e0b08",
+        border: "1px solid #f59e0b22",
+        borderRadius: "10px",
+        marginBottom: "24px",
+      }}
+    >
+      <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f59e0b", animation: "pulse 2s ease-in-out infinite" }} />
+      <span style={{ fontSize: "13px", color: "#f59e0b" }}>
+        <strong>{count}</strong> founding spots remaining
+      </span>
+      <span style={{ fontSize: "10px", color: "var(--text-secondary)", padding: "2px 6px", background: "#f59e0b12", borderRadius: "4px" }}>
+        DEMO
+      </span>
+    </div>
+  );
+}
+
 export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -93,9 +128,10 @@ export default function PricingPage() {
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
             Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it against everyone else — human or bot.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "13px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "13px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed. No credit card. No catch.
           </p>
+          <FoundingCounter />
 
           {/* How It Works */}
           <div
