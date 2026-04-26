@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import CommandPalette from "@/components/CommandPalette";
+import ActivityFeed from "@/components/ActivityFeed";
+import KonamiCode from "@/components/KonamiCode";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -250,6 +253,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
+        <CommandPalette />
+        <ActivityFeed />
+        <KonamiCode />
         {children}
       </body>
     </html>
