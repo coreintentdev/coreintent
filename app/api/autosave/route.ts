@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.autosave in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type BackendKey = "primary" | "docs" | "files" | "cache" | "links" | "state";
 type SaveType   = "link" | "doc" | "state" | "command" | "config" | "signal" | "agent";
@@ -69,7 +69,10 @@ const SERVICES_REPLACED = [
 
 const TOTAL_MONTHLY_COST = 66;
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "autosave");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const totalSaved = SERVICES_REPLACED.reduce((sum, r) => {
       const match = r.saved.match(/\d+/);
@@ -117,6 +120,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "autosave");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<SaveRequest>;
   try {
     body = (await req.json()) as Partial<SaveRequest>;

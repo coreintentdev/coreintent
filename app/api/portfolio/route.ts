@@ -7,7 +7,8 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight, serverError } from "@/lib/api";
+import { NextRequest } from "next/server";
+import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Holding {
   asset:     string;
@@ -33,7 +34,10 @@ const RAW_HOLDINGS = [
   { asset: "USDC", balance: 7406.4, price: 1.0,   change24h:  0.0 },
 ];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const holdings: Holding[] = RAW_HOLDINGS.map((h) => ({ ...h, value: h.balance * h.price }));
     const totalValue = holdings.reduce((sum, h) => sum + h.value, 0);

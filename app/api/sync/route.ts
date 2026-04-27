@@ -15,7 +15,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, validateNumber } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateNumber, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type Channel = "web" | "desktop";
 
@@ -88,7 +88,10 @@ function buildKycQuestions(input: SyncRequest): string[] {
   ];
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     return ok({
       mode:    "master_sync_policy",
@@ -112,6 +115,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: SyncRequest;
   try {
     body = (await req.json()) as SyncRequest;

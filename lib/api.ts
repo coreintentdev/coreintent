@@ -247,10 +247,12 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
 /**
  * Rate limit check — no-op stub until Cloudflare KV or Upstash Redis is wired in.
  * Call at the start of each route handler; return tooManyRequests() if limited.
+ * Wire the real implementation by replacing this function body — all call sites
+ * are already in place across every route handler.
  *
  * @example
  * const limit = await checkRateLimit(req.headers.get("x-forwarded-for") ?? "anon", "ai");
- * if (limit.limited) return tooManyRequests(limit.retryAfter);
+ * if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
  */
 export async function checkRateLimit(
   _ip: string,

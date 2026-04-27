@@ -12,7 +12,7 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Note {
   id:        number;
@@ -36,7 +36,10 @@ interface NotesListResponse {
 const publicNotes: Note[] = [];
 let nextId = 1;
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "notes");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const data: NotesListResponse = {
       notes: publicNotes,
@@ -50,6 +53,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "notes");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<NoteRequest>;
   try {
     body = (await req.json()) as Partial<NoteRequest>;

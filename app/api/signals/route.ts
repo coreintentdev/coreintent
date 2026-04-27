@@ -7,7 +7,8 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight, serverError } from "@/lib/api";
+import { NextRequest } from "next/server";
+import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Signal {
   id:         number;
@@ -52,7 +53,10 @@ const SIGNAL_TEMPLATES: SignalTemplate[] = [
   { id: 3, pair: "SOL/USD", direction: "short", confidence: 0.62, source: "SentimentBot"  },
 ];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const now = new Date().toISOString();
     const allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));

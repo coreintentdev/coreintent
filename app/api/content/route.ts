@@ -10,7 +10,7 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
@@ -81,7 +81,10 @@ const TEMPLATES: Record<ContentType, object> = {
   },
 };
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "content");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     return ok({
       availableTypes: VALID_TYPES,
@@ -100,6 +103,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "content");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<ContentRequest>;
   try {
     body = (await req.json()) as Partial<ContentRequest>;

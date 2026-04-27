@@ -6,7 +6,8 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight, serverError } from "@/lib/api";
+import { NextRequest } from "next/server";
+import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 import { getAiKeyStatus } from "@/lib/ai";
 
 interface AIService {
@@ -44,7 +45,10 @@ interface ConnectionsResponse {
   summary:        { total: number; live: number; demo: number; planned: number; ready: number };
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const keys = getAiKeyStatus();
     const ai: ConnectionsResponse["ai"] = {

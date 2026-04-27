@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callAIsParallel, callPerplexity, callClaude, callGrok, validateAiContent, type AIResponse } from "@/lib/ai";
-import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -31,7 +31,10 @@ const IDENTITY = {
 
 const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "research");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const results = await callAIsParallel({
       perplexity:
@@ -68,6 +71,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "research");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<ResearchRequest>;
   try {
     body = (await req.json()) as Partial<ResearchRequest>;

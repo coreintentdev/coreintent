@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, type AIResponse } from "@/lib/ai";
-import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -30,7 +30,10 @@ const PROTECTED_ASSETS = {
 
 const VALID_TYPES: ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "protect");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
     const results = await callAIsParallel({
       grok:
@@ -75,6 +78,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "protect");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<ProtectRequest>;
   try {
     body = (await req.json()) as Partial<ProtectRequest>;
