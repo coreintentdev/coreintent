@@ -142,14 +142,31 @@ export default function PricingPage() {
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
             Three leagues. Three timeframes. One rule: the best strategy wins.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "12px" }}>
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
+          <div
+            className="urgency-badge"
+            style={{
+              display: "inline-block",
+              padding: "6px 16px",
+              background: "#f59e0b12",
+              border: "1px solid #f59e0b33",
+              borderRadius: "20px",
+              fontSize: "11px",
+              color: "#f59e0b",
+              marginBottom: "32px",
+              letterSpacing: "0.3px",
+            }}
+          >
+            Early access open — founding member status for first registrations
+          </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+          <div className="league-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {LEAGUES.map((league) => (
               <article
                 key={league.name}
+                className={league.name === "Weekly Grind" ? "league-card-popular" : ""}
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -158,8 +175,30 @@ export default function PricingPage() {
                   display: "flex",
                   flexDirection: "column",
                   position: "relative",
+                  overflow: "visible",
                 }}
               >
+                {league.name === "Weekly Grind" && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-12px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      padding: "4px 16px",
+                      background: "#3b82f6",
+                      color: "#fff",
+                      borderRadius: "12px",
+                      fontSize: "10px",
+                      fontWeight: "bold",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Most Popular
+                  </div>
+                )}
                 <div
                   aria-hidden="true"
                   style={{
@@ -534,6 +573,7 @@ export default function PricingPage() {
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
                 href="/"
+                className="cta-primary"
                 style={{
                   padding: "14px 32px",
                   background: "var(--accent-green)",

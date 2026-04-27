@@ -607,3 +607,165 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   CONVERSION LAYER — Landing Page Optimizer
+   ═══════════════════════════════════════════ */
+
+/* ─── Animated Counter Glow ─── */
+@keyframes counterGlow {
+  0%, 100% { text-shadow: 0 0 8px currentColor; }
+  50% { text-shadow: 0 0 20px currentColor, 0 0 40px rgba(16, 185, 129, 0.2); }
+}
+
+.animated-counter-value {
+  animation: counterGlow 4s ease-in-out infinite;
+}
+
+/* ─── Hero Headline ─── */
+.hero-headline {
+  text-shadow: 0 0 60px rgba(16, 185, 129, 0.3), 0 0 120px rgba(16, 185, 129, 0.1);
+}
+
+/* ─── CTA Buttons ─── */
+.cta-primary {
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25), 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.cta-primary:hover {
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.5), 0 0 64px rgba(16, 185, 129, 0.15), 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+.cta-secondary {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+.cta-secondary:hover {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ─── Floating CTA ─── */
+@keyframes floatCTAIn {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.floating-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 16px 24px;
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 14, 23, 0.97) 30%);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: floatCTAIn 0.4s ease both;
+  border-top: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.floating-cta a {
+  padding: 12px 32px;
+  background: var(--accent-green);
+  color: #000;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: inherit;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.floating-cta a:hover {
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.5), 0 0 64px rgba(16, 185, 129, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ─── How It Works ─── */
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.how-it-works-step {
+  position: relative;
+  text-align: center;
+  padding: 28px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.how-it-works-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Section Divider ─── */
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+  margin: 0 auto 16px;
+  border-radius: 1px;
+}
+
+/* ─── Urgency Badge ─── */
+@keyframes urgencyPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.urgency-badge {
+  animation: urgencyPulse 2s ease-in-out infinite;
+}
+
+/* ─── League Card Popular ─── */
+.league-card-popular {
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.1), 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Mobile Responsive — Conversion Layer ─── */
+@media (max-width: 768px) {
+  .floating-cta {
+    padding: 12px 16px;
+  }
+
+  .floating-cta a {
+    padding: 10px 24px;
+    font-size: 13px;
+  }
+
+  .how-it-works-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .how-it-works-arrow {
+    display: none !important;
+  }
+
+  .counter-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .league-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .counter-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

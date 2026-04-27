@@ -607,6 +607,77 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ target, label, prefix = "", suffix = "", color = "var(--accent-green)" }: { target: number; label: string; prefix?: string; suffix?: string; color?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const duration = 2000;
+          const steps = 60;
+          const increment = target / steps;
+          let current = 0;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target]);
+
+  return (
+    <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
+      <div className="animated-counter-value" style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "bold", color, lineHeight: "1" }}>
+        {prefix}{count.toLocaleString()}{suffix}
+      </div>
+      <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "6px" }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating CTA ─── */
+function FloatingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setVisible(window.scrollY > 500);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div className="floating-cta">
+      <a
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Enter the Arena &mdash; It&apos;s Free &rarr;
+      </a>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -671,17 +742,30 @@ export default function Home() {
               Paper Trading Mode — Building in Public
             </div>
             <h1
+              className="hero-headline"
               style={{
-                fontSize: "clamp(28px, 4vw, 44px)",
+                fontSize: "clamp(32px, 5vw, 56px)",
                 fontWeight: "bold",
-                lineHeight: "1.2",
+                lineHeight: "1.1",
+                marginBottom: "12px",
+                color: "var(--accent-green)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              One Model Guesses.<br />
+              <span style={{ color: "var(--text-primary)" }}>Three Models Decide.</span>
+            </h1>
+            <div
+              style={{
+                fontSize: "clamp(15px, 2vw, 20px)",
+                fontWeight: "500",
+                color: "var(--text-secondary)",
+                minHeight: "1.4em",
                 marginBottom: "8px",
-                color: "var(--text-primary)",
-                minHeight: "1.3em",
               }}
             >
               <TypeWriter />
-            </h1>
+            </div>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
               The agentic AI trading engine that replaced subscriptions with competitions
             </p>
@@ -712,6 +796,7 @@ export default function Home() {
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
+                className="cta-primary"
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
                 style={{
                   padding: "14px 32px",
@@ -729,6 +814,7 @@ export default function Home() {
               </button>
               <a
                 href="/pricing"
+                className="cta-secondary"
                 style={{
                   padding: "14px 32px",
                   background: "transparent",
@@ -784,38 +870,90 @@ export default function Home() {
             </div>
             </ScrollReveal>
 
+            {/* How It Works */}
+            <ScrollReveal>
+            <div style={{ marginTop: "48px" }}>
+              <div className="section-divider" />
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+                How it works
+              </div>
+              <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", marginBottom: "24px", color: "var(--text-primary)" }}>
+                Three Models. One Signal. Zero Guessing.
+              </h2>
+              <div className="how-it-works-grid" style={{ gap: "24px" }}>
+                {[
+                  { step: "01", title: "Detect", desc: "Grok scans X, news feeds, and social sentiment in real-time. Spots momentum shifts before the crowd catches on.", color: "#ef4444", model: "Grok / xAI" },
+                  { step: "02", title: "Interrogate", desc: "Claude runs risk models, stress-tests assumptions, and challenges every signal. Weak signals die here. Strong ones survive.", color: "#a855f7", model: "Claude / Anthropic" },
+                  { step: "03", title: "Verify", desc: "Perplexity cross-references live data, breaking news, and on-chain metrics. When all three agree, you move with conviction.", color: "#3b82f6", model: "Perplexity AI" },
+                ].map((item, i) => (
+                  <div
+                    key={item.step}
+                    className="how-it-works-step card-hover-glow"
+                    style={{ borderColor: `${item.color}22` }}
+                  >
+                    <div style={{ fontSize: "32px", fontWeight: "bold", color: item.color, opacity: 0.3, marginBottom: "8px" }}>
+                      {item.step}
+                    </div>
+                    <div style={{ fontSize: "18px", fontWeight: "bold", color: item.color, marginBottom: "8px" }}>
+                      {item.title}
+                    </div>
+                    <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6", marginBottom: "12px" }}>
+                      {item.desc}
+                    </div>
+                    <div style={{ fontSize: "10px", color: item.color, textTransform: "uppercase", letterSpacing: "0.5px", opacity: 0.7 }}>
+                      {item.model}
+                    </div>
+                    {i < 2 && (
+                      <div
+                        className="how-it-works-arrow"
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          right: "-14px",
+                          transform: "translateY(-50%)",
+                          color: "var(--text-secondary)",
+                          fontSize: "16px",
+                          zIndex: 2,
+                        }}
+                      >
+                        &rarr;
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            </ScrollReveal>
+
             {/* Animated Signal Pipeline */}
             <ScrollReveal>
             <SignalPipeline />
             </ScrollReveal>
 
-            {/* Stats Banner */}
+            {/* Animated Counters */}
+            <ScrollReveal>
             <div
+              className="counter-grid"
               style={{
                 marginTop: "28px",
-                display: "flex",
-                justifyContent: "center",
-                gap: "24px",
-                flexWrap: "wrap",
-                padding: "16px 24px",
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: "16px",
+                padding: "24px",
                 background: "#10b98108",
                 border: "1px solid #10b98118",
-                borderRadius: "10px",
+                borderRadius: "12px",
               }}
             >
-              {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
-              ].map((stat) => (
-                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
-                  <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
-                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
-                </div>
-              ))}
+              <AnimatedCounter target={14000} label="Signals Analyzed" suffix="+" color="#10b981" />
+              <AnimatedCounter target={3} label="AI Models" color="#a855f7" />
+              <AnimatedCounter target={6} label="Trading Agents" color="#3b82f6" />
+              <AnimatedCounter target={0} label="Subscription Fee" prefix="$" color="#f59e0b" />
+              <span style={{ fontSize: "8px", color: "var(--text-secondary)", gridColumn: "1 / -1", textAlign: "center", marginTop: "-8px" }}>
+                DEMO COUNTERS — Platform in development
+              </span>
             </div>
+            </ScrollReveal>
 
             {/* Powered By */}
             <ScrollReveal>
@@ -946,12 +1084,12 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Open Source", detail: "GitHub", color: "#10b981", icon: "{ }" },
-                { label: "NZ-Built", detail: "No VC", color: "#3b82f6", icon: "NZ" },
-                { label: "Paper Mode", detail: "Honest", color: "#a855f7", icon: "PT" },
-                { label: "$45/mo", detail: "Total Cost", color: "#f59e0b", icon: "$" },
-                { label: "3 Models", detail: "Cross-Check", color: "#ef4444", icon: "AI" },
-                { label: "Bots OK", detail: "First-Class", color: "#06b6d4", icon: "B" },
+                { label: "Built in NZ", detail: "No VC. No Silicon Valley.", color: "#3b82f6", icon: "NZ" },
+                { label: "AI-Powered", detail: "3 Models Cross-Checking", color: "#a855f7", icon: "AI" },
+                { label: "Competition-Grade", detail: "Daily / Weekly / Monthly", color: "#10b981", icon: "LB" },
+                { label: "Open Source", detail: "Transparent by Default", color: "#f59e0b", icon: "{ }" },
+                { label: "Bot-Friendly", detail: "AI-to-AI First-Class", color: "#06b6d4", icon: "B" },
+                { label: "$0 to Compete", detail: "Free. Always.", color: "#ef4444", icon: "$0" },
               ].map((badge) => (
                 <div
                   key={badge.label}
@@ -1436,6 +1574,7 @@ npm run build           # Production build`}
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
         <span>Paper Trading Mode | v0.2.0-alpha</span>
       </footer>
+      <FloatingCTA />
     </div>
   );
 }
