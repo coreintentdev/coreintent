@@ -155,7 +155,7 @@ function saveConversation(state: ConversationState): void {
 }
 
 function matchCommand(input: string): string | null {
-  const normalized = input.trim().toLowerCase().replace(/[^a-z0-9\s]/g, "");
+  const normalized = input.trim().toLowerCase().replace(/[^a-z0-9\s?]/g, "");
   const commands = Object.keys(RESPONSES);
   for (const cmd of commands) {
     if (normalized === cmd || normalized.startsWith(cmd + " ")) return cmd;
@@ -183,6 +183,7 @@ export default function AITwin() {
   const [demoRunning, setDemoRunning] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
   const wakeListenerAttached = useRef(false);
   const hasGreeted = useRef(false);
 
@@ -217,10 +218,25 @@ export default function AITwin() {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    return () => {
+      if (audioContextRef.current) {
+        void audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
+  }, []);
+
   const playNotification = useCallback(() => {
     if (!soundEnabled) return;
     try {
-      const ctx = new AudioContext();
+      if (!audioContextRef.current || audioContextRef.current.state === "closed") {
+        audioContextRef.current = new AudioContext();
+      }
+      const ctx = audioContextRef.current;
+      if (ctx.state === "suspended") {
+        void ctx.resume();
+      }
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
@@ -334,6 +350,7 @@ export default function AITwin() {
     document.addEventListener("mousemove", wake, { once: true });
 
     return () => {
+      wakeListenerAttached.current = false;
       document.removeEventListener("keydown", wake);
       document.removeEventListener("mousemove", wake);
     };
