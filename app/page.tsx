@@ -366,7 +366,7 @@ function NeuralNetwork() {
 
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      <svg viewBox="0 0 620 320" style={{ width: "100%", height: "100%", opacity: 0.5 }}>
+      <svg viewBox="0 0 620 320" role="img" aria-label="Neural network visualization showing Grok, Claude, and Perplexity feeding into the CoreIntent engine" style={{ width: "100%", height: "100%", opacity: 0.5 }}>
         <defs>
           {nodes.map((n) => (
             <radialGradient key={n.id} id={`ng-${n.id}`}>

@@ -60,6 +60,7 @@ const structuredData = {
       description:
         "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
+      datePublished: "2026-03-01",
       dateModified: "2026-03-01",
       inLanguage: "en-NZ",
     },

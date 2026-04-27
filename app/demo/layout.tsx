@@ -61,7 +61,8 @@ const structuredData = {
       description:
         "Experience CoreIntent's multi-AI trading engine in action with simulated data and real architecture.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
-      dateModified: "2026-04-22",
+      datePublished: "2026-03-01",
+      dateModified: "2026-04-27",
       inLanguage: "en-NZ",
     },
   ],

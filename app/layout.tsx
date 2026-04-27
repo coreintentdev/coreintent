@@ -89,7 +89,11 @@ export const metadata: Metadata = {
     "Corey McIvor",
   ],
   category: "Finance",
-  verification: {},
+  other: {
+    "theme-color": "#10b981",
+    "color-scheme": "dark",
+    "msapplication-TileColor": "#0a0e17",
+  },
 };
 
 const jsonLd = {
@@ -127,6 +131,8 @@ const jsonLd = {
       name: "Zynthio",
       alternateName: "Zynthio.ai",
       url: "https://zynthio.ai",
+      description:
+        "Parent brand behind CoreIntent — building agentic AI trading tools with multi-model orchestration. Based in New Zealand.",
       logo: {
         "@type": "ImageObject",
         url: "https://coreintent.dev/opengraph-image.png",
@@ -137,6 +143,7 @@ const jsonLd = {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
       },
+      foundingDate: "2026",
       foundingLocation: {
         "@type": "Place",
         address: {
@@ -156,6 +163,7 @@ const jsonLd = {
         "@type": "ContactPoint",
         email: "corey@coreyai.ai",
         contactType: "customer support",
+        availableLanguage: "English",
       },
     },
     {
@@ -209,17 +217,11 @@ const jsonLd = {
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
+      datePublished: "2026-03-01",
+      dateModified: "2026-04-27",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
       },
     },
     {
