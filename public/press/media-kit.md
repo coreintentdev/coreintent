@@ -148,6 +148,40 @@ The entire platform uses monospace typography. This is a deliberate design choic
 5. **Status:** Always mention "paper trading mode" when discussing current capabilities
 6. **Honesty:** Never imply live trading, exchange connections, or features that don't exist yet
 
+## Brand Do's and Don'ts
+
+### Do
+- Use "CoreIntent" in Signal Green (#10b981) on dark backgrounds
+- Reference the three AI models by name: Grok, Claude, Perplexity
+- Mention "competitions, not subscriptions" in any pricing context
+- Include "Built in New Zealand" or "NZ-built" in geographic references
+- Label all demo content as demo in any derivative materials
+- Use monospace typography (JetBrains Mono preferred) for brand consistency
+
+### Don't
+- Don't use "Core Intent" (two words) or abbreviate to "CI"
+- Don't imply CoreIntent is live trading — it's paper trading mode
+- Don't reference exchange connections as active — Binance/Coinbase are planned
+- Don't associate CoreIntent with Australia in any legal or business context
+- Don't use serif or decorative fonts in CoreIntent brand materials
+- Don't claim user numbers, trading volume, or financial returns that don't exist
+- Don't remove "DEMO" labels from placeholder content in screenshots
+
+## Social Media Image Specs
+
+| Platform | Format | Dimensions | Notes |
+|----------|--------|-----------|-------|
+| **X/Twitter** | Post image | 1200 x 675 | 16:9, dark background preferred |
+| **X/Twitter** | Header | 1500 x 500 | Brand strip with tagline |
+| **LinkedIn** | Post image | 1200 x 627 | Professional, include URL |
+| **LinkedIn** | Company banner | 1128 x 191 | CoreIntent + Zynthio branding |
+| **Instagram** | Square post | 1080 x 1080 | Carousels at same size |
+| **Instagram** | Story/Reel | 1080 x 1920 | 9:16, full-screen |
+| **TikTok** | Video | 1080 x 1920 | 9:16, hook in first 3 seconds |
+| **Open Graph** | Link preview | 1200 x 630 | Auto-generated via Next.js |
+
+All images should use the Deep Navy (#0a0e17) background with Signal Green (#10b981) accents. Monospace typography only.
+
 ## Media Contact
 
 Corey McIvor

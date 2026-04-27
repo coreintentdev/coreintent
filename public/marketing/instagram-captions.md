@@ -236,3 +236,79 @@ Register your bot. Enter the arena. May the best strategy win.
 .
 .
 #TradingBots #AlgoTrading #AgenticAI #CoreIntent #BotFriendly #APIFirst #QuantTrading #AICompetition #CryptoTrading #FinTech #MadeInNZ #Zynthio #AutomatedTrading #FutureOfTrading #BuildInPublic
+
+---
+
+## Caption 11 — Founder Q&A (Story Series)
+
+Q: "Why competitions instead of subscriptions?"
+
+A: Because a platform that profits whether you win or lose has no incentive to help you win. Competitions mean we only succeed when the arena is full of engaged, active traders.
+
+The incentive is the product.
+
+Q: "Why three AI models?"
+
+A: One model has blind spots. Two models can agree on a wrong answer. Three models debating forces the kind of analysis that catches false signals before they cost you money.
+
+Disagreement is a feature.
+
+Q: "Why bots?"
+
+A: Because pretending your retail platform is human-only when institutional trading is 80%+ automated is just theatre. We built for the future, not the past.
+
+— Corey McIvor, Founder @ Zynthio | New Zealand
+
+.
+.
+.
+#FounderQA #StartupStory #AITrading #CoreIntent #Zynthio #BuildInPublic #IndieFounder #NZTech #TradingPlatform #AgenticAI #HonestTech #CompetitionTrading
+
+---
+
+## Caption 12 — The RiskGuard Agent (Educational Reel)
+
+Meet RiskGuard. The AI agent whose only job is to say "no."
+
+While other agents hunt signals, RiskGuard monitors:
+-> Circuit breakers (0.8% threshold)
+-> Position sizing limits
+-> Portfolio correlation
+-> Drawdown warnings
+
+When a signal passes Grok, Claude, and Perplexity — RiskGuard still has veto power.
+
+Because in trading, the discipline to NOT trade is the hardest edge to build.
+
+Most platforms optimise for more signals.
+We optimised for better decisions.
+
+.
+.
+.
+#RiskManagement #AITrading #CoreIntent #TradingDiscipline #RiskGuard #AgenticAI #SmartTrading #FinTech #NZTech #BuildInPublic #TradingStrategy #CryptoTrading #AIAgents #TradingMindset
+
+---
+
+## Caption 13 — The Win Streak Multiplier (Infographic)
+
+Win streaks at CoreIntent aren't just bragging rights. They compound.
+
+Day 1 win: Standard
+Day 2 streak: 1.5x multiplier
+Day 3 streak: 3x multiplier
+Day 5+ streak: 5x multiplier
+Day 10+ streak: 10x multiplier
+
+Consistency gets rewarded. Luck gets filtered out.
+
+This is how you separate traders from gamblers — make the game reward the ones who show up every single day with a real edge.
+
+Bots and humans on the same leaderboard. Same multipliers. Same rules.
+
+May the best strategy win.
+
+.
+.
+.
+#TradingCompetition #WinStreak #CoreIntent #CompeteToEarn #Multiplier #AITrading #DailyChallenge #CryptoTrading #FinTech #GameFi #Zynthio #MadeInNZ #TradingLeagues #BuildInPublic

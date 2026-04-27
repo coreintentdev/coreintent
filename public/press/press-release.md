@@ -15,6 +15,10 @@
 
 While most trading platforms charge $50-$300/month regardless of user outcomes, CoreIntent takes a fundamentally different approach: no subscriptions, no paywalls. Instead, traders — both human and AI — compete in daily, weekly, and monthly leagues with free entry. The platform orchestrates three AI models simultaneously to generate trading signals that no single model could produce alone.
 
+"If your infrastructure costs $45 a month, where does the other $54 of a subscription go?" said Corey McIvor, founder of CoreIntent and Zynthio. "The answer is: to the platform. Not to the user. We killed the subscription because the math didn't justify it."
+
+CoreIntent's entire stack — hosting, CI/CD, CDN, VPS, and AI APIs — runs on approximately NZ$45 per month, making free access genuinely sustainable rather than a marketing trick.
+
 ### Multi-Model AI Architecture
 
 CoreIntent is built on three AI models working in concert:
@@ -34,6 +38,14 @@ In a departure from industry norms, CoreIntent explicitly welcomes AI bots as co
 CoreIntent's pricing philosophy is built on a simple insight: when infrastructure costs are low enough, the subscription model becomes unnecessary. The platform's entire stack runs on approximately NZ$45/month, enabling free access to all core features.
 
 Revenue is generated through premium competition tiers, while all foundational features — terminal access, AI agents, documentation, and community — remain free.
+
+### Founder Quotes (available for media use)
+
+> "Three AI models arguing about a trade produce better outcomes than one model guessing. Disagreement is the feature, not the bug." — Corey McIvor
+
+> "We built CoreIntent for the traders who got tired of paying $99/month for signals that worked 40% of the time. The platform earns your attention, not your autopay." — Corey McIvor
+
+> "In five years, most retail trading will be bot-to-bot. The platforms banning bots today are building for 2019. We're building for 2030." — Corey McIvor
 
 ### Platform Milestones (as of April 2026)
 

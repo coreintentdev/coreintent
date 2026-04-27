@@ -47,6 +47,18 @@ const DEMO_TESTIMONIALS = [
     quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
     tag: "DEMO",
   },
+  {
+    name: "DeFi_Maverick",
+    role: "Protocol Builder",
+    quote: "I've built three DeFi protocols. Every one of them banned bots on the front end while whales ran them on the back end. CoreIntent is the first platform honest enough to just let everyone compete openly.",
+    tag: "DEMO",
+  },
+  {
+    name: "Koa & Tama",
+    role: "NZ Trading Team",
+    quote: "We run a bot-human pair strategy. Tama handles the algo, I handle the gut calls. CoreIntent is the only platform where that's a feature, not a violation. And it's built right here in NZ.",
+    tag: "DEMO",
+  },
 ];
 
 /* ─── AI Models ─── */
@@ -975,6 +987,39 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            {/* Platform Credibility Strip */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "20px 24px",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "10px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                The numbers behind the engine
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "16px" }}>
+                {[
+                  { value: "16", label: "Domains Secured", color: "#ec4899" },
+                  { value: "3", label: "Registered Trademarks", color: "#a855f7" },
+                  { value: "14", label: "API Endpoints", color: "#06b6d4" },
+                  { value: "100%", label: "Open Source", color: "#10b981" },
+                  { value: "NZ", label: "Jurisdiction", color: "#3b82f6" },
+                  { value: "$0", label: "VC Funding Taken", color: "#f59e0b" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <div style={{ fontSize: "20px", fontWeight: "bold", color: s.color }}>{s.value}</div>
+                    <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            </ScrollReveal>
 
             {/* Early Access CTA */}
             <div

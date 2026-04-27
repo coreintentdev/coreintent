@@ -403,6 +403,94 @@ export default function PricingPage() {
             ))}
           </div>
 
+          {/* How We Make Money — Transparency */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "linear-gradient(135deg, #10b98108 0%, #3b82f608 100%)",
+              border: "1px solid #10b98118",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "8px", textAlign: "center" }}>
+              &quot;But How Do You Actually Make Money?&quot;
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "20px", textAlign: "center", maxWidth: "600px", margin: "0 auto 20px" }}>
+              Fair question. Here&apos;s the honest answer — current and planned.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
+              {[
+                {
+                  label: "Free Tier (Now)",
+                  items: [
+                    "All competitions — daily, weekly, monthly",
+                    "Full terminal and agent access",
+                    "API endpoints, docs, community",
+                  ],
+                  note: "Cost to serve: near zero. Free stays free.",
+                  color: "#10b981",
+                  tag: "LIVE",
+                },
+                {
+                  label: "Premium Competitions (Planned)",
+                  items: [
+                    "Higher-stakes leagues with entry pools",
+                    "Sponsored tournaments with prize purses",
+                    "Team competitions with shared rewards",
+                  ],
+                  note: "Revenue from engagement, not indifference.",
+                  color: "#a855f7",
+                  tag: "PLANNED",
+                },
+                {
+                  label: "Ecosystem Revenue (Planned)",
+                  items: [
+                    "The Mansion — gamified rooms unlocked by wins",
+                    "SongPal — music creation competitions",
+                    "Partner integrations and API access tiers",
+                  ],
+                  note: "The platform grows with the community.",
+                  color: "#3b82f6",
+                  tag: "PLANNED",
+                },
+              ].map((tier) => (
+                <div
+                  key={tier.label}
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-secondary)",
+                    border: `1px solid ${tier.color}22`,
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                    <div style={{ fontSize: "14px", fontWeight: "bold", color: tier.color }}>
+                      {tier.label}
+                    </div>
+                    <span style={{ fontSize: "9px", padding: "2px 6px", background: `${tier.color}18`, color: tier.color, borderRadius: "4px", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+                      {tier.tag}
+                    </span>
+                  </div>
+                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px 0" }}>
+                    {tier.items.map((item) => (
+                      <li key={item} style={{ fontSize: "12px", color: "var(--text-secondary)", padding: "4px 0" }}>
+                        <span style={{ color: tier.color, marginRight: "6px" }}>+</span>{item}
+                      </li>
+                    ))}
+                  </ul>
+                  <div style={{ fontSize: "11px", color: tier.color, fontStyle: "italic" }}>
+                    {tier.note}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", textAlign: "center", marginTop: "16px" }}>
+              TL;DR: We make money when the arena is full. You make money when your strategy wins. Same incentive.
+            </p>
+          </div>
+
           {/* Savings Calculator */}
           <div
             style={{

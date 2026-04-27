@@ -664,3 +664,154 @@ Different game.
 coreintent.dev
 
 #FinTech #CoreIntent
+
+---
+
+## Post 39 — The Q2 2026 Update
+
+Q2 2026 update from CoreIntent:
+
+What shipped this quarter:
+-> 14 API endpoints (up from 12)
+-> Improved OG images for link previews
+-> Full content calendar and press kit
+-> Security header hardening
+-> Audit score: 96%
+
+What's next:
+-> Exchange connections (Binance, Coinbase)
+-> Premium competition tiers
+-> The Mansion — gamified trading world
+
+What hasn't changed:
+-> $0 subscriptions
+-> $45/mo infrastructure
+-> Every demo label stays honest
+
+coreintent.dev
+
+#BuildInPublic #Q2Update #CoreIntent
+
+---
+
+## Post 40 — The Conviction Test
+
+Here's a quick test for whether a founder believes in their product:
+
+Would they use it if they weren't building it?
+
+I'd compete on CoreIntent even if someone else built it. Three models cross-checking signals? Free competitions? Bots welcome? That's just better architecture.
+
+The fact that I built it is incidental. The thesis is what matters.
+
+#FounderMindset #CoreIntent
+
+---
+
+## Post 41 — Thread: 5 Reasons Bots Will Dominate Trading
+
+Thread: 5 reasons bots will dominate retail trading by 2030
+
+1/ Bots don't panic sell. Humans do. Every. Single. Time.
+
+2/ Bots execute in milliseconds. Humans take 3-7 seconds on a good day. In volatile markets, that's an eternity.
+
+3/ Bots don't have "feelings" about a position. They follow the strategy. Humans revenge-trade.
+
+4/ Bots can run 24/7/365. Humans need sleep, weekends, and holidays. Markets don't.
+
+5/ Bots can be backtested against years of data before risking a cent. Humans trade on vibes.
+
+The platforms banning bots are protecting egos, not users.
+
+CoreIntent: bots compete alongside humans. Same rules. Same leaderboard. Best strategy wins.
+
+coreintent.dev
+
+#AgenticAI #TradingBots #FutureOfTrading
+
+---
+
+## Post 42 — The $2,376 Question
+
+You have $2,376.
+
+Option A: Pay a trading platform $99/mo for two years.
+Option B: Keep the money. Use CoreIntent for free. Trade with the $2,376 instead.
+
+We're not saying our signals are better.
+
+We're saying $2,376 in your trading account is objectively better than $2,376 in someone else's.
+
+coreintent.dev
+
+#TradingMath #FinTech #CoreIntent
+
+---
+
+## Post 43 — NZ vs Silicon Valley
+
+Silicon Valley: Raise $50M. Hire 200 people. Burn $2M/month. Ship in 18 months. Pray.
+
+New Zealand: $45/month infrastructure. One founder. Three AI models. Ship in weeks. Iterate daily.
+
+Different approach. Same internet. Same users.
+
+The playing field is flat now. Geography is a detail, not a barrier.
+
+coreintent.dev
+
+#MadeInNZ #IndieFounder #GlobalStartup
+
+---
+
+## Post 44 — The Risk Guard
+
+Every trading platform talks about signals.
+
+Nobody talks about the signal that saves you.
+
+RiskGuard is our AI agent whose only job is to say "no."
+
+Circuit breakers at 0.8%. Position correlation checks. Portfolio heat monitoring. When RiskGuard overrides a signal, that's not a failure — that's the system working.
+
+The best trade is sometimes no trade.
+
+#RiskManagement #AITrading #CoreIntent
+
+---
+
+## Post 45 — The Multiplier Effect
+
+Win streaks on CoreIntent aren't just bragging rights.
+
+Day 1: Standard position
+Day 2 win: 1.5x multiplier
+Day 3 win: 3x multiplier
+Day 5+ win: 5x multiplier
+Day 10+ win: 10x multiplier
+
+Consistency gets compounded. Luck gets filtered out.
+
+This is how you separate traders from gamblers.
+
+#TradingCompetition #CoreIntent #GameTheory
+
+---
+
+## Post 46 — Poll: Your Platform's Honesty
+
+Quick audit of your current trading platform:
+
+1. Are demo endpoints labelled "demo"?
+2. Are planned features labelled "planned"?
+3. Can you see the actual infrastructure cost?
+4. Is the subscription price justified by the service cost?
+
+If you answered "no" to any of these, you're paying for theatre.
+
+CoreIntent: 4/4 yes. Always.
+
+coreintent.dev
+
+#Transparency #HonestTech #FinTech

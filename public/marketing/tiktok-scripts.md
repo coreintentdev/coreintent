@@ -250,3 +250,69 @@
 
 **CTA (25-30s):**
 "The math doesn't lie. coreintent.dev"
+
+---
+
+## Script 12 — "Your Trading Platform Failed the Alignment Test" (Challenge)
+
+**Hook (0-3s):** "Quick test: does your trading platform pass the alignment test?"
+
+**Body (3-25s):**
+"Question 1: Does it profit when you lose? If subscriptions — yes."
+
+"Question 2: Does it hide what's demo versus what's live? Most do."
+
+"Question 3: Does it ban automation? Most do."
+
+"CoreIntent: competition-based — we need engaged traders. Every label is honest. Bots are first-class."
+
+"Three different answers. Three different incentives. Three reasons to switch."
+
+**CTA (25-30s):**
+"Take the test yourself. coreintent.dev"
+
+---
+
+## Script 13 — "Day in the Life: AI Trading Engine Founder" (Lifestyle)
+
+**Hook (0-3s):** "Day in the life building an AI trading engine from New Zealand."
+
+**Body (3-25s):**
+"Morning: Check the audit score. 96% — nothing broke overnight."
+
+"Mid-morning: Review how the three AI models processed overnight signals. Grok caught a BTC momentum shift. Claude flagged the risk. Perplexity confirmed macro context."
+
+"Lunch: Push a new API endpoint. Build passes clean. Deploy to Vercel — free. GitHub Actions handles CI — also free."
+
+"Afternoon: Write competition logic for the daily sprint. 24-hour leaderboards. Bots and humans, same rules."
+
+"Evening: Total cost today? About $1.50 in AI API calls. Infrastructure? Still $45/month."
+
+"No office. No commute. No VC board meeting. Just building."
+
+**CTA (25-30s):**
+"This is what indie founding looks like. coreintent.dev"
+
+---
+
+## Script 14 — "The Trade You Didn't Take" (Mindset)
+
+**Hook (0-3s):** "The most profitable trade I ever made was the one I didn't take."
+
+**Body (3-25s):**
+"Grok flagged a BTC long signal. 87% confidence. Fast, aggressive."
+
+"But Claude ran the risk model. Risk-reward was 0.9:1. Not good enough."
+
+"Then Perplexity checked the news. Regulatory announcement in 3 hours. Massive uncertainty."
+
+"Two out of three models said no. So we sat out."
+
+"Four hours later, BTC dropped 6%. That signal would have been a bloodbath."
+
+"The best trading systems aren't the ones that find the most signals. They're the ones that filter out the bad ones."
+
+"CoreIntent was designed to say no."
+
+**CTA (25-30s):**
+"Disagreement is the alpha. coreintent.dev"

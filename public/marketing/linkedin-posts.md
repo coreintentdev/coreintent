@@ -215,3 +215,72 @@ Currently validating this architecture in paper trading mode before deploying wi
 -> coreintent.dev | github.com/coreintentdev/coreintent
 
 #AI #MachineLearning #SystemDesign #TradingTechnology #FinTech #MultiModelAI
+
+---
+
+## Post 8 — The Infrastructure Argument for Indie Founders
+
+**Your SaaS doesn't need to cost $10k/month to run. Here's proof.**
+
+I run a full AI trading platform — three LLMs, six agents, 14 API endpoints, interactive terminal, CI/CD, CDN with WAF — for $45/month.
+
+Breakdown:
+- **Vercel** (hosting): $0
+- **GitHub Actions** (CI/CD): $0
+- **Cloudflare Pro** (CDN + WAF + DDoS): $20
+- **Cloudzy VPS** (trading backend): $25
+- **AI APIs** (Claude, Grok, Perplexity): Pay-per-use, cents per call
+
+That's it. No kubernetes clusters. No multi-region AWS deployments. No $200/month monitoring stack.
+
+**What this means for founders:**
+
+1. **Free tiers are real infrastructure.** Vercel, GitHub, Cloudflare — these aren't toy tools. They handle production traffic.
+
+2. **LLM costs are per-use, not per-seat.** You don't need to amortise AI infrastructure across subscriptions. You pay when users use it.
+
+3. **The "you need funding" narrative is outdated.** If your marginal cost per user approaches zero, your business model doesn't need VC money — it needs engaged users.
+
+At CoreIntent, this infrastructure insight drives everything: if it costs $45/month to serve everyone, charging subscriptions is just extraction. So we run free competitions instead.
+
+Currently paper trading. Building in public. Every line of code on GitHub.
+
+-> coreintent.dev | github.com/coreintentdev/coreintent
+
+#StartupInfrastructure #IndieFounder #SaaS #CloudComputing #AI #LeanStartup #BuildInPublic
+
+---
+
+## Post 9 — Why Competition-Based Revenue Is the Future of Digital Products
+
+**The subscription model has an incentive problem. Here's how we think about it differently.**
+
+Subscriptions are convenient for platforms. Predictable revenue. Low churn friction. Auto-renewal means revenue even from disengaged users.
+
+But that convenience creates a structural misalignment: the platform profits whether the user succeeds or not. In trading, this is particularly dangerous — you're paying $99/month for signals while the platform has no skin in your outcomes.
+
+At CoreIntent, we replaced subscriptions with competitions.
+
+**The mechanics:**
+- Daily sprints (24-hour leaderboard resets)
+- Weekly grinds (7-day risk-adjusted scoring)
+- Monthly championships (full portfolio wars)
+- All free entry. Win streaks earn multipliers.
+
+**Why this works better:**
+
+1. **Revenue depends on engagement.** We only succeed when traders show up to compete. No ghost subscribers padding our MRR.
+
+2. **Quality pressure is real.** If our AI signals are poor, competitions are empty. The product has to work.
+
+3. **Bot-inclusive by design.** Competition-based models naturally accommodate automated participants — the strategy wins, not the species.
+
+4. **Community forms around competition.** Leaderboards create narratives. Win streaks create legends. This is inherently more engaging than a dashboard you check once a month.
+
+The broader pattern: any digital product where the user's success can be measured (fitness, education, trading, creative tools) could benefit from competition-based revenue instead of subscriptions.
+
+Currently validating this at CoreIntent. Paper trading mode. Building in public.
+
+-> coreintent.dev
+
+#ProductStrategy #BusinessModel #FinTech #Innovation #Competition #StartupStrategy
