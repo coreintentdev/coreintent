@@ -612,6 +612,7 @@ function AnimatedCounter({ target, label, prefix = "", suffix = "", color = "var
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -624,11 +625,14 @@ function AnimatedCounter({ target, label, prefix = "", suffix = "", color = "var
           const steps = 60;
           const increment = target / steps;
           let current = 0;
-          const timer = setInterval(() => {
+          timerRef.current = setInterval(() => {
             current += increment;
             if (current >= target) {
               setCount(target);
-              clearInterval(timer);
+              if (timerRef.current) {
+                clearInterval(timerRef.current);
+                timerRef.current = null;
+              }
             } else {
               setCount(Math.floor(current));
             }
@@ -638,7 +642,13 @@ function AnimatedCounter({ target, label, prefix = "", suffix = "", color = "var
       { threshold: 0.3 }
     );
     obs.observe(el);
-    return () => obs.disconnect();
+    return () => {
+      obs.disconnect();
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [target]);
 
   return (
