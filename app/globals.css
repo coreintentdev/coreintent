@@ -702,7 +702,12 @@ a {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 12px;
+  overflow: visible;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.how-it-works-step.card-hover-glow {
+  overflow: visible;
 }
 
 .how-it-works-step:hover {
