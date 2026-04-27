@@ -74,6 +74,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mscan\x1b[0m        - Full system scan with progress
   \x1b[32mweather\x1b[0m     - Market weather forecast
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
+  \x1b[32mslots\x1b[0m       - Crypto slot machine — spin the reels
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
 
   \x1b[33m── ANALYTICS ──\x1b[0m
@@ -98,6 +99,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mparty\x1b[0m       - Competition mode
   \x1b[32msudo\x1b[0m        - Nice try
   \x1b[32mrickroll\x1b[0m    - You know what this is
+  \x1b[32mmoon\x1b[0m        - When moon?
+  \x1b[32mwen\x1b[0m         - Wen lambo?
 
   \x1b[90mTab to autocomplete | Arrow keys for history | && to chain\x1b[0m`,
 
@@ -342,6 +345,30 @@ Brand: Zynthio.ai — NZ registered
   \x1b[33m  and desert you\x1b[0m
   \x1b[90m  ...you just got rickrolled by a trading engine.\x1b[0m
   \x1b[90m  Type \x1b[32mhelp\x1b[0m for actual commands.\x1b[0m`,
+
+  moon: `\x1b[33m
+  ███╗   ███╗ ██████╗  ██████╗ ███╗   ██╗
+  ████╗ ████║██╔═══██╗██╔═══██╗████╗  ██║
+  ██╔████╔██║██║   ██║██║   ██║██╔██╗ ██║
+  ██║╚██╔╝██║██║   ██║██║   ██║██║╚██╗██║
+  ██║ ╚═╝ ██║╚██████╔╝╚██████╔╝██║ ╚████║
+  ╚═╝     ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝
+\x1b[0m
+  \x1b[33m            *  .  *
+         .  *  TO THE  *  .
+       *    MOON    *
+         .  *  .  *  .
+            *  .  *\x1b[0m
+
+  \x1b[90mThree models. One direction. Straight up.\x1b[0m
+  \x1b[90mPaper trading mode — no real rockets involved.\x1b[0m`,
+
+  wen: `\x1b[33m  Wen moon?\x1b[0m   When three models agree.
+  \x1b[33m  Wen lambo?\x1b[0m  When paper trading goes live.
+  \x1b[33m  Wen rich?\x1b[0m   When skill beats luck on the leaderboard.
+  \x1b[33m  Wen launch?\x1b[0m Building. In. Public.
+
+  \x1b[90m  "The leaderboard doesn't care who built you."\x1b[0m`,
 
   party: `\x1b[33m
   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -599,8 +626,8 @@ const ALL_COMMANDS = [
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
   "trade", "radar", "ping", "cowsay", "top",
   "stonks", "leaderboard", "lb", "battle", "scan", "weather",
-  "challenge", "warp", "buy", "sell", "hold", "quit",
-  "sudo", "rickroll",
+  "challenge", "warp", "slots", "buy", "sell", "hold", "quit",
+  "sudo", "rickroll", "moon", "wen",
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
 ];
@@ -1817,6 +1844,66 @@ export default function Terminal() {
   \x1b[90mForecast generated from three-model consensus. Not financial advice.\x1b[0m`;
       addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
       return out;
+    }
+
+    // ── SLOTS: Crypto slot machine ──
+    if (trimmed === "slots") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ CRYPTO SLOTS ══\x1b[0m`,
+        `\x1b[90m  Pull the lever...\x1b[0m`, ``);
+
+      const syms = [
+        { s: "₿", n: "BTC", c: "\x1b[33m" },
+        { s: "Ξ", n: "ETH", c: "\x1b[35m" },
+        { s: "◎", n: "SOL", c: "\x1b[32m" },
+        { s: "▲", n: "AVAX", c: "\x1b[31m" },
+        { s: "◆", n: "LINK", c: "\x1b[34m" },
+        { s: "★", n: "MOON", c: "\x1b[33m" },
+        { s: "✗", n: "REKT", c: "\x1b[31m" },
+      ];
+      const pick = () => syms[Math.floor(Math.random() * syms.length)];
+      const result = [pick(), pick(), pick()];
+
+      let frame = 0;
+      const slotIv = setInterval(() => {
+        if (frame < 4) {
+          const a = pick(), b = pick(), c = pick();
+          addLines(`  \x1b[90m│\x1b[0m ${a.c}${a.s}\x1b[0m \x1b[90m│\x1b[0m ${b.c}${b.s}\x1b[0m \x1b[90m│\x1b[0m ${c.c}${c.s}\x1b[0m \x1b[90m│\x1b[0m`);
+        } else if (frame < 6) {
+          const b = pick(), c = pick();
+          addLines(`  \x1b[90m│\x1b[0m ${result[0].c}${result[0].s}\x1b[0m \x1b[90m│\x1b[0m ${b.c}${b.s}\x1b[0m \x1b[90m│\x1b[0m ${c.c}${c.s}\x1b[0m \x1b[90m│\x1b[0m  \x1b[32m◀\x1b[0m`);
+        } else if (frame < 8) {
+          const c = pick();
+          addLines(`  \x1b[90m│\x1b[0m ${result[0].c}${result[0].s}\x1b[0m \x1b[90m│\x1b[0m ${result[1].c}${result[1].s}\x1b[0m \x1b[90m│\x1b[0m ${c.c}${c.s}\x1b[0m \x1b[90m│\x1b[0m  \x1b[32m◀◀\x1b[0m`);
+        } else if (frame === 8) {
+          addLines(
+            ``,
+            `  \x1b[36m╔═════╦═════╦═════╗\x1b[0m`,
+            `  \x1b[36m║\x1b[0m  ${result[0].c}${result[0].s}\x1b[0m  \x1b[36m║\x1b[0m  ${result[1].c}${result[1].s}\x1b[0m  \x1b[36m║\x1b[0m  ${result[2].c}${result[2].s}\x1b[0m  \x1b[36m║\x1b[0m`,
+            `  \x1b[36m╚═════╩═════╩═════╝\x1b[0m`
+          );
+        } else {
+          clearInterval(slotIv);
+          const [sa, sb, sc] = result;
+          const triple = sa.n === sb.n && sb.n === sc.n;
+          const pair = sa.n === sb.n || sb.n === sc.n || sa.n === sc.n;
+          if (triple && sa.n === "MOON") {
+            addLines(``, `\x1b[33m  ★ ★ ★  J A C K P O T  ★ ★ ★\x1b[0m`, `\x1b[33m  THREE MOONS — TO THE MOON!\x1b[0m`);
+          } else if (triple && sa.n === "REKT") {
+            addLines(``, `\x1b[31m  ✗ ✗ ✗  TRIPLE REKT  ✗ ✗ ✗\x1b[0m`, `\x1b[31m  Absolute carnage. Spin again if you dare.\x1b[0m`);
+          } else if (triple) {
+            addLines(``, `\x1b[32m  ★ ★ ★  TRIPLE ${sa.n}! BIG WIN!  ★ ★ ★\x1b[0m`);
+          } else if (pair) {
+            const matched = sa.n === sb.n ? sa : sb.n === sc.n ? sb : sa;
+            addLines(``, `\x1b[33m  ★ ★  Double ${matched.n} — small win\x1b[0m`);
+          } else {
+            addLines(``, `\x1b[90m  No match. Type \x1b[32mslots\x1b[90m to spin again.\x1b[0m`);
+          }
+          addLines(`  \x1b[90mFor entertainment only — no real credits\x1b[0m`, ``);
+        }
+        frame++;
+      }, 150);
+      return "";
     }
 
     // ── Resolve aliases ──

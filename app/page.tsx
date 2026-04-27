@@ -205,6 +205,70 @@ function TypeWriter() {
   return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
 }
 
+/* ─── Live Signal Feed ─── */
+const SIGNAL_POOL = [
+  { pair: "BTC/USDT", dir: "LONG", conf: 87, model: "Grok", mc: "#ef4444" },
+  { pair: "ETH/USDT", dir: "HOLD", conf: 65, model: "Claude", mc: "#a855f7" },
+  { pair: "SOL/USDT", dir: "LONG", conf: 91, model: "Engine", mc: "#10b981" },
+  { pair: "AVAX/USDT", dir: "SHORT", conf: 72, model: "Perplexity", mc: "#3b82f6" },
+  { pair: "LINK/USDT", dir: "LONG", conf: 83, model: "Grok", mc: "#ef4444" },
+  { pair: "DOT/USDT", dir: "SHORT", conf: 68, model: "Claude", mc: "#a855f7" },
+  { pair: "BTC/USDT", dir: "LONG", conf: 94, model: "Engine", mc: "#10b981" },
+  { pair: "SOL/USDT", dir: "HOLD", conf: 58, model: "Perplexity", mc: "#3b82f6" },
+];
+
+function LiveSignalFeed() {
+  const [idx, setIdx] = useState(0);
+  const [vis, setVis] = useState(true);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setVis(false);
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % SIGNAL_POOL.length);
+        setVis(true);
+      }, 300);
+    }, 3500);
+    return () => clearInterval(iv);
+  }, []);
+
+  const s = SIGNAL_POOL[idx];
+  const dirColor = s.dir === "LONG" ? "#10b981" : s.dir === "SHORT" ? "#ef4444" : "#f59e0b";
+
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "8px 16px",
+        background: "#10b98108",
+        border: "1px solid #10b98118",
+        borderRadius: "8px",
+        fontSize: "12px",
+        marginBottom: "16px",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        opacity: vis ? 1 : 0,
+        transform: vis ? "translateY(0)" : "translateY(-4px)",
+      }}
+    >
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "#10b981", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981" }} />
+        SIGNAL
+      </span>
+      <span style={{ color: "var(--text-primary)", fontWeight: "bold" }}>{s.pair}</span>
+      <span style={{ color: dirColor, fontWeight: "bold", fontSize: "11px" }}>
+        {s.dir === "LONG" ? "▲" : s.dir === "SHORT" ? "▼" : "◆"} {s.dir}
+      </span>
+      <span style={{ color: s.conf >= 80 ? "#10b981" : s.conf >= 60 ? "#f59e0b" : "#ef4444" }}>
+        {s.conf}%
+      </span>
+      <span style={{ color: s.mc, fontSize: "10px", opacity: 0.8 }}>[{s.model}]</span>
+      <span style={{ color: "var(--text-secondary)", fontSize: "10px" }}>DEMO</span>
+    </div>
+  );
+}
+
 /* ─── Market Ticker ─── */
 function MarketTicker() {
   const [tick, setTick] = useState(0);
@@ -619,6 +683,7 @@ export default function Home() {
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
         <section
+          className="scan-line"
           style={{
             padding: "48px 24px 40px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
@@ -682,7 +747,11 @@ export default function Home() {
             >
               <TypeWriter />
             </h1>
-            <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
+            <p
+              className="glitch-text-subtle"
+              data-text="The agentic AI trading engine that replaced subscriptions with competitions"
+              style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}
+            >
               The agentic AI trading engine that replaced subscriptions with competitions
             </p>
             <p
@@ -707,9 +776,10 @@ export default function Home() {
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
               Built by traders who got tired of paying for signals that don&apos;t work.
             </p>
-            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
+            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 20px" }}>
               Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
             </p>
+            <LiveSignalFeed />
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
@@ -978,6 +1048,7 @@ export default function Home() {
 
             {/* Early Access CTA */}
             <div
+              className="holo-border"
               style={{
                 marginTop: "36px",
                 padding: "24px",

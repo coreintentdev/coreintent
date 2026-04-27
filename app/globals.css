@@ -410,6 +410,33 @@ a {
   opacity: 0.7;
 }
 
+/* ─── Subtle Glitch (lower intensity) ─── */
+.glitch-text-subtle {
+  position: relative;
+}
+
+.glitch-text-subtle::before,
+.glitch-text-subtle::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text-subtle::before {
+  color: #ef4444;
+  animation: glitchClip 6s linear infinite;
+  opacity: 0.25;
+}
+
+.glitch-text-subtle::after {
+  color: #3b82f6;
+  animation: glitchClip 6s linear infinite reverse;
+  opacity: 0.25;
+}
+
 /* ─── Energy Pulse Ring ─── */
 @keyframes energyPulse {
   0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
