@@ -55,8 +55,8 @@ Based in: New Zealand (NEVER register anything in Australia)
 - No user authentication yet
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI rendering (potential XSS; JSON-LD structured data sanitized 2026-04-22)
-- xterm packages in package.json but not actually used
-- `security/remove-runtime-fingerprint` and `security/sanitize-api-error-leakage` branches were DELETED (2026-04-25 branch cleanup) without being merged into main — verify both security patches landed on main; if not, the fixes are lost and need to be re-applied
+- xterm packages removed from package.json (resolved 2026-04-27)
+- `security/remove-runtime-fingerprint` and `security/sanitize-api-error-leakage` patches CONFIRMED on main (2026-04-27 audit): poweredByHeader:false in next.config.js + serverError() sanitizes all API error responses
 - 30 non-main branches as of 2026-04-25 — cursor/AI tool sprawl; review and delete stale branches regularly; enable branch auto-delete on merge in GitHub settings
 
 ## Family (NEVER fabricate)
