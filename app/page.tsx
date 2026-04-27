@@ -379,7 +379,7 @@ const STATUS_CARDS = [
   { label: "AI Agents", value: "Ready", color: "#a855f7" },
   { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
   { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "12", color: "#06b6d4" },
+  { label: "API Routes", value: "14", color: "#06b6d4" },
 ];
 
 /* ─── Architecture Pillars ─── */
@@ -1005,9 +1005,9 @@ export default function Home() {
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "16px" }}>
                 {[
-                  { value: "16", label: "Domains Secured", color: "#ec4899" },
-                  { value: "3", label: "Registered Trademarks", color: "#a855f7" },
-                  { value: "14", label: "API Endpoints", color: "#06b6d4" },
+                  { value: `${DOMAINS.length}`, label: "Domains Secured", color: "#ec4899" },
+                  { value: `${TRADEMARKS.length}`, label: "Registered Trademarks", color: "#a855f7" },
+                  { value: `${STATUS_CARDS.find(c => c.label === "API Routes")?.value ?? "14"}`, label: "API Endpoints", color: "#06b6d4" },
                   { value: "100%", label: "Open Source", color: "#10b981" },
                   { value: "NZ", label: "Jurisdiction", color: "#3b82f6" },
                   { value: "$0", label: "VC Funding Taken", color: "#f59e0b" },
