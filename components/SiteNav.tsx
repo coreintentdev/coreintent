@@ -2,16 +2,29 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const NAV_LINKS = [
-  { href: "/", label: "Terminal" },
-  { href: "/demo", label: "Demo" },
-  { href: "/stack", label: "Stack" },
-  { href: "/pricing", label: "Pricing" },
-];
+import { useLocale } from "@/lib/locale-context";
+import { locales, defaultLocale, type Locale } from "@/lib/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function SiteNav() {
   const pathname = usePathname();
+  const { locale, t } = useLocale();
+
+  const segments = pathname.split("/").filter(Boolean);
+  const hasLocalePrefix = locales.includes(segments[0] as Locale);
+  const pathWithoutLocale = hasLocalePrefix ? "/" + segments.slice(1).join("/") : pathname;
+
+  function localePath(href: string) {
+    if (locale === defaultLocale) return href;
+    return `/${locale}${href}`;
+  }
+
+  const NAV_LINKS = [
+    { href: "/", label: t("nav.terminal") },
+    { href: "/demo", label: t("nav.demo") },
+    { href: "/stack", label: t("nav.stack") },
+    { href: "/pricing", label: t("nav.pricing") },
+  ];
 
   return (
     <header
@@ -25,7 +38,7 @@ export default function SiteNav() {
       }}
     >
       <Link
-        href="/"
+        href={localePath("/")}
         aria-label="CoreIntent — Home"
         style={{
           display: "flex",
@@ -47,27 +60,30 @@ export default function SiteNav() {
           v0.2.0-alpha | Zynthio.ai
         </span>
       </Link>
-      <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            style={{
-              padding: "6px 16px",
-              borderRadius: "6px",
-              fontSize: "13px",
-              fontFamily: "inherit",
-              textDecoration: "none",
-              background:
-                pathname === link.href ? "var(--accent-green)" : "transparent",
-              color:
-                pathname === link.href ? "#000" : "var(--text-secondary)",
-            }}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={localePath(link.href)}
+              style={{
+                padding: "6px 16px",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontFamily: "inherit",
+                textDecoration: "none",
+                background:
+                  pathWithoutLocale === link.href ? "var(--accent-green)" : "transparent",
+                color:
+                  pathWithoutLocale === link.href ? "#000" : "var(--text-secondary)",
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <LanguageSwitcher currentLocale={locale} />
+      </div>
     </header>
   );
 }

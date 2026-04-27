@@ -607,3 +607,28 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ─── RTL Support ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] .particle-dot {
+  --drift-x: calc(-1 * var(--drift-x));
+}

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { headers } from "next/headers";
+import { locales, defaultLocale } from "@/lib/i18n";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -18,6 +20,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://coreintent.dev"),
   alternates: {
     canonical: "https://coreintent.dev",
+    languages: Object.fromEntries(locales.map((l) => [l, `https://coreintent.dev/${l}`])),
   },
   openGraph: {
     type: "website",
@@ -170,7 +173,7 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
-      inLanguage: "en-NZ",
+      inLanguage: ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
       isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
@@ -194,6 +197,7 @@ const jsonLd = {
         "Interactive web terminal",
         "AI agent fleet",
         "Bot-friendly competitions",
+        "10-language internationalization",
       ],
       screenshot: {
         "@type": "ImageObject",
@@ -208,7 +212,7 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
-      inLanguage: "en-NZ",
+      inLanguage: ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -238,13 +242,17 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const locale = headersList.get("x-locale") ?? defaultLocale;
+  const dir = headersList.get("x-locale-dir") ?? "ltr";
+
   return (
-    <html lang="en-NZ" className={jetbrainsMono.variable}>
+    <html lang={locale} dir={dir} className={jetbrainsMono.variable}>
       <body>
         <script
           type="application/ld+json"

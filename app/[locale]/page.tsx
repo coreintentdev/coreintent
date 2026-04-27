@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useLocale } from "@/lib/locale-context";
+import { formatNumber, formatCurrency } from "@/lib/i18n";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -611,6 +613,7 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const { locale, t } = useLocale();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -668,7 +671,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -683,7 +686,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaced subscriptions with competitions
+              {t("hero.subtitle")}
             </p>
             <p
               style={{
@@ -694,21 +697,19 @@ export default function Home() {
                 lineHeight: "1.6",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
+              {t("hero.subscription_contrast").split(".")[0] + "."}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
+              {t("hero.subscription_contrast").split(". ").slice(1).join(". ") || "We charge nothing. You prove yourself in competition."}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
+              {t("hero.built_by")}
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
+              {t("hero.open_source")}
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -725,10 +726,10 @@ export default function Home() {
                   cursor: "pointer",
                 }}
               >
-                Launch Terminal &rarr;
+                {t("hero.cta_terminal")} &rarr;
               </button>
               <a
-                href="/pricing"
+                href={locale === "en" ? "/pricing" : `/${locale}/pricing`}
                 style={{
                   padding: "14px 32px",
                   background: "transparent",
@@ -742,7 +743,7 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                {t("hero.cta_competitions")}
               </a>
             </div>
 
@@ -804,11 +805,11 @@ export default function Home() {
               }}
             >
               {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
+                { value: "3", label: t("stats.ai_models"), color: "#a855f7" },
+                { value: "6", label: t("stats.trading_agents"), color: "#3b82f6" },
+                { value: formatCurrency(0, locale), label: t("stats.entry_fee"), color: "#10b981" },
+                { value: formatCurrency(45, locale) + "/mo", label: t("stats.stack_cost"), color: "#f59e0b" },
+                { value: "0", label: t("stats.subscriptions"), color: "#ef4444" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
                   <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
@@ -821,7 +822,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Powered by three AI models
+                {t("pipeline.powered_by")}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
@@ -991,11 +992,10 @@ export default function Home() {
                 Early Access
               </div>
               <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-                Get in before the leaderboard fills up.
+                {t("cta.heading")}
               </div>
               <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
-                Early registrations get priority placement when competitions go live.
-                The platform is free. The advantage is timing.
+                {t("cta.description")}
               </div>
               <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
                 <a
@@ -1016,7 +1016,7 @@ export default function Home() {
                     display: "inline-block",
                   }}
                 >
-                  Star on GitHub
+                  {t("cta.github")}
                 </a>
                 <a
                   href="https://x.com/coreintentai"
@@ -1035,11 +1035,11 @@ export default function Home() {
                     display: "inline-block",
                   }}
                 >
-                  Follow @coreintentai
+                  {t("cta.follow")}
                 </a>
               </div>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
-                Competitions launching soon. Paper trading mode active.
+                {t("cta.note")}
               </div>
             </div>
           </div>
@@ -1082,7 +1082,7 @@ export default function Home() {
 
       {/* Main content */}
       <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
-        {tab === "terminal" && <Terminal />}
+        {tab === "terminal" && <Terminal locale={locale} />}
 
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
         {tab === "dashboard" && (

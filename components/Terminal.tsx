@@ -1,8 +1,25 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { getTerminalGreeting, type Locale } from "@/lib/i18n";
 
-const WELCOME_BANNER = `\x1b[36m
+const TERMINAL_GREETINGS: Record<string, { paperMode: string; helpHint: string }> = {
+  en: { paperMode: "Paper trading mode — no real money at risk", helpHint: "Type help for commands. Tab to autocomplete. cai to start." },
+  es: { paperMode: "Modo paper trading — sin dinero real en riesgo", helpHint: "Escribe help para comandos. Tab para autocompletar. cai para empezar." },
+  mi: { paperMode: "Aratau hokohoko pepa — kāore he moni tūturu kei te tūraru", helpHint: "Pato help mō ngā whakahau. Tab ki te whakakī aunoa. cai ki te tīmata." },
+  zh: { paperMode: "模拟交易模式 — 无真实资金风险", helpHint: "输入 help 查看命令。Tab 自动补全。cai 开始。" },
+  ja: { paperMode: "ペーパートレードモード — 実際の資金リスクなし", helpHint: "help でコマンド一覧。Tab で自動補完。cai で開始。" },
+  pt: { paperMode: "Modo paper trading — sem dinheiro real em risco", helpHint: "Digite help para comandos. Tab para autocompletar. cai para começar." },
+  fr: { paperMode: "Mode paper trading — aucun argent réel en jeu", helpHint: "Tapez help pour les commandes. Tab pour compléter. cai pour commencer." },
+  de: { paperMode: "Paper-Trading-Modus — kein echtes Geld im Risiko", helpHint: "Tippe help für Befehle. Tab zum Vervollständigen. cai zum Starten." },
+  ar: { paperMode: "وضع التداول الورقي — لا أموال حقيقية في خطر", helpHint: "اكتب help للأوامر. Tab للإكمال التلقائي. cai للبدء." },
+  hi: { paperMode: "पेपर ट्रेडिंग मोड — कोई वास्तविक पैसा जोखिम में नहीं", helpHint: "कमांड के लिए help टाइप करें। Tab ऑटोकम्पलीट। cai शुरू करें।" },
+};
+
+function buildWelcomeBanner(locale: Locale = "en"): string {
+  const greeting = getTerminalGreeting(locale);
+  const strings = TERMINAL_GREETINGS[locale] ?? TERMINAL_GREETINGS.en;
+  return `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
@@ -10,11 +27,12 @@ const WELCOME_BANNER = `\x1b[36m
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 \x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
+\x1b[33m${greeting} — Zynthio.ai v0.2.0\x1b[0m
+\x1b[90m${strings.paperMode}\x1b[0m
+${strings.helpHint.replace("help", "\x1b[32mhelp\x1b[0m").replace("cai", "\x1b[32mcai\x1b[0m")}
 \x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -605,7 +623,7 @@ const ALL_COMMANDS = [
   "heatmap", "backtest", "pulse",
 ];
 
-export default function Terminal() {
+export default function Terminal({ locale = "en" as Locale }: { locale?: Locale }) {
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -634,8 +652,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(locale)]);
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {
