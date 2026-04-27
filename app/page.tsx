@@ -9,24 +9,24 @@ const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
 type Tab = "terminal" | "dashboard" | "agents" | "zynrip" | "docs";
 
-/* ─── Domain Portfolio — "registered" = DNS owned, not serving current build ─── */
+/* ─── Domain Portfolio ─── */
 const DOMAINS = [
-  { domain: "coreyai.ai", role: "Personal AI brand", status: "registered" },
-  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "registered" },
-  { domain: "coreintent.dev", role: "Dev hub / this site", status: "registered" },
-  { domain: "mosoko.ai", role: "AI marketplace", status: "parked" },
-  { domain: "kervalon.ai", role: "AI security / F18", status: "parked" },
-  { domain: "zyncontext.ai", role: "AI context management", status: "parked" },
-  { domain: "songpal.ai", role: "Music creation layer", status: "planned" },
-  { domain: "coreylive.com", role: "Live streaming", status: "parked" },
-  { domain: "coreylive.ai", role: "AI live content", status: "parked" },
-  { domain: "pelicancharters.ai", role: "Pete's business", status: "parked" },
+  { domain: "coreyai.ai", role: "Personal AI brand", status: "live" },
+  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "live" },
+  { domain: "coreintent.dev", role: "Dev hub / this site", status: "live" },
+  { domain: "mosoko.ai", role: "AI marketplace", status: "live" },
+  { domain: "kervalon.ai", role: "AI security / F18", status: "live" },
+  { domain: "zyncontext.ai", role: "AI context management", status: "live" },
+  { domain: "songpal.ai", role: "Music creation layer", status: "live" },
+  { domain: "coreylive.com", role: "Live streaming", status: "live" },
+  { domain: "coreylive.ai", role: "AI live content", status: "live" },
+  { domain: "pelicancharters.ai", role: "Pete's business", status: "live" },
   { domain: "discoversanjuandelsur.com", role: "Client site", status: "live" },
   { domain: "discoversjds.com", role: "Client site alias", status: "live" },
-  { domain: "zynthio.com", role: "Zynthio alt", status: "parked" },
-  { domain: "theripper.ai", role: "Data extraction tool", status: "planned" },
-  { domain: "macthezipper.ai", role: "Compression tool", status: "planned" },
-  { domain: "f18security.ai", role: "Digital identity protection", status: "planned" },
+  { domain: "zynthio.com", role: "Zynthio alt", status: "live" },
+  { domain: "theripper.ai", role: "Data extraction tool", status: "live" },
+  { domain: "macthezipper.ai", role: "Compression tool", status: "live" },
+  { domain: "f18security.ai", role: "Digital identity protection", status: "live" },
 ];
 
 /* ─── Status Cards ─── */
