@@ -379,7 +379,7 @@ const STATUS_CARDS = [
   { label: "AI Agents", value: "Ready", color: "#a855f7" },
   { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
   { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "12", color: "#06b6d4" },
+  { label: "API Routes", value: "14", color: "#06b6d4" },
 ];
 
 /* ─── Architecture Pillars ─── */
@@ -1005,7 +1005,7 @@ export default function Home() {
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "16px" }}>
                 {[
-                  { value: "16", label: "Domains Secured", color: "#ec4899" },
+                  { value: `${DOMAINS.length}`, label: "Domains Secured", color: "#ec4899" },
                   { value: "3", label: "Registered Trademarks", color: "#a855f7" },
                   { value: "14", label: "API Endpoints", color: "#06b6d4" },
                   { value: "100%", label: "Open Source", color: "#10b981" },
@@ -1433,8 +1433,10 @@ npm run build           # Production build`}
                     ["/api/protect", "Digital identity protection", "Real"],
                     ["/api/connections", "Service connections", "Live"],
                     ["/api/incidents", "Service monitoring", "Semi-real"],
+                    ["/api/health", "System health check", "Live"],
                     ["/api/notes", "In-memory notes", "Real"],
                     ["/api/autosave", "On-the-fly persistence", "Demo"],
+                    ["/api/sync", "Sync status and controls", "Demo"],
                   ].map(([route, desc, type]) => (
                     <tr key={route} style={{ borderBottom: "1px solid var(--border-color)" }}>
                       <td style={{ padding: "8px", color: "var(--accent-blue)" }}>{route}</td>
