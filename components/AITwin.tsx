@@ -155,7 +155,9 @@ function saveConversation(state: ConversationState): void {
 }
 
 function matchCommand(input: string): string | null {
-  const normalized = input.trim().toLowerCase().replace(/[^a-z0-9\s]/g, "");
+  const trimmed = input.trim().toLowerCase();
+  if (trimmed === "?" || trimmed === "h") return "help";
+  const normalized = trimmed.replace(/[^a-z0-9\s]/g, "");
   const commands = Object.keys(RESPONSES);
   for (const cmd of commands) {
     if (normalized === cmd || normalized.startsWith(cmd + " ")) return cmd;
@@ -167,7 +169,7 @@ function matchCommand(input: string): string | null {
   if (normalized.includes("safe") || normalized.includes("private") || normalized.includes("privacy") || normalized.includes("security") || normalized.includes("data")) return "security";
   if (normalized.includes("corey") || normalized.includes("founder") || normalized.includes("built") || normalized.includes("who")) return "who";
   if (normalized.includes("demo") || normalized.includes("trade") || normalized.includes("signal") || normalized.includes("watch") || normalized.includes("show")) return "demo";
-  if (normalized.includes("help") || normalized === "?" || normalized === "h") return "help";
+  if (normalized.includes("help")) return "help";
   return null;
 }
 
@@ -185,6 +187,7 @@ export default function AITwin() {
   const inputRef = useRef<HTMLInputElement>(null);
   const wakeListenerAttached = useRef(false);
   const hasGreeted = useRef(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
 
   // Load saved conversation on mount
   useEffect(() => {
@@ -220,7 +223,11 @@ export default function AITwin() {
   const playNotification = useCallback(() => {
     if (!soundEnabled) return;
     try {
-      const ctx = new AudioContext();
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContext();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") ctx.resume();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
@@ -334,6 +341,7 @@ export default function AITwin() {
     document.addEventListener("mousemove", wake, { once: true });
 
     return () => {
+      wakeListenerAttached.current = false;
       document.removeEventListener("keydown", wake);
       document.removeEventListener("mousemove", wake);
     };
