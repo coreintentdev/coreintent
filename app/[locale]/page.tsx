@@ -700,10 +700,10 @@ export default function Home() {
               {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              {t("hero.subscription_contrast").split(".")[0] + "."}
+              {t("hero.subscription_theirs")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              {t("hero.subscription_contrast").split(". ").slice(1).join(". ") || "We charge nothing. You prove yourself in competition."}
+              {t("hero.subscription_ours")}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
               {t("hero.built_by")}
@@ -1059,11 +1059,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tabId) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tabId}
+            onClick={() => setTab(tabId)}
+            aria-pressed={tab === tabId}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -1071,11 +1071,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tabId ? "var(--accent-green)" : "transparent",
+              color: tab === tabId ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {t(`tabs.${tabId}`)}
           </button>
         ))}
       </div>
