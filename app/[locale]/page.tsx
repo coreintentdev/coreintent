@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { useLocale } from "@/lib/locale-context";
-import { formatNumber, formatCurrency } from "@/lib/i18n";
+import { formatNumber, formatCurrency, isRtl } from "@/lib/i18n";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -60,18 +60,23 @@ const AI_MODELS = [
 
 /* ─── Particle Field Background ─── */
 function ParticleField() {
-  const particles = Array.from({ length: 24 }, (_, i) => ({
-    id: i,
-    left: `${(i * 4.17 + (i % 3) * 11) % 100}%`,
-    top: `${(i * 7.3 + (i % 5) * 13) % 100}%`,
-    size: 1.5 + (i % 4) * 0.8,
-    duration: 10 + (i % 7) * 3,
-    delay: (i % 5) * 2.5,
-    driftX: (i % 2 === 0 ? 1 : -1) * (20 + (i % 6) * 12),
-    driftY: -(30 + (i % 4) * 20),
-    color: ["#10b981", "#3b82f6", "#a855f7", "#06b6d4"][i % 4],
-    opacity: 0.15 + (i % 3) * 0.1,
-  }));
+  const { locale } = useLocale();
+  const rtl = isRtl(locale);
+  const particles = Array.from({ length: 24 }, (_, i) => {
+    const driftXBase = (i % 2 === 0 ? 1 : -1) * (20 + (i % 6) * 12);
+    return {
+      id: i,
+      left: `${(i * 4.17 + (i % 3) * 11) % 100}%`,
+      top: `${(i * 7.3 + (i % 5) * 13) % 100}%`,
+      size: 1.5 + (i % 4) * 0.8,
+      duration: 10 + (i % 7) * 3,
+      delay: (i % 5) * 2.5,
+      driftX: rtl ? -driftXBase : driftXBase,
+      driftY: -(30 + (i % 4) * 20),
+      color: ["#10b981", "#3b82f6", "#a855f7", "#06b6d4"][i % 4],
+      opacity: 0.15 + (i % 3) * 0.1,
+    };
+  });
 
   return (
     <div className="particle-field">
@@ -700,10 +705,10 @@ export default function Home() {
               {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              {t("hero.subscription_contrast").split(".")[0] + "."}
+              {t("hero.subscription_contrast_theirs")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              {t("hero.subscription_contrast").split(". ").slice(1).join(". ") || "We charge nothing. You prove yourself in competition."}
+              {t("hero.subscription_contrast_ours")}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
               {t("hero.built_by")}
@@ -1059,11 +1064,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tabName) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tabName}
+            onClick={() => setTab(tabName)}
+            aria-pressed={tab === tabName}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -1071,11 +1076,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tabName ? "var(--accent-green)" : "transparent",
+              color: tab === tabName ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {t(`tabs.${tabName}`)}
           </button>
         ))}
       </div>

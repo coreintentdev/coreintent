@@ -629,6 +629,3 @@ a {
   animation-direction: reverse;
 }
 
-[dir="rtl"] .particle-dot {
-  --drift-x: calc(-1 * var(--drift-x));
-}
