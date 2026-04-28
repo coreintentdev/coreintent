@@ -1,6 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useI18n } from "@/lib/i18n-context";
+
+const LOCALE_GREETINGS: Record<string, string> = {
+  en: "Welcome to CoreIntent Commander",
+  es: "Bienvenido a CoreIntent Commander",
+  mi: "Nau mai ki CoreIntent Commander",
+  zh: "欢迎来到 CoreIntent Commander",
+  ja: "CoreIntent Commander へようこそ",
+  pt: "Bem-vindo ao CoreIntent Commander",
+  fr: "Bienvenue sur CoreIntent Commander",
+  de: "Willkommen bei CoreIntent Commander",
+  ar: "مرحبا بك في CoreIntent Commander",
+  hi: "CoreIntent Commander में आपका स्वागत है",
+};
 
 const WELCOME_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
@@ -633,6 +647,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { locale } = useI18n();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -661,8 +676,12 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    const greeting = LOCALE_GREETINGS[locale] || LOCALE_GREETINGS.en;
+    const localeGreeting = locale !== "en"
+      ? `\x1b[33m${greeting}\x1b[0m\n`
+      : "";
+    setLines([localeGreeting + WELCOME_BANNER]);
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

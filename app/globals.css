@@ -634,3 +634,31 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   RTL SUPPORT — Arabic and other RTL locales
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] nav {
+  direction: rtl;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] header nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}

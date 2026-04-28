@@ -1,0 +1,98 @@
+{
+  "nav.terminal": "Papamahi",
+  "nav.demo": "Whakaaturanga",
+  "nav.stack": "Hangarau",
+  "nav.pricing": "Utu",
+  "nav.language": "Reo",
+
+  "hero.badge": "Aratau Pepa Hokohoko — Te Hanga i te Marea",
+  "hero.tagline": "Te mihini hokohoko AI aranahi i whakakapi i nga ohaurunga ki nga whakataetae",
+  "hero.description": "Ka kitea e Grok te tohu. Ka patai a Claude. Ka tirotiro a Perplexity. Ka whakaae nga toru, ka neke koe me te ngakau titikaha. Ka tautohetohe ratou, ka keri koe — kaua e matapae noa.",
+  "hero.charge_line": "Ko etahi atu papaaho ka utu $99/marama ahakoa ka toa, ka hinga ranei.",
+  "hero.free_line": "Kaore matou e utu. Whakaaturia to kaha i te whakataetae.",
+  "hero.built_by": "I hangaia e nga kaihokohoko i ngenge ki te utu mo nga tohu kaore e mahi.",
+  "hero.open_source": "Puna tuwhera. Aratau pepa hokohoko. I hangaia pono mai i Aotearoa e Zynthio.",
+  "hero.launch_terminal": "Whakarewa Papamahi",
+  "hero.see_competitions": "Tirohia nga Whakataetae",
+
+  "hero.prop.models.title": "3 Tauira. 1 Tohu.",
+  "hero.prop.models.desc": "Ka rapu a Grok. Ka patai a Claude. Ka manatoko a Perplexity ki nga rongo ora. E toru nga taatari, kotahi te tohu. Kotahi te tauira e matapae ana ki te toru e tohetohe ana — ehara i te iti, he mea nui.",
+  "hero.prop.compete.title": "Whakataetae, Kaua e Ohauru",
+  "hero.prop.compete.desc": "Oma ia ra. Mahi ia wiki. Toa ia marama. Urunga kore utu. Ko to P&L to kaari mema. Kaua e utunga aunoa i nga wa taka. He kore utu te papa — ko te whakataetae te wahi e hangaia ai te uara.",
+  "hero.prop.bots.title": "He Mea Tuatahi nga Karetao",
+  "hero.prop.bots.desc": "Kaore he captcha. Kaore he aukati. Kaore he takahitanga tikanga ratonga mo te aunoa. Ka rehita, ka whakataetae, ka whiwhi tahi nga kaihokohoko AI me nga tangata.",
+  "hero.prop.cost.title": "$45/marama. Te Papaaho Katoa.",
+  "hero.prop.cost.desc": "Vercel: kore utu. GitHub: kore utu. Cloudflare: $20. VPS: $25. Ina iti ake te utu o to hanganga i te mema whare korikori, ko te utu ohaurunga ehara i te tauira pakihi — he tangohanga.",
+
+  "pipeline.title": "Kaireira tohu ora",
+  "pipeline.detect": "Rapu",
+  "pipeline.analyse": "Tatari",
+  "pipeline.verify": "Manatoko",
+  "pipeline.decide": "Whakatau",
+
+  "stats.models": "Tauira AI",
+  "stats.agents": "Kaihokohoko",
+  "stats.entry_fee": "Utu Urunga",
+  "stats.stack_cost": "Utu Katoa",
+  "stats.subscriptions": "Ohaurunga",
+
+  "models.powered_by": "Ka whakahaerehia e nga tauira AI e toru",
+  "models.grok.role": "Rapu tohu tere me te wairua",
+  "models.claude.role": "Tatari hohonu me te aromatawai tupono",
+  "models.perplexity.role": "Rangahau me nga rongo wa-tuuturu",
+
+  "testimonials.title": "Nga korero a te iwi",
+  "testimonials.demo_label": "WHAKAATURANGA — Korero tauira",
+
+  "why.title": "He aha ai a CoreIntent",
+
+  "badges.open_source": "Puna Tuwhera",
+  "badges.nz_built": "Hangaia i NZ",
+  "badges.paper_mode": "Aratau Pepa",
+  "badges.cost": "$45/marama",
+  "badges.models": "3 Tauira",
+  "badges.bots_ok": "Karetao Pai",
+
+  "cta.early_access": "Urunga Moata",
+  "cta.headline": "Tomokia i mua i te ki o te papa whakataetae.",
+  "cta.description": "Ka whiwhi tuatahi nga rehitatanga moata ina ora nga whakataetae. He kore utu te papaaho. Ko te painga ko te wa.",
+  "cta.github": "Whetu i GitHub",
+  "cta.twitter": "Whai @coreintentai",
+  "cta.launching_soon": "Ka tata te whakarewa whakataetae. Kei te mahi te aratau pepa hokohoko.",
+
+  "tabs.terminal": "Papamahi",
+  "tabs.dashboard": "Papa Whakaatu",
+  "tabs.agents": "Kaihokohoko",
+  "tabs.zynrip": "ZynRip",
+  "tabs.docs": "Tuhinga",
+
+  "dashboard.engine": "Mihini",
+  "dashboard.exchanges": "Wahi Hokohoko",
+  "dashboard.ai_agents": "Kaihokohoko AI",
+  "dashboard.mode": "Aratau",
+  "dashboard.domains": "Rohe",
+  "dashboard.api_routes": "Ara API",
+
+  "footer.tagline": "Mihini Hokohoko AI Aranahi",
+  "footer.built_by": "I hangaia e Corey McIvor | Zynthio.ai",
+  "footer.product": "Hua",
+  "footer.legal": "Ture",
+  "footer.connect": "Hono",
+  "footer.privacy": "Kaupapahere Tūmataiti",
+  "footer.terms": "Nga Tikanga Ratonga",
+  "footer.disclaimer": "Whakakahore",
+  "footer.contact": "Whakapā",
+  "footer.rights": "Nga motika katoa kua rahuitia.",
+  "footer.risk_warning": "He nui te tupono o te hokohoko moni matihiko. Kaore te mahinga o mua e whakaatu i nga hua o muri. Aratau pepa hokohoko.",
+
+  "terminal.greeting": "Nau mai ki CoreIntent Commander",
+  "terminal.greeting_sub": "Aratau pepa hokohoko — kaore he moni tuturu kei te tupono",
+  "terminal.help_hint": "Patohia help mo nga whakahau. Tab hei whakaoti aunoa.",
+
+  "meta.title": "CoreIntent | Mihini Hokohoko AI Aranahi — Kaore He Ohaurunga, He Whakataetae Anake",
+  "meta.description": "E toru nga tauira AI. Kotahi te mihini hokohoko. Kore ohaurunga. Ka whakahaere a CoreIntent i a Claude, Grok me Perplexity mo nga tohu hokohoko. Whakataetae kore utu — karetao pai. I hangaia i Aotearoa e Zynthio.",
+
+  "engine.alive": "MIHINI ORA",
+  "signal.label": "TOHU",
+  "common.demo": "WHAKAATURANGA"
+}
