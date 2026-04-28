@@ -435,8 +435,8 @@ function generateBook() {
 }
 
 /* ─── Candlestick Chart (Simulated OHLC) ─── */
-function CandlestickChart() {
-  const candles = Array.from({ length: 24 }, (_, i) => {
+function generateCandles() {
+  return Array.from({ length: 24 }, (_, i) => {
     const basePrice = 67000 + Math.sin(i * 0.5) * 800 + (Math.random() - 0.4) * 400;
     const open = basePrice + (Math.random() - 0.5) * 300;
     const close = basePrice + (Math.random() - 0.5) * 300;
@@ -444,6 +444,10 @@ function CandlestickChart() {
     const low = Math.min(open, close) - Math.random() * 200;
     return { open, close, high, low, bullish: close > open };
   });
+}
+
+function CandlestickChart() {
+  const [candles] = useState(generateCandles);
 
   const allPrices = candles.flatMap((c) => [c.high, c.low]);
   const minPrice = Math.min(...allPrices);
@@ -567,7 +571,7 @@ function CandlestickChart() {
                 y={bodyTop}
                 width={candleWidth}
                 height={bodyHeight}
-                fill={c.bullish ? color : color}
+                fill={color}
                 rx={2}
                 opacity={0.9}
               />
