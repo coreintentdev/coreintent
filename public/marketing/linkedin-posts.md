@@ -215,3 +215,65 @@ Currently validating this architecture in paper trading mode before deploying wi
 -> coreintent.dev | github.com/coreintentdev/coreintent
 
 #AI #MachineLearning #SystemDesign #TradingTechnology #FinTech #MultiModelAI
+
+---
+
+## Post 8 — April 2026 Milestone Update
+
+**CoreIntent April update: what's real, what's demo, and what we learned.**
+
+Building in public means sharing the uncomfortable parts too.
+
+**What's working:**
+- 3 AI models (Grok, Claude, Perplexity) integrated and responding to queries
+- 6 trading agents configured with distinct strategies
+- 14 API endpoints built, deployed, and documented
+- Full interactive web terminal with real command execution
+- Dynamic Open Graph images generated at the edge for every page
+- Structured data markup (FAQ schema, Event schema, breadcrumbs)
+
+**What's honest:**
+- Most API routes still return demo data. Labelled as such.
+- No exchange connections yet (Binance/Coinbase are planned, not live)
+- No user authentication or database layer
+- Paper trading mode — clearly stated in every banner
+
+**What we learned:**
+1. Transparency converts better than polish. Users who see "DEMO" labels trust the platform more, not less.
+2. Multi-model consensus architecture works — but the real value is in the disagreements, not the agreements.
+3. $45/month infrastructure is sustainable. Month after month. No funding anxiety.
+
+The temptation in fintech is to fake it until you make it. We're making it without faking it.
+
+-> coreintent.dev
+
+#BuildInPublic #FinTech #Startups #AI #Transparency #NewZealand
+
+---
+
+## Post 9 — Why We Open-Sourced Our Marketing
+
+**We open-sourced our marketing materials. Here's why.**
+
+Go to our GitHub repo. Navigate to /public/marketing/. You'll find:
+- 45 ready-to-post tweets
+- 8 LinkedIn posts (including this one)
+- 11 TikTok video scripts
+- 10 Instagram captions with hashtag strategies
+- An HTML email newsletter template
+- A 30-day content calendar with platform-specific scheduling
+- A complete press kit, one-pager, and media guide
+
+All of it. Public. Forkable.
+
+**"But won't competitors copy it?"**
+
+The content only works because the underlying product thesis is genuine. You can copy the tweets — but you can't copy $45/month infrastructure costs. You can't copy a competition-based revenue model when your investors expect subscription MRR. You can't copy radical transparency when your dashboard has fake green dots.
+
+Marketing is a reflection of product decisions. When those decisions are strong, the marketing writes itself.
+
+Open-sourcing the marketing is the final proof that we mean what we say about transparency.
+
+-> github.com/coreintentdev/coreintent/tree/main/public/marketing
+
+#ContentMarketing #OpenSource #BuildInPublic #StartupMarketing #FinTech

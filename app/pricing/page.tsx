@@ -207,8 +207,34 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-                <div style={{ fontSize: "14px", fontWeight: "bold", color: league.color }}>
-                  Entry: {league.entry}
+                <div style={{ marginTop: "auto" }}>
+                  <div style={{ fontSize: "28px", fontWeight: "bold", color: league.color, marginBottom: "4px" }}>
+                    $0
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "16px" }}>
+                    Free entry. Always.
+                  </div>
+                  <a
+                    href="https://github.com/coreintentdev/coreintent"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "block",
+                      padding: "12px 24px",
+                      background: league.color,
+                      color: "#000",
+                      border: "none",
+                      borderRadius: "8px",
+                      fontFamily: "inherit",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      textDecoration: "none",
+                      textAlign: "center",
+                    }}
+                  >
+                    Join {league.name} &rarr;
+                  </a>
                 </div>
               </article>
             ))}
@@ -484,7 +510,7 @@ export default function PricingPage() {
               Early Access
             </div>
             <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>
-              First movers get first-mover advantages.
+              Founding members shape the future. First movers own it.
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginTop: "16px", maxWidth: "600px", margin: "16px auto 0" }}>
               {[
@@ -524,12 +550,15 @@ export default function PricingPage() {
             }}
           >
             <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
-              The Arena Is Open.
+              The Arena Is Open. Your Move.
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
               No credit card. No subscription trap. No &quot;free trial&quot; that silently converts to $99/mo.
               <br />
-              Just you, your strategy, and the leaderboard. Early registration gets priority placement.
+              Just you, your strategy, and the leaderboard.
+            </p>
+            <p style={{ color: "var(--accent-green)", fontSize: "13px", fontWeight: "bold", marginBottom: "20px" }}>
+              Founding members get priority placement when competitions go live.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link

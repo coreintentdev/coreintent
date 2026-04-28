@@ -664,3 +664,113 @@ Different game.
 coreintent.dev
 
 #FinTech #CoreIntent
+
+---
+
+## Post 39 — The Content Is Public Too
+
+We open-sourced the trading engine.
+
+Then we open-sourced the marketing.
+
+38 tweets. 7 LinkedIn posts. 11 TikTok scripts. 10 Instagram captions. A press kit. A 30-day content calendar.
+
+All in /public/marketing/ on GitHub.
+
+Copy the marketing too. We dare you.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #BuildInPublic #ContentStrategy
+
+---
+
+## Post 40 — The OG Image Is Generated
+
+Our Open Graph images aren't designed in Figma.
+
+They're generated at the edge. In code. Automatically.
+
+Every page gets a unique, branded preview when you share the link — zero manual work.
+
+When your marketing runs on infrastructure, not headcount, you move faster.
+
+$45/mo includes the preview cards.
+
+#DevMarketing #NextJS #EdgeComputing
+
+---
+
+## Post 41 — Schema Markup as Marketing
+
+Most trading platforms optimise for "sign up" buttons.
+
+We optimised for Google's FAQ rich results.
+
+Every competition is Schema.org structured data. Every FAQ answer is machine-readable. Every league is an Event with scheduling data.
+
+SEO isn't a department. It's a design decision.
+
+coreintent.dev/pricing
+
+#SEO #StructuredData #FinTech
+
+---
+
+## Post 42 — The Peer Review Analogy
+
+Science doesn't trust a single study.
+Courts don't trust a single witness.
+Medicine doesn't trust a single trial.
+
+Why would you trust a single AI model with your trading signals?
+
+CoreIntent runs peer review for markets. Three models. Three perspectives. One signal — or none.
+
+#MultiModelAI #CriticalThinking #AITrading
+
+---
+
+## Post 43 — Paper Trading Is R&D
+
+SpaceX didn't launch astronauts on the first rocket.
+
+Tesla didn't sell the first prototype.
+
+We're not "just" paper trading.
+
+We're running R&D on a multi-model trading engine with six agents, three AI models, and zero risk to anyone's capital.
+
+When we go live, the architecture will be battle-tested. Not rushed.
+
+That's not weakness. That's engineering.
+
+#PaperTrading #StartupMindset #CoreIntent
+
+---
+
+## Post 44 — NZ Time Zone Advantage
+
+Building from NZ means we ship while SF sleeps.
+
+US markets close. We push code. US wakes up to new features.
+
+12-hour offset isn't a disadvantage. It's a deployment window.
+
+#MadeInNZ #RemoteWork #IndieFounder
+
+---
+
+## Post 45 — The 3-Filter Test
+
+Before any signal reaches a trader on CoreIntent, it passes 3 filters:
+
+Filter 1: Does it exist? (Grok — pattern detection)
+Filter 2: Should we act? (Claude — risk analysis)
+Filter 3: Is the context right? (Perplexity — research)
+
+Most signals fail at Filter 2.
+
+That's the point.
+
+#RiskManagement #AITrading #TradingSignals
