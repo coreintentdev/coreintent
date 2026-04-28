@@ -745,6 +745,21 @@ export default function Home() {
                 minHeight: "1.3em",
               }}
             >
+              <span
+                style={{
+                  position: "absolute",
+                  width: "1px",
+                  height: "1px",
+                  padding: 0,
+                  margin: "-1px",
+                  overflow: "hidden",
+                  clip: "rect(0,0,0,0)",
+                  whiteSpace: "nowrap",
+                  border: 0,
+                }}
+              >
+                CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
+              </span>
               <TypeWriter />
             </h1>
             <p
@@ -1492,7 +1507,7 @@ npm run build           # Production build`}
       </main>
 
       {/* Status bar */}
-      <footer
+      <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -1503,10 +1518,13 @@ npm run build           # Production build`}
           color: "var(--text-secondary)",
           background: "var(--bg-secondary)",
         }}
+        role="status"
+        aria-label="Engine status"
       >
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
         <span>Paper Trading Mode | v0.2.0-alpha</span>
-      </footer>
+      </div>
+      <SiteFooter />
     </div>
   );
 }

@@ -2,30 +2,31 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://coreintent.dev";
+  const now = new Date().toISOString().split("T")[0];
 
   return [
     {
       url: base,
-      lastModified: new Date("2026-04-27"),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
+      url: `${base}/demo`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${base}/pricing`,
-      lastModified: new Date("2026-04-27"),
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${base}/stack`,
-      lastModified: new Date("2026-04-27"),
+      lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${base}/demo`,
-      lastModified: new Date("2026-04-27"),
-      changeFrequency: "weekly",
       priority: 0.7,
     },
     {
