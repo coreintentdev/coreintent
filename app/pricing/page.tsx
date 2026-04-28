@@ -9,6 +9,8 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
+    highlight: false,
+    tagline: "Prove your edge every 24 hours",
     description: "Leaderboard resets at midnight UTC. By morning, someone won. Could be a quant in Tokyo. Could be a bot in a data centre. No carryover, no safety net — 24 hours to prove your edge or start fresh.",
     features: [
       "Fresh challenge drops at 00:00 UTC — clean slate daily",
@@ -18,11 +20,14 @@ const LEAGUES = [
       "Results posted publicly — no hiding behind private portfolios",
     ],
     entry: "Free",
+    cta: "Start Competing",
   },
   {
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
+    highlight: false,
+    tagline: "Consistency over luck",
     description: "Anyone can get lucky for a day. Show us seven. Consistency separates traders from gamblers. Sharpe ratio matters here, not just raw P&L — this league proves which one you are.",
     features: [
       "7-day performance with risk-adjusted scoring",
@@ -32,11 +37,14 @@ const LEAGUES = [
       "Drawdown penalties — surviving the dips matters as much as catching the rips",
     ],
     entry: "Free",
+    cta: "Join the Grind",
   },
   {
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
+    highlight: true,
+    tagline: "Where legends are made",
     description: "The main event. 30 days. Full portfolio wars. This is where reputations are forged, pretenders get exposed, and the best strategy — human or bot — takes the crown. Zero entry fee.",
     features: [
       "Full month performance under real market conditions",
@@ -46,6 +54,7 @@ const LEAGUES = [
       "The highest stakes. The biggest bragging rights. Still free.",
     ],
     entry: "Free",
+    cta: "Enter the Championship",
   },
 ];
 
@@ -63,6 +72,26 @@ export default function PricingPage() {
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
+          {/* Urgency Banner */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "10px",
+              padding: "6px 16px",
+              background: "#f59e0b12",
+              border: "1px solid #f59e0b33",
+              borderRadius: "20px",
+              fontSize: "11px",
+              color: "#f59e0b",
+              marginBottom: "12px",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+            }}
+          >
+            <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b", animation: "pulse 2s ease-in-out infinite" }} />
+            Founding Member Access — Competitions launching soon
+          </div>
           <div
             style={{
               display: "inline-block",
@@ -79,10 +108,10 @@ export default function PricingPage() {
           >
             Trading as a sport
           </div>
-          <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
+          <h1 style={{ fontSize: "clamp(28px, 4vw, 44px)", marginBottom: "12px", lineHeight: "1.2", fontWeight: "bold" }}>
             No Subscriptions. Just Competitions.
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px", maxWidth: "600px", margin: "0 auto 8px" }}>
             You pay $99/mo. You lose money. They still get paid.<br />
             That&apos;s not alignment — that&apos;s indifference with a billing cycle.
           </p>
@@ -146,20 +175,43 @@ export default function PricingPage() {
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+          <div className="league-grid-responsive" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {LEAGUES.map((league) => (
               <article
                 key={league.name}
+                className={league.highlight ? "league-highlight" : ""}
                 style={{
-                  background: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
+                  background: league.highlight
+                    ? "linear-gradient(180deg, #a855f708 0%, var(--bg-secondary) 100%)"
+                    : "var(--bg-secondary)",
+                  border: `1px solid ${league.highlight ? "#a855f733" : "var(--border-color)"}`,
                   borderRadius: "12px",
                   padding: "32px 24px",
                   display: "flex",
                   flexDirection: "column",
                   position: "relative",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 }}
               >
+                {league.highlight && (
+                  <div style={{
+                    position: "absolute",
+                    top: "-12px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    padding: "4px 16px",
+                    background: "#a855f7",
+                    color: "#fff",
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    borderRadius: "20px",
+                    letterSpacing: "0.5px",
+                    textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                  }}>
+                    Most Popular
+                  </div>
+                )}
                 <div
                   aria-hidden="true"
                   style={{
@@ -171,14 +223,18 @@ export default function PricingPage() {
                 >
                   {league.icon}
                 </div>
-                <h3 style={{ color: league.color, fontSize: "20px", marginBottom: "8px" }}>
+                <h3 style={{ color: league.color, fontSize: "20px", marginBottom: "2px" }}>
                   {league.name}
                 </h3>
+                <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "12px", fontStyle: "italic" }}>
+                  {league.tagline}
+                </div>
                 <p
                   style={{
                     fontSize: "13px",
                     color: "var(--text-secondary)",
                     marginBottom: "16px",
+                    lineHeight: "1.5",
                   }}
                 >
                   {league.description}
@@ -207,9 +263,26 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-                <div style={{ fontSize: "14px", fontWeight: "bold", color: league.color }}>
-                  Entry: {league.entry}
+                <div style={{ marginBottom: "16px" }}>
+                  <div style={{ fontSize: "24px", fontWeight: "bold", color: league.color }}>
+                    {league.entry}
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
+                    No credit card required
+                  </div>
                 </div>
+                <Link
+                  href="/"
+                  className="league-cta"
+                  style={{
+                    background: league.highlight ? league.color : "transparent",
+                    color: league.highlight ? "#fff" : league.color,
+                    border: league.highlight ? "none" : `1px solid ${league.color}44`,
+                    boxShadow: league.highlight ? `0 4px 20px ${league.color}33` : "none",
+                  }}
+                >
+                  {league.cta}
+                </Link>
               </article>
             ))}
           </div>
@@ -420,7 +493,7 @@ export default function PricingPage() {
             <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px" }}>
               What a typical $99/mo trading subscription costs you — whether you profit or not.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "24px" }}>
+            <div className="savings-grid-responsive" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "24px" }}>
               {[
                 { period: "3 Months", them: "$297", us: "$0", saved: "$297" },
                 { period: "6 Months", them: "$594", us: "$0", saved: "$594" },

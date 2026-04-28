@@ -116,6 +116,75 @@ function ScrollReveal({ children, className = "" }: { children: React.ReactNode;
   return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
 }
 
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000 }: { end: number; suffix?: string; prefix?: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const startTime = performance.now();
+    const animate = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * end));
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [started, end, duration]);
+
+  return <span ref={ref} className={started ? "counter-value" : ""}>{prefix}{started ? count : 0}{suffix}</span>;
+}
+
+/* ─── Floating CTA ─── */
+function FloatingCTA() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div
+      className="floating-cta-wrap"
+      style={{
+        position: "fixed",
+        bottom: 24,
+        right: 24,
+        zIndex: 1000,
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        opacity: show ? 1 : 0,
+        transform: show ? "translateY(0)" : "translateY(20px)",
+        pointerEvents: show ? "auto" : "none",
+      }}
+    >
+      <a
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-cta-btn"
+      >
+        <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#000", animation: "pulse 2s ease-in-out infinite" }} />
+        Enter the Arena
+      </a>
+    </div>
+  );
+}
+
 /* ─── Engine Heartbeat ─── */
 function EngineHeartbeat() {
   const [beat, setBeat] = useState(0);
@@ -854,38 +923,121 @@ export default function Home() {
             </div>
             </ScrollReveal>
 
+            {/* ─── How It Works ─── */}
+            <ScrollReveal>
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px" }}>
+                How it works
+              </div>
+              <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "20px" }}>
+                From noise to conviction in three steps.
+              </div>
+              <div
+                className="how-it-works-grid"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1fr",
+                  gap: "20px",
+                  textAlign: "center",
+                }}
+              >
+                {[
+                  {
+                    step: "01",
+                    title: "Signal Detection",
+                    desc: "Grok scans markets, social feeds, and price action 24/7. When it spots a potential trade, it raises the flag. Speed is its edge.",
+                    color: "#ef4444",
+                    icon: "G",
+                  },
+                  {
+                    step: "02",
+                    title: "Cross-Validation",
+                    desc: "Claude runs risk analysis. Perplexity checks live news and on-chain data. If they disagree, the signal gets flagged — not blindly executed.",
+                    color: "#a855f7",
+                    icon: "C+P",
+                  },
+                  {
+                    step: "03",
+                    title: "Compete & Win",
+                    desc: "Enter free daily, weekly, or monthly leagues. Your strategy — human or bot — goes head to head against the field. The leaderboard is the proof.",
+                    color: "#10b981",
+                    icon: "W",
+                  },
+                ].map((s, i) => (
+                  <div
+                    key={s.step}
+                    className={`step-card stagger-${i + 1}`}
+                    style={{
+                      padding: "28px 20px",
+                      background: "var(--bg-primary)",
+                      border: `1px solid ${s.color}22`,
+                      borderRadius: "12px",
+                      position: "relative",
+                    }}
+                  >
+                    <div
+                      className="step-number"
+                      style={{
+                        background: `${s.color}14`,
+                        color: s.color,
+                        border: `1px solid ${s.color}33`,
+                      }}
+                    >
+                      {s.step}
+                    </div>
+                    <div style={{ fontSize: "15px", fontWeight: "bold", color: s.color, marginBottom: "8px" }}>
+                      {s.title}
+                    </div>
+                    <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+                      {s.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            </ScrollReveal>
+
             {/* Animated Signal Pipeline */}
             <ScrollReveal>
             <SignalPipeline />
             </ScrollReveal>
 
-            {/* Stats Banner */}
+            {/* Animated Stats Banner */}
+            <ScrollReveal>
             <div
+              className="stats-banner-responsive"
               style={{
                 marginTop: "28px",
                 display: "flex",
                 justifyContent: "center",
-                gap: "24px",
+                gap: "32px",
                 flexWrap: "wrap",
-                padding: "16px 24px",
-                background: "#10b98108",
+                padding: "24px 32px",
+                background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
                 border: "1px solid #10b98118",
-                borderRadius: "10px",
+                borderRadius: "12px",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.03), transparent)", backgroundSize: "200% 100%", animation: "glowSweep 4s ease infinite", pointerEvents: "none" }} />
               {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
+                { end: 3, suffix: "", label: "AI Models", sublabel: "Cross-checking", color: "#a855f7" },
+                { end: 6, suffix: "", label: "Trading Agents", sublabel: "Battle-ready", color: "#3b82f6" },
+                { end: 0, suffix: "", prefix: "$", label: "Entry Fee", sublabel: "Always free", color: "#10b981" },
+                { end: 45, suffix: "/mo", prefix: "$", label: "Total Cost", sublabel: "Whole platform", color: "#f59e0b" },
+                { end: 0, suffix: "", label: "Subscriptions", sublabel: "Ever", color: "#ef4444" },
               ].map((stat) => (
-                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
-                  <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
-                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
+                <div key={stat.label} style={{ textAlign: "center", minWidth: "90px", position: "relative", zIndex: 1 }}>
+                  <div style={{ fontSize: "28px", fontWeight: "bold", color: stat.color, lineHeight: "1.2" }}>
+                    <AnimatedCounter end={stat.end} prefix={stat.prefix || ""} suffix={stat.suffix} duration={1800} />
+                  </div>
+                  <div style={{ fontSize: "11px", fontWeight: "bold", color: "var(--text-primary)", textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "2px" }}>{stat.label}</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "1px" }}>{stat.sublabel}</div>
                 </div>
               ))}
             </div>
+            </ScrollReveal>
 
             {/* Powered By */}
             <ScrollReveal>
@@ -1006,45 +1158,57 @@ export default function Home() {
             </ScrollReveal>
 
             {/* Trust Badges */}
+            <ScrollReveal>
             <div
               style={{
                 marginTop: "36px",
                 display: "flex",
                 justifyContent: "center",
-                gap: "16px",
+                gap: "12px",
                 flexWrap: "wrap",
               }}
             >
               {[
-                { label: "Open Source", detail: "GitHub", color: "#10b981", icon: "{ }" },
-                { label: "NZ-Built", detail: "No VC", color: "#3b82f6", icon: "NZ" },
-                { label: "Paper Mode", detail: "Honest", color: "#a855f7", icon: "PT" },
-                { label: "$45/mo", detail: "Total Cost", color: "#f59e0b", icon: "$" },
-                { label: "3 Models", detail: "Cross-Check", color: "#ef4444", icon: "AI" },
-                { label: "Bots OK", detail: "First-Class", color: "#06b6d4", icon: "B" },
+                { label: "Built in NZ", detail: "No VC. No permission.", color: "#3b82f6", icon: "NZ" },
+                { label: "AI-Powered", detail: "3 models cross-checking", color: "#a855f7", icon: "AI" },
+                { label: "Competition-Grade", detail: "Daily / Weekly / Monthly", color: "#10b981", icon: "CG" },
+                { label: "Open Source", detail: "Full transparency", color: "#f59e0b", icon: "{ }" },
+                { label: "Bot-Friendly", detail: "AI-to-AI first-class", color: "#06b6d4", icon: "B" },
+                { label: "Paper Mode", detail: "Honestly labelled", color: "#ec4899", icon: "PT" },
               ].map((badge) => (
                 <div
                   key={badge.label}
+                  className="trust-badge-enhanced"
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "8px",
-                    padding: "8px 14px",
-                    background: badge.color + "08",
+                    gap: "10px",
+                    padding: "10px 16px",
+                    background: `${badge.color}08`,
                     border: `1px solid ${badge.color}22`,
-                    borderRadius: "8px",
+                    borderRadius: "10px",
                   }}
                 >
-                  <span style={{ fontSize: "10px", fontWeight: "bold", color: badge.color, background: badge.color + "18", padding: "4px 6px", borderRadius: "4px" }}>
+                  <span style={{
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    color: badge.color,
+                    background: `${badge.color}18`,
+                    padding: "6px 8px",
+                    borderRadius: "6px",
+                    letterSpacing: "0.5px",
+                    lineHeight: 1,
+                  }}>
                     {badge.icon}
                   </span>
                   <div>
-                    <div style={{ fontSize: "11px", fontWeight: "bold", color: "var(--text-primary)" }}>{badge.label}</div>
-                    <div style={{ fontSize: "9px", color: "var(--text-secondary)" }}>{badge.detail}</div>
+                    <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{badge.label}</div>
+                    <div style={{ fontSize: "9px", color: "var(--text-secondary)", lineHeight: "1.3" }}>{badge.detail}</div>
                   </div>
                 </div>
               ))}
             </div>
+            </ScrollReveal>
 
             {/* Early Access CTA */}
             <div
@@ -1507,6 +1671,8 @@ npm run build           # Production build`}
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
         <span>Paper Trading Mode | v0.2.0-alpha</span>
       </footer>
+
+      <FloatingCTA />
     </div>
   );
 }
