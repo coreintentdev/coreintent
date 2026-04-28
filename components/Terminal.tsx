@@ -88,6 +88,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mzen\x1b[0m         - Trading koan for the soul
   \x1b[32mfire\x1b[0m        - ASCII fire simulation
   \x1b[32mabout\x1b[0m       - Platform summary & how it works
+  \x1b[32mdecrypt\x1b[0m     - Decrypt a classified message
+  \x1b[32morbit\x1b[0m       - Watch AI models orbit the engine
+  \x1b[32mglitch\x1b[0m      - Trigger a system resilience test
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -630,6 +633,7 @@ const ALL_COMMANDS = [
   "sudo", "rickroll", "moon", "wen",
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
+  "decrypt", "orbit", "glitch",
 ];
 
 export default function Terminal() {
@@ -1903,6 +1907,186 @@ export default function Terminal() {
         }
         frame++;
       }, 150);
+      return "";
+    }
+
+    // ── decrypt ──
+    if (trimmed === "decrypt") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ DECRYPTING CLASSIFIED MESSAGE ══\x1b[0m`,
+        `\x1b[90m  Source: ZYNTHIO COMMAND | Clearance: 336\x1b[0m`, ``);
+
+      const secret = "THE FUTURE OF TRADING IS MULTI-AGENT CONSENSUS";
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>{}[]";
+      const revealed: string[] = Array(secret.length).fill("");
+      let pos = 0;
+      let subFrame = 0;
+
+      const dIv = setInterval(() => {
+        if (pos >= secret.length) {
+          clearInterval(dIv);
+          addLines(``,
+            `\x1b[32m  ✓ DECRYPTION COMPLETE\x1b[0m`,
+            `  \x1b[36mClearance:\x1b[0m  Level 336`,
+            `  \x1b[36mClassified:\x1b[0m "Every human needs a bot. Every bot needs a human."`,
+            `  \x1b[90mF18 Security — digital identity protection active\x1b[0m`, ``);
+          return;
+        }
+
+        if (subFrame < 3) {
+          // Show scrambled version
+          let line = "  \x1b[32m";
+          for (let i = 0; i < secret.length; i++) {
+            if (secret[i] === " ") { line += " "; continue; }
+            if (i < pos) line += secret[i];
+            else if (i === pos) line += `\x1b[33m${chars[Math.floor(Math.random() * chars.length)]}\x1b[32m`;
+            else line += `\x1b[90m${chars[Math.floor(Math.random() * chars.length)]}\x1b[32m`;
+          }
+          line += "\x1b[0m";
+          addLines(line);
+          subFrame++;
+        } else {
+          revealed[pos] = secret[pos];
+          pos++;
+          subFrame = 0;
+        }
+      }, 40);
+      return "";
+    }
+
+    // ── orbit ──
+    if (trimmed === "orbit") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ AI MODEL ORBIT — LIVE VISUALIZATION ══\x1b[0m`, ``);
+
+      const orbitFrames = 12;
+      let frame = 0;
+      const models = [
+        { name: "GROK", c: "\x1b[31m", sym: "G" },
+        { name: "CLAUDE", c: "\x1b[35m", sym: "C" },
+        { name: "PERPLEXITY", c: "\x1b[34m", sym: "P" },
+      ];
+
+      const oIv = setInterval(() => {
+        if (frame >= orbitFrames) {
+          clearInterval(oIv);
+          addLines(
+            `\x1b[36m  ┌────────────────────────────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Model Sync:    \x1b[32m3/3 ONLINE\x1b[0m                 \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Orbit Speed:   \x1b[32m2.4s/cycle\x1b[0m                 \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Data Packets:  \x1b[32m${142 + Math.floor(Math.random() * 50)} processed\x1b[0m             \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Consensus:     \x1b[32mACTIVE\x1b[0m                     \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └────────────────────────────────────────────┘\x1b[0m`,
+            `  \x1b[90mThree models orbit the engine. Consensus is gravity.\x1b[0m`, ``
+          );
+          return;
+        }
+
+        // Calculate positions around a circle
+        const angles = models.map((_, i) => (frame / orbitFrames * 2 * Math.PI) + (i * 2 * Math.PI / 3));
+        const W = 42;
+        const H = 9;
+        const cx = 20;
+        const cy = 4;
+        const rx = 16;
+        const ry = 3;
+
+        // Build ASCII frame
+        const grid: string[][] = Array.from({ length: H }, () => Array(W).fill(" "));
+
+        // Draw orbit ellipse
+        for (let a = 0; a < 60; a++) {
+          const angle = (a / 60) * 2 * Math.PI;
+          const ox = Math.round(cx + rx * Math.cos(angle));
+          const oy = Math.round(cy + ry * Math.sin(angle));
+          if (ox >= 0 && ox < W && oy >= 0 && oy < H && grid[oy][ox] === " ") {
+            grid[oy][ox] = "·";
+          }
+        }
+
+        // Place engine at center
+        grid[cy][cx] = "E";
+
+        // Place models
+        const modelPositions: { x: number; y: number; mi: number }[] = [];
+        for (let i = 0; i < models.length; i++) {
+          const mx = Math.round(cx + rx * Math.cos(angles[i]));
+          const my = Math.round(cy + ry * Math.sin(angles[i]));
+          if (mx >= 0 && mx < W && my >= 0 && my < H) {
+            grid[my][mx] = models[i].sym;
+            modelPositions.push({ x: mx, y: my, mi: i });
+          }
+        }
+
+        // Render frame
+        const frameLines = grid.map((row) => {
+          let line = "  ";
+          for (const ch of row) {
+            if (ch === "E") line += "\x1b[32m◉\x1b[0m";
+            else if (ch === "G") line += "\x1b[31mG\x1b[0m";
+            else if (ch === "C") line += "\x1b[35mC\x1b[0m";
+            else if (ch === "P") line += "\x1b[34mP\x1b[0m";
+            else if (ch === "·") line += "\x1b[90m·\x1b[0m";
+            else line += ch;
+          }
+          return line;
+        });
+
+        // Add status
+        const activeModel = models[frame % 3];
+        frameLines.push(`  \x1b[90mframe ${frame + 1}/${orbitFrames}\x1b[0m  ${activeModel.c}${activeModel.name}\x1b[0m transmitting...`);
+
+        addLines(...frameLines, ``);
+        frame++;
+      }, 300);
+      return "";
+    }
+
+    // ── glitch ──
+    if (trimmed === "glitch") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+
+      const glitchChars = "░▒▓█▀▄▌▐│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬";
+      const corruptMessages = [
+        "SIGNAL INTEGRITY CHECK",
+        "CONSENSUS MATRIX",
+        "AI MODEL SYNC",
+        "RISK PARAMETERS",
+        "CIRCUIT BREAKER",
+        "MARKET FEED",
+      ];
+      let phase = 0;
+
+      const gIv = setInterval(() => {
+        if (phase < 6) {
+          // Glitch frames
+          const W = 50;
+          let line = "  ";
+          for (let i = 0; i < W; i++) {
+            const gc = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            const colors = ["\x1b[31m", "\x1b[32m", "\x1b[33m", "\x1b[34m", "\x1b[35m", "\x1b[36m"];
+            line += `${colors[Math.floor(Math.random() * colors.length)]}${gc}\x1b[0m`;
+          }
+          addLines(line);
+          phase++;
+        } else if (phase < 12) {
+          // Recovery frames
+          const msgIdx = phase - 6;
+          const msg = corruptMessages[msgIdx] || "SYSTEMS";
+          const recovered = Math.random() > 0.3;
+          const status = recovered ? `\x1b[32m✓ STABLE\x1b[0m` : `\x1b[33m◐ SYNCING\x1b[0m`;
+          addLines(`  \x1b[90m[recovery]\x1b[0m ${msg.padEnd(24)} ${status}`);
+          phase++;
+        } else {
+          clearInterval(gIv);
+          addLines(``,
+            `\x1b[36m  ══ GLITCH ANALYSIS ══\x1b[0m`,
+            `  \x1b[32m✓\x1b[0m System recovered. All models responsive.`,
+            `  \x1b[33mCause:\x1b[0m  Simulated stress test (no actual failure)`,
+            `  \x1b[33mResult:\x1b[0m All 6 subsystems recovered within tolerance`,
+            `  \x1b[90mF18 Security — resilience test passed\x1b[0m`, ``);
+        }
+      }, 120);
       return "";
     }
 

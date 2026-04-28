@@ -434,6 +434,172 @@ function generateBook() {
   return { asks, bids, maxTotal };
 }
 
+/* ─── Live Candlestick Chart ─── */
+function LiveCandlestickChart() {
+  const [candles, setCandles] = useState<Array<{
+    open: number; close: number; high: number; low: number; ts: number;
+  }>>([]);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const maxCandles = 24;
+
+  useEffect(() => {
+    let price = 67420;
+    const initial: typeof candles = [];
+    for (let i = 0; i < 12; i++) {
+      const open = price;
+      const move = (Math.random() - 0.45) * 400;
+      const close = open + move;
+      const high = Math.max(open, close) + Math.random() * 200;
+      const low = Math.min(open, close) - Math.random() * 200;
+      initial.push({ open, close, high, low, ts: Date.now() - (12 - i) * 60000 });
+      price = close;
+    }
+    setCandles(initial);
+
+    const iv = setInterval(() => {
+      setCandles(prev => {
+        const last = prev[prev.length - 1];
+        const lastClose = last ? last.close : 67420;
+        const open = lastClose;
+        const move = (Math.random() - 0.45) * 350;
+        const close = open + move;
+        const high = Math.max(open, close) + Math.random() * 180;
+        const low = Math.min(open, close) - Math.random() * 180;
+        const next = [...prev, { open, close, high, low, ts: Date.now() }];
+        return next.slice(-maxCandles);
+      });
+    }, 2500);
+    return () => clearInterval(iv);
+  }, []);
+
+  if (candles.length === 0) return null;
+
+  const svgW = 600;
+  const svgH = 200;
+  const pad = 16;
+  const allPrices = candles.flatMap(c => [c.high, c.low]);
+  const minP = Math.min(...allPrices);
+  const maxP = Math.max(...allPrices);
+  const range = maxP - minP || 1;
+  const toY = (p: number) => pad + (1 - (p - minP) / range) * (svgH - pad * 2);
+  const candleW = Math.max(4, (svgW - pad * 2) / candles.length - 2);
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{
+        fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)",
+        letterSpacing: "0.5px", marginBottom: "12px",
+      }}>
+        Live Candlestick Chart (BTC/USDT)
+        <span className="animate-pulse" style={{
+          display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+          background: "#10b981", marginLeft: 8, verticalAlign: "middle",
+        }} />
+      </h2>
+      <div style={{
+        background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
+        borderRadius: "10px", padding: "20px", position: "relative",
+      }}>
+        <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{ width: "100%", height: "auto" }}>
+          <defs>
+            <linearGradient id="candleGlow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#10b981" stopOpacity={0.08} />
+              <stop offset="100%" stopColor="transparent" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          {/* Grid lines */}
+          {[0.2, 0.4, 0.6, 0.8].map(pct => {
+            const price = minP + range * (1 - pct);
+            return (
+              <g key={pct}>
+                <line x1={pad} y1={svgH * pct} x2={svgW - pad} y2={svgH * pct}
+                  stroke="var(--border-color)" strokeWidth="0.5" strokeDasharray="4 4" />
+                <text x={svgW - pad + 4} y={svgH * pct + 3} fill="#64748b" fontSize="8"
+                  fontFamily="monospace">${Math.round(price).toLocaleString()}</text>
+              </g>
+            );
+          })}
+          {/* Candles */}
+          {candles.map((c, i) => {
+            const x = pad + (i / candles.length) * (svgW - pad * 2) + candleW / 2;
+            const isGreen = c.close >= c.open;
+            const color = isGreen ? "#10b981" : "#ef4444";
+            const bodyTop = toY(Math.max(c.open, c.close));
+            const bodyBot = toY(Math.min(c.open, c.close));
+            const bodyH = Math.max(1, bodyBot - bodyTop);
+            const isHovered = hoveredIdx === i;
+            const isLatest = i === candles.length - 1;
+            return (
+              <g key={`${c.ts}-${i}`}
+                onMouseEnter={() => setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                style={{ cursor: "crosshair" }}>
+                {/* Wick */}
+                <line x1={x} y1={toY(c.high)} x2={x} y2={toY(c.low)}
+                  stroke={color} strokeWidth={1} opacity={isHovered ? 1 : 0.7} />
+                {/* Body */}
+                <rect x={x - candleW / 2} y={bodyTop} width={candleW} height={bodyH}
+                  fill={isGreen ? color : color} stroke={color} strokeWidth={0.5}
+                  opacity={isHovered ? 1 : 0.85}
+                  rx={1} />
+                {/* Glow on latest */}
+                {isLatest && (
+                  <rect x={x - candleW / 2 - 2} y={bodyTop - 2} width={candleW + 4} height={bodyH + 4}
+                    fill="none" stroke={color} strokeWidth={1} opacity={0.4} rx={2}
+                    style={{ filter: `drop-shadow(0 0 4px ${color})` }} />
+                )}
+                {/* Hover tooltip */}
+                {isHovered && (
+                  <g>
+                    <rect x={x - 45} y={toY(c.high) - 52} width={90} height={46}
+                      fill="var(--bg-primary)" stroke={color} strokeWidth={0.5} rx={4} opacity={0.95} />
+                    <text x={x} y={toY(c.high) - 38} textAnchor="middle" fill={color} fontSize="8" fontFamily="monospace" fontWeight="bold">
+                      {isGreen ? "▲ BULL" : "▼ BEAR"}
+                    </text>
+                    <text x={x} y={toY(c.high) - 27} textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="monospace">
+                      O:{Math.round(c.open).toLocaleString()} C:{Math.round(c.close).toLocaleString()}
+                    </text>
+                    <text x={x} y={toY(c.high) - 17} textAnchor="middle" fill="#94a3b8" fontSize="7" fontFamily="monospace">
+                      H:{Math.round(c.high).toLocaleString()} L:{Math.round(c.low).toLocaleString()}
+                    </text>
+                    <text x={x} y={toY(c.high) - 8} textAnchor="middle" fill={color} fontSize="7" fontFamily="monospace">
+                      {isGreen ? "+" : ""}{((c.close - c.open) / c.open * 100).toFixed(2)}%
+                    </text>
+                  </g>
+                )}
+              </g>
+            );
+          })}
+          {/* Current price line */}
+          {candles.length > 0 && (() => {
+            const lastClose = candles[candles.length - 1].close;
+            const y = toY(lastClose);
+            return (
+              <g>
+                <line x1={pad} y1={y} x2={svgW - pad} y2={y}
+                  stroke="#10b981" strokeWidth={0.5} strokeDasharray="3 3" opacity={0.5} />
+                <rect x={svgW - pad - 1} y={y - 7} width={50} height={14}
+                  fill="#10b981" rx={3} opacity={0.9} />
+                <text x={svgW - pad + 24} y={y + 3} textAnchor="middle" fill="#000"
+                  fontSize="8" fontFamily="monospace" fontWeight="bold">
+                  ${Math.round(lastClose).toLocaleString()}
+                </text>
+              </g>
+            );
+          })()}
+        </svg>
+        <div style={{
+          display: "flex", justifyContent: "space-between", marginTop: "8px",
+          fontSize: "10px", color: "var(--text-secondary)",
+        }}>
+          <span>Simulated 5-min candles</span>
+          <span>{candles.length} candles | Updates every 2.5s</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function DemoPage() {
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
@@ -902,6 +1068,11 @@ export default function DemoPage() {
               </div>
             </section>
           </div>
+          </ScrollReveal>
+
+          {/* ═══ LIVE CANDLESTICK CHART ═══ */}
+          <ScrollReveal>
+          <LiveCandlestickChart />
           </ScrollReveal>
 
           {/* ═══ MODEL AGREEMENT MATRIX ═══ */}

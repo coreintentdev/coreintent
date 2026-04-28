@@ -634,3 +634,161 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 4 Animations
+   ═══════════════════════════════════════════ */
+
+/* ─── Candlestick Appear ─── */
+@keyframes candleGrow {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.candle-appear {
+  transform-origin: bottom;
+  animation: candleGrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Data Stream Effect ─── */
+@keyframes dataStream {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -200px;
+  }
+}
+
+.data-stream::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(16, 185, 129, 0.02) 3px,
+    rgba(16, 185, 129, 0.02) 4px
+  );
+  background-size: 100% 200px;
+  animation: dataStream 8s linear infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ─── Crypto Price Flash ─── */
+@keyframes priceFlash {
+  0% { background: transparent; }
+  20% { background: var(--flash-color, rgba(16, 185, 129, 0.15)); }
+  100% { background: transparent; }
+}
+
+.price-flash-up {
+  --flash-color: rgba(16, 185, 129, 0.15);
+  animation: priceFlash 0.6s ease;
+}
+
+.price-flash-down {
+  --flash-color: rgba(239, 68, 68, 0.15);
+  animation: priceFlash 0.6s ease;
+}
+
+/* ─── Signal Ping Ripple ─── */
+@keyframes signalPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.signal-ping::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-green);
+  animation: signalPing 2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ─── Morphing Border ─── */
+@keyframes morphBorder {
+  0%, 100% {
+    border-radius: 10px 4px 10px 4px;
+  }
+  25% {
+    border-radius: 4px 10px 4px 10px;
+  }
+  50% {
+    border-radius: 10px 10px 4px 4px;
+  }
+  75% {
+    border-radius: 4px 4px 10px 10px;
+  }
+}
+
+.morph-border {
+  animation: morphBorder 8s ease-in-out infinite;
+}
+
+/* ─── Stagger Children Reveal ─── */
+.stagger-reveal > *:nth-child(1) { animation-delay: 0s; }
+.stagger-reveal > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger-reveal > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger-reveal > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger-reveal > *:nth-child(5) { animation-delay: 0.24s; }
+.stagger-reveal > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger-reveal > *:nth-child(7) { animation-delay: 0.36s; }
+.stagger-reveal > *:nth-child(8) { animation-delay: 0.42s; }
+
+/* ─── Crosshair cursor for charts ─── */
+.chart-crosshair {
+  cursor: crosshair;
+}
+
+/* ─── Neon box on hover ─── */
+.neon-hover {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.neon-hover:hover {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2), 0 0 30px rgba(16, 185, 129, 0.05), inset 0 0 15px rgba(16, 185, 129, 0.03);
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+/* ─── Typing cursor animation ─── */
+@keyframes terminalCursorPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent-green); }
+  50% { opacity: 0.3; box-shadow: none; }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--accent-green);
+  animation: terminalCursorPulse 1.2s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+/* ─── Responsive: Order book stacks on mobile ─── */
+@media (max-width: 768px) {
+  .demo-dual-panel {
+    grid-template-columns: 1fr !important;
+  }
+}
