@@ -154,6 +154,7 @@ function FloatingCTA() {
 
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 400);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

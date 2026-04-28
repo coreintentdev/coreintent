@@ -778,10 +778,29 @@ html {
   filter: brightness(1.1);
 }
 
-/* ─── Stagger Reveal ─── */
-.stagger-1 { animation-delay: 0.1s !important; }
-.stagger-2 { animation-delay: 0.2s !important; }
-.stagger-3 { animation-delay: 0.3s !important; }
+/* ─── Step Card Stagger Animation ─── */
+@keyframes stepReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-card {
+  opacity: 0;
+}
+
+.revealed .step-card {
+  animation: stepReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.revealed .step-card.stagger-1 { animation-delay: 0.1s; }
+.revealed .step-card.stagger-2 { animation-delay: 0.2s; }
+.revealed .step-card.stagger-3 { animation-delay: 0.3s; }
 
 /* ─── Mobile Responsive Enhancements ─── */
 @media (max-width: 768px) {
@@ -811,17 +830,8 @@ html {
     grid-template-columns: 1fr 1fr !important;
   }
 
-  .comparison-grid-responsive {
-    grid-template-columns: 1fr !important;
-  }
-
   .stats-banner-responsive {
     gap: 16px !important;
     padding: 16px !important;
-  }
-
-  .steps-responsive {
-    flex-direction: column !important;
-    align-items: center !important;
   }
 }
