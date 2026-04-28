@@ -50,14 +50,17 @@ Based in: New Zealand (NEVER register anything in Australia)
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues
-- All 14 API routes return hardcoded demo data
+- Exchange/market routes (market, portfolio, signals, agents) return hardcoded demo data — no live exchange connections
+- protect/research/content routes call live AI APIs when env keys are set; fall back to [DEMO] gracefully when not
+- health/status/connections derive real values from env vars (no hardcoded data)
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer
-- Terminal uses dangerouslySetInnerHTML for ANSI rendering (potential XSS; JSON-LD structured data sanitized 2026-04-22)
+- Terminal uses dangerouslySetInnerHTML for ANSI rendering (XSS mitigated: HTML escaped first, only allowlisted ANSI codes converted to spans)
 - xterm packages removed from package.json (resolved 2026-04-27)
 - `security/remove-runtime-fingerprint` and `security/sanitize-api-error-leakage` patches CONFIRMED on main (2026-04-27 audit): poweredByHeader:false in next.config.js + serverError() sanitizes all API error responses
 - 30 non-main branches as of 2026-04-25 — cursor/AI tool sprawl; review and delete stale branches regularly; enable branch auto-delete on merge in GitHub settings
+- Audit score: 96% (52/54, 0 failures) as of 2026-04-28 — rate limiting wired up (checkRateLimit stub ready for Cloudflare KV / Upstash Redis)
 
 ## Family (NEVER fabricate)
 - Michelle (wife), Ruby (~14, daughter), Wesley (son)
