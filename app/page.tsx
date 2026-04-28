@@ -607,6 +607,123 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Mini Sparkline for AI Model Cards ─── */
+function MiniSparkline({ color, seed }: { color: string; seed: number }) {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 2000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const W = 120;
+  const H = 28;
+  const points = Array.from({ length: 20 }, (_, i) => {
+    const y = H / 2 + Math.sin((i + tick) * 0.6 + seed * 0.3) * (H * 0.35) + Math.cos((i + tick) * 0.3 + seed) * (H * 0.1);
+    return `${(i / 19) * W},${Math.max(2, Math.min(H - 2, y))}`;
+  });
+  const linePath = `M ${points.join(" L ")}`;
+  const fillPath = `${linePath} L ${W},${H} L 0,${H} Z`;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "28px", opacity: 0.7 }}>
+      <defs>
+        <linearGradient id={`spark-${seed}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity={0.3} />
+          <stop offset="100%" stopColor={color} stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <path d={fillPath} fill={`url(#spark-${seed})`} />
+      <path d={linePath} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ─── Live Data Stream Feed ─── */
+const STREAM_EVENTS = [
+  { type: "signal", text: "BTC/USDT LONG signal detected", model: "Grok", color: "#10b981", icon: "▲" },
+  { type: "analysis", text: "Risk assessment complete — R:R 2.4:1", model: "Claude", color: "#a855f7", icon: "◉" },
+  { type: "research", text: "No negative catalysts in last 4h", model: "Perplexity", color: "#3b82f6", icon: "◎" },
+  { type: "trade", text: "Paper trade executed: LONG BTC @ $67,420", model: "Engine", color: "#10b981", icon: "⚡" },
+  { type: "signal", text: "ETH/USDT consolidation pattern forming", model: "Grok", color: "#f59e0b", icon: "●" },
+  { type: "analysis", text: "SOL momentum score: 78/100", model: "Claude", color: "#a855f7", icon: "◉" },
+  { type: "alert", text: "Whale movement: 2,400 BTC transferred", model: "Perplexity", color: "#ef4444", icon: "!" },
+  { type: "consensus", text: "3/3 models agree: HOLD AVAX/USDT", model: "Engine", color: "#10b981", icon: "✓" },
+  { type: "signal", text: "LINK/USDT breakout above resistance", model: "Grok", color: "#10b981", icon: "▲" },
+  { type: "research", text: "Fed minutes: no rate change signal", model: "Perplexity", color: "#3b82f6", icon: "◎" },
+  { type: "analysis", text: "Portfolio heat: 62% — within limits", model: "Claude", color: "#a855f7", icon: "◉" },
+  { type: "trade", text: "Paper trade closed: +2.1% on ETH", model: "Engine", color: "#10b981", icon: "⚡" },
+];
+
+function DataStream() {
+  const [events, setEvents] = useState<Array<{ id: number; event: typeof STREAM_EVENTS[0]; time: string }>>([]);
+  const idRef = useRef(0);
+
+  useEffect(() => {
+    const addEvent = () => {
+      const event = STREAM_EVENTS[idRef.current % STREAM_EVENTS.length];
+      const time = new Date().toLocaleTimeString("en-NZ", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+      idRef.current++;
+      setEvents((prev) => [{ id: idRef.current, event, time }, ...prev].slice(0, 5));
+    };
+    addEvent();
+    const iv = setInterval(addEvent, 3000);
+    return () => clearInterval(iv);
+  }, []);
+
+  return (
+    <div
+      className="glow-line-animated"
+      style={{
+        marginTop: "36px",
+        background: "var(--bg-primary)",
+        border: "1px solid var(--border-color)",
+        borderRadius: "10px",
+        padding: "16px",
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
+        Live Engine Feed
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981" }} />
+        <span style={{ marginLeft: "auto", fontSize: "9px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px" }}>
+          SIMULATED
+        </span>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        {events.map((item) => (
+          <div
+            key={item.id}
+            className="stream-item"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              padding: "6px 10px",
+              background: "var(--bg-secondary)",
+              borderRadius: "6px",
+              borderLeft: `2px solid ${item.event.color}`,
+              fontSize: "11px",
+            }}
+          >
+            <span style={{ color: item.event.color, fontSize: "12px", width: "14px", textAlign: "center" }}>
+              {item.event.icon}
+            </span>
+            <span style={{ color: "var(--text-secondary)", fontSize: "10px", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+              {item.time}
+            </span>
+            <span style={{ color: item.event.color, fontSize: "10px", fontWeight: "bold", whiteSpace: "nowrap" }}>
+              {item.event.model}
+            </span>
+            <span style={{ color: "var(--text-primary)", flex: 1 }}>
+              {item.event.text}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -789,6 +906,11 @@ export default function Home() {
             <SignalPipeline />
             </ScrollReveal>
 
+            {/* Live Data Stream Feed */}
+            <ScrollReveal>
+            <DataStream />
+            </ScrollReveal>
+
             {/* Stats Banner */}
             <div
               style={{
@@ -855,7 +977,8 @@ export default function Home() {
                     </div>
                     <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>{m.name}</div>
                     <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>{m.provider}</div>
-                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{m.role}</div>
+                    <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4", marginBottom: "8px" }}>{m.role}</div>
+                    <MiniSparkline color={m.color} seed={m.name.charCodeAt(0)} />
                   </div>
                 ))}
               </div>

@@ -434,6 +434,296 @@ function generateBook() {
   return { asks, bids, maxTotal };
 }
 
+/* ─── Candlestick Chart (Simulated OHLC) ─── */
+function CandlestickChart() {
+  const candles = Array.from({ length: 24 }, (_, i) => {
+    const basePrice = 67000 + Math.sin(i * 0.5) * 800 + (Math.random() - 0.4) * 400;
+    const open = basePrice + (Math.random() - 0.5) * 300;
+    const close = basePrice + (Math.random() - 0.5) * 300;
+    const high = Math.max(open, close) + Math.random() * 200;
+    const low = Math.min(open, close) - Math.random() * 200;
+    return { open, close, high, low, bullish: close > open };
+  });
+
+  const allPrices = candles.flatMap((c) => [c.high, c.low]);
+  const minPrice = Math.min(...allPrices);
+  const maxPrice = Math.max(...allPrices);
+  const priceRange = maxPrice - minPrice || 1;
+
+  const svgW = 600;
+  const svgH = 250;
+  const topPad = 20;
+  const botPad = 20;
+  const chartHeight = svgH - topPad - botPad;
+  const candleWidth = 20;
+  const gap = 4;
+
+  const toY = (price: number) =>
+    topPad + chartHeight - ((price - minPrice) / priceRange) * chartHeight;
+
+  return (
+    <div
+      style={{
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border-color)",
+        borderRadius: "10px",
+        padding: "20px",
+        height: "100%",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+        <h3
+          style={{
+            fontSize: "12px",
+            textTransform: "uppercase",
+            color: "var(--text-secondary)",
+            letterSpacing: "0.5px",
+            margin: 0,
+          }}
+        >
+          BTC/USDT — 4H CANDLESTICK
+          <span
+            className="animate-pulse"
+            style={{
+              display: "inline-block",
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#10b981",
+              marginLeft: 8,
+              verticalAlign: "middle",
+            }}
+          />
+        </h3>
+        <span
+          style={{
+            fontSize: "9px",
+            padding: "2px 8px",
+            borderRadius: "4px",
+            background: "#f59e0b18",
+            color: "#f59e0b",
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            border: "1px solid #f59e0b33",
+          }}
+        >
+          SIMULATED DATA
+        </span>
+      </div>
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{ width: "100%", height: "auto" }}>
+        {/* Background grid */}
+        {[0.2, 0.4, 0.6, 0.8].map((pct) => (
+          <line
+            key={pct}
+            x1={0}
+            y1={topPad + chartHeight * pct}
+            x2={svgW}
+            y2={topPad + chartHeight * pct}
+            stroke="var(--border-color)"
+            strokeWidth="0.5"
+            strokeDasharray="4 4"
+          />
+        ))}
+        {candles.map((c, i) => {
+          const x = 8 + i * (candleWidth + gap);
+          const candleCenterX = x + candleWidth / 2;
+          const bodyTop = toY(Math.max(c.open, c.close));
+          const bodyBot = toY(Math.min(c.open, c.close));
+          const bodyHeight = Math.max(bodyBot - bodyTop, 1);
+          const wickTop = toY(c.high);
+          const wickBot = toY(c.low);
+          const color = c.bullish ? "#10b981" : "#ef4444";
+
+          return (
+            <g
+              key={i}
+              style={{
+                animation: `candleGrow 0.4s ease both`,
+                animationDelay: `${i * 0.06}s`,
+                transformOrigin: `${candleCenterX}px ${bodyBot}px`,
+              }}
+            >
+              {/* Upper wick */}
+              <line
+                x1={candleCenterX}
+                y1={wickTop}
+                x2={candleCenterX}
+                y2={bodyTop}
+                stroke={color}
+                strokeWidth={1.5}
+              />
+              {/* Lower wick */}
+              <line
+                x1={candleCenterX}
+                y1={bodyBot}
+                x2={candleCenterX}
+                y2={wickBot}
+                stroke={color}
+                strokeWidth={1.5}
+              />
+              {/* Body */}
+              <rect
+                x={x}
+                y={bodyTop}
+                width={candleWidth}
+                height={bodyHeight}
+                fill={c.bullish ? color : color}
+                rx={2}
+                opacity={0.9}
+              />
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+/* ─── Risk Gauge (Semicircular) ─── */
+function RiskGauge() {
+  const [riskValue, setRiskValue] = useState(34);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setRiskValue((prev) => {
+        const delta = (Math.random() - 0.5) * 20;
+        return Math.max(5, Math.min(95, Math.round(prev + delta)));
+      });
+    }, 3000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const riskLabel = riskValue < 35 ? "LOW" : riskValue < 65 ? "MEDIUM" : "HIGH";
+  const riskColor = riskValue < 35 ? "#10b981" : riskValue < 65 ? "#f59e0b" : "#ef4444";
+
+  // Needle angle: -180 (left/low) to 0 (right/high)
+  const needleAngle = -180 + (riskValue / 100) * 180;
+
+  return (
+    <div
+      style={{
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border-color)",
+        borderRadius: "10px",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+      }}
+    >
+      <h3
+        style={{
+          fontSize: "12px",
+          textTransform: "uppercase",
+          color: "var(--text-secondary)",
+          letterSpacing: "0.5px",
+          marginBottom: "12px",
+          textAlign: "center",
+        }}
+      >
+        Risk Level
+      </h3>
+      <svg viewBox="0 0 200 120" style={{ width: "100%", maxWidth: "220px", height: "auto" }}>
+        {/* Green arc (low risk: left third) */}
+        <path
+          d="M 20 100 A 80 80 0 0 1 60 34.36"
+          fill="none"
+          stroke="#10b981"
+          strokeWidth={10}
+          strokeLinecap="round"
+          opacity={0.3}
+        />
+        {/* Yellow arc (medium risk: middle third) */}
+        <path
+          d="M 60 34.36 A 80 80 0 0 1 140 34.36"
+          fill="none"
+          stroke="#f59e0b"
+          strokeWidth={10}
+          strokeLinecap="round"
+          opacity={0.3}
+        />
+        {/* Red arc (high risk: right third) */}
+        <path
+          d="M 140 34.36 A 80 80 0 0 1 180 100"
+          fill="none"
+          stroke="#ef4444"
+          strokeWidth={10}
+          strokeLinecap="round"
+          opacity={0.3}
+        />
+
+        {/* Needle */}
+        <g
+          style={{
+            transformOrigin: "100px 100px",
+            transform: `rotate(${needleAngle}deg)`,
+            transition: "transform 1s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+        >
+          <line
+            x1={100}
+            y1={100}
+            x2={170}
+            y2={100}
+            stroke={riskColor}
+            strokeWidth={2.5}
+            strokeLinecap="round"
+          />
+          <circle cx={100} cy={100} r={5} fill={riskColor} />
+        </g>
+
+        {/* Center hub */}
+        <circle cx={100} cy={100} r={3} fill="var(--text-primary)" />
+
+        {/* Risk percentage */}
+        <text
+          x={100}
+          y={85}
+          textAnchor="middle"
+          fill={riskColor}
+          fontSize={22}
+          fontWeight="bold"
+          fontFamily="monospace"
+          style={{ transition: "fill 0.5s ease" }}
+        >
+          {riskValue}%
+        </text>
+
+        {/* Risk label */}
+        <text
+          x={100}
+          y={110}
+          textAnchor="middle"
+          fill={riskColor}
+          fontSize={10}
+          fontWeight="bold"
+          fontFamily="monospace"
+          style={{ transition: "fill 0.5s ease" }}
+        >
+          {riskLabel}
+        </text>
+      </svg>
+      <span
+        style={{
+          fontSize: "9px",
+          marginTop: "8px",
+          padding: "2px 8px",
+          borderRadius: "4px",
+          background: "#f59e0b18",
+          color: "#f59e0b",
+          border: "1px solid #f59e0b33",
+          textTransform: "uppercase",
+          fontWeight: "bold",
+        }}
+      >
+        SIMULATED
+      </span>
+    </div>
+  );
+}
+
 export default function DemoPage() {
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
@@ -719,6 +1009,14 @@ export default function DemoPage() {
               </div>
             </div>
           </section>
+
+          {/* ═══ CANDLESTICK + RISK GAUGE ═══ */}
+          <ScrollReveal>
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "16px", marginBottom: "40px" }}>
+            <CandlestickChart />
+            <RiskGauge />
+          </div>
+          </ScrollReveal>
 
           {/* ═══ SIGNAL FEED + CHART ═══ */}
           <ScrollReveal>

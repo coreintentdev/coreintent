@@ -75,6 +75,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mweather\x1b[0m     - Market weather forecast
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
+  \x1b[32mcandle [pair]\x1b[0m- ASCII candlestick chart (e.g. \x1b[32mcandle ETH/USDT\x1b[0m)
+  \x1b[32mdashboard\x1b[0m   - Inline engine dashboard \x1b[90m(live)\x1b[0m
 
   \x1b[33m── ANALYTICS ──\x1b[0m
   \x1b[32mheatmap\x1b[0m     - Crypto correlation matrix (animated)
@@ -603,6 +605,7 @@ const ALL_COMMANDS = [
   "sudo", "rickroll",
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
+  "candle", "dashboard",
 ];
 
 export default function Terminal() {
@@ -1792,6 +1795,175 @@ export default function Terminal() {
   \x1b[90mType 'demo' to see it in action, or 'help' for all commands.\x1b[0m`;
       addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
       return out;
+    }
+
+    // ── CANDLE: ASCII candlestick chart ──
+    if (trimmed === "candle" || trimmed.startsWith("candle ")) {
+      const pair = trimmed === "candle" ? "BTC/USDT" : raw.substring(7).trim().toUpperCase() || "BTC/USDT";
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60,
+      };
+      const basePrice = basePrices[pair] || 100;
+      const ROWS = 12;
+      const NUM_CANDLES = 20;
+
+      // Generate 20 candlesticks with OHLC
+      const candles: Array<{ o: number; h: number; l: number; c: number }> = [];
+      let prevClose = basePrice;
+      for (let i = 0; i < NUM_CANDLES; i++) {
+        const drift = (Math.random() - 0.47) * basePrice * 0.004;
+        const o = prevClose;
+        const c = o + drift;
+        const wickUp = Math.abs(drift) * (0.5 + Math.random());
+        const wickDn = Math.abs(drift) * (0.5 + Math.random());
+        const h = Math.max(o, c) + wickUp;
+        const l = Math.min(o, c) - wickDn;
+        candles.push({ o, h, l, c });
+        prevClose = c;
+      }
+
+      // Find global min/max for normalization
+      const allLows = candles.map((c) => c.l);
+      const allHighs = candles.map((c) => c.h);
+      const gMin = Math.min(...allLows);
+      const gMax = Math.max(...allHighs);
+      const gRange = gMax - gMin || 1;
+
+      // Map price to row (0 = bottom, ROWS-1 = top)
+      const toRow = (p: number) => Math.round(((p - gMin) / gRange) * (ROWS - 1));
+
+      // Build the grid row by row (top row = ROWS-1)
+      const chartLines: string[] = [];
+      for (let row = ROWS - 1; row >= 0; row--) {
+        const price = gMin + (row / (ROWS - 1)) * gRange;
+        const label = basePrice >= 1000
+          ? `$${Math.round(price).toLocaleString()}`
+          : `$${price.toFixed(2)}`;
+        let line = `  \x1b[90m${label.padStart(8)} ┤\x1b[0m`;
+        for (let ci = 0; ci < NUM_CANDLES; ci++) {
+          const cn = candles[ci];
+          const bullish = cn.c >= cn.o;
+          const color = bullish ? "\x1b[32m" : "\x1b[31m";
+          const bodyTop = toRow(Math.max(cn.o, cn.c));
+          const bodyBot = toRow(Math.min(cn.o, cn.c));
+          const wickTop = toRow(cn.h);
+          const wickBot = toRow(cn.l);
+          if (row >= bodyBot && row <= bodyTop) {
+            line += `${color}█\x1b[0m `;
+          } else if (row >= wickBot && row <= wickTop) {
+            line += `${color}│\x1b[0m `;
+          } else {
+            line += "  ";
+          }
+        }
+        chartLines.push(line);
+      }
+
+      const openPrice = candles[0].o;
+      const closePrice = candles[NUM_CANDLES - 1].c;
+      const highPrice = gMax;
+      const lowPrice = gMin;
+      const changePct = ((closePrice - openPrice) / openPrice * 100).toFixed(2);
+      const cc = Number(changePct) >= 0 ? "\x1b[32m" : "\x1b[31m";
+      const fmtP = (p: number) => basePrice >= 1000 ? `$${Math.round(p).toLocaleString()}` : `$${p.toFixed(2)}`;
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ CANDLESTICK — ${pair} 4H ══\x1b[0m`, ``);
+
+      let ri = 0;
+      const riv = setInterval(() => {
+        if (ri < chartLines.length) {
+          addLines(chartLines[ri]);
+          ri++;
+        } else {
+          clearInterval(riv);
+          addLines(
+            ``,
+            `  \x1b[90mOpen:\x1b[0m  ${fmtP(openPrice)}    \x1b[90mHigh:\x1b[0m ${fmtP(highPrice)}`,
+            `  \x1b[90mClose:\x1b[0m ${fmtP(closePrice)}    \x1b[90mLow:\x1b[0m  ${fmtP(lowPrice)}`,
+            `  \x1b[90mChange:\x1b[0m ${cc}${Number(changePct) >= 0 ? "+" : ""}${changePct}%\x1b[0m`,
+            ``,
+            `  \x1b[90mPaper trading — simulated candlestick data\x1b[0m`, ``
+          );
+        }
+      }, 150);
+      return "";
+    }
+
+    // ── DASHBOARD: Inline engine dashboard ──
+    if (trimmed === "dashboard") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[90mLoading dashboard...\x1b[0m`);
+
+      let statusText = "\x1b[33m?\x1b[0m";
+      let portfolioText = "\x1b[33m?\x1b[0m";
+      let signalsText = "\x1b[33m?\x1b[0m";
+      let sparkline = "";
+
+      try {
+        const [statusRes, portfolioRes, signalsRes] = await Promise.all([
+          fetch("/api/status").catch(() => null),
+          fetch("/api/portfolio").catch(() => null),
+          fetch("/api/signals").catch(() => null),
+        ]);
+
+        if (statusRes && statusRes.ok) {
+          const sd = await statusRes.json();
+          const mode = (sd.mode as string) || "unknown";
+          const engine = (sd.engine as string) || "unknown";
+          statusText = `\x1b[32m${engine}\x1b[0m \x1b[90m(${mode})\x1b[0m`;
+        }
+
+        if (portfolioRes && portfolioRes.ok) {
+          const pd = await portfolioRes.json();
+          const total = pd.totalValue as number | undefined;
+          portfolioText = total != null ? `\x1b[32m$${total.toLocaleString()}\x1b[0m` : "\x1b[33m?\x1b[0m";
+        }
+
+        if (signalsRes && signalsRes.ok) {
+          const sgd = await signalsRes.json();
+          const signals = (sgd.signals || sgd) as Array<{ confidence?: number }>;
+          const count = Array.isArray(signals) ? signals.length : 0;
+          signalsText = `\x1b[36m${count}\x1b[0m active`;
+
+          // Mini sparkline of signal confidences
+          if (Array.isArray(signals) && signals.length > 0) {
+            const blocks = "▁▂▃▄▅▆▇█";
+            sparkline = signals.slice(0, 10).map((s) => {
+              const conf = (s.confidence ?? 50) / 100;
+              const idx = Math.min(7, Math.round(conf * 7));
+              return conf >= 0.6 ? `\x1b[32m${blocks[idx]}\x1b[0m` : conf >= 0.4 ? `\x1b[33m${blocks[idx]}\x1b[0m` : `\x1b[31m${blocks[idx]}\x1b[0m`;
+            }).join("");
+          }
+        }
+      } catch {
+        // All failed — defaults already set to "?"
+      }
+
+      const nzTime = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" });
+      const uptime = Math.floor((Date.now() - startTime.current) / 1000);
+      const mins = Math.floor(uptime / 60);
+      const secs = uptime % 60;
+
+      const out = [
+        `\x1b[36m  ┌──────────────────────────────────────────┐\x1b[0m`,
+        `\x1b[36m  │\x1b[0m  \x1b[33mCOREINTENT DASHBOARD\x1b[0m                   \x1b[36m│\x1b[0m`,
+        `\x1b[36m  ├──────────────────────────────────────────┤\x1b[0m`,
+        `\x1b[36m  │\x1b[0m  \x1b[90mEngine:\x1b[0m    ${statusText}`,
+        `\x1b[36m  │\x1b[0m  \x1b[90mPortfolio:\x1b[0m ${portfolioText}`,
+        `\x1b[36m  │\x1b[0m  \x1b[90mSignals:\x1b[0m   ${signalsText}`,
+        sparkline ? `\x1b[36m  │\x1b[0m  \x1b[90mConfidence:\x1b[0m ${sparkline}` : null,
+        `\x1b[36m  ├──────────────────────────────────────────┤\x1b[0m`,
+        `\x1b[36m  │\x1b[0m  \x1b[90mTime:\x1b[0m   ${nzTime} NZST`,
+        `\x1b[36m  │\x1b[0m  \x1b[90mUptime:\x1b[0m ${mins}m ${secs}s`,
+        `\x1b[36m  └──────────────────────────────────────────┘\x1b[0m`,
+      ].filter(Boolean) as string[];
+
+      setLines((prev) => {
+        const copy = [...prev];
+        const idx = copy.lastIndexOf(`\x1b[90mLoading dashboard...\x1b[0m`);
+        if (idx !== -1) copy.splice(idx, 1);
+        return [...copy, ...out, ""];
+      });
+      return out.join("\n");
     }
 
     // ── WEATHER: Market weather report ──

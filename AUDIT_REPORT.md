@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Sat Apr 25 04:46:51 UTC 2026
+Generated: Tue Apr 28 04:27:41 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -39,7 +39,7 @@ Generated: Sat Apr 25 04:46:51 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2133:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2305:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
