@@ -671,6 +671,162 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Terminal Preview — "Try It" CTA ─── */
+const PREVIEW_SCRIPT = [
+  { type: "cmd" as const, text: "dashboard" },
+  { type: "out" as const, text: "\x1b[32m◉\x1b[0m  Engine ONLINE  |  3 models synced  |  0 incidents" },
+  { type: "out" as const, text: "\x1b[31mGrok\x1b[0m ████████████░░░░ 78%  \x1b[35mClaude\x1b[0m ██████████░░░░░░ 62%" },
+  { type: "out" as const, text: "\x1b[34mPerplexity\x1b[0m ███████████████░ 91%  \x1b[32mConsensus: STRONG\x1b[0m" },
+  { type: "cmd" as const, text: "warp" },
+  { type: "out" as const, text: "\x1b[31mGrok\x1b[0m → RSI divergence, volume spike 2.3x → \x1b[32mLONG 87%\x1b[0m" },
+  { type: "out" as const, text: "\x1b[35mClaude\x1b[0m → R/R 2.4:1, resistance untested → \x1b[33mAdjust 79%\x1b[0m" },
+  { type: "out" as const, text: "\x1b[34mPerplexity\x1b[0m → No negative news, whale accumulation → \x1b[32m82%\x1b[0m" },
+  { type: "out" as const, text: "\x1b[36m★ ENGINE DECISION: LONG BTC/USDT @ $67,420 | 3/3 AGREE | 83%\x1b[0m" },
+  { type: "cmd" as const, text: "anthem" },
+  { type: "out" as const, text: "\x1b[33mEvery human needs a bot. Every bot needs a human. 336.\x1b[0m" },
+];
+
+function TerminalPreview({ onLaunch }: { onLaunch: () => void }) {
+  const [lineIdx, setLineIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [displayLines, setDisplayLines] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (lineIdx >= PREVIEW_SCRIPT.length) return;
+
+    const line = PREVIEW_SCRIPT[lineIdx];
+    if (line.type === "cmd") {
+      if (charIdx <= line.text.length) {
+        const timer = setTimeout(() => {
+          setDisplayLines((prev) => {
+            const copy = [...prev];
+            const prompt = `\x1b[32m⚡\x1b[0m ${line.text.substring(0, charIdx)}`;
+            if (copy.length > 0 && copy[copy.length - 1].startsWith("\x1b[32m⚡")) {
+              copy[copy.length - 1] = prompt;
+            } else {
+              copy.push(prompt);
+            }
+            return copy;
+          });
+          setCharIdx((c) => c + 1);
+        }, 60 + Math.random() * 40);
+        return () => clearTimeout(timer);
+      } else {
+        const timer = setTimeout(() => {
+          setCharIdx(0);
+          setLineIdx((l) => l + 1);
+        }, 400);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      const timer = setTimeout(() => {
+        setDisplayLines((prev) => [...prev, line.text]);
+        setCharIdx(0);
+        setLineIdx((l) => l + 1);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [lineIdx, charIdx]);
+
+  useEffect(() => {
+    if (lineIdx >= PREVIEW_SCRIPT.length) {
+      const timer = setTimeout(() => {
+        setDisplayLines([]);
+        setLineIdx(0);
+        setCharIdx(0);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [lineIdx]);
+
+  const ansiToSpan = (text: string) => {
+    const map: Record<string, string> = {
+      "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
+      "34": "#3b82f6", "35": "#a855f7", "36": "#06b6d4", "90": "#64748b",
+    };
+    let html = text
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\x1b\[(\d+)m/g, (_m, code) => {
+      if (code === "0") return "</span>";
+      return map[code] ? `<span style="color:${map[code]}">` : "";
+    });
+    const opens = (html.match(/<span /g) || []).length;
+    const closes = (html.match(/<\/span>/g) || []).length;
+    if (opens > closes) html += "</span>".repeat(opens - closes);
+    return html;
+  };
+
+  return (
+    <div style={{ marginTop: "36px" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        Try the terminal
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+      </div>
+      <div
+        className="neon-hover data-stream"
+        style={{
+          background: "var(--bg-terminal)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          overflow: "hidden",
+          cursor: "pointer",
+          position: "relative",
+        }}
+        onClick={onLaunch}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === "Enter") onLaunch(); }}
+        aria-label="Launch terminal"
+      >
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "8px 12px",
+          background: "#161b22",
+          borderBottom: "1px solid var(--border-color)",
+          fontSize: "12px",
+        }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+          <span style={{ marginLeft: "8px", color: "var(--text-secondary)" }}>zynthio commander</span>
+        </div>
+        <div style={{
+          padding: "12px 16px",
+          fontFamily: "inherit",
+          fontSize: "12px",
+          lineHeight: "1.6",
+          minHeight: "140px",
+          maxHeight: "180px",
+          overflow: "hidden",
+        }}>
+          {displayLines.map((line, i) => (
+            <div key={i} dangerouslySetInnerHTML={{ __html: ansiToSpan(line) }} />
+          ))}
+          {lineIdx < PREVIEW_SCRIPT.length && PREVIEW_SCRIPT[lineIdx]?.type === "cmd" && charIdx <= (PREVIEW_SCRIPT[lineIdx]?.text.length ?? 0) && (
+            <span className="terminal-cursor" style={{ marginLeft: "2px" }} />
+          )}
+        </div>
+        <div style={{
+          padding: "8px 16px",
+          borderTop: "1px solid var(--border-color)",
+          background: "#161b22",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px",
+        }}>
+          <span style={{ fontSize: "11px", color: "var(--accent-green)", fontWeight: "bold" }}>
+            Click to launch full terminal
+          </span>
+          <span style={{ fontSize: "14px", color: "var(--accent-green)" }}>&rarr;</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -1128,6 +1284,11 @@ export default function Home() {
                 Competitions launching soon. Paper trading mode active.
               </div>
             </div>
+
+            {/* ─── Try the Terminal ─── */}
+            <ScrollReveal>
+            <TerminalPreview onLaunch={() => { setShowHero(false); setTab("terminal"); }} />
+            </ScrollReveal>
           </div>
         </section>
       )}
