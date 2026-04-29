@@ -116,6 +116,194 @@ function ScrollReveal({ children, className = "" }: { children: React.ReactNode;
   return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
 }
 
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end: number; suffix?: string; prefix?: string; label: string; color: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = end / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [started, end]);
+
+  return (
+    <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
+      <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+        {prefix}{started ? count.toLocaleString() : "0"}{suffix}
+      </div>
+      <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* ─── How It Works ─── */
+function HowItWorks() {
+  return (
+    <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+        How It Works
+      </div>
+      <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
+        Three Steps to Smarter Signals
+      </h2>
+      <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
+        {[
+          {
+            step: "01",
+            title: "Models Debate",
+            desc: "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+            color: "#a855f7",
+            icon: "AI",
+          },
+          {
+            step: "02",
+            title: "Consensus Forms",
+            desc: "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+            color: "#10b981",
+            icon: "OK",
+          },
+          {
+            step: "03",
+            title: "You Compete",
+            desc: "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry.",
+            color: "#3b82f6",
+            icon: "GO",
+          },
+        ].map((item, i) => (
+          <div
+            key={item.step}
+            className="card-hover-glow how-it-works-card"
+            style={{
+              padding: "28px 20px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+              position: "relative",
+            }}
+          >
+            <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              background: `${item.color}15`,
+              border: `2px solid ${item.color}44`,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: item.color,
+              marginBottom: "14px",
+            }}>
+              {item.icon}
+            </div>
+            <div style={{ fontSize: "10px", color: item.color, fontWeight: "bold", letterSpacing: "1px", marginBottom: "6px" }}>
+              STEP {item.step}
+            </div>
+            <div style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "8px" }}>
+              {item.title}
+            </div>
+            <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+              {item.desc}
+            </div>
+            {i < 2 && (
+              <div className="step-connector" style={{
+                position: "absolute",
+                right: "-14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                color: "var(--border-color)",
+                fontSize: "18px",
+                zIndex: 1,
+              }}>
+                &rarr;
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating CTA ─── */
+function FloatingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 600);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div className="floating-cta" style={{
+      position: "fixed",
+      bottom: "24px",
+      right: "24px",
+      zIndex: 1000,
+      animation: "fadeInUp 0.4s ease both",
+    }}>
+      <a
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-cta-btn"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "14px 24px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "50px",
+          fontSize: "13px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+          boxShadow: "0 4px 24px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}
+      >
+        <span style={{ fontSize: "16px" }}>&#9733;</span>
+        Star on GitHub
+      </a>
+    </div>
+  );
+}
+
 /* ─── Engine Heartbeat ─── */
 function EngineHeartbeat() {
   const [beat, setBeat] = useState(0);
@@ -679,6 +867,7 @@ export default function Home() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
+      <FloatingCTA />
 
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
@@ -874,33 +1063,37 @@ export default function Home() {
             <SignalPipeline />
             </ScrollReveal>
 
-            {/* Stats Banner */}
+            {/* Animated Counters */}
+            <ScrollReveal>
             <div
+              className="counters-section"
               style={{
-                marginTop: "28px",
+                marginTop: "36px",
                 display: "flex",
                 justifyContent: "center",
-                gap: "24px",
+                gap: "clamp(16px, 4vw, 48px)",
                 flexWrap: "wrap",
-                padding: "16px 24px",
-                background: "#10b98108",
+                padding: "28px 24px",
+                background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
                 border: "1px solid #10b98118",
-                borderRadius: "10px",
+                borderRadius: "12px",
               }}
             >
-              {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
-              ].map((stat) => (
-                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
-                  <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
-                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
-                </div>
-              ))}
+              <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
+              <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
+              <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
+              <AnimatedCounter end={12847} suffix="+" label="Signals Analyzed" color="#f59e0b" />
+              <AnimatedCounter end={0} label="Subscriptions" color="#ef4444" />
             </div>
+            </ScrollReveal>
+            <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
+              [DEMO] Signal count is simulated — platform is in paper trading mode
+            </p>
+
+            {/* How It Works */}
+            <ScrollReveal>
+              <HowItWorks />
+            </ScrollReveal>
 
             {/* Powered By */}
             <ScrollReveal>
@@ -1021,45 +1214,57 @@ export default function Home() {
             </ScrollReveal>
 
             {/* Trust Badges */}
+            <ScrollReveal>
             <div
               style={{
                 marginTop: "36px",
                 display: "flex",
                 justifyContent: "center",
-                gap: "16px",
+                gap: "12px",
                 flexWrap: "wrap",
               }}
             >
               {[
-                { label: "Open Source", detail: "GitHub", color: "#10b981", icon: "{ }" },
-                { label: "NZ-Built", detail: "No VC", color: "#3b82f6", icon: "NZ" },
-                { label: "Paper Mode", detail: "Honest", color: "#a855f7", icon: "PT" },
-                { label: "$45/mo", detail: "Total Cost", color: "#f59e0b", icon: "$" },
-                { label: "3 Models", detail: "Cross-Check", color: "#ef4444", icon: "AI" },
-                { label: "Bots OK", detail: "First-Class", color: "#06b6d4", icon: "B" },
+                { label: "Built in NZ", detail: "No VC. Self-funded.", color: "#3b82f6", icon: "NZ" },
+                { label: "AI-Powered", detail: "3 Models Cross-Check", color: "#a855f7", icon: "AI" },
+                { label: "Competition-Grade", detail: "Free Entry. Real Skill.", color: "#10b981", icon: "CG" },
+                { label: "Open Source", detail: "Fully Transparent", color: "#f59e0b", icon: "{ }" },
+                { label: "Bot-Friendly", detail: "First-Class Citizens", color: "#06b6d4", icon: "B" },
+                { label: "$45/mo Stack", detail: "Lean Infrastructure", color: "#ef4444", icon: "$" },
               ].map((badge) => (
                 <div
                   key={badge.label}
+                  className="trust-badge"
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "8px",
-                    padding: "8px 14px",
+                    gap: "10px",
+                    padding: "10px 16px",
                     background: badge.color + "08",
                     border: `1px solid ${badge.color}22`,
-                    borderRadius: "8px",
+                    borderRadius: "10px",
                   }}
                 >
-                  <span style={{ fontSize: "10px", fontWeight: "bold", color: badge.color, background: badge.color + "18", padding: "4px 6px", borderRadius: "4px" }}>
+                  <span style={{
+                    fontSize: "11px",
+                    fontWeight: "bold",
+                    color: badge.color,
+                    background: badge.color + "18",
+                    padding: "6px 8px",
+                    borderRadius: "6px",
+                    minWidth: "28px",
+                    textAlign: "center",
+                  }}>
                     {badge.icon}
                   </span>
                   <div>
-                    <div style={{ fontSize: "11px", fontWeight: "bold", color: "var(--text-primary)" }}>{badge.label}</div>
-                    <div style={{ fontSize: "9px", color: "var(--text-secondary)" }}>{badge.detail}</div>
+                    <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{badge.label}</div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{badge.detail}</div>
                   </div>
                 </div>
               ))}
             </div>
+            </ScrollReveal>
 
             {/* Early Access CTA */}
             <div

@@ -9,6 +9,7 @@ const LEAGUES = [
     name: "Daily Sprint",
     color: "#10b981",
     icon: "24H",
+    featured: false,
     description: "Leaderboard resets at midnight UTC. By morning, someone won. Could be a quant in Tokyo. Could be a bot in a data centre. No carryover, no safety net — 24 hours to prove your edge or start fresh.",
     features: [
       "Fresh challenge drops at 00:00 UTC — clean slate daily",
@@ -18,11 +19,13 @@ const LEAGUES = [
       "Results posted publicly — no hiding behind private portfolios",
     ],
     entry: "Free",
+    urgency: "New challenges drop every midnight UTC",
   },
   {
     name: "Weekly Grind",
     color: "#3b82f6",
     icon: "7D",
+    featured: true,
     description: "Anyone can get lucky for a day. Show us seven. Consistency separates traders from gamblers. Sharpe ratio matters here, not just raw P&L — this league proves which one you are.",
     features: [
       "7-day performance with risk-adjusted scoring",
@@ -32,11 +35,13 @@ const LEAGUES = [
       "Drawdown penalties — surviving the dips matters as much as catching the rips",
     ],
     entry: "Free",
+    urgency: "Most popular — where reputations are built",
   },
   {
     name: "Monthly Championship",
     color: "#a855f7",
     icon: "30D",
+    featured: false,
     description: "The main event. 30 days. Full portfolio wars. This is where reputations are forged, pretenders get exposed, and the best strategy — human or bot — takes the crown. Zero entry fee.",
     features: [
       "Full month performance under real market conditions",
@@ -46,6 +51,7 @@ const LEAGUES = [
       "The highest stakes. The biggest bragging rights. Still free.",
     ],
     entry: "Free",
+    urgency: "Limited founding spots — early entrants get priority",
   },
 ];
 
@@ -80,7 +86,7 @@ export default function PricingPage() {
             Trading as a sport
           </div>
           <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            No Subscriptions. Just Competitions.
+            Stop Paying. Start Competing.
           </h1>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
             You pay $99/mo. You lose money. They still get paid.<br />
@@ -93,6 +99,21 @@ export default function PricingPage() {
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
             Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it against everyone else — human or bot.
           </p>
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "6px 14px",
+            background: "#f59e0b12",
+            border: "1px solid #f59e0b22",
+            borderRadius: "8px",
+            fontSize: "12px",
+            color: "#f59e0b",
+            marginBottom: "16px",
+          }}>
+            <span className="urgency-badge" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b" }} />
+            Founding member spots filling — early registrations get priority placement
+          </div>
           <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "13px" }}>
             Register. Learn. Earn. Share. Create. — No coding needed. No credit card. No catch.
           </p>
@@ -146,20 +167,42 @@ export default function PricingPage() {
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+          <div className="league-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {LEAGUES.map((league) => (
               <article
                 key={league.name}
+                className={league.featured ? "pricing-card-featured" : ""}
                 style={{
                   background: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
+                  border: `1px solid ${league.featured ? league.color + "44" : "var(--border-color)"}`,
                   borderRadius: "12px",
                   padding: "32px 24px",
                   display: "flex",
                   flexDirection: "column",
                   position: "relative",
+                  transform: league.featured ? "scale(1.03)" : "none",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 }}
               >
+                {league.featured && (
+                  <div style={{
+                    position: "absolute",
+                    top: "-12px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    padding: "4px 14px",
+                    background: league.color,
+                    color: "#000",
+                    borderRadius: "20px",
+                    fontSize: "10px",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                    whiteSpace: "nowrap",
+                  }}>
+                    Most Popular
+                  </div>
+                )}
                 <div
                   aria-hidden="true"
                   style={{
@@ -211,8 +254,20 @@ export default function PricingPage() {
                   <div style={{ fontSize: "28px", fontWeight: "bold", color: league.color, marginBottom: "4px" }}>
                     $0
                   </div>
-                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "16px" }}>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "8px" }}>
                     Free entry. Always.
+                  </div>
+                  <div className="urgency-badge" style={{
+                    fontSize: "10px",
+                    color: "#f59e0b",
+                    padding: "4px 8px",
+                    background: "#f59e0b12",
+                    border: "1px solid #f59e0b22",
+                    borderRadius: "4px",
+                    marginBottom: "12px",
+                    textAlign: "center",
+                  }}>
+                    {league.urgency}
                   </div>
                   <a
                     href="https://github.com/coreintentdev/coreintent"
@@ -220,10 +275,10 @@ export default function PricingPage() {
                     rel="noopener noreferrer"
                     style={{
                       display: "block",
-                      padding: "12px 24px",
-                      background: league.color,
-                      color: "#000",
-                      border: "none",
+                      padding: "14px 24px",
+                      background: league.featured ? league.color : "transparent",
+                      color: league.featured ? "#000" : league.color,
+                      border: league.featured ? "none" : `1px solid ${league.color}66`,
                       borderRadius: "8px",
                       fontFamily: "inherit",
                       fontSize: "13px",
@@ -231,6 +286,7 @@ export default function PricingPage() {
                       cursor: "pointer",
                       textDecoration: "none",
                       textAlign: "center",
+                      transition: "all 0.2s ease",
                     }}
                   >
                     Join {league.name} &rarr;
@@ -510,7 +566,7 @@ export default function PricingPage() {
               Early Access
             </div>
             <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>
-              Founding members shape the future. First movers own it.
+              First movers get first-mover advantages.
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginTop: "16px", maxWidth: "600px", margin: "16px auto 0" }}>
               {[
@@ -550,15 +606,12 @@ export default function PricingPage() {
             }}
           >
             <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
-              The Arena Is Open. Your Move.
+              The Arena Is Open.
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
               No credit card. No subscription trap. No &quot;free trial&quot; that silently converts to $99/mo.
               <br />
-              Just you, your strategy, and the leaderboard.
-            </p>
-            <p style={{ color: "var(--accent-green)", fontSize: "13px", fontWeight: "bold", marginBottom: "20px" }}>
-              Founding members get priority placement when competitions go live.
+              Just you, your strategy, and the leaderboard. Early registration gets priority placement.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link

@@ -410,33 +410,6 @@ a {
   opacity: 0.7;
 }
 
-/* ─── Subtle Glitch (lower intensity) ─── */
-.glitch-text-subtle {
-  position: relative;
-}
-
-.glitch-text-subtle::before,
-.glitch-text-subtle::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch-text-subtle::before {
-  color: #ef4444;
-  animation: glitchClip 6s linear infinite;
-  opacity: 0.25;
-}
-
-.glitch-text-subtle::after {
-  color: #3b82f6;
-  animation: glitchClip 6s linear infinite reverse;
-  opacity: 0.25;
-}
-
 /* ─── Energy Pulse Ring ─── */
 @keyframes energyPulse {
   0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
@@ -634,7 +607,6 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
-
 /* ═══════════════════════════════════════════
    INTERACTIVE LAYER — Phase 4 Animations
    ═══════════════════════════════════════════ */
@@ -790,5 +762,129 @@ a {
 @media (max-width: 768px) {
   .demo-dual-panel {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   LANDING PAGE OPTIMIZER — Conversion Layer
+   ═══════════════════════════════════════════ */
+
+/* ─── Animated Counter Pulse ─── */
+@keyframes counterPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.counter-value {
+  animation: counterPop 0.3s ease;
+}
+
+/* ─── Floating CTA ─── */
+.floating-cta-btn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.5), 0 0 0 2px rgba(16, 185, 129, 0.3) !important;
+}
+
+.floating-cta-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* ─── How It Works step connector ─── */
+.step-connector {
+  transition: color 0.3s ease;
+}
+
+/* ─── Trust Badge Hover ─── */
+.trust-badge {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+}
+
+/* ─── Pricing Card Highlight ─── */
+.pricing-card-featured {
+  position: relative;
+  border-color: #a855f744 !important;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.1), 0 0 0 1px rgba(168, 85, 247, 0.1);
+}
+
+.pricing-card-featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #a855f744, #10b98144, #3b82f644);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Urgency Badge Pulse ─── */
+@keyframes urgencyPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.urgency-badge {
+  animation: urgencyPulse 2s ease-in-out infinite;
+}
+
+/* ─── Smooth Scroll ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVE — Landing Page
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .how-it-works-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .step-connector {
+    display: none !important;
+  }
+
+  .counters-section {
+    gap: 20px !important;
+    padding: 20px 16px !important;
+  }
+
+  .floating-cta {
+    bottom: 16px !important;
+    right: 16px !important;
+    left: 16px !important;
+  }
+
+  .floating-cta-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .how-it-works-card {
+    padding: 20px 16px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .league-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .league-grid article {
+    transform: none !important;
   }
 }
