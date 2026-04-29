@@ -672,29 +672,29 @@ function SignalPipeline() {
 }
 
 /* ─── Terminal Preview — "Try It" CTA ─── */
+const PREVIEW_SCRIPT = [
+  { type: "cmd" as const, text: "dashboard" },
+  { type: "out" as const, text: "\x1b[32m◉\x1b[0m  Engine ONLINE  |  3 models synced  |  0 incidents" },
+  { type: "out" as const, text: "\x1b[31mGrok\x1b[0m ████████████░░░░ 78%  \x1b[35mClaude\x1b[0m ██████████░░░░░░ 62%" },
+  { type: "out" as const, text: "\x1b[34mPerplexity\x1b[0m ███████████████░ 91%  \x1b[32mConsensus: STRONG\x1b[0m" },
+  { type: "cmd" as const, text: "warp" },
+  { type: "out" as const, text: "\x1b[31mGrok\x1b[0m → RSI divergence, volume spike 2.3x → \x1b[32mLONG 87%\x1b[0m" },
+  { type: "out" as const, text: "\x1b[35mClaude\x1b[0m → R/R 2.4:1, resistance untested → \x1b[33mAdjust 79%\x1b[0m" },
+  { type: "out" as const, text: "\x1b[34mPerplexity\x1b[0m → No negative news, whale accumulation → \x1b[32m82%\x1b[0m" },
+  { type: "out" as const, text: "\x1b[36m★ ENGINE DECISION: LONG BTC/USDT @ $67,420 | 3/3 AGREE | 83%\x1b[0m" },
+  { type: "cmd" as const, text: "anthem" },
+  { type: "out" as const, text: "\x1b[33mEvery human needs a bot. Every bot needs a human. 336.\x1b[0m" },
+];
+
 function TerminalPreview({ onLaunch }: { onLaunch: () => void }) {
   const [lineIdx, setLineIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [displayLines, setDisplayLines] = useState<string[]>([]);
 
-  const script = [
-    { type: "cmd" as const, text: "dashboard" },
-    { type: "out" as const, text: "\x1b[32m◉\x1b[0m  Engine ONLINE  |  3 models synced  |  0 incidents" },
-    { type: "out" as const, text: "\x1b[31mGrok\x1b[0m ████████████░░░░ 78%  \x1b[35mClaude\x1b[0m ██████████░░░░░░ 62%" },
-    { type: "out" as const, text: "\x1b[34mPerplexity\x1b[0m ███████████████░ 91%  \x1b[32mConsensus: STRONG\x1b[0m" },
-    { type: "cmd" as const, text: "warp" },
-    { type: "out" as const, text: "\x1b[31mGrok\x1b[0m → RSI divergence, volume spike 2.3x → \x1b[32mLONG 87%\x1b[0m" },
-    { type: "out" as const, text: "\x1b[35mClaude\x1b[0m → R/R 2.4:1, resistance untested → \x1b[33mAdjust 79%\x1b[0m" },
-    { type: "out" as const, text: "\x1b[34mPerplexity\x1b[0m → No negative news, whale accumulation → \x1b[32m82%\x1b[0m" },
-    { type: "out" as const, text: "\x1b[36m★ ENGINE DECISION: LONG BTC/USDT @ $67,420 | 3/3 AGREE | 83%\x1b[0m" },
-    { type: "cmd" as const, text: "anthem" },
-    { type: "out" as const, text: "\x1b[33mEvery human needs a bot. Every bot needs a human. 336.\x1b[0m" },
-  ];
-
   useEffect(() => {
-    if (lineIdx >= script.length) return;
+    if (lineIdx >= PREVIEW_SCRIPT.length) return;
 
-    const line = script[lineIdx];
+    const line = PREVIEW_SCRIPT[lineIdx];
     if (line.type === "cmd") {
       if (charIdx <= line.text.length) {
         const timer = setTimeout(() => {
@@ -729,7 +729,7 @@ function TerminalPreview({ onLaunch }: { onLaunch: () => void }) {
   }, [lineIdx, charIdx]);
 
   useEffect(() => {
-    if (lineIdx >= script.length) {
+    if (lineIdx >= PREVIEW_SCRIPT.length) {
       const timer = setTimeout(() => {
         setDisplayLines([]);
         setLineIdx(0);
@@ -804,7 +804,7 @@ function TerminalPreview({ onLaunch }: { onLaunch: () => void }) {
           {displayLines.map((line, i) => (
             <div key={i} dangerouslySetInnerHTML={{ __html: ansiToSpan(line) }} />
           ))}
-          {lineIdx < script.length && script[lineIdx]?.type === "cmd" && charIdx <= (script[lineIdx]?.text.length ?? 0) && (
+          {lineIdx < PREVIEW_SCRIPT.length && PREVIEW_SCRIPT[lineIdx]?.type === "cmd" && charIdx <= (PREVIEW_SCRIPT[lineIdx]?.text.length ?? 0) && (
             <span className="terminal-cursor" style={{ marginLeft: "2px" }} />
           )}
         </div>
