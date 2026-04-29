@@ -250,3 +250,120 @@
 
 **CTA (25-30s):**
 "The math doesn't lie. coreintent.dev"
+
+---
+
+## Script 12 — "POV: Your Bot Just Beat a Hedge Fund Analyst"
+
+**Hook (0-3s):** "POV: Your Python script just placed 3rd against hedge fund analysts."
+
+**Body (3-25s):**
+"You built it in a weekend. 47 lines of code. It registers on CoreIntent. Enters the daily sprint."
+
+"24 hours later, it's on the leaderboard. Ahead of traders with Bloomberg terminals and six-figure salaries."
+
+"No captcha stopped it. No terms of service blocked it. It just... competed."
+
+"Because on CoreIntent, the leaderboard doesn't care who built you."
+
+*[Visual: screen recording of a bot entering a competition, time-lapse of leaderboard updating]*
+
+**CTA (25-30s):**
+"Your bot deserves an arena. coreintent.dev"
+
+> Note: This is a hypothetical scenario using demo data. CoreIntent is in paper trading mode.
+
+---
+
+## Script 13 — "I Built an AI Trading Platform for $45/mo"
+
+**Hook (0-3s):** "My entire AI trading platform costs less than your gym membership."
+
+**Body (3-25s):**
+*[Show cost breakdown on screen, crossing each off]*
+
+"Hosting: free. CI/CD: free. AI signals from Grok: basically free. Perplexity research: free."
+
+"Cloudflare for security: twenty bucks. VPS for the trading engine: twenty-five."
+
+"That's it. $45. Three AI models. Six trading agents. Free competitions."
+
+"Most platforms charge you $99/mo for LESS than this. They charge because they CAN, not because they NEED to."
+
+"When your infrastructure costs this little, charging subscriptions isn't a business model. It's a toll booth."
+
+**CTA (25-30s):**
+"$0 to compete. coreintent.dev — built from New Zealand."
+
+---
+
+## Script 14 — "3 AIs Walk Into a Trade..."
+
+**Hook (0-3s):** "Three AIs walk into a trade. Only one of them is wrong."
+
+**Body (3-25s):**
+"Grok scans Twitter. 'BTC breakout! Sentiment is bullish! Go long!'"
+
+"Claude runs the numbers. 'Hold on. The risk-reward ratio is 0.8:1. That's below threshold.'"
+
+"Perplexity checks the news. 'Actually, there's a whale wallet that just moved 12,000 BTC to an exchange. Probable dump incoming.'"
+
+*[Beat]*
+
+"Two against one. Signal rejected."
+
+"Four hours later, BTC drops 4%."
+
+"That's not three models guessing. That's peer review."
+
+**CTA (25-30s):**
+"Multi-model consensus. coreintent.dev"
+
+> Note: This is a hypothetical scenario. CoreIntent uses demo data in paper trading mode.
+
+---
+
+## Script 15 — "The Trading Platform That WANTS You to Use Bots"
+
+**Hook (0-3s):** "Every other trading platform bans bots. We BEG you to bring them."
+
+**Body (3-25s):**
+"Binance: captcha. Robinhood: terms violation. Coinbase: rate limited."
+
+"CoreIntent: 'Welcome. Here's the API. Register your bot. Enter the arena.'"
+
+"Why? Because the future of trading isn't humans vs bots. It's humans AND bots on the same leaderboard."
+
+"Your algo competes against quant strategies. Your neural net competes against rule-based systems. Your weekend project competes against everything."
+
+"The best strategy wins. We don't care who wrote it."
+
+**CTA (25-30s):**
+"Bot-friendly. Human-friendly. Strategy-first. coreintent.dev"
+
+---
+
+## Script 16 — "The Subscription Math Nobody Talks About"
+
+**Hook (0-3s):** "Let me show you what your $99/mo trading subscription actually costs."
+
+**Body (3-25s):**
+*[Show calculator on screen]*
+
+"$99 times 3 months: $297."
+"$99 times 6 months: $594."
+"$99 times 12 months: $1,188."
+"$99 times 2 years: $2,376."
+
+"And here's the uncomfortable part: you paid that whether you made money or not. The platform won either way."
+
+*[Clear screen]*
+
+"CoreIntent: $0. Zero. For everything."
+
+"Three AI models. Six agents. Daily, weekly, monthly competitions. Interactive terminal. Full API access."
+
+"Our entire stack costs $45/mo. So free isn't a marketing trick — it's just math."
+
+**CTA (25-30s):**
+"Stop paying the subscription tax. coreintent.dev"

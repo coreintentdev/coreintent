@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/demo/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Interactive Demo — AI Trading Simulation",
+        alt: "CoreIntent — Interactive AI Trading Demo. Watch 3 Models Debate Trades.",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Watch Grok, Claude & Perplexity debate trades live. Paper trading simulation — free to try.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/demo/opengraph-image"],
   },
 };
 

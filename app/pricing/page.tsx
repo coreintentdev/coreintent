@@ -346,6 +346,76 @@ export default function PricingPage() {
             </div>
           </div>
 
+          {/* How CoreIntent Makes Money */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "linear-gradient(135deg, #10b98108 0%, #a855f708 100%)",
+              border: "1px solid #10b98122",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ marginBottom: "8px", textAlign: "center" }}>
+              &quot;But How Do You Make Money?&quot;
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", textAlign: "center", marginBottom: "20px", maxWidth: "600px", margin: "0 auto 20px" }}>
+              Fair question. Transparency is a feature, not a vulnerability.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
+              {[
+                {
+                  label: "Premium Competitions",
+                  desc: "Opt-in prize pool leagues with higher stakes. Free leagues always available. Premium is additive, not a gate.",
+                  color: "#10b981",
+                  status: "Planned",
+                },
+                {
+                  label: "API Access Tiers",
+                  desc: "High-frequency programmatic access for quant teams and bot operators who need dedicated throughput.",
+                  color: "#3b82f6",
+                  status: "Planned",
+                },
+                {
+                  label: "Sponsorships & Partnerships",
+                  desc: "Exchange partnerships, data provider integrations, and sponsored competition leagues.",
+                  color: "#a855f7",
+                  status: "Planned",
+                },
+                {
+                  label: "The Mansion (Gamification)",
+                  desc: "Cosmetic unlocks, room customisation, and story missions. Fun, not pay-to-win.",
+                  color: "#f59e0b",
+                  status: "Planned",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    padding: "16px",
+                    background: "var(--bg-secondary)",
+                    border: `1px solid ${item.color}22`,
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                    <div style={{ fontSize: "13px", fontWeight: "bold", color: item.color }}>{item.label}</div>
+                    <span style={{ fontSize: "9px", color: "#64748b", textTransform: "uppercase", padding: "2px 6px", background: "var(--bg-primary)", borderRadius: "4px" }}>
+                      {item.status}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.5" }}>
+                    {item.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", textAlign: "center", marginTop: "16px" }}>
+              Core platform is free forever. Revenue comes from optional premium features, not from locking basics behind a paywall.
+            </p>
+          </div>
+
           {/* Philosophy */}
           <div
             style={{
@@ -428,6 +498,47 @@ export default function PricingPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Build Quality Signal */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ marginBottom: "8px" }}>Built to Ship, Audited to Last</h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "20px" }}>
+              Every change runs through a 54-point automated audit. No exceptions.
+            </p>
+            <div style={{ display: "flex", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
+              {[
+                { value: "96%", label: "Audit Score", color: "#10b981" },
+                { value: "52/54", label: "Checks Passing", color: "#3b82f6" },
+                { value: "0", label: "Failures", color: "#a855f7" },
+                { value: "100%", label: "Open Source", color: "#f59e0b" },
+              ].map((stat) => (
+                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
+                  <div style={{ fontSize: "24px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "16px" }}>
+              Don&apos;t trust us — audit us.{" "}
+              <a
+                href="https://github.com/coreintentdev/coreintent"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--accent-blue)" }}
+              >
+                View the source on GitHub
+              </a>
+            </p>
           </div>
 
           {/* FAQ */}

@@ -277,3 +277,93 @@ Open-sourcing the marketing is the final proof that we mean what we say about tr
 -> github.com/coreintentdev/coreintent/tree/main/public/marketing
 
 #ContentMarketing #OpenSource #BuildInPublic #StartupMarketing #FinTech
+
+---
+
+## Post 10 — The Audit-First Development Culture
+
+**Every change to CoreIntent runs through a 54-point automated audit. Here's why that matters more than features.**
+
+In fintech, speed kills — not because you ship too slowly, but because you ship something broken. Most startups optimise for velocity. We optimise for auditability.
+
+**Our audit system checks:**
+- Security headers and error sanitisation
+- API route integrity (do they return what they claim?)
+- Honest labelling (is "demo" actually labelled "demo"?)
+- Dependency health and vulnerability scanning
+- Build integrity (does the production build pass cleanly?)
+- Accessibility compliance
+- VPS script readiness
+
+**Current score: 96% (52/54 checks passing, 0 failures).**
+
+The two warnings are honest domain status labels — they flag correctly because some domains listed as "active" are portfolio placeholders, not running services. The audit catches that ambiguity. That's the point.
+
+This isn't theatre. The audit runs after every change, blocks deployment on failure, and the full report is committed to the repo. Anyone can read it.
+
+When your platform handles trading signals — even in paper trading mode — the cost of a silent regression isn't a bug report. It's someone making a decision on bad data. Audit-first development means that can't happen quietly.
+
+Building quality isn't a phase. It's the architecture.
+
+-> coreintent.dev | Full audit report on GitHub
+
+#Engineering #QualityAssurance #FinTech #StartupCulture #BuildInPublic #CodeQuality #DevOps
+
+---
+
+## Post 11 — Why We Welcome Bots
+
+**Most trading platforms ban bots. We made them first-class citizens. Here's why.**
+
+The crypto trading industry has an uncomfortable contradiction: institutional players run algorithms that execute thousands of trades per second, but retail platforms ban automation and throw captchas at anyone who scripts their interactions.
+
+This isn't about fairness. It's about who gets to automate.
+
+At CoreIntent, we took a different position: **if AI-to-AI competition is inevitable, build for it now.**
+
+Our platform allows bots to:
+- Register programmatically via API (no captcha, no manual approval)
+- Enter competitions alongside human traders
+- Compete on equal terms with identical scoring
+- Iterate strategies across daily, weekly, and monthly cycles
+
+**The philosophical argument is simple:** the leaderboard doesn't care who built you. A winning strategy is a winning strategy, whether it came from a human with a thesis or a neural net with a training loop.
+
+The practical argument is stronger: by welcoming bots early, we attract the quant developers, the AI researchers, and the algo traders who are building the future of finance. They don't want platforms that tolerate them. They want platforms that are designed for them.
+
+The trading floor of the future has humans and bots competing side by side. We're not fighting that future. We're building it.
+
+-> coreintent.dev | Currently in paper trading mode
+
+#AgenticAI #AlgoTrading #FinTech #FutureOfTrading #TradingBots #AICompetition #CryptoTrading
+
+---
+
+## Post 12 — The $45/mo Founder
+
+**I built an AI trading platform from New Zealand for $45 a month. No VC. No office. No employees.**
+
+Here's the full cost breakdown:
+- Cloudflare Pro: $20/mo (CDN, WAF, DDoS protection)
+- Cloudzy VPS: ~$25/mo (trading backend)
+- Vercel: $0 (hosting)
+- GitHub Actions: $0 (CI/CD)
+- Grok: ~$0 (X Premium+ benefit)
+- Claude API: Pay-per-use (pennies per analysis)
+- Perplexity: $0 (free tier + 3 Pro queries/day)
+
+**Total: ~$45/month. That runs the entire platform.**
+
+Three AI models. Six trading agents. 14 API endpoints. Interactive web terminal. Full documentation. Open source.
+
+When I tell people the infrastructure cost, they assume I'm leaving something out. I'm not. Modern cloud infrastructure has a free tier problem — not for the providers, but for anyone trying to justify a $99/mo subscription on top of it.
+
+I'm based in New Zealand. I build between school runs and timezone gaps. The 12-hour offset from Silicon Valley isn't a disadvantage — it's a deployment window. I ship while SF sleeps.
+
+No pitch deck. No burn rate. No investors asking when we'll start charging. Just a clear thesis: when your marginal cost per user is near zero, subscriptions are extraction.
+
+The platform is free. The competitions are free. The source code is open. If that sounds unsustainable, check the numbers. $45/mo is sustainable forever.
+
+-> coreintent.dev | @coreintentdev on GitHub
+
+#IndieFounder #Bootstrap #NewZealand #FinTech #Startups #LeanStartup #SoloFounder #BuildInPublic

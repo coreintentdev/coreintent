@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/stack/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Technology Stack — Claude, Grok & Perplexity",
+        alt: "CoreIntent — The Stack: Claude, Grok & Perplexity AI Architecture",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       "Claude + Grok + Perplexity — the multi-AI stack powering CoreIntent trading engine.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/stack/opengraph-image"],
   },
 };
 
