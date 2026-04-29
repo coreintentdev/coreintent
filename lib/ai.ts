@@ -31,7 +31,7 @@ export interface AIResponse {
    * Only present when live === false due to a failure (not demo).
    * Enables monitoring dashboards to classify failure modes.
    */
-  errorType?: "api_error" | "rate_limit" | "network_error" | "timeout";
+  errorType?: "api_error" | "auth_error" | "rate_limit" | "network_error" | "timeout";
 }
 
 /** Which AI API keys are configured (true) vs demo placeholder (false). */
@@ -121,11 +121,8 @@ function sanitizeApiError(status: number, source: AIResponse["source"]): string 
 
 const GROK_TIMEOUT_MS = 15_000;
 
-/**
- * System prompt for Grok.
- * Structured for trading signals: concise, data-driven, no hallucinations.
- */
-const GROK_SYSTEM =
+/** Default system prompt for Grok — trading signals and concise output. Exported for route reuse. */
+export const GROK_SYSTEM =
   "You are CoreIntent's signal detection AI for Zynthio.ai (paper trading mode, NZ).\n" +
   "All signals are PAPER TRADING only — no real capital at risk.\n\n" +
   "Signal format (use when outputting a trade signal):\n" +
@@ -188,7 +185,9 @@ export async function callGrok(
         model:     "grok-3",
         content:   sanitizeApiError(res.status, "grok"),
         live:      false,
-        errorType: res.status === 429 ? "rate_limit" : "api_error",
+        errorType: res.status === 429 ? "rate_limit"
+                 : (res.status === 401 || res.status === 403) ? "auth_error"
+                 : "api_error",
       };
     }
 
@@ -219,7 +218,7 @@ const CLAUDE_TIMEOUT_MS = 25_000;
  * Avoid injecting per-request variables (timestamps, prices) here — put those
  * in the user message instead.
  */
-const CLAUDE_DEFAULT_SYSTEM =
+export const CLAUDE_DEFAULT_SYSTEM =
   "You are CoreIntent, an agentic AI trading assistant for Zynthio.ai (parent brand).\n" +
   "Owner: Corey McIvor (@coreintentdev / @coreintentai, NZ). Mode: paper_trading.\n\n" +
   "Platform state (as of April 2026):\n" +
@@ -298,7 +297,9 @@ export async function callClaude(
         model:     "claude-sonnet-4-6",
         content:   sanitizeApiError(res.status, "claude"),
         live:      false,
-        errorType: res.status === 429 ? "rate_limit" : "api_error",
+        errorType: res.status === 429 ? "rate_limit"
+                 : (res.status === 401 || res.status === 403) ? "auth_error"
+                 : "api_error",
       };
     }
 
@@ -325,7 +326,7 @@ const PERPLEXITY_TIMEOUT_MS = 30_000;
  * Enforces factual, cited output and sets NZ regulatory context.
  * Keep stable between requests to benefit from any server-side caching.
  */
-const PERPLEXITY_SYSTEM =
+export const PERPLEXITY_SYSTEM =
   "You are CoreIntent's research AI for Zynthio.ai (paper trading mode, NZ).\n\n" +
   "Research rules:\n" +
   "- Provide factual, cited information only. No speculation presented as fact.\n" +
@@ -389,7 +390,9 @@ export async function callPerplexity(
         model:     "sonar-pro",
         content:   sanitizeApiError(res.status, "perplexity"),
         live:      false,
-        errorType: res.status === 429 ? "rate_limit" : "api_error",
+        errorType: res.status === 429 ? "rate_limit"
+                 : (res.status === 401 || res.status === 403) ? "auth_error"
+                 : "api_error",
       };
     }
 
@@ -518,9 +521,11 @@ export interface ParallelAIResults {
   perplexity: AIResponse;
   claude:     AIResponse;
   /** true when all three live API calls succeeded. */
-  allLive:  boolean;
+  allLive:     boolean;
+  /** true when at least one live API call succeeded. */
+  partialLive: boolean;
   /** true when all three responses contain non-empty content. */
-  allValid: boolean;
+  allValid:    boolean;
 }
 
 /**
@@ -544,8 +549,9 @@ export async function callAIsParallel(
     grok,
     perplexity,
     claude,
-    allLive:  grok.live  && perplexity.live  && claude.live,
-    allValid: validateAiContent(grok) && validateAiContent(perplexity) && validateAiContent(claude),
+    allLive:     grok.live && perplexity.live && claude.live,
+    partialLive: grok.live || perplexity.live || claude.live,
+    allValid:    validateAiContent(grok) && validateAiContent(perplexity) && validateAiContent(claude),
   };
 }
 

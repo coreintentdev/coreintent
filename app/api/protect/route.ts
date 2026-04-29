@@ -64,8 +64,9 @@ export async function GET(req: NextRequest) {
         webPresence:      { ...results.perplexity, purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(results.perplexity) },
         threatAssessment: { ...results.claude,     purpose: "Risk analysis & recommendations", contentValid: validateAiContent(results.claude)     },
       },
-      allLive:  results.allLive,
-      allValid: results.allValid,
+      allLive:     results.allLive,
+      partialLive: results.partialLive,
+      allValid:    results.allValid,
       landmines: {
         status:   "armed",
         coverage: PROTECTED_ASSETS.names.length + PROTECTED_ASSETS.domains.length + PROTECTED_ASSETS.socials.length,

@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
   if (body.content !== undefined) {
     const content = validateString(body.content, 10_000);
     if (content === null) {
-      return badRequest("content must be a string of 10,000 characters or fewer");
+      return badRequest("content must be a non-empty string of 10,000 characters or fewer");
     }
   }
 
