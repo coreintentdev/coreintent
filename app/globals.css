@@ -888,3 +888,69 @@ html {
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE CONTENT — Enhanced Animations
+   ═══════════════════════════════════════════ */
+
+@keyframes depthPulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes wallGlow {
+  0%, 100% { filter: drop-shadow(0 0 2px currentColor); }
+  50% { filter: drop-shadow(0 0 6px currentColor); }
+}
+
+@keyframes sentinelScan {
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.depth-fill-pulse {
+  animation: depthPulse 3s ease-in-out infinite;
+}
+
+.depth-wall-marker {
+  animation: wallGlow 2s ease-in-out infinite;
+}
+
+.card-hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.interactive-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.glow-line {
+  position: relative;
+  overflow: hidden;
+}
+.glow-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+  animation: sentinelScan 4s ease-in-out infinite;
+}

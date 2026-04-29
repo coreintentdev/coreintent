@@ -76,11 +76,14 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
   \x1b[32mslots\x1b[0m       - Crypto slot machine — spin the reels
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
+  \x1b[32mwhale\x1b[0m       - Track whale wallet movements
+  \x1b[32marena\x1b[0m       - Competition arena & brackets
 
   \x1b[33m── ANALYTICS ──\x1b[0m
   \x1b[32mheatmap\x1b[0m     - Crypto correlation matrix (animated)
   \x1b[32mbacktest\x1b[0m    - Run a strategy backtest simulation
   \x1b[32mpulse\x1b[0m       - Engine vitals heartbeat monitor
+  \x1b[32mflux\x1b[0m        - Market sentiment flow visualization
 
   \x1b[33m── EXPERIENCES ──\x1b[0m
   \x1b[32mspeedtest\x1b[0m   - Network speed diagnostics
@@ -91,6 +94,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mdecrypt\x1b[0m     - Decrypt a classified message
   \x1b[32morbit\x1b[0m       - Watch AI models orbit the engine
   \x1b[32mglitch\x1b[0m      - Trigger a system resilience test
+  \x1b[32mdna\x1b[0m         - System identity fingerprint
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -634,6 +638,7 @@ const ALL_COMMANDS = [
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
   "decrypt", "orbit", "glitch",
+  "whale", "arena", "dna", "flux",
 ];
 
 export default function Terminal() {
@@ -2087,6 +2092,200 @@ export default function Terminal() {
             `  \x1b[90mF18 Security — resilience test passed\x1b[0m`, ``);
         }
       }, 120);
+      return "";
+    }
+
+    // ── WHALE: Track whale wallet movements ──
+    if (trimmed === "whale") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ WHALE TRACKER — LARGE WALLET MONITOR ══\x1b[0m`,
+        `\x1b[90m  Scanning blockchain for whale movements...\x1b[0m`, ``);
+
+      const whaleArt = [
+        `\x1b[36m           .    .                \x1b[0m`,
+        `\x1b[36m          . \\__/ \\_  .           \x1b[0m`,
+        `\x1b[36m         . /        \\  .         \x1b[0m`,
+        `\x1b[36m    ____/            \\____       \x1b[0m`,
+        `\x1b[36m   /                      \\      \x1b[0m`,
+        `\x1b[36m  |  \x1b[33m●\x1b[36m                     |---<\x1b[0m`,
+        `\x1b[36m   \\____    ________  ____/      \x1b[0m`,
+        `\x1b[36m        \\__/        \\/           \x1b[0m`,
+      ];
+      for (const line of whaleArt) addLines(`  ${line}`);
+      addLines(``);
+
+      const txs = [
+        { wallet: "0x7a...f3e2", action: "BOUGHT", amount: "142.5 BTC", value: "$9.6M", time: "2m ago" },
+        { wallet: "0xb2...91a4", action: "MOVED", amount: "3,200 ETH", value: "$10.5M", time: "8m ago" },
+        { wallet: "0x1e...c7d8", action: "SOLD", amount: "85,000 SOL", value: "$12.1M", time: "14m ago" },
+        { wallet: "0xd4...2f56", action: "BOUGHT", amount: "500 BTC", value: "$33.7M", time: "31m ago" },
+        { wallet: "0x9c...e801", action: "STAKED", amount: "12,000 ETH", value: "$39.4M", time: "1h ago" },
+      ];
+
+      let wi = 0;
+      const wiv = setInterval(() => {
+        if (wi < txs.length) {
+          const tx = txs[wi];
+          const actionColor = tx.action === "BOUGHT" ? "\x1b[32m" : tx.action === "SOLD" ? "\x1b[31m" : "\x1b[36m";
+          addLines(`  \x1b[90m${tx.wallet}\x1b[0m ${actionColor}${tx.action.padEnd(7)}\x1b[0m ${tx.amount.padEnd(14)} \x1b[33m${tx.value.padEnd(8)}\x1b[0m \x1b[90m${tx.time}\x1b[0m`);
+          wi++;
+        } else {
+          clearInterval(wiv);
+          addLines(``,
+            `\x1b[36m  ── Whale Summary ──\x1b[0m`,
+            `  Net flow:      \x1b[32m+$82.7M bought\x1b[0m vs \x1b[31m$12.1M sold\x1b[0m`,
+            `  Bias:          \x1b[32mACCUMULATION\x1b[0m — institutions loading`,
+            `  Smart money:   \x1b[32mBullish\x1b[0m — 4 of 5 whales buying`,
+            `  Alert level:   \x1b[33mELEVATED\x1b[0m — unusual volume`,
+            `  \x1b[90mSimulated whale data — demo mode\x1b[0m`, ``
+          );
+        }
+      }, 350);
+      return "";
+    }
+
+    // ── ARENA: Competition arena & brackets ──
+    if (trimmed === "arena") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m         THE ARENA — COMPETITION BRACKETS\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════════\x1b[0m`, ``);
+
+      const brackets = [
+        `  \x1b[33m┌── DAILY LEAGUE ─────────────────────────────────┐\x1b[0m`,
+        `  \x1b[33m│\x1b[0m  \x1b[32m1.\x1b[0m AlphaStrat_v7  \x1b[90mvs\x1b[0m  NightOwl_Bot     \x1b[32m  WIN\x1b[0m  \x1b[33m│\x1b[0m`,
+        `  \x1b[33m│\x1b[0m  \x1b[32m2.\x1b[0m Priya S.       \x1b[90mvs\x1b[0m  TrendRider       \x1b[32m  WIN\x1b[0m  \x1b[33m│\x1b[0m`,
+        `  \x1b[33m│\x1b[0m  \x1b[90m3.\x1b[0m Jordan K.      \x1b[90mvs\x1b[0m  DegenBot_42      \x1b[31m LOSS\x1b[0m  \x1b[33m│\x1b[0m`,
+        `  \x1b[33m│\x1b[0m  \x1b[33m4.\x1b[0m Alex R.        \x1b[90mvs\x1b[0m  \x1b[33mYOU\x1b[0m              \x1b[33m    ?\x1b[0m  \x1b[33m│\x1b[0m`,
+        `  \x1b[33m└────────────────────────────────────────────────┘\x1b[0m`,
+        ``,
+        `  \x1b[36m┌── WEEKLY LEAGUE ────────────────────────────────┐\x1b[0m`,
+        `  \x1b[36m│\x1b[0m  Day 4/7  |  32 traders  |  Prize: TBD        \x1b[36m│\x1b[0m`,
+        `  \x1b[36m│\x1b[0m  Leader:  \x1b[32mAlphaStrat_v7\x1b[0m (+$2,847)            \x1b[36m│\x1b[0m`,
+        `  \x1b[36m│\x1b[0m  Your rank: \x1b[33m#8\x1b[0m (no trades yet)              \x1b[36m│\x1b[0m`,
+        `  \x1b[36m└────────────────────────────────────────────────┘\x1b[0m`,
+        ``,
+        `  \x1b[35m┌── MONTHLY LEAGUE ───────────────────────────────┐\x1b[0m`,
+        `  \x1b[35m│\x1b[0m  Week 2/4  |  128 traders  |  \x1b[33mTHE BIG ONE\x1b[0m     \x1b[35m│\x1b[0m`,
+        `  \x1b[35m│\x1b[0m  Leader:  \x1b[32mQuantVault_AI\x1b[0m (+$8,412)           \x1b[35m│\x1b[0m`,
+        `  \x1b[35m│\x1b[0m  Bots: 47%  |  Humans: 53%                  \x1b[35m│\x1b[0m`,
+        `  \x1b[35m│\x1b[0m  Your rank: \x1b[33mUnranked\x1b[0m (enter to compete)     \x1b[35m│\x1b[0m`,
+        `  \x1b[35m└────────────────────────────────────────────────┘\x1b[0m`,
+      ];
+
+      let ai = 0;
+      const aiv = setInterval(() => {
+        if (ai < brackets.length) {
+          addLines(brackets[ai]);
+          ai++;
+        } else {
+          clearInterval(aiv);
+          addLines(``,
+            `  \x1b[90mFree entry. Bots welcome. Best strategy wins.\x1b[0m`,
+            `  \x1b[90mCompetitions are planned — this is what's coming.\x1b[0m`, ``
+          );
+        }
+      }, 100);
+      return "";
+    }
+
+    // ── DNA: System identity fingerprint ──
+    if (trimmed === "dna") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ SYSTEM DNA — IDENTITY FINGERPRINT ══\x1b[0m`, ``);
+
+      const allFrameLines: string[] = [];
+      for (let f = 0; f < 6; f++) {
+        for (let y = 0; y < 10; y++) {
+          const angle = (y + f * 1.3) * 0.55;
+          const offset = Math.round(Math.sin(angle) * 8);
+          const padding = " ".repeat(Math.max(0, 14 + offset));
+          const padding2 = " ".repeat(Math.max(1, Math.abs(offset * 2)));
+
+          const labels = ["GROK", "CLDE", "PRPX", "336!", "ZYNTH", "NZ♦♦", "CAI+", "F18!", "BOTS", "FREE"];
+          const label = labels[y % labels.length];
+          const c1 = ["\x1b[31m", "\x1b[35m", "\x1b[34m", "\x1b[32m", "\x1b[33m"][y % 5];
+          const c2 = ["\x1b[34m", "\x1b[32m", "\x1b[33m", "\x1b[31m", "\x1b[35m"][y % 5];
+
+          if (Math.abs(offset) < 2) {
+            allFrameLines.push(`  ${padding}${c1}●\x1b[0m\x1b[90m═${label}═\x1b[0m${c2}●\x1b[0m`);
+          } else {
+            allFrameLines.push(`  ${padding}${c1}●\x1b[0m${padding2}${c2}●\x1b[0m`);
+          }
+        }
+        allFrameLines.push(``);
+      }
+
+      let di = 0;
+      const div = setInterval(() => {
+        if (di < allFrameLines.length) {
+          addLines(allFrameLines[di]);
+          di++;
+        } else {
+          clearInterval(div);
+          addLines(
+            `\x1b[36m  ┌──────────────────────────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mFingerprint:\x1b[0m  CI-336-ZYNTH-NZ          \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mGenome:\x1b[0m       Grok × Claude × Perplexity\x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mMutation:\x1b[0m     v0.2.0-alpha              \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mOrigin:\x1b[0m       New Zealand               \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mSignal:\x1b[0m       \x1b[32m336 — DOMINANT\x1b[0m            \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └──────────────────────────────────────────┘\x1b[0m`,
+            `  \x1b[90mEvery system has DNA. This is ours.\x1b[0m`, ``
+          );
+        }
+      }, 40);
+      return "";
+    }
+
+    // ── FLUX: Market sentiment flow visualization ──
+    if (trimmed === "flux") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ MARKET FLUX — SENTIMENT FLOW ══\x1b[0m`,
+        `\x1b[90m  Visualizing multi-model sentiment in real-time...\x1b[0m`, ``);
+
+      const W = 52;
+      let frame = 0;
+      const totalFrames = 14;
+
+      const fluxIv = setInterval(() => {
+        if (frame < totalFrames) {
+          let line = "  ";
+          for (let x = 0; x < W; x++) {
+            const wave1 = Math.sin((x + frame * 3) * 0.15) * 0.5 + 0.5;
+            const wave2 = Math.sin((x + frame * 2) * 0.12 + 2) * 0.5 + 0.5;
+            const wave3 = Math.sin((x + frame * 4) * 0.18 + 4) * 0.5 + 0.5;
+            const combined = (wave1 + wave2 + wave3) / 3;
+
+            const blocks = " ░▒▓█";
+            const idx = Math.min(4, Math.floor(combined * 5));
+
+            if (wave1 > wave2 && wave1 > wave3) {
+              line += `\x1b[31m${blocks[idx]}\x1b[0m`;
+            } else if (wave2 > wave3) {
+              line += `\x1b[35m${blocks[idx]}\x1b[0m`;
+            } else {
+              line += `\x1b[34m${blocks[idx]}\x1b[0m`;
+            }
+          }
+          addLines(line);
+          frame++;
+        } else {
+          clearInterval(fluxIv);
+          const sentiment = Math.random() > 0.5 ? "BULLISH" : "CAUTIOUS";
+          const sentColor = sentiment === "BULLISH" ? "\x1b[32m" : "\x1b[33m";
+          addLines(``,
+            `  \x1b[31m━━\x1b[0m Grok    \x1b[35m━━\x1b[0m Claude    \x1b[34m━━\x1b[0m Perplexity`,
+            ``,
+            `  \x1b[36mFlow Analysis:\x1b[0m`,
+            `  Dominant model:   \x1b[35mClaude\x1b[0m (risk-weighting strongest)`,
+            `  Consensus drift:  ${sentColor}${sentiment}\x1b[0m`,
+            `  Volatility:       \x1b[33mMODERATE\x1b[0m — models partially aligned`,
+            `  Signal coherence: \x1b[32m${72 + Math.floor(Math.random() * 20)}%\x1b[0m`,
+            `  \x1b[90mSentiment flux visualization — demo data\x1b[0m`, ``
+          );
+        }
+      }, 130);
       return "";
     }
 

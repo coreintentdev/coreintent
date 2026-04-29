@@ -434,6 +434,155 @@ function generateBook() {
   return { asks, bids, maxTotal };
 }
 
+/* ─── Market Depth Chart ─── */
+function DepthChart() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 1200);
+    return () => clearInterval(iv);
+  }, []);
+
+  const mid = 67420;
+  const spread = 0.02;
+  const levels = 20;
+
+  const bids: Array<{ price: number; cumSize: number }> = [];
+  const asks: Array<{ price: number; cumSize: number }> = [];
+  let bidCum = 0;
+  let askCum = 0;
+
+  for (let i = 0; i < levels; i++) {
+    const bidSize = (Math.sin(i * 0.7 + tick * 0.3) * 0.5 + 1) * (2 + Math.random() * 3);
+    bidCum += bidSize;
+    bids.push({ price: mid - (i + 1) * mid * spread * 0.05, cumSize: bidCum });
+
+    const askSize = (Math.cos(i * 0.6 + tick * 0.25) * 0.5 + 1) * (2 + Math.random() * 3);
+    askCum += askSize;
+    asks.push({ price: mid + (i + 1) * mid * spread * 0.05, cumSize: askCum });
+  }
+
+  const svgW = 600;
+  const svgH = 180;
+  const pad = 40;
+  const maxCum = Math.max(bidCum, askCum);
+
+  const toX = (price: number) => {
+    const minP = bids[bids.length - 1].price;
+    const maxP = asks[asks.length - 1].price;
+    return pad + ((price - minP) / (maxP - minP)) * (svgW - pad * 2);
+  };
+  const toY = (cum: number) => svgH - pad - (cum / maxCum) * (svgH - pad * 2);
+
+  const bidPoints = bids.map((b) => `${toX(b.price)},${toY(b.cumSize)}`);
+  const askPoints = asks.map((a) => `${toX(a.price)},${toY(a.cumSize)}`);
+
+  const bidPath = `M ${toX(mid)},${svgH - pad} L ${bidPoints.join(" L ")}`;
+  const askPath = `M ${toX(mid)},${svgH - pad} L ${askPoints.join(" L ")}`;
+
+  const bidFill = `${bidPath} L ${toX(bids[bids.length - 1].price)},${svgH - pad} Z`;
+  const askFill = `${askPath} L ${toX(asks[asks.length - 1].price)},${svgH - pad} Z`;
+
+  const buyWall = bids.reduce((max, b, i) => {
+    const size = i === 0 ? b.cumSize : b.cumSize - bids[i - 1].cumSize;
+    return size > max.size ? { price: b.price, size } : max;
+  }, { price: 0, size: 0 });
+  const sellWall = asks.reduce((max, a, i) => {
+    const size = i === 0 ? a.cumSize : a.cumSize - asks[i - 1].cumSize;
+    return size > max.size ? { price: a.price, size } : max;
+  }, { price: 0, size: 0 });
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{
+        fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)",
+        letterSpacing: "0.5px", marginBottom: "12px",
+      }}>
+        Market Depth (BTC/USDT)
+        <span className="animate-pulse" style={{
+          display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+          background: "#10b981", marginLeft: 8, verticalAlign: "middle",
+        }} />
+      </h2>
+      <div className="glow-line" style={{
+        background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
+        borderRadius: "10px", padding: "20px",
+      }}>
+        <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{ width: "100%", height: "auto" }}>
+          <defs>
+            <linearGradient id="bidGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#10b981" stopOpacity={0.35} />
+              <stop offset="100%" stopColor="#10b981" stopOpacity={0.05} />
+            </linearGradient>
+            <linearGradient id="askGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity={0.35} />
+              <stop offset="100%" stopColor="#ef4444" stopOpacity={0.05} />
+            </linearGradient>
+          </defs>
+          {[0.25, 0.5, 0.75].map((pct) => (
+            <line key={pct} x1={pad} y1={svgH - pad - pct * (svgH - pad * 2)}
+              x2={svgW - pad} y2={svgH - pad - pct * (svgH - pad * 2)}
+              stroke="var(--border-color)" strokeWidth="0.5" strokeDasharray="3 3" />
+          ))}
+          <line x1={toX(mid)} y1={pad} x2={toX(mid)} y2={svgH - pad}
+            stroke="#f59e0b" strokeWidth="1" strokeDasharray="4 4" opacity={0.5} />
+          <text x={toX(mid)} y={pad - 4} textAnchor="middle" fill="#f59e0b"
+            fontSize="8" fontFamily="monospace">MID ${mid.toLocaleString()}</text>
+          <path d={bidFill} fill="url(#bidGrad)" className="depth-fill-pulse" />
+          <path d={bidPath} fill="none" stroke="#10b981" strokeWidth="1.5"
+            style={{ transition: "d 0.5s ease" }} />
+          <path d={askFill} fill="url(#askGrad)" className="depth-fill-pulse" />
+          <path d={askPath} fill="none" stroke="#ef4444" strokeWidth="1.5"
+            style={{ transition: "d 0.5s ease" }} />
+          {buyWall.price > 0 && (
+            <g className="depth-wall-marker">
+              <circle cx={toX(buyWall.price)} cy={toY(bids.find((b) => b.price === buyWall.price)?.cumSize || 0)}
+                r={5} fill="none" stroke="#10b981" strokeWidth={1.5} opacity={0.8} />
+              <text x={toX(buyWall.price)} y={toY(bids.find((b) => b.price === buyWall.price)?.cumSize || 0) - 10}
+                textAnchor="middle" fill="#10b981" fontSize="7" fontFamily="monospace">
+                BUY WALL
+              </text>
+            </g>
+          )}
+          {sellWall.price > 0 && (
+            <g className="depth-wall-marker">
+              <circle cx={toX(sellWall.price)} cy={toY(asks.find((a) => a.price === sellWall.price)?.cumSize || 0)}
+                r={5} fill="none" stroke="#ef4444" strokeWidth={1.5} opacity={0.8} />
+              <text x={toX(sellWall.price)} y={toY(asks.find((a) => a.price === sellWall.price)?.cumSize || 0) - 10}
+                textAnchor="middle" fill="#ef4444" fontSize="7" fontFamily="monospace">
+                SELL WALL
+              </text>
+            </g>
+          )}
+          <text x={pad + 10} y={svgH - pad + 14} fill="#10b981" fontSize="8" fontFamily="monospace">Bids</text>
+          <text x={svgW - pad - 30} y={svgH - pad + 14} fill="#ef4444" fontSize="8" fontFamily="monospace">Asks</text>
+        </svg>
+        <div style={{
+          display: "flex", justifyContent: "space-between", marginTop: "12px",
+          fontSize: "10px", color: "var(--text-secondary)",
+        }}>
+          <span>
+            Buy pressure: <span style={{ color: "#10b981", fontWeight: "bold" }}>
+              {bidCum.toFixed(1)} BTC
+            </span>
+          </span>
+          <span>Spread: <span style={{ color: "#f59e0b" }}>${(asks[0].price - bids[0].price).toFixed(2)}</span></span>
+          <span>
+            Sell pressure: <span style={{ color: "#ef4444", fontWeight: "bold" }}>
+              {askCum.toFixed(1)} BTC
+            </span>
+          </span>
+        </div>
+        <div style={{
+          textAlign: "center", marginTop: "8px", fontSize: "9px",
+          color: "var(--text-secondary)", opacity: 0.7,
+        }}>
+          Simulated depth data — updates every 1.2s
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Live Candlestick Chart ─── */
 function LiveCandlestickChart() {
   const [candles, setCandles] = useState<Array<{
@@ -721,7 +870,7 @@ export default function DemoPage() {
           color: "#f59e0b",
         }}
       >
-        INTERACTIVE DEMO — Simulated data for demonstration. Not real trading.
+        <span className="interactive-badge" style={{ background: "transparent", border: "none", color: "#f59e0b", fontSize: "12px", padding: 0 }}>INTERACTIVE DEMO</span> — Simulated data for demonstration. Not real trading.
       </div>
 
       <main style={{ flex: 1, padding: "0 24px 48px" }}>
@@ -769,7 +918,7 @@ export default function DemoPage() {
               {prices.map((p) => (
                 <div
                   key={p.symbol}
-                  className="card-hover"
+                  className="card-hover card-hover-lift"
                   style={{
                     padding: "20px",
                     background: "var(--bg-secondary)",
@@ -1073,6 +1222,11 @@ export default function DemoPage() {
           {/* ═══ LIVE CANDLESTICK CHART ═══ */}
           <ScrollReveal>
           <LiveCandlestickChart />
+          </ScrollReveal>
+
+          {/* ═══ MARKET DEPTH CHART ═══ */}
+          <ScrollReveal>
+          <DepthChart />
           </ScrollReveal>
 
           {/* ═══ MODEL AGREEMENT MATRIX ═══ */}

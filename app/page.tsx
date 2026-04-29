@@ -95,6 +95,51 @@ function ParticleField() {
   );
 }
 
+/* ─── Cursor Glow — mouse-following radial highlight ─── */
+function CursorGlow() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const parent = el.parentElement;
+    if (!parent) return;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = parent.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      el.style.opacity = "1";
+      el.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(16,185,129,0.07), rgba(59,130,246,0.04), transparent 60%)`;
+    };
+
+    const onLeave = () => {
+      el.style.opacity = "0";
+    };
+
+    parent.addEventListener("mousemove", onMove);
+    parent.addEventListener("mouseleave", onLeave);
+    return () => {
+      parent.removeEventListener("mousemove", onMove);
+      parent.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: "absolute",
+        inset: 0,
+        pointerEvents: "none",
+        zIndex: 0,
+        opacity: 0,
+        transition: "opacity 0.3s ease",
+      }}
+    />
+  );
+}
+
 /* ─── Scroll Reveal Hook ─── */
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -883,6 +928,7 @@ export default function Home() {
           }}
         >
           <div className="grid-bg" />
+          <CursorGlow />
           <ParticleField />
           <NeuralNetwork />
           <button
