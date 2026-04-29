@@ -61,9 +61,10 @@ export async function GET(req: NextRequest) {
         socialSentiment: { ...results.grok,       purpose: "X/Twitter monitoring",    contentValid: validateAiContent(results.grok)       },
         selfAnalysis:    { ...results.claude,     purpose: "Threat & brand analysis", contentValid: validateAiContent(results.claude)     },
       },
-      allLive:   results.allLive,
-      allValid:  results.allValid,
-      timestamp: new Date().toISOString(),
+      allLive:     results.allLive,
+      partialLive: results.partialLive,
+      allValid:    results.allValid,
+      timestamp:   new Date().toISOString(),
     });
   } catch (e) {
     return serverError(e);

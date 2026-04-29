@@ -12,7 +12,7 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateOptionalString, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Note {
   id:        number;
@@ -66,8 +66,7 @@ export async function POST(req: NextRequest) {
   const text = validateString(body.text, 2000);
   if (!text) return badRequest("text is required and must be 2000 characters or fewer");
 
-  const rawTag = typeof body.tag === "string" ? body.tag.trim().slice(0, 50) : "general";
-  const tag    = rawTag || "general";
+  const tag = validateOptionalString(body.tag, 50) ?? "general";
 
   const note: Note = { id: nextId++, text, tag, timestamp: new Date().toISOString() };
   publicNotes.push(note);

@@ -116,6 +116,13 @@ export function gatewayError(
   return err(message, 502);
 }
 
+/** 503 Service Unavailable — AI service or upstream dependency is temporarily down. */
+export function serviceUnavailable(
+  message = "Service temporarily unavailable. Please try again shortly."
+): NextResponse<ApiResponse<null>> {
+  return err(message, 503);
+}
+
 /**
  * 429 Too Many Requests.
  * @param retryAfterSeconds How long the caller should wait before retrying.
@@ -153,6 +160,22 @@ export function methodNotAllowed(
  * empty / exceeding maxLen. Callers decide whether null means a 400 error.
  */
 export function validateString(value: unknown, maxLen: number): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > maxLen) return null;
+  return trimmed;
+}
+
+/**
+ * Validate an optional string field from a request body.
+ * Returns null when the field is absent, empty after trim, non-string, or exceeds maxLen.
+ * Differs from validateString in that callers treat null as "use default" rather than "error".
+ *
+ * @example
+ * const tag = validateOptionalString(body.tag, 50) ?? "general";
+ */
+export function validateOptionalString(value: unknown, maxLen: number): string | null {
+  if (value === undefined || value === null) return null;
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
   if (!trimmed || trimmed.length > maxLen) return null;
@@ -217,6 +240,21 @@ export function validateEnum<T extends string>(
 ): T | null {
   if (typeof value !== "string") return null;
   return (allowed as readonly string[]).includes(value) ? (value as T) : null;
+}
+
+/**
+ * Runtime type guard for the standard ApiResponse envelope.
+ * Use in test fixtures or when consuming CoreIntent API responses
+ * from an external context where TypeScript compile-time checks don't apply.
+ *
+ * @example
+ * const raw = await res.json();
+ * if (!isApiResponse(raw)) throw new Error("Unexpected response shape");
+ */
+export function isApiResponse(value: unknown): value is ApiResponse {
+  if (typeof value !== "object" || value === null) return false;
+  const obj = value as Record<string, unknown>;
+  return typeof obj.success === "boolean" && "data" in obj;
 }
 
 // ---------------------------------------------------------------------------
