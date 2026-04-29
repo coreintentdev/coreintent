@@ -1,11 +1,11 @@
 # CoreIntent Audit Report
-Generated: Tue Apr 28 06:32:57 UTC 2026
+Generated: Wed Apr 29 04:29:54 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
 - INFO: Routes found: 33
 - PASS: TypeScript compiles (strict mode)
-- PASS: ESLint passes
+- WARN: ESLint warnings or errors
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -39,7 +39,7 @@ Generated: Tue Apr 28 06:32:57 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2404:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2649:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -64,7 +64,7 @@ Generated: Tue Apr 28 06:32:57 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (14 instances)
+- PASS: ARIA attributes found (16 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
@@ -85,8 +85,8 @@ Generated: Tue Apr 28 06:32:57 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
+| PASS | 51 |
 | FAIL | 0 |
-| WARN | 2 |
+| WARN | 3 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 94%** (51/54 checks passed)
