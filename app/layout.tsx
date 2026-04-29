@@ -93,6 +93,8 @@ export const metadata: Metadata = {
     "theme-color": "#10b981",
     "color-scheme": "dark",
     "msapplication-TileColor": "#0a0e17",
+    "geo.region": "NZ",
+    "geo.placename": "New Zealand",
   },
 };
 
@@ -149,12 +151,11 @@ const jsonLd = {
         address: {
           "@type": "PostalAddress",
           addressCountry: "NZ",
+          addressRegion: "New Zealand",
         },
       },
-      areaServed: {
-        "@type": "Country",
-        name: "New Zealand",
-      },
+      areaServed: "Worldwide",
+      knowsLanguage: "en",
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
@@ -218,7 +219,7 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-04-29",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",

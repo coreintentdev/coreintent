@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -812,7 +813,7 @@ export default function Home() {
               >
                 Launch Terminal &rarr;
               </button>
-              <a
+              <Link
                 href="/pricing"
                 style={{
                   padding: "14px 32px",
@@ -828,7 +829,7 @@ export default function Home() {
                 }}
               >
                 See the Competitions
-              </a>
+              </Link>
             </div>
 
             {/* Value Props */}
