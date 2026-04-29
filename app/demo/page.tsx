@@ -490,6 +490,7 @@ function DepthChart() {
     const size = i === 0 ? a.cumSize : a.cumSize - asks[i - 1].cumSize;
     return size > max.size ? { price: a.price, size } : max;
   }, { price: 0, size: 0 });
+  const spreadValue = asks.length > 0 && bids.length > 0 ? asks[0].price - bids[0].price : 0;
 
   return (
     <section style={{ marginBottom: "40px" }}>
@@ -565,7 +566,7 @@ function DepthChart() {
               {bidCum.toFixed(1)} BTC
             </span>
           </span>
-          <span>Spread: <span style={{ color: "#f59e0b" }}>$67.4</span></span>
+          <span>Spread: <span style={{ color: "#f59e0b" }}>${spreadValue.toFixed(1)}</span></span>
           <span>
             Sell pressure: <span style={{ color: "#ef4444", fontWeight: "bold" }}>
               {askCum.toFixed(1)} BTC
