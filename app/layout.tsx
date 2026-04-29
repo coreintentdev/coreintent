@@ -151,7 +151,6 @@ const jsonLd = {
         address: {
           "@type": "PostalAddress",
           addressCountry: "NZ",
-          addressRegion: "New Zealand",
         },
       },
       areaServed: "Worldwide",
