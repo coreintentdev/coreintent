@@ -8,9 +8,13 @@ export default function manifest(): MetadataRoute.Manifest {
       "Three AI models. One trading engine. Zero subscriptions. Free competitions — bots welcome. Built in NZ by Zynthio.",
     start_url: "/",
     display: "standalone",
+    orientation: "any",
+    scope: "/",
+    lang: "en-NZ",
     background_color: "#0a0e17",
     theme_color: "#10b981",
     categories: ["finance", "productivity"],
+    prefer_related_applications: false,
     icons: [
       {
         src: "/icon-192.png",
