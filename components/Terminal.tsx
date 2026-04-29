@@ -92,6 +92,11 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32morbit\x1b[0m       - Watch AI models orbit the engine
   \x1b[32mglitch\x1b[0m      - Trigger a system resilience test
 
+  \x1b[33m── COMMAND CENTER ──\x1b[0m
+  \x1b[32mdashboard\x1b[0m   - Live system dashboard (all vitals at once)
+  \x1b[32mneural\x1b[0m      - Neural network signal flow visualization
+  \x1b[32manthem\x1b[0m      - The CoreIntent anthem (dramatic reveal)
+
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
   \x1b[32mcowsay\x1b[0m      - ASCII cow wisdom
@@ -634,6 +639,7 @@ const ALL_COMMANDS = [
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
   "decrypt", "orbit", "glitch",
+  "dashboard", "neural", "anthem",
 ];
 
 export default function Terminal() {
@@ -2039,6 +2045,245 @@ export default function Terminal() {
         addLines(...frameLines, ``);
         frame++;
       }, 300);
+      return "";
+    }
+
+    // ── DASHBOARD: Live system dashboard ──
+    if (trimmed === "dashboard") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+
+      const header = [
+        `\x1b[36m╔══════════════════════════════════════════════════════════════════╗\x1b[0m`,
+        `\x1b[36m║\x1b[0m  \x1b[32m◉\x1b[0m  \x1b[36mCOREINTENT DASHBOARD\x1b[0m       \x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m  \x1b[36m║\x1b[0m`,
+        `\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m`,
+      ];
+      addLines(...header);
+
+      let phase = 0;
+      const dashIv = setInterval(() => {
+        if (phase === 0) {
+          // AI Model Status
+          const models = [
+            { name: "Grok", c: "\x1b[31m", load: 72 + Math.floor(Math.random() * 20), status: "SCANNING" },
+            { name: "Claude", c: "\x1b[35m", load: 45 + Math.floor(Math.random() * 30), status: "ANALYSING" },
+            { name: "Perplexity", c: "\x1b[34m", load: 60 + Math.floor(Math.random() * 25), status: "RESEARCHING" },
+          ];
+          addLines(`\x1b[36m║\x1b[0m  \x1b[33mAI MODELS\x1b[0m                                                        \x1b[36m║\x1b[0m`);
+          for (const m of models) {
+            const barLen = Math.round(m.load / 5);
+            const bar = `${m.c}${"█".repeat(barLen)}${"░".repeat(20 - barLen)}\x1b[0m`;
+            addLines(`\x1b[36m║\x1b[0m   ${m.c}${m.name.padEnd(12)}\x1b[0m ${bar} ${String(m.load).padStart(3)}%  \x1b[90m${m.status}\x1b[0m   \x1b[36m║\x1b[0m`);
+          }
+          addLines(`\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m`);
+        } else if (phase === 1) {
+          // Market snapshot
+          const prices = [
+            { s: "BTC", p: (67420 + Math.random() * 200 - 100).toFixed(0), ch: (Math.random() * 4 - 1).toFixed(2) },
+            { s: "ETH", p: (3285 + Math.random() * 20 - 10).toFixed(0), ch: (Math.random() * 5 - 2).toFixed(2) },
+            { s: "SOL", p: (142.8 + Math.random() * 3 - 1.5).toFixed(1), ch: (Math.random() * 6 - 2).toFixed(2) },
+          ];
+          addLines(`\x1b[36m║\x1b[0m  \x1b[33mMARKET SNAPSHOT\x1b[0m                                                  \x1b[36m║\x1b[0m`);
+          for (const p of prices) {
+            const c = Number(p.ch) >= 0 ? "\x1b[32m" : "\x1b[31m";
+            const arrow = Number(p.ch) >= 0 ? "▲" : "▼";
+            addLines(`\x1b[36m║\x1b[0m   ${p.s.padEnd(6)} $${p.p.padStart(7)}  ${c}${arrow} ${Number(p.ch) >= 0 ? "+" : ""}${p.ch}%\x1b[0m                                  \x1b[36m║\x1b[0m`);
+          }
+          addLines(`\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m`);
+        } else if (phase === 2) {
+          // Sparkline + Stats
+          const blocks = "▁▂▃▄▅▆▇█";
+          let price = 67420;
+          const spark: string[] = [];
+          for (let i = 0; i < 40; i++) {
+            price += (Math.random() - 0.47) * 80;
+            const idx = Math.min(7, Math.max(0, Math.round(((price - 67200) / 400) * 7)));
+            spark.push(price >= 67420 ? `\x1b[32m${blocks[idx]}\x1b[0m` : `\x1b[31m${blocks[idx]}\x1b[0m`);
+          }
+          addLines(
+            `\x1b[36m║\x1b[0m  \x1b[33mBTC 1H SPARKLINE\x1b[0m                                                 \x1b[36m║\x1b[0m`,
+            `\x1b[36m║\x1b[0m   ${spark.join("")}   \x1b[36m║\x1b[0m`,
+            `\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m`
+          );
+        } else if (phase === 3) {
+          // Engine vitals
+          const bpm = 60 + Math.floor(Math.random() * 20);
+          const lat = 12 + Math.floor(Math.random() * 30);
+          const sync = 94 + Math.floor(Math.random() * 6);
+          const uptime = Math.floor((Date.now() - startTime.current) / 1000);
+          const uptimeStr = `${Math.floor(uptime / 60)}m ${uptime % 60}s`;
+          addLines(
+            `\x1b[36m║\x1b[0m  \x1b[33mENGINE VITALS\x1b[0m                                                    \x1b[36m║\x1b[0m`,
+            `\x1b[36m║\x1b[0m   \x1b[32m♥\x1b[0m Heartbeat: \x1b[32m${bpm} BPM\x1b[0m    \x1b[36m⚡\x1b[0m Latency: \x1b[32m${lat}ms\x1b[0m    \x1b[36m◉\x1b[0m Sync: \x1b[32m${sync}%\x1b[0m      \x1b[36m║\x1b[0m`,
+            `\x1b[36m║\x1b[0m   \x1b[36m↺\x1b[0m Uptime: \x1b[32m${uptimeStr}\x1b[0m     \x1b[36m⊞\x1b[0m Circuit: \x1b[32mARMED\x1b[0m     \x1b[36m▲\x1b[0m Risk: \x1b[32mNOMINAL\x1b[0m   \x1b[36m║\x1b[0m`,
+            `\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m`
+          );
+        } else if (phase === 4) {
+          // Active signals
+          const sigs = [
+            { pair: "BTC/USDT", dir: "LONG", conf: 87, model: "Grok" },
+            { pair: "ETH/USDT", dir: "HOLD", conf: 65, model: "Claude" },
+            { pair: "SOL/USDT", dir: "LONG", conf: 91, model: "Engine" },
+          ];
+          addLines(`\x1b[36m║\x1b[0m  \x1b[33mACTIVE SIGNALS\x1b[0m                                                   \x1b[36m║\x1b[0m`);
+          for (const s of sigs) {
+            const dc = s.dir === "LONG" ? "\x1b[32m▲" : s.dir === "SHORT" ? "\x1b[31m▼" : "\x1b[33m◆";
+            const cc = s.conf >= 80 ? "\x1b[32m" : "\x1b[33m";
+            addLines(`\x1b[36m║\x1b[0m   ${s.pair.padEnd(12)} ${dc} ${s.dir.padEnd(5)}\x1b[0m  ${cc}${s.conf}%\x1b[0m  \x1b[90m[${s.model}]\x1b[0m                       \x1b[36m║\x1b[0m`);
+          }
+          addLines(
+            `\x1b[36m╠══════════════════════════════════════════════════════════════════╣\x1b[0m`,
+            `\x1b[36m║\x1b[0m  \x1b[90mPaper trading mode — demo data | Type\x1b[0m \x1b[32mhelp\x1b[0m \x1b[90mfor all commands\x1b[0m      \x1b[36m║\x1b[0m`,
+            `\x1b[36m╚══════════════════════════════════════════════════════════════════╝\x1b[0m`,
+            ``
+          );
+        } else {
+          clearInterval(dashIv);
+        }
+        phase++;
+      }, 250);
+      return "";
+    }
+
+    // ── NEURAL: Neural network signal flow ──
+    if (trimmed === "neural") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ NEURAL NETWORK — SIGNAL FLOW ══\x1b[0m`,
+        `\x1b[90m  Watch data flow through the three-model consensus network\x1b[0m`, ``);
+
+      const layers = [
+        { nodes: ["\x1b[31mG", "\x1b[35mC", "\x1b[34mP"], label: "INPUT" },
+        { nodes: ["\x1b[36m◉", "\x1b[36m◉", "\x1b[36m◉", "\x1b[36m◉"], label: "HIDDEN" },
+        { nodes: ["\x1b[33m▲", "\x1b[33m▼", "\x1b[33m◆"], label: "SIGNALS" },
+        { nodes: ["\x1b[32m★"], label: "CONSENSUS" },
+      ];
+
+      let layerIdx = 0;
+      const nIv = setInterval(() => {
+        if (layerIdx < layers.length) {
+          const layer = layers[layerIdx];
+          const nodeStr = layer.nodes.map(n => `  ${n}\x1b[0m `).join("   ");
+          const connection = layerIdx < layers.length - 1 ? "\x1b[90m" + "─".repeat(8) + "►\x1b[0m" : "";
+
+          if (layerIdx === 0) {
+            addLines(
+              `  \x1b[90m┌─ ${layer.label} LAYER ────────────────────────────────────┐\x1b[0m`,
+              `  \x1b[90m│\x1b[0m  \x1b[31m[G]\x1b[0m Grok     \x1b[90m━━\x1b[0m \x1b[31mScanning feeds...\x1b[0m              \x1b[90m│\x1b[0m`,
+              `  \x1b[90m│\x1b[0m  \x1b[35m[C]\x1b[0m Claude   \x1b[90m━━\x1b[0m \x1b[35mRisk analysis...\x1b[0m               \x1b[90m│\x1b[0m`,
+              `  \x1b[90m│\x1b[0m  \x1b[34m[P]\x1b[0m Perplx   \x1b[90m━━\x1b[0m \x1b[34mFact-checking...\x1b[0m               \x1b[90m│\x1b[0m`,
+              `  \x1b[90m└──────────────────────────────────────────────────┘\x1b[0m`,
+              `                    \x1b[90m│ │ │\x1b[0m`,
+              `                    \x1b[90m▼ ▼ ▼\x1b[0m`
+            );
+          } else if (layerIdx === 1) {
+            const weights = Array.from({ length: 4 }, () => (Math.random() * 0.5 + 0.5).toFixed(2));
+            addLines(
+              `  \x1b[90m┌─ ${layer.label} LAYER ───────────────────────────────────┐\x1b[0m`,
+              `  \x1b[90m│\x1b[0m  \x1b[36m◉\x1b[0m w=\x1b[32m${weights[0]}\x1b[0m   \x1b[36m◉\x1b[0m w=\x1b[32m${weights[1]}\x1b[0m   \x1b[36m◉\x1b[0m w=\x1b[32m${weights[2]}\x1b[0m   \x1b[36m◉\x1b[0m w=\x1b[32m${weights[3]}\x1b[0m   \x1b[90m│\x1b[0m`,
+              `  \x1b[90m│\x1b[0m  \x1b[90mReLU    Sigmoid   ReLU    Softmax\x1b[0m          \x1b[90m│\x1b[0m`,
+              `  \x1b[90m└──────────────────────────────────────────────────┘\x1b[0m`,
+              `                    \x1b[90m│ │ │\x1b[0m`,
+              `                    \x1b[90m▼ ▼ ▼\x1b[0m`
+            );
+          } else if (layerIdx === 2) {
+            const longConf = (70 + Math.random() * 20).toFixed(0);
+            const shortConf = (20 + Math.random() * 15).toFixed(0);
+            const holdConf = (100 - Number(longConf) - Number(shortConf)).toFixed(0);
+            addLines(
+              `  \x1b[90m┌─ ${layer.label} LAYER ──────────────────────────────────┐\x1b[0m`,
+              `  \x1b[90m│\x1b[0m  \x1b[32m▲ LONG  ${longConf}%\x1b[0m    \x1b[31m▼ SHORT ${shortConf}%\x1b[0m    \x1b[33m◆ HOLD  ${holdConf}%\x1b[0m     \x1b[90m│\x1b[0m`,
+              `  \x1b[90m└──────────────────────────────────────────────────┘\x1b[0m`,
+              `                      \x1b[90m│\x1b[0m`,
+              `                      \x1b[90m▼\x1b[0m`
+            );
+          } else {
+            const decision = Number((70 + Math.random() * 20).toFixed(0)) >= 75 ? "LONG" : "HOLD";
+            const confidence = (75 + Math.random() * 18).toFixed(0);
+            const dc = decision === "LONG" ? "\x1b[32m" : "\x1b[33m";
+            addLines(
+              `  \x1b[36m╔══════════════════════════════════════════════════╗\x1b[0m`,
+              `  \x1b[36m║\x1b[0m  \x1b[32m★\x1b[0m  \x1b[36mCONSENSUS OUTPUT\x1b[0m                               \x1b[36m║\x1b[0m`,
+              `  \x1b[36m║\x1b[0m      Decision: ${dc}${decision}\x1b[0m                              \x1b[36m║\x1b[0m`,
+              `  \x1b[36m║\x1b[0m      Confidence: \x1b[32m${confidence}%\x1b[0m                           \x1b[36m║\x1b[0m`,
+              `  \x1b[36m║\x1b[0m      Models: \x1b[32m3/3 agree\x1b[0m                            \x1b[36m║\x1b[0m`,
+              `  \x1b[36m╚══════════════════════════════════════════════════╝\x1b[0m`,
+              ``,
+              `  \x1b[90mNeural network visualization — simulated signal flow\x1b[0m`, ``
+            );
+          }
+          layerIdx++;
+        } else {
+          clearInterval(nIv);
+        }
+      }, 600);
+      return "";
+    }
+
+    // ── ANTHEM: CoreIntent anthem with dramatic reveal ──
+    if (trimmed === "anthem") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+
+      const frames = [
+        // Blackout
+        `\x1b[90m  .......................................................\x1b[0m`,
+        `\x1b[90m  .............  INCOMING TRANSMISSION  .................\x1b[0m`,
+        `\x1b[90m  .......................................................\x1b[0m`,
+        ``,
+        // Title reveal
+        `\x1b[32m  ╔═══════════════════════════════════════════════════════╗\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m                                                       \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[36m████████╗██╗  ██╗███████╗                          \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[36m╚══██╔══╝██║  ██║██╔════╝                          \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m      \x1b[36m██║   ███████║█████╗                             \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m      \x1b[36m██║   ██╔══██║██╔══╝                             \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m      \x1b[36m██║   ██║  ██║███████╗                           \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m      \x1b[36m╚═╝   ╚═╝  ╚═╝╚══════╝                           \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m                                                       \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[33m█████╗ ███╗   ██╗████████╗██╗  ██╗███████╗███╗ ███╗\x1b[0m \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[33m██╔══██╗████╗  ██║╚══██╔══╝██║  ██║██╔════╝████╗████║\x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[33m███████║██╔██╗ ██║   ██║   ███████║█████╗  ██╔████╔██║\x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[33m██╔══██║██║╚██╗██║   ██║   ██╔══██║██╔══╝  ██║╚██╔╝██║\x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[33m██║  ██║██║ ╚████║   ██║   ██║  ██║███████╗██║ ╚═╝ ██║\x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m   \x1b[33m╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝\x1b[32m║\x1b[0m`,
+        `\x1b[32m  ║\x1b[0m                                                       \x1b[32m║\x1b[0m`,
+        `\x1b[32m  ╚═══════════════════════════════════════════════════════╝\x1b[0m`,
+        ``,
+        // Verses
+        `  \x1b[36mI.\x1b[0m  \x1b[33mOne model guesses.\x1b[0m`,
+        `      \x1b[33mThree models debate.\x1b[0m`,
+        `      \x1b[33mConsensus is conviction.\x1b[0m`,
+        `      \x1b[33mDisagreement is dig deeper.\x1b[0m`,
+        ``,
+        `  \x1b[36mII.\x1b[0m \x1b[31mGrok\x1b[0m sees it first.`,
+        `      \x1b[35mClaude\x1b[0m questions everything.`,
+        `      \x1b[34mPerplexity\x1b[0m checks the facts.`,
+        `      \x1b[32mThe Engine\x1b[0m decides.`,
+        ``,
+        `  \x1b[36mIII.\x1b[0m \x1b[90mNo subscriptions. No permission.\x1b[0m`,
+        `       \x1b[90mNo VC. No burn rate.\x1b[0m`,
+        `       \x1b[90mFree costs fuck all to serve.\x1b[0m`,
+        `       \x1b[90mThe arena is open.\x1b[0m`,
+        ``,
+        `  \x1b[36mIV.\x1b[0m \x1b[32m  Every human needs a bot.\x1b[0m`,
+        `      \x1b[32m  Every bot needs a human.\x1b[0m`,
+        `      \x1b[32m  Just protect the heart.\x1b[0m`,
+        ``,
+        `  \x1b[33m  ███ 336 ███\x1b[0m`,
+        `  \x1b[33m  THE SIGNAL IS DOMINANT\x1b[0m`,
+        ``,
+        `  \x1b[90m— Corey McIvor, New Zealand\x1b[0m`,
+        `  \x1b[90m— Zynthio.ai / CoreIntent\x1b[0m`,
+        ``,
+      ];
+
+      let fi = 0;
+      const aIv = setInterval(() => {
+        if (fi < frames.length) {
+          addLines(frames[fi]);
+          fi++;
+        } else {
+          clearInterval(aIv);
+        }
+      }, 180);
       return "";
     }
 

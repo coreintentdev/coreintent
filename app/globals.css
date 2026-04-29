@@ -786,6 +786,142 @@ a {
   vertical-align: text-bottom;
 }
 
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 5 Animations
+   ═══════════════════════════════════════════ */
+
+/* ─── Electric Border Trace ─── */
+@keyframes electricTrace {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.electric-border {
+  position: relative;
+}
+
+.electric-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    #10b981 0%,
+    #3b82f6 25%,
+    #a855f7 50%,
+    #ef4444 75%,
+    #10b981 100%
+  );
+  animation: electricTrace 4s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Neural Glow ─── */
+@keyframes neuralGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+  }
+  25% {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.6), 0 0 20px rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.2);
+  }
+  75% {
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.6), 0 0 20px rgba(239, 68, 68, 0.2);
+  }
+}
+
+.neural-glow {
+  animation: neuralGlow 6s ease-in-out infinite;
+}
+
+/* ─── Holographic Card Shine ─── */
+@keyframes holoShine {
+  0% {
+    background-position: -200% 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    background-position: 200% 0;
+    opacity: 0;
+  }
+}
+
+.holo-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(16, 185, 129, 0.04) 30%,
+    rgba(59, 130, 246, 0.08) 45%,
+    rgba(168, 85, 247, 0.04) 55%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: holoShine 5s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ─── Matrix Rain Column ─── */
+@keyframes matrixDrip {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+.matrix-column {
+  position: absolute;
+  font-size: 10px;
+  color: #10b981;
+  font-family: monospace;
+  writing-mode: vertical-rl;
+  letter-spacing: 3px;
+  opacity: 0;
+  animation: matrixDrip var(--drip-duration, 8s) linear infinite;
+  animation-delay: var(--drip-delay, 0s);
+  pointer-events: none;
+}
+
+/* ─── Dashboard Frame Border ─── */
+@keyframes dashBorderPulse {
+  0%, 100% {
+    border-color: rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+}
+
+.dash-frame {
+  animation: dashBorderPulse 3s ease-in-out infinite;
+}
+
 /* ─── Responsive: Order book stacks on mobile ─── */
 @media (max-width: 768px) {
   .demo-dual-panel {
