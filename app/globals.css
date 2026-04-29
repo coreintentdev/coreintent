@@ -910,6 +910,10 @@ html {
   100% { transform: translateX(100%); opacity: 0; }
 }
 
+.depth-fill-pulse {
+  animation: depthPulse 3s ease-in-out infinite;
+}
+
 .depth-wall-marker {
   animation: wallGlow 2s ease-in-out infinite;
 }

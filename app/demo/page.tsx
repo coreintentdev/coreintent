@@ -503,7 +503,7 @@ function DepthChart() {
           background: "#10b981", marginLeft: 8, verticalAlign: "middle",
         }} />
       </h2>
-      <div style={{
+      <div className="glow-line" style={{
         background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
         borderRadius: "10px", padding: "20px",
       }}>
@@ -527,14 +527,14 @@ function DepthChart() {
             stroke="#f59e0b" strokeWidth="1" strokeDasharray="4 4" opacity={0.5} />
           <text x={toX(mid)} y={pad - 4} textAnchor="middle" fill="#f59e0b"
             fontSize="8" fontFamily="monospace">MID ${mid.toLocaleString()}</text>
-          <path d={bidFill} fill="url(#bidGrad)" />
+          <path d={bidFill} fill="url(#bidGrad)" className="depth-fill-pulse" />
           <path d={bidPath} fill="none" stroke="#10b981" strokeWidth="1.5"
             style={{ transition: "d 0.5s ease" }} />
-          <path d={askFill} fill="url(#askGrad)" />
+          <path d={askFill} fill="url(#askGrad)" className="depth-fill-pulse" />
           <path d={askPath} fill="none" stroke="#ef4444" strokeWidth="1.5"
             style={{ transition: "d 0.5s ease" }} />
           {buyWall.price > 0 && (
-            <g>
+            <g className="depth-wall-marker">
               <circle cx={toX(buyWall.price)} cy={toY(bids.find((b) => b.price === buyWall.price)?.cumSize || 0)}
                 r={5} fill="none" stroke="#10b981" strokeWidth={1.5} opacity={0.8} />
               <text x={toX(buyWall.price)} y={toY(bids.find((b) => b.price === buyWall.price)?.cumSize || 0) - 10}
@@ -544,7 +544,7 @@ function DepthChart() {
             </g>
           )}
           {sellWall.price > 0 && (
-            <g>
+            <g className="depth-wall-marker">
               <circle cx={toX(sellWall.price)} cy={toY(asks.find((a) => a.price === sellWall.price)?.cumSize || 0)}
                 r={5} fill="none" stroke="#ef4444" strokeWidth={1.5} opacity={0.8} />
               <text x={toX(sellWall.price)} y={toY(asks.find((a) => a.price === sellWall.price)?.cumSize || 0) - 10}
@@ -565,7 +565,7 @@ function DepthChart() {
               {bidCum.toFixed(1)} BTC
             </span>
           </span>
-          <span>Spread: <span style={{ color: "#f59e0b" }}>$67.4</span></span>
+          <span>Spread: <span style={{ color: "#f59e0b" }}>${(asks[0].price - bids[0].price).toFixed(2)}</span></span>
           <span>
             Sell pressure: <span style={{ color: "#ef4444", fontWeight: "bold" }}>
               {askCum.toFixed(1)} BTC
@@ -870,7 +870,7 @@ export default function DemoPage() {
           color: "#f59e0b",
         }}
       >
-        INTERACTIVE DEMO — Simulated data for demonstration. Not real trading.
+        <span className="interactive-badge" style={{ background: "transparent", border: "none", color: "#f59e0b", fontSize: "12px", padding: 0 }}>INTERACTIVE DEMO</span> — Simulated data for demonstration. Not real trading.
       </div>
 
       <main style={{ flex: 1, padding: "0 24px 48px" }}>
@@ -918,7 +918,7 @@ export default function DemoPage() {
               {prices.map((p) => (
                 <div
                   key={p.symbol}
-                  className="card-hover"
+                  className="card-hover card-hover-lift"
                   style={{
                     padding: "20px",
                     background: "var(--bg-secondary)",
