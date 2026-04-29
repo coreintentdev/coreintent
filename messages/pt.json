@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Tecnologia",
+    "pricing": "Competições"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construindo em Público",
+    "engine_alive": "MOTOR ATIVO",
+    "subtitle": "O motor de trading com IA agêntica que substituiu assinaturas por competições",
+    "description": "Grok detecta o sinal. Claude questiona. Perplexity verifica os fatos. Quando os três concordam, você age com convicção. Quando discordam, você investiga mais — não adivinha mais.",
+    "cta_terminal": "Iniciar Terminal",
+    "cta_competitions": "Ver Competições",
+    "signal": "SINAL"
+  },
+  "pipeline": {
+    "title": "Pipeline de sinais ao vivo",
+    "detect": "Detectar",
+    "analyse": "Analisar",
+    "verify": "Verificar",
+    "decide": "Decidir"
+  },
+  "footer": {
+    "tagline": "Motor de Trading com IA Agêntica",
+    "product": "Produto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "disclaimer": "Aviso Legal",
+    "contact": "Contato",
+    "rights": "Todos os direitos reservados.",
+    "risk_warning": "O trading de criptomoedas envolve riscos significativos. Desempenho passado não garante resultados futuros. Modo paper trading."
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent",
+    "paper_mode": "Modo paper trading — sem risco de dinheiro real",
+    "help_hint": "Digite help para comandos. Tab para autocompletar. cai para começar."
+  },
+  "language": {
+    "switch": "Idioma"
+  },
+  "status_bar": {
+    "paper_trading": "Modo Paper Trading"
+  }
+}

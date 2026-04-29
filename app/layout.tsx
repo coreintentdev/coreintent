@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { JetBrains_Mono } from "next/font/google";
+import { isValidLocale, isRtl, defaultLocale, localeRegions, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -170,7 +172,7 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
-      inLanguage: "en-NZ",
+      inLanguage: ["en-NZ", "es-ES", "mi-NZ", "zh-CN", "ja-JP", "pt-BR", "fr-FR", "de-DE", "ar-SA", "hi-IN"],
       isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
@@ -238,13 +240,18 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const localeHeader = headersList.get("x-locale") || defaultLocale;
+  const locale: Locale = isValidLocale(localeHeader) ? localeHeader : defaultLocale;
+  const dir = isRtl(locale) ? "rtl" : "ltr";
+
   return (
-    <html lang="en-NZ" className={jetbrainsMono.variable}>
+    <html lang={localeRegions[locale]} dir={dir} className={jetbrainsMono.variable}>
       <body>
         <script
           type="application/ld+json"

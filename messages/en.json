@@ -1,0 +1,138 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing"
+  },
+  "hero": {
+    "badge": "Paper Trading Mode — Building in Public",
+    "engine_alive": "ENGINE ALIVE",
+    "sr_title": "CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.",
+    "subtitle": "The agentic AI trading engine that replaced subscriptions with competitions",
+    "description": "Grok spots the signal. Claude questions it. Perplexity fact-checks it. When all three agree, you move with conviction. When they disagree, you dig deeper — not guess harder.",
+    "charge_line": "Other platforms charge $99/mo whether you win or lose.",
+    "free_line": "We charge nothing. You prove yourself in competition.",
+    "built_by": "Built by traders who got tired of paying for signals that don't work.",
+    "open_source": "Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.",
+    "cta_terminal": "Launch Terminal",
+    "cta_competitions": "See the Competitions",
+    "signal": "SIGNAL",
+    "dismiss_hero": "Dismiss hero section"
+  },
+  "value_props": {
+    "models": {
+      "label": "3 Models. 1 Signal.",
+      "desc": "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental."
+    },
+    "compete": {
+      "label": "Compete, Don't Subscribe",
+      "desc": "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created."
+    },
+    "bots": {
+      "label": "Bots Are First-Class",
+      "desc": "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you."
+    },
+    "cost": {
+      "label": "$45/mo. The Whole Platform.",
+      "desc": "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction."
+    }
+  },
+  "pipeline": {
+    "title": "Live signal pipeline",
+    "detect": "Detect",
+    "analyse": "Analyse",
+    "verify": "Verify",
+    "decide": "Decide"
+  },
+  "stats": {
+    "ai_models": "AI Models",
+    "trading_agents": "Trading Agents",
+    "entry_fee": "Entry Fee",
+    "total_stack_cost": "Total Stack Cost",
+    "subscriptions": "Subscriptions"
+  },
+  "sections": {
+    "powered_by": "Powered by three AI models",
+    "testimonials": "What people are saying",
+    "testimonials_demo": "DEMO — Placeholder testimonials",
+    "why_coreintent": "Why CoreIntent"
+  },
+  "badges": {
+    "open_source": "Open Source",
+    "nz_built": "NZ-Built",
+    "paper_mode": "Paper Mode",
+    "total_cost": "Total Cost",
+    "three_models": "3 Models",
+    "bots_ok": "Bots OK"
+  },
+  "early_access": {
+    "title": "Early Access",
+    "headline": "Get in before the leaderboard fills up.",
+    "description": "Early registrations get priority placement when competitions go live. The platform is free. The advantage is timing.",
+    "star_github": "Star on GitHub",
+    "follow_x": "Follow @coreintentai",
+    "launching_soon": "Competitions launching soon. Paper trading mode active."
+  },
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Dashboard",
+    "agents": "Agents",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "dashboard": {
+    "engine": "Engine",
+    "exchanges": "Exchanges",
+    "ai_agents": "AI Agents",
+    "mode": "Mode",
+    "domains": "Domains",
+    "api_routes": "API Routes",
+    "online": "ONLINE",
+    "planned": "Planned",
+    "ready": "Ready",
+    "paper_trading": "Paper Trading",
+    "domain_portfolio": "Domain Portfolio",
+    "architecture": "Architecture",
+    "stack_costs": "Stack & Costs (~$45/mo)",
+    "service": "Service",
+    "role": "Role",
+    "cost": "Cost",
+    "trademark_portfolio": "Trademark Portfolio",
+    "hard_rules": "Hard Rules"
+  },
+  "agents_tab": {
+    "title": "AI Agent Fleet",
+    "description": "Paper trading mode — agents are configured but not live-trading."
+  },
+  "footer": {
+    "tagline": "Agentic AI Trading Engine",
+    "built_by": "Built by Corey McIvor | Zynthio.ai",
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "competitions": "Competitions",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "risk_warning": "Trading cryptocurrency involves significant risk. Past performance does not guarantee future results. Paper trading mode."
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — CoreIntent Trading Engine",
+    "paper_mode": "Paper trading mode — no real money at risk",
+    "help_hint": "Type help for commands. Tab to autocomplete. cai to start."
+  },
+  "language": {
+    "switch": "Language"
+  },
+  "status_bar": {
+    "paper_trading": "Paper Trading Mode"
+  }
+}

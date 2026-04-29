@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Technologie",
+    "pricing": "Wettbewerbe"
+  },
+  "hero": {
+    "badge": "Paper-Trading-Modus — Öffentlich gebaut",
+    "engine_alive": "ENGINE AKTIV",
+    "subtitle": "Die agentische KI-Trading-Engine, die Abos durch Wettbewerbe ersetzt hat",
+    "description": "Grok erkennt das Signal. Claude hinterfragt es. Perplexity überprüft die Fakten. Wenn alle drei übereinstimmen, handelst du mit Überzeugung. Wenn nicht, forschst du tiefer.",
+    "cta_terminal": "Terminal starten",
+    "cta_competitions": "Wettbewerbe ansehen",
+    "signal": "SIGNAL"
+  },
+  "pipeline": {
+    "title": "Live-Signal-Pipeline",
+    "detect": "Erkennen",
+    "analyse": "Analysieren",
+    "verify": "Verifizieren",
+    "decide": "Entscheiden"
+  },
+  "footer": {
+    "tagline": "Agentische KI-Trading-Engine",
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "connect": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "disclaimer": "Haftungsausschluss",
+    "contact": "Kontakt",
+    "rights": "Alle Rechte vorbehalten.",
+    "risk_warning": "Der Handel mit Kryptowährungen birgt erhebliche Risiken. Vergangene Performance garantiert keine zukünftigen Ergebnisse. Paper-Trading-Modus."
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — CoreIntent Trading-Engine",
+    "paper_mode": "Paper-Trading-Modus — kein echtes Geld gefährdet",
+    "help_hint": "Tippe help für Befehle. Tab zum Autocomplete. cai zum Starten."
+  },
+  "language": {
+    "switch": "Sprache"
+  },
+  "status_bar": {
+    "paper_trading": "Paper-Trading-Modus"
+  }
+}

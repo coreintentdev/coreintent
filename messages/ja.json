@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "テクノロジー",
+    "pricing": "コンペティション"
+  },
+  "hero": {
+    "badge": "ペーパートレーディングモード — パブリックビルド",
+    "engine_alive": "エンジン稼働中",
+    "sr_title": "CoreIntent — 3つのAIモデル。1つのトレーディングエンジン。サブスクなし。",
+    "subtitle": "サブスクリプションをコンペティションに置き換えたAIエージェントトレーディングエンジン",
+    "description": "Grokがシグナルを検知。Claudeが問いかける。Perplexityが事実確認。3つが一致すれば確信を持って動く。一致しなければ、より深く掘り下げる。",
+    "cta_terminal": "ターミナルを起動",
+    "cta_competitions": "コンペティションを見る",
+    "signal": "シグナル"
+  },
+  "pipeline": {
+    "title": "ライブシグナルパイプライン",
+    "detect": "検知",
+    "analyse": "分析",
+    "verify": "検証",
+    "decide": "判断"
+  },
+  "footer": {
+    "tagline": "AIエージェントトレーディングエンジン",
+    "product": "プロダクト",
+    "legal": "法的情報",
+    "connect": "つながる",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "disclaimer": "免責事項",
+    "contact": "お問い合わせ",
+    "rights": "全著作権所有。",
+    "risk_warning": "暗号資産取引には重大なリスクが伴います。過去の実績は将来の結果を保証するものではありません。ペーパートレーディングモード。"
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — CoreIntent トレーディングエンジン",
+    "paper_mode": "ペーパートレーディングモード — 実際の資金リスクなし",
+    "help_hint": "helpと入力してコマンド一覧。Tabで自動補完。caiで開始。"
+  },
+  "language": {
+    "switch": "言語"
+  },
+  "status_bar": {
+    "paper_trading": "ペーパートレーディングモード"
+  }
+}

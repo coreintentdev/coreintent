@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Démo",
+    "stack": "Technologie",
+    "pricing": "Compétitions"
+  },
+  "hero": {
+    "badge": "Mode Paper Trading — Construction en Public",
+    "engine_alive": "MOTEUR ACTIF",
+    "subtitle": "Le moteur de trading IA agentique qui a remplacé les abonnements par des compétitions",
+    "description": "Grok détecte le signal. Claude le questionne. Perplexity le vérifie. Quand les trois s'accordent, vous agissez avec conviction. Sinon, vous creusez plus — pas devinez plus.",
+    "cta_terminal": "Lancer le Terminal",
+    "cta_competitions": "Voir les Compétitions",
+    "signal": "SIGNAL"
+  },
+  "pipeline": {
+    "title": "Pipeline de signaux en direct",
+    "detect": "Détecter",
+    "analyse": "Analyser",
+    "verify": "Vérifier",
+    "decide": "Décider"
+  },
+  "footer": {
+    "tagline": "Moteur de Trading IA Agentique",
+    "product": "Produit",
+    "legal": "Juridique",
+    "connect": "Contact",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "disclaimer": "Avertissement",
+    "contact": "Contact",
+    "rights": "Tous droits réservés.",
+    "risk_warning": "Le trading de cryptomonnaies comporte des risques importants. Les performances passées ne garantissent pas les résultats futurs. Mode paper trading."
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Moteur de Trading CoreIntent",
+    "paper_mode": "Mode paper trading — aucun risque d'argent réel",
+    "help_hint": "Tapez help pour les commandes. Tab pour autocompléter. cai pour commencer."
+  },
+  "language": {
+    "switch": "Langue"
+  },
+  "status_bar": {
+    "paper_trading": "Mode Paper Trading"
+  }
+}

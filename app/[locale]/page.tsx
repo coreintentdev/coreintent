@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslation } from "@/lib/i18n-client";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -611,6 +612,7 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const { t, locale, formatNumber: fmtNum } = useTranslation();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -668,7 +670,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -683,7 +685,7 @@ export default function Home() {
               <TypeWriter />
             </h1>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaced subscriptions with competitions
+              {t("hero.subtitle")}
             </p>
             <p
               style={{
@@ -694,21 +696,19 @@ export default function Home() {
                 lineHeight: "1.6",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
+              {t("hero.charge_line")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
+              {t("hero.free_line")}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
+              {t("hero.built_by")}
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
+              {t("hero.open_source")}
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
@@ -725,10 +725,10 @@ export default function Home() {
                   cursor: "pointer",
                 }}
               >
-                Launch Terminal &rarr;
+                {t("hero.cta_terminal")} &rarr;
               </button>
               <a
-                href="/pricing"
+                href={`/${locale}/pricing`}
                 style={{
                   padding: "14px 32px",
                   background: "transparent",
@@ -742,7 +742,7 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                {t("hero.cta_competitions")}
               </a>
             </div>
 
@@ -758,10 +758,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction.", color: "#f59e0b" },
+                { label: t("value_props.models.label"), desc: t("value_props.models.desc"), color: "#a855f7" },
+                { label: t("value_props.compete.label"), desc: t("value_props.compete.desc"), color: "#10b981" },
+                { label: t("value_props.bots.label"), desc: t("value_props.bots.desc"), color: "#3b82f6" },
+                { label: t("value_props.cost.label"), desc: t("value_props.cost.desc"), color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -804,11 +804,11 @@ export default function Home() {
               }}
             >
               {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
+                { value: "3", label: t("stats.ai_models"), color: "#a855f7" },
+                { value: "6", label: t("stats.trading_agents"), color: "#3b82f6" },
+                { value: "$0", label: t("stats.entry_fee"), color: "#10b981" },
+                { value: "$45/mo", label: t("stats.total_stack_cost"), color: "#f59e0b" },
+                { value: "0", label: t("stats.subscriptions"), color: "#ef4444" },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
                   <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
@@ -821,7 +821,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Powered by three AI models
+                {t("sections.powered_by")}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
@@ -866,9 +866,9 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                What people are saying
+                {t("sections.testimonials")}
                 <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
-                  DEMO — Placeholder testimonials
+                  {t("sections.testimonials_demo")}
                 </span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
@@ -903,7 +903,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Why CoreIntent
+                {t("sections.why_coreintent")}
               </div>
               <div
                 style={{
@@ -946,12 +946,12 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Open Source", detail: "GitHub", color: "#10b981", icon: "{ }" },
-                { label: "NZ-Built", detail: "No VC", color: "#3b82f6", icon: "NZ" },
-                { label: "Paper Mode", detail: "Honest", color: "#a855f7", icon: "PT" },
-                { label: "$45/mo", detail: "Total Cost", color: "#f59e0b", icon: "$" },
-                { label: "3 Models", detail: "Cross-Check", color: "#ef4444", icon: "AI" },
-                { label: "Bots OK", detail: "First-Class", color: "#06b6d4", icon: "B" },
+                { label: t("badges.open_source"), detail: "GitHub", color: "#10b981", icon: "{ }" },
+                { label: t("badges.nz_built"), detail: t("badges.nz_built"), color: "#3b82f6", icon: "NZ" },
+                { label: t("badges.paper_mode"), detail: t("badges.paper_mode"), color: "#a855f7", icon: "PT" },
+                { label: "$45/mo", detail: t("badges.total_cost"), color: "#f59e0b", icon: "$" },
+                { label: t("badges.three_models"), detail: t("badges.three_models"), color: "#ef4444", icon: "AI" },
+                { label: t("badges.bots_ok"), detail: t("badges.bots_ok"), color: "#06b6d4", icon: "B" },
               ].map((badge) => (
                 <div
                   key={badge.label}
@@ -988,14 +988,13 @@ export default function Home() {
               }}
             >
               <div style={{ fontSize: "11px", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-                Early Access
+                {t("early_access.title")}
               </div>
               <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-                Get in before the leaderboard fills up.
+                {t("early_access.headline")}
               </div>
               <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
-                Early registrations get priority placement when competitions go live.
-                The platform is free. The advantage is timing.
+                {t("early_access.description")}
               </div>
               <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
                 <a
@@ -1016,7 +1015,7 @@ export default function Home() {
                     display: "inline-block",
                   }}
                 >
-                  Star on GitHub
+                  {t("early_access.star_github")}
                 </a>
                 <a
                   href="https://x.com/coreintentai"
@@ -1035,11 +1034,11 @@ export default function Home() {
                     display: "inline-block",
                   }}
                 >
-                  Follow @coreintentai
+                  {t("early_access.follow_x")}
                 </a>
               </div>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
-                Competitions launching soon. Paper trading mode active.
+                {t("early_access.launching_soon")}
               </div>
             </div>
           </div>
@@ -1059,11 +1058,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tabKey) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tabKey}
+            onClick={() => setTab(tabKey)}
+            aria-pressed={tab === tabKey}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -1071,11 +1070,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tabKey ? "var(--accent-green)" : "transparent",
+              color: tab === tabKey ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {tabKey === "zynrip" ? "ZynRip" : t(`tabs.${tabKey}`)}
           </button>
         ))}
       </div>
@@ -1434,7 +1433,7 @@ npm run build           # Production build`}
         }}
       >
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>{t("status_bar.paper_trading")} | v0.2.0-alpha</span>
       </footer>
     </div>
   );

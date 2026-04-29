@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "竞赛"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 公开构建",
+    "engine_alive": "引擎运行中",
+    "sr_title": "CoreIntent — 三个AI模型。一个交易引擎。零订阅。",
+    "subtitle": "用竞赛取代订阅的AI代理交易引擎",
+    "description": "Grok发现信号。Claude质疑它。Perplexity验证它。三者一致时，你带着信心行动。不一致时，你深入研究——而非盲目猜测。",
+    "charge_line": "其他平台无论盈亏都收$99/月。",
+    "free_line": "我们不收费。在竞赛中证明自己。",
+    "cta_terminal": "启动终端",
+    "cta_competitions": "查看竞赛",
+    "signal": "信号"
+  },
+  "pipeline": {
+    "title": "实时信号管道",
+    "detect": "检测",
+    "analyse": "分析",
+    "verify": "验证",
+    "decide": "决策"
+  },
+  "stats": {
+    "ai_models": "AI模型",
+    "trading_agents": "交易代理",
+    "entry_fee": "入场费",
+    "total_stack_cost": "总成本",
+    "subscriptions": "订阅"
+  },
+  "footer": {
+    "tagline": "AI代理交易引擎",
+    "product": "产品",
+    "legal": "法律",
+    "connect": "联系",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "disclaimer": "免责声明",
+    "contact": "联系我们",
+    "rights": "版权所有。",
+    "risk_warning": "加密货币交易涉及重大风险。过去的表现不能保证未来的结果。模拟交易模式。"
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — CoreIntent 交易引擎",
+    "paper_mode": "模拟交易模式 — 无真实资金风险",
+    "help_hint": "输入 help 查看命令。Tab 自动补全。cai 开始。"
+  },
+  "language": {
+    "switch": "语言"
+  },
+  "status_bar": {
+    "paper_trading": "模拟交易模式"
+  }
+}

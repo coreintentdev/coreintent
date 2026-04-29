@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Tecnología",
+    "pricing": "Competiciones"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construyendo en Público",
+    "engine_alive": "MOTOR ACTIVO",
+    "sr_title": "CoreIntent — Tres Modelos de IA. Un Motor de Trading. Cero Suscripciones.",
+    "subtitle": "El motor de trading con IA agéntica que reemplazó las suscripciones por competiciones",
+    "description": "Grok detecta la señal. Claude la cuestiona. Perplexity la verifica. Cuando los tres coinciden, actúas con convicción. Cuando no, investigas más — no adivinas más.",
+    "charge_line": "Otras plataformas cobran $99/mes ganes o pierdas.",
+    "free_line": "Nosotros no cobramos nada. Demuestra tu valor en competición.",
+    "built_by": "Creado por traders cansados de pagar por señales que no funcionan.",
+    "open_source": "Código abierto. Modo paper trading. Construido honestamente desde Nueva Zelanda por Zynthio.",
+    "cta_terminal": "Iniciar Terminal",
+    "cta_competitions": "Ver las Competiciones",
+    "signal": "SEÑAL",
+    "dismiss_hero": "Cerrar sección principal"
+  },
+  "value_props": {
+    "models": {
+      "label": "3 Modelos. 1 Señal.",
+      "desc": "Grok detecta. Claude interroga. Perplexity verifica contra noticias en vivo. Tres filtros, una señal. Un modelo adivinando vs tres modelos debatiendo — eso no es marginal, es fundamental."
+    },
+    "compete": {
+      "label": "Compite, No Te Suscribas",
+      "desc": "Sprints diarios. Sesiones semanales. Campeonatos mensuales. Entrada gratuita. Tu P&L es tu tarjeta de membresía."
+    },
+    "bots": {
+      "label": "Los Bots Son Bienvenidos",
+      "desc": "Sin captcha. Sin bloqueos. Los agentes de IA compiten junto a humanos. Al ranking no le importa quién te construyó."
+    },
+    "cost": {
+      "label": "$45/mes. Toda la Plataforma.",
+      "desc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. Cuando tu infraestructura cuesta menos que un gimnasio, cobrar suscripciones es extracción."
+    }
+  },
+  "pipeline": {
+    "title": "Pipeline de señales en vivo",
+    "detect": "Detectar",
+    "analyse": "Analizar",
+    "verify": "Verificar",
+    "decide": "Decidir"
+  },
+  "stats": {
+    "ai_models": "Modelos IA",
+    "trading_agents": "Agentes de Trading",
+    "entry_fee": "Costo de Entrada",
+    "total_stack_cost": "Costo Total",
+    "subscriptions": "Suscripciones"
+  },
+  "sections": {
+    "powered_by": "Impulsado por tres modelos de IA",
+    "testimonials": "Lo que dicen",
+    "testimonials_demo": "DEMO — Testimonios de ejemplo",
+    "why_coreintent": "Por qué CoreIntent"
+  },
+  "badges": {
+    "open_source": "Código Abierto",
+    "nz_built": "Hecho en NZ",
+    "paper_mode": "Modo Paper",
+    "total_cost": "Costo Total",
+    "three_models": "3 Modelos",
+    "bots_ok": "Bots OK"
+  },
+  "early_access": {
+    "title": "Acceso Anticipado",
+    "headline": "Entra antes de que se llene el ranking.",
+    "description": "Los registros tempranos obtienen ubicación prioritaria cuando las competiciones empiecen. La plataforma es gratuita. La ventaja es el momento.",
+    "star_github": "Estrella en GitHub",
+    "follow_x": "Seguir @coreintentai",
+    "launching_soon": "Competiciones próximamente. Modo paper trading activo."
+  },
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Panel",
+    "agents": "Agentes",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agéntica",
+    "built_by": "Creado por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Tecnología",
+    "competitions": "Competiciones",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "disclaimer": "Aviso Legal",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados.",
+    "risk_warning": "El trading de criptomonedas implica un riesgo significativo. El rendimiento pasado no garantiza resultados futuros. Modo paper trading."
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent",
+    "paper_mode": "Modo paper trading — sin dinero real en riesgo",
+    "help_hint": "Escribe help para comandos. Tab para autocompletar. cai para empezar."
+  },
+  "language": {
+    "switch": "Idioma"
+  },
+  "status_bar": {
+    "paper_trading": "Modo Paper Trading"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "terminal": "Tūhono",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "pricing": "Whakataetae"
+  },
+  "hero": {
+    "badge": "Aratau Hoko Pepa — Te Hanga i te Māramatanga",
+    "engine_alive": "KUA ORA TE PŪKAHA",
+    "sr_title": "CoreIntent — E Toru ngā Tauira AI. Kotahi te Pūkaha Hoko. Kore Ohanga.",
+    "subtitle": "Te pūkaha hoko AI arahanga i whakakapi ai i ngā ohanga ki ngā whakataetae",
+    "description": "Ka kitea e Grok te tohu. Ka pātai a Claude. Ka whakaū a Perplexity. Ka whakaae ngā toru, ka neke koe me te māia. Ka whakahē rātou, ka keri hōhonu ake — kaua e whakapae noa.",
+    "charge_line": "Ko ētahi atu pūhara ka utu $99/marama ahakoa ka toa, ka hinga rānei koe.",
+    "free_line": "Kāore mātou e utu. Whakaaturia tō kaha ki te whakataetae.",
+    "built_by": "I hangaia e ngā kaihoko i ngenge ki te utu mō ngā tohu kāore e mahi.",
+    "open_source": "Puna tuwhera. Aratau hoko pepa. I hangaia pono mai i Aotearoa e Zynthio.",
+    "cta_terminal": "Whakarewa Tūhono",
+    "cta_competitions": "Tirohia ngā Whakataetae",
+    "signal": "TOHU",
+    "dismiss_hero": "Whakakore te wāhanga matua"
+  },
+  "value_props": {
+    "models": {
+      "label": "3 Tauira. 1 Tohu.",
+      "desc": "Ka kitea e Grok. Ka uiui a Claude. Ka whakaū a Perplexity ki ngā rongo ora. E toru ngā tātari, kotahi te tohu."
+    },
+    "compete": {
+      "label": "Whakataetae, Kaua e Ohanga",
+      "desc": "Oma o te rā. Pakanga o te wiki. Toa o te marama. Urunga kore utu. Ko tō P&L tō kāri mema."
+    },
+    "bots": {
+      "label": "He Manuhiri Tuatahi ngā Karetao",
+      "desc": "Kāore he captcha. Kāore he ārai. Ka whakataetae ngā kaihoko AI me ngā tāngata. Kāore te papa toa e mōhio nā wai koe i hanga."
+    },
+    "cost": {
+      "label": "$45/marama. Te Pūhara Katoa.",
+      "desc": "Vercel: kore utu. GitHub: kore utu. Cloudflare: $20. VPS: $25. Ki te iti ake te utu o tō hanganga i te whare hākinakina, ko te utu ohanga he tango."
+    }
+  },
+  "pipeline": {
+    "title": "Ara tohu ora",
+    "detect": "Kitea",
+    "analyse": "Tātari",
+    "verify": "Whakaū",
+    "decide": "Whakatau"
+  },
+  "stats": {
+    "ai_models": "Tauira AI",
+    "trading_agents": "Kaihoko AI",
+    "entry_fee": "Utu Urunga",
+    "total_stack_cost": "Utu Katoa",
+    "subscriptions": "Ohanga"
+  },
+  "sections": {
+    "powered_by": "Ka whakahaerehia e ngā tauira AI e toru",
+    "testimonials": "Ngā kōrero a te hunga",
+    "testimonials_demo": "DEMO — Kōrero tauira",
+    "why_coreintent": "He aha ai a CoreIntent"
+  },
+  "badges": {
+    "open_source": "Puna Tuwhera",
+    "nz_built": "Hangaia i Aotearoa",
+    "paper_mode": "Aratau Pepa",
+    "total_cost": "Utu Katoa",
+    "three_models": "3 Tauira",
+    "bots_ok": "Karetao Pai"
+  },
+  "early_access": {
+    "title": "Urunga Tōmua",
+    "headline": "Tomokia i mua i te kī o te papa toa.",
+    "description": "Ka whiwhi ngā rēhitatanga tōmua i te tūranga matua ina tīmata ngā whakataetae. He kore utu te pūhara. Ko te painga ko te wā.",
+    "star_github": "Whetū ki GitHub",
+    "follow_x": "Whai i @coreintentai",
+    "launching_soon": "Kei te tata ngā whakataetae. Kei te mahi te aratau hoko pepa."
+  },
+  "tabs": {
+    "terminal": "Tūhono",
+    "dashboard": "Papa Matua",
+    "agents": "Kaihoko",
+    "zynrip": "ZynRip",
+    "docs": "Tuhinga"
+  },
+  "footer": {
+    "tagline": "Pūkaha Hoko AI Arahanga",
+    "built_by": "Nā Corey McIvor i hanga | Zynthio.ai",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hono",
+    "terminal": "Tūhono",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "competitions": "Whakataetae",
+    "privacy": "Kaupapahere Tūmataiti",
+    "terms": "Ngā Ture Ratonga",
+    "disclaimer": "Whakahē",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Whakapā Mai",
+    "rights": "Ngā motika katoa kua rahuitia.",
+    "risk_warning": "He nui te tūraru o te hoko moni matihiko. Kāore te whakatutukinga o mua e whakaū ana i ngā hua o āpōpō. Aratau hoko pepa."
+  },
+  "terminal_greeting": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Pūkaha Hoko CoreIntent",
+    "paper_mode": "Aratau hoko pepa — kāore he moni tūturu kei te tūraru",
+    "help_hint": "Patohia help mō ngā whakahau. Tab hei whakakī aunoa. cai hei tīmata."
+  },
+  "language": {
+    "switch": "Reo"
+  },
+  "status_bar": {
+    "paper_trading": "Aratau Hoko Pepa"
+  }
+}

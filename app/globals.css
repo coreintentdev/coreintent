@@ -607,3 +607,28 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ─── RTL Support (Arabic and other RTL languages) ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .particle-field {
+  transform: scaleX(-1);
+}
