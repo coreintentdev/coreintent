@@ -143,7 +143,8 @@ export default function PricingPage() {
             That&apos;s not alignment — that&apos;s extraction with a billing cycle.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "15px", fontWeight: "bold" }}>
-            We run on $45/mo. Free costs us nothing to serve. So we give it away.
+            CoreIntent runs on $45/mo. Subscriptions aren&apos;t a business model — they&apos;re a tax on traders
+            who haven&apos;t found a better platform yet.
           </p>
 
           <div style={{
@@ -778,12 +779,12 @@ export default function PricingPage() {
             }}
           >
             <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
-              The Arena Is Open.
+              The Arena Is Open. Your Move.
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
-              No credit card. No subscription trap. No &quot;free trial&quot; that silently converts to $99/mo.
+              No credit card. No subscription trap. No &quot;free trial&quot; that converts to $99/mo while you sleep.
               <br />
-              Just you, your strategy, and the leaderboard. Early registration gets priority placement.
+              Just you, your strategy, and the leaderboard. Founding members get priority placement when leagues launch.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link

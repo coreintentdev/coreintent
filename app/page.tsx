@@ -1086,10 +1086,10 @@ export default function Home() {
             </div>
             <p
               className="glitch-text-subtle"
-              data-text="Grok detects. Claude interrogates. Perplexity verifies."
+              data-text="Three AI models cross-check every signal. Zero subscriptions. Free competitions."
               style={{ fontSize: "16px", color: "var(--accent-green)", marginBottom: "12px", fontWeight: "600" }}
             >
-              Grok detects. Claude interrogates. Perplexity verifies.
+              Three AI models cross-check every signal. Zero subscriptions. Free competitions.
             </p>
             <p
               style={{
@@ -1233,6 +1233,61 @@ export default function Home() {
             {/* How It Works */}
             <ScrollReveal>
               <HowItWorks />
+            </ScrollReveal>
+
+            {/* Founding Member Banner */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "20px 24px",
+                background: "linear-gradient(135deg, #f59e0b08 0%, #a855f708 50%, #10b98108 100%)",
+                border: "1px solid #f59e0b22",
+                borderRadius: "12px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "4px 12px",
+                background: "#f59e0b18",
+                border: "1px solid #f59e0b33",
+                borderRadius: "20px",
+                fontSize: "10px",
+                color: "#f59e0b",
+                marginBottom: "12px",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}>
+                <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b", animation: "pulse 2s ease-in-out infinite" }} />
+                Founding Member Window Open
+              </div>
+              <p style={{ fontSize: "14px", color: "var(--text-primary)", fontWeight: "bold", marginBottom: "4px" }}>
+                Early registrations shape the platform, not just the waitlist.
+              </p>
+              <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", maxWidth: "500px", margin: "0 auto 12px" }}>
+                Priority placement when leagues launch. Permanent founding badge.
+                Direct input on features and roadmap. The arena is free — the timing is the advantage.
+              </p>
+              <a
+                href="/pricing"
+                style={{
+                  display: "inline-block",
+                  padding: "10px 24px",
+                  background: "#f59e0b",
+                  color: "#000",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                }}
+              >
+                Claim Founding Status &rarr;
+              </a>
+            </div>
             </ScrollReveal>
 
             {/* Powered By */}
