@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -7,6 +8,15 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
   variable: "--font-mono",
 });
+
+const RTL_LOCALES = ["ar"];
+
+const LOCALE_HTML_LANG: Record<string, string> = {
+  en: "en-NZ", es: "es", mi: "mi", zh: "zh", ja: "ja",
+  pt: "pt", fr: "fr", de: "de", ar: "ar", hi: "hi",
+};
+
+const SUPPORTED_LOCALES = ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"];
 
 export const metadata: Metadata = {
   title: {
@@ -18,6 +28,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://coreintent.dev"),
   alternates: {
     canonical: "https://coreintent.dev",
+    languages: Object.fromEntries(
+      SUPPORTED_LOCALES.map((loc) => [
+        LOCALE_HTML_LANG[loc],
+        `https://coreintent.dev/${loc}`,
+      ]),
+    ),
   },
   openGraph: {
     type: "website",
@@ -163,7 +179,7 @@ const jsonLd = {
         "@type": "ContactPoint",
         email: "corey@coreyai.ai",
         contactType: "customer support",
-        availableLanguage: "English",
+        availableLanguage: ["English", "Spanish", "Maori"],
       },
     },
     {
@@ -178,7 +194,7 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
-      inLanguage: "en-NZ",
+      inLanguage: ["en-NZ", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
       isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
@@ -202,6 +218,7 @@ const jsonLd = {
         "Interactive web terminal",
         "AI agent fleet",
         "Bot-friendly competitions",
+        "Multilingual support (10 languages)",
       ],
       screenshot: {
         "@type": "ImageObject",
@@ -216,9 +233,9 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
-      inLanguage: "en-NZ",
+      inLanguage: ["en-NZ", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-04-30",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -240,13 +257,29 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("locale")?.value || "en";
+  const htmlLang = LOCALE_HTML_LANG[locale] || "en-NZ";
+  const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
+
   return (
-    <html lang="en-NZ" className={jetbrainsMono.variable}>
+    <html lang={htmlLang} dir={dir} className={jetbrainsMono.variable}>
+      <head>
+        {SUPPORTED_LOCALES.map((loc) => (
+          <link
+            key={loc}
+            rel="alternate"
+            hrefLang={LOCALE_HTML_LANG[loc]}
+            href={`https://coreintent.dev/${loc}`}
+          />
+        ))}
+        <link rel="alternate" hrefLang="x-default" href="https://coreintent.dev" />
+      </head>
       <body>
         <script
           type="application/ld+json"

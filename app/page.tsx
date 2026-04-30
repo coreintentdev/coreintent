@@ -1,9 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useLocale } from "@/lib/locale-context";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -165,13 +167,14 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
 /* ─── How It Works ─── */
 function HowItWorks() {
+  const { t } = useLocale();
   return (
     <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-        How It Works
+        {t("howItWorks.label")}
       </div>
       <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
-        Three Steps to Smarter Signals
+        {t("howItWorks.title")}
       </h2>
       <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
         {[
@@ -307,6 +310,7 @@ function FloatingCTA() {
 /* ─── Engine Heartbeat ─── */
 function EngineHeartbeat() {
   const [beat, setBeat] = useState(0);
+  const { t } = useLocale();
   useEffect(() => {
     const iv = setInterval(() => setBeat((b) => b + 1), 2000);
     return () => clearInterval(iv);
@@ -324,14 +328,14 @@ function EngineHeartbeat() {
         }}
       />
       <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
-        ENGINE ALIVE
+        {t("hero.engineAlive")}
       </span>
     </div>
   );
 }
 
 /* ─── TypeWriter ─── */
-const HERO_PHRASES = [
+const HERO_PHRASES_EN = [
   "Three AI Models Argue.",
   "You Get Better Signals.",
   "Grok Spots. Claude Questions.",
@@ -359,13 +363,19 @@ const HERO_PHRASES = [
 ];
 
 function TypeWriter() {
+  const { t } = useLocale();
+  const phrases = Array.from({ length: 10 }, (_, i) => {
+    const val = t(`phrases.${i}`);
+    return val !== `phrases.${i}` ? val : HERO_PHRASES_EN[i];
+  }).concat(HERO_PHRASES_EN.slice(10));
+
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
 
   const tick = useCallback(() => {
-    const current = HERO_PHRASES[phraseIdx];
+    const current = phrases[phraseIdx];
     if (!isDeleting) {
       setText(current.substring(0, charIdx + 1));
       setCharIdx((c) => c + 1);
@@ -378,11 +388,11 @@ function TypeWriter() {
       setCharIdx((c) => c - 1);
       if (charIdx <= 1) {
         setIsDeleting(false);
-        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        setPhraseIdx((p) => (p + 1) % phrases.length);
         return;
       }
     }
-  }, [charIdx, isDeleting, phraseIdx]);
+  }, [charIdx, isDeleting, phraseIdx, phrases]);
 
   useEffect(() => {
     const speed = isDeleting ? 40 : 80;
@@ -406,6 +416,7 @@ const SIGNAL_POOL = [
 ];
 
 function LiveSignalFeed() {
+  const { t } = useLocale();
   const [idx, setIdx] = useState(0);
   const [vis, setVis] = useState(true);
 
@@ -442,7 +453,7 @@ function LiveSignalFeed() {
     >
       <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "#10b981", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
         <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981" }} />
-        SIGNAL
+        {t("signal.label")}
       </span>
       <span style={{ color: "var(--text-primary)", fontWeight: "bold" }}>{s.pair}</span>
       <span style={{ color: dirColor, fontWeight: "bold", fontSize: "11px" }}>
@@ -452,13 +463,14 @@ function LiveSignalFeed() {
         {s.conf}%
       </span>
       <span style={{ color: s.mc, fontSize: "10px", opacity: 0.8 }}>[{s.model}]</span>
-      <span style={{ color: "var(--text-secondary)", fontSize: "10px" }}>DEMO</span>
+      <span style={{ color: "var(--text-secondary)", fontSize: "10px" }}>{t("signal.demo")}</span>
     </div>
   );
 }
 
 /* ─── Market Ticker ─── */
 function MarketTicker() {
+  const { locale, htmlLang } = useLocale();
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const iv = setInterval(() => setTick((t) => t + 1), 2000);
@@ -512,7 +524,7 @@ function MarketTicker() {
           >
             <span style={{ color: t.c, fontWeight: "bold" }}>{t.s}</span>
             <span style={{ color: "var(--text-primary)" }}>
-              ${t.price.toLocaleString("en-US", { minimumFractionDigits: t.dec, maximumFractionDigits: t.dec })}
+              ${t.price.toLocaleString(htmlLang, { minimumFractionDigits: t.dec, maximumFractionDigits: t.dec })}
             </span>
             <span
               style={{
@@ -863,6 +875,7 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const { t, locale, formatNumber } = useLocale();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -922,7 +935,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -953,10 +966,10 @@ export default function Home() {
             </h1>
             <p
               className="glitch-text-subtle"
-              data-text="The agentic AI trading engine that replaced subscriptions with competitions"
+              data-text={t("hero.tagline")}
               style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}
             >
-              The agentic AI trading engine that replaced subscriptions with competitions
+              {t("hero.tagline")}
             </p>
             <p
               style={{
@@ -967,21 +980,19 @@ export default function Home() {
                 lineHeight: "1.6",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              {t("hero.description")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
+              {t("hero.otherPlatforms")}
             </p>
             <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
+              {t("hero.weCharge")}
             </p>
             <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
+              {t("hero.builtBy")}
             </p>
             <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 20px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
+              {t("hero.openSource")}
             </p>
             <LiveSignalFeed />
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
@@ -999,9 +1010,9 @@ export default function Home() {
                   cursor: "pointer",
                 }}
               >
-                Launch Terminal &rarr;
+                {t("hero.launchTerminal")} &rarr;
               </button>
-              <a
+              <Link
                 href="/pricing"
                 style={{
                   padding: "14px 32px",
@@ -1016,8 +1027,8 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
-              </a>
+                {t("hero.seeCompetitions")}
+              </Link>
             </div>
 
             {/* Value Props */}
@@ -1032,10 +1043,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction.", color: "#f59e0b" },
+                { label: t("valueProps.threeModels"), desc: t("valueProps.threeModelsDesc"), color: "#a855f7" },
+                { label: t("valueProps.compete"), desc: t("valueProps.competeDesc"), color: "#10b981" },
+                { label: t("valueProps.bots"), desc: t("valueProps.botsDesc"), color: "#3b82f6" },
+                { label: t("valueProps.cost"), desc: t("valueProps.costDesc"), color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -1079,15 +1090,15 @@ export default function Home() {
                 borderRadius: "12px",
               }}
             >
-              <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
-              <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
-              <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
-              <AnimatedCounter end={12847} suffix="+" label="Signals Analyzed" color="#f59e0b" />
-              <AnimatedCounter end={0} label="Subscriptions" color="#ef4444" />
+              <AnimatedCounter end={3} label={t("counters.aiModels")} color="#a855f7" />
+              <AnimatedCounter end={6} label={t("counters.tradingAgents")} color="#3b82f6" />
+              <AnimatedCounter end={0} prefix="$" label={t("counters.entryFee")} color="#10b981" />
+              <AnimatedCounter end={12847} suffix="+" label={t("counters.signalsAnalyzed")} color="#f59e0b" />
+              <AnimatedCounter end={0} label={t("counters.subscriptions")} color="#ef4444" />
             </div>
             </ScrollReveal>
             <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
-              [DEMO] Signal count is simulated — platform is in paper trading mode
+              {t("status.demoData")}
             </p>
 
             {/* How It Works */}
@@ -1099,7 +1110,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Powered by three AI models
+                {t("poweredBy.label")}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
@@ -1144,9 +1155,9 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                What people are saying
+                {t("testimonials.label")}
                 <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
-                  DEMO — Placeholder testimonials
+                  {t("testimonials.demoTag")}
                 </span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", textAlign: "left" }}>
@@ -1181,7 +1192,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Why CoreIntent
+                {t("whyCoreintent.label")}
               </div>
               <div
                 style={{
@@ -1225,12 +1236,12 @@ export default function Home() {
               }}
             >
               {[
-                { label: "Built in NZ", detail: "No VC. Self-funded.", color: "#3b82f6", icon: "NZ" },
-                { label: "AI-Powered", detail: "3 Models Cross-Check", color: "#a855f7", icon: "AI" },
-                { label: "Competition-Grade", detail: "Free Entry. Real Skill.", color: "#10b981", icon: "CG" },
-                { label: "Open Source", detail: "Fully Transparent", color: "#f59e0b", icon: "{ }" },
-                { label: "Bot-Friendly", detail: "First-Class Citizens", color: "#06b6d4", icon: "B" },
-                { label: "$45/mo Stack", detail: "Lean Infrastructure", color: "#ef4444", icon: "$" },
+                { label: t("trustBadges.builtInNz"), detail: t("trustBadges.builtInNzDetail"), color: "#3b82f6", icon: "NZ" },
+                { label: t("trustBadges.aiPowered"), detail: t("trustBadges.aiPoweredDetail"), color: "#a855f7", icon: "AI" },
+                { label: t("trustBadges.competitionGrade"), detail: t("trustBadges.competitionGradeDetail"), color: "#10b981", icon: "CG" },
+                { label: t("trustBadges.openSource"), detail: t("trustBadges.openSourceDetail"), color: "#f59e0b", icon: "{ }" },
+                { label: t("trustBadges.botFriendly"), detail: t("trustBadges.botFriendlyDetail"), color: "#06b6d4", icon: "B" },
+                { label: t("trustBadges.leanStack"), detail: t("trustBadges.leanStackDetail"), color: "#ef4444", icon: "$" },
               ].map((badge) => (
                 <div
                   key={badge.label}
@@ -1279,14 +1290,13 @@ export default function Home() {
               }}
             >
               <div style={{ fontSize: "11px", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-                Early Access
+                {t("hero.earlyAccess")}
               </div>
               <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-                Get in before the leaderboard fills up.
+                {t("hero.earlyAccessTitle")}
               </div>
               <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
-                Early registrations get priority placement when competitions go live.
-                The platform is free. The advantage is timing.
+                {t("hero.earlyAccessDesc")}
               </div>
               <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
                 <a
@@ -1307,7 +1317,7 @@ export default function Home() {
                     display: "inline-block",
                   }}
                 >
-                  Star on GitHub
+                  {t("hero.starOnGithub")}
                 </a>
                 <a
                   href="https://x.com/coreintentai"
@@ -1326,11 +1336,11 @@ export default function Home() {
                     display: "inline-block",
                   }}
                 >
-                  Follow @coreintentai
+                  {t("hero.followUs")}
                 </a>
               </div>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
-                Competitions launching soon. Paper trading mode active.
+                {t("hero.competitionsLaunching")}
               </div>
             </div>
           </div>
@@ -1350,11 +1360,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tabKey) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tabKey}
+            onClick={() => setTab(tabKey)}
+            aria-pressed={tab === tabKey}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -1362,11 +1372,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tabKey ? "var(--accent-green)" : "transparent",
+              color: tab === tabKey ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {tabKey === "zynrip" ? "ZynRip" : t(`tabs.${tabKey}`)}
           </button>
         ))}
       </div>
@@ -1727,7 +1737,7 @@ npm run build           # Production build`}
         aria-label="Engine status"
       >
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
-        <span>Paper Trading Mode | v0.2.0-alpha</span>
+        <span>{t("status.paperTrading")} | v0.2.0-alpha</span>
       </div>
       <SiteFooter />
     </div>

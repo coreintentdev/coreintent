@@ -888,3 +888,27 @@ html {
     transform: none !important;
   }
 }
+
+/* ─── RTL Support ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] .step-connector {
+  right: auto !important;
+  left: -14px !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+}
+
+[dir="rtl"] nav {
+  direction: rtl;
+}
+
+[dir="rtl"] .floating-cta {
+  right: auto !important;
+  left: 24px !important;
+}

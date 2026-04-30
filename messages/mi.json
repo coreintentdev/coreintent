@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "title": "CoreIntent | Pūkaha Hokohoko AI Māngai — Kāore he Ohanga, Ko te Whakataetae Anake",
+    "description": "E toru ngā tauira AI. Kotahi te pūkaha hokohoko. Kore utu ohanga. Ka whakahaerehia e CoreIntent a Claude, Grok me Perplexity mō ngā tohu hokohoko. Whakataetae kore utu — e pai ana ngā karetao. I hangaia i Aotearoa e Zynthio."
+  },
+  "nav": {
+    "terminal": "Tūāpapa",
+    "demo": "Whakaatu",
+    "stack": "Tūāpapa Hangarau",
+    "pricing": "Utu",
+    "language": "Reo"
+  },
+  "hero": {
+    "badge": "Āhua Hokohoko Pepa — E Hanga Ana i te Māramatanga",
+    "engineAlive": "PŪKAHA ORA",
+    "tagline": "Te pūkaha hokohoko AI māngai i whakakapi i ngā ohanga ki ngā whakataetae",
+    "description": "Ka kite a Grok i te tohu. Ka pātai a Claude. Ka tirotiro a Perplexity. Ka whakaae ngā toru, ka neke koe me te māia. Ka tautohetohe rātou, ka keri koe — kaua e matapōrehu.",
+    "otherPlatforms": "Ka utua e ētahi atu tūāpapa $99/marama ahakoa ka toa, ka hinga rānei.",
+    "weCharge": "Kāore mātou e utu. Whakaaturia tō kaha i te whakataetae.",
+    "builtBy": "I hangaia e ngā kaihokohoko i ngenge ki te utu mō ngā tohu kāore e mahi.",
+    "openSource": "Puna tuwhera. Āhua hokohoko pepa. I hangaia i Aotearoa e Zynthio.",
+    "launchTerminal": "Whakatūwhera Tūāpapa",
+    "seeCompetitions": "Tirohia ngā Whakataetae",
+    "earlyAccess": "Urunga Tōmua",
+    "earlyAccessTitle": "Tomokia i mua i te kī o te papa tātai.",
+    "earlyAccessDesc": "Ka whiwhi ngā rēhitatanga tōmua i te tūranga matua ina tīmata ngā whakataetae. He kore utu te tūāpapa. Ko te painga ko te wā.",
+    "starOnGithub": "Whetū i GitHub",
+    "followUs": "Whāia @coreintentai",
+    "competitionsLaunching": "Kei te haere mai ngā whakataetae. Kei te mahi te āhua hokohoko pepa."
+  },
+  "phrases": {
+    "0": "E Toru ngā Tauira AI e Tautohe Ana.",
+    "1": "Ka Pai Ake Ō Tohu.",
+    "2": "Ka Kite a Grok. Ka Pātai a Claude.",
+    "3": "Ka Tirotiro a Perplexity.",
+    "4": "Whakaae = Māia.",
+    "5": "Tautohetohe = Keri Hōhonu.",
+    "6": "$0 Ohanga. $0 Whakapahā.",
+    "7": "E Pai Ana ngā Karetao. Me ngā Tāngata.",
+    "8": "I Hangaia i Aotearoa.",
+    "9": "He Hākinakina te Hokohoko Ināianei."
+  },
+  "signal": {
+    "label": "TOHU",
+    "demo": "WHAKAATU"
+  },
+  "howItWorks": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Māramatanga",
+    "step01": "HIPANGA 01",
+    "step01Title": "Ka Tautohe ngā Tauira",
+    "step01Desc": "Ka kitea e Grok he tohu. Ka pātai a Claude. Ka tirotiro a Perplexity ki ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrerorero.",
+    "step02": "HIPANGA 02",
+    "step02Title": "Ka Puta te Whakaae",
+    "step02Desc": "Ina whakaae ngā tauira e toru, ka kaha te whakapono. Ina tautohe, ka tohu te pūnaha i te rangirua — kāore he whakapono teka.",
+    "step03": "HIPANGA 03",
+    "step03Title": "Ka Whakataetae Koe",
+    "step03Desc": "Kawea te tohu ki ngā whakataetae ā-rā, ā-wiki, ā-marama rānei. Whakaaturia tō rautaki ki ngā tāngata me ngā karetao. Kore utu."
+  },
+  "valueProps": {
+    "threeModels": "3 Tauira. 1 Tohu.",
+    "threeModelsDesc": "Ka kite a Grok. Ka pātai a Claude. Ka tirotiro a Perplexity ki ngā rongo ora. E toru ngā tātari, kotahi te tohu.",
+    "compete": "Whakataetae, Kaua e Ohanga",
+    "competeDesc": "Oma ā-rā. Mahi ā-wiki. Whakataetae ā-marama. Kore utu. Ko tō P&L tō kāri mema.",
+    "bots": "He Mea Tuatahi ngā Karetao",
+    "botsDesc": "Kāore he captcha. Kāore he aukati. Ka rēhita, ka whakataetae, ka toa ngā māngai AI i te taha o ngā tāngata.",
+    "cost": "$45/marama. Te Tūāpapa Katoa.",
+    "costDesc": "Ina iti ake te utu o tō hanganga i te mema whare tākaro, ehara te utu ohanga i te tauira pakihi — he tangohanga."
+  },
+  "counters": {
+    "aiModels": "Tauira AI",
+    "tradingAgents": "Māngai Hokohoko",
+    "entryFee": "Utu Tomokanga",
+    "signalsAnalyzed": "Tohu Kua Tātarihia",
+    "subscriptions": "Ohanga"
+  },
+  "pipeline": {
+    "label": "Ara tohu ora",
+    "detect": "Kite",
+    "analyse": "Tātari",
+    "verify": "Whakaū",
+    "decide": "Whakatau"
+  },
+  "poweredBy": {
+    "label": "E toru ngā tauira AI e whakakaha ana",
+    "grokRole": "Kitenga tohu tere me te kare-ā-roto",
+    "claudeRole": "Tātaritanga hōhonu me te aromatawai mōrearea",
+    "perplexityRole": "Rangahau wā-tūturu me ngā rongo"
+  },
+  "testimonials": {
+    "label": "He aha tā te iwi e kōrero ana",
+    "demoTag": "WHAKAATU — Kōrero tauira"
+  },
+  "whyCoreintent": {
+    "label": "He Aha ai a CoreIntent"
+  },
+  "trustBadges": {
+    "builtInNz": "I Hangaia i Aotearoa",
+    "builtInNzDetail": "Kāore he VC. Pūtea whaiaro.",
+    "aiPowered": "AI-Whakakaha",
+    "aiPoweredDetail": "3 Tauira Tirotiro",
+    "competitionGrade": "Taumata Whakataetae",
+    "competitionGradeDetail": "Kore Utu. Pūkenga Tūturu.",
+    "openSource": "Puna Tuwhera",
+    "openSourceDetail": "Mārama Katoa",
+    "botFriendly": "Pai ki ngā Karetao",
+    "botFriendlyDetail": "Kirirarau Tuatahi",
+    "leanStack": "Tūāpapa $45/marama",
+    "leanStackDetail": "Hanganga Māmā"
+  },
+  "tabs": {
+    "terminal": "Tūāpapa",
+    "dashboard": "Papa Whakahaere",
+    "agents": "Māngai",
+    "zynrip": "ZynRip",
+    "docs": "Tuhinga"
+  },
+  "footer": {
+    "tagline": "Pūkaha Hokohoko AI Māngai",
+    "builtBy": "I hangaia e Corey McIvor | Zynthio.ai",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hononga",
+    "privacy": "Kaupapahere Tūmataiti",
+    "terms": "Ngā Ture Ratonga",
+    "disclaimer": "Whakakāhoretanga",
+    "contact": "Whakapā",
+    "copyright": "© {year} Corey McIvor. Ngā mōtika katoa kua rāhuitia.",
+    "riskWarning": "He nui te mōrearea o te hokohoko moni matihiko. Kāore e taea e ngā hua o mua te whakapūmau i ngā hua o āpōpō. Āhua hokohoko pepa."
+  },
+  "terminal": {
+    "greeting": "Kia ora — Nau mai ki CoreIntent Commander",
+    "subtitle": "Āhua hokohoko pepa — kāore he moni tūturu i te mōrearea",
+    "helpPrompt": "Patohia help mō ngā tono. Tab ki te whakakī aunoa. cai ki te tīmata."
+  },
+  "status": {
+    "paperTrading": "Āhua Hokohoko Pepa",
+    "demoData": "[WHAKAATU] He tauira te tatau tohu — kei te āhua hokohoko pepa te tūāpapa"
+  }
+}

@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLocale } from "@/lib/locale-context";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const NAV_LINKS = [
-  { href: "/", label: "Terminal" },
-  { href: "/demo", label: "Demo" },
-  { href: "/stack", label: "Stack" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/", label: "nav.terminal", fallback: "Terminal" },
+  { href: "/demo", label: "nav.demo", fallback: "Demo" },
+  { href: "/stack", label: "nav.stack", fallback: "Stack" },
+  { href: "/pricing", label: "nav.pricing", fallback: "Pricing" },
 ];
 
 export default function SiteNav() {
   const pathname = usePathname();
+  const { t } = useLocale();
 
   return (
     <header
@@ -47,27 +50,30 @@ export default function SiteNav() {
           v0.2.0-alpha | Zynthio.ai
         </span>
       </Link>
-      <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            style={{
-              padding: "6px 16px",
-              borderRadius: "6px",
-              fontSize: "13px",
-              fontFamily: "inherit",
-              textDecoration: "none",
-              background:
-                pathname === link.href ? "var(--accent-green)" : "transparent",
-              color:
-                pathname === link.href ? "#000" : "var(--text-secondary)",
-            }}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+        <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                padding: "6px 16px",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontFamily: "inherit",
+                textDecoration: "none",
+                background:
+                  pathname === link.href ? "var(--accent-green)" : "transparent",
+                color:
+                  pathname === link.href ? "#000" : "var(--text-secondary)",
+              }}
+            >
+              {t(link.label)}
+            </Link>
+          ))}
+        </nav>
+        <LanguageSwitcher />
+      </div>
     </header>
   );
 }

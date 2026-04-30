@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competencias",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading. Competencias gratuitas — bots bienvenidos. Hecho en NZ por Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precios",
+    "language": "Idioma"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construyendo en Público",
+    "engineAlive": "MOTOR ACTIVO",
+    "tagline": "El motor de trading con IA agéntica que reemplazó suscripciones por competencias",
+    "description": "Grok detecta la señal. Claude la cuestiona. Perplexity la verifica. Cuando los tres coinciden, actúas con convicción. Cuando no, investigas más — no adivinas más.",
+    "otherPlatforms": "Otras plataformas cobran $99/mes ganes o pierdas.",
+    "weCharge": "Nosotros no cobramos nada. Demuestra tu habilidad en competencia.",
+    "builtBy": "Construido por traders cansados de pagar por señales que no funcionan.",
+    "openSource": "Código abierto. Modo paper trading. Construido honestamente desde Nueva Zelanda por Zynthio.",
+    "launchTerminal": "Abrir Terminal",
+    "seeCompetitions": "Ver las Competencias",
+    "earlyAccess": "Acceso Anticipado",
+    "earlyAccessTitle": "Entra antes de que se llene la tabla de posiciones.",
+    "earlyAccessDesc": "Los registros tempranos obtienen posición prioritaria cuando las competencias comiencen. La plataforma es gratis. La ventaja es el timing.",
+    "starOnGithub": "Estrella en GitHub",
+    "followUs": "Seguir @coreintentai",
+    "competitionsLaunching": "Competencias próximamente. Modo paper trading activo."
+  },
+  "phrases": {
+    "0": "Tres Modelos de IA Debaten.",
+    "1": "Tú Obtienes Mejores Señales.",
+    "2": "Grok Detecta. Claude Cuestiona.",
+    "3": "Perplexity Verifica.",
+    "4": "Consenso = Convicción.",
+    "5": "Desacuerdo = Investiga Más.",
+    "6": "$0 Suscripciones. $0 Excusas.",
+    "7": "Bots Bienvenidos. Humanos También.",
+    "8": "Hecho en Nueva Zelanda.",
+    "9": "El Trading Ahora Es Deporte."
+  },
+  "signal": {
+    "label": "SEÑAL",
+    "demo": "DEMO"
+  },
+  "howItWorks": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos Hacia Mejores Señales",
+    "step01": "PASO 01",
+    "step01Title": "Los Modelos Debaten",
+    "step01Desc": "Grok detecta una señal. Claude la cuestiona. Perplexity verifica con datos en vivo. Tres perspectivas, una conversación.",
+    "step02": "PASO 02",
+    "step02Title": "Se Forma el Consenso",
+    "step02Desc": "Cuando los tres modelos coinciden, la confianza es alta. Cuando no, el sistema señala incertidumbre — sin falsas convicciones.",
+    "step03": "PASO 03",
+    "step03Title": "Tú Compites",
+    "step03Desc": "Lleva la señal a competencias diarias, semanales o mensuales. Demuestra tu estrategia contra humanos y bots. Entrada gratuita."
+  },
+  "valueProps": {
+    "threeModels": "3 Modelos. 1 Señal.",
+    "threeModelsDesc": "Grok detecta. Claude interroga. Perplexity verifica contra noticias en vivo. Tres filtros, una señal.",
+    "compete": "Compite, No Te Suscribas",
+    "competeDesc": "Sprints diarios. Grinds semanales. Campeonatos mensuales. Entrada gratis. Tu P&L es tu credencial.",
+    "bots": "Bots Son de Primera Clase",
+    "botsDesc": "Sin captcha. Sin bloqueos. Sin violaciones de ToS por automatización. Los agentes IA registran, compiten y ganan junto a humanos.",
+    "cost": "$45/mes. Toda la Plataforma.",
+    "costDesc": "Cuando tu infraestructura cuesta menos que un gimnasio, cobrar suscripciones no es un modelo de negocio — es extracción."
+  },
+  "counters": {
+    "aiModels": "Modelos IA",
+    "tradingAgents": "Agentes Trading",
+    "entryFee": "Cuota de Entrada",
+    "signalsAnalyzed": "Señales Analizadas",
+    "subscriptions": "Suscripciones"
+  },
+  "pipeline": {
+    "label": "Pipeline de señales en vivo",
+    "detect": "Detectar",
+    "analyse": "Analizar",
+    "verify": "Verificar",
+    "decide": "Decidir"
+  },
+  "poweredBy": {
+    "label": "Impulsado por tres modelos de IA",
+    "grokRole": "Detección rápida de señales y sentimiento",
+    "claudeRole": "Análisis profundo y evaluación de riesgo",
+    "perplexityRole": "Investigación en tiempo real y noticias"
+  },
+  "testimonials": {
+    "label": "Lo que dice la gente",
+    "demoTag": "DEMO — Testimonios de ejemplo"
+  },
+  "whyCoreintent": {
+    "label": "Por Qué CoreIntent"
+  },
+  "trustBadges": {
+    "builtInNz": "Hecho en NZ",
+    "builtInNzDetail": "Sin VC. Autofinanciado.",
+    "aiPowered": "Potenciado por IA",
+    "aiPoweredDetail": "3 Modelos Verifican",
+    "competitionGrade": "Nivel Competencia",
+    "competitionGradeDetail": "Entrada Gratis. Habilidad Real.",
+    "openSource": "Código Abierto",
+    "openSourceDetail": "Totalmente Transparente",
+    "botFriendly": "Amigable con Bots",
+    "botFriendlyDetail": "Ciudadanos de Primera Clase",
+    "leanStack": "Stack $45/mes",
+    "leanStackDetail": "Infraestructura Lean"
+  },
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Panel",
+    "agents": "Agentes",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agéntica",
+    "builtBy": "Construido por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "disclaimer": "Descargo",
+    "contact": "Contacto",
+    "copyright": "© {year} Corey McIvor. Todos los derechos reservados.",
+    "riskWarning": "Operar criptomonedas implica riesgo significativo. El rendimiento pasado no garantiza resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenido a CoreIntent Commander",
+    "subtitle": "Modo paper trading — sin dinero real en riesgo",
+    "helpPrompt": "Escribe help para comandos. Tab para autocompletar. cai para iniciar."
+  },
+  "status": {
+    "paperTrading": "Modo Paper Trading",
+    "demoData": "[DEMO] El conteo de señales es simulado — la plataforma está en modo paper trading"
+  }
+}
