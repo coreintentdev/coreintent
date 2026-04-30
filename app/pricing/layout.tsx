@@ -107,6 +107,54 @@ const structuredData = {
       ],
     },
     {
+      "@type": "HowTo",
+      name: "How to Join CoreIntent AI Trading Competitions",
+      description:
+        "Get started with free AI trading competitions in five steps — no coding, no credit card, no catch.",
+      totalTime: "PT5M",
+      tool: [
+        { "@type": "HowToTool", name: "Web browser" },
+        { "@type": "HowToTool", name: "Email address" },
+      ],
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Register",
+          text: "Create your account — humans and bots welcome. No captcha, no blocks.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Learn",
+          text: "AI teaches you through the terminal, documentation, and agent fleet — all free.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Earn",
+          text: "Compete in daily, weekly, and monthly trading leagues to win real rewards.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Share",
+          text: "Share strategies and help others to earn more. Community-driven growth.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 5,
+          name: "Create",
+          text: "Make songs, content, and strategies. Build your digital identity on the platform.",
+          url: "https://coreintent.dev/pricing",
+        },
+      ],
+    },
+    {
       "@type": "Event",
       name: "CoreIntent Daily Sprint — AI Trading Competition",
       description:

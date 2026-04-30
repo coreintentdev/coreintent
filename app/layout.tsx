@@ -203,6 +203,10 @@ const jsonLd = {
         "AI agent fleet",
         "Bot-friendly competitions",
       ],
+      sameAs: [
+        "https://github.com/coreintentdev/coreintent",
+        "https://x.com/coreintentai",
+      ],
       screenshot: {
         "@type": "ImageObject",
         url: "https://coreintent.dev/opengraph-image.png",
@@ -218,10 +222,37 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-04-30",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://coreintent.dev/#sourcecode",
+      name: "CoreIntent",
+      codeRepository: "https://github.com/coreintentdev/coreintent",
+      programmingLanguage: ["TypeScript", "JavaScript"],
+      runtimePlatform: "Node.js",
+      license: "https://opensource.org/licenses/MIT",
+      author: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      description:
+        "Open-source agentic AI trading engine with multi-model orchestration. Built with Next.js, TypeScript, and three AI models.",
+      targetProduct: {
+        "@type": "WebApplication",
+        "@id": "https://coreintent.dev/#application",
       },
     },
     {

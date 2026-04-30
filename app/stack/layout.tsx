@@ -60,7 +60,7 @@ const structuredData = {
         "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure.",
       url: "https://coreintent.dev/stack",
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-04-30",
       author: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
@@ -70,6 +70,7 @@ const structuredData = {
         "@id": "https://zynthio.ai/#organization",
       },
       mainEntityOfPage: "https://coreintent.dev/stack",
+      image: "https://coreintent.dev/stack/opengraph-image",
       about: [
         {
           "@type": "SoftwareApplication",
