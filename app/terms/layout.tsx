@@ -63,6 +63,7 @@ const structuredData = {
       datePublished: "2026-03-01",
       dateModified: "2026-03-01",
       inLanguage: "en-NZ",
+      image: "https://coreintent.dev/opengraph-image.png",
     },
   ],
 };
