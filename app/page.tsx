@@ -226,6 +226,72 @@ function ParticleField() {
   );
 }
 
+/* ─── Data Rain Background ─── */
+function DataRain() {
+  const columns = Array.from({ length: 12 }, (_, i) => {
+    const chars = "01ZYN$ETH₿CAI336SIGNAL";
+    const str = Array.from({ length: 30 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    return {
+      id: i,
+      left: `${(i * 8.33 + 2) % 100}%`,
+      duration: 12 + (i % 5) * 4,
+      delay: (i % 7) * 2.5,
+      text: str,
+    };
+  });
+
+  return (
+    <div className="data-rain">
+      {columns.map((c) => (
+        <div
+          key={c.id}
+          className="data-rain-column"
+          style={{
+            left: c.left,
+            "--rain-duration": `${c.duration}s`,
+            "--rain-delay": `${c.delay}s`,
+          } as React.CSSProperties}
+        >
+          {c.text}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Cursor Spotlight ─── */
+function CursorSpotlight() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const parent = el.parentElement;
+    if (!parent) return;
+
+    const handleMove = (e: MouseEvent) => {
+      const rect = parent.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      el.style.setProperty("--mouse-x", `${x}%`);
+      el.style.setProperty("--mouse-y", `${y}%`);
+      setActive(true);
+    };
+
+    const handleLeave = () => setActive(false);
+
+    parent.addEventListener("mousemove", handleMove);
+    parent.addEventListener("mouseleave", handleLeave);
+    return () => {
+      parent.removeEventListener("mousemove", handleMove);
+      parent.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
+
+  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
+}
+
 /* ─── Scroll Reveal Hook ─── */
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -438,24 +504,25 @@ function FloatingCTA() {
 /* ─── Engine Heartbeat ─── */
 function EngineHeartbeat() {
   const [beat, setBeat] = useState(0);
+  const [latency, setLatency] = useState(12);
   useEffect(() => {
-    const iv = setInterval(() => setBeat((b) => b + 1), 2000);
+    const iv = setInterval(() => {
+      setBeat((b) => b + 1);
+      setLatency(8 + Math.floor(Math.random() * 25));
+    }, 2000);
     return () => clearInterval(iv);
   }, []);
   return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
       <div
-        className="engine-heartbeat"
+        className="engine-alive-dot"
         key={beat}
-        style={{
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          background: "#10b981",
-        }}
       />
       <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
         ENGINE ALIVE
+      </span>
+      <span style={{ fontSize: "9px", color: "var(--text-secondary)", fontFamily: "inherit" }}>
+        {latency}ms
       </span>
     </div>
   );
@@ -1015,7 +1082,9 @@ export default function Home() {
           }}
         >
           <div className="grid-bg" />
+          <DataRain />
           <ParticleField />
+          <CursorSpotlight />
           <NeuralNetwork />
           <button
             onClick={() => setShowHero(false)}
@@ -1431,7 +1500,7 @@ export default function Home() {
               ].map((badge) => (
                 <div
                   key={badge.label}
-                  className="trust-badge"
+                  className="trust-badge card-breathe"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -1536,6 +1605,7 @@ export default function Home() {
         </section>
       )}
 
+      <div className="section-divider" />
       <MarketTicker />
 
       {/* Tab bar */}

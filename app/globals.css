@@ -972,3 +972,189 @@ html {
     animation-duration: 30s;
   }
 }
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 5: Alive Effects
+   ═══════════════════════════════════════════ */
+
+/* ─── Matrix Data Rain ─── */
+@keyframes dataRain {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.data-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.data-rain-column {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  font-size: 10px;
+  font-family: inherit;
+  line-height: 1.2;
+  writing-mode: vertical-rl;
+  color: rgba(16, 185, 129, 0.08);
+  text-shadow: 0 0 4px rgba(16, 185, 129, 0.1);
+  animation: dataRain var(--rain-duration, 15s) linear infinite;
+  animation-delay: var(--rain-delay, 0s);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ─── Magnetic Cursor Spotlight ─── */
+.cursor-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(16, 185, 129, 0.04),
+    rgba(59, 130, 246, 0.02) 40%,
+    transparent 70%
+  );
+}
+
+.cursor-spotlight.active {
+  opacity: 1;
+}
+
+/* ─── Live Engine Dot ─── */
+@keyframes engineAlive {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.6), 0 0 8px rgba(16, 185, 129, 0.3);
+    background: #10b981;
+  }
+  25% {
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.8), 0 0 16px rgba(16, 185, 129, 0.4);
+    background: #34d399;
+  }
+  50% {
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.4), 0 0 6px rgba(16, 185, 129, 0.2);
+    background: #059669;
+  }
+  75% {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.9), 0 0 20px rgba(16, 185, 129, 0.5);
+    background: #10b981;
+  }
+}
+
+.engine-alive-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  animation: engineAlive 2s ease-in-out infinite;
+}
+
+/* ─── Section Divider Glow ─── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.2) 20%,
+    rgba(59, 130, 246, 0.3) 50%,
+    rgba(168, 85, 247, 0.2) 80%,
+    transparent
+  );
+  margin: 0;
+  border: none;
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.08) 20%,
+    rgba(59, 130, 246, 0.12) 50%,
+    rgba(168, 85, 247, 0.08) 80%,
+    transparent
+  );
+  filter: blur(3px);
+}
+
+/* ─── Breath Animation for Cards ─── */
+@keyframes breathe {
+  0%, 100% { border-color: rgba(30, 41, 59, 0.5); }
+  50% { border-color: rgba(16, 185, 129, 0.15); }
+}
+
+.card-breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.card-breathe:nth-child(2) { animation-delay: 1s; }
+.card-breathe:nth-child(3) { animation-delay: 2s; }
+.card-breathe:nth-child(4) { animation-delay: 3s; }
+.card-breathe:nth-child(5) { animation-delay: 4s; }
+.card-breathe:nth-child(6) { animation-delay: 5s; }
+
+/* ─── Pulsing Border Trace ─── */
+@keyframes borderTrace {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.border-trace {
+  position: relative;
+}
+
+.border-trace::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #10b98133 10%,
+    #3b82f633 20%,
+    transparent 30%,
+    transparent 100%
+  );
+  background-size: 100% 100%;
+  animation: borderTrace 6s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Status Ticker Glow ─── */
+@keyframes tickerGlow {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 6px rgba(16, 185, 129, 0.4); }
+}
+
+.ticker-item-glow {
+  animation: tickerGlow 3s ease-in-out infinite;
+}
+
+/* ─── Focus Ring for Accessibility ─── */
+.terminal-input:focus-visible {
+  outline: 1px solid rgba(16, 185, 129, 0.5);
+  outline-offset: 2px;
+}

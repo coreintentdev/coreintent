@@ -94,6 +94,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32msniper\x1b[0m      - AI target lock — three models converge
   \x1b[32mcyberwar\x1b[0m    - Live war room command center
   \x1b[32mhologram\x1b[0m    - Holographic data projection
+  \x1b[32marena\x1b[0m       - Live competition bracket — bots vs humans
+  \x1b[32mdna\x1b[0m         - Trading engine DNA — the genetic code
+  \x1b[32mtrain\x1b[0m       - Watch the neural network learn in real time
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -638,6 +641,7 @@ const ALL_COMMANDS = [
   "heatmap", "backtest", "pulse",
   "decrypt", "orbit", "glitch",
   "sniper", "cyberwar", "hologram",
+  "arena", "dna", "train",
 ];
 
 export default function Terminal() {
@@ -2294,6 +2298,212 @@ export default function Terminal() {
         }
         frame++;
       }, 180);
+      return "";
+    }
+
+    // ── ARENA: Competition bracket visualization ──
+    if (trimmed === "arena") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ THE ARENA — WEEKLY COMPETITION BRACKET ══\x1b[0m`,
+        `\x1b[90m  Bots vs Humans. Skill vs Strategy. Who survives?\x1b[0m`, ``);
+
+      const competitors = [
+        { name: "AlphaStrat_v7", type: "BOT", elo: 2140 },
+        { name: "Priya S.", type: "HMN", elo: 1980 },
+        { name: "NightOwl_Bot", type: "BOT", elo: 1890 },
+        { name: "Jordan K.", type: "HMN", elo: 1820 },
+        { name: "TrendRider", type: "BOT", elo: 1760 },
+        { name: "Alex R.", type: "HMN", elo: 1710 },
+        { name: "DegenBot_42", type: "BOT", elo: 1650 },
+        { name: "You", type: "HMN", elo: 1500 },
+      ];
+      let phase = 0;
+
+      const arenaIv = setInterval(() => {
+        if (phase === 0) {
+          addLines(
+            `\x1b[36m  ┌─────────────────────── QUARTER FINALS ───────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase <= 4) {
+          const i = (phase - 1) * 2;
+          const a = competitors[i];
+          const b = competitors[i + 1];
+          const aWin = a.elo + Math.random() * 200 > b.elo + Math.random() * 200;
+          const aColor = a.type === "BOT" ? "\x1b[34m" : "\x1b[33m";
+          const bColor = b.type === "BOT" ? "\x1b[34m" : "\x1b[33m";
+          const wColor = aWin ? "\x1b[32m" : "";
+          const lColor = aWin ? "" : "\x1b[32m";
+          const aTag = a.type === "BOT" ? "\x1b[34m[BOT]\x1b[0m" : "\x1b[33m[HMN]\x1b[0m";
+          const bTag = b.type === "BOT" ? "\x1b[34m[BOT]\x1b[0m" : "\x1b[33m[HMN]\x1b[0m";
+          addLines(
+            `\x1b[36m  │\x1b[0m  Match ${phase}:  ${aColor}${wColor}${a.name.padEnd(16)}\x1b[0m ${aTag}  \x1b[90mvs\x1b[0m  ${bColor}${lColor}${b.name.padEnd(16)}\x1b[0m ${bTag}  ${aWin ? `\x1b[32m◀ WIN\x1b[0m` : `\x1b[32mWIN ▶\x1b[0m`}`,
+            `\x1b[36m  │\x1b[0m          P&L: ${aWin ? "\x1b[32m+$" + (Math.floor(Math.random() * 800) + 400) : "\x1b[31m-$" + (Math.floor(Math.random() * 300) + 100)}   \x1b[0m  vs  ${!aWin ? "\x1b[32m+$" + (Math.floor(Math.random() * 800) + 400) : "\x1b[31m-$" + (Math.floor(Math.random() * 300) + 100)}\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 5) {
+          addLines(
+            `\x1b[36m  ├───────────────────── SEMI FINALS ─────────────────────────────┤\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mSemi 1:\x1b[0m  \x1b[34mAlphaStrat_v7\x1b[0m \x1b[34m[BOT]\x1b[0m  \x1b[90mvs\x1b[0m  \x1b[33mNightOwl_Bot\x1b[0m \x1b[34m[BOT]\x1b[0m  \x1b[32m◀ WIN\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mSemi 2:\x1b[0m  \x1b[33mJordan K.\x1b[0m \x1b[33m[HMN]\x1b[0m      \x1b[90mvs\x1b[0m  \x1b[34mTrendRider\x1b[0m \x1b[34m[BOT]\x1b[0m    \x1b[32mWIN ▶\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 6) {
+          addLines(
+            `\x1b[36m  ├──────────────────────── FINAL ──────────────────────────────┤\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 7) {
+          const botWins = Math.random() > 0.45;
+          addLines(
+            `\x1b[36m  │\x1b[0m          \x1b[34mAlphaStrat_v7\x1b[0m  \x1b[90mvs\x1b[0m  \x1b[34mTrendRider\x1b[0m`,
+            `\x1b[36m  │\x1b[0m          \x1b[34m[BOT]\x1b[0m                 \x1b[34m[BOT]\x1b[0m`,
+            `\x1b[36m  │\x1b[0m`,
+            `\x1b[36m  │\x1b[0m              ${botWins ? `\x1b[32m██  ████████████████████  ██\x1b[0m` : `\x1b[32m██  ████████████████████  ██\x1b[0m`}`,
+            `\x1b[36m  │\x1b[0m              \x1b[33m★\x1b[0m  \x1b[32mCHAMPION: ${botWins ? "AlphaStrat_v7" : "TrendRider"}\x1b[0m  \x1b[33m★\x1b[0m`,
+            `\x1b[36m  │\x1b[0m              \x1b[32m██  ████████████████████  ██\x1b[0m`,
+            `\x1b[36m  │\x1b[0m`,
+            `\x1b[36m  │\x1b[0m          Prize: \x1b[33mBragging rights + leaderboard crown\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └──────────────────────────────────────────────────────────────┘\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 8) {
+          addLines(``,
+            `  \x1b[36mResults:\x1b[0m`,
+            `    Bots advanced:  \x1b[34m3/4\x1b[0m  |  Humans advanced: \x1b[33m1/4\x1b[0m`,
+            `    Champion:       \x1b[34m[BOT]\x1b[0m`,
+            `    Your placement: \x1b[33m8th\x1b[0m — eliminated in quarters`,
+            ``,
+            `  \x1b[90mThe leaderboard doesn't care who built you.\x1b[0m`,
+            `  \x1b[90mCompetitions planned — this is what's coming.\x1b[0m`, ``);
+          clearInterval(arenaIv);
+        }
+      }, 350);
+      return "";
+    }
+
+    // ── DNA: Engine DNA double helix visualization ──
+    if (trimmed === "dna") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ ENGINE DNA — THE GENETIC CODE ══\x1b[0m`,
+        `\x1b[90m  Sequencing the CoreIntent genome...\x1b[0m`, ``);
+
+      const traits = [
+        { gene: "GROK_SIGNAL", pair: "FAST_SCAN", color: "\x1b[31m" },
+        { gene: "CLAUDE_RISK", pair: "DEEP_THINK", color: "\x1b[35m" },
+        { gene: "PERP_VERIFY", pair: "FACT_CHECK", color: "\x1b[34m" },
+        { gene: "CONSENSUS_3", pair: "MULTI_MODEL", color: "\x1b[32m" },
+        { gene: "NO_CAPTCHA_", pair: "BOTS_WELCOM", color: "\x1b[33m" },
+        { gene: "PAPER_TRADE", pair: "ZERO_RISK__", color: "\x1b[36m" },
+        { gene: "COMPETITION", pair: "NOT_SUBSCRI", color: "\x1b[33m" },
+        { gene: "NZ_REGISTER", pair: "NEVER_AU___", color: "\x1b[32m" },
+        { gene: "F18_SECURIT", pair: "LAND_MINES_", color: "\x1b[31m" },
+        { gene: "THREE_THREE", pair: "SIX_SIGNAL_", color: "\x1b[33m" },
+      ];
+
+      let row = 0;
+      const dnaIv = setInterval(() => {
+        if (row < traits.length) {
+          const t = traits[row];
+          const phase = row * 0.6;
+          const sinVal = Math.sin(phase);
+          const indent = Math.round(sinVal * 6) + 10;
+          const gap = Math.round(Math.abs(Math.cos(phase)) * 8) + 2;
+          const leftPad = " ".repeat(indent);
+          const bridge = gap <= 3 ? "═══" : gap <= 5 ? "──╫──" : "─────╫─────";
+          addLines(`  ${leftPad}${t.color}${t.gene}\x1b[0m \x1b[90m${bridge}\x1b[0m ${t.color}${t.pair}\x1b[0m`);
+          row++;
+        } else {
+          clearInterval(dnaIv);
+          addLines(``, `\x1b[36m  ┌─ GENOME ANALYSIS ─────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Base Pairs:  \x1b[32m10 core traits\x1b[0m           \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Mutations:   \x1b[33m0\x1b[0m (clean genome)          \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Stability:   \x1b[32m99.7%\x1b[0m                    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Signal:      \x1b[33m336\x1b[0m (dominant allele)    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Lineage:     \x1b[36mZynthio → CoreIntent\x1b[0m    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └─────────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mEvery gene earns its place. No bloat. No dead code.\x1b[0m`, ``);
+        }
+      }, 160);
+      return "";
+    }
+
+    // ── TRAIN: Neural network training visualization ──
+    if (trimmed === "train") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ NEURAL NETWORK TRAINING ══\x1b[0m`,
+        `\x1b[90m  Training consensus model on 30 epochs...\x1b[0m`, ``);
+
+      let epoch = 0;
+      const totalEpochs = 30;
+      let loss = 2.4 + Math.random() * 0.5;
+      let accuracy = 0.35 + Math.random() * 0.1;
+      const blocks = "░▒▓█";
+
+      const trainIv = setInterval(() => {
+        if (epoch < totalEpochs) {
+          epoch++;
+          const lr = 0.001 * Math.pow(0.95, epoch);
+          const lossDecay = (Math.random() * 0.08 + 0.04) * (1 + 0.5 / epoch);
+          loss = Math.max(0.08 + Math.random() * 0.05, loss - lossDecay);
+          accuracy = Math.min(0.97, accuracy + (Math.random() * 0.025 + 0.005));
+
+          const lossBar = Math.max(0, Math.min(20, Math.round(loss * 8)));
+          const accBar = Math.min(20, Math.round(accuracy * 20));
+          const lossViz = Array.from({ length: 20 }, (_, i) => {
+            if (i < lossBar) {
+              const bi = Math.min(3, Math.floor((lossBar - i) / 5));
+              return i < lossBar / 2 ? `\x1b[31m${blocks[bi]}\x1b[0m` : `\x1b[33m${blocks[bi]}\x1b[0m`;
+            }
+            return `\x1b[90m·\x1b[0m`;
+          }).join("");
+          const accViz = Array.from({ length: 20 }, (_, i) => {
+            if (i < accBar) {
+              return i > accBar * 0.7 ? `\x1b[32m${blocks[3]}\x1b[0m` : `\x1b[32m${blocks[2]}\x1b[0m`;
+            }
+            return `\x1b[90m·\x1b[0m`;
+          }).join("");
+
+          const epochStr = String(epoch).padStart(2);
+          const lossStr = loss.toFixed(4).padStart(7);
+          const accStr = (accuracy * 100).toFixed(1).padStart(5);
+          const lrStr = lr.toExponential(1);
+
+          if (epoch % 5 === 0 || epoch === 1 || epoch === totalEpochs) {
+            addLines(`  \x1b[90mEpoch ${epochStr}\x1b[0m  Loss ${lossViz} \x1b[33m${lossStr}\x1b[0m  Acc ${accViz} \x1b[32m${accStr}%\x1b[0m  \x1b[90mlr=${lrStr}\x1b[0m`);
+          }
+        } else {
+          clearInterval(trainIv);
+          const finalAcc = (accuracy * 100).toFixed(1);
+          const finalLoss = loss.toFixed(4);
+          const convergence = Number(finalAcc) >= 90 ? "\x1b[32mCONVERGED\x1b[0m" : "\x1b[33mIMPROVING\x1b[0m";
+
+          addLines(``,
+            `\x1b[36m  ══ TRAINING COMPLETE ══\x1b[0m`,
+            ``,
+            `  \x1b[33mModel:\x1b[0m          CoreIntent Consensus v3`,
+            `  \x1b[33mArchitecture:\x1b[0m   3-head attention (Grok + Claude + Perplexity)`,
+            `  \x1b[33mFinal Loss:\x1b[0m     \x1b[33m${finalLoss}\x1b[0m`,
+            `  \x1b[33mFinal Accuracy:\x1b[0m \x1b[32m${finalAcc}%\x1b[0m`,
+            `  \x1b[33mEpochs:\x1b[0m         ${totalEpochs}`,
+            `  \x1b[33mStatus:\x1b[0m         ${convergence}`,
+            ``,
+            `  \x1b[36mLayer Weights:\x1b[0m`,
+            `    Grok attention:       \x1b[31m${"█".repeat(Math.round(Math.random() * 3 + 6))}${"░".repeat(4)}\x1b[0m ${(0.28 + Math.random() * 0.1).toFixed(3)}`,
+            `    Claude attention:     \x1b[35m${"█".repeat(Math.round(Math.random() * 3 + 7))}${"░".repeat(3)}\x1b[0m ${(0.38 + Math.random() * 0.1).toFixed(3)}`,
+            `    Perplexity attention: \x1b[34m${"█".repeat(Math.round(Math.random() * 3 + 5))}${"░".repeat(5)}\x1b[0m ${(0.24 + Math.random() * 0.1).toFixed(3)}`,
+            `    Consensus gate:       \x1b[32m${"█".repeat(Math.round(Math.random() * 2 + 8))}${"░".repeat(2)}\x1b[0m ${(0.89 + Math.random() * 0.08).toFixed(3)}`,
+            ``,
+            `  \x1b[90mModel checkpoint saved. Paper trading — no real predictions.\x1b[0m`, ``);
+        }
+      }, 100);
       return "";
     }
 
