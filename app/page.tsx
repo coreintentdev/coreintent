@@ -57,17 +57,18 @@ const AI_MODELS = [
 ];
 
 /* ─── Konami Code Easter Egg ─── */
+const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+
 function KonamiCode() {
   const [activated, setActivated] = useState(false);
   const [fading, setFading] = useState(false);
   const seqRef = useRef<string[]>([]);
-  const code = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       seqRef.current.push(e.key);
-      if (seqRef.current.length > code.length) seqRef.current.shift();
-      if (seqRef.current.join(",") === code.join(",")) {
+      if (seqRef.current.length > KONAMI_CODE.length) seqRef.current.shift();
+      if (seqRef.current.join(",") === KONAMI_CODE.join(",")) {
         setActivated(true);
         seqRef.current = [];
         setTimeout(() => setFading(true), 4000);
