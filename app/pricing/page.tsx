@@ -1,8 +1,55 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+
+function LaunchCountdown() {
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const iv = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const launchDate = new Date("2026-06-01T00:00:00Z").getTime();
+  const diff = Math.max(0, launchDate - now);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+
+  return (
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      gap: "16px",
+      marginBottom: "24px",
+    }}>
+      {[
+        { v: days, l: "Days" },
+        { v: hours, l: "Hours" },
+        { v: mins, l: "Min" },
+        { v: secs, l: "Sec" },
+      ].map((t) => (
+        <div key={t.l} style={{ textAlign: "center" }}>
+          <div style={{
+            fontSize: "clamp(24px, 4vw, 36px)",
+            fontWeight: "bold",
+            color: "var(--accent-green)",
+            lineHeight: 1.1,
+            fontVariantNumeric: "tabular-nums",
+          }}>
+            {String(t.v).padStart(2, "0")}
+          </div>
+          <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+            {t.l}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 const LEAGUES = [
   {
@@ -85,37 +132,51 @@ export default function PricingPage() {
           >
             Trading as a sport
           </div>
-          <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: "12px", lineHeight: "1.2" }}>
-            Stop Paying. Start Competing.
+          <h1 style={{ fontSize: "clamp(30px, 5vw, 46px)", marginBottom: "12px", lineHeight: "1.15" }}>
+            Stop Paying.{" "}
+            <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
+              Start Competing.
+            </span>
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px" }}>
-            You pay $99/mo. You lose money. They still get paid.<br />
-            That&apos;s not alignment — that&apos;s indifference with a billing cycle.
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px", maxWidth: "560px", margin: "0 auto 8px" }}>
+            You pay $99/mo. You lose money. They still get paid.
+            That&apos;s not alignment — that&apos;s extraction with a billing cycle.
           </p>
-          <p style={{ color: "var(--accent-green)", marginBottom: "8px", fontSize: "15px", fontWeight: "bold" }}>
-            CoreIntent costs $45/mo to run. When your marginal cost per user is near zero,
-            subscriptions aren&apos;t a business model — they&apos;re a tax.
+          <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "15px", fontWeight: "bold" }}>
+            We run on $45/mo. Free costs us nothing to serve. So we give it away.
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "14px" }}>
-            Your edge isn&apos;t your wallet. It&apos;s your strategy. Prove it against everyone else — human or bot.
-          </p>
+
           <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "6px 14px",
-            background: "#f59e0b12",
+            padding: "20px 24px",
+            background: "linear-gradient(135deg, #f59e0b08 0%, #10b98108 100%)",
             border: "1px solid #f59e0b22",
-            borderRadius: "8px",
-            fontSize: "12px",
-            color: "#f59e0b",
-            marginBottom: "16px",
+            borderRadius: "12px",
+            marginBottom: "20px",
+            maxWidth: "520px",
+            margin: "0 auto 24px",
           }}>
-            <span className="urgency-badge" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b" }} />
-            Founding member spots filling — early registrations get priority placement
+            <div style={{ fontSize: "10px", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+              Competitions Launch In
+            </div>
+            <LaunchCountdown />
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "4px 12px",
+              background: "#f59e0b12",
+              border: "1px solid #f59e0b22",
+              borderRadius: "8px",
+              fontSize: "11px",
+              color: "#f59e0b",
+            }}>
+              <span className="urgency-badge" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b" }} />
+              Early registrations get founding member status
+            </div>
           </div>
+
           <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "13px" }}>
-            Register. Learn. Earn. Share. Create. — No coding needed. No credit card. No catch.
+            Register. Learn. Earn. Share. Create. — No credit card. No catch.
           </p>
 
           {/* How It Works */}
@@ -273,6 +334,7 @@ export default function PricingPage() {
                     href="https://github.com/coreintentdev/coreintent"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={league.featured ? "cta-primary" : "cta-secondary"}
                     style={{
                       display: "block",
                       padding: "14px 24px",
@@ -281,12 +343,11 @@ export default function PricingPage() {
                       border: league.featured ? "none" : `1px solid ${league.color}66`,
                       borderRadius: "8px",
                       fontFamily: "inherit",
-                      fontSize: "13px",
+                      fontSize: "14px",
                       fontWeight: "bold",
                       cursor: "pointer",
                       textDecoration: "none",
                       textAlign: "center",
-                      transition: "all 0.2s ease",
                     }}
                   >
                     Join {league.name} &rarr;
@@ -727,14 +788,15 @@ export default function PricingPage() {
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
                 href="/"
+                className="cta-primary"
                 style={{
-                  padding: "14px 32px",
+                  padding: "16px 36px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "14px",
+                  fontSize: "15px",
                   fontWeight: "bold",
                   cursor: "pointer",
                   textDecoration: "none",
@@ -745,14 +807,15 @@ export default function PricingPage() {
               </Link>
               <Link
                 href="/stack"
+                className="cta-secondary"
                 style={{
-                  padding: "14px 32px",
+                  padding: "16px 36px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "14px",
+                  fontSize: "15px",
                   cursor: "pointer",
                   textDecoration: "none",
                   display: "inline-block",

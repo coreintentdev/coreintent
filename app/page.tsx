@@ -916,7 +916,7 @@ export default function Home() {
                 borderRadius: "20px",
                 fontSize: "11px",
                 color: "#10b981",
-                marginBottom: "16px",
+                marginBottom: "20px",
                 letterSpacing: "0.5px",
                 textTransform: "uppercase",
               }}
@@ -926,75 +926,80 @@ export default function Home() {
             </div>
             <h1
               style={{
-                fontSize: "clamp(28px, 4vw, 44px)",
+                fontSize: "clamp(32px, 5vw, 52px)",
                 fontWeight: "bold",
-                lineHeight: "1.2",
-                marginBottom: "8px",
+                lineHeight: "1.15",
+                marginBottom: "12px",
                 color: "var(--text-primary)",
-                minHeight: "1.3em",
               }}
             >
-              <span
-                style={{
-                  position: "absolute",
-                  width: "1px",
-                  height: "1px",
-                  padding: 0,
-                  margin: "-1px",
-                  overflow: "hidden",
-                  clip: "rect(0,0,0,0)",
-                  whiteSpace: "nowrap",
-                  border: 0,
-                }}
-              >
+              <span className="sr-only">
                 CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
               </span>
-              <TypeWriter />
+              <span aria-hidden="true">
+                When Three AI Models{" "}
+                <span className="neon-green" style={{ position: "relative" }}>Disagree</span>
+                ,<br />
+                You Don&apos;t Guess Harder.
+              </span>
             </h1>
+            <div
+              style={{
+                fontSize: "clamp(16px, 2.5vw, 22px)",
+                color: "var(--text-secondary)",
+                marginBottom: "16px",
+                minHeight: "1.4em",
+              }}
+            >
+              <TypeWriter />
+            </div>
             <p
               className="glitch-text-subtle"
-              data-text="The agentic AI trading engine that replaced subscriptions with competitions"
-              style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}
+              data-text="Grok detects. Claude interrogates. Perplexity verifies."
+              style={{ fontSize: "16px", color: "var(--accent-green)", marginBottom: "12px", fontWeight: "600" }}
             >
-              The agentic AI trading engine that replaced subscriptions with competitions
+              Grok detects. Claude interrogates. Perplexity verifies.
             </p>
             <p
               style={{
-                fontSize: "17px",
+                fontSize: "15px",
                 color: "var(--text-secondary)",
-                maxWidth: "620px",
-                margin: "0 auto 12px",
-                lineHeight: "1.6",
+                maxWidth: "580px",
+                margin: "0 auto 16px",
+                lineHeight: "1.7",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              Three AI models cross-check every signal before you see it.
+              Consensus means conviction. Disagreement means dig deeper — not guess harder.
             </p>
-            <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
-            </p>
-            <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
-            </p>
-            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
-            </p>
-            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 20px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
-            </p>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "16px",
+              marginBottom: "20px",
+              flexWrap: "wrap",
+            }}>
+              <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
+                $99/mo platforms
+              </span>
+              <span style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>
+                $0 forever — compete free
+              </span>
+            </div>
             <LiveSignalFeed />
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
+                className="cta-primary"
                 style={{
-                  padding: "14px 32px",
+                  padding: "16px 36px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "14px",
+                  fontSize: "15px",
                   fontWeight: "bold",
                   cursor: "pointer",
                 }}
@@ -1003,14 +1008,15 @@ export default function Home() {
               </button>
               <a
                 href="/pricing"
+                className="cta-secondary"
                 style={{
-                  padding: "14px 32px",
+                  padding: "16px 36px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "14px",
+                  fontSize: "15px",
                   cursor: "pointer",
                   textDecoration: "none",
                   display: "inline-block",
@@ -1019,6 +1025,9 @@ export default function Home() {
                 See the Competitions
               </a>
             </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "12px auto 0", maxWidth: "400px" }}>
+              Open source. Paper trading. Built honestly from New Zealand by Zynthio.
+            </p>
 
             {/* Value Props */}
             <ScrollReveal>
@@ -1293,14 +1302,15 @@ export default function Home() {
                   href="https://github.com/coreintentdev/coreintent"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="cta-primary"
                   style={{
-                    padding: "12px 28px",
+                    padding: "14px 32px",
                     background: "var(--accent-green)",
                     color: "#000",
                     border: "none",
                     borderRadius: "8px",
                     fontFamily: "inherit",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: "bold",
                     cursor: "pointer",
                     textDecoration: "none",
@@ -1313,14 +1323,15 @@ export default function Home() {
                   href="https://x.com/coreintentai"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="cta-secondary"
                   style={{
-                    padding: "12px 28px",
+                    padding: "14px 32px",
                     background: "transparent",
                     color: "var(--text-primary)",
                     border: "1px solid var(--border-color)",
                     borderRadius: "8px",
                     fontFamily: "inherit",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     cursor: "pointer",
                     textDecoration: "none",
                     display: "inline-block",
