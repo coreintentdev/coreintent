@@ -58,9 +58,9 @@ Based in: New Zealand (NEVER register anything in Australia)
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI rendering (XSS mitigated: HTML escaped first, only allowlisted ANSI codes converted to spans)
 - xterm packages removed from package.json (resolved 2026-04-27)
-- `security/remove-runtime-fingerprint` and `security/sanitize-api-error-leakage` patches CONFIRMED on main (2026-04-27 audit): poweredByHeader:false in next.config.js + serverError() sanitizes all API error responses
-- 30 non-main branches as of 2026-04-29 — cursor/AI tool sprawl; 4 confirmed-stale branches persist for 5th consecutive pass (build-monitor/security-audit-fix, claude/check-coreintent-builds-JTrDd, cursor-dependency-security-upgrade-ef32, cursor-zynrip-incident-ef32) — delete these immediately; enable branch auto-delete on merge in GitHub settings
-- Audit score: 96% (52/54, 0 failures) as of 2026-04-28 — rate limiting wired up (checkRateLimit stub ready for Cloudflare KV / Upstash Redis)
+- Security patches confirmed on main (2026-04-30 audit): poweredByHeader:false in next.config.js + serverError() sanitizes all API error responses
+- 30 non-main branches as of 2026-04-30 — cursor/AI tool sprawl; 4 confirmed-stale branches persist (build-monitor/security-audit-fix, claude/check-coreintent-builds-JTrDd, cursor-dependency-security-upgrade-ef32, cursor-zynrip-incident-ef32) — delete these; enable branch auto-delete on merge in GitHub settings
+- Audit score: 96% (52/54, 0 failures) as of 2026-04-30 — rate limiting wired up (checkRateLimit stub ready for Cloudflare KV / Upstash Redis)
 
 ## Family (NEVER fabricate)
 - Michelle (wife), Ruby (~14, daughter), Wesley (son)
