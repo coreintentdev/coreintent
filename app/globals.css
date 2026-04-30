@@ -656,6 +656,16 @@ a {
   animation: countIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* ─── Konami Code Easter Egg ─── */
+.konami-overlay {
+  backdrop-filter: blur(8px);
+}
+
+.konami-336 {
+  text-shadow: 0 0 40px rgba(16, 185, 129, 0.3), 0 0 80px rgba(59, 130, 246, 0.2);
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {

@@ -5,7 +5,7 @@ Generated: Thu Apr 30 04:35:58 UTC 2026
 - PASS: npm run build succeeds
 - INFO: Routes found: 31
 - PASS: TypeScript compiles (strict mode)
-- PASS: ESLint passes
+- WARN: ESLint warnings or errors
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -39,7 +39,7 @@ Generated: Thu Apr 30 04:35:58 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2133:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2340:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -85,8 +85,8 @@ Generated: Thu Apr 30 04:35:58 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
+| PASS | 51 |
 | FAIL | 0 |
-| WARN | 2 |
+| WARN | 3 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 94%** (51/54 checks passed)

@@ -91,6 +91,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mdecrypt\x1b[0m     - Decrypt a classified message
   \x1b[32morbit\x1b[0m       - Watch AI models orbit the engine
   \x1b[32mglitch\x1b[0m      - Trigger a system resilience test
+  \x1b[32msniper\x1b[0m      - AI target lock — three models converge
+  \x1b[32mcyberwar\x1b[0m    - Live war room command center
+  \x1b[32mhologram\x1b[0m    - Holographic data projection
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -634,6 +637,7 @@ const ALL_COMMANDS = [
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
   "decrypt", "orbit", "glitch",
+  "sniper", "cyberwar", "hologram",
 ];
 
 export default function Terminal() {
@@ -2087,6 +2091,209 @@ export default function Terminal() {
             `  \x1b[90mF18 Security — resilience test passed\x1b[0m`, ``);
         }
       }, 120);
+      return "";
+    }
+
+    // ── SNIPER: AI target lock animation ──
+    if (trimmed === "sniper") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ SNIPER — AI TARGET LOCK ══\x1b[0m`,
+        `\x1b[90m  Three models acquiring target...\x1b[0m`, ``);
+
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+      const target = pairs[Math.floor(Math.random() * pairs.length)];
+      const price = target === "BTC/USDT" ? 67420 : target === "ETH/USDT" ? 3285 : target === "SOL/USDT" ? 142.8 : 35.6;
+      let frame = 0;
+      const totalFrames = 18;
+
+      const sniperIv = setInterval(() => {
+        if (frame < 4) {
+          const w = 12 - frame * 2;
+          const pad = " ".repeat(Math.max(0, 10 - w));
+          const scope = "-".repeat(w);
+          addLines(`  ${pad}\x1b[31m[\x1b[0m${scope}\x1b[33m+\x1b[0m${scope}\x1b[31m]\x1b[0m  \x1b[90mGrok scanning...\x1b[0m`);
+        } else if (frame < 8) {
+          const w = 12 - (frame - 4) * 2;
+          const pad = " ".repeat(Math.max(0, 10 - w));
+          const scope = "-".repeat(w);
+          addLines(`  ${pad}\x1b[35m[\x1b[0m${scope}\x1b[33m+\x1b[0m${scope}\x1b[35m]\x1b[0m  \x1b[90mClaude analyzing...\x1b[0m`);
+        } else if (frame < 12) {
+          const w = 12 - (frame - 8) * 2;
+          const pad = " ".repeat(Math.max(0, 10 - w));
+          const scope = "-".repeat(w);
+          addLines(`  ${pad}\x1b[34m[\x1b[0m${scope}\x1b[33m+\x1b[0m${scope}\x1b[34m]\x1b[0m  \x1b[90mPerplexity verifying...\x1b[0m`);
+        } else if (frame === 12) {
+          addLines(``);
+          addLines(`\x1b[33m  ══════════════════════════════════════\x1b[0m`);
+          addLines(`\x1b[33m       ╔═══════════════════════╗\x1b[0m`);
+          addLines(`\x1b[33m       ║\x1b[0m   \x1b[31m◤\x1b[0m \x1b[32mTARGET LOCKED\x1b[0m \x1b[31m◥\x1b[0m   \x1b[33m║\x1b[0m`);
+          addLines(`\x1b[33m       ╚═══════════════════════╝\x1b[0m`);
+          addLines(`\x1b[33m  ══════════════════════════════════════\x1b[0m`);
+        } else if (frame === 14) {
+          const conf = 78 + Math.floor(Math.random() * 18);
+          const dir = conf > 85 ? "LONG" : conf > 75 ? "HOLD" : "SHORT";
+          const dirColor = dir === "LONG" ? "\x1b[32m▲" : dir === "SHORT" ? "\x1b[31m▼" : "\x1b[33m◆";
+          addLines(
+            ``,
+            `  \x1b[36mTarget:\x1b[0m    \x1b[33m${target}\x1b[0m @ $${price.toLocaleString()}`,
+            `  \x1b[36mDirection:\x1b[0m ${dirColor} ${dir}\x1b[0m`,
+            `  \x1b[36mConfidence:\x1b[0m \x1b[32m${conf}%\x1b[0m`,
+            ``,
+            `  \x1b[31mGrok:\x1b[0m       Signal detected in 0.${2 + Math.floor(Math.random() * 6)}s`,
+            `  \x1b[35mClaude:\x1b[0m     Risk model passed — R:R ${(1.5 + Math.random() * 2).toFixed(1)}:1`,
+            `  \x1b[34mPerplexity:\x1b[0m No adverse news — clear to proceed`,
+            ``,
+            `  \x1b[32m✓ CONSENSUS ACHIEVED\x1b[0m — 3/3 models aligned`,
+            `  \x1b[90mPaper trading — no real execution\x1b[0m`, ``
+          );
+        } else if (frame >= totalFrames) {
+          clearInterval(sniperIv);
+        }
+        frame++;
+      }, 200);
+      return "";
+    }
+
+    // ── CYBERWAR: War room command center ──
+    if (trimmed === "cyberwar") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ CYBERWAR — COMMAND CENTER ══\x1b[0m`,
+        `\x1b[90m  Initializing war room...\x1b[0m`, ``);
+
+      let frame = 0;
+      const totalFrames = 16;
+      const bars = ["▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"];
+
+      const warIv = setInterval(() => {
+        if (frame < 3) {
+          const systems = [
+            { name: "RADAR", color: "\x1b[31m" },
+            { name: "SHIELD", color: "\x1b[34m" },
+            { name: "INTEL", color: "\x1b[35m" },
+            { name: "COMMS", color: "\x1b[33m" },
+          ];
+          const sys = systems[frame % systems.length];
+          addLines(`  ${sys.color}[${sys.name}]\x1b[0m Subsystem online... \x1b[32m✓\x1b[0m`);
+        } else if (frame === 3) {
+          addLines(``,
+            `\x1b[36m  ┌─────────────────────────────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mZ Y N T H I O   W A R   R O O M\x1b[0m           \x1b[36m│\x1b[0m`,
+            `\x1b[36m  ├─────────────────────────────────────────────┤\x1b[0m`);
+        } else if (frame > 3 && frame < 12) {
+          const elapsed = frame - 3;
+          const grokLoad = Math.min(8, Math.floor(elapsed * 1.2));
+          const claudeLoad = Math.min(8, Math.floor(elapsed * 0.9));
+          const perplexityLoad = Math.min(8, Math.floor(elapsed * 1.0));
+          const grokBar = bars.slice(0, grokLoad).join("") + " ".repeat(Math.max(0, 8 - grokLoad));
+          const claudeBar = bars.slice(0, claudeLoad).join("") + " ".repeat(Math.max(0, 8 - claudeLoad));
+          const perplexityBar = bars.slice(0, perplexityLoad).join("") + " ".repeat(Math.max(0, 8 - perplexityLoad));
+
+          const threats = Math.floor(Math.random() * 3);
+          const signals = 14 + Math.floor(elapsed * 3) + Math.floor(Math.random() * 5);
+          const uptime = (99.7 + Math.random() * 0.29).toFixed(2);
+
+          addLines(
+            `\x1b[36m  │\x1b[0m  \x1b[31mGrok\x1b[0m       \x1b[31m${grokBar}\x1b[0m ${(grokLoad * 12.5).toFixed(0).padStart(3)}%  \x1b[90mThreat: ${threats}\x1b[0m  \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[35mClaude\x1b[0m     \x1b[35m${claudeBar}\x1b[0m ${(claudeLoad * 12.5).toFixed(0).padStart(3)}%  \x1b[90mSigs: ${signals}\x1b[0m    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[34mPerplexity\x1b[0m \x1b[34m${perplexityBar}\x1b[0m ${(perplexityLoad * 12.5).toFixed(0).padStart(3)}%  \x1b[90mUp: ${uptime}%\x1b[0m \x1b[36m│\x1b[0m`,
+          );
+        } else if (frame === 12) {
+          addLines(
+            `\x1b[36m  ├─────────────────────────────────────────────┤\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[32m■\x1b[0m DEFCON 4  \x1b[32m■\x1b[0m Models: 3/3  \x1b[32m■\x1b[0m Shields: UP  \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └─────────────────────────────────────────────┘\x1b[0m`,
+          );
+        } else if (frame === 14) {
+          addLines(``,
+            `  \x1b[32m✓ WAR ROOM ACTIVE\x1b[0m`,
+            `  \x1b[36mOperations:\x1b[0m  6 agents deployed`,
+            `  \x1b[36mSurveillance:\x1b[0m ${38 + Math.floor(Math.random() * 20)} signals intercepted`,
+            `  \x1b[36mThreat Level:\x1b[0m \x1b[32mLOW\x1b[0m — no anomalies`,
+            `  \x1b[36mConsensus:\x1b[0m   3/3 models in formation`,
+            ``,
+            `  \x1b[90mF18 Security — perimeter secured\x1b[0m`,
+            `  \x1b[90mType 'sniper' to lock a target\x1b[0m`, ``);
+        } else if (frame >= totalFrames) {
+          clearInterval(warIv);
+        }
+        frame++;
+      }, 250);
+      return "";
+    }
+
+    // ── HOLOGRAM: Holographic data projection ──
+    if (trimmed === "hologram") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ HOLOGRAPHIC PROJECTION ══\x1b[0m`,
+        `\x1b[90m  Initializing hologram emitter...\x1b[0m`, ``);
+
+      let frame = 0;
+      const totalFrames = 24;
+      const holoText = "COREINTENT";
+      const glitchChars = "█▓▒░╬╫╪┼╳";
+
+      const holoIv = setInterval(() => {
+        if (frame < 6) {
+          let line1 = "  ";
+          let line2 = "  ";
+          for (let i = 0; i < holoText.length; i++) {
+            if (i <= frame) {
+              const colors = ["\x1b[36m", "\x1b[34m", "\x1b[35m"];
+              line1 += `${colors[i % 3]}${holoText[i]}\x1b[0m`;
+              line2 += `${colors[i % 3]}${holoText[i].toLowerCase()}\x1b[0m`;
+            } else {
+              line1 += `\x1b[90m${glitchChars[Math.floor(Math.random() * glitchChars.length)]}\x1b[0m`;
+              line2 += `\x1b[90m${glitchChars[Math.floor(Math.random() * glitchChars.length)]}\x1b[0m`;
+            }
+          }
+          addLines(line1, line2);
+        } else if (frame === 6) {
+          addLines(``);
+          const holoArt = [
+            `\x1b[36m       ╱╲\x1b[0m`,
+            `\x1b[36m      ╱  ╲\x1b[0m`,
+            `\x1b[34m     ╱ \x1b[33m◆\x1b[34m  ╲\x1b[0m`,
+            `\x1b[34m    ╱  \x1b[36mAI\x1b[34m  ╲\x1b[0m`,
+            `\x1b[35m   ╱  \x1b[36mCORE\x1b[35m  ╲\x1b[0m`,
+            `\x1b[35m  ╱──────────╲\x1b[0m`,
+            `\x1b[36m  ╲──────────╱\x1b[0m`,
+            `\x1b[36m   ╲  \x1b[33m336\x1b[36m   ╱\x1b[0m`,
+            `\x1b[34m    ╲      ╱\x1b[0m`,
+            `\x1b[34m     ╲    ╱\x1b[0m`,
+            `\x1b[35m      ╲  ╱\x1b[0m`,
+            `\x1b[35m       ╲╱\x1b[0m`,
+          ];
+          for (const line of holoArt) addLines(line);
+        } else if (frame === 10) {
+          addLines(``);
+          const dataPoints = [
+            { label: "Engine", val: "v0.2.0-alpha", c: "\x1b[32m" },
+            { label: "Models", val: "3 active", c: "\x1b[36m" },
+            { label: "Agents", val: "6 deployed", c: "\x1b[35m" },
+            { label: "Signals", val: `${847 + Math.floor(Math.random() * 200)} processed`, c: "\x1b[33m" },
+            { label: "Uptime", val: `${(99.7 + Math.random() * 0.29).toFixed(2)}%`, c: "\x1b[32m" },
+            { label: "Latency", val: `${12 + Math.floor(Math.random() * 8)}ms`, c: "\x1b[34m" },
+          ];
+          for (const dp of dataPoints) {
+            const glitchLine = Math.random() > 0.7 ? `  \x1b[90m${glitchChars.substring(0, 3)}\x1b[0m` : "";
+            addLines(`  \x1b[90m${dp.label.padEnd(10)}\x1b[0m ${dp.c}${dp.val}\x1b[0m${glitchLine}`);
+          }
+        } else if (frame === 14) {
+          addLines(``,
+            `  \x1b[36m┌─ HOLOGRAM STABLE ──────────────────┐\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[32m✓\x1b[0m Projection: \x1b[32mACTIVE\x1b[0m              \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[32m✓\x1b[0m Resolution: \x1b[32mCRYSTAL\x1b[0m             \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[32m✓\x1b[0m Depth:      \x1b[32m12 LAYERS\x1b[0m           \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[33m◆\x1b[0m Source:     \x1b[33mZYNTHIO CORE\x1b[0m        \x1b[36m│\x1b[0m`,
+            `  \x1b[36m└────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mHolographic interface — the future is here\x1b[0m`,
+            `  \x1b[90mType 'cyberwar' for the full command center\x1b[0m`, ``);
+        } else if (frame >= totalFrames) {
+          clearInterval(holoIv);
+        }
+        frame++;
+      }, 180);
       return "";
     }
 

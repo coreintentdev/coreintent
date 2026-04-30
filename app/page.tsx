@@ -56,6 +56,136 @@ const AI_MODELS = [
   { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
 ];
 
+/* ─── Konami Code Easter Egg ─── */
+function KonamiCode() {
+  const [activated, setActivated] = useState(false);
+  const [fading, setFading] = useState(false);
+  const seqRef = useRef<string[]>([]);
+  const code = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      seqRef.current.push(e.key);
+      if (seqRef.current.length > code.length) seqRef.current.shift();
+      if (seqRef.current.join(",") === code.join(",")) {
+        setActivated(true);
+        seqRef.current = [];
+        setTimeout(() => setFading(true), 4000);
+        setTimeout(() => { setActivated(false); setFading(false); }, 5000);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  if (!activated) return null;
+
+  return (
+    <div
+      className="konami-overlay"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0, 0, 0, 0.92)",
+        transition: "opacity 1s ease",
+        opacity: fading ? 0 : 1,
+        pointerEvents: fading ? "none" : "auto",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <div
+          className="konami-336"
+          style={{
+            fontSize: "clamp(80px, 15vw, 160px)",
+            fontWeight: "bold",
+            background: "linear-gradient(135deg, #10b981, #3b82f6, #a855f7, #ef4444)",
+            backgroundSize: "300% 300%",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            animation: "gradientShift 2s ease infinite, glitch 0.3s ease infinite",
+            letterSpacing: "0.05em",
+          }}
+        >
+          336
+        </div>
+        <div style={{
+          fontSize: "clamp(14px, 2.5vw, 20px)",
+          color: "#10b981",
+          marginTop: "16px",
+          animation: "fadeInUp 0.6s ease 0.3s both",
+          letterSpacing: "4px",
+          textTransform: "uppercase",
+        }}>
+          The Signal Is Dominant
+        </div>
+        <div style={{
+          fontSize: "11px",
+          color: "var(--text-secondary)",
+          marginTop: "24px",
+          animation: "fadeInUp 0.6s ease 0.8s both",
+        }}>
+          You found the secret. Welcome to the inner circle.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── 3D Tilt Card ─── */
+function TiltCard({ children, className = "", style = {} }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState("perspective(600px) rotateX(0deg) rotateY(0deg)");
+  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
+
+  const handleMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rotateY = (x - 0.5) * 16;
+    const rotateX = (0.5 - y) * 16;
+    setTransform(`perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`);
+    setGlowPos({ x: x * 100, y: y * 100 });
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    setTransform("perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)");
+    setGlowPos({ x: 50, y: 50 });
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={className}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      style={{
+        ...style,
+        transform,
+        transition: "transform 0.15s ease-out",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(16, 185, 129, 0.12), transparent 60%)`,
+          pointerEvents: "none",
+          transition: "background 0.15s ease-out",
+        }}
+      />
+      {children}
+    </div>
+  );
+}
+
 /* ─── Particle Field Background ─── */
 function ParticleField() {
   const particles = Array.from({ length: 24 }, (_, i) => ({
@@ -867,6 +997,7 @@ export default function Home() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
+      <KonamiCode />
       <FloatingCTA />
 
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
@@ -1112,7 +1243,7 @@ export default function Home() {
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
-                  <div
+                  <TiltCard
                     key={m.name}
                     className="card-hover-glow"
                     style={{
@@ -1120,6 +1251,7 @@ export default function Home() {
                       background: "var(--bg-primary)",
                       border: "1px solid var(--border-color)",
                       borderRadius: "8px",
+                      cursor: "default",
                     }}
                   >
                     <div
@@ -1143,7 +1275,7 @@ export default function Home() {
                     <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>{m.name}</div>
                     <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>{m.provider}</div>
                     <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{m.role}</div>
-                  </div>
+                  </TiltCard>
                 ))}
               </div>
             </div>
