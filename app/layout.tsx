@@ -227,14 +227,6 @@ const jsonLd = {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
       },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
-      },
     },
     {
       "@type": "SoftwareSourceCode",

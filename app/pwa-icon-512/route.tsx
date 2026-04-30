@@ -13,7 +13,6 @@ export async function GET() {
           alignItems: "center",
           justifyContent: "center",
           background: "#0a0e17",
-          borderRadius: "64px",
         }}
       >
         <div
