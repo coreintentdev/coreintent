@@ -1,9 +1,9 @@
 # CoreIntent Audit Report
-Generated: Thu Apr 30 04:53:53 UTC 2026
+Generated: Thu Apr 30 04:57:46 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 31
+- INFO: Routes found: 35
 - PASS: TypeScript compiles (strict mode)
 - WARN: ESLint warnings or errors
 
@@ -39,7 +39,7 @@ Generated: Thu Apr 30 04:53:53 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2340:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:2611:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -49,13 +49,13 @@ Generated: Thu Apr 30 04:53:53 UTC 2026
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 4 files
+- PASS: next/link used in 5 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:597:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:598:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
-  app/page.tsx:599:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
+  app/page.tsx:727:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:728:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:729:  { domain: "coreintent.dev", role: "Dev hub / this site", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -64,7 +64,7 @@ Generated: Thu Apr 30 04:53:53 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (13 instances)
+- PASS: ARIA attributes found (14 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies
