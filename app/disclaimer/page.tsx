@@ -1,54 +1,9 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Disclaimer — Trading Risk Warning",
-  description:
-    "CoreIntent disclaimer and trading risk warning. Paper trading only. Not financial advice. AI-generated signals are for educational purposes. Alpha software.",
-  alternates: {
-    canonical: "https://coreintent.dev/disclaimer",
-  },
-  openGraph: {
-    title: "Disclaimer | CoreIntent",
-    description:
-      "Trading risk warning. CoreIntent is paper trading only — not financial advice. AI signals for education.",
-    url: "https://coreintent.dev/disclaimer",
-  },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "https://coreintent.dev/disclaimer",
-      url: "https://coreintent.dev/disclaimer",
-      name: "Disclaimer — CoreIntent",
-      description:
-        "Trading risk warning and legal disclaimer for CoreIntent AI trading platform.",
-      isPartOf: { "@id": "https://coreintent.dev/#website" },
-      datePublished: "2026-03-01",
-      dateModified: "2026-03-01",
-      inLanguage: "en-NZ",
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://coreintent.dev" },
-        { "@type": "ListItem", position: 2, name: "Disclaimer", item: "https://coreintent.dev/disclaimer" },
-      ],
-    },
-  ],
-};
 
 export default function DisclaimerPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>

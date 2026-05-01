@@ -1,54 +1,9 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "CoreIntent privacy policy. How we collect, use, and protect your data. Operated by Corey McIvor under Zynthio in New Zealand. We never sell your data.",
-  alternates: {
-    canonical: "https://coreintent.dev/privacy",
-  },
-  openGraph: {
-    title: "Privacy Policy | CoreIntent",
-    description:
-      "How CoreIntent collects, uses, and protects your data. NZ-based, Zynthio brand. We never sell your data.",
-    url: "https://coreintent.dev/privacy",
-  },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "https://coreintent.dev/privacy",
-      url: "https://coreintent.dev/privacy",
-      name: "Privacy Policy — CoreIntent",
-      description:
-        "How CoreIntent collects, uses, and protects your data under New Zealand privacy law.",
-      isPartOf: { "@id": "https://coreintent.dev/#website" },
-      datePublished: "2026-03-01",
-      dateModified: "2026-03-01",
-      inLanguage: "en-NZ",
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://coreintent.dev" },
-        { "@type": "ListItem", position: 2, name: "Privacy Policy", item: "https://coreintent.dev/privacy" },
-      ],
-    },
-  ],
-};
 
 export default function PrivacyPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>

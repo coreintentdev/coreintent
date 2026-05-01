@@ -1,54 +1,9 @@
-import type { Metadata } from "next";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description:
-    "CoreIntent terms of service. Paper trading competitions, bots welcome, governed by New Zealand law. Operated by Corey McIvor under the Zynthio brand.",
-  alternates: {
-    canonical: "https://coreintent.dev/terms",
-  },
-  openGraph: {
-    title: "Terms of Service | CoreIntent",
-    description:
-      "Terms of service for CoreIntent AI trading platform. NZ law, paper trading, bots welcome.",
-    url: "https://coreintent.dev/terms",
-  },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "https://coreintent.dev/terms",
-      url: "https://coreintent.dev/terms",
-      name: "Terms of Service — CoreIntent",
-      description:
-        "Terms governing use of the CoreIntent AI trading platform, competitions, and services.",
-      isPartOf: { "@id": "https://coreintent.dev/#website" },
-      datePublished: "2026-03-01",
-      dateModified: "2026-03-01",
-      inLanguage: "en-NZ",
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://coreintent.dev" },
-        { "@type": "ListItem", position: 2, name: "Terms of Service", item: "https://coreintent.dev/terms" },
-      ],
-    },
-  ],
-};
 
 export default function TermsPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
       <SiteNav />
       <main style={{ flex: 1, padding: "48px 24px" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", lineHeight: "1.8", fontSize: "14px" }}>
