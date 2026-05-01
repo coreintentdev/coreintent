@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, type AIResponse } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, sanitizeForPrompt, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
@@ -94,25 +94,27 @@ export async function POST(req: NextRequest) {
 
   const type = validateEnum(body.type, VALID_TYPES) ?? "general";
 
+  const safeCheck = sanitizeForPrompt(check, 500);
+
   try {
     type ScanFn = () => Promise<AIResponse>;
     const scanMap: Record<ThreatCheckType, ScanFn> = {
       impersonation: () => callGrok(
-        `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +
+        `Is "${safeCheck}" impersonating or copying CoreIntent / Corey McIvor? ` +
         `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`,
         GROK_SECURITY_SYSTEM
       ),
       domain: () => callPerplexity(
-        `Is the domain "${check}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
+        `Is the domain "${safeCheck}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
         `Check registration date, content, and stated intent.`
       ),
       threat: () => callClaude(
-        `Assess this as a potential threat to CoreIntent's digital identity: "${check}". ` +
+        `Assess this as a potential threat to CoreIntent's digital identity: "${safeCheck}". ` +
         `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
         CLAUDE_RISK_SYSTEM
       ),
       general: () => callPerplexity(
-        `Does "${check}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
+        `Does "${safeCheck}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
       ),
     };
 

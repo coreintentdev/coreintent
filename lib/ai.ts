@@ -64,6 +64,22 @@ function isDemoKey(key: string | undefined, placeholder: string): boolean {
 }
 
 /**
+ * Strip control characters and normalize whitespace in user-supplied text
+ * before embedding it in an AI prompt. validateString() enforces length upstream;
+ * this adds AI-layer defense against control-character-based prompt injection.
+ *
+ * @param text   User-supplied string (already length-validated by validateString).
+ * @param maxLen Hard cap applied after stripping — redundant safety net.
+ */
+export function sanitizeForPrompt(text: string, maxLen = 1000): string {
+  return text
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, " ") // strip control chars (keep \t \n \r)
+    .replace(/[ \t]+/g, " ")  // collapse horizontal whitespace
+    .trim()
+    .slice(0, maxLen);
+}
+
+/**
  * fetch() with an AbortController timeout.
  * Throws DOMException { name: "AbortError" } when the deadline is exceeded.
  */
@@ -201,6 +217,17 @@ export async function callGrok(
   } catch (e) {
     return classifyFetchError(e, "grok", "grok-3");
   }
+}
+
+/**
+ * Convenience wrapper for Grok content drafting.
+ * Pre-wires GROK_CONTENT_SYSTEM so callers don't need to import the system prompt.
+ */
+export async function callGrokContent(
+  prompt: string,
+  options?: { maxTokens?: number }
+): Promise<AIResponse> {
+  return callGrok(prompt, GROK_CONTENT_SYSTEM, options);
 }
 
 // ---------------------------------------------------------------------------

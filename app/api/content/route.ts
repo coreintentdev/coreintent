@@ -2,15 +2,14 @@
  * /api/content — Bulk content generation API.
  *
  * GET  — list available content types, templates, and pipeline details
- * POST — queue a content generation job (Grok draft → Claude refine)
- *
- * In production, POST triggers the real Grok → Claude pipeline.
- * All generation is currently queued/demo only — no content is rendered yet.
+ * POST — generate content via Grok draft → Claude refine pipeline when AI keys are
+ *        configured; falls back to a "queued" demo response when keys are absent.
  *
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
 import { ok, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { callGrokContent, callClaude, validateAiContent, getAiKeyStatus, sanitizeForPrompt } from "@/lib/ai";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
 type ContentTone = "technical" | "hype" | "educational" | "community";
@@ -23,7 +22,8 @@ interface ContentRequest {
 }
 
 interface ContentJobResponse {
-  status:        "queued";
+  /** "generated" when AI pipeline ran; "queued" in demo mode (no keys). */
+  status:        "generated" | "queued";
   type:          ContentType;
   topic:         string;
   count:         number;
@@ -31,6 +31,12 @@ interface ContentJobResponse {
   estimatedTime: string;
   pipeline:      string[];
   message:       string;
+  /** Grok raw draft — present when live AI is configured. */
+  draft?:        string;
+  /** Claude-refined output — present when both keys are configured. */
+  content?:      string;
+  /** true = live AI pipeline ran; false = demo fallback. */
+  live:          boolean;
 }
 
 const VALID_TYPES: ContentType[] = ["video_6s", "tweet", "linkedin", "thread", "announcement", "blog"];
@@ -126,17 +132,72 @@ export async function POST(req: NextRequest) {
 
   const tone = validateEnum(body.tone, VALID_TONES) ?? "technical";
 
-  const data: ContentJobResponse = {
-    status:        "queued",
-    type,
-    topic,
-    count,
-    tone,
-    estimatedTime: `${count * 2}s`,
-    pipeline:      ["grok_draft", "claude_refine", "review_queue"],
-    message:       `${count}x ${type} queued for: "${topic}"`,
-  };
-  return ok(data, 202);
+  try {
+    const keys = getAiKeyStatus();
+
+    if (keys.grok || keys.claude) {
+      const safeTopic = sanitizeForPrompt(topic, 300);
+      const typeSpec  = TEMPLATES[type];
+      const specNote  = "specs" in typeSpec
+        ? ` Specs: ${JSON.stringify((typeSpec as { specs: unknown }).specs)}.`
+        : "";
+
+      const grokPrompt =
+        `Draft a ${type} about: "${safeTopic}". Tone: ${tone}.${specNote} ` +
+        `Stay on-brand for CoreIntent (AI trading, paper mode, competition leagues). ` +
+        `Output the content only — no preamble, no labels.`;
+
+      const grokResult = await callGrokContent(grokPrompt, { maxTokens: 600 });
+
+      let content = grokResult.content;
+      let usedClaude = false;
+
+      if (keys.claude && validateAiContent(grokResult)) {
+        const claudePrompt =
+          `Refine this ${type} for CoreIntent's audience. ` +
+          `Tone: ${tone}. Fix any awkward phrasing, keep it punchy, stay within platform specs.` +
+          `\n\nDraft:\n${grokResult.content}\n\nReturn the refined version only.`;
+        const claudeResult = await callClaude(claudePrompt, undefined, { maxTokens: 700 });
+        if (validateAiContent(claudeResult)) {
+          content    = claudeResult.content;
+          usedClaude = true;
+        }
+      }
+
+      const data: ContentJobResponse = {
+        status:        "generated",
+        type,
+        topic,
+        count,
+        tone,
+        estimatedTime: "0s",
+        pipeline:      usedClaude ? ["grok_draft", "claude_refine"] : ["grok_draft"],
+        message:       count > 1
+          ? `Generated 1 template for ${count}× ${type}. Use this as a base.`
+          : `Generated ${type} for: "${topic}"`,
+        draft:   grokResult.content,
+        content,
+        live:    grokResult.live,
+      };
+      return ok(data, 200);
+    }
+
+    // Demo fallback — no AI keys configured.
+    const data: ContentJobResponse = {
+      status:        "queued",
+      type,
+      topic,
+      count,
+      tone,
+      estimatedTime: `${count * 2}s`,
+      pipeline:      ["grok_draft", "claude_refine", "review_queue"],
+      message:       `[DEMO] ${count}× ${type} queued for: "${topic}"`,
+      live:          false,
+    };
+    return ok(data, 202);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function OPTIONS() {
