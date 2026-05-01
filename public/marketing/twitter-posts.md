@@ -225,13 +225,14 @@ coreintent.dev
 
 ## Post 14 — Build in Public Update
 
-Build in public update — April 2026:
+Build in public update — May 2026:
 
 What's live:
--> 13 API endpoints
+-> 14 API endpoints
 -> 6 AI agents configured
 -> Interactive terminal with real commands
--> Full docs and architecture guide
+-> 96% audit score (52/54, 0 failures)
+-> Security hardened: headers locked, errors sanitised
 
 What's planned:
 -> Binance/Coinbase exchange connections
@@ -673,7 +674,7 @@ We open-sourced the trading engine.
 
 Then we open-sourced the marketing.
 
-38 tweets. 7 LinkedIn posts. 11 TikTok scripts. 10 Instagram captions. A press kit. A 30-day content calendar.
+60 tweets. 13 LinkedIn posts. 16 TikTok scripts. 15 Instagram captions. A press kit. A 30-day content calendar.
 
 All in /public/marketing/ on GitHub.
 
@@ -927,3 +928,102 @@ You don't just use the platform. You shape it.
 coreintent.dev
 
 #EarlyAccess #Community #CoreIntent
+
+---
+
+## Post 56 — May 2026 Build in Public Update
+
+May 2026 update. No fluff.
+
+What shipped:
+-> 14 API routes live
+-> 96% audit score (52/54 checks, 0 failures)
+-> Security hardened (error sanitisation, headers locked)
+-> Rate limiting wired up
+-> 55 marketing posts, open-sourced
+
+What's still demo:
+-> Exchange connections
+-> User auth
+-> Database
+
+What hasn't changed:
+-> $45/mo infrastructure
+-> $0 to use
+-> Zero lies on the dashboard
+
+#BuildInPublic #CoreIntent #HonestTech
+
+---
+
+## Post 57 — The Audit Score Challenge
+
+54-point automated audit. Every push. No exceptions.
+
+Current score: 96%.
+
+0 failures. 52 checks passing. Security headers verified. Error responses sanitised. Demo data honestly labelled.
+
+Most trading platforms don't even have ONE automated check.
+
+We have 54.
+
+Audit us: github.com/coreintentdev/coreintent
+
+#Engineering #QualityFirst #CoreIntent
+
+---
+
+## Post 58 — Security Without Theatre
+
+We don't list security features for marketing clout.
+
+We just... do them:
+-> poweredByHeader disabled
+-> Error responses sanitised (no stack traces leaked)
+-> Rate limiting ready for production
+-> Dependency scanning on every build
+-> CORS configured properly
+
+No "military-grade encryption" buzzwords. Just engineering.
+
+#Security #FinTech #BuildInPublic
+
+---
+
+## Post 59 — The 30 Branch Problem
+
+We had 30 non-main branches.
+
+Cursor sessions. AI tool sprawl. Abandoned experiments.
+
+So we audited them. Identified 4 confirmed-stale branches. Documented everything.
+
+Branch hygiene is a feature, not a chore. If you're using AI coding tools, check your branches. They multiply.
+
+#DevOps #CodeHygiene #BuildInPublic
+
+---
+
+## Post 60 — Open Source Marketing Is a Power Move
+
+Our entire marketing kit is in the GitHub repo:
+
+/public/marketing/
+-> 55+ tweets
+-> 12 LinkedIn posts
+-> 16 TikTok scripts
+-> 15 Instagram captions
+-> Email newsletter template
+-> 30-day content calendar
+
+/public/press/
+-> Press release
+-> Investor one-pager
+-> Full media kit
+
+All open source. All forkable.
+
+The content only works because the product thesis is real. Copy it. We dare you.
+
+#OpenSource #ContentStrategy #BuildInPublic

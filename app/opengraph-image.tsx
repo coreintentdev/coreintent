@@ -57,9 +57,28 @@ export default async function Image() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "16px",
+            gap: "12px",
           }}
         >
+          {/* Status badge */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "6px 16px",
+              background: "rgba(16, 185, 129, 0.1)",
+              border: "1px solid rgba(16, 185, 129, 0.25)",
+              borderRadius: "20px",
+              fontSize: "14px",
+              color: "#10b981",
+              letterSpacing: "1px",
+              textTransform: "uppercase" as const,
+            }}
+          >
+            Paper Trading Mode
+          </div>
+
           {/* Logo text */}
           <div
             style={{
@@ -76,13 +95,13 @@ export default async function Image() {
           {/* Tagline */}
           <div
             style={{
-              fontSize: "28px",
+              fontSize: "26px",
               color: "#e2e8f0",
               display: "flex",
               gap: "8px",
             }}
           >
-            Agentic AI Trading Engine
+            Three AI Models. One Engine. Zero Subscriptions.
           </div>
 
           {/* Separator */}
@@ -91,85 +110,91 @@ export default async function Image() {
               width: "120px",
               height: "2px",
               background: "linear-gradient(90deg, transparent, #10b981, transparent)",
-              margin: "8px 0",
+              margin: "4px 0",
               display: "flex",
             }}
           />
 
-          {/* AI Models */}
+          {/* AI Models row */}
           <div
             style={{
               display: "flex",
               gap: "32px",
-              marginTop: "8px",
+              marginTop: "4px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
+            {[
+              { name: "Grok", role: "Signal Detection", color: "#ef4444" },
+              { name: "Claude", role: "Deep Analysis", color: "#a855f7" },
+              { name: "Perplexity", role: "Live Research", color: "#3b82f6" },
+            ].map((m) => (
               <div
+                key={m.name}
                 style={{
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "50%",
-                  background: "#ef4444",
                   display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
                 }}
-              />
-              <span style={{ fontSize: "20px", color: "#94a3b8", display: "flex" }}>Grok</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
+              >
+                <div
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                    borderRadius: "50%",
+                    background: m.color,
+                    display: "flex",
+                  }}
+                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span style={{ fontSize: "18px", color: m.color, fontWeight: "bold", display: "flex" }}>{m.name}</span>
+                  <span style={{ fontSize: "12px", color: "#6b7280", display: "flex" }}>{m.role}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats row */}
+          <div
+            style={{
+              display: "flex",
+              gap: "48px",
+              marginTop: "16px",
+            }}
+          >
+            {[
+              { value: "$0", label: "Entry Fee", color: "#10b981" },
+              { value: "3", label: "AI Models", color: "#a855f7" },
+              { value: "6", label: "Trading Agents", color: "#3b82f6" },
+              { value: "96%", label: "Audit Score", color: "#f59e0b" },
+            ].map((s) => (
               <div
+                key={s.label}
                 style={{
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "50%",
-                  background: "#a855f7",
                   display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
-              />
-              <span style={{ fontSize: "20px", color: "#94a3b8", display: "flex" }}>Claude</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <div
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "50%",
-                  background: "#3b82f6",
-                  display: "flex",
-                }}
-              />
-              <span style={{ fontSize: "20px", color: "#94a3b8", display: "flex" }}>Perplexity</span>
-            </div>
+              >
+                <span style={{ fontSize: "28px", fontWeight: "bold", color: s.color, display: "flex" }}>
+                  {s.value}
+                </span>
+                <span style={{ fontSize: "11px", color: "#6b7280", textTransform: "uppercase" as const, letterSpacing: "0.5px", display: "flex" }}>
+                  {s.label}
+                </span>
+              </div>
+            ))}
           </div>
 
           {/* Bottom tagline */}
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "16px",
               color: "#6b7280",
-              marginTop: "16px",
+              marginTop: "12px",
               display: "flex",
             }}
           >
-            No Subscriptions. Just Competitions. Built in NZ by Zynthio.
+            Free Competitions. Bots Welcome. Built in NZ by Zynthio.
           </div>
         </div>
 
