@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link as I18nLink } from "@/i18n/navigation";
 import SiteNav from "@/components/SiteNav";
@@ -541,7 +541,7 @@ const PHRASE_COUNT = 24;
 
 function TypeWriter() {
   const t = useTranslations("phrases");
-  const phrases = Array.from({ length: PHRASE_COUNT }, (_, i) => t(String(i)));
+  const phrases = useMemo(() => Array.from({ length: PHRASE_COUNT }, (_, i) => t(String(i))), [t]);
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
