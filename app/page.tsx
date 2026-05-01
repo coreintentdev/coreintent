@@ -557,6 +557,8 @@ function miniAnsiToHtml(text: string): string {
   return result;
 }
 
+const HERO_DEMO_CMDS = ["status", "brain"];
+
 function HeroTerminal({ onLaunchFull }: { onLaunchFull: () => void }) {
   const [displayLines, setDisplayLines] = useState<string[]>([]);
   const [typingCmd, setTypingCmd] = useState("");
@@ -567,13 +569,13 @@ function HeroTerminal({ onLaunchFull }: { onLaunchFull: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
 
-  const DEMO_CMDS = ["status", "brain"];
+
 
   useEffect(() => {
-    if (userMode || demoStep >= DEMO_CMDS.length) return;
+    if (userMode || demoStep >= HERO_DEMO_CMDS.length) return;
     if (demoPhase !== "typing") return;
 
-    const cmd = DEMO_CMDS[demoStep];
+    const cmd = HERO_DEMO_CMDS[demoStep];
     let charIdx = 0;
     const startDelay = demoStep === 0 ? 600 : 400;
 
@@ -594,14 +596,14 @@ function HeroTerminal({ onLaunchFull }: { onLaunchFull: () => void }) {
 
   useEffect(() => {
     if (demoPhase !== "output") return;
-    const cmd = DEMO_CMDS[demoStep];
+    const cmd = HERO_DEMO_CMDS[demoStep];
     const output = MINI_COMMANDS[cmd] || [];
     setDisplayLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, ...output]);
     setTypingCmd("");
 
     setTimeout(() => {
       setDemoPhase("typing");
-      if (demoStep + 1 >= DEMO_CMDS.length) {
+      if (demoStep + 1 >= HERO_DEMO_CMDS.length) {
         setDisplayLines((prev) => [...prev, "", "  \x1b[90mTry: help, 336, cai, about\x1b[0m"]);
         setUserMode(true);
         setTimeout(() => inputRef.current?.focus(), 100);
