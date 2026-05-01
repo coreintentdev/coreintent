@@ -1,6 +1,3 @@
-import { getRequestConfig } from "next-intl/server";
-import { notFound } from "next/navigation";
-
 export const locales = ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
@@ -79,16 +76,3 @@ export function formatPercent(value: number, locale: Locale): string {
     maximumFractionDigits: 2,
   }).format(value / 100);
 }
-
-export default getRequestConfig(async ({ requestLocale }) => {
-  const locale = await requestLocale;
-
-  if (!locale || !isValidLocale(locale)) {
-    notFound();
-  }
-
-  return {
-    locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
-  };
-});
