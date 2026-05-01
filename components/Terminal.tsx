@@ -76,6 +76,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
   \x1b[32mslots\x1b[0m       - Crypto slot machine — spin the reels
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
+  \x1b[32mfloor\x1b[0m       - Trading floor: 60s live market chaos
 
   \x1b[33m── ANALYTICS ──\x1b[0m
   \x1b[32mheatmap\x1b[0m     - Crypto correlation matrix (animated)
@@ -635,7 +636,7 @@ const ALL_COMMANDS = [
   "sync", "zynhandball", "zynkyc", "fortune", "matrix", "hack",
   "trade", "radar", "ping", "cowsay", "top",
   "stonks", "leaderboard", "lb", "battle", "scan", "weather",
-  "challenge", "warp", "slots", "buy", "sell", "hold", "quit",
+  "challenge", "warp", "slots", "floor", "buy", "sell", "hold", "quit",
   "sudo", "rickroll", "moon", "wen",
   "speedtest", "lore", "zen", "fire", "about",
   "heatmap", "backtest", "pulse",
@@ -670,6 +671,16 @@ export default function Terminal() {
       volume: string;
       grokSays: string;
     }>;
+    floorState?: {
+      cash: number;
+      position: { pair: string; entry: number; qty: number } | null;
+      prices: Record<string, number>;
+      trades: number;
+      wins: number;
+      elapsed: number;
+      marketIv: ReturnType<typeof setInterval>;
+      history: number[];
+    };
   } | null>(null);
 
   useEffect(() => {
@@ -2505,6 +2516,182 @@ export default function Terminal() {
         }
       }, 100);
       return "";
+    }
+
+    // ── FLOOR: 60-second trading chaos ──
+    if (trimmed === "floor") {
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT", "LINK/USDT", "DOT/USDT"];
+      const basePrices: Record<string, number> = {
+        "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80,
+        "AVAX/USDT": 35.60, "LINK/USDT": 14.80, "DOT/USDT": 7.42,
+      };
+
+      let cash = 10000;
+      let position: { pair: string; entry: number; qty: number } | null = null;
+      let elapsed = 0;
+      let trades = 0;
+      let wins = 0;
+      let tick = 0;
+      const prices: Record<string, number> = { ...basePrices };
+      const history: number[] = [cash];
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ═══════════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  TRADING FLOOR — 60 SECOND BLITZ\x1b[0m`,
+        `\x1b[36m  ═══════════════════════════════════════════════\x1b[0m`,
+        `  Start with $10,000. Trade fast. Beat the clock.`,
+        `  \x1b[33mBUY <pair>\x1b[0m — go long | \x1b[31mSELL\x1b[0m — close position`,
+        `  \x1b[90mPrices update every 2s. Market is volatile.\x1b[0m`,
+        ``);
+
+      const updateMarket = () => {
+        tick++;
+        for (const p of pairs) {
+          const volatility = p.startsWith("BTC") ? 0.003 : p.startsWith("ETH") ? 0.004 : 0.006;
+          const trend = Math.sin(tick * 0.15 + p.charCodeAt(0) * 0.3) * volatility * 0.5;
+          const noise = (Math.random() - 0.5) * volatility * 2;
+          prices[p] = prices[p] * (1 + trend + noise);
+        }
+      };
+
+      const renderBoard = () => {
+        const timeLeft = Math.max(0, 60 - elapsed);
+        const timeColor = timeLeft <= 10 ? "\x1b[31m" : timeLeft <= 20 ? "\x1b[33m" : "\x1b[32m";
+        const boardLines: string[] = [
+          `  ${timeColor}⏱ ${timeLeft}s\x1b[0m  |  \x1b[33m$${cash.toFixed(0)}\x1b[0m cash  |  ${trades} trades  |  ${wins} wins`,
+        ];
+
+        const pairLines = pairs.map((p) => {
+          const base = basePrices[p];
+          const current = prices[p];
+          const change = ((current - base) / base) * 100;
+          const arrow = change >= 0 ? "\x1b[32m▲" : "\x1b[31m▼";
+          const dec = current > 100 ? 0 : current > 1 ? 2 : 4;
+          const pStr = current.toFixed(dec);
+          const spark = Math.abs(change) > 0.5 ? " ★" : "";
+          return `    ${p.padEnd(12)} $${pStr.padStart(8)}  ${arrow}${Math.abs(change).toFixed(2)}%\x1b[0m${spark}`;
+        });
+
+        boardLines.push(`  \x1b[36m────────────────────────────────────\x1b[0m`, ...pairLines);
+
+        if (position) {
+          const pnl = (prices[position.pair] - position.entry) * position.qty;
+          const pnlPct = ((prices[position.pair] - position.entry) / position.entry) * 100;
+          const pnlColor = pnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+          boardLines.push(`  \x1b[36m────────────────────────────────────\x1b[0m`);
+          boardLines.push(`  \x1b[33mPosition:\x1b[0m ${position.pair} x${position.qty.toFixed(4)} @ $${position.entry.toFixed(2)}`);
+          boardLines.push(`  \x1b[33mP&L:\x1b[0m      ${pnlColor}${pnl >= 0 ? "+" : ""}$${pnl.toFixed(2)} (${pnl >= 0 ? "+" : ""}${pnlPct.toFixed(2)}%)\x1b[0m`);
+        } else {
+          boardLines.push(`  \x1b[90m  No position — type BUY <pair>\x1b[0m`);
+        }
+
+        return boardLines;
+      };
+
+      addLines(...renderBoard());
+
+      const marketIv = setInterval(() => {
+        elapsed += 2;
+        updateMarket();
+
+        if (position) {
+          const pnl = (prices[position.pair] - position.entry) * position.qty;
+          history.push(cash + pnl + position.entry * position.qty);
+        } else {
+          history.push(cash);
+        }
+
+        if (elapsed >= 60) {
+          clearInterval(marketIv);
+          if (position) {
+            const exitPrice = prices[position.pair];
+            const pnl = (exitPrice - position.entry) * position.qty;
+            cash += exitPrice * position.qty;
+            if (pnl > 0) wins++;
+            trades++;
+            position = null;
+          }
+          const finalPnl = cash - 10000;
+          const finalColor = finalPnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+          const grade = finalPnl > 500 ? "S" : finalPnl > 200 ? "A" : finalPnl > 0 ? "B" : finalPnl > -200 ? "C" : "F";
+          const gradeColor = grade === "S" ? "\x1b[32m" : grade === "A" ? "\x1b[36m" : grade === "B" ? "\x1b[33m" : "\x1b[31m";
+
+          const sparkline = history.slice(-20).map((v, i, arr) => {
+            const min = Math.min(...arr);
+            const max = Math.max(...arr);
+            const range = max - min || 1;
+            const chars = "▁▂▃▄▅▆▇█";
+            return chars[Math.min(7, Math.floor(((v - min) / range) * 7))];
+          }).join("");
+
+          addLines(``,
+            `\x1b[36m  ═══════════════════════════════════════════════\x1b[0m`,
+            `\x1b[36m  TIME'S UP — FLOOR CLOSED\x1b[0m`,
+            `\x1b[36m  ═══════════════════════════════════════════════\x1b[0m`,
+            ``,
+            `  \x1b[33mFinal Balance:\x1b[0m  ${finalColor}$${cash.toFixed(2)}\x1b[0m`,
+            `  \x1b[33mP&L:\x1b[0m            ${finalColor}${finalPnl >= 0 ? "+" : ""}$${finalPnl.toFixed(2)}\x1b[0m`,
+            `  \x1b[33mTrades:\x1b[0m         ${trades}  |  Wins: ${wins}/${trades || 1}`,
+            `  \x1b[33mGrade:\x1b[0m          ${gradeColor}${grade}\x1b[0m`,
+            `  \x1b[33mEquity Curve:\x1b[0m   \x1b[36m${sparkline}\x1b[0m`,
+            ``,
+            `  \x1b[90mPaper trading. No real money. Type 'floor' to play again.\x1b[0m`, ``);
+          return;
+        }
+
+        addLines(``, ...renderBoard());
+      }, 2000);
+
+      gameRef.current = {
+        round: -1, score: 0, streak: 0, bestStreak: 0,
+        scenarios: [],
+        floorState: { cash, position, prices, trades, wins, elapsed, marketIv, history },
+      };
+
+      return "";
+    }
+
+    // ── Floor: handle BUY/SELL during floor game ──
+    if (gameRef.current?.floorState) {
+      const floor = gameRef.current.floorState;
+      if (trimmed.startsWith("buy ") && !floor.position) {
+        const pair = trimmed.slice(4).trim().toUpperCase();
+        const matchedPair = Object.keys(floor.prices).find(
+          (p) => p === pair || p.startsWith(pair)
+        );
+        if (matchedPair && floor.prices[matchedPair]) {
+          const price = floor.prices[matchedPair];
+          const qty = floor.cash / price;
+          floor.position = { pair: matchedPair, entry: price, qty };
+          floor.cash = 0;
+          addLines(`  \x1b[32m✓ BOUGHT\x1b[0m ${matchedPair} x${qty.toFixed(4)} @ $${price.toFixed(2)}`);
+        } else {
+          addLines(`  \x1b[31m✗\x1b[0m Unknown pair. Try: BTC, ETH, SOL, AVAX, LINK, DOT`);
+        }
+        return "";
+      }
+      if (trimmed === "sell" && floor.position) {
+        const exitPrice = floor.prices[floor.position.pair];
+        const pnl = (exitPrice - floor.position.entry) * floor.position.qty;
+        floor.cash = exitPrice * floor.position.qty;
+        const pnlColor = pnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+        if (pnl > 0) floor.wins++;
+        floor.trades++;
+        addLines(`  ${pnlColor}${pnl >= 0 ? "✓" : "✗"} SOLD\x1b[0m ${floor.position.pair} — P&L: ${pnlColor}${pnl >= 0 ? "+" : ""}$${pnl.toFixed(2)}\x1b[0m`);
+        floor.position = null;
+        gameRef.current.floorState = floor;
+        return "";
+      }
+      if (trimmed === "sell" && !floor.position) {
+        addLines(`  \x1b[33mNo position to sell.\x1b[0m`);
+        return "";
+      }
+      if (trimmed === "quit" || trimmed === "exit") {
+        clearInterval(floor.marketIv);
+        gameRef.current = null;
+        addLines(`  \x1b[33mLeft the trading floor.\x1b[0m`);
+        return "";
+      }
     }
 
     // ── Resolve aliases ──
