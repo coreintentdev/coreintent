@@ -451,6 +451,242 @@ function HowItWorks() {
   );
 }
 
+/* ─── Boot Sequence Overlay ─── */
+function BootSequence({ onComplete }: { onComplete: () => void }) {
+  const [lines, setLines] = useState<{ text: string; color: string }[]>([]);
+  const [fading, setFading] = useState(false);
+  const [progress, setProgress] = useState(false);
+
+  useEffect(() => {
+    const boot = [
+      { text: "COREINTENT ENGINE v0.2.0", color: "#10b981", delay: 200 },
+      { text: "Initializing AI orchestra...", color: "#94a3b8", delay: 400 },
+      { text: "[OK] Grok ............ signal detection online", color: "#ef4444", delay: 600 },
+      { text: "[OK] Claude .......... deep analysis online", color: "#a855f7", delay: 800 },
+      { text: "[OK] Perplexity ...... research layer online", color: "#3b82f6", delay: 1000 },
+      { text: "[OK] Signal pipeline .. armed", color: "#10b981", delay: 1200 },
+      { text: "[OK] Competition engine .. ready", color: "#f59e0b", delay: 1400 },
+      { text: "Loading trading arena...", color: "#94a3b8", delay: 1600 },
+      { text: "█ ENGINE ONLINE — 3 models active", color: "#10b981", delay: 2000 },
+    ];
+
+    setProgress(true);
+
+    boot.forEach((line) => {
+      setTimeout(() => {
+        setLines((prev) => [...prev, { text: line.text, color: line.color }]);
+      }, line.delay);
+    });
+
+    setTimeout(() => setFading(true), 2600);
+    setTimeout(onComplete, 3200);
+  }, [onComplete]);
+
+  return (
+    <div className={`boot-overlay${fading ? " fading" : ""}`}>
+      <div className="boot-scanline" />
+      <div style={{ maxWidth: "460px", width: "100%", padding: "0 24px" }}>
+        <div style={{ marginBottom: "20px", fontSize: "10px", color: "#10b98166", letterSpacing: "2px", textTransform: "uppercase" }}>
+          ZYNTHIO.AI / SYSTEM BOOT
+        </div>
+        {lines.map((line, i) => (
+          <div
+            key={i}
+            className="boot-line"
+            style={{ color: line.color, animationDelay: `${i * 0.05}s` }}
+          >
+            {line.text}
+          </div>
+        ))}
+        {progress && (
+          <div style={{ marginTop: "16px", background: "rgba(16, 185, 129, 0.1)", borderRadius: "2px", overflow: "hidden" }}>
+            <div className="boot-progress" />
+          </div>
+        )}
+        <div style={{ marginTop: "12px", fontSize: "9px", color: "#94a3b844", letterSpacing: "1px" }}>
+          PAPER TRADING MODE — NO REAL MONEY AT RISK
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Hero Mini Terminal ─── */
+const MINI_COMMANDS: Record<string, string[]> = {
+  help: [
+    "  \x1b[36mAvailable:\x1b[0m status | brain | 336 | cai | about | clear",
+    "  \x1b[90m50+ commands in the full terminal\x1b[0m",
+  ],
+  status: [
+    "  \x1b[32m●\x1b[0m ENGINE ONLINE — Paper Trading",
+    "  AI: Grok \x1b[32m●\x1b[0m  Claude \x1b[32m●\x1b[0m  Perplexity \x1b[32m●\x1b[0m",
+    "  Signals: 3 active | Confidence: 87%",
+  ],
+  brain: [
+    "  Grok     \x1b[90m→\x1b[0m Fast signal detection",
+    "  Claude   \x1b[90m→\x1b[0m Deep analysis & risk",
+    "  Perplexity \x1b[90m→\x1b[0m Real-time research",
+    "  \x1b[33mConsensus: 3/3 debating BTC/USDT\x1b[0m",
+  ],
+  "336": [
+    "  \x1b[32m█████ THE SIGNAL IS DOMINANT █████\x1b[0m",
+    "  \x1b[90m\"Every human needs a bot.\"\x1b[0m",
+  ],
+  cai: [
+    "  \x1b[36mCoreIntent\x1b[0m — Agentic AI Trading Engine",
+    "  Owner: Corey McIvor | Zynthio.ai | NZ",
+    "  \x1b[90mCompetitions, not subscriptions.\x1b[0m",
+  ],
+  about: [
+    "  3 AI models × 1 engine × 0 subscriptions",
+    "  Built in New Zealand. Bots welcome.",
+    "  \x1b[90mPaper trading mode — building in public.\x1b[0m",
+  ],
+};
+
+function miniAnsiToHtml(text: string): string {
+  let result = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  result = result
+    .replace(/\x1b\[32m/g, '<span style="color:#10b981">')
+    .replace(/\x1b\[33m/g, '<span style="color:#f59e0b">')
+    .replace(/\x1b\[36m/g, '<span style="color:#06b6d4">')
+    .replace(/\x1b\[31m/g, '<span style="color:#ef4444">')
+    .replace(/\x1b\[35m/g, '<span style="color:#a855f7">')
+    .replace(/\x1b\[90m/g, '<span style="color:#64748b">')
+    .replace(/\x1b\[0m/g, "</span>");
+  return result;
+}
+
+const HERO_DEMO_CMDS = ["status", "brain"];
+
+function HeroTerminal({ onLaunchFull }: { onLaunchFull: () => void }) {
+  const [displayLines, setDisplayLines] = useState<string[]>([]);
+  const [typingCmd, setTypingCmd] = useState("");
+  const [demoStep, setDemoStep] = useState(0);
+  const [demoPhase, setDemoPhase] = useState<"typing" | "output" | "done">("typing");
+  const [userInput, setUserInput] = useState("");
+  const [userMode, setUserMode] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
+
+
+  useEffect(() => {
+    if (userMode || demoStep >= HERO_DEMO_CMDS.length) return;
+    if (demoPhase !== "typing") return;
+
+    const cmd = HERO_DEMO_CMDS[demoStep];
+    let charIdx = 0;
+    const startDelay = demoStep === 0 ? 600 : 400;
+
+    const timer = setTimeout(() => {
+      const typeInterval = setInterval(() => {
+        charIdx++;
+        setTypingCmd(cmd.substring(0, charIdx));
+        if (charIdx >= cmd.length) {
+          clearInterval(typeInterval);
+          setTimeout(() => setDemoPhase("output"), 300);
+        }
+      }, 80);
+      return () => clearInterval(typeInterval);
+    }, startDelay);
+
+    return () => clearTimeout(timer);
+  }, [demoStep, demoPhase, userMode]);
+
+  useEffect(() => {
+    if (demoPhase !== "output") return;
+    const cmd = HERO_DEMO_CMDS[demoStep];
+    const output = MINI_COMMANDS[cmd] || [];
+    setDisplayLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, ...output]);
+    setTypingCmd("");
+
+    setTimeout(() => {
+      setDemoPhase("typing");
+      if (demoStep + 1 >= HERO_DEMO_CMDS.length) {
+        setDisplayLines((prev) => [...prev, "", "  \x1b[90mTry: help, 336, cai, about\x1b[0m"]);
+        setUserMode(true);
+        setTimeout(() => inputRef.current?.focus(), 100);
+      } else {
+        setDemoStep((s) => s + 1);
+      }
+    }, 600);
+  }, [demoPhase, demoStep]);
+
+  useEffect(() => {
+    if (bodyRef.current) {
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+    }
+  }, [displayLines, typingCmd]);
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      const cmd = userInput.trim().toLowerCase();
+      if (!cmd) return;
+      setUserInput("");
+
+      if (cmd === "clear") {
+        setDisplayLines([]);
+        return;
+      }
+
+      const output = MINI_COMMANDS[cmd];
+      if (output) {
+        setDisplayLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, ...output]);
+      } else {
+        setDisplayLines((prev) => [
+          ...prev,
+          `\x1b[32m❯\x1b[0m ${cmd}`,
+          `  \x1b[31mUnknown:\x1b[0m ${cmd} \x1b[90m— try help\x1b[0m`,
+        ]);
+      }
+    },
+    [userInput]
+  );
+
+  return (
+    <div className="hero-terminal">
+      <div className="hero-terminal-bar">
+        <div className="hero-terminal-dot" style={{ background: "#ef4444" }} />
+        <div className="hero-terminal-dot" style={{ background: "#f59e0b" }} />
+        <div className="hero-terminal-dot" style={{ background: "#10b981" }} />
+        <span style={{ flex: 1, textAlign: "center", fontSize: "10px", color: "var(--text-secondary)", letterSpacing: "0.5px" }}>
+          COMMANDER v0.2.0 — try it live
+        </span>
+      </div>
+      <div ref={bodyRef} className="hero-terminal-body">
+        {displayLines.map((line, i) => (
+          <div key={i} dangerouslySetInnerHTML={{ __html: miniAnsiToHtml(line) }} />
+        ))}
+        {typingCmd && !userMode && (
+          <div>
+            <span dangerouslySetInnerHTML={{ __html: miniAnsiToHtml("\x1b[32m❯\x1b[0m") }} />{" "}
+            <span style={{ color: "var(--text-primary)" }}>{typingCmd}</span>
+            <span style={{ animation: "miniTermCursor 0.8s step-end infinite", color: "var(--accent-green)" }}>|</span>
+          </div>
+        )}
+      </div>
+      {userMode && (
+        <form onSubmit={handleSubmit} className="hero-terminal-input">
+          <span style={{ color: "#10b981", fontSize: "12px" }}>❯</span>
+          <input
+            ref={inputRef}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="type a command..."
+            autoComplete="off"
+            spellCheck={false}
+          />
+        </form>
+      )}
+      <div className="hero-terminal-launch" role="button" tabIndex={0} onClick={onLaunchFull} onKeyDown={(e) => e.key === "Enter" && onLaunchFull()}>
+        Launch Full Terminal (50+ commands) &rarr;
+      </div>
+    </div>
+  );
+}
+
 /* ─── Floating CTA ─── */
 function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -1061,9 +1297,19 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const [booting, setBooting] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !sessionStorage.getItem("ci_booted");
+  });
+
+  const handleBootComplete = useCallback(() => {
+    setBooting(false);
+    if (typeof window !== "undefined") sessionStorage.setItem("ci_booted", "1");
+  }, []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      {booting && <BootSequence onComplete={handleBootComplete} />}
       <SiteNav />
       <KonamiCode />
       <FloatingCTA />
@@ -1226,6 +1472,7 @@ export default function Home() {
                 See the Competitions
               </a>
             </div>
+            <HeroTerminal onLaunchFull={() => { setShowHero(false); setTab("terminal"); }} />
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "12px auto 0", maxWidth: "400px" }}>
               Open source. Paper trading. Built honestly from New Zealand by Zynthio.
             </p>

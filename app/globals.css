@@ -1158,3 +1158,185 @@ html {
   outline: 1px solid rgba(16, 185, 129, 0.5);
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════
+   BOOT SEQUENCE & HERO TERMINAL
+   ═══════════════════════════════════════════ */
+
+@keyframes bootLine {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bootFadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes scanlineDown {
+  0% { top: -100%; }
+  100% { top: 200%; }
+}
+
+@keyframes bootGlitch {
+  0%, 90%, 100% { transform: translate(0); filter: none; }
+  92% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+  94% { transform: translate(2px, -1px); filter: hue-rotate(-90deg); }
+  96% { transform: translate(-1px, -1px); filter: brightness(1.5); }
+  98% { transform: translate(1px, 1px); filter: hue-rotate(45deg); }
+}
+
+.boot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #030608;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.boot-overlay.fading {
+  animation: bootFadeOut 0.6s ease forwards;
+  pointer-events: none;
+}
+
+.boot-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15), transparent);
+  animation: scanlineDown 2s linear infinite;
+  pointer-events: none;
+}
+
+.boot-line {
+  animation: bootLine 0.3s ease both;
+  font-size: 13px;
+  line-height: 1.8;
+  font-family: inherit;
+}
+
+/* ─── Hero Mini Terminal ─── */
+@keyframes miniTermGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.08), inset 0 1px 0 rgba(16, 185, 129, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.15), 0 0 80px rgba(16, 185, 129, 0.05), inset 0 1px 0 rgba(16, 185, 129, 0.1); }
+}
+
+@keyframes miniTermCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes miniTermTyping {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.hero-terminal {
+  margin: 24px auto 0;
+  max-width: 520px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0a0e14;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  animation: miniTermGlow 4s ease-in-out infinite;
+  text-align: left;
+  position: relative;
+}
+
+.hero-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(16, 185, 129, 0.04);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.hero-terminal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.hero-terminal-body {
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.7;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.hero-terminal-body::-webkit-scrollbar { width: 4px; }
+.hero-terminal-body::-webkit-scrollbar-track { background: transparent; }
+.hero-terminal-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
+
+.hero-terminal-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-top: 1px solid rgba(16, 185, 129, 0.08);
+  background: rgba(16, 185, 129, 0.02);
+}
+
+.hero-terminal-input input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.hero-terminal-input input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.hero-terminal-launch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px;
+  background: rgba(16, 185, 129, 0.06);
+  border-top: 1px solid rgba(16, 185, 129, 0.08);
+  color: var(--accent-green);
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.hero-terminal-launch:hover {
+  background: rgba(16, 185, 129, 0.12);
+}
+
+/* ─── Urgency Pulse for Boot ─── */
+@keyframes urgencyPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ─── Boot Progress Bar ─── */
+@keyframes bootProgress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.boot-progress {
+  height: 2px;
+  background: var(--accent-green);
+  border-radius: 1px;
+  animation: bootProgress 2.5s ease-out forwards;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
