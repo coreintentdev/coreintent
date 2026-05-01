@@ -132,19 +132,40 @@ export default function PricingPage() {
           >
             Trading as a sport
           </div>
-          <h1 style={{ fontSize: "clamp(30px, 5vw, 46px)", marginBottom: "12px", lineHeight: "1.15" }}>
+          <h1 style={{ fontSize: "clamp(30px, 5vw, 50px)", marginBottom: "16px", lineHeight: "1.1" }}>
             Stop Paying.{" "}
             <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
               Start Competing.
             </span>
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "16px", maxWidth: "560px", margin: "0 auto 8px" }}>
-            You pay $99/mo. You lose money. They still get paid.
-            That&apos;s not alignment — that&apos;s extraction with a billing cycle.
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "20px",
+            marginBottom: "16px",
+            flexWrap: "wrap",
+          }}>
+            <span style={{
+              fontSize: "32px",
+              fontWeight: "bold",
+              color: "#ef4444",
+              textDecoration: "line-through",
+              opacity: 0.5,
+            }}>$99/mo</span>
+            <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>&rarr;</span>
+            <span style={{
+              fontSize: "42px",
+              fontWeight: "bold",
+              color: "var(--accent-green)",
+              textShadow: "0 0 30px rgba(16, 185, 129, 0.3)",
+            }}>$0</span>
+          </div>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "15px", maxWidth: "520px", margin: "0 auto 8px" }}>
+            They charge you whether you win or lose. That&apos;s not alignment — that&apos;s extraction.
           </p>
-          <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "15px", fontWeight: "bold" }}>
-            CoreIntent runs on $45/mo. Subscriptions aren&apos;t a business model — they&apos;re a tax on traders
-            who haven&apos;t found a better platform yet.
+          <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
+            Our entire platform runs on $45/mo. Free isn&apos;t a marketing trick — it&apos;s math.
           </p>
 
           <div style={{
@@ -491,6 +512,7 @@ export default function PricingPage() {
           >
             <h3 style={{ marginBottom: "12px" }}>The Philosophy</h3>
             <ul
+              className="pricing-philosophy-grid"
               style={{
                 listStyle: "none",
                 padding: 0,
@@ -533,7 +555,7 @@ export default function PricingPage() {
             }}
           >
             <h3 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h3>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <table className="pricing-compare-table" style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ borderBottom: "2px solid var(--border-color)" }}>
                   <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "12px", color: "var(--text-secondary)" }}></th>
@@ -675,7 +697,7 @@ export default function PricingPage() {
             <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px" }}>
               What a typical $99/mo trading subscription costs you — whether you profit or not.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "24px" }}>
+            <div className="savings-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "24px" }}>
               {[
                 { period: "3 Months", them: "$297", us: "$0", saved: "$297" },
                 { period: "6 Months", them: "$594", us: "$0", saved: "$594" },

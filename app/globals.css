@@ -906,6 +906,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ─── Hero CTA Attention Pulse ─── */
+@keyframes ctaAttention {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 0 0 rgba(16, 185, 129, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+.hero-cta-main {
+  animation: ctaAttention 3s ease-in-out infinite;
+}
+
+.hero-cta-main:hover {
+  animation: none;
+}
+
 /* ═══════════════════════════════════════════
    MOBILE RESPONSIVE — Landing Page
    ═══════════════════════════════════════════ */
@@ -935,11 +949,56 @@ html {
     width: 100% !important;
     justify-content: center !important;
   }
+
+  .pricing-compare-table {
+    display: block !important;
+    overflow-x: auto;
+  }
+
+  .pricing-compare-table td,
+  .pricing-compare-table th {
+    padding: 8px 6px !important;
+    font-size: 11px !important;
+  }
+
+  .pricing-philosophy-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .why-coreintent-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .savings-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 @media (max-width: 480px) {
   .how-it-works-card {
     padding: 20px 16px !important;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-cta-main {
+    padding: 16px 24px !important;
+    font-size: 15px !important;
+  }
+
+  .savings-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .ticker-track {
+    gap: 24px;
+    animation-duration: 30s;
   }
 }
 
@@ -951,25 +1010,6 @@ html {
 
   .league-grid article {
     transform: none !important;
-  }
-}
-
-/* ═══════════════════════════════════════════
-   MOBILE — Enhanced Responsive (Small Screens)
-   ═══════════════════════════════════════════ */
-
-@media (max-width: 480px) {
-  .cta-primary,
-  .cta-secondary {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-@media (max-width: 640px) {
-  .ticker-track {
-    gap: 24px;
-    animation-duration: 30s;
   }
 }
 

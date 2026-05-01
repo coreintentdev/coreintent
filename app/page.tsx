@@ -1127,10 +1127,10 @@ export default function Home() {
             </div>
             <h1
               style={{
-                fontSize: "clamp(32px, 5vw, 52px)",
+                fontSize: "clamp(32px, 5vw, 56px)",
                 fontWeight: "bold",
-                lineHeight: "1.15",
-                marginBottom: "12px",
+                lineHeight: "1.1",
+                marginBottom: "16px",
                 color: "var(--text-primary)",
               }}
             >
@@ -1138,40 +1138,33 @@ export default function Home() {
                 CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
               </span>
               <span aria-hidden="true">
-                When Three AI Models{" "}
-                <span className="neon-green" style={{ position: "relative" }}>Disagree</span>
-                ,<br />
-                You Don&apos;t Guess Harder.
+                One Model <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Guesses</span>.
+                <br />
+                Three Models{" "}
+                <span className="neon-green" style={{ position: "relative" }}>Debate</span>.
               </span>
             </h1>
             <div
               style={{
-                fontSize: "clamp(16px, 2.5vw, 22px)",
+                fontSize: "clamp(15px, 2.2vw, 20px)",
                 color: "var(--text-secondary)",
-                marginBottom: "16px",
+                marginBottom: "20px",
                 minHeight: "1.4em",
               }}
             >
               <TypeWriter />
             </div>
             <p
-              className="glitch-text-subtle"
-              data-text="Three AI models cross-check every signal. Zero subscriptions. Free competitions."
-              style={{ fontSize: "16px", color: "var(--accent-green)", marginBottom: "12px", fontWeight: "600" }}
-            >
-              Three AI models cross-check every signal. Zero subscriptions. Free competitions.
-            </p>
-            <p
               style={{
-                fontSize: "15px",
+                fontSize: "16px",
                 color: "var(--text-secondary)",
-                maxWidth: "580px",
-                margin: "0 auto 16px",
+                maxWidth: "560px",
+                margin: "0 auto 20px",
                 lineHeight: "1.7",
               }}
             >
-              Three AI models cross-check every signal before you see it.
-              Consensus means conviction. Disagreement means dig deeper — not guess harder.
+              Grok spots the signal. Claude questions it. Perplexity fact-checks against live data.
+              Consensus means conviction. Disagreement means dig deeper.
             </p>
             <div style={{
               display: "flex",
@@ -1184,25 +1177,26 @@ export default function Home() {
               <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
                 $99/mo platforms
               </span>
-              <span style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>
+              <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
                 $0 forever — compete free
               </span>
             </div>
             <LiveSignalFeed />
-            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap", marginBottom: "8px" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
-                className="cta-primary"
+                className="cta-primary hero-cta-main"
                 style={{
-                  padding: "16px 36px",
+                  padding: "18px 44px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "15px",
+                  fontSize: "16px",
                   fontWeight: "bold",
                   cursor: "pointer",
+                  letterSpacing: "0.3px",
                 }}
               >
                 Launch Terminal &rarr;
@@ -1211,13 +1205,13 @@ export default function Home() {
                 href="/pricing"
                 className="cta-secondary"
                 style={{
-                  padding: "16px 36px",
+                  padding: "18px 44px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "15px",
+                  fontSize: "16px",
                   cursor: "pointer",
                   textDecoration: "none",
                   display: "inline-block",
@@ -1226,7 +1220,7 @@ export default function Home() {
                 See the Competitions
               </a>
             </div>
-            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "12px auto 0", maxWidth: "400px" }}>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "400px" }}>
               Open source. Paper trading. Built honestly from New Zealand by Zynthio.
             </p>
 
@@ -1242,10 +1236,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies. One model guessing vs three debating — that's not marginal, that's fundamental.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card — not your autopay.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Stack.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership. Subscriptions aren't a business model — they're extraction.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -1458,7 +1452,7 @@ export default function Home() {
                   textAlign: "left",
                 }}
               >
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                <div className="why-coreintent-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   {[
                     { them: "One model guessing", us: "Three models debating" },
                     { them: "$99/mo whether you win or lose", us: "$0 — compete to prove your edge" },
