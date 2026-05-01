@@ -99,6 +99,34 @@ a {
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes aiTwinSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes aiTwinDots {
+  0%, 20% { content: "."; }
+  40% { content: ".."; }
+  60%, 100% { content: "..."; }
+}
+
+.ai-twin-typing-dots {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.ai-twin-toggle:not(:hover) {
+  animation: aiTwinGlow 3s ease-in-out infinite;
+}
+
+.ai-twin-toggle:hover {
+  transform: scale(1.08);
+}
+
+@keyframes aiTwinGlow {
+  0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 12px #10b98122; }
+  50% { box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 24px #10b98144; }
+}
+
 /* ─── Utility Classes ─── */
 
 .animate-fade-in {
