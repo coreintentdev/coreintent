@@ -451,6 +451,217 @@ function HowItWorks() {
   );
 }
 
+/* ─── Mini Terminal Preview ─── */
+function MiniTerminalPreview({ onLaunch }: { onLaunch: () => void }) {
+  const [lines, setLines] = useState<string[]>([]);
+  const [inputVal, setInputVal] = useState("");
+  const [typing, setTyping] = useState(true);
+  const [demoPhase, setDemoPhase] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const MINI_COMMANDS: Record<string, string> = {
+    help: `  \x1b[32mcai\x1b[0m       System overview     \x1b[32mbrain\x1b[0m    AI orchestra
+  \x1b[32mstatus\x1b[0m    Engine vitals       \x1b[32m336\x1b[0m      The signal
+  \x1b[32mzen\x1b[0m       Trading wisdom      \x1b[32mfortune\x1b[0m  Your fate
+  \x1b[90mFull terminal: 100+ commands. Click "Launch Terminal" below.\x1b[0m`,
+    cai: `  \x1b[36mCAI — CORE AI STATUS\x1b[0m
+  Engine:  CoreIntent v0.1.0-alpha
+  Mode:    \x1b[33mPaper trading\x1b[0m
+  \x1b[32m●\x1b[0m Claude Pro   — ACTIVE   \x1b[32m●\x1b[0m Grok Free   — ACTIVE
+  \x1b[33m◐\x1b[0m Perplexity   — FREE     \x1b[33m◐\x1b[0m zyn-bash    — standby`,
+    brain: `  \x1b[36mBRAIN — AI Orchestra\x1b[0m
+  \x1b[32m●\x1b[0m \x1b[31mGrok\x1b[0m         Fast signals, 60 threads
+  \x1b[32m●\x1b[0m \x1b[35mClaude\x1b[0m       Deep analysis, orchestration
+  \x1b[33m◐\x1b[0m \x1b[34mPerplexity\x1b[0m   Research (free tier)
+  \x1b[90mBots welcome. No captcha. AI-to-AI is first-class.\x1b[0m`,
+    status: `  \x1b[32m● ENGINE ONLINE\x1b[0m
+  Mode:    \x1b[33mPaper Trading\x1b[0m   Version: 0.2.0
+  Signals: \x1b[32m4 active\x1b[0m | 2 pending
+  Circuit Breaker: \x1b[32mARMED\x1b[0m (threshold: 0.8%)`,
+    "336": `  \x1b[32m████ ████ ████\x1b[0m
+  \x1b[32m   █    █ █   \x1b[0m
+  \x1b[32m ███ ████ ████\x1b[0m
+  \x1b[33mTHE SIGNAL IS DOMINANT\x1b[0m`,
+    zen: `  \x1b[36m"The market is a mirror. It reflects your patience,\x1b[0m
+  \x1b[36m your greed, and your discipline — equally."\x1b[0m
+  \x1b[90m— The Engine, after watching 10,000 candles\x1b[0m`,
+    fortune: `  \x1b[33m★\x1b[0m Your next trade will teach you more than your last ten.
+  \x1b[90mLucky numbers: 3, 3, 6\x1b[0m`,
+  };
+
+  useEffect(() => {
+    const demoSequence = [
+      { delay: 500, text: "status", speed: 80 },
+      { delay: 3000, text: "brain", speed: 60 },
+    ];
+
+    let cancelled = false;
+    const timeouts: ReturnType<typeof setTimeout>[] = [];
+
+    const runDemo = async () => {
+      for (const step of demoSequence) {
+        if (cancelled) return;
+        await new Promise<void>((resolve) => {
+          const t = setTimeout(resolve, step.delay);
+          timeouts.push(t);
+        });
+        if (cancelled) return;
+        setTyping(true);
+        for (let i = 0; i <= step.text.length; i++) {
+          if (cancelled) return;
+          const char = i;
+          await new Promise<void>((resolve) => {
+            const t = setTimeout(() => {
+              setInputVal(step.text.substring(0, char));
+              resolve();
+            }, step.speed);
+            timeouts.push(t);
+          });
+        }
+        if (cancelled) return;
+        await new Promise<void>((resolve) => {
+          const t = setTimeout(resolve, 400);
+          timeouts.push(t);
+        });
+        if (cancelled) return;
+        const cmd = step.text;
+        const output = MINI_COMMANDS[cmd] || `\x1b[31mUnknown: ${cmd}\x1b[0m`;
+        setLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, output, ""]);
+        setInputVal("");
+        setDemoPhase((p) => p + 1);
+      }
+      setTyping(false);
+    };
+
+    runDemo();
+    return () => {
+      cancelled = true;
+      timeouts.forEach(clearTimeout);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputVal.trim()) return;
+    setTyping(false);
+    const cmd = inputVal.trim().toLowerCase();
+    const output = MINI_COMMANDS[cmd] || `\x1b[31mUnknown command.\x1b[0m Type \x1b[32mhelp\x1b[0m for options.`;
+    setLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${inputVal}`, output, ""]);
+    setInputVal("");
+  };
+
+  const ansiMini = (text: string) => {
+    const map: Record<string, string> = {
+      "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
+      "34": "#3b82f6", "35": "#a855f7", "36": "#06b6d4", "90": "#64748b",
+    };
+    let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\x1b\[(\d+)m/g, (_m, code) => {
+      if (code === "0") return "</span>";
+      const color = map[code];
+      return color ? `<span style="color:${color}">` : "";
+    });
+    const opens = (html.match(/<span /g) || []).length;
+    const closes = (html.match(/<\/span>/g) || []).length;
+    if (opens > closes) html += "</span>".repeat(opens - closes);
+    return html;
+  };
+
+  return (
+    <div style={{ marginTop: "36px" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px", textAlign: "center" }}>
+        Try It Now
+      </div>
+      <h3 style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "16px", textAlign: "center" }}>
+        Talk to the engine. Type a command.
+      </h3>
+      <div
+        style={{
+          background: "var(--bg-terminal)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          overflow: "hidden",
+          maxWidth: "640px",
+          margin: "0 auto",
+        }}
+      >
+        <div style={{
+          display: "flex", alignItems: "center", gap: "8px", padding: "8px 12px",
+          background: "#161b22", borderBottom: "1px solid var(--border-color)", fontSize: "12px",
+        }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+          <span style={{ marginLeft: "8px", color: "var(--text-secondary)", fontSize: "11px" }}>coreintent — try it</span>
+        </div>
+        <div
+          onClick={() => inputRef.current?.focus()}
+          style={{
+            padding: "12px",
+            fontFamily: "inherit",
+            fontSize: "12px",
+            lineHeight: "1.6",
+            whiteSpace: "pre-wrap",
+            minHeight: "160px",
+            maxHeight: "240px",
+            overflow: "auto",
+            cursor: "text",
+          }}
+        >
+          <div dangerouslySetInnerHTML={{ __html: ansiMini(`\x1b[36mZynthio Commander\x1b[0m — \x1b[90mMini preview. Type \x1b[32mhelp\x1b[90m for commands.\x1b[0m`) }} />
+          <div style={{ marginBottom: "4px" }} />
+          {lines.map((line, i) => (
+            <div key={i} dangerouslySetInnerHTML={{ __html: ansiMini(line) }} />
+          ))}
+          <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ color: "var(--accent-green)", marginRight: "8px" }}>&#9889;</span>
+            <input
+              ref={inputRef}
+              value={inputVal}
+              onChange={(e) => { setInputVal(e.target.value); setTyping(false); }}
+              spellCheck={false}
+              placeholder={typing ? "" : demoPhase >= 2 ? "your turn — try: cai, 336, zen..." : ""}
+              style={{
+                flex: 1, background: "transparent", border: "none", outline: "none",
+                color: "var(--text-primary)", fontFamily: "inherit", fontSize: "12px",
+                caretColor: "var(--accent-green)",
+              }}
+            />
+          </form>
+        </div>
+      </div>
+      <div style={{ textAlign: "center", marginTop: "14px" }}>
+        <button
+          onClick={onLaunch}
+          style={{
+            padding: "10px 28px",
+            background: "transparent",
+            color: "var(--accent-green)",
+            border: "1px solid var(--accent-green)",
+            borderRadius: "8px",
+            fontFamily: "inherit",
+            fontSize: "13px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--accent-green)";
+            e.currentTarget.style.color = "#000";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--accent-green)";
+          }}
+        >
+          Launch Full Terminal (100+ commands)
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Floating CTA ─── */
 function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -1524,6 +1735,11 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            </ScrollReveal>
+
+            {/* Try It — Mini Terminal Preview */}
+            <ScrollReveal>
+            <MiniTerminalPreview onLaunch={() => { setShowHero(false); setTab("terminal"); }} />
             </ScrollReveal>
 
             {/* Early Access CTA */}

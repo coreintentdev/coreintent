@@ -416,6 +416,208 @@ function OrderBookAndNeural() {
   );
 }
 
+/* ─── Risk Gauge — Animated SVG semicircular gauge ─── */
+function RiskGauge({ grok, claude, perplexity }: { grok: number; claude: number; perplexity: number }) {
+  const overall = Math.round((grok + claude + perplexity) / 3);
+  const riskScore = 100 - overall;
+  const label = riskScore < 25 ? "LOW" : riskScore < 50 ? "MODERATE" : riskScore < 75 ? "ELEVATED" : "CRITICAL";
+  const labelColor = riskScore < 25 ? "#10b981" : riskScore < 50 ? "#3b82f6" : riskScore < 75 ? "#f59e0b" : "#ef4444";
+
+  const cx = 120;
+  const cy = 100;
+  const r = 80;
+  const startAngle = Math.PI;
+  const needleAngle = startAngle - (riskScore / 100) * Math.PI;
+  const nx = cx + Math.cos(needleAngle) * (r - 10);
+  const ny = cy - Math.sin(needleAngle) * (r - 10);
+
+  const arcPath = (start: number, end: number) => {
+    const sx = cx + Math.cos(start) * r;
+    const sy = cy - Math.sin(start) * r;
+    const ex = cx + Math.cos(end) * r;
+    const ey = cy - Math.sin(end) * r;
+    const sweep = start > end ? 1 : 0;
+    return `M ${sx} ${sy} A ${r} ${r} 0 0 ${sweep} ${ex} ${ey}`;
+  };
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        Risk Assessment Gauge
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: labelColor, marginLeft: 8, verticalAlign: "middle" }} />
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <svg viewBox="0 0 240 130" style={{ width: "100%", maxWidth: "280px", height: "auto" }}>
+            <defs>
+              <linearGradient id="riskGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="33%" stopColor="#3b82f6" />
+                <stop offset="66%" stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#ef4444" />
+              </linearGradient>
+            </defs>
+            <path d={arcPath(startAngle, 0)} fill="none" stroke="#1e293b" strokeWidth="14" strokeLinecap="round" />
+            <path d={arcPath(startAngle, 0)} fill="none" stroke="url(#riskGrad)" strokeWidth="10" strokeLinecap="round" opacity={0.8} />
+            <line x1={cx} y1={cy} x2={nx} y2={ny} stroke={labelColor} strokeWidth="3" strokeLinecap="round" style={{ transition: "all 0.8s ease-out", filter: `drop-shadow(0 0 4px ${labelColor})` }} />
+            <circle cx={cx} cy={cy} r="6" fill={labelColor} style={{ filter: `drop-shadow(0 0 6px ${labelColor})` }} />
+            <text x={cx} y={cy + 24} textAnchor="middle" fill={labelColor} fontSize="18" fontWeight="bold" fontFamily="monospace">{label}</text>
+            <text x={cx} y={cy + 38} textAnchor="middle" fill="#64748b" fontSize="10" fontFamily="monospace">Score: {riskScore}/100</text>
+            <text x={40} y={cy + 12} textAnchor="middle" fill="#10b981" fontSize="9" fontFamily="monospace">LOW</text>
+            <text x={200} y={cy + 12} textAnchor="middle" fill="#ef4444" fontSize="9" fontFamily="monospace">HIGH</text>
+          </svg>
+        </div>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "20px" }}>
+          <div style={{ fontSize: "10px", textTransform: "uppercase", color: "var(--text-secondary)", marginBottom: "12px", letterSpacing: "0.5px" }}>Model Confidence Breakdown</div>
+          {[
+            { name: "Grok", value: grok, color: "#ef4444" },
+            { name: "Claude", value: claude, color: "#a855f7" },
+            { name: "Perplexity", value: perplexity, color: "#3b82f6" },
+          ].map((m) => (
+            <div key={m.name} style={{ marginBottom: "14px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                <span style={{ fontSize: "12px", color: m.color, fontWeight: "bold" }}>{m.name}</span>
+                <span style={{ fontSize: "12px", color: m.color }}>{m.value}%</span>
+              </div>
+              <div style={{ height: "6px", background: "#1e293b", borderRadius: "3px", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${m.value}%`, background: m.color, borderRadius: "3px", transition: "width 0.8s ease-out", boxShadow: `0 0 8px ${m.color}66` }} />
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop: "16px", padding: "10px", background: "var(--bg-primary)", borderRadius: "6px", border: `1px solid ${labelColor}33` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "11px", color: "var(--text-secondary)" }}>Engine Verdict</span>
+              <span style={{ fontSize: "13px", fontWeight: "bold", color: labelColor }}>
+                {overall >= 80 ? "STRONG BUY" : overall >= 65 ? "BUY" : overall >= 50 ? "HOLD" : "SELL"}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textAlign: "center", marginTop: "8px" }}>
+        Risk score derived from inverse model confidence. Updates in real-time. Simulated data.
+      </div>
+    </section>
+  );
+}
+
+/* ─── Visual Market Depth ─── */
+function VisualDepth() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 1800);
+    return () => clearInterval(iv);
+  }, []);
+
+  const basePrice = 67420;
+  const levels = 10;
+  const bids: Array<{ price: number; size: number }> = [];
+  const asks: Array<{ price: number; size: number }> = [];
+
+  for (let i = 0; i < levels; i++) {
+    const seed = tick * 0.1 + i;
+    const bidSize = 0.5 + Math.abs(Math.sin(seed * 1.3 + i)) * 4;
+    const askSize = 0.5 + Math.abs(Math.sin(seed * 1.7 + i + 3)) * 4;
+    bids.push({ price: basePrice - (i + 1) * 12 - Math.random() * 5, size: bidSize });
+    asks.push({ price: basePrice + (i + 1) * 12 + Math.random() * 5, size: askSize });
+  }
+
+  const maxSize = Math.max(...bids.map((b) => b.size), ...asks.map((a) => a.size));
+  const bidTotal = bids.reduce((a, b) => a + b.size, 0);
+  const askTotal = asks.reduce((a, b) => a + b.size, 0);
+  const imbalance = ((bidTotal - askTotal) / (bidTotal + askTotal) * 100);
+
+  const svgW = 500;
+  const svgH = 200;
+  const midX = svgW / 2;
+  const barH = svgH / levels - 2;
+
+  let bidCumulative = 0;
+  let askCumulative = 0;
+  const bidCum = bids.map((b) => { bidCumulative += b.size; return bidCumulative; });
+  const askCum = asks.map((a) => { askCumulative += a.size; return askCumulative; });
+  const maxCum = Math.max(bidCumulative, askCumulative);
+
+  const bidAreaPoints = bids.map((_, i) => {
+    const x = midX - (bidCum[i] / maxCum) * (midX - 20);
+    const y = 10 + i * (svgH / levels) + barH / 2;
+    return `${x},${y}`;
+  });
+  const askAreaPoints = asks.map((_, i) => {
+    const x = midX + (askCum[i] / maxCum) * (midX - 20);
+    const y = 10 + i * (svgH / levels) + barH / 2;
+    return `${x},${y}`;
+  });
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        Market Depth Visualization
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+      </h2>
+      <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "20px" }}>
+        <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{ width: "100%", height: "auto" }}>
+          <defs>
+            <linearGradient id="bidFill" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#10b981" stopOpacity="0.02" />
+            </linearGradient>
+            <linearGradient id="askFill" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#ef4444" stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          <line x1={midX} y1="0" x2={midX} y2={svgH} stroke="#f59e0b" strokeWidth="1" strokeDasharray="4 4" opacity="0.5" />
+          <text x={midX} y={svgH - 2} textAnchor="middle" fill="#f59e0b" fontSize="9" fontFamily="monospace">
+            ${basePrice.toLocaleString()}
+          </text>
+          <polygon points={`${midX},${10 + barH / 2} ${bidAreaPoints.join(" ")} ${bidAreaPoints[bidAreaPoints.length - 1].split(",")[0]},${svgH - 10} ${midX},${svgH - 10}`}
+            fill="url(#bidFill)" stroke="#10b981" strokeWidth="1.5" opacity="0.8"
+            style={{ transition: "all 0.5s ease" }} />
+          <polygon points={`${midX},${10 + barH / 2} ${askAreaPoints.join(" ")} ${askAreaPoints[askAreaPoints.length - 1].split(",")[0]},${svgH - 10} ${midX},${svgH - 10}`}
+            fill="url(#askFill)" stroke="#ef4444" strokeWidth="1.5" opacity="0.8"
+            style={{ transition: "all 0.5s ease" }} />
+          {bids.map((b, i) => {
+            const w = (b.size / maxSize) * (midX - 40);
+            const y = 10 + i * (svgH / levels);
+            return (
+              <g key={`bid-${i}`}>
+                <rect x={midX - w - 4} y={y} width={w} height={barH} fill="#10b981" opacity="0.15" rx="2"
+                  style={{ transition: "all 0.5s ease" }} />
+                <text x={midX - w - 8} y={y + barH / 2 + 3} textAnchor="end" fill="#10b981" fontSize="7" fontFamily="monospace">
+                  {b.size.toFixed(2)}
+                </text>
+              </g>
+            );
+          })}
+          {asks.map((a, i) => {
+            const w = (a.size / maxSize) * (midX - 40);
+            const y = 10 + i * (svgH / levels);
+            return (
+              <g key={`ask-${i}`}>
+                <rect x={midX + 4} y={y} width={w} height={barH} fill="#ef4444" opacity="0.15" rx="2"
+                  style={{ transition: "all 0.5s ease" }} />
+                <text x={midX + w + 12} y={y + barH / 2 + 3} textAnchor="start" fill="#ef4444" fontSize="7" fontFamily="monospace">
+                  {a.size.toFixed(2)}
+                </text>
+              </g>
+            );
+          })}
+          <text x="20" y="14" fill="#10b981" fontSize="10" fontWeight="bold" fontFamily="monospace">BIDS</text>
+          <text x={svgW - 20} y="14" textAnchor="end" fill="#ef4444" fontSize="10" fontWeight="bold" fontFamily="monospace">ASKS</text>
+        </svg>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px", fontSize: "11px" }}>
+          <span style={{ color: "#10b981" }}>Bid Volume: {bidTotal.toFixed(2)} BTC</span>
+          <span style={{ color: imbalance > 0 ? "#10b981" : "#ef4444", fontWeight: "bold" }}>
+            Imbalance: {imbalance > 0 ? "+" : ""}{imbalance.toFixed(1)}% {imbalance > 10 ? "(Bullish)" : imbalance < -10 ? "(Bearish)" : "(Neutral)"}
+          </span>
+          <span style={{ color: "#ef4444" }}>Ask Volume: {askTotal.toFixed(2)} BTC</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function generateBook() {
   const mid = 67420 + (Math.random() - 0.5) * 200;
   const asks: Array<{ price: number; size: number; total: number }> = [];
@@ -1075,9 +1277,19 @@ export default function DemoPage() {
           <LiveCandlestickChart />
           </ScrollReveal>
 
+          {/* ═══ RISK GAUGE ═══ */}
+          <ScrollReveal>
+          <RiskGauge grok={consensus.grok} claude={consensus.claude} perplexity={consensus.perplexity} />
+          </ScrollReveal>
+
           {/* ═══ MODEL AGREEMENT MATRIX ═══ */}
           <ScrollReveal>
           <ModelAgreement />
+          </ScrollReveal>
+
+          {/* ═══ MARKET DEPTH ═══ */}
+          <ScrollReveal>
+          <VisualDepth />
           </ScrollReveal>
 
           {/* ═══ ORDER BOOK & NEURAL ACTIVITY ═══ */}

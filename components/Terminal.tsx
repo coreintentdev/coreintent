@@ -81,6 +81,8 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mheatmap\x1b[0m     - Crypto correlation matrix (animated)
   \x1b[32mbacktest\x1b[0m    - Run a strategy backtest simulation
   \x1b[32mpulse\x1b[0m       - Engine vitals heartbeat monitor
+  \x1b[32mdashboard\x1b[0m   - Live dashboard with charts & gauges
+  \x1b[32mdepth [pair]\x1b[0m - Market depth / order book (e.g. \x1b[32mdepth ETH/USDT\x1b[0m)
 
   \x1b[33m── EXPERIENCES ──\x1b[0m
   \x1b[32mspeedtest\x1b[0m   - Network speed diagnostics
@@ -638,7 +640,7 @@ const ALL_COMMANDS = [
   "challenge", "warp", "slots", "buy", "sell", "hold", "quit",
   "sudo", "rickroll", "moon", "wen",
   "speedtest", "lore", "zen", "fire", "about",
-  "heatmap", "backtest", "pulse",
+  "heatmap", "backtest", "pulse", "dashboard", "depth",
   "decrypt", "orbit", "glitch",
   "sniper", "cyberwar", "hologram",
   "arena", "dna", "train",
@@ -1670,6 +1672,166 @@ export default function Terminal() {
           );
         }
       }, 200);
+      return "";
+    }
+
+    // ── DASHBOARD: Live ASCII dashboard with gauges, charts, vitals ──
+    if (trimmed === "dashboard") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT LIVE DASHBOARD ══\x1b[0m`,
+        `\x1b[90m  Initializing real-time telemetry...\x1b[0m`, ``);
+
+      let frame = 0;
+      const totalFrames = 16;
+      const btcBase = 67200 + Math.random() * 800;
+      const ethBase = 3420 + Math.random() * 80;
+      const solBase = 178 + Math.random() * 12;
+      const priceHistory: { btc: number[]; eth: number[]; sol: number[] } = { btc: [], eth: [], sol: [] };
+
+      const dashIv = setInterval(() => {
+        if (frame >= totalFrames) {
+          clearInterval(dashIv);
+          addLines(
+            `  \x1b[36m└─────────────────────────────────────────────────────────────┘\x1b[0m`,
+            `  \x1b[90mDashboard stream ended. Type \x1b[32mdashboard\x1b[90m to restart.\x1b[0m`, ``
+          );
+          return;
+        }
+
+        const t = frame;
+        const btcPrice = btcBase + Math.sin(t * 0.4) * 300 + (Math.random() - 0.5) * 200;
+        const ethPrice = ethBase + Math.sin(t * 0.5 + 1) * 40 + (Math.random() - 0.5) * 30;
+        const solPrice = solBase + Math.sin(t * 0.3 + 2) * 8 + (Math.random() - 0.5) * 5;
+        priceHistory.btc.push(btcPrice);
+        priceHistory.eth.push(ethPrice);
+        priceHistory.sol.push(solPrice);
+
+        const sparkline = (data: number[]) => {
+          const chars = "▁▂▃▄▅▆▇█";
+          const recent = data.slice(-12);
+          const mn = Math.min(...recent);
+          const mx = Math.max(...recent);
+          const range = mx - mn || 1;
+          return recent.map((v) => {
+            const idx = Math.min(7, Math.round(((v - mn) / range) * 7));
+            return v >= recent[0] ? `\x1b[32m${chars[idx]}\x1b[0m` : `\x1b[31m${chars[idx]}\x1b[0m`;
+          }).join("");
+        };
+
+        const grokConf = 0.72 + Math.sin(t * 0.6) * 0.15 + Math.random() * 0.08;
+        const claudeConf = 0.78 + Math.sin(t * 0.4 + 1) * 0.12 + Math.random() * 0.06;
+        const perpConf = 0.65 + Math.sin(t * 0.5 + 2) * 0.18 + Math.random() * 0.1;
+        const consensus = (grokConf + claudeConf + perpConf) / 3;
+
+        const gauge = (value: number, label: string, color: string) => {
+          const width = 12;
+          const filled = Math.round(Math.max(0, Math.min(1, value)) * width);
+          return `${color}${label.padEnd(5)}\x1b[0m ${color}${"█".repeat(filled)}${"░".repeat(width - filled)}\x1b[0m ${color}${(value * 100).toFixed(0)}%\x1b[0m`;
+        };
+
+        const bpm = 60 + Math.floor(Math.sin(t * 0.3) * 10) + Math.floor(Math.random() * 8);
+        const latency = 14 + Math.floor(Math.random() * 25);
+        const signals = 3 + Math.floor(Math.sin(t * 0.2) * 2) + Math.floor(Math.random() * 3);
+        const btcChange = priceHistory.btc.length > 1 ? ((btcPrice - priceHistory.btc[0]) / priceHistory.btc[0] * 100) : 0;
+        const ethChange = priceHistory.eth.length > 1 ? ((ethPrice - priceHistory.eth[0]) / priceHistory.eth[0] * 100) : 0;
+        const solChange = priceHistory.sol.length > 1 ? ((solPrice - priceHistory.sol[0]) / priceHistory.sol[0] * 100) : 0;
+
+        const btcDir = btcChange >= 0 ? `\x1b[32m▲+${btcChange.toFixed(2)}%\x1b[0m` : `\x1b[31m▼${btcChange.toFixed(2)}%\x1b[0m`;
+        const ethDir = ethChange >= 0 ? `\x1b[32m▲+${ethChange.toFixed(2)}%\x1b[0m` : `\x1b[31m▼${ethChange.toFixed(2)}%\x1b[0m`;
+        const solDir = solChange >= 0 ? `\x1b[32m▲+${solChange.toFixed(2)}%\x1b[0m` : `\x1b[31m▼${solChange.toFixed(2)}%\x1b[0m`;
+
+        const consensusDir = consensus > 0.75 ? "\x1b[32mLONG\x1b[0m" : consensus > 0.65 ? "\x1b[33mHOLD\x1b[0m" : "\x1b[31mSHORT\x1b[0m";
+        const riskLevel = consensus > 0.78 ? "\x1b[32mLOW\x1b[0m" : consensus > 0.68 ? "\x1b[33mMED\x1b[0m" : "\x1b[31mHIGH\x1b[0m";
+
+        const frameLines = [
+          `  \x1b[36m┌───────────────────────────────────────────────────────────────┐\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[36m♥\x1b[0m ${bpm} BPM  \x1b[36m⚡\x1b[0m ${latency}ms  \x1b[36m◉\x1b[0m ${signals} signals  \x1b[36m▲\x1b[0m Risk: ${riskLevel}  \x1b[36m◎\x1b[0m ${consensusDir}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m├───────────────────────────────────────────────────────────────┤\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[33mBTC\x1b[0m $${btcPrice.toFixed(0).padStart(6)} ${btcDir}  ${sparkline(priceHistory.btc)}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[33mETH\x1b[0m $${ethPrice.toFixed(0).padStart(6)} ${ethDir}  ${sparkline(priceHistory.eth)}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[33mSOL\x1b[0m $${solPrice.toFixed(0).padStart(6)} ${solDir}  ${sparkline(priceHistory.sol)}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m├───────────────────────────────────────────────────────────────┤\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  ${gauge(grokConf, "GROK", "\x1b[31m")}  ${gauge(claudeConf, "CLAUD", "\x1b[35m")}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  ${gauge(perpConf, "PERP", "\x1b[34m")}  ${gauge(consensus, "SYNC", "\x1b[32m")}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m`,
+        ];
+
+        if (frame === 0) {
+          addLines(...frameLines);
+        } else {
+          setLines((prev) => {
+            const copy = [...prev];
+            const dashStart = copy.length - 10;
+            for (let i = 0; i < frameLines.length; i++) {
+              copy[dashStart + i] = frameLines[i];
+            }
+            return copy;
+          });
+        }
+        frame++;
+      }, 600);
+      return "";
+    }
+
+    // ── DEPTH: Market depth chart ──
+    if (trimmed === "depth" || trimmed.startsWith("depth ")) {
+      const pairArg = trimmed === "depth" ? "BTC/USDT" : raw.substring(6).trim().toUpperCase();
+      const pair = pairArg || "BTC/USDT";
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ MARKET DEPTH — ${pair} ══\x1b[0m`,
+        `\x1b[90m  Loading order book...\x1b[0m`, ``);
+
+      const basePrice = pair.startsWith("BTC") ? 67500 : pair.startsWith("ETH") ? 3450 : pair.startsWith("SOL") ? 182 : 100;
+      const levels = 8;
+      const asks: Array<{ price: number; size: number; total: number }> = [];
+      const bids: Array<{ price: number; size: number; total: number }> = [];
+      let askTotal = 0;
+      let bidTotal = 0;
+
+      for (let i = levels - 1; i >= 0; i--) {
+        const spread = (i + 1) * basePrice * 0.001;
+        const size = +(Math.random() * 5 + 0.5).toFixed(3);
+        askTotal += size;
+        asks.unshift({ price: basePrice + spread, size, total: askTotal });
+      }
+      for (let i = 0; i < levels; i++) {
+        const spread = (i + 1) * basePrice * 0.001;
+        const size = +(Math.random() * 5 + 0.5).toFixed(3);
+        bidTotal += size;
+        bids.push({ price: basePrice - spread, size, total: bidTotal });
+      }
+
+      const maxTotal = Math.max(askTotal, bidTotal);
+      let di = 0;
+      const depthIv = setInterval(() => {
+        if (di < asks.length) {
+          const a = asks[di];
+          const barLen = Math.round((a.total / maxTotal) * 24);
+          const bar = `\x1b[31m${"█".repeat(barLen)}${"░".repeat(24 - barLen)}\x1b[0m`;
+          addLines(`  ${bar}  \x1b[31m$${a.price.toFixed(2).padStart(10)}\x1b[0m  ${a.size.toFixed(3).padStart(7)}  \x1b[90m${a.total.toFixed(3)}\x1b[0m`);
+          di++;
+        } else if (di === asks.length) {
+          const mid = basePrice;
+          addLines(`  ${"─".repeat(24)}  \x1b[33m$${mid.toFixed(2).padStart(10)} ◄ MID\x1b[0m  ${"─".repeat(7)}  ${"─".repeat(6)}`);
+          di++;
+        } else if (di <= asks.length + bids.length) {
+          const b = bids[di - asks.length - 1];
+          const barLen = Math.round((b.total / maxTotal) * 24);
+          const bar = `\x1b[32m${"█".repeat(barLen)}${"░".repeat(24 - barLen)}\x1b[0m`;
+          addLines(`  ${bar}  \x1b[32m$${b.price.toFixed(2).padStart(10)}\x1b[0m  ${b.size.toFixed(3).padStart(7)}  \x1b[90m${b.total.toFixed(3)}\x1b[0m`);
+          di++;
+        } else {
+          clearInterval(depthIv);
+          const spread = ((asks[asks.length - 1].price - bids[0].price) / basePrice * 100).toFixed(3);
+          const imbalance = ((bidTotal - askTotal) / (bidTotal + askTotal) * 100).toFixed(1);
+          const imbColor = Number(imbalance) > 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(``,
+            `  \x1b[36mSpread:\x1b[0m ${spread}%  \x1b[36mImbalance:\x1b[0m ${imbColor}${imbalance}%\x1b[0m ${Number(imbalance) > 10 ? "(buyers dominant)" : Number(imbalance) < -10 ? "(sellers dominant)" : "(balanced)"}`,
+            `  \x1b[36mBid Wall:\x1b[0m \x1b[32m${bidTotal.toFixed(2)}\x1b[0m  \x1b[36mAsk Wall:\x1b[0m \x1b[31m${askTotal.toFixed(2)}\x1b[0m`,
+            `  \x1b[90mSimulated order book — demo data\x1b[0m`, ``
+          );
+        }
+      }, 120);
       return "";
     }
 
