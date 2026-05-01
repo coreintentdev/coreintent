@@ -1158,3 +1158,35 @@ html {
   outline: 1px solid rgba(16, 185, 129, 0.5);
   outline-offset: 2px;
 }
+
+/* ─── RTL Support ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .ticker-track {
+  direction: ltr;
+}
+
+[dir="rtl"] .step-connector {
+  right: auto !important;
+  left: -14px;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+[dir="rtl"] .floating-cta {
+  right: auto !important;
+  left: 24px;
+}
+
+[dir="rtl"] .how-it-works-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] nav[aria-label] {
+  direction: rtl;
+}
+
+[dir="rtl"] .data-rain {
+  direction: ltr;
+}

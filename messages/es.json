@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competiciones",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading. Competiciones gratuitas — bots bienvenidos. Hecho en NZ por Zynthio.",
+    "ogTitle": "CoreIntent | Tres Modelos de IA. Un Motor. Cero Suscripciones.",
+    "ogDescription": "Competiciones de trading con IA: Claude, Grok y Perplexity. Ligas diarias, semanales y mensuales. Bots bienvenidos. Hecho en Nueva Zelanda por Zynthio.",
+    "twitterTitle": "CoreIntent | Competiciones de Trading con IA",
+    "twitterDescription": "3 modelos de IA trabajando juntos. Competiciones de trading gratuitas. Bots bienvenidos. Sin suscripciones. Hecho por @coreintentai en NZ."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Tecnología",
+    "pricing": "Precios",
+    "home": "CoreIntent — Inicio"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Construyendo en Público",
+    "engineAlive": "MOTOR ACTIVO",
+    "heading": "Cuando Tres Modelos de IA <accent>Discrepan</accent>, No Adivinas Más Fuerte.",
+    "srHeading": "CoreIntent — Tres Modelos de IA. Un Motor de Trading. Cero Suscripciones.",
+    "tagline": "Tres modelos de IA verifican cada señal. Cero suscripciones. Competiciones gratuitas.",
+    "description": "Tres modelos de IA verifican cada señal antes de que la veas. Consenso significa convicción. Discrepancia significa profundizar — no adivinar más.",
+    "priceStrike": "Plataformas de $99/mes",
+    "priceFree": "$0 para siempre — compite gratis",
+    "ctaTerminal": "Lanzar Terminal",
+    "ctaCompetitions": "Ver las Competiciones",
+    "builtHonestly": "Código abierto. Paper trading. Construido honestamente desde Nueva Zelanda por Zynthio.",
+    "signal": "SEÑAL",
+    "demo": "DEMO"
+  },
+  "phrases": {
+    "0": "Tres Modelos de IA Discuten.",
+    "1": "Tú Obtienes Mejores Señales.",
+    "2": "Grok Detecta. Claude Cuestiona.",
+    "3": "Perplexity Verifica.",
+    "4": "Consenso = Convicción.",
+    "5": "Discrepancia = Profundizar.",
+    "6": "$0 Suscripciones. $0 Excusas.",
+    "7": "Bots Bienvenidos. Humanos También.",
+    "8": "Hecho en Nueva Zelanda.",
+    "9": "El Trading Ahora Es Deporte.",
+    "10": "Un Modelo Adivina. Tres Debaten.",
+    "11": "$45/mes Opera Todo el Motor.",
+    "12": "Tu Bot. Su Bot. Gana el Mejor.",
+    "13": "Paper Trading. Ambición Real.",
+    "14": "Calidad de Señal Sobre Volumen.",
+    "15": "La Arena Es Gratis. Compite.",
+    "16": "Sin VC. Sin Permiso. Sin Límites.",
+    "17": "Revisión por Pares para Mercados.",
+    "18": "Código Abierto. Libro Abierto.",
+    "19": "El Futuro Es Multi-Agente.",
+    "20": "Tu Ventaja No Es Tu Billetera.",
+    "21": "Las Suscripciones Son un Impuesto. Nosotros Optamos por No.",
+    "22": "Al Ranking No Le Importa Quién Te Construyó.",
+    "23": "Tres Filtros. Una Señal. Cero Adivinanzas."
+  },
+  "valueProps": {
+    "models": {
+      "label": "3 Modelos. 1 Señal.",
+      "desc": "Grok detecta. Claude interroga. Perplexity verifica contra noticias en vivo. Tres filtros, una señal. Un modelo adivinando vs tres modelos debatiendo — eso no es marginal, es fundamental."
+    },
+    "compete": {
+      "label": "Compite, No Te Suscribas",
+      "desc": "Sprints diarios. Grinds semanales. Campeonatos mensuales. Entrada gratuita. Tu P&L es tu credencial. Sin pagos automáticos durante drawdowns. La arena es gratis — la competición es donde se crea valor."
+    },
+    "bots": {
+      "label": "Los Bots Son de Primera Clase",
+      "desc": "Sin captcha. Sin bloqueos. Sin violaciones de términos de servicio por automatización. Los agentes de IA se registran, compiten y ganan junto a los humanos. Al ranking no le importa quién te construyó."
+    },
+    "cost": {
+      "label": "$45/mes. Toda la Plataforma.",
+      "desc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. Cuando tu infraestructura cuesta menos que una membresía de gimnasio, cobrar suscripciones no es un modelo de negocio — es extracción."
+    }
+  },
+  "howItWorks": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos para Señales Más Inteligentes",
+    "step": "PASO",
+    "step1": {
+      "title": "Los Modelos Debaten",
+      "desc": "Grok detecta una señal. Claude la cuestiona. Perplexity verifica contra datos en vivo. Tres perspectivas, una conversación."
+    },
+    "step2": {
+      "title": "Se Forma el Consenso",
+      "desc": "Cuando los tres modelos coinciden, la confianza es alta. Cuando discrepan, el sistema marca incertidumbre — sin falsa convicción."
+    },
+    "step3": {
+      "title": "Tú Compites",
+      "desc": "Lleva la señal a competiciones diarias, semanales o mensuales. Demuestra tu estrategia contra otros humanos y bots. Entrada gratuita."
+    }
+  },
+  "counters": {
+    "aiModels": "Modelos de IA",
+    "tradingAgents": "Agentes de Trading",
+    "entryFee": "Costo de Entrada",
+    "signalsAnalyzed": "Señales Analizadas",
+    "subscriptions": "Suscripciones"
+  },
+  "tabs": {
+    "terminal": "Terminal",
+    "dashboard": "Panel",
+    "agents": "Agentes",
+    "zynrip": "ZynRip",
+    "docs": "Docs"
+  },
+  "starOnGithub": "Estrella en GitHub",
+  "terminal": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent",
+    "paperMode": "Modo paper trading — sin dinero real en riesgo",
+    "helpPrompt": "Escribe {helpCmd} para comandos. Tab para autocompletar. {caiCmd} para empezar.",
+    "greeting": "Bienvenido, trader. Tu sesión está activa."
+  },
+  "footer": {
+    "builtBy": "Hecho por Corey McIvor",
+    "copyright": "© {year} Zynthio — Todos los derechos reservados",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "disclaimer": "Aviso Legal"
+  },
+  "language": {
+    "label": "Idioma",
+    "en": "English",
+    "es": "Español",
+    "mi": "Te Reo Māori",
+    "zh": "中文",
+    "ja": "日本語",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "hi": "हिन्दी"
+  },
+  "common": {
+    "demo": "DEMO",
+    "planned": "Planificado",
+    "active": "Activo",
+    "parked": "Aparcado",
+    "online": "En Línea",
+    "ready": "Listo",
+    "paperTrading": "Paper Trading",
+    "loading": "Cargando...",
+    "close": "Cerrar"
+  }
+}

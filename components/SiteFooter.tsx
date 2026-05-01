@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function SiteFooter() {
+  const t = useTranslations();
+
   return (
     <footer
       style={{
@@ -35,7 +40,7 @@ export default function SiteFooter() {
           </div>
           <p>Agentic AI Trading Engine</p>
           <p style={{ marginTop: "4px" }}>
-            Built by Corey McIvor | Zynthio.ai
+            {t("footer.builtBy")} | Zynthio.ai
           </p>
         </div>
 
@@ -48,16 +53,16 @@ export default function SiteFooter() {
               Product
             </span>
             <Link href="/" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terminal
+              {t("nav.terminal")}
             </Link>
             <Link href="/demo" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Demo
+              {t("nav.demo")}
             </Link>
             <Link href="/stack" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Stack
+              {t("nav.stack")}
             </Link>
             <Link href="/pricing" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Competitions
+              {t("nav.pricing")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -65,13 +70,13 @@ export default function SiteFooter() {
               Legal
             </span>
             <Link href="/privacy" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Privacy Policy
+              {t("footer.privacy")}
             </Link>
             <Link href="/terms" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terms of Service
+              {t("footer.terms")}
             </Link>
             <Link href="/disclaimer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Disclaimer
+              {t("footer.disclaimer")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>

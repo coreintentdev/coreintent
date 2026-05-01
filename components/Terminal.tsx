@@ -1,8 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { LOCALE_TO_BCP47, type Locale } from "@/lib/i18n";
 
-const WELCOME_BANNER = `\x1b[36m
+const LOCALE_GREETINGS: Record<string, string> = {
+  en: "Welcome, trader. Your session is live.",
+  es: "Bienvenido, trader. Tu sesión está activa.",
+  mi: "Nau mai, kai hokohoko. Kua ora tō whaihanga.",
+  zh: "欢迎，交易者。您的会话已上线。",
+  ja: "ようこそ、トレーダー。セッションが開始されました。",
+  pt: "Bem-vindo, trader. Sua sessão está ativa.",
+  fr: "Bienvenue, trader. Votre session est active.",
+  de: "Willkommen, Trader. Deine Sitzung ist aktiv.",
+  ar: "مرحبًا أيها المتداول. جلستك نشطة.",
+  hi: "स्वागत है, ट्रेडर। आपका सत्र लाइव है।",
+};
+
+function buildWelcomeBanner(locale: string): string {
+  const bcp47 = LOCALE_TO_BCP47[locale as Locale] || "en-NZ";
+  const greeting = LOCALE_GREETINGS[locale] || LOCALE_GREETINGS.en;
+  return `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
@@ -13,8 +31,9 @@ const WELCOME_BANNER = `\x1b[36m
 \x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
 \x1b[90mPaper trading mode — no real money at risk\x1b[0m
 Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
-`;
+\x1b[90m${new Date().toLocaleString(bcp47, { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[32m${greeting}\x1b[0m`;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -645,6 +664,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const locale = useLocale();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -673,8 +693,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(locale)]);
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

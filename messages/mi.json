@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "title": "CoreIntent | Mihini Hokohoko AI Mahi — Kāore He Ohaurunga, Ko Ngā Whakataetae Anake",
+    "titleTemplate": "{title} | CoreIntent",
+    "description": "E toru ngā tauira AI. Kotahi te mihini hokohoko. Kore ohaurunga. Ko CoreIntent te kaiwhakahaere i a Claude, Grok me Perplexity mō ngā tohu hokohoko. Whakataetae kore utu — e pai ana ngā karetao. Hangaia i Aotearoa e Zynthio.",
+    "ogTitle": "CoreIntent | E Toru ngā Tauira AI. Kotahi te Mihini. Kore Ohaurunga.",
+    "ogDescription": "Whakataetae hokohoko AI me Claude, Grok me Perplexity. Rīki ā-rā, ā-wiki me ā-marama. E pai ana ngā karetao. Hangaia i Aotearoa e Zynthio.",
+    "twitterTitle": "CoreIntent | Whakataetae Hokohoko AI",
+    "twitterDescription": "E 3 ngā tauira AI e mahi ngātahi ana. Whakataetae hokohoko kore utu. E pai ana ngā karetao. Kāore he ohaurunga. Hangaia e @coreintentai i Aotearoa."
+  },
+  "nav": {
+    "terminal": "Tūhono",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "pricing": "Utu",
+    "home": "CoreIntent — Kāinga"
+  },
+  "hero": {
+    "badge": "Aratau Hokohoko Pepa — Te Hanga i te Tūmatanui",
+    "engineAlive": "KUA ORA TE MIHINI",
+    "heading": "Ka <accent>Tautohetohe</accent> ngā Tauira AI e Toru, Kāore Koe e Matapōrehu.",
+    "srHeading": "CoreIntent — E Toru ngā Tauira AI. Kotahi te Mihini Hokohoko. Kore Ohaurunga.",
+    "tagline": "E toru ngā tauira AI e tirohia ana ia tohu. Kore ohaurunga. Whakataetae kore utu.",
+    "description": "E toru ngā tauira AI e tirohia ana ia tohu i mua i tō kitenga. Ko te whakaae ko te whakapono. Ko te tautohetohe ko te keri hōhonu — kaua ko te matapōrehu.",
+    "priceStrike": "Tūāpapa $99/marama",
+    "priceFree": "$0 mō ake tonu — whakataetae kore utu",
+    "ctaTerminal": "Whakarewa Tūhono",
+    "ctaCompetitions": "Tirohia ngā Whakataetae",
+    "builtHonestly": "Puna tuwhera. Hokohoko pepa. Hangaia pono mai i Aotearoa e Zynthio.",
+    "signal": "TOHU",
+    "demo": "WHAKAATURANGA"
+  },
+  "phrases": {
+    "0": "E Toru ngā Tauira AI e Tautohe ana.",
+    "1": "Ka Pai Ake Ō Tohu.",
+    "2": "Ko Grok te Kaitirotiro. Ko Claude te Kaipātai.",
+    "3": "Ko Perplexity te Kaiwhakaū.",
+    "4": "Whakaae = Whakapono.",
+    "5": "Tautohetohe = Keri Hōhonu.",
+    "6": "$0 Ohaurunga. $0 Whakapahē.",
+    "7": "E Pai Ana ngā Karetao. Ngā Tāngata Anō.",
+    "8": "Hangaia i Aotearoa.",
+    "9": "He Hākinakina te Hokohoko Ināianei.",
+    "10": "Kotahi te Tauira e Matapōrehu. E Toru e Tautohe.",
+    "11": "$45/marama mō te Mihini Katoa.",
+    "12": "Tō Karetao. Tā Rātou Karetao. Ko te Pai Rawa te Toa.",
+    "13": "Hokohoko Pepa. Wawata Tūturu.",
+    "14": "Kounga Tohu mua i te Nui.",
+    "15": "He Kore Utu te Papa. Whakataetae.",
+    "16": "Kāore He VC. Kāore He Whakaaetanga. Kāore He Tepe.",
+    "17": "Arotake ā-Hoa mō ngā Mākete.",
+    "18": "Puna Tuwhera. Pukapuka Tuwhera.",
+    "19": "Ko te Āpōpō he Multi-Agent.",
+    "20": "Ehara Tō Taha i Tō Pūkoro.",
+    "21": "He Tāke ngā Ohaurunga. I Whiriwhiri Mātou kia Kore.",
+    "22": "Kāore te Papa Toa e Mōhio Ko Wai Koe.",
+    "23": "E Toru ngā Tātari. Kotahi te Tohu. Kore Matapōrehu."
+  },
+  "valueProps": {
+    "models": {
+      "label": "3 Tauira. 1 Tohu.",
+      "desc": "Ko Grok te kaitirotiro. Ko Claude te kaipātai. Ko Perplexity te kaiwhakaū ki ngā kōrero ora. E toru ngā tātari, kotahi te tohu. Kotahi te tauira e matapōrehu ana, e toru e tautohe ana — ehara i te iti, he mea nui."
+    },
+    "compete": {
+      "label": "Whakataetae, Kaua e Ohaurunga",
+      "desc": "Omanga ā-rā. Mahi ā-wiki. Whakataetae ā-marama. Urunga kore utu. Ko tō P&L tō kāri mema. Kāore he utu aunoa. He kore utu te papa — ko te whakataetae te wāhi e hangaia ai te uara."
+    },
+    "bots": {
+      "label": "Ko ngā Karetao he Mea Tuatahi",
+      "desc": "Kāore he captcha. Kāore he ārai. Kāore he takahitanga tikanga. Ka rēhita, ka whakataetae, ka whiwhi ngā karetao AI me ngā tāngata. Kāore te papa toa e mōhio ko wai koe."
+    },
+    "cost": {
+      "label": "$45/marama. Te Tūāpapa Katoa.",
+      "desc": "Vercel: kore utu. GitHub: kore utu. Cloudflare: $20. VPS: $25. Ka iti ake te utu o tō hanganga i te mema whare korikori, ko te utu ohaurunga ehara i te aratau pakihi — he tangohanga."
+    }
+  },
+  "howItWorks": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Māia",
+    "step": "HIPANGA",
+    "step1": {
+      "title": "Ka Tautohe ngā Tauira",
+      "desc": "Ka kite a Grok i te tohu. Ka pātai a Claude. Ka whakaū a Perplexity ki ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrero."
+    },
+    "step2": {
+      "title": "Ka Puta te Whakaae",
+      "desc": "Ka whakaae ngā tauira e toru, ka nui te whakapono. Ka tautohe rātou, ka tohua te rangirua — kāore he whakapono teka."
+    },
+    "step3": {
+      "title": "Ka Whakataetae Koe",
+      "desc": "Kawea te tohu ki ngā whakataetae ā-rā, ā-wiki, ā-marama rānei. Whakaaturia tō rautaki ki ētahi atu tāngata me ngā karetao. Urunga kore utu."
+    }
+  },
+  "counters": {
+    "aiModels": "Tauira AI",
+    "tradingAgents": "Karetao Hokohoko",
+    "entryFee": "Utu Urunga",
+    "signalsAnalyzed": "Tohu Kua Tātarihia",
+    "subscriptions": "Ohaurunga"
+  },
+  "tabs": {
+    "terminal": "Tūhono",
+    "dashboard": "Papatohu",
+    "agents": "Karetao",
+    "zynrip": "ZynRip",
+    "docs": "Tuhinga"
+  },
+  "starOnGithub": "Whetū i GitHub",
+  "terminal": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Mihini Hokohoko CoreIntent",
+    "paperMode": "Aratau hokohoko pepa — kāore he moni tūturu e tūraru ana",
+    "helpPrompt": "Patohia {helpCmd} mō ngā whakahau. Tab mō te whakakī aunoa. {caiCmd} ki te tīmata.",
+    "greeting": "Nau mai, kai hokohoko. Kua ora tō whaihanga."
+  },
+  "footer": {
+    "builtBy": "Hangaia e Corey McIvor",
+    "copyright": "© {year} Zynthio — Ngā motika katoa",
+    "privacy": "Tūmataiti",
+    "terms": "Ngā Ture",
+    "disclaimer": "Whakakāhoretanga"
+  },
+  "language": {
+    "label": "Reo",
+    "en": "English",
+    "es": "Español",
+    "mi": "Te Reo Māori",
+    "zh": "中文",
+    "ja": "日本語",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ar": "العربية",
+    "hi": "हिन्दी"
+  },
+  "common": {
+    "demo": "WHAKAATURANGA",
+    "planned": "Kua Maheretia",
+    "active": "Kua Ora",
+    "parked": "Kua Tū",
+    "online": "Tuihono",
+    "ready": "Kua Reri",
+    "paperTrading": "Hokohoko Pepa",
+    "loading": "E uta ana...",
+    "close": "Katia"
+  }
+}

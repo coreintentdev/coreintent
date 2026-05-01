@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { Link as I18nLink } from "@/i18n/navigation";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -362,38 +364,36 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
 /* ─── How It Works ─── */
 function HowItWorks() {
+  const t = useTranslations("howItWorks");
   return (
     <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-        How It Works
+        {t("label")}
       </div>
       <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
-        Three Steps to Smarter Signals
+        {t("title")}
       </h2>
       <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
-        {[
+        {([
           {
             step: "01",
-            title: "Models Debate",
-            desc: "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+            key: "step1" as const,
             color: "#a855f7",
             icon: "AI",
           },
           {
             step: "02",
-            title: "Consensus Forms",
-            desc: "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+            key: "step2" as const,
             color: "#10b981",
             icon: "OK",
           },
           {
             step: "03",
-            title: "You Compete",
-            desc: "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry.",
+            key: "step3" as const,
             color: "#3b82f6",
             icon: "GO",
           },
-        ].map((item, i) => (
+        ]).map((item, i) => (
           <div
             key={item.step}
             className="card-hover-glow how-it-works-card"
@@ -423,13 +423,13 @@ function HowItWorks() {
               {item.icon}
             </div>
             <div style={{ fontSize: "10px", color: item.color, fontWeight: "bold", letterSpacing: "1px", marginBottom: "6px" }}>
-              STEP {item.step}
+              {t("step")} {item.step}
             </div>
             <div style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "8px" }}>
-              {item.title}
+              {t(`${item.key}.title`)}
             </div>
             <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
-              {item.desc}
+              {t(`${item.key}.desc`)}
             </div>
             {i < 2 && (
               <div className="step-connector" style={{
@@ -454,6 +454,7 @@ function HowItWorks() {
 /* ─── Floating CTA ─── */
 function FloatingCTA() {
   const [visible, setVisible] = useState(false);
+  const t = useTranslations();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -495,9 +496,18 @@ function FloatingCTA() {
         }}
       >
         <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        {t("starOnGithub")}
       </a>
     </div>
+  );
+}
+
+function EngineAliveLabel() {
+  const t = useTranslations("hero");
+  return (
+    <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
+      {t("engineAlive")}
+    </span>
   );
 }
 
@@ -518,9 +528,7 @@ function EngineHeartbeat() {
         className="engine-alive-dot"
         key={beat}
       />
-      <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
-        ENGINE ALIVE
-      </span>
+      <EngineAliveLabel />
       <span style={{ fontSize: "9px", color: "var(--text-secondary)", fontFamily: "inherit" }}>
         {latency}ms
       </span>
@@ -529,41 +537,18 @@ function EngineHeartbeat() {
 }
 
 /* ─── TypeWriter ─── */
-const HERO_PHRASES = [
-  "Three AI Models Argue.",
-  "You Get Better Signals.",
-  "Grok Spots. Claude Questions.",
-  "Perplexity Fact-Checks.",
-  "Consensus = Conviction.",
-  "Disagreement = Dig Deeper.",
-  "$0 Subscriptions. $0 Excuses.",
-  "Bots Welcome. Humans Too.",
-  "Built in New Zealand.",
-  "Trading Is a Sport Now.",
-  "One Model Guesses. Three Debate.",
-  "$45/mo Runs the Whole Engine.",
-  "Your Bot. Their Bot. Best Wins.",
-  "Paper Trading. Real Ambition.",
-  "Signal Quality Over Signal Volume.",
-  "The Arena Is Free. Compete.",
-  "No VC. No Permission. No Limits.",
-  "Peer Review for Markets.",
-  "Open Source. Open Book.",
-  "The Future Is Multi-Agent.",
-  "Your Edge Isn't Your Wallet.",
-  "Subscriptions Are a Tax. We Opted Out.",
-  "The Leaderboard Doesn't Care Who Built You.",
-  "Three Filters. One Signal. Zero Guessing.",
-];
+const PHRASE_COUNT = 24;
 
 function TypeWriter() {
+  const t = useTranslations("phrases");
+  const phrases = Array.from({ length: PHRASE_COUNT }, (_, i) => t(String(i)));
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
 
   const tick = useCallback(() => {
-    const current = HERO_PHRASES[phraseIdx];
+    const current = phrases[phraseIdx];
     if (!isDeleting) {
       setText(current.substring(0, charIdx + 1));
       setCharIdx((c) => c + 1);
@@ -576,11 +561,11 @@ function TypeWriter() {
       setCharIdx((c) => c - 1);
       if (charIdx <= 1) {
         setIsDeleting(false);
-        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        setPhraseIdx((p) => (p + 1) % phrases.length);
         return;
       }
     }
-  }, [charIdx, isDeleting, phraseIdx]);
+  }, [charIdx, isDeleting, phraseIdx, phrases]);
 
   useEffect(() => {
     const speed = isDeleting ? 40 : 80;
@@ -1061,6 +1046,7 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const t = useTranslations();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -1123,7 +1109,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -1135,13 +1121,12 @@ export default function Home() {
               }}
             >
               <span className="sr-only">
-                CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
+                {t("hero.srHeading")}
               </span>
               <span aria-hidden="true">
-                When Three AI Models{" "}
-                <span className="neon-green" style={{ position: "relative" }}>Disagree</span>
-                ,<br />
-                You Don&apos;t Guess Harder.
+                {t.rich("hero.heading", {
+                  accent: (chunks) => <span className="neon-green" style={{ position: "relative" }}>{chunks}</span>,
+                })}
               </span>
             </h1>
             <div
@@ -1156,10 +1141,10 @@ export default function Home() {
             </div>
             <p
               className="glitch-text-subtle"
-              data-text="Three AI models cross-check every signal. Zero subscriptions. Free competitions."
+              data-text={t("hero.tagline")}
               style={{ fontSize: "16px", color: "var(--accent-green)", marginBottom: "12px", fontWeight: "600" }}
             >
-              Three AI models cross-check every signal. Zero subscriptions. Free competitions.
+              {t("hero.tagline")}
             </p>
             <p
               style={{
@@ -1170,8 +1155,7 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Three AI models cross-check every signal before you see it.
-              Consensus means conviction. Disagreement means dig deeper — not guess harder.
+              {t("hero.description")}
             </p>
             <div style={{
               display: "flex",
@@ -1182,10 +1166,10 @@ export default function Home() {
               flexWrap: "wrap",
             }}>
               <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
-                $99/mo platforms
+                {t("hero.priceStrike")}
               </span>
               <span style={{ fontSize: "18px", fontWeight: "bold", color: "var(--accent-green)" }}>
-                $0 forever — compete free
+                {t("hero.priceFree")}
               </span>
             </div>
             <LiveSignalFeed />
@@ -1205,9 +1189,9 @@ export default function Home() {
                   cursor: "pointer",
                 }}
               >
-                Launch Terminal &rarr;
+                {t("hero.ctaTerminal")} &rarr;
               </button>
-              <a
+              <I18nLink
                 href="/pricing"
                 className="cta-secondary"
                 style={{
@@ -1223,11 +1207,11 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
-              </a>
+                {t("hero.ctaCompetitions")}
+              </I18nLink>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "12px auto 0", maxWidth: "400px" }}>
-              Open source. Paper trading. Built honestly from New Zealand by Zynthio.
+              {t("hero.builtHonestly")}
             </p>
 
             {/* Value Props */}
@@ -1241,14 +1225,14 @@ export default function Home() {
                 textAlign: "left",
               }}
             >
-              {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies against live news. Three filters, one signal. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. No autopay during drawdowns. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. No terms-of-service violations for automation. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your infrastructure costs less than a gym membership, charging subscriptions isn't a business model — it's extraction.", color: "#f59e0b" },
-              ].map((prop) => (
+              {([
+                { key: "models", color: "#a855f7" },
+                { key: "compete", color: "#10b981" },
+                { key: "bots", color: "#3b82f6" },
+                { key: "cost", color: "#f59e0b" },
+              ] as const).map((prop) => (
                 <div
-                  key={prop.label}
+                  key={prop.key}
                   className="card-hover-glow"
                   style={{
                     padding: "16px",
@@ -1258,10 +1242,10 @@ export default function Home() {
                   }}
                 >
                   <div style={{ fontSize: "13px", fontWeight: "bold", color: prop.color, marginBottom: "4px" }}>
-                    {prop.label}
+                    {t(`valueProps.${prop.key}.label`)}
                   </div>
                   <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
-                    {prop.desc}
+                    {t(`valueProps.${prop.key}.desc`)}
                   </div>
                 </div>
               ))}
@@ -1289,11 +1273,11 @@ export default function Home() {
                 borderRadius: "12px",
               }}
             >
-              <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
-              <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
-              <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
-              <AnimatedCounter end={12847} suffix="+" label="Signals Analyzed" color="#f59e0b" />
-              <AnimatedCounter end={0} label="Subscriptions" color="#ef4444" />
+              <AnimatedCounter end={3} label={t("counters.aiModels")} color="#a855f7" />
+              <AnimatedCounter end={6} label={t("counters.tradingAgents")} color="#3b82f6" />
+              <AnimatedCounter end={0} prefix="$" label={t("counters.entryFee")} color="#10b981" />
+              <AnimatedCounter end={12847} suffix="+" label={t("counters.signalsAnalyzed")} color="#f59e0b" />
+              <AnimatedCounter end={0} label={t("counters.subscriptions")} color="#ef4444" />
             </div>
             </ScrollReveal>
             <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
@@ -1341,7 +1325,7 @@ export default function Home() {
                 Priority placement when leagues launch. Permanent founding badge.
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
-              <a
+              <I18nLink
                 href="/pricing"
                 style={{
                   display: "inline-block",
@@ -1356,7 +1340,7 @@ export default function Home() {
                 }}
               >
                 Claim Founding Status &rarr;
-              </a>
+              </I18nLink>
             </div>
             </ScrollReveal>
 
@@ -1619,11 +1603,11 @@ export default function Home() {
           background: "var(--bg-primary)",
         }}
       >
-        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((t) => (
+        {(["terminal", "dashboard", "agents", "zynrip", "docs"] as Tab[]).map((tabKey) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
+            key={tabKey}
+            onClick={() => setTab(tabKey)}
+            aria-pressed={tab === tabKey}
             style={{
               padding: "6px 16px",
               borderRadius: "6px",
@@ -1631,11 +1615,11 @@ export default function Home() {
               cursor: "pointer",
               fontFamily: "inherit",
               fontSize: "13px",
-              background: tab === t ? "var(--accent-green)" : "transparent",
-              color: tab === t ? "#000" : "var(--text-secondary)",
+              background: tab === tabKey ? "var(--accent-green)" : "transparent",
+              color: tab === tabKey ? "#000" : "var(--text-secondary)",
             }}
           >
-            {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
+            {t(`tabs.${tabKey}`)}
           </button>
         ))}
       </div>
