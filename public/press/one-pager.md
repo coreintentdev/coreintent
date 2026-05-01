@@ -81,13 +81,14 @@ Register -> Learn -> Compete -> Earn -> Create
 5. **$45/month total stack** — Lean infrastructure makes free sustainable
 6. **NZ-built, zero VC** — No board meetings. No burn rate anxiety. Just building
 
-## Platform Stats (April 2026)
+## Platform Stats (May 2026)
 
 | Metric | Value |
 |--------|-------|
 | **AI Models** | 3 (Claude, Grok, Perplexity) |
 | **Trading Agents** | 6 configured |
-| **API Endpoints** | 13 (mix of live, demo, real) |
+| **API Endpoints** | 14 (mix of live, demo, real) |
+| **Audit Score** | 96% (52/54 checks, 0 failures) |
 | **Monthly Infrastructure** | ~NZ$45 |
 | **Domains Owned** | 16 |
 | **Registered Trademarks** | 3 (ZYNTHIO, CoreyAI, SongPal) |

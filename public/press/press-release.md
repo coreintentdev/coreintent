@@ -4,7 +4,7 @@
 
 **FOR IMMEDIATE RELEASE**
 
-**New Zealand — April 2026**
+**New Zealand — May 2026**
 
 > **Note:** This is a draft press release. Verify all details before distribution.
 > CoreIntent is currently in paper trading mode — not live trading.
@@ -35,15 +35,17 @@ CoreIntent's pricing philosophy is built on a simple insight: when infrastructur
 
 Revenue is generated through premium competition tiers, while all foundational features — terminal access, AI agents, documentation, and community — remain free.
 
-### Platform Milestones (as of April 2026)
+### Platform Milestones (as of May 2026)
 
 - 3 AI models orchestrated in a multi-layer signal pipeline
 - 6 specialised AI trading agents configured and paper trading
-- 12+ API endpoints (mix of live, demo, and real)
+- 14 API endpoints (mix of live, demo, and real)
 - Full interactive web terminal with real command execution
+- 96% audit score (52/54 checks passing, 0 failures)
 - Open-source codebase on GitHub
 - 16 domains secured across the Zynthio ecosystem
 - 3 registered trademarks (ZYNTHIO, CoreyAI, SongPal)
+- Security hardened: poweredByHeader disabled, error responses sanitised
 
 ### Key Facts
 

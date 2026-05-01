@@ -224,7 +224,7 @@ Currently validating this architecture in paper trading mode before deploying wi
 
 Building in public means sharing the uncomfortable parts too.
 
-**What's working:**
+**What shipped:**
 - 3 AI models (Grok, Claude, Perplexity) integrated and responding to queries
 - 6 trading agents configured with distinct strategies
 - 14 API endpoints built, deployed, and documented
@@ -256,10 +256,10 @@ The temptation in fintech is to fake it until you make it. We're making it witho
 **We open-sourced our marketing materials. Here's why.**
 
 Go to our GitHub repo. Navigate to /public/marketing/. You'll find:
-- 45 ready-to-post tweets
-- 8 LinkedIn posts (including this one)
-- 11 TikTok video scripts
-- 10 Instagram captions with hashtag strategies
+- 60 ready-to-post tweets
+- 13 LinkedIn posts (including this one)
+- 16 TikTok video scripts
+- 15 Instagram captions with hashtag strategies
 - An HTML email newsletter template
 - A 30-day content calendar with platform-specific scheduling
 - A complete press kit, one-pager, and media guide
@@ -367,3 +367,35 @@ The platform is free. The competitions are free. The source code is open. If tha
 -> coreintent.dev | @coreintentdev on GitHub
 
 #IndieFounder #Bootstrap #NewZealand #FinTech #Startups #LeanStartup #SoloFounder #BuildInPublic
+
+---
+
+## Post 13 — May 2026 Milestone Update
+
+**CoreIntent May update: 96% audit score, security hardened, and the marketing is open source too.**
+
+Building in public means the updates keep coming. Here's May.
+
+**What shipped:**
+- 14 API endpoints built, deployed, and documented
+- 96% automated audit score (52/54 checks passing, 0 failures)
+- Security hardening: poweredByHeader disabled, all error responses sanitised to prevent information leakage
+- Rate limiting infrastructure wired up (ready for Cloudflare KV / Upstash Redis)
+- Branch audit: 30 non-main branches catalogued, 4 confirmed stale identified for cleanup
+
+**What's honest (still):**
+- Most API routes return demo data. Labelled as such.
+- No exchange connections yet. Binance/Coinbase are planned, not live.
+- No user authentication or database layer yet.
+- Paper trading mode — every banner says so.
+
+**What we learned this month:**
+1. Security hygiene compounds. One poweredByHeader=false and one sanitised error response might seem trivial, but they close the two most common information disclosure vectors in Next.js apps. Do them early.
+2. Branch sprawl is the hidden cost of AI-assisted development. When you use Cursor, Claude Code, and other AI tools, branches multiply. Audit them monthly or your repo becomes a graveyard.
+3. Open-sourcing your marketing is the ultimate confidence signal. If your tweets are in your GitHub repo, you can't hide behind different narratives for different audiences.
+
+The infrastructure still costs $45/month. The platform is still free. The conviction hasn't changed.
+
+-> coreintent.dev | github.com/coreintentdev/coreintent
+
+#BuildInPublic #FinTech #Startups #AI #Security #NewZealand #Engineering
