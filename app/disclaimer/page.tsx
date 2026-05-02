@@ -104,7 +104,7 @@ export default function DisclaimerPage() {
               Contact
             </h2>
             <p style={{ color: "var(--text-secondary)" }}>
-              Questions: <a href="mailto:corey@coreyai.ai">corey@coreyai.ai</a>
+              Questions: <a href="mailto:corey@coreyai.ai" aria-label="Email CoreIntent about disclaimers">corey@coreyai.ai</a>
             </p>
           </section>
         </div>

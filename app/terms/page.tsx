@@ -128,7 +128,7 @@ export default function TermsPage() {
               10. Contact
             </h2>
             <p style={{ color: "var(--text-secondary)" }}>
-              Questions about these terms: <a href="mailto:corey@coreyai.ai">corey@coreyai.ai</a>
+              Questions about these terms: <a href="mailto:corey@coreyai.ai" aria-label="Email CoreIntent about terms of service">corey@coreyai.ai</a>
             </p>
           </section>
         </div>

@@ -63,5 +63,6 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: "https://coreintent.dev/sitemap.xml",
+    host: "https://coreintent.dev",
   };
 }

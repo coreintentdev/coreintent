@@ -139,7 +139,7 @@ export default function PrivacyPage() {
               9. Contact
             </h2>
             <p style={{ color: "var(--text-secondary)" }}>
-              For privacy-related questions: <a href="mailto:corey@coreyai.ai">corey@coreyai.ai</a>
+              For privacy-related questions: <a href="mailto:corey@coreyai.ai" aria-label="Email CoreIntent for privacy enquiries">corey@coreyai.ai</a>
             </p>
           </section>
         </div>

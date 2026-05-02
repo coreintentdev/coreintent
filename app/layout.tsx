@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -7,6 +7,16 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
   variable: "--font-mono",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+    { media: "(prefers-color-scheme: light)", color: "#10b981" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: {
@@ -89,8 +99,15 @@ export const metadata: Metadata = {
     "Corey McIvor",
   ],
   category: "Finance",
+  ...(process.env.GOOGLE_SITE_VERIFICATION || process.env.BING_SITE_VERIFICATION
+    ? {
+        verification: {
+          ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
+          ...(process.env.BING_SITE_VERIFICATION && { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }),
+        },
+      }
+    : {}),
   other: {
-    "theme-color": "#10b981",
     "color-scheme": "dark",
     "msapplication-TileColor": "#0a0e17",
   },
@@ -218,7 +235,7 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-05-02",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
