@@ -109,6 +109,28 @@
 
 ---
 
+## Week 5 — Launch Countdown (May -> June 1st)
+
+| Day | Platform | Content | Source File | Pillar |
+|-----|----------|---------|-------------|--------|
+| Mon | X/Twitter | Post 56 — 30-Day Countdown | twitter-posts.md | Product |
+| Mon | LinkedIn | Post 13 — Competition Launch Announcement | linkedin-posts.md | Product |
+| Mon | Instagram | Caption 16 — Countdown to Launch (Reel) | instagram-captions.md | Product |
+| Tue | X/Twitter | Post 57 — Why We Waited | twitter-posts.md | Transparency |
+| Tue | TikTok | Script 17 — "30 Days Until Launch" | tiktok-scripts.md | Product |
+| Wed | X/Twitter | Post 58 — What Happens on Day One | twitter-posts.md | Product |
+| Wed | Instagram | Caption 17 — The Countdown Clock | instagram-captions.md | Transparency |
+| Thu | X/Twitter | Post 61 — Thread: 5 Things Ready for Launch | twitter-posts.md | Technical |
+| Thu | TikTok | Script 18 — "Why We Put a Countdown Clock" | tiktok-scripts.md | Transparency |
+| Fri | X/Twitter | Post 62 — May Update: Build in Public | twitter-posts.md | Transparency |
+| Fri | LinkedIn | Post 14 — May 2026 Build in Public Update | linkedin-posts.md | Transparency |
+| Fri | Instagram | Caption 18 — May Build Update (Carousel) | instagram-captions.md | Transparency |
+| Sat | X/Twitter | Post 59 — The Bot Builders Are Coming | twitter-posts.md | Product |
+| Sat | TikTok | Script 19 — "The Arena Opens June 1st" | tiktok-scripts.md | Product |
+| Sun | X/Twitter | Post 64 — First Mover Advantage Has an Expiry Date | twitter-posts.md | Product |
+
+---
+
 ## Evergreen Content (Rotate Monthly)
 
 These posts can be reused and adapted every month:

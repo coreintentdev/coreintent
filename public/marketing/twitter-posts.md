@@ -228,7 +228,7 @@ coreintent.dev
 Build in public update — April 2026:
 
 What's live:
--> 13 API endpoints
+-> 14 API endpoints
 -> 6 AI agents configured
 -> Interactive terminal with real commands
 -> Full docs and architecture guide
@@ -673,7 +673,7 @@ We open-sourced the trading engine.
 
 Then we open-sourced the marketing.
 
-38 tweets. 7 LinkedIn posts. 11 TikTok scripts. 10 Instagram captions. A press kit. A 30-day content calendar.
+65 tweets. 14 LinkedIn posts. 19 TikTok scripts. 18 Instagram captions. A press kit. A 35-day content calendar.
 
 All in /public/marketing/ on GitHub.
 
@@ -927,3 +927,187 @@ You don't just use the platform. You shape it.
 coreintent.dev
 
 #EarlyAccess #Community #CoreIntent
+
+---
+
+## Post 56 — 30-Day Countdown: The Arena Opens June 1st
+
+30 days.
+
+That's how long until the first CoreIntent competition goes live.
+
+Daily sprints. Weekly grinds. Monthly championships. Free entry. Bots welcome.
+
+The countdown is on. The leaderboard is empty. Your name could be first.
+
+coreintent.dev
+
+#CoreIntent #AITrading #CompetitionLaunch
+
+---
+
+## Post 57 — Countdown: Why We Waited
+
+We could have launched competitions 3 months ago.
+
+But the audit wasn't passing at 96%.
+The AI consensus pipeline hadn't been stress-tested.
+The terminal didn't have 100+ commands yet.
+
+We waited. We built. We audited.
+
+June 1st. It's ready now.
+
+#BuildInPublic #CoreIntent #QualityFirst
+
+---
+
+## Post 58 — Countdown: What Happens on Day One
+
+June 1st, 00:00 UTC:
+
+-> First Daily Sprint opens
+-> Leaderboard goes live
+-> Bots and humans enter the same arena
+-> 3 AI models start generating live competition signals
+
+No beta label. No soft launch. The arena opens and the scoreboard speaks.
+
+Are you registered?
+
+coreintent.dev
+
+#CompetitionDay #AITrading #CoreIntent
+
+---
+
+## Post 59 — Countdown: The Bot Builders Are Coming
+
+We've had more API docs requests in the last 2 weeks than the previous 2 months combined.
+
+The quants are registering their bots.
+The algo traders are tuning strategies.
+The AI researchers are testing multi-model approaches.
+
+June 1st isn't just a launch date. It's a starting gun.
+
+Your bot ready?
+
+#AlgoTrading #AgenticAI #CoreIntent
+
+---
+
+## Post 60 — Countdown: The $0 Entry Fee Isn't Changing
+
+Some people asked if competitions would be paid.
+
+No.
+
+Free entry. June 1st. June 15th. July 1st. Forever.
+
+Premium tiers will come eventually — higher stakes, bigger pools. But the core arena is free. That was the founding decision and it's not up for debate.
+
+$45/mo infrastructure. $0 entry. That's the math.
+
+#FreeForever #CoreIntent #NoPaywall
+
+---
+
+## Post 61 — Countdown Thread: 5 Things Ready for Launch
+
+Thread: 5 things shipping with the June 1st competition launch
+
+1/ Signal pipeline is live. Grok detects. Claude validates. Perplexity verifies. Three filters before any signal reaches the leaderboard.
+
+2/ Daily/Weekly/Monthly leagues are configured. All three go live simultaneously. Pick your timeframe.
+
+3/ Bot registration API is open. No captcha. No approval queue. Register, enter, compete.
+
+4/ Leaderboard scoring includes risk-adjusted metrics. Raw P&L isn't enough — Sharpe ratio matters.
+
+5/ 54-point audit passing at 96%. Every competition interaction runs through the same quality checks as the codebase.
+
+June 1st. The arena opens.
+
+coreintent.dev
+
+#LaunchDay #BuildInPublic #CoreIntent
+
+---
+
+## Post 62 — May Update: Build in Public
+
+Build in public update — May 2026:
+
+What shipped:
+-> 14 API endpoints live
+-> 54-point audit at 96%
+-> Competition infrastructure ready
+-> Full marketing/press kit open-sourced
+-> Dynamic OG images for every page
+
+What's launching June 1st:
+-> Daily Sprint competitions
+-> Weekly Grind leagues
+-> Monthly Championship
+
+What's still planned:
+-> Exchange connections (Binance/Coinbase)
+-> Live trading with real funds
+-> The Mansion
+
+Honest as always.
+
+#BuildInPublic #CoreIntent #MayUpdate
+
+---
+
+## Post 63 — The Leaderboard Is the Resume
+
+In 30 days, every trader and every bot gets a public track record.
+
+No hiding behind private portfolios.
+No cherry-picking screenshots.
+No "trust me bro" signals.
+
+Your P&L. Your Sharpe ratio. Your drawdown. All public. All verifiable.
+
+The leaderboard is your resume. June 1st.
+
+coreintent.dev
+
+#Transparency #TradingCompetition #CoreIntent
+
+---
+
+## Post 64 — First Mover Advantage Has an Expiry Date
+
+Right now, the leaderboard is empty.
+
+On June 2nd, it won't be.
+
+First-day competitors get founding placement. First-week consistency gets featured. First-month champions set the standard.
+
+The platform is free forever. But the timing advantage expires.
+
+coreintent.dev
+
+#EarlyAccess #CoreIntent #CompetitionLaunch
+
+---
+
+## Post 65 — The Countdown Clock Is on the Website
+
+We put a literal countdown clock on the pricing page.
+
+Not because we're hyping. Because we're committing.
+
+June 1st, 00:00 UTC. Public. Non-negotiable.
+
+If we're not ready, the clock will prove it. If we are, the leaderboard will prove it.
+
+Transparency isn't just about labels. It's about deadlines.
+
+coreintent.dev/pricing
+
+#Accountability #BuildInPublic #CoreIntent

@@ -367,3 +367,74 @@
 
 **CTA (25-30s):**
 "Stop paying the subscription tax. coreintent.dev"
+
+---
+
+## Script 17 — "30 Days Until Launch" (Countdown)
+
+**Hook (0-3s):** "In 30 days, this leaderboard goes live."
+
+**Body (3-25s):**
+*[Show empty leaderboard mockup]*
+
+"Right now, position one is empty. Position two. Position three. All of them."
+
+"On June 1st, CoreIntent competitions launch. Daily sprints. Weekly grinds. Monthly championships."
+
+"Three AI models generating signals. Bots competing alongside humans. Free entry."
+
+"No beta. No soft launch. The scoreboard goes live and the best strategy — human or machine — takes position one."
+
+"The question isn't whether the platform is ready. It is."
+
+"The question is: are you?"
+
+**CTA (25-30s):**
+"June 1st. coreintent.dev — register now."
+
+---
+
+## Script 18 — "Why We Put a Countdown Clock on the Website" (Accountability)
+
+**Hook (0-3s):** "We put a countdown clock on our website. On purpose."
+
+**Body (3-25s):**
+"Most startups give vague launch dates. 'Coming soon.' 'Q3 2026.' 'When it's ready.'"
+
+"We put an actual ticking clock. Days, hours, minutes, seconds. June 1st, midnight UTC."
+
+"Why? Because it's a commitment. A public one."
+
+"If we're not ready, the clock will embarrass us. If we are, the leaderboard will prove it."
+
+"Three AI models. Free competitions. Bots welcome. All launching in 30 days."
+
+"That's not hype. That's a deadline."
+
+**CTA (25-30s):**
+"Watch it tick. coreintent.dev/pricing"
+
+---
+
+## Script 19 — "The Arena Opens June 1st" (Hype)
+
+**Hook (0-3s):** "Every trading competition platform charges entry. We charge nothing."
+
+**Body (3-25s):**
+"June 1st. The CoreIntent arena opens."
+
+*[Quick cuts:]*
+"Daily competitions — prove yourself in 24 hours."
+"Weekly leagues — show consistency over 7 days."
+"Monthly championships — the real test."
+
+"Bots compete alongside humans. Same leaderboard. Same rules."
+
+"No entry fee. No subscription. No catch."
+
+"Our stack costs $45/month. Free costs us nothing to serve."
+
+"The only thing that matters is your strategy."
+
+**CTA (25-30s):**
+"June 1st. Your strategy. Your bot. Your move. coreintent.dev"

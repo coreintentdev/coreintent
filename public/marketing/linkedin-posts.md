@@ -256,9 +256,9 @@ The temptation in fintech is to fake it until you make it. We're making it witho
 **We open-sourced our marketing materials. Here's why.**
 
 Go to our GitHub repo. Navigate to /public/marketing/. You'll find:
-- 45 ready-to-post tweets
-- 8 LinkedIn posts (including this one)
-- 11 TikTok video scripts
+- 65 ready-to-post tweets
+- 14 LinkedIn posts (including this one)
+- 19 TikTok video scripts
 - 10 Instagram captions with hashtag strategies
 - An HTML email newsletter template
 - A 30-day content calendar with platform-specific scheduling
@@ -367,3 +367,82 @@ The platform is free. The competitions are free. The source code is open. If tha
 -> coreintent.dev | @coreintentdev on GitHub
 
 #IndieFounder #Bootstrap #NewZealand #FinTech #Startups #LeanStartup #SoloFounder #BuildInPublic
+
+---
+
+## Post 13 — Competition Launch Announcement (May 2026)
+
+**CoreIntent competitions go live June 1st. Here's what's launching and why we waited.**
+
+We could have launched competitions in February. The infrastructure was ready. The leagues were configured. The leaderboard was built.
+
+We didn't launch. Here's why.
+
+**The audit wasn't clean enough.**
+
+Our 54-point automated audit was catching edge cases in signal validation. Two checks were flagging domain ambiguities. The competition scoring engine hadn't been stress-tested against concurrent bot entries.
+
+So we waited. Three more months of paper trading. Three more months of testing. Three more months of saying "not yet" when the temptation was to say "good enough."
+
+**What ships June 1st:**
+
+1. **Daily Sprint** — 24-hour competitions, leaderboard resets at midnight UTC
+2. **Weekly Grind** — 7-day risk-adjusted scoring, team competitions enabled
+3. **Monthly Championship** — 30-day portfolio wars, the main event
+
+All three leagues go live simultaneously. Free entry. Bots compete alongside humans.
+
+**What we learned by waiting:**
+- The multi-model consensus pipeline needed a disagreement threshold calibration. When two models agreed but the third had low confidence, the system was generating ambiguous signals. Fixed.
+- Risk-adjusted scoring (not just raw P&L) changes behavior. Traders who know Sharpe ratio matters build different strategies than traders chasing raw returns. The league design had to reinforce this.
+- Bot registration at scale needed rate limiting without captchas. Solved with API key throttling — fair access without friction.
+
+**The numbers:**
+- 14 API endpoints live
+- 54-point audit at 96% (52/54 passing, 0 failures)
+- 3 AI models integrated (Claude, Grok, Perplexity)
+- 6 trading agents configured
+- $45/month infrastructure — unchanged
+
+The countdown clock is on the website. June 1st, 00:00 UTC. Public commitment.
+
+-> coreintent.dev/pricing
+
+#FinTech #AI #Competition #ProductLaunch #BuildInPublic #CoreIntent #Startups
+
+---
+
+## Post 14 — May 2026 Build in Public Update
+
+**May 2026 update: 14 API routes, 96% audit score, and a launch date.**
+
+Monthly transparency report for CoreIntent — here's what's real, what's demo, and what changed since April.
+
+**What shipped in May:**
+- Competition infrastructure finalised (Daily/Weekly/Monthly leagues)
+- Marketing and press kit open-sourced on GitHub
+- Dynamic Open Graph images generating for every page
+- Structured data markup for Google FAQ rich results on the competitions page
+- 14 API endpoints documented and tested
+
+**What's launching June 1st:**
+- First Daily Sprint competition
+- First Weekly Grind league
+- First Monthly Championship
+- Public leaderboards with risk-adjusted scoring
+- Bot registration via API
+
+**What's still honest:**
+- No exchange connections yet (Binance/Coinbase are planned)
+- No user authentication system
+- No database/persistence layer
+- Paper trading mode throughout
+- Demo data labelled as demo
+
+**Infrastructure bill: ~$45/month.** Same as last month. Same as the month before.
+
+The hardest part of building in public isn't the transparency. It's resisting the urge to round up. These numbers are exact.
+
+-> coreintent.dev
+
+#BuildInPublic #FinTech #AI #Transparency #MonthlyUpdate #CoreIntent #Startups #NewZealand

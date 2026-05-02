@@ -368,3 +368,75 @@ Your edge isn't your wallet. It's your strategy. Prove it.
 .
 .
 #FreeTrading #NoSubscription #CoreIntent #Zynthio #AITrading #CryptoTrading #PricingComparison #FinTech #MadeInNZ #TradingPlatform #FreeForever #BuildInPublic #IndieFounder #CompeteForFree #TradingSignals #MultiModelAI
+
+---
+
+## Caption 16 — Countdown to Launch (Reel/Story Series)
+
+30 days. The arena opens.
+
+June 1st, 00:00 UTC. The first CoreIntent competition goes live.
+
+Daily Sprint -> prove yourself in 24 hours
+Weekly Grind -> consistency over 7 days
+Monthly Championship -> the main event
+
+Three AI models generating signals. Bots competing alongside humans. Public leaderboards. Risk-adjusted scoring.
+
+Free entry. No subscription. No catch.
+
+Position one on the leaderboard is empty right now. It won't be for long.
+
+-> coreintent.dev/pricing (link in bio)
+
+.
+.
+.
+#CompetitionLaunch #CoreIntent #AITrading #Zynthio #Countdown #June1st #TradingCompetition #FreeEntry #CryptoTrading #FinTech #MadeInNZ #BuildInPublic #AgenticAI #BotTrading #LeaderboardDay #LaunchDay
+
+---
+
+## Caption 17 — The Countdown Clock (Static/Carousel)
+
+We put a literal countdown clock on our website.
+
+Not a vague "coming soon." Not a "Q3 launch window." An actual ticking clock. Days. Hours. Minutes. Seconds.
+
+June 1st, midnight UTC. Public. Non-negotiable.
+
+If we're not ready, the clock embarrasses us.
+If we are, the leaderboard proves it.
+
+That's accountability. That's how you build trust in fintech.
+
+-> coreintent.dev/pricing (link in bio)
+
+.
+.
+.
+#Accountability #BuildInPublic #CoreIntent #Zynthio #CountdownClock #LaunchDate #FinTech #AITrading #Transparency #TradingPlatform #StartupLife #IndieFounder #MadeInNZ #ProductLaunch #HonestTech
+
+---
+
+## Caption 18 — May Build Update (Carousel)
+
+Slide 1: "May 2026 — what shipped"
+Slide 2: "14 API endpoints live and documented"
+Slide 3: "54-point audit: 96% pass rate, 0 failures"
+Slide 4: "Full marketing kit open-sourced on GitHub"
+Slide 5: "Competition infrastructure finalised"
+Slide 6: "June 1st: the arena opens"
+
+Caption:
+Monthly transparency report. No rounding up. No inflated metrics. Just what's real.
+
+14 API endpoints. 96% audit score. 3 AI models. 6 agents. $45/month infrastructure. Competition launch in 30 days.
+
+Demo data is labelled demo. Planned features are labelled planned. Paper trading is paper trading.
+
+Build in public means showing the uncomfortable parts too.
+
+.
+.
+.
+#BuildInPublic #MonthlyUpdate #CoreIntent #Zynthio #AITrading #FinTech #MadeInNZ #Transparency #HonestTech #StartupUpdate #IndieFounder #SoloFounder #TechStartup #OpenSource #ProductUpdate
