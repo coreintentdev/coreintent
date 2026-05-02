@@ -1334,7 +1334,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              Free AI Trading Competitions — Open Source — Built in NZ
             </div>
             <h1
               style={{
@@ -1410,7 +1410,7 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Launch Terminal &rarr;
+                Enter the Arena &rarr;
               </button>
               <a
                 href="/pricing"

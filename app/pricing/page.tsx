@@ -372,7 +372,7 @@ export default function PricingPage() {
                       textAlign: "center",
                     }}
                   >
-                    Join {league.name} &rarr;
+                    Enter {league.name} &rarr;
                   </a>
                 </div>
               </article>
