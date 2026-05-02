@@ -99,12 +99,14 @@ export const metadata: Metadata = {
     "Corey McIvor",
   ],
   category: "Finance",
-  verification: {
-    google: "GOOGLE_SITE_VERIFICATION",
-    other: {
-      "msvalidate.01": "BING_SITE_VERIFICATION",
-    },
-  },
+  ...(process.env.GOOGLE_SITE_VERIFICATION || process.env.BING_SITE_VERIFICATION
+    ? {
+        verification: {
+          ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
+          ...(process.env.BING_SITE_VERIFICATION && { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }),
+        },
+      }
+    : {}),
   other: {
     "color-scheme": "dark",
     "msapplication-TileColor": "#0a0e17",
@@ -237,14 +239,6 @@ const jsonLd = {
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
       },
     },
     {
