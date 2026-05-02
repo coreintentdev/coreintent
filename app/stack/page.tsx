@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -81,6 +81,310 @@ const ARCH_CONNECTIONS = [
   { from: "engine", to: "vps", label: "deploy" },
   { from: "risk", to: "engine", label: "limits" },
 ];
+
+/* ─── Live Signal Pipeline — Real-time AI orchestration visualization ─── */
+const PIPELINE_STAGES = [
+  { id: "grok", label: "Grok", role: "Signal Scan", color: "#ef4444", x: 80, y: 60 },
+  { id: "claude", label: "Claude", role: "Risk Analysis", color: "#a855f7", x: 270, y: 60 },
+  { id: "perplexity", label: "Perplexity", role: "Fact-Check", color: "#3b82f6", x: 460, y: 60 },
+  { id: "engine", label: "Engine", role: "Consensus", color: "#10b981", x: 650, y: 60 },
+];
+
+const PIPELINE_SIGNALS = [
+  { pair: "BTC/USDT", price: "$67,420", direction: "LONG", conf: [87, 79, 82, 83] },
+  { pair: "ETH/USDT", price: "$3,285", direction: "SHORT", conf: [72, 81, 68, 74] },
+  { pair: "SOL/USDT", price: "$142.80", direction: "LONG", conf: [91, 85, 88, 88] },
+  { pair: "AVAX/USDT", price: "$35.60", direction: "HOLD", conf: [58, 62, 55, 58] },
+];
+
+function LiveSignalPipeline() {
+  const [activeStage, setActiveStage] = useState(-1);
+  const [signalIdx, setSignalIdx] = useState(0);
+  const [dotProgress, setDotProgress] = useState(0);
+  const [confidences, setConfidences] = useState([0, 0, 0, 0]);
+  const [statusText, setStatusText] = useState("Awaiting signal...");
+  const [signalCount, setSignalCount] = useState(847);
+  const [latency, setLatency] = useState(0);
+
+  const signal = PIPELINE_SIGNALS[signalIdx];
+
+  const cycleSignal = useCallback(() => {
+    let stage = -1;
+    let elapsed = 0;
+    const stepDuration = 900;
+    const stages = [
+      { stage: 0, status: `Grok scanning ${PIPELINE_SIGNALS[signalIdx].pair}...` },
+      { stage: 0, status: `Signal detected: ${PIPELINE_SIGNALS[signalIdx].direction} @ ${PIPELINE_SIGNALS[signalIdx].price}` },
+      { stage: 1, status: "Claude running deep risk analysis..." },
+      { stage: 1, status: `Risk/reward: ${(1.5 + Math.random() * 2).toFixed(1)}:1 — acceptable` },
+      { stage: 2, status: "Perplexity fact-checking live sources..." },
+      { stage: 2, status: "No adverse news — research confirms" },
+      { stage: 3, status: "Engine computing weighted consensus..." },
+      { stage: 3, status: `DECISION: ${PIPELINE_SIGNALS[signalIdx].direction} — ${PIPELINE_SIGNALS[signalIdx].conf[3]}% confidence` },
+    ];
+
+    const iv = setInterval(() => {
+      const stepIdx = Math.floor(elapsed / stepDuration);
+      if (stepIdx >= stages.length) {
+        clearInterval(iv);
+        setActiveStage(-1);
+        setDotProgress(0);
+        setStatusText("Signal processed. Awaiting next...");
+        setSignalCount((c) => c + 1);
+        setTimeout(() => {
+          setSignalIdx((i) => (i + 1) % PIPELINE_SIGNALS.length);
+        }, 1500);
+        return;
+      }
+
+      const currentStep = stages[stepIdx];
+      if (currentStep.stage !== stage) {
+        stage = currentStep.stage;
+        setActiveStage(stage);
+        const sig = PIPELINE_SIGNALS[signalIdx];
+        setConfidences((prev) => {
+          const next = [...prev];
+          next[stage] = sig.conf[stage];
+          return next;
+        });
+      }
+      setStatusText(currentStep.status);
+      setDotProgress(stepIdx / (stages.length - 1));
+      setLatency(Math.floor(elapsed / 100) * 100 + Math.floor(Math.random() * 50));
+      elapsed += stepDuration / 2;
+    }, stepDuration / 2);
+
+    return () => clearInterval(iv);
+  }, [signalIdx]);
+
+  useEffect(() => {
+    setConfidences([0, 0, 0, 0]);
+    setActiveStage(-1);
+    setDotProgress(0);
+    const cleanup = cycleSignal();
+    return cleanup;
+  }, [cycleSignal]);
+
+  const getConnectionPath = (fromIdx: number) => {
+    const from = PIPELINE_STAGES[fromIdx];
+    const to = PIPELINE_STAGES[fromIdx + 1];
+    return `M ${from.x + 35} ${from.y} L ${to.x - 35} ${to.y}`;
+  };
+
+  const getDotPosition = () => {
+    const totalConnections = 3;
+    const progressPerConnection = 1 / totalConnections;
+    const connectionIdx = Math.min(2, Math.floor(dotProgress * totalConnections));
+    const localProgress = (dotProgress * totalConnections - connectionIdx) / 1;
+
+    const from = PIPELINE_STAGES[connectionIdx];
+    const to = PIPELINE_STAGES[connectionIdx + 1];
+    if (!from || !to) return { x: PIPELINE_STAGES[3].x, y: PIPELINE_STAGES[3].y };
+
+    const startX = from.x + 35;
+    const endX = to.x - 35;
+    return {
+      x: startX + (endX - startX) * Math.min(1, localProgress),
+      y: from.y,
+    };
+  };
+
+  const dot = getDotPosition();
+  const dirColor = signal.direction === "LONG" ? "#10b981" : signal.direction === "SHORT" ? "#ef4444" : "#f59e0b";
+
+  return (
+    <div
+      style={{
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border-color)",
+        borderRadius: "10px",
+        padding: "24px",
+        marginBottom: "40px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div className="grid-bg" />
+
+      {/* Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", position: "relative" }}>
+        <div>
+          <div style={{ fontSize: "10px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px" }}>
+            Live Signal Pipeline
+          </div>
+          <div style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text-primary)", marginTop: "4px" }}>
+            Watch AI Models Process a Signal
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Signals</div>
+            <div style={{ fontSize: "14px", fontWeight: "bold", color: "#10b981" }}>{signalCount.toLocaleString()}</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Latency</div>
+            <div style={{ fontSize: "14px", fontWeight: "bold", color: latency < 2000 ? "#10b981" : "#f59e0b" }}>{(latency / 1000).toFixed(1)}s</div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <span className="animate-pulse" style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+            <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold" }}>LIVE</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Pipeline SVG */}
+      <svg viewBox="0 0 730 130" style={{ width: "100%", height: "auto", position: "relative" }}>
+        <defs>
+          <filter id="pipeGlow">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <linearGradient id="connectionGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#10b981" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#a855f7" stopOpacity="0.6" />
+          </linearGradient>
+        </defs>
+
+        {/* Connection lines */}
+        {[0, 1, 2].map((i) => {
+          const isActive = activeStage > i || (activeStage === i && dotProgress > i / 3);
+          return (
+            <path
+              key={`conn-${i}`}
+              d={getConnectionPath(i)}
+              fill="none"
+              stroke={isActive ? PIPELINE_STAGES[i + 1].color : "var(--border-color)"}
+              strokeWidth={isActive ? 2 : 1}
+              strokeDasharray={isActive ? "8 4" : "none"}
+              strokeOpacity={isActive ? 0.8 : 0.3}
+              className={isActive ? "pipeline-connection-active" : ""}
+              style={{ transition: "stroke 0.3s, stroke-opacity 0.3s" }}
+            />
+          );
+        })}
+
+        {/* Nodes */}
+        {PIPELINE_STAGES.map((node, i) => {
+          const isActive = activeStage === i;
+          const isPast = activeStage > i;
+          return (
+            <g key={node.id}>
+              {/* Glow ring */}
+              {isActive && (
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r="36"
+                  fill="none"
+                  stroke={node.color}
+                  strokeWidth="1"
+                  opacity="0.3"
+                  className="pipeline-node-active"
+                  style={{ "--glow-color": node.color } as React.CSSProperties}
+                />
+              )}
+              {/* Node circle */}
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r="28"
+                fill={isActive ? node.color + "25" : isPast ? node.color + "15" : node.color + "08"}
+                stroke={node.color}
+                strokeWidth={isActive ? 2 : 1}
+                strokeOpacity={isActive ? 1 : isPast ? 0.6 : 0.3}
+                filter={isActive ? "url(#pipeGlow)" : undefined}
+                style={{ transition: "all 0.4s ease" }}
+              />
+              {/* Label */}
+              <text x={node.x} y={node.y - 3} textAnchor="middle" fill={isActive || isPast ? node.color : "#64748b"} fontSize="11" fontWeight="bold" fontFamily="inherit"
+                style={{ transition: "fill 0.3s" }}>
+                {node.label}
+              </text>
+              <text x={node.x} y={node.y + 10} textAnchor="middle" fill={isActive ? node.color : "#64748b"} fontSize="7" fontFamily="inherit" opacity={isActive ? 0.8 : 0.5}>
+                {node.role}
+              </text>
+              {/* Confidence badge */}
+              {confidences[i] > 0 && (
+                <g>
+                  <rect x={node.x - 16} y={node.y + 20} width="32" height="16" rx="4" fill={node.color + "20"} stroke={node.color} strokeWidth="0.5" strokeOpacity="0.4" />
+                  <text x={node.x} y={node.y + 31} textAnchor="middle" fill={node.color} fontSize="9" fontWeight="bold" fontFamily="inherit">
+                    {confidences[i]}%
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+
+        {/* Traveling signal dot */}
+        {activeStage >= 0 && (
+          <g>
+            <circle cx={dot.x} cy={dot.y} r="8" fill={dirColor} opacity="0.15" />
+            <circle cx={dot.x} cy={dot.y} r="4" fill={dirColor} filter="url(#pipeGlow)">
+              <animate attributeName="r" values="3;5;3" dur="0.8s" repeatCount="indefinite" />
+            </circle>
+          </g>
+        )}
+      </svg>
+
+      {/* Status bar */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "16px",
+          padding: "10px 16px",
+          background: "var(--bg-primary)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <span style={{
+            padding: "3px 10px",
+            borderRadius: "4px",
+            fontSize: "10px",
+            fontWeight: "bold",
+            background: dirColor + "20",
+            color: dirColor,
+            border: `1px solid ${dirColor}44`,
+          }}>
+            {signal.pair} {signal.direction}
+          </span>
+          <span className="pipeline-status-enter" key={statusText} style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+            {statusText}
+          </span>
+        </div>
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          {activeStage >= 0 && (
+            <div style={{ display: "flex", gap: "4px" }}>
+              {[0, 1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: i <= activeStage ? PIPELINE_STAGES[i].color : "var(--border-color)",
+                    transition: "background 0.3s",
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          <span style={{ fontSize: "10px", color: "var(--text-secondary)" }}>
+            {signal.price}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ArchitectureDiagram() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
@@ -266,6 +570,9 @@ export default function StackPage() {
           <p style={{ color: "var(--text-secondary)", marginBottom: "40px" }}>
             Full API orchestra powering CoreIntent / Zynthio
           </p>
+
+          {/* Live Signal Pipeline */}
+          <LiveSignalPipeline />
 
           {/* Architecture Diagram */}
           <ArchitectureDiagram />

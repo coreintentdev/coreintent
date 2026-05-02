@@ -551,6 +551,12 @@ function MiniTerminalPreview({ onLaunch }: { onLaunch: () => void }) {
     setInputVal("");
   };
 
+  const quickExec = (cmd: string) => {
+    setTyping(false);
+    const output = MINI_COMMANDS[cmd] || `\x1b[31mUnknown: ${cmd}\x1b[0m`;
+    setLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, output, ""]);
+  };
+
   const ansiMini = (text: string) => {
     const map: Record<string, string> = {
       "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
@@ -630,6 +636,14 @@ function MiniTerminalPreview({ onLaunch }: { onLaunch: () => void }) {
             />
           </form>
         </div>
+      </div>
+      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", marginTop: "12px" }}>
+        <span style={{ fontSize: "10px", color: "var(--text-secondary)", alignSelf: "center", marginRight: "4px" }}>Try:</span>
+        {["brain", "status", "cai", "336", "zen", "fortune"].map((cmd) => (
+          <button key={cmd} className="quick-cmd-btn" onClick={() => quickExec(cmd)}>
+            {cmd}
+          </button>
+        ))}
       </div>
       <div style={{ textAlign: "center", marginTop: "14px" }}>
         <button
