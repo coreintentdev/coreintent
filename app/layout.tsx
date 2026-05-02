@@ -8,6 +8,22 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
+const bingSiteVerification = process.env.BING_SITE_VERIFICATION;
+const verification =
+  googleSiteVerification || bingSiteVerification
+    ? {
+        ...(googleSiteVerification ? { google: googleSiteVerification } : {}),
+        ...(bingSiteVerification
+          ? {
+              other: {
+                "msvalidate.01": bingSiteVerification,
+              },
+            }
+          : {}),
+      }
+    : undefined;
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -99,12 +115,7 @@ export const metadata: Metadata = {
     "Corey McIvor",
   ],
   category: "Finance",
-  verification: {
-    google: "GOOGLE_SITE_VERIFICATION",
-    other: {
-      "msvalidate.01": "BING_SITE_VERIFICATION",
-    },
-  },
+  ...(verification ? { verification } : {}),
   other: {
     "color-scheme": "dark",
     "msapplication-TileColor": "#0a0e17",
@@ -237,14 +248,6 @@ const jsonLd = {
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
       },
     },
     {
