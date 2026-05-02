@@ -254,7 +254,7 @@ export default function PricingPage() {
             {LEAGUES.map((league) => (
               <article
                 key={league.name}
-                className={league.featured ? "pricing-card-featured" : ""}
+                className={league.featured ? "pricing-card-featured holo-border" : "card-hover-glow"}
                 style={{
                   background: "var(--bg-secondary)",
                   border: `1px solid ${league.featured ? league.color + "44" : "var(--border-color)"}`,
@@ -372,7 +372,7 @@ export default function PricingPage() {
                       textAlign: "center",
                     }}
                   >
-                    Enter {league.name} &rarr;
+                    {league.featured ? "Claim Your Spot" : `Enter ${league.name}`} &rarr;
                   </a>
                 </div>
               </article>

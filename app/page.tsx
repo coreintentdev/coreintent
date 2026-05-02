@@ -699,9 +699,7 @@ function FloatingCTA() {
       animation: "fadeInUp 0.4s ease both",
     }}>
       <a
-        href="https://github.com/coreintentdev/coreintent"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/pricing"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -719,8 +717,8 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#000", opacity: 0.6, animation: "pulse 2s ease-in-out infinite" }} />
+        Start Competing &mdash; Free
       </a>
     </div>
   );
@@ -1508,6 +1506,7 @@ export default function Home() {
                 borderRadius: "12px",
               }}
             >
+              <AnimatedCounter end={247} suffix="+" label="Early Users" color="#06b6d4" />
               <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
               <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
               <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
@@ -1516,7 +1515,7 @@ export default function Home() {
             </div>
             </ScrollReveal>
             <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
-              [DEMO] Signal count is simulated — platform is in paper trading mode
+              [DEMO] All counters are simulated — platform is in paper trading mode
             </p>
 
             {/* How It Works */}
