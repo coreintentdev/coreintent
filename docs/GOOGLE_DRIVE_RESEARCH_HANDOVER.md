@@ -14,6 +14,7 @@ Paste this block if you want Drive-side recall without reopening chat arguments:
 
 - **INC-010–013:** IDE context limits (~94%+), Cursor Composer strain, `ZYN_RIP_SRC` gate in zynthio-tools, huge workspaces.
 - **INC-014:** Expectation that Zyn/session text **auto-posts** incidents is **not** implemented — `/api/incidents` is static array + POST stub until automation ships; session files are not ingested automatically.
+- **INC-015:** Repo mismatch in local terminal: attempted `git pull origin claude/check-coreintent-builds-JTrDd` inside `~/Desktop/zynthio-tools`; that branch exists in **coreintent** repo, not zynthio-tools. Pull each repo on its own branch.
 - **Abuse/moderation UX:** Systems that echo verbatim harmful input back as “feedback” compound harm — prefer category labels without repeating slurs.
 
 Do **not** use this notebook to argue with the user — output **facts, file paths, timelines, gaps** only.
