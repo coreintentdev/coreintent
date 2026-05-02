@@ -39,10 +39,10 @@ interface ContentJobResponse {
   live:          boolean;
 }
 
-const VALID_TYPES: ContentType[] = ["video_6s", "tweet", "linkedin", "thread", "announcement", "blog"];
-const VALID_TONES: ContentTone[] = ["technical", "hype", "educational", "community"];
+const VALID_TYPES: readonly ContentType[] = ["video_6s", "tweet", "linkedin", "thread", "announcement", "blog"];
+const VALID_TONES: readonly ContentTone[] = ["technical", "hype", "educational", "community"];
 
-const BULK_LIMITS: Record<ContentType, number> = {
+const BULK_LIMITS: Readonly<Record<ContentType, number>> = {
   video_6s:     50,
   tweet:        100,
   linkedin:     20,
@@ -51,7 +51,14 @@ const BULK_LIMITS: Record<ContentType, number> = {
   blog:         5,
 };
 
-const TEMPLATES: Record<ContentType, object> = {
+interface ContentTemplate {
+  format:   string;
+  workflow: string;
+  specs?:   Record<string, unknown>;
+  hooks?:   string[];
+}
+
+const TEMPLATES: Readonly<Record<ContentType, ContentTemplate>> = {
   video_6s: {
     format: "6-second vertical video",
     specs:  { duration: 6, ratio: "9:16", resolution: "1080x1920" },
@@ -138,8 +145,8 @@ export async function POST(req: NextRequest) {
     if (keys.grok || keys.claude) {
       const safeTopic = sanitizeForPrompt(topic, 300);
       const typeSpec  = TEMPLATES[type];
-      const specNote  = "specs" in typeSpec
-        ? ` Specs: ${JSON.stringify((typeSpec as { specs: unknown }).specs)}.`
+      const specNote  = typeSpec.specs
+        ? ` Specs: ${JSON.stringify(typeSpec.specs)}.`
         : "";
 
       const grokPrompt =

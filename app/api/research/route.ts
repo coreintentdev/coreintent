@@ -29,7 +29,7 @@ const IDENTITY = {
   domain:  "coreintent.dev",
 } as const;
 
-const VALID_TASKS: ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
+const VALID_TASKS: readonly ResearchTask[] = ["research", "analysis", "signal", "sentiment"];
 
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "anon";

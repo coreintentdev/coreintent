@@ -78,7 +78,7 @@ const INCIDENTS: Incident[] = [
   },
 ];
 
-const MONITORED_SERVICES: MonitoredService[] = [
+const MONITORED_SERVICES: readonly MonitoredService[] = [
   { name: "CoreIntent Engine",    status: "operational",    uptime: "99.9%", note: "Build passes, app runs" },
   { name: "Binance Connection",   status: "not_connected",  uptime: "0%",    note: "Demo data only — no SDK, no API key" },
   { name: "Coinbase Connection",  status: "not_connected",  uptime: "0%",    note: "Demo data only — no SDK, no API key" },
@@ -96,7 +96,7 @@ const MONITORED_SERVICES: MonitoredService[] = [
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },
 ];
 
-const VALID_SEVERITIES: IncidentSeverity[] = ["critical", "major", "minor", "info"];
+const VALID_SEVERITIES: readonly IncidentSeverity[] = ["critical", "major", "minor", "info"];
 
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "anon";

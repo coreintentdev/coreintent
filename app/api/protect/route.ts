@@ -28,7 +28,7 @@ const PROTECTED_ASSETS = {
   customTools: ["The Ripper", "Mac the Zipper", "PDF Plumber", "SongPal"],
 } as const;
 
-const VALID_TYPES: ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
+const VALID_TYPES: readonly ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
 
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "anon";

@@ -21,7 +21,7 @@ interface Agent {
 }
 
 interface AgentsResponse {
-  agents:          Agent[];
+  agents:          readonly Agent[];
   totalActive:     number;
   totalPaused:     number;
   totalProcessing: number;
@@ -30,7 +30,7 @@ interface AgentsResponse {
   timestamp:       string;
 }
 
-const AGENTS: Agent[] = [
+const AGENTS: readonly Agent[] = [
   { name: "TrendFollower",  model: "claude-opus-4-7",            status: "active",     task: "BTC/ETH momentum",        uptime: 3600 },
   { name: "MeanRevert",     model: "claude-sonnet-4-6",          status: "active",     task: "SOL mean reversion",      uptime: 3500 },
   { name: "SentimentBot",   model: "grok-3",                     status: "processing", task: "Social signals",          uptime: 2400 },

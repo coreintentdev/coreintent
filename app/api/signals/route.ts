@@ -47,7 +47,7 @@ const MIN_CONFIDENCE = 0.75;
  * Static signal definitions. Timestamps are stamped per-request in GET
  * to avoid serving stale module-load timestamps after long uptimes.
  */
-const SIGNAL_TEMPLATES: SignalTemplate[] = [
+const SIGNAL_TEMPLATES: readonly SignalTemplate[] = [
   { id: 1, pair: "BTC/USD", direction: "long",  confidence: 0.87, source: "TrendFollower" },
   { id: 2, pair: "ETH/USD", direction: "long",  confidence: 0.79, source: "MeanRevert"    },
   { id: 3, pair: "SOL/USD", direction: "short", confidence: 0.62, source: "SentimentBot"  },
