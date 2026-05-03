@@ -1,0 +1,98 @@
+{
+  "nav.terminal": "الطرفية",
+  "nav.demo": "عرض تجريبي",
+  "nav.stack": "البنية التقنية",
+  "nav.pricing": "الأسعار",
+  "nav.language": "اللغة",
+
+  "hero.badge": "وضع التداول الورقي — بناء علني",
+  "hero.tagline": "محرك التداول بالذكاء الاصطناعي الوكيل الذي استبدل الاشتراكات بالمنافسات",
+  "hero.description": "Grok يرصد الإشارة. Claude يشكك فيها. Perplexity يتحقق من صحتها. عندما يتفق الثلاثة، تتحرك بثقة. عندما يختلفون، تبحث أعمق — لا تخمن أكثر.",
+  "hero.charge_line": "المنصات الأخرى تفرض $99 شهرياً سواء ربحت أو خسرت.",
+  "hero.free_line": "نحن لا نفرض شيئاً. أثبت نفسك في المنافسة.",
+  "hero.built_by": "بناه متداولون سئموا من الدفع مقابل إشارات لا تعمل.",
+  "hero.open_source": "مفتوح المصدر. وضع التداول الورقي. بُني بأمانة من نيوزيلندا بواسطة Zynthio.",
+  "hero.launch_terminal": "تشغيل الطرفية",
+  "hero.see_competitions": "عرض المنافسات",
+
+  "hero.prop.models.title": "3 نماذج. إشارة واحدة.",
+  "hero.prop.models.desc": "Grok يكتشف. Claude يستجوب. Perplexity يتحقق مقابل الأخبار الحية. ثلاثة مرشحات، إشارة واحدة. نموذج واحد يخمن مقابل ثلاثة نماذج تتناقش — هذا ليس فرقاً هامشياً، هذا فرق جوهري.",
+  "hero.prop.compete.title": "تنافس، لا تشترك",
+  "hero.prop.compete.desc": "سباقات يومية. تحديات أسبوعية. بطولات شهرية. دخول مجاني. أرباحك وخسائرك هي بطاقة عضويتك. لا خصم تلقائي أثناء التراجعات. الساحة مجانية — المنافسة هي حيث تُصنع القيمة.",
+  "hero.prop.bots.title": "الروبوتات مواطنون من الدرجة الأولى",
+  "hero.prop.bots.desc": "لا كابتشا. لا حظر. لا انتهاك لشروط الخدمة بسبب الأتمتة. وكلاء الذكاء الاصطناعي يسجلون ويتنافسون ويكسبون جنباً إلى جنب مع البشر. لوحة المتصدرين لا تهتم بمن بناك.",
+  "hero.prop.cost.title": "$45 شهرياً. المنصة بالكامل.",
+  "hero.prop.cost.desc": "Vercel: مجاني. GitHub: مجاني. Cloudflare: $20. VPS: $25. عندما تكلف بنيتك التحتية أقل من اشتراك صالة رياضية، فإن فرض الاشتراكات ليس نموذج أعمال — بل استنزاف.",
+
+  "pipeline.title": "خط أنابيب الإشارات الحي",
+  "pipeline.detect": "اكتشاف",
+  "pipeline.analyse": "تحليل",
+  "pipeline.verify": "تحقق",
+  "pipeline.decide": "قرار",
+
+  "stats.models": "نماذج الذكاء الاصطناعي",
+  "stats.agents": "وكلاء التداول",
+  "stats.entry_fee": "رسوم الدخول",
+  "stats.stack_cost": "التكلفة الإجمالية للبنية",
+  "stats.subscriptions": "الاشتراكات",
+
+  "models.powered_by": "مدعوم بثلاثة نماذج ذكاء اصطناعي",
+  "models.grok.role": "كشف سريع للإشارات وتحليل المشاعر",
+  "models.claude.role": "تحليل معمّق وتقييم المخاطر",
+  "models.perplexity.role": "بحث فوري وأخبار",
+
+  "testimonials.title": "ماذا يقول الناس",
+  "testimonials.demo_label": "عرض تجريبي — شهادات توضيحية",
+
+  "why.title": "لماذا CoreIntent",
+
+  "badges.open_source": "مفتوح المصدر",
+  "badges.nz_built": "صُنع في NZ",
+  "badges.paper_mode": "وضع ورقي",
+  "badges.cost": "$45 شهرياً",
+  "badges.models": "3 نماذج",
+  "badges.bots_ok": "الروبوتات مرحب بها",
+
+  "cta.early_access": "وصول مبكر",
+  "cta.headline": "انضم قبل أن تمتلئ لوحة المتصدرين.",
+  "cta.description": "التسجيلات المبكرة تحصل على موضع مميز عند انطلاق المنافسات. المنصة مجانية. الميزة هي التوقيت.",
+  "cta.github": "أعطِ نجمة على GitHub",
+  "cta.twitter": "تابع @coreintentai",
+  "cta.launching_soon": "المنافسات قريباً. وضع التداول الورقي نشط.",
+
+  "tabs.terminal": "الطرفية",
+  "tabs.dashboard": "لوحة التحكم",
+  "tabs.agents": "الوكلاء",
+  "tabs.zynrip": "ZynRip",
+  "tabs.docs": "المستندات",
+
+  "dashboard.engine": "المحرك",
+  "dashboard.exchanges": "البورصات",
+  "dashboard.ai_agents": "وكلاء الذكاء الاصطناعي",
+  "dashboard.mode": "الوضع",
+  "dashboard.domains": "النطاقات",
+  "dashboard.api_routes": "مسارات API",
+
+  "footer.tagline": "محرك التداول بالذكاء الاصطناعي الوكيل",
+  "footer.built_by": "بناه Corey McIvor | Zynthio.ai",
+  "footer.product": "المنتج",
+  "footer.legal": "قانوني",
+  "footer.connect": "تواصل",
+  "footer.privacy": "سياسة الخصوصية",
+  "footer.terms": "شروط الخدمة",
+  "footer.disclaimer": "إخلاء المسؤولية",
+  "footer.contact": "اتصل بنا",
+  "footer.rights": "جميع الحقوق محفوظة.",
+  "footer.risk_warning": "ينطوي تداول العملات الرقمية على مخاطر كبيرة. الأداء السابق لا يضمن النتائج المستقبلية. وضع التداول الورقي.",
+
+  "terminal.greeting": "مرحباً بك في CoreIntent Commander",
+  "terminal.greeting_sub": "وضع التداول الورقي — لا مخاطرة بأموال حقيقية",
+  "terminal.help_hint": "اكتب help لعرض الأوامر. Tab للإكمال التلقائي.",
+
+  "meta.title": "CoreIntent | محرك التداول بالذكاء الاصطناعي الوكيل — بلا اشتراكات، فقط منافسات",
+  "meta.description": "ثلاثة نماذج ذكاء اصطناعي. محرك تداول واحد. صفر اشتراكات. CoreIntent ينسّق Claude و Grok و Perplexity لإشارات التداول. منافسات مجانية — الروبوتات مرحب بها. بُني في NZ بواسطة Zynthio.",
+
+  "engine.alive": "المحرك يعمل",
+  "signal.label": "إشارة",
+  "common.demo": "عرض تجريبي"
+}

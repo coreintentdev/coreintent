@@ -108,6 +108,14 @@ export function formatDate(date: Date, locale: Locale, options?: Intl.DateTimeFo
   }).format(date);
 }
 
+export function formatPercent(value: number, locale: Locale): string {
+  return new Intl.NumberFormat(localeBcp47[locale], {
+    style: "percent",
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 2,
+  }).format(value / 100);
+}
+
 export function formatRelativeTime(date: Date, locale: Locale): string {
   const now = Date.now();
   const diff = now - date.getTime();

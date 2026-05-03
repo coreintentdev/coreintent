@@ -1,140 +1,130 @@
-# CoreIntent — Internationalization (i18n)
+# CoreIntent — Internationalization (i18n) Architecture
 
 ## Supported Locales
 
-| Code | Language       | Direction | Status      |
-|------|---------------|-----------|-------------|
-| en   | English (NZ)  | LTR       | Complete    |
-| es   | Spanish       | LTR       | Complete    |
-| mi   | Te Reo Maori  | LTR       | Complete    |
-| zh   | Chinese       | LTR       | Stub        |
-| ja   | Japanese      | LTR       | Stub        |
-| pt   | Portuguese    | LTR       | Stub        |
-| fr   | French        | LTR       | Stub        |
-| de   | German        | LTR       | Stub        |
-| ar   | Arabic        | RTL       | Stub        |
-| hi   | Hindi         | LTR       | Stub        |
-
-Default locale: `en` (English, NZ)
+| Code | Language       | Direction | BCP 47  |
+|------|---------------|-----------|---------|
+| en   | English        | LTR       | en-NZ   |
+| es   | Spanish        | LTR       | es      |
+| mi   | Te Reo Maori   | LTR       | mi-NZ   |
+| zh   | Chinese        | LTR       | zh-Hans |
+| ja   | Japanese       | LTR       | ja      |
+| pt   | Portuguese     | LTR       | pt-BR   |
+| fr   | French         | LTR       | fr      |
+| de   | German         | LTR       | de      |
+| ar   | Arabic         | RTL       | ar      |
+| hi   | Hindi          | LTR       | hi      |
 
 ## Architecture
 
-### URL Structure
+### URL Pattern
 
-All pages live under `app/[locale]/`. The middleware detects the user's preferred locale and redirects:
+All pages live under `app/[locale]/`. Middleware redirects bare paths to the user's preferred locale:
+- `coreintent.dev/` redirects to `coreintent.dev/en/`
+- `coreintent.dev/es/pricing` — Spanish pricing page
+- `coreintent.dev/ar/` — Arabic landing page (RTL)
 
-```
-/            → /en           (redirect)
-/en          → Landing page (English)
-/es          → Landing page (Spanish)
-/mi          → Landing page (Te Reo Maori)
-/es/pricing  → Pricing page (Spanish)
-```
-
-### Key Files
+### File Structure
 
 ```
-lib/i18n.ts           — Locale config, formatting utilities, translation loader
-lib/i18n-context.tsx   — React context + hooks (useI18n, useTranslation, useLocale, useLocaleFormat)
-messages/en.json       — English translations
-messages/es.json       — Spanish translations
-messages/mi.json       — Te Reo Maori translations
-middleware.ts          — Locale detection (Accept-Language, cookie, URL prefix)
-app/[locale]/layout.tsx — Locale-aware layout with hreflang SEO tags
-components/LanguageSwitcher.tsx — Dropdown language selector
+lib/
+  i18n.ts              — Locale config, message loader, formatting utilities
+  i18n-context.tsx     — React context (I18nProvider, useI18n, useLocale)
+
+messages/
+  en.json              — English (source of truth)
+  es.json              — Spanish
+  mi.json              — Te Reo Maori
+  zh.json, ja.json, pt.json, fr.json, de.json, ar.json, hi.json
+
+app/
+  [locale]/
+    layout.tsx         — Locale-aware layout (RTL, metadata, JSON-LD, I18nProvider)
+    page.tsx           — Localized landing page
+    pricing/page.tsx   — All 7 subpages also under [locale]
+    ...
+
+components/
+  LanguageSwitcher.tsx — Dropdown locale selector in nav
 ```
 
-### How Locale Detection Works
+### Key Components
 
-1. Check URL path for locale prefix (`/es/pricing`)
-2. Check `NEXT_LOCALE` cookie (set by language switcher)
-3. Parse `Accept-Language` header from browser
-4. Fall back to `en`
+**`lib/i18n.ts`** — Core utilities:
+- `getMessages(locale)` — Async message loader with caching
+- `createTranslator(messages)` — Returns `t(key, params?)` function
+- `formatNumber`, `formatCurrency`, `formatDate`, `formatPercent`, `formatRelativeTime` — Intl-based formatters
+- `extractLocaleFromPath`, `stripLocaleFromPath` — URL helpers
+- `isLocale`, `isRtl`, `getDirection` — Locale checks
 
-### Translation System
+**`lib/i18n-context.tsx`** — React context for client components:
+- `<I18nProvider locale={locale} messages={messages}>` — Wraps all `[locale]` pages
+- `useI18n()` — Returns `{ locale, t, formatNumber, formatCurrency, formatDate }`
+- `useLocale()` — Returns just the locale string
+- `useLocaleFormat()` — Returns locale-bound format functions
 
-Translations are JSON key-value files in `messages/`. Keys use dot notation:
+**`components/LanguageSwitcher.tsx`** — Dropdown selector. Sets `NEXT_LOCALE` cookie and navigates to the equivalent page in the new locale.
 
-```json
-{
-  "hero.tagline": "The agentic AI trading engine...",
-  "nav.terminal": "Terminal",
-  "footer.rights": "All rights reserved."
-}
-```
+### Middleware (`middleware.ts`)
 
-### Using Translations in Components
-
-**Client components** (most of the app):
-
-```tsx
-import { useI18n } from "@/lib/i18n-context";
-
-function MyComponent() {
-  const { t, locale, formatNumber, formatCurrency, formatDate } = useI18n();
-  
-  return (
-    <div>
-      <h1>{t("hero.tagline")}</h1>
-      <p>{t("hero.description", { count: 3 })}</p>
-      <span>{formatCurrency(45, "NZD")}</span>
-      <time>{formatDate(new Date())}</time>
-    </div>
-  );
-}
-```
-
-**Server components** (layout, metadata):
-
-```tsx
-import { getMessages, createTranslator } from "@/lib/i18n";
-
-const messages = await getMessages(locale);
-const t = createTranslator(messages);
-```
-
-### Number and Date Formatting
-
-All formatting uses `Intl` APIs with the correct BCP 47 tag for each locale:
-
-```tsx
-const { formatNumber, formatCurrency, formatDate } = useI18n();
-
-formatNumber(67420);         // "67,420" (en) / "67.420" (es)
-formatCurrency(45, "NZD");   // "NZ$45" (en) / "45 NZ$" (fr)
-formatDate(new Date());      // "28 April 2026" (en) / "28 de abril de 2026" (es)
-```
-
-Or use the standalone utilities:
-
-```tsx
-import { formatNumber, formatCurrency, formatDate, formatRelativeTime } from "@/lib/i18n";
-```
+- Detects preferred locale from `NEXT_LOCALE` cookie or `Accept-Language` header
+- Redirects bare paths (e.g., `/pricing`) to locale-prefixed paths (`/en/pricing`)
+- Passes through API routes (`/api/*`), static assets, and Next.js internals
+- Injects security headers on all responses
 
 ### RTL Support
 
-Arabic (`ar`) is automatically detected as RTL. The `[locale]/layout.tsx` sets `dir="rtl"` on the wrapper. CSS rules in `globals.css` handle layout mirroring.
+Arabic is the RTL locale. `app/[locale]/layout.tsx` sets `dir="rtl"` on the wrapper `<div>`.
+
+### SEO
+
+- **hreflang tags**: Injected in `app/layout.tsx` `<head>` for all 10 locales plus `x-default`
+- **Canonical URLs**: Per-locale canonicals in `[locale]/layout.tsx` metadata
+- **Sitemap**: `app/sitemap.ts` generates entries for every locale+page combination with `alternates.languages`
+- **JSON-LD**: Lists all 10 languages in `inLanguage` arrays
+- **OpenGraph**: Per-locale `og:locale` in metadata
+
+### Terminal Localization
+
+The terminal component (`components/Terminal.tsx`) uses `LOCALE_GREETINGS` — a static mapping of locale codes to welcome messages displayed above the ASCII art banner. The greeting changes automatically when users switch languages.
+
+## Translation Key Convention
+
+Keys use flat dot notation: `"section.key"`. Examples:
+- `nav.terminal`, `nav.pricing` — Navigation labels
+- `hero.badge`, `hero.tagline` — Hero section
+- `hero.prop.models.title`, `hero.prop.models.desc` — Value prop cards
+- `footer.tagline`, `footer.risk_warning` — Footer text
+- `terminal.greeting`, `terminal.greeting_sub` — Terminal strings
+- `meta.title`, `meta.description` — Page metadata
+
+Interpolation uses `{param}` syntax: `t("key", { count: 5 })`.
 
 ## Adding a New Language
 
-1. Create `messages/<code>.json` — copy `en.json` and translate all values
-2. Add the locale code to `locales` array in `lib/i18n.ts`
-3. Add entries to `localeNames`, `localeFlags`, `localeBcp47` in `lib/i18n.ts`
-4. If RTL, add to `rtlLocales` array
-5. Add a greeting to `LOCALE_GREETINGS` in `components/Terminal.tsx`
-6. Test: visit `/<code>` in browser
+1. Add the locale code to `locales` array in `lib/i18n.ts`
+2. Add entries to `localeNames`, `localeFlags`, `localeBcp47` maps
+3. If RTL: add to `rtlLocales` array
+4. Copy `messages/en.json` to `messages/{code}.json` and translate all values
+5. Add greeting to `LOCALE_GREETINGS` in `components/Terminal.tsx`
+6. Add hreflang entry in `app/layout.tsx`
+7. Middleware and sitemap auto-detect from the `locales` array in `lib/i18n.ts`
+8. Run `npm run build` to verify
 
-No code changes needed beyond step 2-5 — the middleware, routing, and sitemap handle new locales automatically.
+## Locale-Aware Formatting
 
-## Adding Translatable Strings
+All formatting uses `Intl` APIs via helpers in `lib/i18n.ts`:
+- `formatNumber(1234.5, "de")` → `"1.234,5"`
+- `formatCurrency(45, "ja", "USD")` → `"$45"`
+- `formatDate(new Date(), "fr")` → `"3 mai 2026"`
+- `formatPercent(87.5, "ar")` → `"٨٧٫٥٪"`
+- `formatRelativeTime(date, "es")` → `"hace 2 horas"`
 
-1. Add the key and English value to `messages/en.json`
-2. Add translations to other locale files
-3. Use `t("your.key")` in components via `useI18n()`
+The `useLocaleFormat()` hook provides locale-bound versions of these functions for client components.
 
 ## Cultural Notes
 
-- **en** is `en-NZ` (New Zealand English) — the founder is based in NZ
-- **mi** (Te Reo Maori) reflects NZ cultural roots and Maori heritage awareness
-- The platform targets global traders — every locale matters
-- Arabic RTL support ensures proper layout for RTL readers
+- Default locale is `en-NZ` (New Zealand English) — founder is NZ-based
+- Te Reo Maori (`mi`) is included as a first-class locale reflecting NZ heritage
+- Translations should be reviewed by native speakers before shipping to production
+- Platform targets global traders — all 10 languages serve real market demographics

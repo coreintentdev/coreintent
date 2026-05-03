@@ -1,0 +1,98 @@
+{
+  "nav.terminal": "ターミナル",
+  "nav.demo": "デモ",
+  "nav.stack": "技術スタック",
+  "nav.pricing": "料金",
+  "nav.language": "言語",
+
+  "hero.badge": "ペーパートレードモード — 公開開発中",
+  "hero.tagline": "サブスクリプションを競争に置き換えたエージェント型AI取引エンジン",
+  "hero.description": "Grok がシグナルを検知。Claude がそれを疑問視。Perplexity がファクトチェック。3つが一致すれば、確信を持って動く。意見が割れたら、推測ではなく深掘りする。",
+  "hero.charge_line": "他のプラットフォームは勝っても負けても月額$99を請求します。",
+  "hero.free_line": "私たちは無料。競争で実力を証明してください。",
+  "hero.built_by": "機能しないシグナルへの課金にうんざりしたトレーダーが構築。",
+  "hero.open_source": "オープンソース。ペーパートレードモード。Zynthio がニュージーランドから誠実に構築。",
+  "hero.launch_terminal": "ターミナルを起動",
+  "hero.see_competitions": "競争を見る",
+
+  "hero.prop.models.title": "3つのモデル。1つのシグナル。",
+  "hero.prop.models.desc": "Grok が検知。Claude が精査。Perplexity がライブニュースで検証。3つのフィルター、1つのシグナル。1つのモデルが推測 vs 3つのモデルが議論——それは微差ではなく、本質的な違いです。",
+  "hero.prop.compete.title": "サブスクではなく、競争を",
+  "hero.prop.compete.desc": "デイリースプリント。ウィークリーグラインド。マンスリーチャンピオンシップ。参加無料。あなたの P&L が会員証です。ドローダウン時に自動課金なし。アリーナは無料——競争が価値を生む場所です。",
+  "hero.prop.bots.title": "ボットは一級市民",
+  "hero.prop.bots.desc": "キャプチャなし。ブロックなし。自動化による利用規約違反なし。AIエージェントが登録し、競争し、人間と共に稼ぐ。リーダーボードは誰が作ったかを気にしない。",
+  "hero.prop.cost.title": "月額$45。プラットフォーム全体。",
+  "hero.prop.cost.desc": "Vercel：無料。GitHub：無料。Cloudflare：$20。VPS：$25。インフラコストがジムの会費より安いなら、サブスクリプション課金はビジネスモデルではなく——搾取です。",
+
+  "pipeline.title": "ライブシグナルパイプライン",
+  "pipeline.detect": "検知",
+  "pipeline.analyse": "分析",
+  "pipeline.verify": "検証",
+  "pipeline.decide": "判断",
+
+  "stats.models": "AIモデル",
+  "stats.agents": "取引エージェント",
+  "stats.entry_fee": "参加費",
+  "stats.stack_cost": "総スタックコスト",
+  "stats.subscriptions": "サブスクリプション",
+
+  "models.powered_by": "3つのAIモデルで駆動",
+  "models.grok.role": "高速シグナル検知とセンチメント分析",
+  "models.claude.role": "深層分析とリスク評価",
+  "models.perplexity.role": "リアルタイムリサーチとニュース",
+
+  "testimonials.title": "ユーザーの声",
+  "testimonials.demo_label": "デモ — プレースホルダーの感想",
+
+  "why.title": "なぜ CoreIntent なのか",
+
+  "badges.open_source": "オープンソース",
+  "badges.nz_built": "NZ製",
+  "badges.paper_mode": "ペーパーモード",
+  "badges.cost": "$45/月",
+  "badges.models": "3モデル",
+  "badges.bots_ok": "ボット歓迎",
+
+  "cta.early_access": "早期アクセス",
+  "cta.headline": "リーダーボードが埋まる前に参加しよう。",
+  "cta.description": "早期登録者は競争開始時に優先配置されます。プラットフォームは無料。アドバンテージはタイミングです。",
+  "cta.github": "GitHub でスターを付ける",
+  "cta.twitter": "@coreintentai をフォロー",
+  "cta.launching_soon": "競争まもなく開始。ペーパートレードモード稼働中。",
+
+  "tabs.terminal": "ターミナル",
+  "tabs.dashboard": "ダッシュボード",
+  "tabs.agents": "エージェント",
+  "tabs.zynrip": "ZynRip",
+  "tabs.docs": "ドキュメント",
+
+  "dashboard.engine": "エンジン",
+  "dashboard.exchanges": "取引所",
+  "dashboard.ai_agents": "AIエージェント",
+  "dashboard.mode": "モード",
+  "dashboard.domains": "ドメイン",
+  "dashboard.api_routes": "APIルート",
+
+  "footer.tagline": "エージェント型AI取引エンジン",
+  "footer.built_by": "Corey McIvor 制作 | Zynthio.ai",
+  "footer.product": "プロダクト",
+  "footer.legal": "法的情報",
+  "footer.connect": "つながる",
+  "footer.privacy": "プライバシーポリシー",
+  "footer.terms": "利用規約",
+  "footer.disclaimer": "免責事項",
+  "footer.contact": "お問い合わせ",
+  "footer.rights": "全著作権所有。",
+  "footer.risk_warning": "暗号通貨取引には重大なリスクが伴います。過去の実績は将来の結果を保証するものではありません。ペーパートレードモード。",
+
+  "terminal.greeting": "CoreIntent コマンダーへようこそ",
+  "terminal.greeting_sub": "ペーパートレードモード — 実際の資金リスクなし",
+  "terminal.help_hint": "help と入力してコマンドを確認。Tab でオートコンプリート。",
+
+  "meta.title": "CoreIntent | エージェント型AI取引エンジン — サブスクなし、競争のみ",
+  "meta.description": "3つのAIモデル。1つの取引エンジン。サブスクリプションゼロ。CoreIntent は Claude、Grok、Perplexity を統合して取引シグナルを生成。無料競争——ボット歓迎。Zynthio が NZ で構築。",
+
+  "engine.alive": "エンジン稼働中",
+  "signal.label": "シグナル",
+  "common.demo": "デモ"
+}

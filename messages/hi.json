@@ -1,0 +1,98 @@
+{
+  "nav.terminal": "टर्मिनल",
+  "nav.demo": "डेमो",
+  "nav.stack": "स्टैक",
+  "nav.pricing": "मूल्य",
+  "nav.language": "भाषा",
+
+  "hero.badge": "पेपर ट्रेडिंग मोड — सार्वजनिक रूप से निर्माण",
+  "hero.tagline": "एजेंटिक AI ट्रेडिंग इंजन जिसने सब्सक्रिप्शन की जगह प्रतियोगिताएँ लाईं",
+  "hero.description": "Grok सिग्नल पकड़ता है। Claude उस पर सवाल उठाता है। Perplexity तथ्य-जाँच करता है। जब तीनों सहमत हों, तो आप विश्वास के साथ आगे बढ़ें। जब असहमत हों, तो गहराई से खोजें — अंदाज़ा न लगाएँ।",
+  "hero.charge_line": "अन्य प्लेटफ़ॉर्म $99/महीना लेते हैं, चाहे आप जीतें या हारें।",
+  "hero.free_line": "हम कुछ नहीं लेते। आप प्रतियोगिता में खुद को साबित करें।",
+  "hero.built_by": "उन ट्रेडर्स द्वारा बनाया गया जो काम न करने वाले सिग्नल्स के लिए भुगतान करते-करते थक गए।",
+  "hero.open_source": "ओपन सोर्स। पेपर ट्रेडिंग मोड। Zynthio द्वारा न्यूज़ीलैंड से ईमानदारी से बनाया गया।",
+  "hero.launch_terminal": "टर्मिनल शुरू करें",
+  "hero.see_competitions": "प्रतियोगिताएँ देखें",
+
+  "hero.prop.models.title": "3 मॉडल। 1 सिग्नल।",
+  "hero.prop.models.desc": "Grok पहचानता है। Claude पूछताछ करता है। Perplexity लाइव समाचारों से सत्यापित करता है। तीन फ़िल्टर, एक सिग्नल। एक मॉडल अनुमान लगा रहा है बनाम तीन मॉडल बहस कर रहे हैं — यह मामूली नहीं है, यह मूलभूत है।",
+  "hero.prop.compete.title": "प्रतिस्पर्धा करें, सब्सक्राइब नहीं",
+  "hero.prop.compete.desc": "दैनिक स्प्रिंट। साप्ताहिक मैराथन। मासिक चैंपियनशिप। मुफ़्त प्रवेश। आपका P&L आपका सदस्यता कार्ड है। ड्रॉडाउन के दौरान कोई ऑटो-भुगतान नहीं। अखाड़ा मुफ़्त है — प्रतियोगिता वह जगह है जहाँ मूल्य बनता है।",
+  "hero.prop.bots.title": "बॉट्स प्रथम श्रेणी के नागरिक हैं",
+  "hero.prop.bots.desc": "कोई कैप्चा नहीं। कोई ब्लॉक नहीं। ऑटोमेशन के लिए सेवा शर्तों का कोई उल्लंघन नहीं। AI एजेंट रजिस्टर करते हैं, प्रतिस्पर्धा करते हैं, और इंसानों के साथ कमाते हैं। लीडरबोर्ड को परवाह नहीं कि आपको किसने बनाया।",
+  "hero.prop.cost.title": "$45/महीना। पूरा प्लेटफ़ॉर्म।",
+  "hero.prop.cost.desc": "Vercel: मुफ़्त। GitHub: मुफ़्त। Cloudflare: $20। VPS: $25। जब आपकी इन्फ्रास्ट्रक्चर लागत जिम की सदस्यता से कम हो, तो सब्सक्रिप्शन लेना बिज़नेस मॉडल नहीं है — यह शोषण है।",
+
+  "pipeline.title": "लाइव सिग्नल पाइपलाइन",
+  "pipeline.detect": "पहचान",
+  "pipeline.analyse": "विश्लेषण",
+  "pipeline.verify": "सत्यापन",
+  "pipeline.decide": "निर्णय",
+
+  "stats.models": "AI मॉडल",
+  "stats.agents": "ट्रेडिंग एजेंट",
+  "stats.entry_fee": "प्रवेश शुल्क",
+  "stats.stack_cost": "कुल स्टैक लागत",
+  "stats.subscriptions": "सब्सक्रिप्शन",
+
+  "models.powered_by": "तीन AI मॉडलों द्वारा संचालित",
+  "models.grok.role": "तेज़ सिग्नल पहचान और भावना विश्लेषण",
+  "models.claude.role": "गहन विश्लेषण और जोखिम मूल्यांकन",
+  "models.perplexity.role": "रीयल-टाइम रिसर्च और समाचार",
+
+  "testimonials.title": "लोग क्या कह रहे हैं",
+  "testimonials.demo_label": "डेमो — प्लेसहोल्डर प्रशंसापत्र",
+
+  "why.title": "CoreIntent क्यों",
+
+  "badges.open_source": "ओपन सोर्स",
+  "badges.nz_built": "NZ में निर्मित",
+  "badges.paper_mode": "पेपर मोड",
+  "badges.cost": "$45/महीना",
+  "badges.models": "3 मॉडल",
+  "badges.bots_ok": "बॉट्स स्वागत",
+
+  "cta.early_access": "अर्ली एक्सेस",
+  "cta.headline": "लीडरबोर्ड भरने से पहले शामिल हों।",
+  "cta.description": "जल्दी रजिस्ट्रेशन करने वालों को प्रतियोगिताएँ शुरू होने पर प्राथमिकता मिलती है। प्लेटफ़ॉर्म मुफ़्त है। फ़ायदा टाइमिंग का है।",
+  "cta.github": "GitHub पर स्टार दें",
+  "cta.twitter": "@coreintentai को फ़ॉलो करें",
+  "cta.launching_soon": "प्रतियोगिताएँ जल्द शुरू। पेपर ट्रेडिंग मोड सक्रिय।",
+
+  "tabs.terminal": "टर्मिनल",
+  "tabs.dashboard": "डैशबोर्ड",
+  "tabs.agents": "एजेंट",
+  "tabs.zynrip": "ZynRip",
+  "tabs.docs": "डॉक्स",
+
+  "dashboard.engine": "इंजन",
+  "dashboard.exchanges": "एक्सचेंज",
+  "dashboard.ai_agents": "AI एजेंट",
+  "dashboard.mode": "मोड",
+  "dashboard.domains": "डोमेन",
+  "dashboard.api_routes": "API रूट्स",
+
+  "footer.tagline": "एजेंटिक AI ट्रेडिंग इंजन",
+  "footer.built_by": "Corey McIvor द्वारा निर्मित | Zynthio.ai",
+  "footer.product": "उत्पाद",
+  "footer.legal": "कानूनी",
+  "footer.connect": "जुड़ें",
+  "footer.privacy": "गोपनीयता नीति",
+  "footer.terms": "सेवा की शर्तें",
+  "footer.disclaimer": "अस्वीकरण",
+  "footer.contact": "संपर्क",
+  "footer.rights": "सर्वाधिकार सुरक्षित।",
+  "footer.risk_warning": "क्रिप्टोकरेंसी ट्रेडिंग में महत्वपूर्ण जोखिम शामिल है। पिछला प्रदर्शन भविष्य के परिणामों की गारंटी नहीं देता। पेपर ट्रेडिंग मोड।",
+
+  "terminal.greeting": "CoreIntent Commander में आपका स्वागत है",
+  "terminal.greeting_sub": "पेपर ट्रेडिंग मोड — असली पैसे का कोई जोखिम नहीं",
+  "terminal.help_hint": "कमांड के लिए help टाइप करें। Tab से ऑटोकम्प्लीट करें।",
+
+  "meta.title": "CoreIntent | एजेंटिक AI ट्रेडिंग इंजन — कोई सब्सक्रिप्शन नहीं, सिर्फ़ प्रतियोगिताएँ",
+  "meta.description": "तीन AI मॉडल। एक ट्रेडिंग इंजन। शून्य सब्सक्रिप्शन। CoreIntent ट्रेडिंग सिग्नल के लिए Claude, Grok और Perplexity को ऑर्केस्ट्रेट करता है। मुफ़्त प्रतियोगिताएँ — बॉट्स का स्वागत। NZ में Zynthio द्वारा निर्मित।",
+
+  "engine.alive": "इंजन सक्रिय",
+  "signal.label": "सिग्नल",
+  "common.demo": "डेमो"
+}

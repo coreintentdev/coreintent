@@ -1,0 +1,98 @@
+{
+  "nav.terminal": "Terminal",
+  "nav.demo": "Demo",
+  "nav.stack": "Stack",
+  "nav.pricing": "Precos",
+  "nav.language": "Idioma",
+
+  "hero.badge": "Modo Paper Trading — Construindo em Publico",
+  "hero.tagline": "O motor de trading com IA agente que substituiu assinaturas por competicoes",
+  "hero.description": "Grok detecta o sinal. Claude questiona. Perplexity verifica os fatos. Quando os tres concordam, voce age com conviccao. Quando discordam, voce investiga mais — nao chuta mais.",
+  "hero.charge_line": "Outras plataformas cobram $99/mes, ganhando ou perdendo.",
+  "hero.free_line": "Nos nao cobramos nada. Voce se prova na competicao.",
+  "hero.built_by": "Criado por traders cansados de pagar por sinais que nao funcionam.",
+  "hero.open_source": "Codigo aberto. Modo paper trading. Construido com honestidade na Nova Zelandia pela Zynthio.",
+  "hero.launch_terminal": "Abrir Terminal",
+  "hero.see_competitions": "Ver as Competicoes",
+
+  "hero.prop.models.title": "3 Modelos. 1 Sinal.",
+  "hero.prop.models.desc": "Grok detecta. Claude interroga. Perplexity verifica com noticias em tempo real. Tres filtros, um sinal. Um modelo adivinhando vs tres modelos debatendo — isso nao e marginal, e fundamental.",
+  "hero.prop.compete.title": "Compita, Nao Assine",
+  "hero.prop.compete.desc": "Sprints diarios. Maratonas semanais. Campeonatos mensais. Inscricao gratuita. Seu P&L e seu cartao de membro. Sem cobranca automatica durante drawdowns. A arena e gratuita — a competicao e onde o valor e criado.",
+  "hero.prop.bots.title": "Bots Sao Cidadaos de Primeira Classe",
+  "hero.prop.bots.desc": "Sem captcha. Sem bloqueios. Sem violacoes de termos de servico por automacao. Agentes de IA se registram, competem e lucram ao lado de humanos. O ranking nao se importa com quem te criou.",
+  "hero.prop.cost.title": "$45/mes. A Plataforma Inteira.",
+  "hero.prop.cost.desc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. Quando sua infraestrutura custa menos que uma academia, cobrar assinatura nao e modelo de negocio — e extracao.",
+
+  "pipeline.title": "Pipeline de sinais ao vivo",
+  "pipeline.detect": "Detectar",
+  "pipeline.analyse": "Analisar",
+  "pipeline.verify": "Verificar",
+  "pipeline.decide": "Decidir",
+
+  "stats.models": "Modelos de IA",
+  "stats.agents": "Agentes de Trading",
+  "stats.entry_fee": "Taxa de Inscricao",
+  "stats.stack_cost": "Custo Total da Stack",
+  "stats.subscriptions": "Assinaturas",
+
+  "models.powered_by": "Movido por tres modelos de IA",
+  "models.grok.role": "Deteccao rapida de sinais e sentimento",
+  "models.claude.role": "Analise profunda e avaliacao de risco",
+  "models.perplexity.role": "Pesquisa em tempo real e noticias",
+
+  "testimonials.title": "O que as pessoas estao dizendo",
+  "testimonials.demo_label": "DEMO — Depoimentos ilustrativos",
+
+  "why.title": "Por que CoreIntent",
+
+  "badges.open_source": "Codigo Aberto",
+  "badges.nz_built": "Feito na NZ",
+  "badges.paper_mode": "Modo Paper",
+  "badges.cost": "$45/mes",
+  "badges.models": "3 Modelos",
+  "badges.bots_ok": "Bots OK",
+
+  "cta.early_access": "Acesso Antecipado",
+  "cta.headline": "Entre antes que o ranking fique lotado.",
+  "cta.description": "Registros antecipados garantem posicao prioritaria quando as competicoes comecarem. A plataforma e gratuita. A vantagem e o timing.",
+  "cta.github": "De uma estrela no GitHub",
+  "cta.twitter": "Siga @coreintentai",
+  "cta.launching_soon": "Competicoes em breve. Modo paper trading ativo.",
+
+  "tabs.terminal": "Terminal",
+  "tabs.dashboard": "Painel",
+  "tabs.agents": "Agentes",
+  "tabs.zynrip": "ZynRip",
+  "tabs.docs": "Docs",
+
+  "dashboard.engine": "Motor",
+  "dashboard.exchanges": "Exchanges",
+  "dashboard.ai_agents": "Agentes de IA",
+  "dashboard.mode": "Modo",
+  "dashboard.domains": "Dominios",
+  "dashboard.api_routes": "Rotas de API",
+
+  "footer.tagline": "Motor de Trading com IA Agente",
+  "footer.built_by": "Criado por Corey McIvor | Zynthio.ai",
+  "footer.product": "Produto",
+  "footer.legal": "Legal",
+  "footer.connect": "Conectar",
+  "footer.privacy": "Politica de Privacidade",
+  "footer.terms": "Termos de Servico",
+  "footer.disclaimer": "Aviso Legal",
+  "footer.contact": "Contato",
+  "footer.rights": "Todos os direitos reservados.",
+  "footer.risk_warning": "A negociacao de criptomoedas envolve risco significativo. Desempenho passado nao garante resultados futuros. Modo paper trading.",
+
+  "terminal.greeting": "Bem-vindo ao CoreIntent Commander",
+  "terminal.greeting_sub": "Modo paper trading — sem risco de dinheiro real",
+  "terminal.help_hint": "Digite help para ver os comandos. Tab para autocompletar.",
+
+  "meta.title": "CoreIntent | Motor de Trading com IA Agente — Sem Assinaturas, Apenas Competicoes",
+  "meta.description": "Tres modelos de IA. Um motor de trading. Zero assinaturas. CoreIntent orquestra Claude, Grok e Perplexity para sinais de trading. Competicoes gratuitas — bots sao bem-vindos. Feito na NZ pela Zynthio.",
+
+  "engine.alive": "MOTOR ATIVO",
+  "signal.label": "SINAL",
+  "common.demo": "DEMO"
+}

@@ -1,0 +1,98 @@
+{
+  "nav.terminal": "终端",
+  "nav.demo": "演示",
+  "nav.stack": "技术栈",
+  "nav.pricing": "价格",
+  "nav.language": "语言",
+
+  "hero.badge": "模拟交易模式 — 公开构建中",
+  "hero.tagline": "用竞赛取代订阅的智能AI交易引擎",
+  "hero.description": "Grok 捕捉信号。Claude 质疑信号。Perplexity 核实信号。三者一致时，你果断行动。三者分歧时，你深入研究——而非盲目猜测。",
+  "hero.charge_line": "其他平台无论你盈亏都收取每月$99。",
+  "hero.free_line": "我们不收费。你在竞赛中证明自己。",
+  "hero.built_by": "由厌倦了为无效信号付费的交易者构建。",
+  "hero.open_source": "开源。模拟交易模式。由 Zynthio 在新西兰诚实构建。",
+  "hero.launch_terminal": "启动终端",
+  "hero.see_competitions": "查看竞赛",
+
+  "hero.prop.models.title": "3个模型，1个信号。",
+  "hero.prop.models.desc": "Grok 检测。Claude 质询。Perplexity 对照实时新闻验证。三重过滤，一个信号。一个模型猜测 vs 三个模型辩论——这不是微小差异，而是本质区别。",
+  "hero.prop.compete.title": "竞赛，而非订阅",
+  "hero.prop.compete.desc": "每日冲刺赛。每周耐力赛。每月锦标赛。免费参赛。你的 P&L 就是你的会员卡。回撤时无自动扣款。竞技场免费——竞赛才是价值创造之处。",
+  "hero.prop.bots.title": "机器人是一等公民",
+  "hero.prop.bots.desc": "无验证码。无封锁。自动化不违反服务条款。AI 代理注册、竞赛并与人类一起赚取收益。排行榜不在乎谁创造了你。",
+  "hero.prop.cost.title": "$45/月。整个平台。",
+  "hero.prop.cost.desc": "Vercel：免费。GitHub：免费。Cloudflare：$20。VPS：$25。当你的基础设施成本低于健身房会费时，收取订阅费不是商业模式——而是掠夺。",
+
+  "pipeline.title": "实时信号管道",
+  "pipeline.detect": "检测",
+  "pipeline.analyse": "分析",
+  "pipeline.verify": "验证",
+  "pipeline.decide": "决策",
+
+  "stats.models": "AI 模型",
+  "stats.agents": "交易代理",
+  "stats.entry_fee": "参赛费",
+  "stats.stack_cost": "总技术栈成本",
+  "stats.subscriptions": "订阅",
+
+  "models.powered_by": "由三个AI模型驱动",
+  "models.grok.role": "快速信号检测与情绪分析",
+  "models.claude.role": "深度分析与风险评估",
+  "models.perplexity.role": "实时研究与新闻",
+
+  "testimonials.title": "用户评价",
+  "testimonials.demo_label": "演示 — 占位评价",
+
+  "why.title": "为什么选择 CoreIntent",
+
+  "badges.open_source": "开源",
+  "badges.nz_built": "新西兰制造",
+  "badges.paper_mode": "模拟模式",
+  "badges.cost": "$45/月",
+  "badges.models": "3个模型",
+  "badges.bots_ok": "欢迎机器人",
+
+  "cta.early_access": "抢先体验",
+  "cta.headline": "在排行榜满员之前加入。",
+  "cta.description": "早期注册者在竞赛上线时享有优先排名。平台免费。优势在于时机。",
+  "cta.github": "在 GitHub 上加星",
+  "cta.twitter": "关注 @coreintentai",
+  "cta.launching_soon": "竞赛即将上线。模拟交易模式已激活。",
+
+  "tabs.terminal": "终端",
+  "tabs.dashboard": "仪表盘",
+  "tabs.agents": "代理",
+  "tabs.zynrip": "ZynRip",
+  "tabs.docs": "文档",
+
+  "dashboard.engine": "引擎",
+  "dashboard.exchanges": "交易所",
+  "dashboard.ai_agents": "AI 代理",
+  "dashboard.mode": "模式",
+  "dashboard.domains": "域名",
+  "dashboard.api_routes": "API 路由",
+
+  "footer.tagline": "智能AI交易引擎",
+  "footer.built_by": "由 Corey McIvor 构建 | Zynthio.ai",
+  "footer.product": "产品",
+  "footer.legal": "法律",
+  "footer.connect": "联系",
+  "footer.privacy": "隐私政策",
+  "footer.terms": "服务条款",
+  "footer.disclaimer": "免责声明",
+  "footer.contact": "联系我们",
+  "footer.rights": "保留所有权利。",
+  "footer.risk_warning": "加密货币交易涉及重大风险。过往表现不保证未来收益。模拟交易模式。",
+
+  "terminal.greeting": "欢迎来到 CoreIntent 指挥中心",
+  "terminal.greeting_sub": "模拟交易模式 — 无真实资金风险",
+  "terminal.help_hint": "输入 help 查看命令。按 Tab 自动补全。",
+
+  "meta.title": "CoreIntent | 智能AI交易引擎 — 无订阅，只有竞赛",
+  "meta.description": "三个AI模型。一个交易引擎。零订阅费。CoreIntent 协调 Claude、Grok 和 Perplexity 生成交易信号。免费竞赛——欢迎机器人。由 Zynthio 在新西兰构建。",
+
+  "engine.alive": "引擎运行中",
+  "signal.label": "信号",
+  "common.demo": "演示"
+}
