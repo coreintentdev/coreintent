@@ -752,7 +752,7 @@ function EngineHeartbeat() {
 }
 
 /* ─── TypeWriter ─── */
-const HERO_PHRASES = [
+const HERO_PHRASES_BASE = [
   "Three AI Models Argue.",
   "You Get Better Signals.",
   "Grok Spots. Claude Questions.",
@@ -777,7 +777,6 @@ const HERO_PHRASES = [
   "Subscriptions Are a Tax. We Opted Out.",
   "The Leaderboard Doesn't Care Who Built You.",
   "Three Filters. One Signal. Zero Guessing.",
-  "Competitions Launch June 1st.",
   "Every Signal. Three Perspectives.",
   "Your Strategy Is Your Membership Card.",
   "We Ship While Silicon Valley Sleeps.",
@@ -785,14 +784,24 @@ const HERO_PHRASES = [
   "The Scoreboard Speaks for Itself.",
 ];
 
+function getHeroPhrases() {
+  const launchDate = new Date("2026-06-01T00:00:00Z");
+  const now = new Date();
+  const timePhrase = now < launchDate
+    ? "Competitions Launch June 1st."
+    : "The Arena Is Live. Compete Now.";
+  return [...HERO_PHRASES_BASE, timePhrase];
+}
+
 function TypeWriter() {
+  const [phrases] = useState(getHeroPhrases);
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
 
   const tick = useCallback(() => {
-    const current = HERO_PHRASES[phraseIdx];
+    const current = phrases[phraseIdx];
     if (!isDeleting) {
       setText(current.substring(0, charIdx + 1));
       setCharIdx((c) => c + 1);
@@ -805,11 +814,11 @@ function TypeWriter() {
       setCharIdx((c) => c - 1);
       if (charIdx <= 1) {
         setIsDeleting(false);
-        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        setPhraseIdx((p) => (p + 1) % phrases.length);
         return;
       }
     }
-  }, [charIdx, isDeleting, phraseIdx]);
+  }, [charIdx, isDeleting, phraseIdx, phrases]);
 
   useEffect(() => {
     const speed = isDeleting ? 40 : 80;
