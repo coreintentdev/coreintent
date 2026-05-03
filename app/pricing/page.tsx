@@ -133,11 +133,11 @@ export default function PricingPage() {
             Trading as a sport — not a subscription
           </div>
           <h1 style={{ fontSize: "clamp(30px, 5vw, 50px)", marginBottom: "16px", lineHeight: "1.1" }}>
-            They Charge You Whether You{" "}
-            <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Win or Lose</span>.
+            Every Other Platform Profits From Your{" "}
+            <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Hope</span>.
             <br />
             <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
-              We Don&apos;t Charge At All.
+              We Profit When You Compete.
             </span>
           </h1>
           <div style={{
@@ -164,10 +164,10 @@ export default function PricingPage() {
             }}>$0</span>
           </div>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "15px", maxWidth: "560px", margin: "0 auto 8px" }}>
-            Subscription platforms profit from your <em>hope</em>, not your results. Their incentive is retention, not your returns.
+            Subscription platforms need you to <em>stay</em>, not <em>succeed</em>. Their incentive is your autopay renewal, not your P&amp;L.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
-            Our entire engine runs on $45/mo. Free isn&apos;t a loss-leader — it&apos;s our actual business model.
+            Our engine costs $45/mo to run. Free entry isn&apos;t a gimmick — it&apos;s infrastructure math.
           </p>
 
           <div style={{
@@ -261,9 +261,24 @@ export default function PricingPage() {
             Three leagues. Three timeframes. One rule:{" "}
             <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>the best strategy wins.</span>
           </p>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "16px", fontSize: "12px" }}>
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
           </p>
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "6px 14px",
+            background: "#10b98112",
+            border: "1px solid #10b98122",
+            borderRadius: "20px",
+            fontSize: "11px",
+            color: "#10b981",
+            marginBottom: "32px",
+          }}>
+            <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", animation: "pulse 2s ease-in-out infinite" }} />
+            All leagues are free. No credit card required. Ever.
+          </div>
 
           <div className="league-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {LEAGUES.map((league) => (
@@ -828,12 +843,12 @@ export default function PricingPage() {
               animation: "shimmer 3s ease infinite",
             }} />
             <h2 style={{ fontSize: "clamp(20px, 4vw, 28px)", marginBottom: "8px" }}>
-              The Arena Is Open. Your Move.
+              The Only Cost Is Not Competing.
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
               No credit card. No subscription trap. No &quot;free trial&quot; that converts to $99/mo while you sleep.
               <br />
-              Just you, your strategy, and the leaderboard. Founding members get priority placement when leagues launch.
+              Founding members get priority placement when leagues launch. Your strategy is your ticket.
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link

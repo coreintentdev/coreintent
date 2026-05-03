@@ -718,7 +718,7 @@ function FloatingCTA() {
         }}
       >
         <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#000", opacity: 0.6, animation: "pulse 2s ease-in-out infinite" }} />
-        Start Competing &mdash; Free
+        Join Free &mdash; No Card Needed
       </a>
     </div>
   );
@@ -946,73 +946,6 @@ function MarketTicker() {
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-/* ─── Live Engine Stats Ticker ─── */
-function EngineStatsTicker() {
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    const iv = setInterval(() => setTick((t) => t + 1), 1500);
-    return () => clearInterval(iv);
-  }, []);
-
-  const stats = [
-    { label: "SIGNALS PROCESSED", value: `${(8_472 + tick * 3).toLocaleString()}`, color: "#10b981", icon: "⚡" },
-    { label: "MODEL SYNC", value: `${(97 + Math.sin(tick * 0.3) * 2.5).toFixed(1)}%`, color: "#a855f7", icon: "◉" },
-    { label: "CONSENSUS RATE", value: `${(82 + Math.sin(tick * 0.4 + 1) * 6).toFixed(1)}%`, color: "#3b82f6", icon: "◆" },
-    { label: "ENGINE UPTIME", value: `${(99.7 + Math.random() * 0.29).toFixed(2)}%`, color: "#10b981", icon: "♥" },
-    { label: "LATENCY", value: `${(12 + Math.floor(Math.random() * 18))}ms`, color: "#06b6d4", icon: "⟐" },
-    { label: "ACTIVE AGENTS", value: "6", color: "#f59e0b", icon: "●" },
-    { label: "GROK THREADS", value: `${58 + Math.floor(Math.sin(tick * 0.2) * 4)}`, color: "#ef4444", icon: "G" },
-    { label: "CIRCUIT BREAKER", value: "ARMED", color: "#10b981", icon: "▲" },
-    { label: "RISK LEVEL", value: Math.random() > 0.7 ? "MED" : "LOW", color: Math.random() > 0.7 ? "#f59e0b" : "#10b981", icon: "◈" },
-    { label: "PAPER P&L", value: `+$${(2_341 + Math.floor(Math.sin(tick * 0.15) * 400)).toLocaleString()}`, color: "#10b981", icon: "$" },
-  ];
-
-  const doubled = [...stats, ...stats];
-
-  return (
-    <div className="live-ribbon" style={{ position: "relative" }}>
-      <div className="ticker-track" style={{ animationDuration: "40s" }}>
-        {doubled.map((s, i) => (
-          <span
-            key={`${s.label}-${i}`}
-            style={{
-              display: "inline-flex",
-              gap: "6px",
-              alignItems: "center",
-              fontSize: "11px",
-              whiteSpace: "nowrap",
-              padding: "0 20px",
-            }}
-          >
-            <span style={{ color: s.color, fontSize: "12px" }}>{s.icon}</span>
-            <span style={{ color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", fontSize: "9px" }}>{s.label}</span>
-            <span style={{ color: s.color, fontWeight: "bold" }}>{s.value}</span>
-          </span>
-        ))}
-      </div>
-      <div style={{
-        position: "absolute",
-        right: 0,
-        top: 0,
-        bottom: 0,
-        width: "40px",
-        background: "linear-gradient(90deg, transparent, var(--bg-primary))",
-        pointerEvents: "none",
-      }} />
-      <div style={{
-        position: "absolute",
-        left: 0,
-        top: 0,
-        bottom: 0,
-        width: "40px",
-        background: "linear-gradient(90deg, var(--bg-primary), transparent)",
-        pointerEvents: "none",
-        zIndex: 1,
-      }} />
     </div>
   );
 }
@@ -1413,7 +1346,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Free AI Trading Competitions — Open Source — Built in NZ
+              3 AI Models. Zero Fees. Compete Now.
             </div>
             <h1
               style={{
@@ -1428,9 +1361,9 @@ export default function Home() {
                 CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
               </span>
               <span aria-hidden="true">
-                Your Edge Isn&apos;t One AI.<br />
-                It&apos;s{" "}
-                <span className="neon-green" style={{ position: "relative" }}>Three Fighting</span>.
+                Stop Paying for Signals.<br />
+                Start{" "}
+                <span className="neon-green" style={{ position: "relative" }}>Outcompeting</span> Them.
               </span>
             </h1>
             <div
@@ -1452,8 +1385,8 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Grok detects the signal. Claude tears it apart. Perplexity fact-checks against live data.
-              When all three agree — you move. When they don&apos;t — you wait. That&apos;s the edge.
+              Three AI models cross-examine every signal before it reaches you.
+              No subscriptions. No paywalls. Enter daily competitions and let your strategy speak.
             </p>
             <div style={{
               display: "flex",
@@ -1488,7 +1421,7 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Start Trading — Free &rarr;
+                Enter the Arena — $0 &rarr;
               </button>
               <a
                 href="/pricing"
@@ -1506,11 +1439,11 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                View Competitions
+                See How It Works
               </a>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "440px" }}>
-              Open source. Paper trading mode. No exchange connections yet. Built honestly in New Zealand.
+              No credit card. No lock-in. Open source &amp; paper trading mode. Built in New Zealand.
             </p>
 
             {/* Value Props */}
@@ -1896,7 +1829,6 @@ export default function Home() {
 
       <div className="section-divider" />
       <MarketTicker />
-      <EngineStatsTicker />
 
       {/* Tab bar */}
       <div
