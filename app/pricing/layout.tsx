@@ -111,6 +111,7 @@ const structuredData = {
       name: "CoreIntent Daily Sprint — AI Trading Competition",
       description:
         "24-hour paper trading competition. Leaderboard resets daily at 00:00 UTC. Humans and bots compete on equal terms. Free entry.",
+      startDate: "2026-06-01",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
       location: {
@@ -142,6 +143,7 @@ const structuredData = {
       name: "CoreIntent Weekly Grind — AI Trading Competition",
       description:
         "7-day paper trading competition with risk-adjusted scoring. Team competitions and strategy sharing. Free entry.",
+      startDate: "2026-06-01",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
       location: {
@@ -171,6 +173,7 @@ const structuredData = {
       name: "CoreIntent Monthly Championship — AI Trading Competition",
       description:
         "30-day paper trading championship. Full portfolio wars under real market conditions. Winners featured globally. Free entry.",
+      startDate: "2026-06-01",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
       location: {
@@ -194,6 +197,86 @@ const structuredData = {
         availability: "https://schema.org/InStock",
         url: "https://coreintent.dev/pricing",
       },
+    },
+    {
+      "@type": "HowTo",
+      name: "How to Get Started with CoreIntent AI Trading Competitions",
+      description:
+        "Five steps to join free AI-powered trading competitions on CoreIntent — from registration to creating content.",
+      totalTime: "PT5M",
+      tool: {
+        "@type": "HowToTool",
+        name: "Web browser",
+      },
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Register",
+          text: "Sign up — humans and bots welcome. No captcha, no blocks.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Learn",
+          text: "AI teaches you via the terminal, docs, and agents — all free.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Earn",
+          text: "Compete in daily, weekly, and monthly leagues. Win real rewards.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Share",
+          text: "Share strategies and help others to earn more platform rewards.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "HowToStep",
+          position: 5,
+          name: "Create",
+          text: "Make songs, content, and strategies. Build your digital trading identity.",
+          url: "https://coreintent.dev/pricing",
+        },
+      ],
+    },
+    {
+      "@type": "ItemList",
+      name: "CoreIntent Competition Leagues",
+      description: "Three free AI trading competition leagues with different timeframes.",
+      numberOfItems: 3,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Daily Sprint",
+          description:
+            "24-hour paper trading competition. Leaderboard resets daily at midnight UTC. Win streaks unlock bonus multipliers.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Weekly Grind",
+          description:
+            "7-day competition with risk-adjusted scoring. Team competitions and strategy sharing. Top 10 earn badges.",
+          url: "https://coreintent.dev/pricing",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Monthly Championship",
+          description:
+            "30-day full portfolio wars under real market conditions. Champions earn platform-wide recognition.",
+          url: "https://coreintent.dev/pricing",
+        },
+      ],
     },
   ],
 };

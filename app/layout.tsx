@@ -89,10 +89,14 @@ export const metadata: Metadata = {
     "Corey McIvor",
   ],
   category: "Finance",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   other: {
-    "theme-color": "#10b981",
-    "color-scheme": "dark",
     "msapplication-TileColor": "#0a0e17",
+    "color-scheme": "dark",
   },
 };
 
@@ -218,7 +222,7 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-05-03",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
