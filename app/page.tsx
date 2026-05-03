@@ -950,6 +950,73 @@ function MarketTicker() {
   );
 }
 
+/* ─── Live Engine Stats Ticker ─── */
+function EngineStatsTicker() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 1500);
+    return () => clearInterval(iv);
+  }, []);
+
+  const stats = [
+    { label: "SIGNALS PROCESSED", value: `${(8_472 + tick * 3).toLocaleString()}`, color: "#10b981", icon: "⚡" },
+    { label: "MODEL SYNC", value: `${(97 + Math.sin(tick * 0.3) * 2.5).toFixed(1)}%`, color: "#a855f7", icon: "◉" },
+    { label: "CONSENSUS RATE", value: `${(82 + Math.sin(tick * 0.4 + 1) * 6).toFixed(1)}%`, color: "#3b82f6", icon: "◆" },
+    { label: "ENGINE UPTIME", value: `${(99.7 + Math.random() * 0.29).toFixed(2)}%`, color: "#10b981", icon: "♥" },
+    { label: "LATENCY", value: `${(12 + Math.floor(Math.random() * 18))}ms`, color: "#06b6d4", icon: "⟐" },
+    { label: "ACTIVE AGENTS", value: "6", color: "#f59e0b", icon: "●" },
+    { label: "GROK THREADS", value: `${58 + Math.floor(Math.sin(tick * 0.2) * 4)}`, color: "#ef4444", icon: "G" },
+    { label: "CIRCUIT BREAKER", value: "ARMED", color: "#10b981", icon: "▲" },
+    { label: "RISK LEVEL", value: Math.random() > 0.7 ? "MED" : "LOW", color: Math.random() > 0.7 ? "#f59e0b" : "#10b981", icon: "◈" },
+    { label: "PAPER P&L", value: `+$${(2_341 + Math.floor(Math.sin(tick * 0.15) * 400)).toLocaleString()}`, color: "#10b981", icon: "$" },
+  ];
+
+  const doubled = [...stats, ...stats];
+
+  return (
+    <div className="live-ribbon" style={{ position: "relative" }}>
+      <div className="ticker-track" style={{ animationDuration: "40s" }}>
+        {doubled.map((s, i) => (
+          <span
+            key={`${s.label}-${i}`}
+            style={{
+              display: "inline-flex",
+              gap: "6px",
+              alignItems: "center",
+              fontSize: "11px",
+              whiteSpace: "nowrap",
+              padding: "0 20px",
+            }}
+          >
+            <span style={{ color: s.color, fontSize: "12px" }}>{s.icon}</span>
+            <span style={{ color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", fontSize: "9px" }}>{s.label}</span>
+            <span style={{ color: s.color, fontWeight: "bold" }}>{s.value}</span>
+          </span>
+        ))}
+      </div>
+      <div style={{
+        position: "absolute",
+        right: 0,
+        top: 0,
+        bottom: 0,
+        width: "40px",
+        background: "linear-gradient(90deg, transparent, var(--bg-primary))",
+        pointerEvents: "none",
+      }} />
+      <div style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: "40px",
+        background: "linear-gradient(90deg, var(--bg-primary), transparent)",
+        pointerEvents: "none",
+        zIndex: 1,
+      }} />
+    </div>
+  );
+}
+
 /* ─── Neural Network Background ─── */
 function NeuralNetwork() {
   const [pulse, setPulse] = useState(0);
@@ -1829,6 +1896,7 @@ export default function Home() {
 
       <div className="section-divider" />
       <MarketTicker />
+      <EngineStatsTicker />
 
       {/* Tab bar */}
       <div
