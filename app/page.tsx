@@ -1361,10 +1361,9 @@ export default function Home() {
                 CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
               </span>
               <span aria-hidden="true">
-                One Model <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Guesses</span>.
-                <br />
-                Three Models{" "}
-                <span className="neon-green" style={{ position: "relative" }}>Debate</span>.
+                Your Edge Isn&apos;t One AI.<br />
+                It&apos;s{" "}
+                <span className="neon-green" style={{ position: "relative" }}>Three Fighting</span>.
               </span>
             </h1>
             <div
@@ -1386,8 +1385,8 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks against live data.
-              Consensus means conviction. Disagreement means dig deeper.
+              Grok detects the signal. Claude tears it apart. Perplexity fact-checks against live data.
+              When all three agree — you move. When they don&apos;t — you wait. That&apos;s the edge.
             </p>
             <div style={{
               display: "flex",
@@ -1397,11 +1396,11 @@ export default function Home() {
               marginBottom: "20px",
               flexWrap: "wrap",
             }}>
-              <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
-                $99/mo platforms
+              <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through", opacity: 0.6 }}>
+                $99/mo signal subscriptions
               </span>
-              <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
-                $0 forever — compete free
+              <span style={{ fontSize: "22px", fontWeight: "bold", color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.4)" }}>
+                $0 forever. Compete free.
               </span>
             </div>
             <LiveSignalFeed />
@@ -1410,7 +1409,7 @@ export default function Home() {
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
                 className="cta-primary hero-cta-main"
                 style={{
-                  padding: "18px 44px",
+                  padding: "18px 48px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
@@ -1422,13 +1421,13 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Enter the Arena &rarr;
+                Start Trading — Free &rarr;
               </button>
               <a
                 href="/pricing"
                 className="cta-secondary"
                 style={{
-                  padding: "18px 44px",
+                  padding: "18px 48px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
@@ -1440,11 +1439,11 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                View Competitions
               </a>
             </div>
-            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "400px" }}>
-              Open source. Paper trading. Built honestly from New Zealand by Zynthio.
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "440px" }}>
+              Open source. Paper trading mode. No exchange connections yet. Built honestly in New Zealand.
             </p>
 
             {/* Value Props */}

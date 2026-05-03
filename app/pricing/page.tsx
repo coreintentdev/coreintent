@@ -130,12 +130,14 @@ export default function PricingPage() {
               textTransform: "uppercase",
             }}
           >
-            Trading as a sport
+            Trading as a sport — not a subscription
           </div>
           <h1 style={{ fontSize: "clamp(30px, 5vw, 50px)", marginBottom: "16px", lineHeight: "1.1" }}>
-            Stop Paying.{" "}
+            They Charge You Whether You{" "}
+            <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Win or Lose</span>.
+            <br />
             <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
-              Start Competing.
+              We Don&apos;t Charge At All.
             </span>
           </h1>
           <div style={{
@@ -161,11 +163,11 @@ export default function PricingPage() {
               textShadow: "0 0 30px rgba(16, 185, 129, 0.3)",
             }}>$0</span>
           </div>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "15px", maxWidth: "520px", margin: "0 auto 8px" }}>
-            They charge you whether you win or lose. That&apos;s not alignment — that&apos;s extraction.
+          <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "15px", maxWidth: "560px", margin: "0 auto 8px" }}>
+            Subscription platforms profit from your <em>hope</em>, not your results. Their incentive is retention, not your returns.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
-            Our entire platform runs on $45/mo. Free isn&apos;t a marketing trick — it&apos;s math.
+            Our entire engine runs on $45/mo. Free isn&apos;t a loss-leader — it&apos;s our actual business model.
           </p>
 
           <div style={{
@@ -211,9 +213,10 @@ export default function PricingPage() {
               marginBottom: "48px",
             }}
           >
-            {STEPS.map((s) => (
+            {STEPS.map((s, i) => (
               <div
                 key={s.label}
+                className="card-hover-glow"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -221,14 +224,23 @@ export default function PricingPage() {
                   padding: "16px",
                   width: "170px",
                   textAlign: "center",
+                  animation: `fadeInUp 0.5s ease ${i * 0.1}s both`,
                 }}
               >
                 <div
                   style={{
-                    fontSize: "24px",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    background: `${s.color}18`,
+                    border: `2px solid ${s.color}44`,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px",
                     fontWeight: "bold",
                     color: s.color,
-                    marginBottom: "4px",
+                    marginBottom: "8px",
                   }}
                 >
                   {s.step}
@@ -242,9 +254,12 @@ export default function PricingPage() {
           </div>
 
           {/* Competition Leagues */}
-          <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Pick Your Arena</h2>
-          <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "14px" }}>
-            Three leagues. Three timeframes. One rule: the best strategy wins.
+          <h2 style={{ fontSize: "clamp(22px, 4vw, 30px)", marginBottom: "8px" }}>
+            Pick Your Arena
+          </h2>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "15px" }}>
+            Three leagues. Three timeframes. One rule:{" "}
+            <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>the best strategy wins.</span>
           </p>
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
             Humans and bots compete on equal terms. AI-to-AI trading is a first-class feature, not a terms-of-service violation.
@@ -791,16 +806,28 @@ export default function PricingPage() {
 
           {/* Final CTA */}
           <div
+            className="holo-border"
             style={{
               marginTop: "48px",
-              padding: "32px 24px",
+              padding: "40px 24px",
               background: "linear-gradient(135deg, #10b98112 0%, #3b82f612 100%)",
               border: "1px solid #10b98122",
               borderRadius: "12px",
               textAlign: "center",
+              position: "relative",
+              overflow: "hidden",
             }}
           >
-            <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "2px",
+              background: "linear-gradient(90deg, transparent, #10b981, #3b82f6, #a855f7, transparent)",
+              animation: "shimmer 3s ease infinite",
+            }} />
+            <h2 style={{ fontSize: "clamp(20px, 4vw, 28px)", marginBottom: "8px" }}>
               The Arena Is Open. Your Move.
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
