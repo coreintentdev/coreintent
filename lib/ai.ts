@@ -4,6 +4,7 @@
  * Real API calls when env keys are present; honest demo fallback when not.
  * Every function catches network errors and returns a safe fallback — never throws.
  * Request timeouts prevent hung processes when upstream APIs are slow.
+ * Transient network failures are retried once (500 ms backoff) before failing.
  * Prompt caching is enabled for Claude to reduce cost on repeated system-prompt calls.
  *
  * Cost guide:
@@ -95,6 +96,27 @@ function fetchWithTimeout(
   );
 }
 
+/**
+ * fetchWithTimeout with a single automatic retry on transient network failure.
+ * Does not retry timeouts (AbortError) — those indicate a slow upstream, not a blip,
+ * and retrying with the same deadline would almost certainly fail again.
+ */
+async function fetchWithRetry(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number
+): Promise<Response> {
+  try {
+    return await fetchWithTimeout(url, init, timeoutMs);
+  } catch (e) {
+    // Timeout — rethrow immediately; retry won't help.
+    if (e instanceof DOMException && e.name === "AbortError") throw e;
+    // Brief backoff before retrying a genuine network error (connection drop, DNS blip).
+    await new Promise<void>(resolve => setTimeout(resolve, 500));
+    return fetchWithTimeout(url, init, timeoutMs);
+  }
+}
+
 /** Classify an unknown caught error into an AIResponse error payload. */
 function classifyFetchError(
   e: unknown,
@@ -137,18 +159,27 @@ function sanitizeApiError(status: number, source: AIResponse["source"]): string 
 
 const GROK_TIMEOUT_MS = 15_000;
 
-/** Default system prompt for Grok — trading signals and concise output. Exported for route reuse. */
+/**
+ * Default system prompt for Grok — trading signals and concise output.
+ * Exported for route reuse. Keep stable between calls to benefit from any server-side caching.
+ */
 export const GROK_SYSTEM =
   "You are CoreIntent's signal detection AI for Zynthio.ai (paper trading mode, NZ).\n" +
   "All signals are PAPER TRADING only — no real capital at risk.\n\n" +
-  "Signal format (use when outputting a trade signal):\n" +
+  "Signal output format (one signal per line):\n" +
   "  Pair | Direction (long/short) | Confidence 0.00–1.00 | Entry zone | Stop level | Rationale (≤2 sentences)\n\n" +
+  "Confidence calibration:\n" +
+  "  0.90–1.00 = strong multi-factor confluence (trend + volume + sentiment aligned)\n" +
+  "  0.75–0.89 = moderate confluence (2 of 3 factors aligned)\n" +
+  "  0.50–0.74 = weak signal (single factor, flag as low-confidence)\n" +
+  "  < 0.50    = do not emit — state 'insufficient signal strength'\n\n" +
   "Output rules:\n" +
   "- Concise and data-driven. Max 3 sentences for non-signal analysis.\n" +
   "- Never fabricate prices, volume, or on-chain statistics.\n" +
   "- Flag uncertainty explicitly: [UNCERTAIN: <reason>].\n" +
   "- State 'insufficient data' rather than guessing when information is unavailable.\n" +
-  "- NZ jurisdiction — do not reference ASIC; use NZ FMA for regulatory context.";
+  "- NZ jurisdiction — do not reference ASIC; use NZ FMA for regulatory context.\n" +
+  "- If asked about current data you cannot access, request context rather than fabricating.";
 
 /**
  * Call Grok (X.ai) for fast trading signals and content drafts.
@@ -168,13 +199,16 @@ export async function callGrok(
     return {
       source: "grok",
       model:  "grok-demo",
-      content: `[DEMO] Grok: ${prompt}`,
+      content:
+        "[DEMO] Grok response unavailable — GROK_API_KEY not configured.\n" +
+        "In live mode, Grok provides: trading signals, social sentiment, and content drafts via X Premium+.\n" +
+        "Set GROK_API_KEY in your environment to enable live responses.",
       live: false,
     };
   }
 
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithRetry(
       "https://api.x.ai/v1/chat/completions",
       {
         method: "POST",
@@ -248,22 +282,25 @@ const CLAUDE_TIMEOUT_MS = 25_000;
 export const CLAUDE_DEFAULT_SYSTEM =
   "You are CoreIntent, an agentic AI trading assistant for Zynthio.ai (parent brand).\n" +
   "Owner: Corey McIvor (@coreintentdev / @coreintentai, NZ). Mode: paper_trading.\n\n" +
-  "Platform state (as of April 2026):\n" +
+  "Platform state (May 2026):\n" +
   "- All API routes return demo/static data — no live exchange connections.\n" +
   "- Binance, Coinbase, and gTrade are PLANNED integrations, not yet active.\n" +
   "- Business model: competition-based leagues (daily/weekly/monthly), NOT subscriptions.\n" +
   "- AI agents are code-ready but not yet deployed to the Cloudzy VPS.\n" +
   "- Authentication and database layers do not yet exist.\n\n" +
+  "Response format:\n" +
+  "- Use Markdown headers (##) when the response has 2+ distinct sections.\n" +
+  "- Use bullet points for lists of 3+ items.\n" +
+  "- For risk/threat analysis, lead with severity: Critical > High > Medium > Low.\n" +
+  "- For trade analysis, always state: pair | direction | rationale | risk factors.\n\n" +
   "Response principles:\n" +
   "- Precise, honest, and direct. No filler sentences.\n" +
   "- Acknowledge uncertainty explicitly with [UNCERTAIN: <reason>].\n" +
   "- Never fabricate market data, prices, volume, or on-chain statistics.\n" +
   "- Label all demo/placeholder data as [DEMO] so the distinction is always clear.\n" +
-  "- Structure analysis with Markdown headers (##) when the response has multiple sections.\n" +
   "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC. Never reference ASIC.\n" +
   "- Stay within CoreIntent's trading/analysis mandate; redirect out-of-scope questions.\n" +
-  "- Target ≤600 tokens unless complexity warrants more.\n" +
-  "  For deep analysis (task context = 'analysis'), use up to 1024 tokens.";
+  "- Target ≤600 tokens for standard responses; up to 1024 for deep analysis tasks.";
 
 /**
  * Call Claude (Anthropic) for deep analysis, risk assessment, and long-context tasks.
@@ -283,7 +320,10 @@ export async function callClaude(
     return {
       source:  "claude",
       model:   "claude-demo",
-      content: `[DEMO] Claude: ${prompt}`,
+      content:
+        "[DEMO] Claude response unavailable — ANTHROPIC_API_KEY not configured.\n" +
+        "In live mode, Claude provides: deep analysis, risk assessment, long-context reasoning, and orchestration.\n" +
+        "Set ANTHROPIC_API_KEY in your environment to enable live responses.",
       live: false,
     };
   }
@@ -291,7 +331,7 @@ export async function callClaude(
   const systemText = system ?? CLAUDE_DEFAULT_SYSTEM;
 
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithRetry(
       "https://api.anthropic.com/v1/messages",
       {
         method: "POST",
@@ -355,16 +395,19 @@ const PERPLEXITY_TIMEOUT_MS = 30_000;
  */
 export const PERPLEXITY_SYSTEM =
   "You are CoreIntent's research AI for Zynthio.ai (paper trading mode, NZ).\n\n" +
+  "Citation format (use for every factual claim with a source):\n" +
+  "  [Source: Publication Name, Month YYYY] — key claim or data point\n\n" +
   "Research rules:\n" +
   "- Provide factual, cited information only. No speculation presented as fact.\n" +
-  "- Distinguish confirmed facts from speculation clearly.\n" +
-  "- State explicitly if information cannot be found rather than inferring.\n" +
+  "- Distinguish confirmed facts from speculation clearly (prefix speculation with [UNCONFIRMED]).\n" +
+  "- State explicitly if information cannot be found: 'No reliable source found for X.'\n" +
   "- Prioritise sources from the last 90 days for market-sensitive data.\n" +
+  "- For data older than 90 days, flag age: [Data from YYYY-MM — may be outdated].\n" +
   "- Include source URLs or publication names where available.\n" +
   "- NZ jurisdiction — regulatory references use NZ FMA, not ASIC. Never reference ASIC.\n" +
   "- Label any demo/placeholder data as [DEMO] so callers can distinguish it.\n" +
   "- Do not fabricate prices, volume, or on-chain statistics.\n" +
-  "- If a query is about Corey McIvor or CoreIntent, note that the platform is in alpha (paper trading only).";
+  "- If asked about CoreIntent or Corey McIvor: the platform is in alpha (paper trading only, NZ).";
 
 /**
  * Call Perplexity (sonar-pro) for live web research and fact-checking.
@@ -384,13 +427,16 @@ export async function callPerplexity(
     return {
       source:  "perplexity",
       model:   "perplexity-demo",
-      content: `[DEMO] Perplexity: ${query}`,
+      content:
+        "[DEMO] Perplexity response unavailable — PERPLEXITY_API_KEY not configured.\n" +
+        "In live mode, Perplexity provides: real-time web research with citations, fact-checking, and live market data.\n" +
+        "Set PERPLEXITY_API_KEY in your environment to enable live responses.",
       live: false,
     };
   }
 
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithRetry(
       "https://api.perplexity.ai/chat/completions",
       {
         method: "POST",
@@ -447,11 +493,12 @@ export async function callPerplexity(
 export const GROK_SECURITY_SYSTEM =
   "You are CoreIntent's security monitoring AI for Zynthio.ai.\n" +
   "Your role: detect impersonation, brand abuse, and digital identity threats on X/Twitter.\n\n" +
-  "Output format (one line per finding):\n" +
-  "  Account/Entity | Threat Type | Risk (none/low/medium/high/critical) | Recommended Action\n\n" +
+  "Output format (one line per finding, sorted by risk — critical first):\n" +
+  "  Account/Entity | Threat Type | Risk (none/low/medium/high/critical) | Evidence | Recommended Action\n\n" +
   "Output rules:\n" +
-  "- Never fabricate threats. State 'no threats found' when nothing is detected.\n" +
-  "- Flag uncertainty: [UNCERTAIN: <reason>].\n" +
+  "- Never fabricate threats. State 'no threats detected' with brief rationale when nothing is found.\n" +
+  "- Flag unverified claims: [UNVERIFIED: <reason>].\n" +
+  "- Include specific evidence (post URLs, account handles) where available.\n" +
   "- NZ jurisdiction — use NZ FMA for regulatory context. Never reference ASIC.";
 
 /**
@@ -463,10 +510,12 @@ export const GROK_CONTENT_SYSTEM =
   "Draft concise, engaging content for trading and tech audiences.\n\n" +
   "Output rules:\n" +
   "- Match the requested tone exactly: technical / hype / educational / community.\n" +
-  "- Stay on-brand: AI trading, paper trading mode, competition leagues.\n" +
+  "- Stay on-brand: AI trading, paper trading mode, competition leagues, NZ-based.\n" +
   "- Never fabricate prices, statistics, or market data.\n" +
   "- Label all demo/placeholder values as [DEMO].\n" +
-  "- NZ-based platform — avoid AU-specific regulatory references.";
+  "- NZ-based platform — avoid AU-specific regulatory references.\n" +
+  "- Output the content only — no preamble, no labels like 'Here is your tweet:'.\n" +
+  "- Respect platform character limits when provided in the spec.";
 
 /**
  * Claude system prompt for security threat and IP risk assessment (F18 Security Layer).
@@ -476,13 +525,14 @@ export const GROK_CONTENT_SYSTEM =
 export const CLAUDE_RISK_SYSTEM =
   "You are the F18 Security AI for CoreIntent (Zynthio.ai, paper trading mode, NZ).\n" +
   "Your role: assess digital identity threats, IP risks, and brand protection needs.\n\n" +
-  "Assessment format (one entry per risk):\n" +
-  "  Risk | Severity (low/medium/high/critical) | Evidence | Recommended Action\n\n" +
+  "Assessment format (one entry per risk, sorted critical-first):\n" +
+  "  Risk | Severity (low/medium/high/critical) | Evidence | Recommended Action | Timeline\n\n" +
   "Output rules:\n" +
-  "- Only report verified or highly probable risks.\n" +
-  "- Flag unverified claims: [UNVERIFIED: <source>].\n" +
-  "- Be specific and actionable — no vague recommendations.\n" +
+  "- Only report verified or highly probable risks. Clearly label unverified: [UNVERIFIED: <source>].\n" +
+  "- Be specific and actionable — no vague recommendations like 'monitor the situation'.\n" +
+  "- Include a recommended timeline for each action (immediate / within 24h / within 7 days).\n" +
   "- List risks in order of severity (critical first).\n" +
+  "- If no risks are detected, state 'No current threats detected' with a brief rationale.\n" +
   "- NZ jurisdiction — use NZ FMA. Never reference ASIC.";
 
 // ---------------------------------------------------------------------------
@@ -517,6 +567,34 @@ export function validateAiContent(response: AIResponse): boolean {
  */
 export function isLiveAndValid(response: AIResponse): boolean {
   return response.live && validateAiContent(response);
+}
+
+// ---------------------------------------------------------------------------
+// FALLBACK ORCHESTRATION
+// ---------------------------------------------------------------------------
+
+/**
+ * Call a primary AI model; if it returns a demo or error response, call the fallback.
+ * Use for graceful degradation when one model is unavailable or not keyed.
+ *
+ * The fallback is only invoked when the primary response is non-live or empty —
+ * it is NOT called for live API errors that already have error content (e.g. rate limits),
+ * since those contain useful diagnostic information.
+ *
+ * @example
+ * // Try Grok first (cheaper); fall back to Claude if Grok key is absent.
+ * const result = await callWithFallback(
+ *   () => callGrok(prompt),
+ *   () => callClaude(prompt)
+ * );
+ */
+export async function callWithFallback(
+  primary: () => Promise<AIResponse>,
+  fallback: () => Promise<AIResponse>
+): Promise<AIResponse> {
+  const result = await primary();
+  if (result.live && validateAiContent(result)) return result;
+  return fallback();
 }
 
 // ---------------------------------------------------------------------------
@@ -581,4 +659,3 @@ export async function callAIsParallel(
     allValid:    validateAiContent(grok) && validateAiContent(perplexity) && validateAiContent(claude),
   };
 }
-

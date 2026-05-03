@@ -8,7 +8,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { demoOk, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Holding {
   asset:     string;
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
       mode:      "paper_trading",
       timestamp: new Date().toISOString(),
     };
-    return ok(data);
+    return demoOk(data);
   } catch (e) {
     return serverError(e);
   }

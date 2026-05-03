@@ -62,6 +62,21 @@ export function ok<T>(data: T, status = 200): NextResponse<ApiResponse<T>> {
   );
 }
 
+/**
+ * Like ok(), but adds X-Demo: true to signal that the payload contains
+ * demo/static data rather than live exchange or AI responses.
+ * Useful for monitoring dashboards and client-side feature flags.
+ *
+ * @example
+ * return demoOk(data); // marks response as demo to any HTTP client
+ */
+export function demoOk<T>(data: T, status = 200): NextResponse<ApiResponse<T>> {
+  return NextResponse.json(
+    { success: true, data },
+    { status, headers: { ...CORS_HEADERS, "X-Request-ID": reqId(), "X-Demo": "true" } }
+  );
+}
+
 /** Return an error JSON response wrapped in the standard envelope. */
 export function err(message: string, status = 500): NextResponse<ApiResponse<null>> {
   return NextResponse.json(
