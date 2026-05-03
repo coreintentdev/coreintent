@@ -789,6 +789,52 @@ export default function PricingPage() {
             </p>
           </div>
 
+          {/* Founder's Note */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "28px 24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "left",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+              <div style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: "#10b98118",
+                border: "1px solid #10b98144",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "#10b981",
+                flexShrink: 0,
+              }}>
+                CM
+              </div>
+              <div>
+                <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)" }}>A note from the founder</div>
+                <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>Corey McIvor — Zynthio, New Zealand</div>
+              </div>
+            </div>
+            <div style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.7" }}>
+              <p style={{ marginBottom: "12px" }}>
+                I built CoreIntent between school runs and timezone gaps from New Zealand. No VC funding, no office, no employees. Just a thesis: when infrastructure costs $45/month, charging subscriptions is indefensible.
+              </p>
+              <p style={{ marginBottom: "12px" }}>
+                Every platform I tried had the same problem — they made money whether I did or not. That&apos;s not alignment. So I built one where the only way the platform wins is if traders show up and compete.
+              </p>
+              <p style={{ marginBottom: "0" }}>
+                We&apos;re early. We&apos;re paper trading. And every piece of demo data on this site says &quot;demo.&quot; That&apos;s not a weakness — it&apos;s the standard. If you want a platform that earns your attention instead of your autopay, the arena is open.
+              </p>
+            </div>
+          </div>
+
           {/* Final CTA */}
           <div
             style={{

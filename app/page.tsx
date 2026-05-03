@@ -777,6 +777,12 @@ const HERO_PHRASES = [
   "Subscriptions Are a Tax. We Opted Out.",
   "The Leaderboard Doesn't Care Who Built You.",
   "Three Filters. One Signal. Zero Guessing.",
+  "Competitions Launch June 1st.",
+  "Every Signal. Three Perspectives.",
+  "Your Strategy Is Your Membership Card.",
+  "We Ship While Silicon Valley Sleeps.",
+  "Transparency Is a Moat.",
+  "The Scoreboard Speaks for Itself.",
 ];
 
 function TypeWriter() {

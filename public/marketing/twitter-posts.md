@@ -1111,3 +1111,90 @@ Transparency isn't just about labels. It's about deadlines.
 coreintent.dev/pricing
 
 #Accountability #BuildInPublic #CoreIntent
+
+---
+
+## Post 66 — May 2026: The Quiet Month
+
+May was quiet externally. Internally:
+
+- Consensus pipeline calibrated
+- Risk-adjusted scoring stress-tested
+- Bot registration rate limiting shipped
+- Marketing kit open-sourced
+- 54-point audit holding at 96%
+
+The loudest months produce the least shipping. The quiet months produce launch dates.
+
+June 1st.
+
+#BuildInPublic #CoreIntent #ShipIt
+
+---
+
+## Post 67 — What $45/mo Buys You in 2026
+
+In 2026, $45/mo gets you:
+
+- 3 AI models cross-checking signals
+- 6 trading agents with distinct strategies
+- Interactive terminal with 100+ commands
+- Daily, weekly, monthly competitions
+- Full docs, open source, no paywall
+
+OR one month of a platform that shows you green dots.
+
+Your call.
+
+coreintent.dev
+
+#AITrading #ValueForMoney #CoreIntent
+
+---
+
+## Post 68 — The Three-Model Handshake
+
+How a CoreIntent signal gets generated:
+
+1. Grok: "BTC breakout pattern forming"
+2. Claude: "Risk/reward is 2.4:1, on-chain supports it"
+3. Perplexity: "No negative catalysts in last 4 hours"
+
+Consensus: LONG. Confidence: 87%.
+
+One model would've given you step 1 and called it a day.
+
+Three models gave you the full picture.
+
+#MultiModelAI #TradingSignals #CoreIntent
+
+---
+
+## Post 69 — The Founder's Timezone
+
+7:30am NZ — Drop kids at school.
+8:00am NZ — Ship code.
+4:00pm NZ — US markets open. Features are live.
+11:00pm NZ — Asia wakes up. Already deployed.
+
+Building from New Zealand means the world gets updates while I sleep.
+
+The 12-hour offset isn't isolation. It's leverage.
+
+#MadeInNZ #IndieFounder #CoreIntent
+
+---
+
+## Post 70 — Why Honesty Converts
+
+We label our demo data "DEMO."
+We label our testimonials "PLACEHOLDER."
+We label paper trading "PAPER TRADING."
+
+Conversion rate went up, not down.
+
+Turns out people trust you more when you tell them what's real. Wild concept for fintech.
+
+coreintent.dev
+
+#RadicalTransparency #FinTech #BuildInPublic

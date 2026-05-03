@@ -446,3 +446,33 @@ The hardest part of building in public isn't the transparency. It's resisting th
 -> coreintent.dev
 
 #BuildInPublic #FinTech #AI #Transparency #MonthlyUpdate #CoreIntent #Startups #NewZealand
+
+---
+
+## Post 15 — Why We Open-Sourced Everything — Including This Post
+
+**The case for open-sourcing your entire go-to-market strategy.**
+
+This LinkedIn post is open source. So are the other 14. Along with 70 tweets, 19 TikTok scripts, 18 Instagram captions, a press kit, a media guide, and a 30-day content calendar.
+
+Navigate to /public/marketing/ in our GitHub repo. Fork it. Copy it. Rewrite it with your brand name.
+
+**"That's insane. Why would you give away your marketing?"**
+
+Because marketing only works when it reflects genuine product decisions. You can copy the tweets, but you can't copy:
+
+1. **$45/month infrastructure.** Most competitors burn $10k+/month. When we say "free is sustainable," it's math, not marketing.
+
+2. **Competition-based revenue.** Try convincing your board to kill subscriptions. We don't have a board.
+
+3. **Radical transparency.** Demo data labelled "demo." Paper trading labelled "paper." Try that when your dashboard is designed to obscure the truth.
+
+4. **Bot-inclusive design.** Most platforms ban automation to protect engagement metrics. We welcome bots because the future of trading is multi-agent.
+
+The marketing reflects the product. The product reflects the thesis. The thesis is simple: aligned incentives, honest labelling, and infrastructure costs low enough to give everything away.
+
+Copy the words. You still need the conviction.
+
+-> coreintent.dev | github.com/coreintentdev/coreintent
+
+#OpenSource #ContentStrategy #BuildInPublic #FinTech #StartupMarketing #AITrading #CoreIntent
