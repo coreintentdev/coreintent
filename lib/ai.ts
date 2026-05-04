@@ -264,6 +264,20 @@ export async function callGrokContent(
   return callGrok(prompt, GROK_CONTENT_SYSTEM, options);
 }
 
+/**
+ * Convenience wrapper for Grok trading signal generation.
+ * Pre-wires GROK_SYSTEM (signal-specific prompt) so routes don't need to import it.
+ *
+ * @example
+ * const sig = await callGrokSignal("Analyse BTC/USD momentum on the 4H chart.");
+ */
+export async function callGrokSignal(
+  prompt: string,
+  options?: { maxTokens?: number }
+): Promise<AIResponse> {
+  return callGrok(prompt, GROK_SYSTEM, options);
+}
+
 // ---------------------------------------------------------------------------
 // CLAUDE — Anthropic — Deep analysis, risk assessment, orchestration
 // ---------------------------------------------------------------------------
@@ -574,29 +588,58 @@ export function isLiveAndValid(response: AIResponse): boolean {
 // ---------------------------------------------------------------------------
 
 /**
- * Call a primary AI model; if it returns a demo or error response, call the fallback.
- * Use for graceful degradation when one model is unavailable or not keyed.
+ * Call a primary AI model; if it returns a non-live or empty response, call the fallback.
  *
- * The fallback is only invoked when the primary response is non-live or empty —
- * it is NOT called for live API errors that already have error content (e.g. rate limits),
- * since those contain useful diagnostic information.
+ * By default the fallback is invoked whenever the primary is non-live (demo or any error).
+ * Set `preserveErrors: true` to keep a live-but-errored response instead of cascading —
+ * useful when the caller wants to surface upstream error detail (e.g. rate-limit messages).
  *
  * @example
  * // Try Grok first (cheaper); fall back to Claude if Grok key is absent.
  * const result = await callWithFallback(
- *   () => callGrok(prompt),
+ *   () => callGrokSignal(prompt),
  *   () => callClaude(prompt)
  * );
  */
 export async function callWithFallback(
   primary: () => Promise<AIResponse>,
-  fallback: () => Promise<AIResponse>
+  fallback: () => Promise<AIResponse>,
+  options?: { preserveErrors?: boolean }
 ): Promise<AIResponse> {
   const result = await primary();
   if (result.live && validateAiContent(result)) return result;
+  // When preserveErrors is true, keep a live error response (has errorType) rather than
+  // overwriting it with the fallback — the caller wants to see the upstream error detail.
+  if (options?.preserveErrors && result.live && result.errorType) return result;
   return fallback();
 }
 
+/**
+ * Try a sequence of AI callers in order, returning the first live + valid response.
+ * Falls through to each next caller when the current one is non-live or returns empty content.
+ * Returns the last result even if all callers fail, so callers always get a usable response.
+ *
+ * @example
+ * // Signal: try Grok (cheapest) → Claude → Perplexity as last resort.
+ * const result = await callWithCascade([
+ *   () => callGrokSignal(prompt),
+ *   () => callClaude(prompt),
+ *   () => callPerplexity(prompt),
+ * ]);
+ */
+export async function callWithCascade(
+  fns: Array<() => Promise<AIResponse>>
+): Promise<AIResponse> {
+  if (fns.length === 0) {
+    return { source: "grok", model: "none", content: "[ERROR] No AI callers provided.", live: false };
+  }
+  let last!: AIResponse;
+  for (const fn of fns) {
+    last = await fn();
+    if (last.live && validateAiContent(last)) return last;
+  }
+  return last;
+}
 // ---------------------------------------------------------------------------
 // PARALLEL ORCHESTRATION
 // ---------------------------------------------------------------------------

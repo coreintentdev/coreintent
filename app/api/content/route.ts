@@ -8,7 +8,7 @@
  * Rate limit: 20 req/min (see RATE_LIMITS.content in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { ok, accepted, badRequest, preflight, serverError, validateString, validateEnum, validatePositiveInt, checkRateLimit, tooManyRequests } from "@/lib/api";
 import { callGrokContent, callClaude, validateAiContent, getAiKeyStatus, sanitizeForPrompt } from "@/lib/ai";
 
 type ContentType = "video_6s" | "tweet" | "linkedin" | "thread" | "announcement" | "blog";
@@ -186,7 +186,7 @@ export async function POST(req: NextRequest) {
         content,
         live:    grokResult.live,
       };
-      return ok(data, 200);
+      return ok(data);
     }
 
     // Demo fallback — no AI keys configured.
@@ -201,7 +201,7 @@ export async function POST(req: NextRequest) {
       message:       `[DEMO] ${count}× ${type} queued for: "${topic}"`,
       live:          false,
     };
-    return ok(data, 202);
+    return accepted(data);
   } catch (e) {
     return serverError(e);
   }

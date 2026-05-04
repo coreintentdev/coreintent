@@ -124,6 +124,34 @@ export function badRequest(message: string): NextResponse<ApiResponse<null>> {
   return err(message, 400);
 }
 
+/**
+ * 201 Created — use when a new resource is successfully persisted.
+ * More semantically precise than ok(data, 201) for POST handlers that create records.
+ *
+ * @example
+ * return created({ note }); // POST /api/notes
+ */
+export function created<T>(data: T): NextResponse<ApiResponse<T>> {
+  return NextResponse.json(
+    { success: true, data },
+    { status: 201, headers: { ...CORS_HEADERS, "X-Request-ID": reqId() } }
+  );
+}
+
+/**
+ * 202 Accepted — use when a job is queued but not yet completed (e.g. demo/async content gen).
+ * Signals to the client that the request was valid but processing is deferred.
+ *
+ * @example
+ * return accepted({ status: "queued", estimatedTime: "2s" }); // POST /api/content (demo mode)
+ */
+export function accepted<T>(data: T): NextResponse<ApiResponse<T>> {
+  return NextResponse.json(
+    { success: true, data },
+    { status: 202, headers: { ...CORS_HEADERS, "X-Request-ID": reqId() } }
+  );
+}
+
 /** 502 Bad Gateway — AI or upstream service returned an unexpected response. */
 export function gatewayError(
   message = "Upstream service returned an invalid response"
@@ -296,6 +324,31 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
 };
+
+/**
+ * Build standard rate-limit response headers for a given window.
+ * Wire these into tooManyRequests() responses once checkRateLimit is backed by KV.
+ *
+ * @param limit     The request budget for the window (from RATE_LIMITS).
+ * @param remaining Requests still available in the current window.
+ * @param resetAt   Unix timestamp (seconds) when the window resets.
+ *
+ * @example
+ * const rlHeaders = rateLimitHeaders(RATE_LIMITS.ai.max, 7, Date.now() / 1000 + 60);
+ * return NextResponse.json({ ... }, { status: 429, headers: { ...CORS_HEADERS, ...rlHeaders } });
+ */
+export function rateLimitHeaders(
+  limit: number,
+  remaining: number,
+  resetAt: number
+): Record<string, string> {
+  return {
+    "X-RateLimit-Limit":     String(limit),
+    "X-RateLimit-Remaining": String(Math.max(0, remaining)),
+    "X-RateLimit-Reset":     String(Math.floor(resetAt)),
+    "Retry-After":           String(Math.max(1, Math.ceil(resetAt - Date.now() / 1000))),
+  };
+}
 
 /**
  * Rate limit check — no-op stub until Cloudflare KV or Upstash Redis is wired in.
