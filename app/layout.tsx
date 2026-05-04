@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -7,6 +7,16 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
   variable: "--font-mono",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+    { media: "(prefers-color-scheme: light)", color: "#10b981" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: {
@@ -222,7 +232,7 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-03",
+      dateModified: "2026-05-04",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -250,7 +260,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-NZ" className={jetbrainsMono.variable}>
+    <html lang="en-NZ" dir="ltr" className={jetbrainsMono.variable}>
       <body>
         <script
           type="application/ld+json"

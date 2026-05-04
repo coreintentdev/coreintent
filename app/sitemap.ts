@@ -35,19 +35,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${base}/privacy`,
-      lastModified: new Date("2026-03-01"),
+      lastModified: new Date("2026-05-04"),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${base}/terms`,
-      lastModified: new Date("2026-03-01"),
+      lastModified: new Date("2026-05-04"),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${base}/disclaimer`,
-      lastModified: new Date("2026-03-01"),
+      lastModified: new Date("2026-05-04"),
       changeFrequency: "yearly",
       priority: 0.3,
     },

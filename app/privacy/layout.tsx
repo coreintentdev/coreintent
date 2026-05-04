@@ -61,7 +61,7 @@ const structuredData = {
         "CoreIntent privacy policy — how we handle your data. NZ Privacy Act 2020 compliant.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-03-01",
+      dateModified: "2026-05-04",
       inLanguage: "en-NZ",
     },
   ],

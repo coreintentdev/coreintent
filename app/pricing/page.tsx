@@ -171,7 +171,7 @@ export default function PricingPage() {
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
       <StickyPricingCTA />
-      <main style={{ flex: 1, padding: "48px 24px 80px", fontFamily: "inherit" }}>
+      <main style={{ flex: 1, padding: "48px 24px 80px", fontFamily: "inherit" }} aria-label="Competitions and Leagues">
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
           <div
             style={{
