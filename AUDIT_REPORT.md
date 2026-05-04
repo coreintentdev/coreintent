@@ -1,10 +1,11 @@
 # CoreIntent Audit Report
-Generated: Mon May  4 04:48:59 UTC 2026
+Generated: Mon May  4 04:58:14 UTC 2026
 
 ## 1. Build
-- **FAIL:** npm run build FAILS — see /tmp/coreintent_build.log
-- **FAIL:** TypeScript errors found
-- WARN: ESLint warnings or errors
+- PASS: npm run build succeeds
+- INFO: Routes found: 35
+- PASS: TypeScript compiles (strict mode)
+- PASS: ESLint passes
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
@@ -84,8 +85,8 @@ Generated: Mon May  4 04:48:59 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 49 |
-| FAIL | 2 |
-| WARN | 3 |
+| PASS | 52 |
+| FAIL | 0 |
+| WARN | 2 |
 
-**Audit Score: 90%** (49/54 checks passed)
+**Audit Score: 96%** (52/54 checks passed)
