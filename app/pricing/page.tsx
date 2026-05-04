@@ -110,11 +110,68 @@ const STEPS = [
   { step: "5", label: "Create", desc: "Make songs, content, strategies. Your digital twin.", color: "#ef4444" },
 ];
 
+function StickyPricingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div style={{
+      position: "fixed",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1000,
+      padding: "12px 24px",
+      background: "linear-gradient(180deg, transparent, rgba(10, 14, 23, 0.95) 20%)",
+      backdropFilter: "blur(8px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "16px",
+      animation: "fadeInUp 0.4s ease both",
+    }}>
+      <span style={{ fontSize: "13px", color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: "6px" }}>
+        <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", animation: "pulse 2s ease-in-out infinite" }} />
+        All leagues free. No credit card.
+      </span>
+      <a
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          padding: "10px 24px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "8px",
+          fontSize: "13px",
+          fontWeight: "bold",
+          textDecoration: "none",
+          fontFamily: "inherit",
+          boxShadow: "0 0 20px rgba(16, 185, 129, 0.3)",
+          transition: "transform 0.2s ease",
+        }}
+      >
+        Claim Your Spot &rarr;
+      </a>
+    </div>
+  );
+}
+
 export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
-      <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
+      <StickyPricingCTA />
+      <main style={{ flex: 1, padding: "48px 24px 80px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
           <div
             style={{
@@ -133,11 +190,11 @@ export default function PricingPage() {
             Trading as a sport — not a subscription
           </div>
           <h1 style={{ fontSize: "clamp(30px, 5vw, 50px)", marginBottom: "16px", lineHeight: "1.1" }}>
-            Every Other Platform Profits From Your{" "}
-            <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Hope</span>.
+            They Charge You to{" "}
+            <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Lose</span>.
             <br />
             <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
-              We Profit When You Compete.
+              We Built an Arena Where You Compete Free.
             </span>
           </h1>
           <div style={{
@@ -164,10 +221,10 @@ export default function PricingPage() {
             }}>$0</span>
           </div>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "15px", maxWidth: "560px", margin: "0 auto 8px" }}>
-            Subscription platforms need you to <em>stay</em>, not <em>succeed</em>. Their incentive is your autopay renewal, not your P&amp;L.
+            Subscription platforms profit whether you win or lose. Their incentive is your autopay renewal — not your P&amp;L.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
-            Our engine costs $45/mo to run. Free entry isn&apos;t a gimmick — it&apos;s infrastructure math.
+            Our engine costs $45/mo to run. Free entry isn&apos;t charity — it&apos;s math. We need engaged traders, not trapped subscribers.
           </p>
 
           <div style={{

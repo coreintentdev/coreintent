@@ -718,7 +718,7 @@ function FloatingCTA() {
         }}
       >
         <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#000", opacity: 0.6, animation: "pulse 2s ease-in-out infinite" }} />
-        Join Free &mdash; No Card Needed
+        Enter the Arena &mdash; $0 Forever
       </a>
     </div>
   );
@@ -1361,9 +1361,13 @@ export default function Home() {
                 CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
               </span>
               <span aria-hidden="true">
-                Stop Paying for Signals.<br />
-                Start{" "}
-                <span className="neon-green" style={{ position: "relative" }}>Outcompeting</span> Them.
+                One Model Guesses.<br />
+                Three Models{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Debate</span>.
+                <br />
+                <span style={{ fontSize: "clamp(20px, 3vw, 34px)", color: "var(--text-secondary)", fontWeight: "normal" }}>
+                  You get the signal they all agree on.
+                </span>
               </span>
             </h1>
             <div
@@ -1385,8 +1389,9 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Three AI models cross-examine every signal before it reaches you.
-              No subscriptions. No paywalls. Enter daily competitions and let your strategy speak.
+              Grok spots it. Claude stress-tests it. Perplexity fact-checks it against live data.
+              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}> Only consensus signals reach you.</span>
+              {" "}No subscriptions. Free competitions. Your edge is skill, not spend.
             </p>
             <div style={{
               display: "flex",
@@ -1399,8 +1404,22 @@ export default function Home() {
               <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through", opacity: 0.6 }}>
                 $99/mo signal subscriptions
               </span>
-              <span style={{ fontSize: "22px", fontWeight: "bold", color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.4)" }}>
-                $0 forever. Compete free.
+              <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>&rarr;</span>
+              <span style={{ fontSize: "26px", fontWeight: "bold", color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.4)" }}>
+                $0 forever
+              </span>
+              <span style={{
+                fontSize: "10px",
+                padding: "4px 10px",
+                background: "#10b98118",
+                border: "1px solid #10b98133",
+                borderRadius: "20px",
+                color: "#10b981",
+                letterSpacing: "0.3px",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}>
+                Not a trial
               </span>
             </div>
             <LiveSignalFeed />
@@ -1421,7 +1440,7 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Enter the Arena — $0 &rarr;
+                Launch the Terminal — Free &rarr;
               </button>
               <a
                 href="/pricing"
