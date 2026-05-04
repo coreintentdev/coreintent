@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Link from "next/link";
+import { useTranslations } from "@/lib/i18n-context";
 
 /* ─── Scroll Reveal ─── */
 function useScrollReveal() {
@@ -803,6 +804,7 @@ function LiveCandlestickChart() {
 }
 
 export default function DemoPage() {
+  const { localePath } = useTranslations();
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
   );
@@ -1319,7 +1321,7 @@ export default function DemoPage() {
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
-                href="/"
+                href={localePath("/")}
                 style={{
                   display: "inline-block",
                   padding: "12px 32px",
@@ -1335,7 +1337,7 @@ export default function DemoPage() {
                 Open Terminal
               </Link>
               <Link
-                href="/stack"
+                href={localePath("/stack")}
                 style={{
                   display: "inline-block",
                   padding: "12px 32px",

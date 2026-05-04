@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { headers } from "next/headers";
+import { locales, isValidLocale, isRtl, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -8,6 +10,8 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
+const BASE_URL = "https://coreintent.dev";
+
 export const metadata: Metadata = {
   title: {
     default: "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
@@ -15,14 +19,17 @@ export const metadata: Metadata = {
   },
   description:
     "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio.",
-  metadataBase: new URL("https://coreintent.dev"),
+  metadataBase: new URL(BASE_URL),
   alternates: {
-    canonical: "https://coreintent.dev",
+    canonical: BASE_URL,
+    languages: Object.fromEntries(
+      locales.map((l) => [l, `${BASE_URL}/${l}`]),
+    ),
   },
   openGraph: {
     type: "website",
     locale: "en_NZ",
-    url: "https://coreintent.dev",
+    url: BASE_URL,
     siteName: "CoreIntent",
     title: "CoreIntent | Three AI Models. One Engine. Zero Subscriptions.",
     description:
@@ -101,7 +108,7 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://coreintent.dev/#person",
+      "@id": `${BASE_URL}/#person`,
       name: "Corey McIvor",
       email: "corey@coreyai.ai",
       url: "https://zynthio.ai",
@@ -135,13 +142,13 @@ const jsonLd = {
         "Parent brand behind CoreIntent — building agentic AI trading tools with multi-model orchestration. Based in New Zealand.",
       logo: {
         "@type": "ImageObject",
-        url: "https://coreintent.dev/opengraph-image.png",
+        url: `${BASE_URL}/opengraph-image.png`,
         width: 1200,
         height: 630,
       },
       founder: {
         "@type": "Person",
-        "@id": "https://coreintent.dev/#person",
+        "@id": `${BASE_URL}/#person`,
       },
       foundingDate: "2026",
       foundingLocation: {
@@ -163,14 +170,14 @@ const jsonLd = {
         "@type": "ContactPoint",
         email: "corey@coreyai.ai",
         contactType: "customer support",
-        availableLanguage: "English",
+        availableLanguage: locales.map((l) => l.toUpperCase()),
       },
     },
     {
       "@type": "WebApplication",
-      "@id": "https://coreintent.dev/#application",
+      "@id": `${BASE_URL}/#application`,
       name: "CoreIntent",
-      url: "https://coreintent.dev",
+      url: BASE_URL,
       description:
         "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
       applicationCategory: "FinanceApplication",
@@ -178,7 +185,7 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
-      inLanguage: "en-NZ",
+      inLanguage: locales,
       isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
@@ -193,7 +200,7 @@ const jsonLd = {
       },
       creator: {
         "@type": "Person",
-        "@id": "https://coreintent.dev/#person",
+        "@id": `${BASE_URL}/#person`,
       },
       featureList: [
         "Multi-AI orchestration (Claude, Grok, Perplexity)",
@@ -202,23 +209,24 @@ const jsonLd = {
         "Interactive web terminal",
         "AI agent fleet",
         "Bot-friendly competitions",
+        "Multilingual interface (10 languages)",
       ],
       screenshot: {
         "@type": "ImageObject",
-        url: "https://coreintent.dev/opengraph-image.png",
+        url: `${BASE_URL}/opengraph-image.png`,
         width: 1200,
         height: 630,
       },
     },
     {
       "@type": "WebSite",
-      "@id": "https://coreintent.dev/#website",
-      url: "https://coreintent.dev",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
-      inLanguage: "en-NZ",
+      inLanguage: locales,
       datePublished: "2026-03-01",
-      dateModified: "2026-04-28",
+      dateModified: "2026-05-04",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -228,29 +236,37 @@ const jsonLd = {
       "@type": "SiteNavigationElement",
       name: "Main Navigation",
       hasPart: [
-        { "@type": "WebPage", name: "Terminal", url: "https://coreintent.dev" },
-        { "@type": "WebPage", name: "Demo", url: "https://coreintent.dev/demo" },
-        { "@type": "WebPage", name: "Stack", url: "https://coreintent.dev/stack" },
-        { "@type": "WebPage", name: "Competitions", url: "https://coreintent.dev/pricing" },
-        { "@type": "WebPage", name: "Privacy Policy", url: "https://coreintent.dev/privacy" },
-        { "@type": "WebPage", name: "Terms of Service", url: "https://coreintent.dev/terms" },
-        { "@type": "WebPage", name: "Disclaimer", url: "https://coreintent.dev/disclaimer" },
+        { "@type": "WebPage", name: "Terminal", url: `${BASE_URL}/en` },
+        { "@type": "WebPage", name: "Demo", url: `${BASE_URL}/en/demo` },
+        { "@type": "WebPage", name: "Stack", url: `${BASE_URL}/en/stack` },
+        { "@type": "WebPage", name: "Competitions", url: `${BASE_URL}/en/pricing` },
+        { "@type": "WebPage", name: "Privacy Policy", url: `${BASE_URL}/en/privacy` },
+        { "@type": "WebPage", name: "Terms of Service", url: `${BASE_URL}/en/terms` },
+        { "@type": "WebPage", name: "Disclaimer", url: `${BASE_URL}/en/disclaimer` },
       ],
     },
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const localeHeader = headersList.get("x-locale");
+  const locale: Locale =
+    localeHeader && isValidLocale(localeHeader) ? localeHeader : "en";
+  const dir = isRtl(locale) ? "rtl" : "ltr";
+
   return (
-    <html lang="en-NZ" className={jetbrainsMono.variable}>
+    <html lang={locale} dir={dir} className={jetbrainsMono.variable}>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         {children}
       </body>

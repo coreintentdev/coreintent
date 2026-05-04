@@ -2,16 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const NAV_LINKS = [
-  { href: "/", label: "Terminal" },
-  { href: "/demo", label: "Demo" },
-  { href: "/stack", label: "Stack" },
-  { href: "/pricing", label: "Pricing" },
-];
+import { useTranslations } from "@/lib/i18n-context";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function SiteNav() {
   const pathname = usePathname();
+  const { t, localePath } = useTranslations();
+
+  const navLinks = [
+    { href: localePath("/"), label: t("nav", "terminal") },
+    { href: localePath("/demo"), label: t("nav", "demo") },
+    { href: localePath("/stack"), label: t("nav", "stack") },
+    { href: localePath("/pricing"), label: t("nav", "pricing") },
+  ];
+
+  function isActive(href: string) {
+    if (href.endsWith("/") || href.split("/").length === 2) {
+      return pathname === href || pathname === href + "/";
+    }
+    return pathname.startsWith(href);
+  }
 
   return (
     <header
@@ -25,8 +35,8 @@ export default function SiteNav() {
       }}
     >
       <Link
-        href="/"
-        aria-label="CoreIntent — Home"
+        href={localePath("/")}
+        aria-label={t("nav", "home")}
         style={{
           display: "flex",
           alignItems: "center",
@@ -47,27 +57,35 @@ export default function SiteNav() {
           v0.2.0-alpha | Zynthio.ai
         </span>
       </Link>
-      <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            style={{
-              padding: "6px 16px",
-              borderRadius: "6px",
-              fontSize: "13px",
-              fontFamily: "inherit",
-              textDecoration: "none",
-              background:
-                pathname === link.href ? "var(--accent-green)" : "transparent",
-              color:
-                pathname === link.href ? "#000" : "var(--text-secondary)",
-            }}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <nav
+          style={{ display: "flex", gap: "4px" }}
+          aria-label="Main navigation"
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                padding: "6px 16px",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontFamily: "inherit",
+                textDecoration: "none",
+                background: isActive(link.href)
+                  ? "var(--accent-green)"
+                  : "transparent",
+                color: isActive(link.href)
+                  ? "#000"
+                  : "var(--text-secondary)",
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <LanguageSwitcher />
+      </div>
     </header>
   );
 }

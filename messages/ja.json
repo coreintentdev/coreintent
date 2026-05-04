@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "技術スタック",
+    "pricing": "料金",
+    "home": "CoreIntent — ホーム"
+  },
+  "hero": {
+    "badge": "3つのAIモデル。手数料ゼロ。今すぐ競争。",
+    "headline1": "シグナルに課金するのはやめよう。",
+    "headline2": "始めよう、",
+    "headlineHighlight": "打ち勝つ",
+    "headline3": "ことを。",
+    "srOnly": "CoreIntent — 3つのAIモデル。1つのトレーディングエンジン。サブスクリプションゼロ。",
+    "subtitle": "3つのAIモデルがあなたに届く前にすべてのシグナルを精査します。サブスクリプションなし。課金の壁なし。デイリーコンペに参加して、あなたの戦略を証明しよう。",
+    "priceBefore": "月額$99のシグナル購読",
+    "priceAfter": "永久に$0。無料で競争。",
+    "ctaPrimary": "アリーナに参加 — $0",
+    "ctaSecondary": "仕組みを見る",
+    "disclaimer": "クレジットカード不要。縛りなし。オープンソース＆ペーパートレードモード。ニュージーランド製。"
+  },
+  "howItWorks": {
+    "label": "仕組み",
+    "title": "よりスマートなシグナルへの3ステップ",
+    "step1Title": "モデルが議論",
+    "step1Desc": "Grokがシグナルを発見。Claudeが疑問を投げる。Perplexityがリアルタイムデータで検証。3つの視点、1つの会話。",
+    "step2Title": "コンセンサスの形成",
+    "step2Desc": "3つのモデルが一致すれば信頼度は高い。意見が分かれれば不確実性をフラグ — 偽の確信なし。",
+    "step3Title": "あなたが競争",
+    "step3Desc": "シグナルをデイリー、ウィークリー、マンスリーコンペに持ち込もう。人間やボットに対してあなたの戦略を証明。参加無料。"
+  },
+  "valueProps": {
+    "models": "3モデル。1シグナル。",
+    "modelsDesc": "Grokが検出。Claudeが尋問。Perplexityが検証。1モデルの推測 vs 3モデルの討論 — それは些細ではなく、根本的な違い。",
+    "compete": "競争しよう、購読ではなく",
+    "competeDesc": "デイリースプリント。ウィークリーチャレンジ。マンスリーチャンピオンシップ。参加無料。あなたのP&Lが会員証 — 自動支払いではなく。",
+    "bots": "ボットは一流市民",
+    "botsDesc": "CAPTCHAなし。ブロックなし。AIエージェントが登録、競争、人間と共に稼ぐ。リーダーボードは作り手を問わない。",
+    "cost": "月額$45。スタック全体。",
+    "costDesc": "Vercel：無料。GitHub：無料。Cloudflare：$20。VPS：$25。インフラ費用はジム会費より安い。"
+  },
+  "terminal": {
+    "greeting": "CoreIntentトレーディングエンジンへようこそ",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — CoreIntentトレーディングエンジン",
+    "paperMode": "ペーパートレードモード — 実際の資金リスクなし",
+    "helpPrompt": "helpでコマンド一覧。Tabで自動補完。caiで開始。"
+  },
+  "footer": {
+    "tagline": "エージェントAIトレーディングエンジン",
+    "builtBy": "Corey McIvor制作 | Zynthio.ai",
+    "product": "プロダクト",
+    "legal": "法的情報",
+    "connect": "つながる",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "disclaimer": "免責事項",
+    "competitions": "コンペティション",
+    "contact": "お問い合わせ",
+    "rights": "無断転載禁止。",
+    "riskWarning": "暗号通貨の取引には大きなリスクが伴います。過去の実績は将来の結果を保証するものではありません。ペーパートレードモード。"
+  },
+  "languageSwitcher": {
+    "label": "言語"
+  },
+  "meta": {
+    "title": "CoreIntent | エージェントAIトレーディングエンジン — サブスク不要、競争のみ",
+    "description": "3つのAIモデル。1つのトレーディングエンジン。サブスクゼロ。CoreIntentがClaude、Grok、Perplexityを統合してトレーディングシグナルを提供。"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "close": "閉じる",
+    "back": "戻る"
+  }
+}

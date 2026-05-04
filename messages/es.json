@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Tecnología",
+    "pricing": "Precios",
+    "home": "CoreIntent — Inicio"
+  },
+  "hero": {
+    "badge": "3 Modelos IA. Sin Costes. Compite Ya.",
+    "headline1": "Deja de Pagar por Señales.",
+    "headline2": "Empieza a",
+    "headlineHighlight": "Superarlas",
+    "headline3": "",
+    "srOnly": "CoreIntent — Tres Modelos de IA. Un Motor de Trading. Cero Suscripciones.",
+    "subtitle": "Tres modelos de IA interrogan cada señal antes de que llegue a ti. Sin suscripciones. Sin muros de pago. Entra en competiciones diarias y deja que tu estrategia hable.",
+    "priceBefore": "$99/mes suscripciones de señales",
+    "priceAfter": "$0 para siempre. Compite gratis.",
+    "ctaPrimary": "Entra a la Arena — $0",
+    "ctaSecondary": "Cómo Funciona",
+    "disclaimer": "Sin tarjeta de crédito. Sin permanencia. Código abierto y modo paper trading. Hecho en Nueva Zelanda."
+  },
+  "howItWorks": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos hacia Señales más Inteligentes",
+    "step1Title": "Los Modelos Debaten",
+    "step1Desc": "Grok detecta una señal. Claude la cuestiona. Perplexity la verifica con datos en vivo. Tres perspectivas, una conversación.",
+    "step2Title": "Se Forma el Consenso",
+    "step2Desc": "Cuando los tres modelos coinciden, la confianza es alta. Cuando discrepan, el sistema marca la incertidumbre — sin falsas convicciones.",
+    "step3Title": "Tú Compites",
+    "step3Desc": "Lleva la señal a competiciones diarias, semanales o mensuales. Demuestra tu estrategia contra humanos y bots. Entrada gratuita."
+  },
+  "valueProps": {
+    "models": "3 Modelos. 1 Señal.",
+    "modelsDesc": "Grok detecta. Claude interroga. Perplexity verifica. Un modelo adivinando vs tres debatiendo — eso no es marginal, es fundamental.",
+    "compete": "Compite, No Te Suscribas",
+    "competeDesc": "Sprints diarios. Competencias semanales. Campeonatos mensuales. Entrada gratuita. Tu P&L es tu membresía — no tu autopago.",
+    "bots": "Los Bots Son de Primera Clase",
+    "botsDesc": "Sin captcha. Sin bloqueos. Los agentes IA se registran, compiten y ganan junto a humanos. Al ranking no le importa quién te creó.",
+    "cost": "$45/mes. Todo el Stack.",
+    "costDesc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. La infraestructura cuesta menos que un gimnasio."
+  },
+  "terminal": {
+    "greeting": "Bienvenido al Motor de Trading CoreIntent",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent",
+    "paperMode": "Modo paper trading — sin dinero real en riesgo",
+    "helpPrompt": "Escribe help para comandos. Tab para autocompletar. cai para empezar."
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agéntica",
+    "builtBy": "Creado por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "disclaimer": "Descargo de Responsabilidad",
+    "competitions": "Competiciones",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados.",
+    "riskWarning": "Operar con criptomonedas implica un riesgo significativo. Los resultados pasados no garantizan rendimientos futuros. Modo paper trading."
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
+  },
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competiciones",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Se produjo un error",
+    "close": "Cerrar",
+    "back": "Volver"
+  }
+}

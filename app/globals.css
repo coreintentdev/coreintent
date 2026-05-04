@@ -1193,6 +1193,37 @@ html {
   animation: tickerGlow 3s ease-in-out infinite;
 }
 
+/* ─── RTL Support ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .how-it-works-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] footer > div {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .terminal-input {
+  text-align: left;
+  direction: ltr;
+}
+
+[dir="rtl"] .terminal-output {
+  text-align: left;
+  direction: ltr;
+}
+
 /* ─── Focus Ring for Accessibility ─── */
 .terminal-input:focus-visible {
   outline: 1px solid rgba(16, 185, 129, 0.5);

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslations } from "@/lib/i18n-context";
 
 function LaunchCountdown() {
   const [now, setNow] = useState(Date.now());
@@ -111,6 +112,7 @@ const STEPS = [
 ];
 
 export default function PricingPage() {
+  const { localePath } = useTranslations();
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
@@ -810,7 +812,7 @@ export default function PricingPage() {
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
-                href="/"
+                href={localePath("/")}
                 className="cta-primary"
                 style={{
                   padding: "16px 36px",
@@ -829,7 +831,7 @@ export default function PricingPage() {
                 Launch Terminal &rarr;
               </Link>
               <Link
-                href="/stack"
+                href={localePath("/stack")}
                 className="cta-secondary"
                 style={{
                   padding: "16px 36px",
@@ -868,7 +870,7 @@ export default function PricingPage() {
             Risk warnings: Trading cryptocurrency involves significant risk. Past performance does not guarantee future results.
             <br />
             See our{" "}
-            <a href="/disclaimer" style={{ color: "var(--accent-blue)" }}>
+            <a href={localePath("/disclaimer")} style={{ color: "var(--accent-blue)" }}>
               full disclaimer
             </a>{" "}
             for more information.

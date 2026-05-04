@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Démo",
+    "stack": "Technologies",
+    "pricing": "Tarifs",
+    "home": "CoreIntent — Accueil"
+  },
+  "hero": {
+    "badge": "3 Modèles IA. Zéro Frais. Compétition Immédiate.",
+    "headline1": "Arrêtez de Payer pour des Signaux.",
+    "headline2": "Commencez à les",
+    "headlineHighlight": "Surpasser",
+    "headline3": "",
+    "srOnly": "CoreIntent — Trois Modèles d'IA. Un Moteur de Trading. Zéro Abonnement.",
+    "subtitle": "Trois modèles d'IA contre-examinent chaque signal avant qu'il ne vous parvienne. Pas d'abonnement. Pas de paywall. Participez aux compétitions quotidiennes et laissez votre stratégie parler.",
+    "priceBefore": "99$/mois d'abonnements aux signaux",
+    "priceAfter": "0$ pour toujours. Compétition gratuite.",
+    "ctaPrimary": "Entrez dans l'Arène — 0$",
+    "ctaSecondary": "Comment ça Marche",
+    "disclaimer": "Pas de carte bancaire. Pas d'engagement. Open source et mode paper trading. Conçu en Nouvelle-Zélande."
+  },
+  "howItWorks": {
+    "label": "Comment ça Marche",
+    "title": "Trois Étapes vers des Signaux plus Intelligents",
+    "step1Title": "Les Modèles Débattent",
+    "step1Desc": "Grok repère un signal. Claude le questionne. Perplexity le vérifie avec des données en direct. Trois perspectives, une conversation.",
+    "step2Title": "Le Consensus se Forme",
+    "step2Desc": "Quand les trois modèles sont d'accord, la confiance est élevée. Quand ils divergent, le système signale l'incertitude — pas de fausse conviction.",
+    "step3Title": "Vous Compétitionnez",
+    "step3Desc": "Amenez le signal dans des compétitions quotidiennes, hebdomadaires ou mensuelles. Prouvez votre stratégie face aux humains et aux bots. Entrée gratuite."
+  },
+  "valueProps": {
+    "models": "3 Modèles. 1 Signal.",
+    "modelsDesc": "Grok détecte. Claude interroge. Perplexity vérifie. Un modèle qui devine vs trois qui débattent — ce n'est pas marginal, c'est fondamental.",
+    "compete": "Compétitionnez, Ne Vous Abonnez Pas",
+    "competeDesc": "Sprints quotidiens. Challenges hebdomadaires. Championnats mensuels. Entrée gratuite. Votre P&L est votre carte de membre — pas votre prélèvement automatique.",
+    "bots": "Les Bots Sont des Citoyens de Première Classe",
+    "botsDesc": "Pas de captcha. Pas de blocage. Les agents IA s'inscrivent, compétitionnent et gagnent aux côtés des humains. Le classement ne se soucie pas de qui vous a créé.",
+    "cost": "45$/mois. Tout le Stack.",
+    "costDesc": "Vercel : gratuit. GitHub : gratuit. Cloudflare : 20$. VPS : 25$. L'infrastructure coûte moins cher qu'un abonnement de gym."
+  },
+  "terminal": {
+    "greeting": "Bienvenue sur le Moteur de Trading CoreIntent",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — Moteur de Trading CoreIntent",
+    "paperMode": "Mode paper trading — aucun argent réel en jeu",
+    "helpPrompt": "Tapez help pour les commandes. Tab pour l'auto-complétion. cai pour commencer."
+  },
+  "footer": {
+    "tagline": "Moteur de Trading à IA Agentique",
+    "builtBy": "Créé par Corey McIvor | Zynthio.ai",
+    "product": "Produit",
+    "legal": "Mentions Légales",
+    "connect": "Contact",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "disclaimer": "Avertissement",
+    "competitions": "Compétitions",
+    "contact": "Contact",
+    "rights": "Tous droits réservés.",
+    "riskWarning": "Le trading de cryptomonnaies comporte des risques importants. Les performances passées ne garantissent pas les résultats futurs. Mode paper trading."
+  },
+  "languageSwitcher": {
+    "label": "Langue"
+  },
+  "meta": {
+    "title": "CoreIntent | Moteur de Trading à IA Agentique — Sans Abonnement, Que des Compétitions",
+    "description": "Trois modèles d'IA. Un moteur de trading. Zéro abonnement. CoreIntent orchestre Claude, Grok et Perplexity pour les signaux de trading."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "close": "Fermer",
+    "back": "Retour"
+  }
+}

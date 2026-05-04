@@ -1,20 +1,25 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslations } from "@/lib/i18n-context";
 
-const WELCOME_BANNER = `\x1b[36m
+const ASCII_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
 ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-\x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[0m`;
+
+function buildWelcomeBanner(t: (section: string, key: string) => string, locale: string): string {
+  return `${ASCII_BANNER}
+\x1b[33m${t("terminal", "subtitle")}\x1b[0m
+\x1b[90m${t("terminal", "paperMode")}\x1b[0m
+${t("terminal", "helpPrompt").replace("help", "\x1b[32mhelp\x1b[0m").replace("cai", "\x1b[32mcai\x1b[0m")}
+\x1b[90m${new Date().toLocaleString(locale, { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -647,6 +652,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { t, locale } = useTranslations();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -675,8 +681,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(t, locale)]);
+  }, [t, locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

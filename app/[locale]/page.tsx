@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslations } from "@/lib/i18n-context";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -362,34 +363,35 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
 /* ─── How It Works ─── */
 function HowItWorks() {
+  const { t } = useTranslations();
   return (
     <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-        How It Works
+        {t("howItWorks", "label")}
       </div>
       <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
-        Three Steps to Smarter Signals
+        {t("howItWorks", "title")}
       </h2>
       <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
         {[
           {
             step: "01",
-            title: "Models Debate",
-            desc: "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+            title: t("howItWorks", "step1Title"),
+            desc: t("howItWorks", "step1Desc"),
             color: "#a855f7",
             icon: "AI",
           },
           {
             step: "02",
-            title: "Consensus Forms",
-            desc: "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+            title: t("howItWorks", "step2Title"),
+            desc: t("howItWorks", "step2Desc"),
             color: "#10b981",
             icon: "OK",
           },
           {
             step: "03",
-            title: "You Compete",
-            desc: "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry.",
+            title: t("howItWorks", "step3Title"),
+            desc: t("howItWorks", "step3Desc"),
             color: "#3b82f6",
             icon: "GO",
           },
@@ -1272,6 +1274,7 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const { t, localePath } = useTranslations();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -1334,7 +1337,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Free AI Trading Competitions — Open Source — Built in NZ
+              {t("hero", "badge")}
             </div>
             <h1
               style={{
@@ -1346,7 +1349,7 @@ export default function Home() {
               }}
             >
               <span className="sr-only">
-                CoreIntent — Three AI Models. One Trading Engine. Zero Subscriptions.
+                {t("hero", "srOnly")}
               </span>
               <span aria-hidden="true">
                 One Model <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Guesses</span>.
@@ -1374,8 +1377,7 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks against live data.
-              Consensus means conviction. Disagreement means dig deeper.
+              {t("hero", "subtitle")}
             </p>
             <div style={{
               display: "flex",
@@ -1386,10 +1388,10 @@ export default function Home() {
               flexWrap: "wrap",
             }}>
               <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
-                $99/mo platforms
+                {t("hero", "priceBefore")}
               </span>
               <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
-                $0 forever — compete free
+                {t("hero", "priceAfter")}
               </span>
             </div>
             <LiveSignalFeed />
@@ -1410,10 +1412,10 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Enter the Arena &rarr;
+                {t("hero", "ctaPrimary")} &rarr;
               </button>
               <a
-                href="/pricing"
+                href={localePath("/pricing")}
                 className="cta-secondary"
                 style={{
                   padding: "18px 44px",
@@ -1428,11 +1430,11 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                {t("hero", "ctaSecondary")}
               </a>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "400px" }}>
-              Open source. Paper trading. Built honestly from New Zealand by Zynthio.
+              {t("hero", "disclaimer")}
             </p>
 
             {/* Value Props */}
@@ -1547,7 +1549,7 @@ export default function Home() {
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
               <a
-                href="/pricing"
+                href={localePath("/pricing")}
                 style={{
                   display: "inline-block",
                   padding: "10px 24px",
