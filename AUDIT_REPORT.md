@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Mon May  4 05:58:01 UTC 2026
+Generated: Mon May  4 06:56:43 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -54,8 +54,8 @@ Generated: Mon May  4 05:58:01 UTC 2026
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
   app/page.tsx:292:  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
-  app/page.tsx:1018:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:1019:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:1008:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:1009:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
