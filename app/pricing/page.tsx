@@ -628,7 +628,7 @@ export default function PricingPage() {
             <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
               What Happens When You Cancel a $99/mo Platform?
             </h3>
-            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px", maxWidth: "560px", margin: "0 auto 24px" }}>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", maxWidth: "560px", margin: "0 auto 24px" }}>
               You lose everything. Your signals, your history, your tools. That&apos;s the subscription trap — you&apos;re renting, not owning.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", maxWidth: "700px", margin: "0 auto" }}>

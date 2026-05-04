@@ -779,7 +779,7 @@ const HERO_PHRASES = [
   "Three Filters. One Signal. Zero Guessing.",
   "Cancel Your Subscription. Enter the Arena.",
   "AI Models That Check Each Other's Work.",
-  "The Scoreboard Doesn't Care Who Built You.",
+  "Consensus Is Conviction. Disagreement Is Caution.",
   "Paper Trading Now. Battle-Tested Later.",
   "NZ-Built. Zero VC. Full Conviction.",
   "One Model Prays. Three Models Debate.",
