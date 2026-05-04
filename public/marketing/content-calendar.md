@@ -13,6 +13,7 @@
 - LinkedIn: 2-3 posts per week
 - Instagram: 3-4 posts per week (mix of carousels, reels, static)
 - TikTok: 2-3 videos per week
+- Reddit: 1-2 posts per week (r/algotrading, r/cryptocurrency, r/artificial, r/startups, r/SideProject)
 
 **Content pillars:**
 1. **Product** — What CoreIntent is and how it works
@@ -26,6 +27,7 @@
 - LinkedIn: Tuesday-Thursday 9am NZST
 - Instagram: Weekdays 12pm NZST, weekends 10am NZST
 - TikTok: 7pm-9pm NZST
+- Reddit: Tuesday-Thursday 10am-2pm NZST (peak US evening engagement)
 
 ---
 
@@ -42,6 +44,7 @@
 | Wed | Instagram | Caption 2 — Architecture Breakdown (Carousel) | instagram-captions.md | Technical |
 | Thu | X/Twitter | Post 4 — Philosophy | twitter-posts.md | Philosophy |
 | Thu | LinkedIn | Post 3 — Business Model Disruption | linkedin-posts.md | Philosophy |
+| Thu | Reddit | Post 1 — r/algotrading: Multi-model engine | reddit-posts.md | Technical |
 | Fri | X/Twitter | Post 5 — Competition Model | twitter-posts.md | Product |
 | Fri | TikTok | Script 2 — "Our AI Models Argue" | tiktok-scripts.md | Technical |
 | Sat | Instagram | Caption 4 — Behind the Build | instagram-captions.md | Transparency |
@@ -62,6 +65,7 @@
 | Wed | Instagram | Caption 7 — The vs. Comparison (Carousel) | instagram-captions.md | Product |
 | Thu | X/Twitter | Post 16 — Open Challenge | twitter-posts.md | Transparency |
 | Thu | TikTok | Script 7 — "The $45 Breakdown" | tiktok-scripts.md | Transparency |
+| Thu | Reddit | Post 2 — r/cryptocurrency: Competitions > subs | reddit-posts.md | Philosophy |
 | Fri | X/Twitter | Post 17 — Paper Trading Isn't Weakness | twitter-posts.md | Transparency |
 | Fri | LinkedIn | Post 2 — Technical Architecture | linkedin-posts.md | Technical |
 | Sat | Instagram | Caption 6 — Disagreement Signal (Reel) | instagram-captions.md | Technical |
@@ -82,6 +86,7 @@
 | Wed | Instagram | Caption 2 — Architecture Breakdown (repost/remix) | instagram-captions.md | Technical |
 | Thu | X/Twitter | Post 26 — The Consensus Signal | twitter-posts.md | Technical |
 | Thu | TikTok | Script 8 — "Why Disagreement Is Alpha" | tiktok-scripts.md | Technical |
+| Thu | Reddit | Post 3 — r/artificial: Multi-model orchestration | reddit-posts.md | Technical |
 | Fri | X/Twitter | Post 21 — Signal vs Noise | twitter-posts.md | Technical |
 | Fri | LinkedIn | Post 5 — The Case for Bot-Inclusive Platforms | linkedin-posts.md | Product |
 | Sat | X/Twitter | Post 29 — The Disagreement Edge | twitter-posts.md | Technical |
@@ -98,8 +103,10 @@
 | Tue | X/Twitter | Post 19 — NZ Startup Energy | twitter-posts.md | Founder |
 | Tue | TikTok | Script 4 — "Bots Are Welcome Here" | tiktok-scripts.md | Product |
 | Tue | Instagram | Caption 5 — Founder Story (reshare) | instagram-captions.md | Founder |
+| Tue | Reddit | Post 4 — r/startups: "$45/mo bootstrap thesis" | reddit-posts.md | Founder |
 | Wed | X/Twitter | Post 9 — The Mansion Teaser | twitter-posts.md | Product |
 | Wed | TikTok | Script 5 — "The Mansion" (Teaser) | tiktok-scripts.md | Product |
+| Wed | Reddit | Post 5 — r/SideProject: Show CoreIntent | reddit-posts.md | Product |
 | Thu | X/Twitter | Post 14 — Build in Public Update | twitter-posts.md | Transparency |
 | Thu | Instagram | Caption 4 — Behind the Build (updated stats) | instagram-captions.md | Transparency |
 | Fri | X/Twitter | Post 20 — The Three-Body Problem | twitter-posts.md | Philosophy |
@@ -125,6 +132,7 @@
 | Fri | X/Twitter | Post 62 — May Update: Build in Public | twitter-posts.md | Transparency |
 | Fri | LinkedIn | Post 14 — May 2026 Build in Public Update | linkedin-posts.md | Transparency |
 | Fri | Instagram | Caption 18 — May Build Update (Carousel) | instagram-captions.md | Transparency |
+| Fri | Reddit | Post 6 — r/cryptocurrency: Bots welcome | reddit-posts.md | Product |
 | Sat | X/Twitter | Post 59 — The Bot Builders Are Coming | twitter-posts.md | Product |
 | Sat | TikTok | Script 19 — "The Arena Opens June 1st" | tiktok-scripts.md | Product |
 | Sun | X/Twitter | Post 64 — First Mover Advantage Has an Expiry Date | twitter-posts.md | Product |
@@ -158,6 +166,9 @@ These posts can be reused and adapted every month:
 | Update media kit with logo files | When logos are ready | press/media-kit.md |
 | Submit to Product Hunt | When competitions go live | Custom listing |
 | Submit to Hacker News | After first competition results | Show HN post |
+| Post to r/algotrading | Week 1 | reddit-posts.md Post 1 |
+| Post to r/cryptocurrency | Week 2 | reddit-posts.md Post 2 |
+| Post to r/SideProject | Week 4 | reddit-posts.md Post 5 |
 
 ---
 

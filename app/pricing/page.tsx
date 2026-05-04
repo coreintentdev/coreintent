@@ -614,6 +614,73 @@ export default function PricingPage() {
             </table>
           </div>
 
+          {/* What Happens When You Cancel */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "linear-gradient(135deg, #ef444408 0%, #10b98108 100%)",
+              border: "1px solid #ef444418",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
+              What Happens When You Cancel a $99/mo Platform?
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px", maxWidth: "560px", margin: "0 auto 24px" }}>
+              You lose everything. Your signals, your history, your tools. That&apos;s the subscription trap — you&apos;re renting, not owning.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", maxWidth: "700px", margin: "0 auto" }}>
+              <div style={{
+                padding: "20px",
+                background: "#ef444408",
+                border: "1px solid #ef444422",
+                borderRadius: "10px",
+                textAlign: "left",
+              }}>
+                <div style={{ fontSize: "12px", fontWeight: "bold", color: "#ef4444", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                  When you cancel a subscription platform
+                </div>
+                {[
+                  "Signals stop immediately",
+                  "Trading tools locked out",
+                  "Historical data inaccessible",
+                  "Bot integrations break",
+                  "Community access revoked",
+                  "Your $1,188/year? Gone.",
+                ].map((item) => (
+                  <div key={item} style={{ fontSize: "12px", color: "var(--text-secondary)", padding: "4px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ color: "#ef4444" }}>&#10005;</span> {item}
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                padding: "20px",
+                background: "#10b98108",
+                border: "1px solid #10b98122",
+                borderRadius: "10px",
+                textAlign: "left",
+              }}>
+                <div style={{ fontSize: "12px", fontWeight: "bold", color: "#10b981", marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                  CoreIntent — nothing to cancel
+                </div>
+                {[
+                  "No subscription to cancel",
+                  "Terminal always accessible",
+                  "Competition history permanent",
+                  "Bot registrations persist",
+                  "Open source — fork it if you want",
+                  "Your $0/year? Still $0.",
+                ].map((item) => (
+                  <div key={item} style={{ fontSize: "12px", color: "var(--text-secondary)", padding: "4px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ color: "#10b981" }}>&#10003;</span> {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Build Quality Signal */}
           <div
             style={{
@@ -692,12 +759,24 @@ export default function PricingPage() {
                 q: "Where is CoreIntent based?",
                 a: "New Zealand. Built by Corey McIvor under the Zynthio brand. No Silicon Valley, no VC money — just a clear thesis and lean infrastructure.",
               },
-            ].map((faq, i) => (
+              {
+                q: "What happens to my data?",
+                a: "Your competition history and leaderboard performance are permanent. There's no subscription to cancel, so there's nothing to lose access to. The codebase is open source — you can always verify what we do with data.",
+              },
+              {
+                q: "How is this different from other AI trading tools?",
+                a: "Most platforms use one model with a temperature slider and call it 'AI-powered.' CoreIntent orchestrates three different AI architectures that actively disagree with each other. Consensus means conviction. Disagreement means caution. Plus: $0 instead of $99/mo.",
+              },
+              {
+                q: "Can I see the code?",
+                a: "Every line. CoreIntent is fully open source on GitHub. Routes, agents, terminal commands, even the marketing copy you're reading right now. Don't trust us — audit us.",
+              },
+            ].map((faq, i, arr) => (
               <div
                 key={i}
                 style={{
                   padding: "16px 0",
-                  borderBottom: i < 5 ? "1px solid var(--border-color)" : "none",
+                  borderBottom: i < arr.length - 1 ? "1px solid var(--border-color)" : "none",
                 }}
               >
                 <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "6px" }}>

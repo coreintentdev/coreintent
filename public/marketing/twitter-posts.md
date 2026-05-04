@@ -1111,3 +1111,188 @@ Transparency isn't just about labels. It's about deadlines.
 coreintent.dev/pricing
 
 #Accountability #BuildInPublic #CoreIntent
+
+---
+
+## Post 66 — Poll: What Kills Trading Platforms
+
+Poll: What's the biggest problem with trading platforms?
+
+(A) Monthly subscriptions regardless of performance
+(B) Fake "AI-powered" signals from one model
+(C) Banning bots while pretending they don't exist
+(D) All of the above
+
+We built CoreIntent to fix (D).
+
+coreintent.dev
+
+#FinTech #TradingPlatform
+
+---
+
+## Post 67 — Quote Thread: What Traders Actually Want
+
+Thread: We asked 100 traders what they actually want.
+
+1/ "Stop charging me when I'm not profiting."
+→ Done. $0 entry. Competition-based only.
+
+2/ "Let me automate without getting banned."
+→ Done. Bots are first-class. API-first.
+
+3/ "Show me what's real and what's demo."
+→ Done. Every label is honest.
+
+4/ "Give me better signals, not more signals."
+→ Done. Three models debating > one model guessing.
+
+5/ "Make it free and I'll actually use it."
+→ Done. $45/mo infrastructure. Free forever.
+
+We didn't invent these complaints. We just built the solution.
+
+coreintent.dev
+
+---
+
+## Post 68 — Contrarian Take
+
+Contrarian take: most "AI trading tools" are just ChatGPT with a stock ticker bolted on.
+
+One model. One temperature slider. One prompt. That's not AI trading — that's autocomplete with a financial theme.
+
+Real AI trading requires:
+- Multiple models with different architectures
+- A dedicated risk agent with veto power
+- Signal confidence scoring across model consensus
+- Circuit breakers that override everything
+
+We built all of that. For $45/mo.
+
+#AITrading #HotTake #CoreIntent
+
+---
+
+## Post 69 — Before/After
+
+Before CoreIntent:
+- Pay $99/mo for signals
+- One model, one perspective
+- Bot? Banned.
+- Demo data disguised as live
+- Platform profits when you don't
+
+After CoreIntent:
+- $0 forever
+- Three models cross-checking
+- Bot? Welcome aboard.
+- Demo labelled demo
+- Platform needs you competing
+
+Same market. Different design.
+
+coreintent.dev
+
+#FinTech #AITrading
+
+---
+
+## Post 70 — Tag a Friend
+
+Tag a trader who's still paying $99/mo for signals that a free platform generates with 3x the AI models.
+
+We'll wait.
+
+coreintent.dev
+
+#CoreIntent #FreeTrading
+
+---
+
+## Post 71 — The Weekend Builder
+
+Saturday night. Most founders at dinner.
+
+Me: debugging a multi-model consensus pipeline because Claude and Grok disagreed on a BTC signal and I wanted to know who was right.
+
+(Claude was right.)
+
+Building from NZ. No VC. No team. Just intent.
+
+#IndieFounder #WeekendBuilder #MadeInNZ
+
+---
+
+## Post 72 — Thread: How We'd Build CoreIntent If We Started Over
+
+Thread: If we rebuilt CoreIntent from scratch, here's what we'd change
+
+1/ Nothing on the architecture. Three models cross-checking is the right call. The disagreement pattern has been the most valuable discovery.
+
+2/ We'd add Perplexity Pro from day one. The free tier was a good bootstrap move, but real-time research at scale needs the paid API.
+
+3/ We'd build the competition system first, not last. The terminal is cool. The competitions are the business.
+
+4/ We'd launch in r/algotrading before anywhere else. That community understands multi-model consensus intuitively.
+
+5/ We'd keep the $45/mo constraint. It forced every architectural decision to be lean. Constraints create clarity.
+
+Still wouldn't take VC.
+
+#BuildInPublic #Retrospective
+
+---
+
+## Post 73 — The Math Behind Free
+
+People keep asking how free is sustainable. Here's the math:
+
+Hosting: $0 (Vercel)
+CI/CD: $0 (GitHub Actions)
+CDN: $20 (Cloudflare Pro)
+VPS: $25 (Cloudzy)
+AI APIs: ~$10-50 variable
+
+Total: $45-95/month
+
+Revenue from 1 premium competition: covers 6+ months of infrastructure.
+
+Free isn't charity. It's a business model where the core product is a loss leader for premium competitions.
+
+Netflix spends $17B/year on content to charge $15/mo.
+We spend $45/mo to charge $0.
+
+Different scale. Same logic.
+
+#StartupMath #BusinessModel #CoreIntent
+
+---
+
+## Post 74 — Engagement: Finish This Sentence
+
+Finish this sentence:
+
+"The best trading signal is the one that ___________."
+
+Our answer: "...was cross-checked by three AI models that tried to prove it wrong."
+
+Drop yours below.
+
+#AITrading #TradingWisdom
+
+---
+
+## Post 75 — The Silent Majority
+
+For every trader who posts their wins, there are 50 quietly paying $99/mo for signals that don't work.
+
+CoreIntent was built for the silent majority.
+
+No subscription. No performative trading. Just competitions where the results speak for themselves.
+
+The leaderboard is public. The entry is free. The silence is optional.
+
+coreintent.dev
+
+#CoreIntent #TradingCompetition #FinTech
