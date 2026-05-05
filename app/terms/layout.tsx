@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "Rules of engagement for CoreIntent AI trading competitions. Governed by New Zealand law.",
     url: "https://coreintent.dev/terms",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
@@ -61,7 +63,7 @@ const structuredData = {
         "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-04",
+      dateModified: "2026-05-05",
       inLanguage: "en-NZ",
     },
   ],

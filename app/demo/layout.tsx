@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "Watch three AI models debate trades in real-time. Simulated data, real architecture. Paper trading demo by Zynthio.",
     url: "https://coreintent.dev/demo",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
@@ -62,7 +64,7 @@ const structuredData = {
         "Experience CoreIntent's multi-AI trading engine in action with simulated data and real architecture.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-04",
+      dateModified: "2026-05-05",
       inLanguage: "en-NZ",
     },
   ],

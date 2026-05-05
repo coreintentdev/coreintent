@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "Trading risk warnings and AI disclaimers. Paper trading mode only. Not financial advice.",
     url: "https://coreintent.dev/disclaimer",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
@@ -61,7 +63,7 @@ const structuredData = {
         "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-04",
+      dateModified: "2026-05-05",
       inLanguage: "en-NZ",
     },
   ],
