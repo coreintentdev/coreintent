@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "CoreIntent | Agentische KI-Trading-Engine — Keine Abos, Nur Wettbewerbe",
+    "description": "Drei KI-Modelle. Eine Trading-Engine. Null Abonnements. CoreIntent orchestriert Claude, Grok & Perplexity für Trading-Signale."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preise",
+    "language": "Sprache"
+  },
+  "hero": {
+    "badge": "PAPER-TRADING-MODUS — KEIN ECHTES GELD IM RISIKO",
+    "title": "Drei KI-Modelle.",
+    "titleAccent": "Eine Engine.",
+    "titleEnd": "Null Abonnements.",
+    "subtitle": "CoreIntent orchestriert Claude, Grok & Perplexity zu einer einheitlichen Trading-Signal-Engine. Kostenlose Wettbewerbe — Bots willkommen.",
+    "cta": "Terminal Starten",
+    "ctaSecondary": "Demo Ansehen"
+  },
+  "howItWorks": {
+    "label": "So Funktioniert's",
+    "title": "Drei Schritte zu Intelligenteren Signalen",
+    "step1": {
+      "title": "Modelle Debattieren",
+      "desc": "Grok erkennt ein Signal. Claude hinterfragt es. Perplexity prüft gegen Live-Daten. Drei Perspektiven, ein Gespräch."
+    },
+    "step2": {
+      "title": "Konsens Bildet Sich",
+      "desc": "Wenn alle drei Modelle übereinstimmen, ist die Konfidenz hoch. Bei Uneinigkeit markiert das System Unsicherheit — keine falsche Überzeugung."
+    },
+    "step3": {
+      "title": "Du Konkurrierst",
+      "desc": "Bringe das Signal in tägliche, wöchentliche oder monatliche Wettbewerbe. Beweise deine Strategie gegen Menschen und Bots. Kostenloser Eintritt."
+    }
+  },
+  "stats": {
+    "models": "KI-Modelle",
+    "cost": "Monatliche Kosten",
+    "competitions": "Liga-Typen",
+    "uptime": "Verfügbarkeitsziel"
+  },
+  "models": {
+    "title": "Das KI-Orchester",
+    "subtitle": "Drei Modelle. Verschiedene Stärken. Ein Konsens.",
+    "grok": {
+      "role": "Schnelle Signalerkennung & Sentiment"
+    },
+    "claude": {
+      "role": "Tiefenanalyse & Risikobewertung"
+    },
+    "perplexity": {
+      "role": "Echtzeit-Recherche & Nachrichten"
+    }
+  },
+  "terminal": {
+    "greeting": "Willkommen bei Zynthio Commander",
+    "subtitle": "Paper-Trading-Modus — kein echtes Geld im Risiko",
+    "helpPrompt": "Tippe help für Befehle. Tab zum Vervollständigen.",
+    "tryIt": "Jetzt Ausprobieren",
+    "talkToEngine": "Sprich mit der Engine. Gib einen Befehl ein.",
+    "launchFull": "Vollständiges Terminal Starten",
+    "yourTurn": "du bist dran — probiere: cai, 336, zen..."
+  },
+  "competitions": {
+    "title": "Wettbewerbe, Keine Abonnements",
+    "subtitle": "Tritt Ligen bei. Beweise deine Strategie. Gewinne Anerkennung. Kostenlos.",
+    "daily": "Täglich",
+    "weekly": "Wöchentlich",
+    "monthly": "Monatlich"
+  },
+  "cta": {
+    "title": "Bereit, Intelligenter zu Handeln?",
+    "subtitle": "Tritt dem Wettbewerb bei. Kostenloser Eintritt. Bots willkommen.",
+    "button": "Loslegen"
+  },
+  "footer": {
+    "builtBy": "Gebaut in Neuseeland von",
+    "paperMode": "Nur Paper-Trading — kein echtes Geld im Risiko",
+    "copyright": "© {year} CoreIntent von Zynthio. Alle Rechte vorbehalten."
+  },
+  "common": {
+    "demo": "DEMO",
+    "planned": "GEPLANT",
+    "active": "AKTIV",
+    "loading": "Laden..."
+  }
+}

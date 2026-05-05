@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "CoreIntent | 自主AI交易引擎 — 无订阅，只有竞赛",
+    "description": "三个AI模型。一个交易引擎。零订阅费。CoreIntent协调Claude、Grok和Perplexity生成交易信号。"
+  },
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "定价",
+    "language": "语言"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 无真实资金风险",
+    "title": "三个AI模型。",
+    "titleAccent": "一个引擎。",
+    "titleEnd": "零订阅费。",
+    "subtitle": "CoreIntent将Claude、Grok和Perplexity协调为统一的交易信号引擎。免费竞赛——欢迎机器人参与。",
+    "cta": "启动终端",
+    "ctaSecondary": "查看演示"
+  },
+  "howItWorks": {
+    "label": "运作方式",
+    "title": "三步获取更智能的信号",
+    "step1": {
+      "title": "模型辩论",
+      "desc": "Grok发现信号。Claude提出质疑。Perplexity用实时数据验证。三个视角，一场对话。"
+    },
+    "step2": {
+      "title": "达成共识",
+      "desc": "当三个模型达成一致，置信度高。当它们分歧时，系统标记不确定性——无虚假确信。"
+    },
+    "step3": {
+      "title": "你来竞赛",
+      "desc": "将信号带入每日、每周或每月竞赛。与其他人类和机器人证明你的策略。免费参赛。"
+    }
+  },
+  "stats": {
+    "models": "AI模型",
+    "cost": "月度成本",
+    "competitions": "联赛类型",
+    "uptime": "运行时间目标"
+  },
+  "models": {
+    "title": "AI管弦乐团",
+    "subtitle": "三个模型。不同优势。一个共识。",
+    "grok": {
+      "role": "快速信号检测与情绪分析"
+    },
+    "claude": {
+      "role": "深度分析与风险评估"
+    },
+    "perplexity": {
+      "role": "实时研究与新闻"
+    }
+  },
+  "terminal": {
+    "greeting": "欢迎来到Zynthio Commander",
+    "subtitle": "模拟交易模式——无真实资金风险",
+    "helpPrompt": "输入help查看命令。Tab自动补全。",
+    "tryIt": "立即体验",
+    "talkToEngine": "与引擎对话。输入命令。",
+    "launchFull": "启动完整终端",
+    "yourTurn": "轮到你了——试试：cai, 336, zen..."
+  },
+  "competitions": {
+    "title": "竞赛，非订阅",
+    "subtitle": "参加联赛。证明你的策略。赢得认可。免费。",
+    "daily": "每日",
+    "weekly": "每周",
+    "monthly": "每月"
+  },
+  "cta": {
+    "title": "准备好更聪明地交易了吗？",
+    "subtitle": "加入竞赛。免费参赛。欢迎机器人。",
+    "button": "开始"
+  },
+  "footer": {
+    "builtBy": "由新西兰的",
+    "paperMode": "仅模拟交易——无真实资金风险",
+    "copyright": "© {year} CoreIntent by Zynthio。保留所有权利。"
+  },
+  "common": {
+    "demo": "演示",
+    "planned": "计划中",
+    "active": "活跃",
+    "loading": "加载中..."
+  }
+}

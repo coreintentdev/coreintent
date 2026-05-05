@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function SiteFooter() {
+  const t = useTranslations("footer");
+
   return (
     <footer
       style={{
@@ -35,7 +40,7 @@ export default function SiteFooter() {
           </div>
           <p>Agentic AI Trading Engine</p>
           <p style={{ marginTop: "4px" }}>
-            Built by Corey McIvor | Zynthio.ai
+            {t("builtBy")} Corey McIvor | Zynthio.ai
           </p>
         </div>
 
@@ -119,11 +124,8 @@ export default function SiteFooter() {
           gap: "8px",
         }}
       >
-        <small>&copy; {new Date().getFullYear()} Corey McIvor. All rights reserved.</small>
-        <small>
-          Trading cryptocurrency involves significant risk. Past performance does
-          not guarantee future results. Paper trading mode.
-        </small>
+        <small>{t("copyright", { year: new Date().getFullYear() })}</small>
+        <small>{t("paperMode")}</small>
       </div>
     </footer>
   );

@@ -1,8 +1,45 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useLocale } from "next-intl";
 
-const WELCOME_BANNER = `\x1b[36m
+const LOCALE_GREETINGS: Record<string, string> = {
+  en: "Welcome to Zynthio Commander",
+  es: "Bienvenido a Zynthio Commander",
+  mi: "Nau mai ki Zynthio Commander",
+  zh: "欢迎来到 Zynthio Commander",
+  ja: "Zynthio Commander へようこそ",
+  pt: "Bem-vindo ao Zynthio Commander",
+  fr: "Bienvenue sur Zynthio Commander",
+  de: "Willkommen bei Zynthio Commander",
+  ar: "مرحباً بك في Zynthio Commander",
+  hi: "Zynthio Commander में आपका स्वागत है",
+};
+
+const LOCALE_SUBTITLES: Record<string, string> = {
+  en: "Paper trading mode — no real money at risk",
+  es: "Modo paper trading — sin dinero real en riesgo",
+  mi: "Aratau pepa hokohoko — kāore he moni tūturu i te tūraru",
+  zh: "模拟交易模式 — 无真实资金风险",
+  ja: "ペーパートレーディングモード — 実資金リスクなし",
+  pt: "Modo paper trading — sem dinheiro real em risco",
+  fr: "Mode paper trading — aucun argent réel en jeu",
+  de: "Paper-Trading-Modus — kein echtes Geld im Risiko",
+  ar: "وضع التداول الورقي — لا أموال حقيقية في خطر",
+  hi: "पेपर ट्रेडिंग मोड — कोई वास्तविक धन जोखिम में नहीं",
+};
+
+function buildWelcomeBanner(locale: string): string {
+  const greeting = LOCALE_GREETINGS[locale] || LOCALE_GREETINGS.en;
+  const subtitle = LOCALE_SUBTITLES[locale] || LOCALE_SUBTITLES.en;
+  const hreflangMap: Record<string, string> = {
+    en: "en-NZ", es: "es", mi: "mi-NZ", zh: "zh-Hans", ja: "ja",
+    pt: "pt-BR", fr: "fr", de: "de", ar: "ar", hi: "hi",
+  };
+  const dateLocale = hreflangMap[locale] || "en-NZ";
+  const dateStr = new Date().toLocaleString(dateLocale, { timeZone: "Pacific/Auckland" });
+
+  return `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
@@ -10,11 +47,12 @@ const WELCOME_BANNER = `\x1b[36m
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 \x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
+\x1b[33m${greeting} v0.2.0 — CoreIntent Trading Engine\x1b[0m
+\x1b[90m${subtitle}\x1b[0m
 Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[90m${dateStr} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -652,6 +690,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const locale = useLocale();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -680,8 +719,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(locale)]);
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

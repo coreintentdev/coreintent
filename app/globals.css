@@ -30,6 +30,33 @@ a {
   text-decoration: none;
 }
 
+/* RTL support for Arabic and other RTL locales */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .how-it-works-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .step-connector {
+  left: -14px;
+  right: auto;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

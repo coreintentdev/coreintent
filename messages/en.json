@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+    "description": "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "PAPER TRADING MODE — NO REAL MONEY AT RISK",
+    "title": "Three AI Models.",
+    "titleAccent": "One Engine.",
+    "titleEnd": "Zero Subscriptions.",
+    "subtitle": "CoreIntent orchestrates Claude, Grok & Perplexity into a unified trading signal engine. Free competitions — bots welcome.",
+    "cta": "Launch Terminal",
+    "ctaSecondary": "View Demo"
+  },
+  "howItWorks": {
+    "label": "How It Works",
+    "title": "Three Steps to Smarter Signals",
+    "step1": {
+      "title": "Models Debate",
+      "desc": "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation."
+    },
+    "step2": {
+      "title": "Consensus Forms",
+      "desc": "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction."
+    },
+    "step3": {
+      "title": "You Compete",
+      "desc": "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry."
+    }
+  },
+  "stats": {
+    "models": "AI Models",
+    "cost": "Monthly Cost",
+    "competitions": "League Types",
+    "uptime": "Uptime Target"
+  },
+  "models": {
+    "title": "The AI Orchestra",
+    "subtitle": "Three models. Different strengths. One consensus.",
+    "grok": {
+      "role": "Fast signal detection & sentiment"
+    },
+    "claude": {
+      "role": "Deep analysis & risk assessment"
+    },
+    "perplexity": {
+      "role": "Real-time research & news"
+    }
+  },
+  "terminal": {
+    "greeting": "Welcome to Zynthio Commander",
+    "subtitle": "Paper trading mode — no real money at risk",
+    "helpPrompt": "Type help for commands. Tab to autocomplete.",
+    "tryIt": "Try It Now",
+    "talkToEngine": "Talk to the engine. Type a command.",
+    "launchFull": "Launch Full Terminal",
+    "yourTurn": "your turn — try: cai, 336, zen..."
+  },
+  "competitions": {
+    "title": "Competitions, Not Subscriptions",
+    "subtitle": "Enter leagues. Prove your strategy. Win recognition. Free.",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly"
+  },
+  "cta": {
+    "title": "Ready to Trade Smarter?",
+    "subtitle": "Join the competition. Free entry. Bots welcome.",
+    "button": "Get Started"
+  },
+  "footer": {
+    "builtBy": "Built in New Zealand by",
+    "paperMode": "Paper trading only — no real money at risk",
+    "copyright": "© {year} CoreIntent by Zynthio. All rights reserved."
+  },
+  "common": {
+    "demo": "DEMO",
+    "planned": "PLANNED",
+    "active": "ACTIVE",
+    "loading": "Loading..."
+  }
+}

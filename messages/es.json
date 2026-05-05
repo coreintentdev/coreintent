@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competencias",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precios",
+    "language": "Idioma"
+  },
+  "hero": {
+    "badge": "MODO PAPER TRADING — SIN DINERO REAL EN RIESGO",
+    "title": "Tres Modelos de IA.",
+    "titleAccent": "Un Motor.",
+    "titleEnd": "Cero Suscripciones.",
+    "subtitle": "CoreIntent orquesta Claude, Grok y Perplexity en un motor de señales de trading unificado. Competencias gratuitas — bots bienvenidos.",
+    "cta": "Abrir Terminal",
+    "ctaSecondary": "Ver Demo"
+  },
+  "howItWorks": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos hacia Señales más Inteligentes",
+    "step1": {
+      "title": "Los Modelos Debaten",
+      "desc": "Grok detecta una señal. Claude la cuestiona. Perplexity verifica contra datos en vivo. Tres perspectivas, una conversación."
+    },
+    "step2": {
+      "title": "Se Forma el Consenso",
+      "desc": "Cuando los tres modelos están de acuerdo, la confianza es alta. Cuando no, el sistema señala incertidumbre — sin falsa convicción."
+    },
+    "step3": {
+      "title": "Tú Compites",
+      "desc": "Lleva la señal a competencias diarias, semanales o mensuales. Demuestra tu estrategia contra humanos y bots. Entrada gratuita."
+    }
+  },
+  "stats": {
+    "models": "Modelos IA",
+    "cost": "Costo Mensual",
+    "competitions": "Tipos de Liga",
+    "uptime": "Objetivo de Uptime"
+  },
+  "models": {
+    "title": "La Orquesta de IA",
+    "subtitle": "Tres modelos. Diferentes fortalezas. Un consenso.",
+    "grok": {
+      "role": "Detección rápida de señales y sentimiento"
+    },
+    "claude": {
+      "role": "Análisis profundo y evaluación de riesgo"
+    },
+    "perplexity": {
+      "role": "Investigación en tiempo real y noticias"
+    }
+  },
+  "terminal": {
+    "greeting": "Bienvenido a Zynthio Commander",
+    "subtitle": "Modo paper trading — sin dinero real en riesgo",
+    "helpPrompt": "Escribe help para comandos. Tab para autocompletar.",
+    "tryIt": "Pruébalo Ahora",
+    "talkToEngine": "Habla con el motor. Escribe un comando.",
+    "launchFull": "Abrir Terminal Completa",
+    "yourTurn": "tu turno — prueba: cai, 336, zen..."
+  },
+  "competitions": {
+    "title": "Competencias, No Suscripciones",
+    "subtitle": "Entra a ligas. Demuestra tu estrategia. Gana reconocimiento. Gratis.",
+    "daily": "Diaria",
+    "weekly": "Semanal",
+    "monthly": "Mensual"
+  },
+  "cta": {
+    "title": "¿Listo para Operar más Inteligente?",
+    "subtitle": "Únete a la competencia. Entrada gratuita. Bots bienvenidos.",
+    "button": "Comenzar"
+  },
+  "footer": {
+    "builtBy": "Construido en Nueva Zelanda por",
+    "paperMode": "Solo paper trading — sin dinero real en riesgo",
+    "copyright": "© {year} CoreIntent por Zynthio. Todos los derechos reservados."
+  },
+  "common": {
+    "demo": "DEMO",
+    "planned": "PLANIFICADO",
+    "active": "ACTIVO",
+    "loading": "Cargando..."
+  }
+}

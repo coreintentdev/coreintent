@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "CoreIntent | Mīhini Hokohoko AI Agentic — Kāore he Ohaurunga, He Whakataetae Anake",
+    "description": "E toru ngā tauira AI. Kotahi te mīhini hokohoko. Kore utu ohaurunga. Ka whakarite a CoreIntent i a Claude, Grok me Perplexity mō ngā tohu hokohoko."
+  },
+  "nav": {
+    "terminal": "Tāmina",
+    "demo": "Whakaaturanga",
+    "stack": "Tākupu",
+    "pricing": "Utu",
+    "language": "Reo"
+  },
+  "hero": {
+    "badge": "ARATAU PEPA HOKOHOKO — KĀORE HE MONI TŪTURU I TE TŪRARU",
+    "title": "E Toru ngā Tauira AI.",
+    "titleAccent": "Kotahi te Mīhini.",
+    "titleEnd": "Kore Ohaurunga.",
+    "subtitle": "Ka whakarite a CoreIntent i a Claude, Grok me Perplexity hei mīhini tohu hokohoko kotahi. Whakataetae koreutu — e pāi ana ngā karetao.",
+    "cta": "Whakatūwhera Tāmina",
+    "ctaSecondary": "Tirohia te Whakaaturanga"
+  },
+  "howItWorks": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Māramatanga",
+    "step1": {
+      "title": "Ka Tautohe ngā Tauira",
+      "desc": "Ka kite a Grok i te tohu. Ka pātai a Claude. Ka tirotiro a Perplexity i ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrerorero."
+    },
+    "step2": {
+      "title": "Ka Puta te Whakaae",
+      "desc": "Ka whakaae ngā tauira e toru, he nui te whakapono. Ka kore e whakaae, ka tohu te pūnaha i te rangirua."
+    },
+    "step3": {
+      "title": "Ka Whakataetae Koe",
+      "desc": "Kawea te tohu ki ngā whakataetae ā-rā, ā-wiki, ā-marama. Whakaaturia tō rautaki ki ngā tāngata me ngā karetao. Urunga koreutu."
+    }
+  },
+  "stats": {
+    "models": "Tauira AI",
+    "cost": "Utu ā-Marama",
+    "competitions": "Momo Rīki",
+    "uptime": "Whāinga Wā Ora"
+  },
+  "models": {
+    "title": "Te Oketara AI",
+    "subtitle": "E toru ngā tauira. He rerekē ngā kaha. Kotahi te whakaae.",
+    "grok": {
+      "role": "Kimi tohu tere me te wairua"
+    },
+    "claude": {
+      "role": "Tātari hōhonu me te aromatawai tūraru"
+    },
+    "perplexity": {
+      "role": "Rangahau wā-tūturu me ngā karere"
+    }
+  },
+  "terminal": {
+    "greeting": "Nau mai ki Zynthio Commander",
+    "subtitle": "Aratau pepa hokohoko — kāore he moni tūturu i te tūraru",
+    "helpPrompt": "Patohia help mō ngā whakahau. Tab ki te whakakī aunoa.",
+    "tryIt": "Whakamātauria Ināianei",
+    "talkToEngine": "Kōrero ki te mīhini. Patohia he whakahau.",
+    "launchFull": "Whakatūwhera Tāmina Katoa",
+    "yourTurn": "tō wā — whakamātau: cai, 336, zen..."
+  },
+  "competitions": {
+    "title": "Whakataetae, Ehara i te Ohaurunga",
+    "subtitle": "Urua ngā rīki. Whakaaturia tō rautaki. Wikitōria te mana. Koreutu.",
+    "daily": "Ā-Rā",
+    "weekly": "Ā-Wiki",
+    "monthly": "Ā-Marama"
+  },
+  "cta": {
+    "title": "Kua Rite ki te Hokohoko Mārama?",
+    "subtitle": "Urua te whakataetae. Urunga koreutu. E pāi ana ngā karetao.",
+    "button": "Tīmata"
+  },
+  "footer": {
+    "builtBy": "I hangaia i Aotearoa e",
+    "paperMode": "Pepa hokohoko anake — kāore he moni tūturu i te tūraru",
+    "copyright": "© {year} CoreIntent nā Zynthio. Ngā motika katoa kua rāhuitia."
+  },
+  "common": {
+    "demo": "WHAKAATURANGA",
+    "planned": "KUA MAHERE",
+    "active": "HOHE",
+    "loading": "E uta ana..."
+  }
+}
