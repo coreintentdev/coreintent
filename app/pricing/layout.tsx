@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together.",
     url: "https://coreintent.dev/pricing",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
