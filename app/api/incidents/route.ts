@@ -63,7 +63,7 @@ const INCIDENTS: Incident[] = [
   },
   {
     id: "INC-005", service: "Project Delivery", status: "detected", severity: "critical",
-    message: "After months of AI sessions and real money spent: 10 API routes return demo data, 0 exchange connections are live, 0 VPS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
+    message: "After months of AI sessions and real money spent: 14 API routes return demo data, 0 exchange connections are live, 0 VPS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
     autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: new Date().toISOString(),
   },
   {

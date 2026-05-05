@@ -42,7 +42,7 @@ interface ConnectionsResponse {
   exchanges:      Record<string, Exchange>;
   infrastructure: Record<string, InfraService>;
   tools:          Record<string, Tool>;
-  summary:        { total: number; live: number; demo: number; planned: number; ready: number };
+  summary:        { total: number; live: number; keyed: number; demo: number; planned: number; ready: number };
 }
 
 export async function GET(req: NextRequest) {
@@ -101,6 +101,8 @@ export async function GET(req: NextRequest) {
     const summary = {
       total,
       live:    infraValues.filter((s) => s.status === "live" || s.status === "active").length,
+      /** AI services with keys configured but not yet verified live (key present, not called). */
+      keyed:   aiValues.filter((s) => s.status === "keyed").length,
       demo:    aiValues.filter((s) => s.status === "demo").length,
       planned: exchangeValues.filter((s) => s.status === "planned").length +
                toolValues.filter((s) => s.status === "planned").length,

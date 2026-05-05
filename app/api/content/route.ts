@@ -149,27 +149,41 @@ export async function POST(req: NextRequest) {
         ? ` Specs: ${JSON.stringify(typeSpec.specs)}.`
         : "";
 
-      const grokPrompt =
-        `Draft a ${type} about: "${safeTopic}". Tone: ${tone}.${specNote} ` +
-        `Stay on-brand for CoreIntent (AI trading, paper mode, competition leagues). ` +
-        `Output the content only — no preamble, no labels.`;
+      // Step 1: Grok draft — only when key is configured.
+      let grokResult: Awaited<ReturnType<typeof callGrokContent>> | undefined;
+      if (keys.grok) {
+        const grokPrompt =
+          `Draft a ${type} about: "${safeTopic}". Tone: ${tone}.${specNote} ` +
+          `Stay on-brand for CoreIntent (AI trading, paper mode, competition leagues). ` +
+          `Output the content only — no preamble, no labels.`;
+        grokResult = await callGrokContent(grokPrompt, { maxTokens: 600 });
+      }
 
-      const grokResult = await callGrokContent(grokPrompt, { maxTokens: 600 });
-
-      let content = grokResult.content;
+      const hasRealDraft = grokResult?.live === true && validateAiContent(grokResult);
+      let content: string = grokResult?.content ?? "";
       let usedClaude = false;
+      let claudeLive = false;
 
-      if (keys.claude && validateAiContent(grokResult)) {
-        const claudePrompt =
-          `Refine this ${type} for CoreIntent's audience. ` +
-          `Tone: ${tone}. Fix any awkward phrasing, keep it punchy, stay within platform specs.` +
-          `\n\nDraft:\n${grokResult.content}\n\nReturn the refined version only.`;
+      // Step 2: Claude either refines a real Grok draft or generates fresh when Grok is absent.
+      if (keys.claude) {
+        const claudePrompt = hasRealDraft
+          ? `Refine this ${type} for CoreIntent's audience. ` +
+            `Tone: ${tone}. Fix any awkward phrasing, keep it punchy, stay within platform specs.` +
+            `\n\nDraft:\n${grokResult!.content}\n\nReturn the refined version only.`
+          : `Generate a ${type} about: "${safeTopic}". Tone: ${tone}.${specNote} ` +
+            `Stay on-brand for CoreIntent (AI trading, paper mode, competition leagues). ` +
+            `Output the content only — no preamble, no labels.`;
         const claudeResult = await callClaude(claudePrompt, undefined, { maxTokens: 700 });
         if (validateAiContent(claudeResult)) {
           content    = claudeResult.content;
           usedClaude = true;
+          claudeLive = claudeResult.live;
         }
       }
+
+      const pipeline = usedClaude
+        ? (hasRealDraft ? ["grok_draft", "claude_refine"] : ["claude_generate"])
+        : ["grok_draft"];
 
       const data: ContentJobResponse = {
         status:        "generated",
@@ -178,13 +192,13 @@ export async function POST(req: NextRequest) {
         count,
         tone,
         estimatedTime: "0s",
-        pipeline:      usedClaude ? ["grok_draft", "claude_refine"] : ["grok_draft"],
+        pipeline,
         message:       count > 1
           ? `Generated 1 template for ${count}× ${type}. Use this as a base.`
           : `Generated ${type} for: "${topic}"`,
-        draft:   grokResult.content,
+        draft:   grokResult?.content,
         content,
-        live:    grokResult.live,
+        live:    (grokResult?.live ?? false) || claudeLive,
       };
       return ok(data);
     }

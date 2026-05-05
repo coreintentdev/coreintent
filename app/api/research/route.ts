@@ -11,7 +11,7 @@
  */
 import { NextRequest } from "next/server";
 import { callAIsParallel, callPerplexity, callClaudeDeep, callGrok, validateAiContent, sanitizeForPrompt, type AIResponse } from "@/lib/ai";
-import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { ok, badRequest, gatewayError, serviceUnavailable, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
 
@@ -54,6 +54,10 @@ export async function GET(req: NextRequest) {
       },
       claudeModel: "claude-opus-4-7",
     });
+
+    // All 3 AIs have errorType = actual API failure (keys present but calls failed), not demo mode.
+    const allErrored = [results.grok, results.perplexity, results.claude].every((r) => r.errorType);
+    if (allErrored) return serviceUnavailable("All AI services returned errors. Please retry shortly.");
 
     return ok({
       identity: IDENTITY,

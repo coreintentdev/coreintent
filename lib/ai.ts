@@ -22,6 +22,12 @@
 // Types
 // ---------------------------------------------------------------------------
 
+/** Claude model identifiers — single source of truth used across lib and routes. */
+export type ClaudeModelId =
+  | "claude-sonnet-4-6"
+  | "claude-opus-4-7"
+  | "claude-haiku-4-5-20251001";
+
 export interface AIResponse {
   source: "grok" | "claude" | "perplexity";
   model:  string;
@@ -327,7 +333,7 @@ export const CLAUDE_DEFAULT_SYSTEM =
 export async function callClaude(
   prompt: string,
   system?: string,
-  options?: { maxTokens?: number; model?: "claude-sonnet-4-6" | "claude-opus-4-7" | "claude-haiku-4-5-20251001" }
+  options?: { maxTokens?: number; model?: ClaudeModelId }
 ): Promise<AIResponse> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (isDemoKey(key, "sk-ant-xxx")) {
@@ -342,8 +348,8 @@ export async function callClaude(
     };
   }
 
-  const systemText  = system ?? CLAUDE_DEFAULT_SYSTEM;
-  const modelId     = options?.model ?? "claude-sonnet-4-6";
+  const systemText = system ?? CLAUDE_DEFAULT_SYSTEM;
+  const modelId    = options?.model ?? "claude-sonnet-4-6";
 
   try {
     const res = await fetchWithRetry(
@@ -386,10 +392,14 @@ export async function callClaude(
     }
 
     const data = await res.json();
+    // Anthropic returns content as an array of typed blocks; extract the first text block.
+    const textBlock = Array.isArray(data.content)
+      ? (data.content as Array<{ type: string; text?: string }>).find((b) => b.type === "text")
+      : undefined;
     return {
       source:  "claude",
       model:   data.model ?? modelId,
-      content: data.content?.[0]?.text ?? "",
+      content: textBlock?.text ?? "",
       live: true,
     };
   } catch (e) {
@@ -408,9 +418,9 @@ export async function callClaude(
 export async function callClaudeDeep(
   prompt: string,
   system?: string,
-  options?: { maxTokens?: number }
+  options?: { maxTokens?: number; model?: ClaudeModelId }
 ): Promise<AIResponse> {
-  return callClaude(prompt, system, { ...options, model: "claude-opus-4-7" });
+  return callClaude(prompt, system, { ...options, model: options?.model ?? "claude-opus-4-7" });
 }
 
 // ---------------------------------------------------------------------------
@@ -698,7 +708,7 @@ export interface ParallelAIPrompts {
     claude?:     number;
   };
   /** Optional Claude model override — defaults to sonnet-4-6 for cost efficiency. */
-  claudeModel?: "claude-sonnet-4-6" | "claude-opus-4-7" | "claude-haiku-4-5-20251001";
+  claudeModel?: ClaudeModelId;
 }
 
 /** Results from a three-way parallel AI call with pre-computed aggregate flags. */

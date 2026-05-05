@@ -19,16 +19,18 @@ import { APP_VERSION, PLATFORM_MODE } from "@/lib/constants";
 const BOOT_TIME = Date.now();
 
 interface HealthResponse {
-  status:    "ok";
-  version:   string;
+  status:      "ok";
+  version:     string;
   /** Seconds since this process started. */
-  uptime:    number;
-  timestamp: string;
-  mode:      "paper_trading" | "live";
+  uptime:      number;
+  timestamp:   string;
+  mode:        "paper_trading" | "live";
+  /** Node.js runtime version (e.g. "v20.14.0"). */
+  nodeVersion: string;
   /** Process RSS memory in megabytes. */
-  memoryMB:  number;
+  memoryMB:    number;
   /** Which AI API keys are configured (true) vs demo placeholder (false). */
-  aiKeys:    AiKeyStatus;
+  aiKeys:      AiKeyStatus;
 }
 
 export async function GET(req: NextRequest) {
@@ -37,13 +39,14 @@ export async function GET(req: NextRequest) {
   if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   const mem = process.memoryUsage();
   const data: HealthResponse = {
-    status:    "ok",
-    version:   APP_VERSION,
-    uptime:    Math.floor((Date.now() - BOOT_TIME) / 1000),
-    timestamp: new Date().toISOString(),
-    mode:      PLATFORM_MODE,
-    memoryMB:  Math.round(mem.rss / 1_048_576),
-    aiKeys:    getAiKeyStatus(),
+    status:      "ok",
+    version:     APP_VERSION,
+    uptime:      Math.floor((Date.now() - BOOT_TIME) / 1000),
+    timestamp:   new Date().toISOString(),
+    mode:        PLATFORM_MODE,
+    nodeVersion: process.version,
+    memoryMB:    Math.round(mem.rss / 1_048_576),
+    aiKeys:      getAiKeyStatus(),
   };
   return ok(data);
 }
