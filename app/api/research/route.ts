@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callClaude, callGrok, validateAiContent, sanitizeForPrompt, type AIResponse } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callClaudeDeep, callGrok, validateAiContent, sanitizeForPrompt, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
@@ -52,6 +52,7 @@ export async function GET(req: NextRequest) {
       systems: {
         claude: "You are CoreIntent's self-awareness module. Be precise, honest, and direct.",
       },
+      claudeModel: "claude-opus-4-7",
     });
 
     return ok({
@@ -93,7 +94,7 @@ export async function POST(req: NextRequest) {
     type TaskFn = () => Promise<AIResponse>;
     const taskMap: Record<ResearchTask, TaskFn> = {
       research:  () => callPerplexity(safeTopic),
-      analysis:  () => callClaude(safeTopic),
+      analysis:  () => callClaudeDeep(safeTopic),
       signal:    () => callGrok(safeTopic),
       sentiment: () => callGrok(`Analyze market and social sentiment for: ${safeTopic}`),
     };

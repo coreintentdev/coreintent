@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { ok, created, badRequest, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type IncidentStatus   = "detected" | "investigating" | "mitigating" | "resolved";
 type IncidentSeverity = "critical" | "major" | "minor" | "info";
@@ -155,10 +155,10 @@ export async function POST(req: NextRequest) {
 
   INCIDENTS.push(incident);
 
-  return ok({
+  return created({
     incident,
     notifications: { slack: "queued", email: "queued", x_dm: "queued" },
-  }, 201);
+  });
 }
 
 export async function OPTIONS() {

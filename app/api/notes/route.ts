@@ -12,7 +12,7 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, badRequest, preflight, serverError, validateString, validateOptionalString, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { ok, created, badRequest, preflight, serverError, validateString, validateOptionalString, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Note {
   id:        number;
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
   const note: Note = { id: nextId++, text, tag, timestamp: new Date().toISOString() };
   publicNotes.push(note);
 
-  return ok({ note }, 201);
+  return created({ note });
 }
 
 export async function OPTIONS() {

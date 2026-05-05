@@ -83,6 +83,10 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mpulse\x1b[0m       - Engine vitals heartbeat monitor
   \x1b[32mdashboard\x1b[0m   - Live dashboard with charts & gauges
   \x1b[32mdepth [pair]\x1b[0m - Market depth / order book (e.g. \x1b[32mdepth ETH/USDT\x1b[0m)
+  \x1b[32mwaveform\x1b[0m    - Market volatility frequency waveform
+  \x1b[32mspectrum\x1b[0m    - Frequency spectrum analyzer (timeframes)
+  \x1b[32mquantum\x1b[0m     - Quantum entanglement consensus model
+  \x1b[32mworldmap\x1b[0m    - Global AI network — model origins & routes
 
   \x1b[33m── EXPERIENCES ──\x1b[0m
   \x1b[32mspeedtest\x1b[0m   - Network speed diagnostics
@@ -644,6 +648,7 @@ const ALL_COMMANDS = [
   "decrypt", "orbit", "glitch",
   "sniper", "cyberwar", "hologram",
   "arena", "dna", "train",
+  "quantum", "waveform", "worldmap", "spectrum",
 ];
 
 export default function Terminal() {
@@ -2666,6 +2671,271 @@ export default function Terminal() {
             `  \x1b[90mModel checkpoint saved. Paper trading — no real predictions.\x1b[0m`, ``);
         }
       }, 100);
+      return "";
+    }
+
+    // ── QUANTUM: Quantum entanglement simulation ──
+    if (trimmed === "quantum") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ QUANTUM CONSENSUS — ENTANGLEMENT SIMULATION ══\x1b[0m`,
+        `\x1b[90m  Initializing quantum register... 3 qubits (G, C, P)\x1b[0m`, ``);
+
+      const qStates = ["|0⟩", "|1⟩", "|+⟩", "|−⟩", "|Ψ⟩"];
+      const gateNames = ["H (Hadamard)", "CNOT", "SWAP", "Rz(π/4)", "MEASURE"];
+      let qFrame = 0;
+      const totalQFrames = 22;
+
+      const qIv = setInterval(() => {
+        if (qFrame < 5) {
+          const g = qStates[Math.floor(Math.random() * qStates.length)];
+          const c = qStates[Math.floor(Math.random() * qStates.length)];
+          const p = qStates[Math.floor(Math.random() * qStates.length)];
+          const gate = gateNames[qFrame];
+          const fidelity = (0.6 + qFrame * 0.08 + Math.random() * 0.05).toFixed(3);
+          addLines(
+            `  \x1b[90m[gate ${qFrame + 1}]\x1b[0m \x1b[33m${gate.padEnd(14)}\x1b[0m  \x1b[31mG:${g}\x1b[0m  \x1b[35mC:${c}\x1b[0m  \x1b[34mP:${p}\x1b[0m  fidelity: \x1b[32m${fidelity}\x1b[0m`
+          );
+          qFrame++;
+        } else if (qFrame === 5) {
+          addLines(``, `\x1b[36m  Entangling qubits...\x1b[0m`, ``);
+          qFrame++;
+        } else if (qFrame < 14) {
+          const W = 48;
+          const phase = qFrame - 6;
+          let wave = "  ";
+          for (let x = 0; x < W; x++) {
+            const v1 = Math.sin((x + phase * 3) * 0.2) * 0.5;
+            const v2 = Math.cos((x + phase * 2) * 0.15 + 1) * 0.4;
+            const v3 = Math.sin((x + phase * 4) * 0.25 + 2) * 0.3;
+            const combined = v1 + v2 + v3;
+            if (combined > 0.6) wave += "\x1b[32m█\x1b[0m";
+            else if (combined > 0.3) wave += "\x1b[36m▓\x1b[0m";
+            else if (combined > 0) wave += "\x1b[34m▒\x1b[0m";
+            else if (combined > -0.3) wave += "\x1b[35m░\x1b[0m";
+            else wave += "\x1b[31m·\x1b[0m";
+          }
+          const entanglement = (60 + phase * 5 + Math.random() * 3).toFixed(1);
+          wave += `  \x1b[33m${entanglement}%\x1b[0m`;
+          addLines(wave);
+          qFrame++;
+        } else if (qFrame === 14) {
+          addLines(``);
+          const bell = Math.random() > 0.5 ? "|Φ⁺⟩" : "|Ψ⁺⟩";
+          addLines(
+            `\x1b[36m  ╔═══════════════════════════════════════════╗\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  \x1b[32m◆\x1b[0m \x1b[36mQUANTUM STATE COLLAPSED\x1b[0m                \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ╠═══════════════════════════════════════════╣\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m                                           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Bell State:  \x1b[33m${bell}\x1b[0m                       \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Entangled:   \x1b[32m3/3 models\x1b[0m                  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Fidelity:    \x1b[32m${(0.94 + Math.random() * 0.05).toFixed(3)}\x1b[0m                     \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Decoherence: \x1b[32m< 0.02\x1b[0m                      \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m                                           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  \x1b[31mGrok\x1b[0m ─── \x1b[33m⊗\x1b[0m ─── \x1b[35mClaude\x1b[0m ─── \x1b[33m⊗\x1b[0m ─── \x1b[34mPerplexity\x1b[0m \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m    \x1b[31m|1⟩\x1b[0m              \x1b[35m|1⟩\x1b[0m              \x1b[34m|1⟩\x1b[0m  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m                                           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Consensus: \x1b[32mCOHERENT\x1b[0m — all models aligned  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ╚═══════════════════════════════════════════╝\x1b[0m`,
+          );
+          qFrame++;
+        } else if (qFrame === 18) {
+          addLines(``,
+            `  \x1b[90mQuantum consensus: when models are entangled,\x1b[0m`,
+            `  \x1b[90mmeasuring one instantly reveals the others.\x1b[0m`,
+            `  \x1b[90mThat's the power of three-model agreement.\x1b[0m`, ``);
+          qFrame++;
+        } else if (qFrame >= totalQFrames) {
+          clearInterval(qIv);
+        } else {
+          qFrame++;
+        }
+      }, 160);
+      return "";
+    }
+
+    // ── WAVEFORM: Market volatility audio-style waveform ──
+    if (trimmed === "waveform" || trimmed.startsWith("waveform ")) {
+      const pair = trimmed === "waveform" ? "BTC/USDT" : raw.substring(9).trim().toUpperCase() || "BTC/USDT";
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ VOLATILITY WAVEFORM — ${pair} ══\x1b[0m`,
+        `\x1b[90m  Rendering 60s of market microstructure...\x1b[0m`, ``);
+
+      const topHalf = " ▁▂▃▄▅▆▇█";
+      const botHalf = " ▔▂▃▄▅▆▇█";
+      let wFrame = 0;
+      const totalWFrames = 12;
+
+      const wIv = setInterval(() => {
+        if (wFrame < totalWFrames) {
+          const W = 56;
+          let upper = "  ";
+          let center = "  ";
+          let lower = "  ";
+
+          for (let x = 0; x < W; x++) {
+            const t = x + wFrame * 6;
+            const v = Math.sin(t * 0.15) * 0.3
+              + Math.sin(t * 0.4) * 0.2
+              + Math.sin(t * 0.8 + wFrame) * 0.15
+              + (Math.random() - 0.5) * 0.35;
+
+            const upHeight = Math.max(0, Math.min(8, Math.round(v * 8 + 4)));
+            const downHeight = Math.max(0, Math.min(8, Math.round(-v * 8 + 4)));
+
+            const color = Math.abs(v) > 0.5 ? "\x1b[31m" : Math.abs(v) > 0.25 ? "\x1b[33m" : "\x1b[32m";
+            upper += `${color}${topHalf[upHeight]}\x1b[0m`;
+            center += v > 0.1 ? `\x1b[32m─\x1b[0m` : v < -0.1 ? `\x1b[31m─\x1b[0m` : `\x1b[90m─\x1b[0m`;
+            lower += `${color}${botHalf[downHeight]}\x1b[0m`;
+          }
+
+          const vol = (12 + Math.abs(Math.sin(wFrame * 0.5)) * 25 + Math.random() * 8).toFixed(1);
+          const volColor = Number(vol) > 25 ? "\x1b[31m" : Number(vol) > 15 ? "\x1b[33m" : "\x1b[32m";
+
+          if (wFrame === 0) {
+            addLines(`  \x1b[90m${" ".repeat(8)}╭${"─".repeat(56)}╮ Vol\x1b[0m`);
+          }
+          addLines(upper, center, lower);
+          if (wFrame % 3 === 2) {
+            addLines(`  \x1b[90m${" ".repeat(8)}├${"╌".repeat(56)}┤\x1b[0m ${volColor}${vol}%\x1b[0m`);
+          }
+          wFrame++;
+        } else {
+          clearInterval(wIv);
+          const avgVol = (18 + Math.random() * 10).toFixed(1);
+          const maxVol = (32 + Math.random() * 15).toFixed(1);
+          const regime = Number(avgVol) > 22 ? "HIGH VOLATILITY" : Number(avgVol) > 15 ? "NORMAL" : "LOW VOLATILITY";
+          const regimeColor = regime === "HIGH VOLATILITY" ? "\x1b[31m" : regime === "NORMAL" ? "\x1b[33m" : "\x1b[32m";
+
+          addLines(
+            `  \x1b[90m${" ".repeat(8)}╰${"─".repeat(56)}╯\x1b[0m`,
+            ``,
+            `  \x1b[36m── Waveform Analysis ──\x1b[0m`,
+            `  Avg Volatility:  \x1b[33m${avgVol}%\x1b[0m`,
+            `  Peak Volatility: \x1b[31m${maxVol}%\x1b[0m`,
+            `  Regime:          ${regimeColor}${regime}\x1b[0m`,
+            `  Frequency:       \x1b[36m${(2 + Math.random() * 3).toFixed(1)} Hz\x1b[0m (tick rate)`,
+            `  Samples:         \x1b[36m${56 * totalWFrames}\x1b[0m data points`,
+            ``,
+            `  \x1b[90mVisualization of market microstructure volatility.\x1b[0m`,
+            `  \x1b[90mHeight = price deviation. Width = time. Color = intensity.\x1b[0m`, ``
+          );
+        }
+      }, 250);
+      return "";
+    }
+
+    // ── WORLDMAP: ASCII world map showing AI model origins ──
+    if (trimmed === "worldmap") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ GLOBAL AI NETWORK — COREINTENT ══\x1b[0m`,
+        `\x1b[90m  Mapping model origins and data flows...\x1b[0m`, ``);
+
+      let mFrame = 0;
+
+      const mIv = setInterval(() => {
+        if (mFrame === 0) {
+          const mapLines = [
+            `\x1b[90m        . ___ .    ___          ___    . __ .          ___  \x1b[0m`,
+            `\x1b[90m      /        \\  /   \\    ____/   \\__/    \\ \\___     /   \\ \x1b[0m`,
+            `\x1b[90m     |  NA      \\/     |__/   EU         \\  ASIA  \\__/     |\x1b[0m`,
+            `\x1b[90m     |     \x1b[31m★\x1b[90m SF  |    / \\     \x1b[34m★\x1b[90m LON     |     \x1b[33m★\x1b[90m TOK      |\x1b[0m`,
+            `\x1b[90m      \\       __/   /   \\__        ___|  __          __/  \x1b[0m`,
+            `\x1b[90m       \\_____/      |      \\______/     \\/  \\________/     \x1b[0m`,
+            `\x1b[90m                    |  AF    \\                             \x1b[0m`,
+            `\x1b[90m                     \\___  __/    \\___                     \x1b[0m`,
+            `\x1b[90m                         \\/  \\       AU                    \x1b[0m`,
+            `\x1b[90m                              \\    \x1b[32m★\x1b[90m NZ                    \x1b[0m`,
+            `\x1b[90m                               \\____/                     \x1b[0m`,
+          ];
+          for (const l of mapLines) addLines(l);
+          addLines(``);
+          mFrame++;
+        } else if (mFrame === 1) {
+          addLines(`  \x1b[36m── Signal Routes ──\x1b[0m`, ``);
+          mFrame++;
+        } else if (mFrame < 6) {
+          const routes = [
+            `  \x1b[31m★ SF\x1b[0m  → \x1b[31mGrok (xAI)\x1b[0m          \x1b[90m━━━\x1b[31m▶\x1b[0m  \x1b[36mFast signals, sentiment scan\x1b[0m`,
+            `  \x1b[31m★ SF\x1b[0m  → \x1b[35mClaude (Anthropic)\x1b[0m   \x1b[90m━━━\x1b[35m▶\x1b[0m  \x1b[36mDeep risk analysis, orchestration\x1b[0m`,
+            `  \x1b[34m★ LON\x1b[0m → \x1b[34mPerplexity\x1b[0m          \x1b[90m━━━\x1b[34m▶\x1b[0m  \x1b[36mResearch, fact-checking, news\x1b[0m`,
+            `  \x1b[32m★ NZ\x1b[0m  → \x1b[32mCoreIntent Engine\x1b[0m    \x1b[90m━━━\x1b[32m▶\x1b[0m  \x1b[36mConsensus, execution, command\x1b[0m`,
+          ];
+          const ri = mFrame - 2;
+          if (ri < routes.length) addLines(routes[ri]);
+          mFrame++;
+        } else if (mFrame === 6) {
+          addLines(``);
+          const latencies = [
+            { from: "SF→NZ", ms: 142 + Math.floor(Math.random() * 30) },
+            { from: "LON→NZ", ms: 188 + Math.floor(Math.random() * 40) },
+            { from: "TOK→NZ", ms: 98 + Math.floor(Math.random() * 20) },
+          ];
+          addLines(`  \x1b[36m── Latency Matrix ──\x1b[0m`);
+          for (const l of latencies) {
+            const barLen = Math.round(l.ms / 15);
+            const color = l.ms < 120 ? "\x1b[32m" : l.ms < 170 ? "\x1b[33m" : "\x1b[31m";
+            addLines(`  ${l.from.padEnd(8)} ${color}${"█".repeat(barLen)}${"░".repeat(Math.max(0, 16 - barLen))}\x1b[0m ${color}${l.ms}ms\x1b[0m`);
+          }
+          mFrame++;
+        } else if (mFrame === 7) {
+          addLines(``,
+            `  \x1b[36m┌─ NETWORK STATUS ────────────────────────┐\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  Nodes:     \x1b[32m4 active\x1b[0m (SF, LON, TOK, NZ) \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  Uptime:    \x1b[32m${(99.7 + Math.random() * 0.29).toFixed(2)}%\x1b[0m                   \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  Signals:   \x1b[32m${840 + Math.floor(Math.random() * 200)}/day\x1b[0m                \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  HQ:        \x1b[33mNew Zealand\x1b[0m (always NZ)     \x1b[36m│\x1b[0m`,
+            `  \x1b[36m└──────────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mAll AI models converge on the NZ engine.\x1b[0m`,
+            `  \x1b[90mThree continents. Three models. One consensus.\x1b[0m`, ``);
+          clearInterval(mIv);
+        }
+        mFrame = Math.min(mFrame, 8);
+      }, 300);
+      return "";
+    }
+
+    // ── SPECTRUM: Live frequency spectrum analyzer ──
+    if (trimmed === "spectrum") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ MARKET FREQUENCY SPECTRUM ══\x1b[0m`,
+        `\x1b[90m  Decomposing price action into frequency bands...\x1b[0m`, ``);
+
+      const bands = ["1m", "5m", "15m", "1H", "4H", "1D", "1W", "1M"];
+      const bandColors = ["\x1b[31m", "\x1b[31m", "\x1b[33m", "\x1b[33m", "\x1b[32m", "\x1b[32m", "\x1b[36m", "\x1b[34m"];
+      let sFrame = 0;
+      const totalSFrames = 10;
+
+      const sIv = setInterval(() => {
+        if (sFrame < totalSFrames) {
+          const specLine = bands.map((b, bi) => {
+            const height = Math.floor(Math.random() * 8) + Math.floor(Math.sin(sFrame * 0.5 + bi * 0.8) * 3 + 4);
+            const clamped = Math.max(1, Math.min(8, height));
+            const bar = "█".repeat(clamped) + "░".repeat(8 - clamped);
+            return `${bandColors[bi]}${bar}\x1b[0m`;
+          }).join(" ");
+
+          if (sFrame === 0) {
+            addLines(`  \x1b[90m  ${bands.map((b) => b.padEnd(9)).join(" ")}\x1b[0m`);
+          }
+          addLines(`  ${specLine}`);
+          sFrame++;
+        } else {
+          clearInterval(sIv);
+          const dominant = bands[2 + Math.floor(Math.random() * 3)];
+          const energy = (65 + Math.random() * 30).toFixed(1);
+          addLines(``,
+            `  \x1b[90m  ${bands.map((b) => b.padEnd(9)).join(" ")}\x1b[0m`,
+            ``,
+            `  \x1b[36mDominant Frequency:\x1b[0m \x1b[33m${dominant}\x1b[0m timeframe`,
+            `  \x1b[36mSpectral Energy:\x1b[0m    \x1b[32m${energy}%\x1b[0m`,
+            `  \x1b[36mNoise Floor:\x1b[0m        \x1b[90m${(8 + Math.random() * 12).toFixed(1)}%\x1b[0m`,
+            `  \x1b[36mSignal-to-Noise:\x1b[0m    \x1b[32m${(2.5 + Math.random() * 3).toFixed(1)}:1\x1b[0m`,
+            ``,
+            `  \x1b[90mFrequency analysis helps identify the dominant trading timeframe.\x1b[0m`,
+            `  \x1b[90mHigher bars = more price action energy in that period.\x1b[0m`, ``);
+        }
+      }, 200);
       return "";
     }
 
