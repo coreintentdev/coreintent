@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "I hangaia i Aotearoa e",
     "paperMode": "Pepa hokohoko anake — kāore he moni tūturu i te tūraru",
-    "copyright": "© {year} CoreIntent nā Zynthio. Ngā motika katoa kua rāhuitia."
+    "copyright": "© {year} CoreIntent nā Zynthio. Ngā motika katoa kua rāhuitia.",
+    "tagline": "Mīhini Hokohoko AI Agentic",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hono",
+    "terminal": "Tāmina",
+    "demo": "Whakaaturanga",
+    "stack": "Tākupu",
+    "competitions": "Whakataetae",
+    "privacy": "Kaupapahere Tūmataiti",
+    "terms": "Ngā Ture Ratonga",
+    "disclaimer": "Whakakāhoretanga"
   },
   "common": {
     "demo": "WHAKAATURANGA",

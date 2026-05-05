@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "由新西兰的",
     "paperMode": "仅模拟交易——无真实资金风险",
-    "copyright": "© {year} CoreIntent by Zynthio。保留所有权利。"
+    "copyright": "© {year} CoreIntent by Zynthio。保留所有权利。",
+    "tagline": "自主AI交易引擎",
+    "product": "产品",
+    "legal": "法律",
+    "connect": "联系",
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "competitions": "竞赛",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "disclaimer": "免责声明"
   },
   "common": {
     "demo": "演示",

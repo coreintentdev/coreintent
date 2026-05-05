@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "Gebaut in Neuseeland von",
     "paperMode": "Nur Paper-Trading — kein echtes Geld im Risiko",
-    "copyright": "© {year} CoreIntent von Zynthio. Alle Rechte vorbehalten."
+    "copyright": "© {year} CoreIntent von Zynthio. Alle Rechte vorbehalten.",
+    "tagline": "Agentische KI-Trading-Engine",
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "connect": "Kontakt",
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "competitions": "Wettbewerbe",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "disclaimer": "Haftungsausschluss"
   },
   "common": {
     "demo": "DEMO",

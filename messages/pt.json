@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "Construído na Nova Zelândia por",
     "paperMode": "Apenas paper trading — sem dinheiro real em risco",
-    "copyright": "© {year} CoreIntent por Zynthio. Todos os direitos reservados."
+    "copyright": "© {year} CoreIntent por Zynthio. Todos os direitos reservados.",
+    "tagline": "Motor de Trading com IA Agêntica",
+    "product": "Produto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "competitions": "Competições",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "disclaimer": "Aviso Legal"
   },
   "common": {
     "demo": "DEMO",

@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "صُنع في نيوزيلندا بواسطة",
     "paperMode": "تداول ورقي فقط — لا أموال حقيقية في خطر",
-    "copyright": "© {year} CoreIntent من Zynthio. جميع الحقوق محفوظة."
+    "copyright": "© {year} CoreIntent من Zynthio. جميع الحقوق محفوظة.",
+    "tagline": "محرك تداول بالذكاء الاصطناعي الوكيل",
+    "product": "المنتج",
+    "legal": "قانوني",
+    "connect": "تواصل",
+    "terminal": "الطرفية",
+    "demo": "عرض تجريبي",
+    "stack": "المكدس",
+    "competitions": "المنافسات",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "disclaimer": "إخلاء المسؤولية"
   },
   "common": {
     "demo": "تجريبي",

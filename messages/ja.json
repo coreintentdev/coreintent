@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "ニュージーランドで開発",
     "paperMode": "ペーパートレーディングのみ — 実資金リスクなし",
-    "copyright": "© {year} CoreIntent by Zynthio. All rights reserved."
+    "copyright": "© {year} CoreIntent by Zynthio. All rights reserved.",
+    "tagline": "エージェントAIトレーディングエンジン",
+    "product": "プロダクト",
+    "legal": "法的情報",
+    "connect": "つながる",
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "スタック",
+    "competitions": "コンペティション",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "disclaimer": "免責事項"
   },
   "common": {
     "demo": "デモ",

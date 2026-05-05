@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocale } from "next-intl";
+import { getHreflangLocale, isValidLocale } from "@/lib/i18n";
 
 const LOCALE_GREETINGS: Record<string, string> = {
   en: "Welcome to Zynthio Commander",
@@ -32,11 +33,7 @@ const LOCALE_SUBTITLES: Record<string, string> = {
 function buildWelcomeBanner(locale: string): string {
   const greeting = LOCALE_GREETINGS[locale] || LOCALE_GREETINGS.en;
   const subtitle = LOCALE_SUBTITLES[locale] || LOCALE_SUBTITLES.en;
-  const hreflangMap: Record<string, string> = {
-    en: "en-NZ", es: "es", mi: "mi-NZ", zh: "zh-Hans", ja: "ja",
-    pt: "pt-BR", fr: "fr", de: "de", ar: "ar", hi: "hi",
-  };
-  const dateLocale = hreflangMap[locale] || "en-NZ";
+  const dateLocale = isValidLocale(locale) ? getHreflangLocale(locale) : "en-NZ";
   const dateStr = new Date().toLocaleString(dateLocale, { timeZone: "Pacific/Auckland" });
 
   return `\x1b[36m

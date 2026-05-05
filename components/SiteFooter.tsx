@@ -38,7 +38,7 @@ export default function SiteFooter() {
           >
             CoreIntent
           </div>
-          <p>Agentic AI Trading Engine</p>
+          <p>{t("tagline")}</p>
           <p style={{ marginTop: "4px" }}>
             {t("builtBy")} Corey McIvor | Zynthio.ai
           </p>
@@ -50,38 +50,38 @@ export default function SiteFooter() {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Product
+              {t("product")}
             </span>
             <Link href="/" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terminal
+              {t("terminal")}
             </Link>
             <Link href="/demo" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Demo
+              {t("demo")}
             </Link>
             <Link href="/stack" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Stack
+              {t("stack")}
             </Link>
             <Link href="/pricing" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Competitions
+              {t("competitions")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Legal
+              {t("legal")}
             </span>
             <Link href="/privacy" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Privacy Policy
+              {t("privacy")}
             </Link>
             <Link href="/terms" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terms of Service
+              {t("terms")}
             </Link>
             <Link href="/disclaimer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Disclaimer
+              {t("disclaimer")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Connect
+              {t("connect")}
             </span>
             <a
               href="https://github.com/coreintentdev"

@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "न्यूजीलैंड में निर्मित",
     "paperMode": "केवल पेपर ट्रेडिंग — कोई वास्तविक धन जोखिम में नहीं",
-    "copyright": "© {year} CoreIntent by Zynthio. सर्वाधिकार सुरक्षित।"
+    "copyright": "© {year} CoreIntent by Zynthio. सर्वाधिकार सुरक्षित।",
+    "tagline": "एजेंटिक AI ट्रेडिंग इंजन",
+    "product": "उत्पाद",
+    "legal": "कानूनी",
+    "connect": "संपर्क",
+    "terminal": "टर्मिनल",
+    "demo": "डेमो",
+    "stack": "स्टैक",
+    "competitions": "प्रतियोगिताएं",
+    "privacy": "गोपनीयता नीति",
+    "terms": "सेवा की शर्तें",
+    "disclaimer": "अस्वीकरण"
   },
   "common": {
     "demo": "डेमो",

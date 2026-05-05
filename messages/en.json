@@ -78,7 +78,18 @@
   "footer": {
     "builtBy": "Built in New Zealand by",
     "paperMode": "Paper trading only — no real money at risk",
-    "copyright": "© {year} CoreIntent by Zynthio. All rights reserved."
+    "copyright": "© {year} CoreIntent by Zynthio. All rights reserved.",
+    "tagline": "Agentic AI Trading Engine",
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "competitions": "Competitions",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer"
   },
   "common": {
     "demo": "DEMO",
