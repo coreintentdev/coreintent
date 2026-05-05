@@ -1270,6 +1270,109 @@ function SignalPipeline() {
   );
 }
 
+/* ─── AI Activity Bar ─── */
+const AI_ACTIVITY_MESSAGES = [
+  { model: "Grok", color: "#ef4444", msg: "BTC 4H RSI divergence detected — scanning confirmation" },
+  { model: "Claude", color: "#a855f7", msg: "Risk model updated — portfolio exposure within threshold" },
+  { model: "Engine", color: "#10b981", msg: "Consensus check: 2/3 models agree on SOL/USDT LONG" },
+  { model: "Perplexity", color: "#3b82f6", msg: "Scanning 14 live feeds — no negative catalysts found" },
+  { model: "Grok", color: "#ef4444", msg: "Volume spike: ETH/USDT +340% vs 20-period avg" },
+  { model: "Claude", color: "#a855f7", msg: "Backtesting signal pattern — 72% win rate over 180 samples" },
+  { model: "Engine", color: "#10b981", msg: "Signal fired: AVAX/USDT LONG @ $35.82 — confidence 91%" },
+  { model: "Perplexity", color: "#3b82f6", msg: "Whale alert: 2,400 BTC moved to exchange — monitoring" },
+  { model: "Grok", color: "#ef4444", msg: "Funding rate flipping negative — potential short squeeze" },
+  { model: "Claude", color: "#a855f7", msg: "Drawdown protection active — max loss threshold: 2.4%" },
+  { model: "Engine", color: "#10b981", msg: "Daily league update: 847 active participants — round closing in 4h" },
+  { model: "Perplexity", color: "#3b82f6", msg: "Fed minutes parsed — no rate cut language detected" },
+];
+
+function AIActivityBar() {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % AI_ACTIVITY_MESSAGES.length);
+        setVisible(true);
+      }, 400);
+    }, 4000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const item = AI_ACTIVITY_MESSAGES[idx];
+
+  return (
+    <div
+      style={{
+        padding: "6px 24px",
+        background: "#0a0e17",
+        borderBottom: "1px solid var(--border-color)",
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        fontSize: "11px",
+        overflow: "hidden",
+        minHeight: "32px",
+      }}
+    >
+      <span
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          color: "#10b981",
+          fontSize: "9px",
+          textTransform: "uppercase",
+          letterSpacing: "0.5px",
+          flexShrink: 0,
+        }}
+      >
+        <span
+          className="animate-pulse"
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: "50%",
+            background: "#10b981",
+            display: "inline-block",
+          }}
+        />
+        LIVE
+      </span>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          transition: "opacity 0.3s ease, transform 0.3s ease",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(-8px)",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "9px",
+            fontWeight: "bold",
+            color: item.color,
+            padding: "2px 6px",
+            background: item.color + "18",
+            borderRadius: "3px",
+            flexShrink: 0,
+          }}
+        >
+          {item.model}
+        </span>
+        <span style={{ color: "var(--text-secondary)" }}>{item.msg}</span>
+      </div>
+      <span style={{ marginLeft: "auto", fontSize: "9px", color: "var(--text-secondary)", flexShrink: 0 }}>
+        [DEMO]
+      </span>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -1837,6 +1940,7 @@ export default function Home() {
       )}
 
       <div className="section-divider" />
+      <AIActivityBar />
       <MarketTicker />
 
       {/* Tab bar */}

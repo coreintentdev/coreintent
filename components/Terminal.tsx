@@ -103,6 +103,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32marena\x1b[0m       - Live competition bracket — bots vs humans
   \x1b[32mdna\x1b[0m         - Trading engine DNA — the genetic code
   \x1b[32mtrain\x1b[0m       - Watch the neural network learn in real time
+  \x1b[32mmission\x1b[0m     - Signal infiltration — interactive AI trading op
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -649,6 +650,7 @@ const ALL_COMMANDS = [
   "sniper", "cyberwar", "hologram",
   "arena", "dna", "train",
   "quantum", "waveform", "worldmap", "spectrum",
+  "mission", "accept", "abort", "analyze", "execute",
 ];
 
 export default function Terminal() {
@@ -677,6 +679,15 @@ export default function Terminal() {
       volume: string;
       grokSays: string;
     }>;
+  } | null>(null);
+  const missionRef = useRef<{
+    phase: number;
+    pair: string;
+    entry: number;
+    confidence: number;
+    grokVote: string;
+    claudeVote: string;
+    perplexityVote: string;
   } | null>(null);
 
   useEffect(() => {
@@ -2939,6 +2950,105 @@ export default function Terminal() {
       return "";
     }
 
+    // ── MISSION: Interactive signal infiltration narrative ──
+    if (trimmed === "mission") {
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+      const pair = pairs[Math.floor(Math.random() * pairs.length)];
+      const basePrice = pair.startsWith("BTC") ? 67420 : pair.startsWith("ETH") ? 3285 : pair.startsWith("SOL") ? 142 : 35;
+      const entry = +(basePrice * (0.995 + Math.random() * 0.01)).toFixed(2);
+      const grokVotes = ["LONG — breakout forming", "SHORT — rejection at resistance", "LONG — volume spike"];
+      const claudeVotes = ["LONG — risk/reward 3.2:1", "HOLD — insufficient data", "SHORT — declining momentum"];
+      const perplVotes = ["LONG — whale accumulation", "LONG — positive funding", "SHORT — news catalyst incoming"];
+      const grokVote = grokVotes[Math.floor(Math.random() * grokVotes.length)];
+      const claudeVote = claudeVotes[Math.floor(Math.random() * claudeVotes.length)];
+      const perplexityVote = perplVotes[Math.floor(Math.random() * perplVotes.length)];
+      const confidence = 65 + Math.floor(Math.random() * 30);
+
+      missionRef.current = { phase: 0, pair, entry, confidence, grokVote, claudeVote, perplexityVote };
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+
+      const delay = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+      const typeLines = async (lns: string[], ms: number) => {
+        for (const l of lns) {
+          await delay(ms);
+          addLines(l);
+        }
+      };
+
+      (async () => {
+        await typeLines([
+          `\x1b[36m  ╔══════════════════════════════════════════════════╗\x1b[0m`,
+          `\x1b[36m  ║        MISSION: SIGNAL INTERCEPT                 ║\x1b[0m`,
+          `\x1b[36m  ╚══════════════════════════════════════════════════╝\x1b[0m`,
+          ``,
+        ], 150);
+        await delay(600);
+        await typeLines([
+          `  \x1b[90m[INCOMING TRANSMISSION]\x1b[0m`,
+          `  \x1b[33mSignal detected on \x1b[0m\x1b[36m${pair}\x1b[0m`,
+          `  \x1b[33mEntry zone:\x1b[0m $${entry.toLocaleString()}`,
+          `  \x1b[33mTimestamp:\x1b[0m  ${new Date().toLocaleTimeString("en-NZ")} NZST`,
+          ``,
+        ], 200);
+        await delay(800);
+        addLines(`  \x1b[90m[PHASE 1] Deploying AI scouts...\x1b[0m`);
+        await delay(1200);
+        await typeLines([
+          ``,
+          `  \x1b[31m┌─ GROK ─────────────────────────────────────┐\x1b[0m`,
+          `  \x1b[31m│\x1b[0m  Verdict: \x1b[33m${grokVote}\x1b[0m`,
+          `  \x1b[31m│\x1b[0m  Speed: \x1b[32m${(12 + Math.random() * 8).toFixed(0)}ms\x1b[0m scan time`,
+          `  \x1b[31m└────────────────────────────────────────────┘\x1b[0m`,
+        ], 120);
+        await delay(600);
+        await typeLines([
+          `  \x1b[35m┌─ CLAUDE ───────────────────────────────────┐\x1b[0m`,
+          `  \x1b[35m│\x1b[0m  Verdict: \x1b[33m${claudeVote}\x1b[0m`,
+          `  \x1b[35m│\x1b[0m  Depth: \x1b[32m${(3 + Math.random() * 4).toFixed(1)}\x1b[0m risk layers analyzed`,
+          `  \x1b[35m└────────────────────────────────────────────┘\x1b[0m`,
+        ], 120);
+        await delay(600);
+        await typeLines([
+          `  \x1b[34m┌─ PERPLEXITY ───────────────────────────────┐\x1b[0m`,
+          `  \x1b[34m│\x1b[0m  Verdict: \x1b[33m${perplexityVote}\x1b[0m`,
+          `  \x1b[34m│\x1b[0m  Sources: \x1b[32m${(5 + Math.floor(Math.random() * 8))}\x1b[0m live feeds cross-referenced`,
+          `  \x1b[34m└────────────────────────────────────────────┘\x1b[0m`,
+        ], 120);
+        await delay(800);
+
+        const longCount = [grokVote, claudeVote, perplexityVote].filter(v => v.startsWith("LONG")).length;
+        const shortCount = [grokVote, claudeVote, perplexityVote].filter(v => v.startsWith("SHORT")).length;
+        const consensus = longCount >= 2 ? "LONG" : shortCount >= 2 ? "SHORT" : "SPLIT";
+        const consensusColor = consensus === "LONG" ? "\x1b[32m" : consensus === "SHORT" ? "\x1b[31m" : "\x1b[33m";
+
+        await typeLines([
+          ``,
+          `  \x1b[90m[PHASE 2] Consensus forming...\x1b[0m`,
+          ``,
+          `  ╭───────────────────────────────────────────╮`,
+          `  │  \x1b[36mCONSENSUS:\x1b[0m ${consensusColor}${consensus}\x1b[0m                         │`,
+          `  │  \x1b[36mConfidence:\x1b[0m \x1b[32m${confidence}%\x1b[0m  Votes: ${longCount}L/${shortCount}S/${3-longCount-shortCount}H  │`,
+          `  │  \x1b[36mRisk Level:\x1b[0m ${confidence > 80 ? "\x1b[32mLOW" : confidence > 65 ? "\x1b[33mMODERATE" : "\x1b[31mELEVATED"}\x1b[0m                       │`,
+          `  ╰───────────────────────────────────────────╯`,
+          ``,
+        ], 150);
+        await delay(500);
+        await typeLines([
+          `  \x1b[90m[PHASE 3] Awaiting your orders, Commander.\x1b[0m`,
+          ``,
+          `  \x1b[32mACCEPT\x1b[0m — Execute the ${consensus} signal at $${entry.toLocaleString()}`,
+          `  \x1b[31mABORT\x1b[0m  — Reject signal. Return to standby.`,
+          `  \x1b[33mANALYZE\x1b[0m — Run deeper analysis (adds 1 more factor)`,
+          ``,
+          `  \x1b[90m→ Type your decision:\x1b[0m \x1b[32maccept\x1b[0m\x1b[90m,\x1b[0m \x1b[31mabort\x1b[0m\x1b[90m, or\x1b[0m \x1b[33manalyze\x1b[0m`,
+        ], 100);
+
+        missionRef.current = { ...missionRef.current!, phase: 1 };
+      })();
+      return "";
+    }
+
     // ── Resolve aliases ──
     const resolved = aliases[trimmed] || trimmed;
 
@@ -2990,6 +3100,78 @@ export default function Terminal() {
 
   // Process command with && chaining support
   const processCommand = useCallback(async (cmd: string) => {
+    const mission = missionRef.current;
+    if (mission && mission.phase === 1) {
+      const choice = cmd.trim().toLowerCase();
+      const delay = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+
+      if (choice === "accept" || choice === "execute") {
+        missionRef.current = null;
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+        addLines(`  \x1b[32m[EXECUTING]\x1b[0m Signal locked. Deploying position...`);
+        await delay(800);
+        const pnl = (Math.random() - 0.35) * mission.entry * 0.02;
+        const pnlStr = pnl >= 0 ? `\x1b[32m+$${pnl.toFixed(2)}\x1b[0m` : `\x1b[31m-$${Math.abs(pnl).toFixed(2)}\x1b[0m`;
+        const exitPrice = +(mission.entry + pnl).toFixed(2);
+        await delay(1000);
+        addLines(
+          `  \x1b[90m...\x1b[0m`,
+          `  \x1b[90m... Position filled at $${mission.entry.toLocaleString()}\x1b[0m`,
+          `  \x1b[90m... Monitoring...\x1b[0m`
+        );
+        await delay(1500);
+        addLines(
+          ``,
+          `  \x1b[36m╔══════════════════════════════════════╗\x1b[0m`,
+          `  \x1b[36m║     MISSION COMPLETE                  ║\x1b[0m`,
+          `  \x1b[36m╚═════════════════════��════════════════╝\x1b[0m`,
+          ``,
+          `  \x1b[33mPair:\x1b[0m   ${mission.pair}`,
+          `  \x1b[33mEntry:\x1b[0m  $${mission.entry.toLocaleString()}`,
+          `  \x1b[33mExit:\x1b[0m   $${exitPrice.toLocaleString()}`,
+          `  \x1b[33mP&L:\x1b[0m    ${pnlStr}`,
+          `  \x1b[33mResult:\x1b[0m ${pnl >= 0 ? "\x1b[32mSIGNAL VALIDATED" : "\x1b[31mSIGNAL FAILED"}\x1b[0m`,
+          ``,
+          `  \x1b[90mPaper trading simulation. Type \x1b[32mmission\x1b[90m for another.\x1b[0m`,
+          ``
+        );
+        return;
+      } else if (choice === "abort") {
+        missionRef.current = null;
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+        addLines(
+          `  \x1b[31m[ABORTED]\x1b[0m Signal rejected. Returning to standby.`,
+          `  \x1b[90mSometimes the best trade is no trade.\x1b[0m`,
+          ``
+        );
+        return;
+      } else if (choice === "analyze") {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+        addLines(`  \x1b[90m[DEEP SCAN] Running extended analysis...\x1b[0m`);
+        await delay(1200);
+        const factors = [
+          `Funding rate: \x1b[32m+0.0${Math.floor(Math.random() * 9)}%\x1b[0m (slightly long-biased)`,
+          `Open interest: \x1b[33m${(120 + Math.random() * 80).toFixed(0)}M\x1b[0m — elevated`,
+          `Liquidation cluster: $${(mission.entry * 0.97).toFixed(0)} (${(Math.random() * 12 + 3).toFixed(0)}M at risk)`,
+          `Whale wallet activity: \x1b[32m${(2 + Math.floor(Math.random() * 5))}\x1b[0m large transfers detected`,
+          `Social sentiment: \x1b[33m${(55 + Math.floor(Math.random() * 30))}%\x1b[0m bullish (X/Reddit/Telegram)`,
+        ];
+        const picked = factors[Math.floor(Math.random() * factors.length)];
+        await delay(600);
+        addLines(
+          `  \x1b[36m  Additional Factor:\x1b[0m ${picked}`,
+          ``,
+          `  \x1b[90mConfidence adjusted:\x1b[0m \x1b[32m${Math.min(95, mission.confidence + Math.floor(Math.random() * 8 + 3))}%\x1b[0m`,
+          ``,
+          `  \x1b[90m→ Now type\x1b[0m \x1b[32maccept\x1b[0m \x1b[90mor\x1b[0m \x1b[31mabort\x1b[0m`,
+        );
+        return;
+      } else {
+        addLines(`\x1b[31mMission active.\x1b[0m Type \x1b[32maccept\x1b[0m, \x1b[31mabort\x1b[0m, or \x1b[33manalyze\x1b[0m`);
+        return;
+      }
+    }
+
     const game = gameRef.current;
     if (game) {
       const choice = cmd.trim().toLowerCase();
