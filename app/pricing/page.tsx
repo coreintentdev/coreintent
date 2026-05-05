@@ -105,6 +105,34 @@ const STEPS = [
   { step: "3", label: "Win", desc: "Top the leaderboard. Earn badges, founding status, bragging rights.", color: "#a855f7" },
 ];
 
+function FoundingSpotsCounter() {
+  const [spots, setSpots] = useState(347);
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setSpots((s) => Math.max(0, s - (Math.random() > 0.7 ? 1 : 0)));
+    }, 8000);
+    return () => clearInterval(iv);
+  }, []);
+  return (
+    <div style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "8px",
+      padding: "6px 14px",
+      background: "#ef444412",
+      border: "1px solid #ef444433",
+      borderRadius: "8px",
+      fontSize: "12px",
+      color: "#ef4444",
+      marginBottom: "20px",
+    }}>
+      <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#ef4444", animation: "pulse 1.5s ease-in-out infinite" }} />
+      <span style={{ fontWeight: "bold", fontVariantNumeric: "tabular-nums" }}>{spots}/500</span> founding spots remaining
+      <span style={{ fontSize: "9px", color: "var(--text-secondary)" }}>[DEMO]</span>
+    </div>
+  );
+}
+
 function StickyPricingCTA() {
   const [visible, setVisible] = useState(false);
 
@@ -221,6 +249,26 @@ export default function PricingPage() {
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
             Our entire stack costs $45/mo. Free entry isn&apos;t a loss leader — it&apos;s just math. We need great traders, not trapped subscribers.
           </p>
+          <FoundingSpotsCounter />
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "24px",
+            flexWrap: "wrap",
+            marginBottom: "16px",
+          }}>
+            {[
+              { value: "3", label: "AI Models", color: "#a855f7" },
+              { value: "6", label: "Agents Included", color: "#3b82f6" },
+              { value: "$0", label: "Forever", color: "#10b981" },
+              { value: "0", label: "Hidden Fees", color: "#ef4444" },
+            ].map((stat) => (
+              <div key={stat.label} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "24px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
+                <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
 
           <div style={{
             padding: "20px 24px",

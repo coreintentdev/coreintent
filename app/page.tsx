@@ -1451,15 +1451,16 @@ export default function Home() {
               }}
             >
               <span className="sr-only">
-                CoreIntent — Three AI Models Fight About Your Trades. You Get the Truth.
+                CoreIntent — Stop Paying to Lose. Start Competing to Win.
               </span>
               <span aria-hidden="true">
-                One AI Guesses.<br />
-                Three AIs{" "}
-                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Fight About It</span>.
+                Stop Paying to{" "}
+                <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Lose</span>.
                 <br />
-                <span style={{ fontSize: "clamp(20px, 3vw, 34px)", color: "var(--text-secondary)", fontWeight: "normal" }}>
-                  You only see what survives.
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Start Competing to Win</span>.
+                <br />
+                <span style={{ fontSize: "clamp(18px, 2.5vw, 28px)", color: "var(--text-secondary)", fontWeight: "normal" }}>
+                  3 AI models. 0 subscriptions. Pure signal.
                 </span>
               </span>
             </h1>
@@ -1482,9 +1483,12 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Grok spots breakouts in real-time. Claude stress-tests them against risk models. Perplexity fact-checks against live news.
-              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}> Only when all three agree does a signal fire.</span>
-              {" "}Zero subscriptions. Free competitions. Your edge is strategy, not spend.
+              Other platforms charge $99/mo for one model guessing. We run{" "}
+              <span style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span>,{" "}
+              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>, and{" "}
+              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> in a debate.
+              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}> Only consensus signals survive.</span>
+              {" "}Free competitions. Your edge is strategy, not spend.
             </p>
             <div style={{
               display: "flex",
