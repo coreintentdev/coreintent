@@ -181,6 +181,19 @@ export function tooManyRequests(retryAfterSeconds = 60): NextResponse<ApiRespons
 }
 
 /**
+ * 204 No Content — use for DELETE or clear operations that return no body.
+ *
+ * @example
+ * return noContent(); // DELETE /api/notes/:id
+ */
+export function noContent(): NextResponse {
+  return new NextResponse(null, {
+    status: 204,
+    headers: { ...CORS_HEADERS, "X-Request-ID": reqId() },
+  });
+}
+
+/**
  * 405 Method Not Allowed.
  * Next.js handles unexported methods automatically, but this provides a consistent envelope.
  */
@@ -283,6 +296,30 @@ export function validateEnum<T extends string>(
 ): T | null {
   if (typeof value !== "string") return null;
   return (allowed as readonly string[]).includes(value) ? (value as T) : null;
+}
+
+/**
+ * Validate an array of strings from a request body.
+ * Returns the filtered array (non-strings removed) when valid, or null when:
+ * - value is not an array
+ * - any element exceeds itemMaxLen
+ * - resulting array length is outside [minLen, maxLen]
+ *
+ * @example
+ * const tags = validateArray(body.tags, 50, 1, 10);
+ * if (!tags) return badRequest("tags must be 1–10 strings, each ≤ 50 chars");
+ */
+export function validateArray(
+  value: unknown,
+  itemMaxLen: number,
+  minLen = 0,
+  maxLen = 100,
+): string[] | null {
+  if (!Array.isArray(value)) return null;
+  if (value.length < minLen || value.length > maxLen) return null;
+  const strings = value.filter((v): v is string => typeof v === "string" && v.trim().length > 0 && v.length <= itemMaxLen);
+  if (strings.length !== value.length) return null;
+  return strings;
 }
 
 /**

@@ -322,12 +322,12 @@ export const CLAUDE_DEFAULT_SYSTEM =
  *
  * @param prompt   User-side message.
  * @param system   Optional override for the system prompt. Caching still applies.
- * @param options  Optional overrides (e.g. maxTokens for cost control).
+ * @param options  Optional overrides — maxTokens and model (defaults to sonnet-4-6).
  */
 export async function callClaude(
   prompt: string,
   system?: string,
-  options?: { maxTokens?: number }
+  options?: { maxTokens?: number; model?: "claude-sonnet-4-6" | "claude-opus-4-7" | "claude-haiku-4-5-20251001" }
 ): Promise<AIResponse> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (isDemoKey(key, "sk-ant-xxx")) {
@@ -342,7 +342,8 @@ export async function callClaude(
     };
   }
 
-  const systemText = system ?? CLAUDE_DEFAULT_SYSTEM;
+  const systemText  = system ?? CLAUDE_DEFAULT_SYSTEM;
+  const modelId     = options?.model ?? "claude-sonnet-4-6";
 
   try {
     const res = await fetchWithRetry(
@@ -350,14 +351,14 @@ export async function callClaude(
       {
         method: "POST",
         headers: {
-          "Content-Type":    "application/json",
-          "x-api-key":       key!,
+          "Content-Type":      "application/json",
+          "x-api-key":         key!,
           "anthropic-version": "2023-06-01",
           // Enable server-side prompt caching for the system message
-          "anthropic-beta":  "prompt-caching-2024-07-31",
+          "anthropic-beta":    "prompt-caching-2024-07-31",
         },
         body: JSON.stringify({
-          model:      "claude-sonnet-4-6",
+          model:      modelId,
           max_tokens: options?.maxTokens ?? 1024,
           system: [
             {
@@ -375,7 +376,7 @@ export async function callClaude(
     if (!res.ok) {
       return {
         source:    "claude",
-        model:     "claude-sonnet-4-6",
+        model:     modelId,
         content:   sanitizeApiError(res.status, "claude"),
         live:      false,
         errorType: res.status === 429 ? "rate_limit"
@@ -387,13 +388,29 @@ export async function callClaude(
     const data = await res.json();
     return {
       source:  "claude",
-      model:   data.model ?? "claude-sonnet-4-6",
+      model:   data.model ?? modelId,
       content: data.content?.[0]?.text ?? "",
       live: true,
     };
   } catch (e) {
-    return classifyFetchError(e, "claude", "claude-sonnet-4-6");
+    return classifyFetchError(e, "claude", modelId);
   }
+}
+
+/**
+ * Convenience wrapper for Claude deep-analysis tasks using the Opus model.
+ * Use for security threat assessments, multi-step reasoning, and long-context analysis
+ * where accuracy matters more than speed. Costs more per request than callClaude().
+ *
+ * @example
+ * const analysis = await callClaudeDeep("Assess the top 3 risks to CoreIntent's brand.");
+ */
+export async function callClaudeDeep(
+  prompt: string,
+  system?: string,
+  options?: { maxTokens?: number }
+): Promise<AIResponse> {
+  return callClaude(prompt, system, { ...options, model: "claude-opus-4-7" });
 }
 
 // ---------------------------------------------------------------------------
@@ -532,6 +549,25 @@ export const GROK_CONTENT_SYSTEM =
   "- Respect platform character limits when provided in the spec.";
 
 /**
+ * Perplexity system prompt for domain/web security checks (F18 Security Layer).
+ * Use when scanning for typosquatting, phishing domains, and cloned repositories.
+ * Pass as the `system` arg to callPerplexity() for protect domain/general checks.
+ */
+export const PERPLEXITY_SECURITY_SYSTEM =
+  "You are CoreIntent's web security research AI for Zynthio.ai (paper trading mode, NZ).\n\n" +
+  "Your role: research and verify digital security threats on the open web.\n\n" +
+  "Output format (one line per finding, sorted by risk — critical first):\n" +
+  "  Entity | Threat Type | Risk (none/low/medium/high/critical) | Evidence (URL or source) | Recommended Action\n\n" +
+  "Research rules:\n" +
+  "- Only report verified findings with cited sources. No speculation presented as fact.\n" +
+  "- Flag unverified claims: [UNVERIFIED: <reason>].\n" +
+  "- For domains: check registration date, WHOIS, content, and stated purpose.\n" +
+  "- For repos: check fork age, commit history, and whether they use CoreIntent branding.\n" +
+  "- State 'No threats detected' with brief rationale when the web search finds nothing.\n" +
+  "- NZ jurisdiction — use NZ FMA for regulatory context. Never reference ASIC.\n" +
+  "- Label demo/placeholder data as [DEMO] if a real search cannot be performed.";
+
+/**
  * Claude system prompt for security threat and IP risk assessment (F18 Security Layer).
  * Pass as the `system` arg to callClaude() for protect/threat routes.
  * Keep stable between requests to benefit from prompt caching.
@@ -661,6 +697,8 @@ export interface ParallelAIPrompts {
     perplexity?: number;
     claude?:     number;
   };
+  /** Optional Claude model override — defaults to sonnet-4-6 for cost efficiency. */
+  claudeModel?: "claude-sonnet-4-6" | "claude-opus-4-7" | "claude-haiku-4-5-20251001";
 }
 
 /** Results from a three-way parallel AI call with pre-computed aggregate flags. */
@@ -691,7 +729,7 @@ export async function callAIsParallel(
   const [grok, perplexity, claude] = await Promise.all([
     callGrok(prompts.grok,             prompts.systems?.grok,       { maxTokens: prompts.maxTokens?.grok }),
     callPerplexity(prompts.perplexity, prompts.systems?.perplexity, { maxTokens: prompts.maxTokens?.perplexity }),
-    callClaude(prompts.claude,         prompts.systems?.claude,     { maxTokens: prompts.maxTokens?.claude }),
+    callClaude(prompts.claude,         prompts.systems?.claude,     { maxTokens: prompts.maxTokens?.claude, model: prompts.claudeModel }),
   ]);
   return {
     grok,

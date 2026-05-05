@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callGrok, callClaude, validateAiContent, sanitizeForPrompt, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, type AIResponse } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callGrok, callClaudeDeep, validateAiContent, sanitizeForPrompt, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, PERPLEXITY_SECURITY_SYSTEM, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
@@ -52,9 +52,11 @@ export async function GET(req: NextRequest) {
         `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
         `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
       systems: {
-        grok:   GROK_SECURITY_SYSTEM,
-        claude: CLAUDE_RISK_SYSTEM,
+        grok:       GROK_SECURITY_SYSTEM,
+        perplexity: PERPLEXITY_SECURITY_SYSTEM,
+        claude:     CLAUDE_RISK_SYSTEM,
       },
+      claudeModel: "claude-opus-4-7",
     });
 
     return ok({
@@ -106,15 +108,17 @@ export async function POST(req: NextRequest) {
       ),
       domain: () => callPerplexity(
         `Is the domain "${safeCheck}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
-        `Check registration date, content, and stated intent.`
+        `Check registration date, content, and stated intent.`,
+        PERPLEXITY_SECURITY_SYSTEM
       ),
-      threat: () => callClaude(
+      threat: () => callClaudeDeep(
         `Assess this as a potential threat to CoreIntent's digital identity: "${safeCheck}". ` +
         `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
         CLAUDE_RISK_SYSTEM
       ),
       general: () => callPerplexity(
-        `Does "${safeCheck}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
+        `Does "${safeCheck}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`,
+        PERPLEXITY_SECURITY_SYSTEM
       ),
     };
 
