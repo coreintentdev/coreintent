@@ -1456,3 +1456,23 @@ a:focus-visible {
   transition: color 0.3s ease;
   font-variant-numeric: tabular-nums;
 }
+
+/* ═══════════════════════════════════════════
+   WAR ROOM — Live Dashboard
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .warroom-charts-row {
+    grid-template-columns: 1fr !important;
+  }
+  .warroom-bottom-row {
+    grid-template-columns: 1fr !important;
+  }
+  .warroom-price-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .warroom-metrics {
+    gap: 16px !important;
+  }
+}

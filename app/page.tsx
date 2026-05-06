@@ -1123,6 +1123,247 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
   },
 ];
 
+/* ─── War Room Dashboard ─── */
+function WarRoom() {
+  const [tick, setTick] = useState(0);
+  const [signals, setSignals] = useState<{ pair: string; dir: string; conf: number; model: string; id: number }[]>([]);
+  const [priceData, setPriceData] = useState<{ btc: number[]; eth: number[]; sol: number[] }>({ btc: [], eth: [], sol: [] });
+
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 1500);
+    return () => clearInterval(iv);
+  }, []);
+
+  useEffect(() => {
+    const btcBase = 67400;
+    const ethBase = 3290;
+    const solBase = 144;
+    setPriceData((prev) => ({
+      btc: [...prev.btc.slice(-29), btcBase + Math.sin(tick * 0.3) * 400 + (Math.random() - 0.5) * 300],
+      eth: [...prev.eth.slice(-29), ethBase + Math.sin(tick * 0.4 + 1) * 50 + (Math.random() - 0.5) * 40],
+      sol: [...prev.sol.slice(-29), solBase + Math.sin(tick * 0.35 + 2) * 10 + (Math.random() - 0.5) * 8],
+    }));
+    if (tick > 0 && Math.random() < 0.35) {
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT", "LINK/USDT", "DOT/USDT"];
+      const dirs = ["LONG", "SHORT", "HOLD"];
+      const models = ["Grok", "Claude", "Engine", "Perplexity"];
+      setSignals((prev) => [
+        {
+          pair: pairs[Math.floor(Math.random() * pairs.length)],
+          dir: dirs[Math.floor(Math.random() * dirs.length)],
+          conf: 55 + Math.floor(Math.random() * 40),
+          model: models[Math.floor(Math.random() * models.length)],
+          id: Date.now(),
+        },
+        ...prev.slice(0, 7),
+      ]);
+    }
+  }, [tick]);
+
+  const bpm = 62 + Math.floor(Math.sin(tick * 0.2) * 8) + Math.floor(Math.random() * 6);
+  const latency = 12 + Math.floor(Math.random() * 20);
+  const activeSignals = 3 + Math.floor(Math.sin(tick * 0.15) * 2);
+  const grokConf = Math.max(0.4, Math.min(0.98, 0.76 + Math.sin(tick * 0.3) * 0.12 + (Math.random() - 0.5) * 0.1));
+  const claudeConf = Math.max(0.4, Math.min(0.98, 0.82 + Math.sin(tick * 0.25 + 1) * 0.1 + (Math.random() - 0.5) * 0.08));
+  const perpConf = Math.max(0.4, Math.min(0.98, 0.7 + Math.sin(tick * 0.35 + 2) * 0.15 + (Math.random() - 0.5) * 0.12));
+  const consensus = (grokConf + claudeConf + perpConf) / 3;
+  const consensusDir = consensus > 0.75 ? "LONG" : consensus > 0.6 ? "HOLD" : "SHORT";
+  const riskValue = 1 - consensus;
+  const riskLabel = riskValue < 0.25 ? "LOW" : riskValue < 0.4 ? "MODERATE" : riskValue < 0.6 ? "ELEVATED" : "HIGH";
+  const riskColor = riskValue < 0.4 ? "#10b981" : riskValue < 0.6 ? "#f59e0b" : "#ef4444";
+
+  const modelColors: Record<string, string> = { Grok: "#ef4444", Claude: "#a855f7", Engine: "#10b981", Perplexity: "#3b82f6" };
+
+  const sparkSvg = (data: number[], color: string) => {
+    if (data.length < 2) return <div style={{ height: 50, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "var(--text-secondary)" }}>Loading...</div>;
+    const w = 200, h = 56;
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const range = max - min || 1;
+    const pts = data.map((v, i) => `${(i / (data.length - 1)) * w},${h - ((v - min) / range) * (h - 8) - 4}`).join(" ");
+    const lastY = h - ((data[data.length - 1] - min) / range) * (h - 8) - 4;
+    const gid = `wg-${color.replace("#", "")}`;
+    return (
+      <svg viewBox={`0 0 ${w} ${h}`} style={{ width: "100%", height: "100%" }} aria-hidden="true">
+        <defs>
+          <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity={0.25} />
+            <stop offset="100%" stopColor={color} stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <polygon points={`0,${h} ${pts} ${w},${h}`} fill={`url(#${gid})`} />
+        <polyline points={pts} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx={w} cy={lastY} r="3" fill={color}>
+          <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    );
+  };
+
+  const arcGauge = (value: number, color: string, label: string) => {
+    const size = 76, r = 28, cx = size / 2, cy = size / 2;
+    const toXY = (deg: number) => ({ x: cx + r * Math.cos((deg * Math.PI) / 180), y: cy + r * Math.sin((deg * Math.PI) / 180) });
+    const startDeg = 150, totalSweep = 240;
+    const valueSweep = Math.max(1, value * totalSweep);
+    const bgEnd = toXY(startDeg + totalSweep);
+    const bgStart = toXY(startDeg);
+    const valEnd = toXY(startDeg + valueSweep);
+    return (
+      <div style={{ textAlign: "center" }}>
+        <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size - 6 }} aria-label={`${label}: ${(value * 100).toFixed(0)}%`}>
+          <path d={`M ${bgStart.x} ${bgStart.y} A ${r} ${r} 0 1 1 ${bgEnd.x} ${bgEnd.y}`} fill="none" stroke="#1e293b" strokeWidth="5" strokeLinecap="round" />
+          <path d={`M ${bgStart.x} ${bgStart.y} A ${r} ${r} 0 ${valueSweep > 180 ? 1 : 0} 1 ${valEnd.x} ${valEnd.y}`} fill="none" stroke={color} strokeWidth="5" strokeLinecap="round" />
+          <text x={cx} y={cy + 3} textAnchor="middle" fill={color} fontSize="13" fontWeight="bold" fontFamily="inherit">
+            {(value * 100).toFixed(0)}%
+          </text>
+        </svg>
+        <div style={{ fontSize: "9px", color, fontWeight: "bold", marginTop: "-6px", letterSpacing: "0.3px" }}>{label}</div>
+      </div>
+    );
+  };
+
+  const agents = [
+    { name: "TrendFollower", status: "scanning", detail: "BTC 4H breakout analysis", color: "#3b82f6", progress: (tick * 7) % 100 },
+    { name: "SentimentBot", status: "processing", detail: "X feed sentiment aggregation", color: "#a855f7", progress: (tick * 11 + 30) % 100 },
+    { name: "RiskGuard", status: "watching", detail: "Circuit breaker armed (0.8%)", color: "#10b981", progress: 100 },
+    { name: "ResearchAgent", status: "researching", detail: "Macro catalyst scan (Fed, CPI)", color: "#f59e0b", progress: (tick * 5 + 60) % 100 },
+  ];
+
+  return (
+    <div>
+      {/* Metrics Strip */}
+      <div className="warroom-metrics" style={{
+        display: "flex", alignItems: "center", gap: "24px", padding: "12px 16px",
+        background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", marginBottom: "16px", flexWrap: "wrap",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span className="engine-alive-dot" key={tick} />
+          <div>
+            <div style={{ fontSize: "18px", fontWeight: "bold", color: "#10b981", fontVariantNumeric: "tabular-nums" }}>{bpm}</div>
+            <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>BPM</div>
+          </div>
+        </div>
+        <div>
+          <div style={{ fontSize: "18px", fontWeight: "bold", color: latency < 20 ? "#10b981" : "#f59e0b", fontVariantNumeric: "tabular-nums" }}>{latency}ms</div>
+          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Latency</div>
+        </div>
+        <div>
+          <div style={{ fontSize: "18px", fontWeight: "bold", color: "#3b82f6", fontVariantNumeric: "tabular-nums" }}>{activeSignals}</div>
+          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Signals</div>
+        </div>
+        <div>
+          <div style={{ fontSize: "14px", fontWeight: "bold", color: riskColor }}>{riskLabel}</div>
+          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Risk</div>
+        </div>
+        <div style={{ marginLeft: "auto" }}>
+          <div style={{
+            fontSize: "14px", fontWeight: "bold",
+            color: consensusDir === "LONG" ? "#10b981" : consensusDir === "SHORT" ? "#ef4444" : "#f59e0b",
+          }}>
+            {consensusDir === "LONG" ? "▲" : consensusDir === "SHORT" ? "▼" : "◆"} {consensusDir} {(consensus * 100).toFixed(0)}%
+          </div>
+          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Consensus</div>
+        </div>
+        <div style={{ fontSize: "9px", color: "var(--text-secondary)", padding: "2px 6px", background: "#f59e0b18", borderRadius: "4px" }}>DEMO</div>
+      </div>
+
+      {/* Charts + Gauges Row */}
+      <div className="warroom-charts-row" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "16px", marginBottom: "16px" }}>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+            Live Price Action
+            <span className="animate-pulse" style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+          </div>
+          <div className="warroom-price-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
+            {[
+              { sym: "BTC", data: priceData.btc, color: "#f7931a", base: 67400 },
+              { sym: "ETH", data: priceData.eth, color: "#627eea", base: 3290 },
+              { sym: "SOL", data: priceData.sol, color: "#14f195", base: 144 },
+            ].map((p) => {
+              const current = p.data[p.data.length - 1] || p.base;
+              const change = ((current - p.base) / p.base) * 100;
+              return (
+                <div key={p.sym}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
+                    <span style={{ fontSize: "13px", fontWeight: "bold", color: p.color }}>{p.sym}</span>
+                    <span style={{ fontSize: "15px", fontWeight: "bold", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>
+                      ${current.toLocaleString("en-US", { maximumFractionDigits: p.base < 100 ? 1 : 0 })}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "11px", color: change >= 0 ? "#10b981" : "#ef4444", marginBottom: "6px", fontVariantNumeric: "tabular-nums" }}>
+                    {change >= 0 ? "▲" : "▼"} {Math.abs(change).toFixed(2)}%
+                  </div>
+                  <div style={{ height: "50px" }}>{sparkSvg(p.data, p.color)}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+            AI Consensus
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px", justifyItems: "center" }}>
+            {arcGauge(grokConf, "#ef4444", "Grok")}
+            {arcGauge(claudeConf, "#a855f7", "Claude")}
+            {arcGauge(perpConf, "#3b82f6", "Perplexity")}
+            {arcGauge(consensus, "#10b981", "Overall")}
+          </div>
+        </div>
+      </div>
+
+      {/* Signals + Agents Row */}
+      <div className="warroom-bottom-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px", maxHeight: "240px", overflow: "auto" }}>
+          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+            Signal Feed
+            <span className="animate-pulse" style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+          </div>
+          {signals.length === 0 && (
+            <div style={{ fontSize: "12px", color: "var(--text-secondary)", padding: "20px 0", textAlign: "center" }}>Waiting for signals...</div>
+          )}
+          {signals.map((s) => {
+            const dc = s.dir === "LONG" ? "#10b981" : s.dir === "SHORT" ? "#ef4444" : "#f59e0b";
+            return (
+              <div key={s.id} className="signal-enter" style={{
+                display: "flex", alignItems: "center", gap: "8px", padding: "5px 8px", borderRadius: "6px", marginBottom: "4px",
+                background: `${dc}08`, border: `1px solid ${dc}18`,
+              }}>
+                <span style={{ fontSize: "9px", fontWeight: "bold", color: modelColors[s.model] || "#94a3b8", padding: "2px 5px", background: (modelColors[s.model] || "#94a3b8") + "18", borderRadius: "3px" }}>{s.model}</span>
+                <span style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{s.pair}</span>
+                <span style={{ fontSize: "11px", fontWeight: "bold", color: dc }}>
+                  {s.dir === "LONG" ? "▲" : s.dir === "SHORT" ? "▼" : "◆"} {s.dir}
+                </span>
+                <span style={{ fontSize: "11px", color: s.conf >= 80 ? "#10b981" : s.conf >= 60 ? "#f59e0b" : "#ef4444" }}>{s.conf}%</span>
+                <span style={{ marginLeft: "auto", fontSize: "9px", color: "var(--text-secondary)" }}>now</span>
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "10px" }}>Agent Activity</div>
+          {agents.map((a) => (
+            <div key={a.name} style={{ marginBottom: "12px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "3px" }}>
+                <span style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{a.name}</span>
+                <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.3px", color: a.color }}>{a.status}</span>
+              </div>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "5px" }}>{a.detail}</div>
+              <div style={{ height: "3px", background: "#1e293b", borderRadius: "2px", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${a.progress}%`, background: a.color, borderRadius: "2px", transition: "width 1.2s ease" }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="section-divider" />
+      <div style={{ height: "16px" }} />
+    </div>
+  );
+}
+
 /* ─── Helpers ─── */
 function statusDot(status: string) {
   const colors: Record<string, string> = {
@@ -1986,6 +2227,9 @@ export default function Home() {
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
         {tab === "dashboard" && (
           <div style={{ overflow: "auto", height: "100%" }}>
+            {/* War Room — Live Dashboard */}
+            <WarRoom />
+
             {/* Status cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", marginBottom: "24px" }}>
               {STATUS_CARDS.map((card) => (
