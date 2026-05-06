@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "title": "CoreIntent | Mīhini Hokohoko Atamai — Kāore he Ohaurunga, Whakataetae Anake",
+    "description": "E toru ngā tauira AI. Kotahi te mīhini hokohoko. Kore ohaurunga. Ka whakahaerehia e CoreIntent a Claude, Grok me Perplexity mō ngā tohu hokohoko. Whakataetae kore utu — māngai rorohiko pai. Hangaia ki Aotearoa e Zynthio."
+  },
+  "nav": {
+    "terminal": "Tūāpapa",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "pricing": "Utu"
+  },
+  "hero": {
+    "badge": "ĀHUA WHAKAMATAU — KĀORE HE MONI TŪTURU I TE TŪRARU",
+    "tagline": "E Toru ngā Tauira AI. Kotahi te Mīhini.",
+    "subtitle": "Kore Ohaurunga.",
+    "description": "Ka kite a Grok. Ka tātari a Claude. Ka whakamana a Perplexity. Ka whakaae rātou, ka whiwhi tohu koe. Ka kore, ka tiakina koe. Whakataetae kore utu — māngai rorohiko pai.",
+    "cta_primary": "Whakatūwhera Tūāpapa",
+    "cta_github": "Whetu ki GitHub",
+    "engine_alive": "MĪHINI ORA"
+  },
+  "hero_phrases": [
+    "E Toru ngā Tauira AI e Tautohe ana.",
+    "Ka Pai Ake Ō Tohu.",
+    "Ka Kite a Grok. Ka Pātai a Claude.",
+    "Ka Whakamana a Perplexity.",
+    "Whakaae = Whakapono.",
+    "Tautohetohe = Keri Hōhonu.",
+    "$0 Ohaurunga. $0 Whakapahē.",
+    "Māngai Rorohiko Pai. Tāngata Anō.",
+    "Hangaia ki Aotearoa.",
+    "He Hākinakina te Hokohoko Ināianei.",
+    "Kotahi te Tauira e Matapae ana. E Toru e Tautohe ana.",
+    "$45/marama e Whakahaere ana i te Mīhini Katoa.",
+    "Tō Māngai. Tā Rātou Māngai. Ko te Pai Rawa ka Toa.",
+    "Whakamatau Hokohoko. Wawata Tūturu.",
+    "Kounga Tohu, Kaua ko te Rahinga.",
+    "Kore Utu te Papa. Whakataetae.",
+    "Kore VC. Kore Whakaaetanga. Kore Mutunga.",
+    "Arotake ā-Hoa mō ngā Mākete.",
+    "Puna Tuwhera. Pukapuka Tuwhera.",
+    "Ko te Anamata he Multi-Māngai.",
+    "Ehara tō Kaha i tō Pūkoro.",
+    "He Tāke ngā Ohaurunga. Kua Puta Mātou.",
+    "Kāore te Papa Toa e Aro Ki Te Kaihanga.",
+    "E Toru ngā Tātari. Kotahi te Tohu. Kore Matapae Noa."
+  ],
+  "how_it_works": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Māramatanga",
+    "step_prefix": "HIPANGA",
+    "steps": [
+      {
+        "title": "Ka Tautohe ngā Tauira",
+        "desc": "Ka kite a Grok i tētahi tohu. Ka pātai a Claude. Ka whakamana a Perplexity ki ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrero."
+      },
+      {
+        "title": "Ka Puta te Whakaae",
+        "desc": "Ka whakaae ngā tauira e toru, ka teitei te whakapono. Ka tautohetohe, ka tohua te āhei kore — kore teka whakapono."
+      },
+      {
+        "title": "Ka Whakataetae Koe",
+        "desc": "Kawea te tohu ki ngā whakataetae ā-rā, ā-wiki, ā-marama rānei. Whakaaturia tō rautaki ki ētahi atu tāngata me māngai rorohiko. Kore utu te urunga."
+      }
+    ]
+  },
+  "mini_terminal": {
+    "try_it": "Whakamātau Ināianei",
+    "talk_to_engine": "Kōrero ki te mīhini. Patohia he tono.",
+    "launch_full": "Whakatūwhera Tūāpapa Katoa (100+ tono)"
+  },
+  "signal_pipeline": {
+    "label": "Kōpae tohu ora",
+    "steps": ["Kite", "Tātari", "Whakamana", "Whakatau"]
+  },
+  "counters": {
+    "ai_models": "Tauira AI",
+    "monthly_cost": "Utu ā-Marama",
+    "api_routes": "Ara API",
+    "competitions": "Momo Whakataetae"
+  },
+  "ai_models": {
+    "title": "Te Ōketara AI",
+    "grok": {
+      "role": "Kitea tere tohu me te wairua"
+    },
+    "claude": {
+      "role": "Tātaritanga hōhonu me te aromatawai tūraru"
+    },
+    "perplexity": {
+      "role": "Rangahau me ngā pūrongo ā-wā tūturu"
+    }
+  },
+  "status": {
+    "engine": "Mīhini",
+    "exchanges": "Wāhi Hokohoko",
+    "ai_agents": "Māngai AI",
+    "mode": "Āhua",
+    "domains": "Rohe",
+    "api_routes": "Ara API",
+    "online": "IPURANGI",
+    "planned": "Kua Maheretia",
+    "ready": "Kua Rite",
+    "paper_trading": "Whakamatau Hokohoko"
+  },
+  "footer": {
+    "tagline": "Mīhini Hokohoko Atamai Agéntica",
+    "built_by": "Hangaia e Corey McIvor | Zynthio.ai",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hononga",
+    "competitions": "Whakataetae",
+    "privacy": "Kaupapahere Tūmataiti",
+    "terms": "Ngā Ture Ratonga",
+    "disclaimer": "Whakakāhoretanga",
+    "contact": "Whakapā Mai",
+    "copyright": "© {year} Corey McIvor. Ngā mōtika katoa kua rahuitia.",
+    "risk_warning": "He tūraru nui te hokohoko moni matihiko. Kāore te whakatutukitanga o mua e whakapūmau ana i ngā hua ā muri. Āhua whakamatau hokohoko."
+  },
+  "terminal": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Mīhini Hokohoko CoreIntent",
+    "paper_mode": "Āhua whakamatau hokohoko — kāore he moni tūturu i te tūraru",
+    "help_hint": "Patohia help mō ngā tono. Tab ki te whakakī aunoa. cai ki te tīmata.",
+    "greeting": "Nau mai ki CoreIntent"
+  },
+  "language_switcher": {
+    "label": "Reo",
+    "current": "Reo o nāianei: {language}"
+  },
+  "common": {
+    "demo": "WHAKAATURANGA",
+    "signal": "TOHU",
+    "loading": "E uta ana...",
+    "error": "Hapa",
+    "close": "Katia"
+  }
+}

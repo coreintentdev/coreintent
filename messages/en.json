@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+    "description": "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing"
+  },
+  "hero": {
+    "badge": "PAPER TRADING MODE — NO REAL MONEY AT RISK",
+    "tagline": "Three AI Models. One Engine.",
+    "subtitle": "Zero Subscriptions.",
+    "description": "Grok detects. Claude analyses. Perplexity verifies. When they agree, you get a signal. When they don't, you get protected. Free competitions — bots welcome.",
+    "cta_primary": "Launch Terminal",
+    "cta_github": "Star on GitHub",
+    "engine_alive": "ENGINE ALIVE"
+  },
+  "hero_phrases": [
+    "Three AI Models Argue.",
+    "You Get Better Signals.",
+    "Grok Spots. Claude Questions.",
+    "Perplexity Fact-Checks.",
+    "Consensus = Conviction.",
+    "Disagreement = Dig Deeper.",
+    "$0 Subscriptions. $0 Excuses.",
+    "Bots Welcome. Humans Too.",
+    "Built in New Zealand.",
+    "Trading Is a Sport Now.",
+    "One Model Guesses. Three Debate.",
+    "$45/mo Runs the Whole Engine.",
+    "Your Bot. Their Bot. Best Wins.",
+    "Paper Trading. Real Ambition.",
+    "Signal Quality Over Signal Volume.",
+    "The Arena Is Free. Compete.",
+    "No VC. No Permission. No Limits.",
+    "Peer Review for Markets.",
+    "Open Source. Open Book.",
+    "The Future Is Multi-Agent.",
+    "Your Edge Isn't Your Wallet.",
+    "Subscriptions Are a Tax. We Opted Out.",
+    "The Leaderboard Doesn't Care Who Built You.",
+    "Three Filters. One Signal. Zero Guessing."
+  ],
+  "how_it_works": {
+    "label": "How It Works",
+    "title": "Three Steps to Smarter Signals",
+    "step_prefix": "STEP",
+    "steps": [
+      {
+        "title": "Models Debate",
+        "desc": "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation."
+      },
+      {
+        "title": "Consensus Forms",
+        "desc": "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction."
+      },
+      {
+        "title": "You Compete",
+        "desc": "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry."
+      }
+    ]
+  },
+  "mini_terminal": {
+    "try_it": "Try It Now",
+    "talk_to_engine": "Talk to the engine. Type a command.",
+    "launch_full": "Launch Full Terminal (100+ commands)"
+  },
+  "signal_pipeline": {
+    "label": "Live signal pipeline",
+    "steps": ["Detect", "Analyse", "Verify", "Decide"]
+  },
+  "counters": {
+    "ai_models": "AI Models",
+    "monthly_cost": "Monthly Cost",
+    "api_routes": "API Routes",
+    "competitions": "Competition Types"
+  },
+  "ai_models": {
+    "title": "The AI Orchestra",
+    "grok": {
+      "role": "Fast signal detection & sentiment"
+    },
+    "claude": {
+      "role": "Deep analysis & risk assessment"
+    },
+    "perplexity": {
+      "role": "Real-time research & news"
+    }
+  },
+  "status": {
+    "engine": "Engine",
+    "exchanges": "Exchanges",
+    "ai_agents": "AI Agents",
+    "mode": "Mode",
+    "domains": "Domains",
+    "api_routes": "API Routes",
+    "online": "ONLINE",
+    "planned": "Planned",
+    "ready": "Ready",
+    "paper_trading": "Paper Trading"
+  },
+  "footer": {
+    "tagline": "Agentic AI Trading Engine",
+    "built_by": "Built by Corey McIvor | Zynthio.ai",
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "competitions": "Competitions",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "risk_warning": "Trading cryptocurrency involves significant risk. Past performance does not guarantee future results. Paper trading mode."
+  },
+  "terminal": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — CoreIntent Trading Engine",
+    "paper_mode": "Paper trading mode — no real money at risk",
+    "help_hint": "Type help for commands. Tab to autocomplete. cai to start.",
+    "greeting": "Welcome to CoreIntent"
+  },
+  "language_switcher": {
+    "label": "Language",
+    "current": "Current language: {language}"
+  },
+  "common": {
+    "demo": "DEMO",
+    "signal": "SIGNAL",
+    "loading": "Loading...",
+    "error": "Error",
+    "close": "Close"
+  }
+}

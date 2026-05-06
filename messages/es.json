@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competiciones",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading. Competiciones gratuitas — bots bienvenidos. Hecho en NZ por Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precios"
+  },
+  "hero": {
+    "badge": "MODO PAPER TRADING — SIN DINERO REAL EN RIESGO",
+    "tagline": "Tres Modelos de IA. Un Motor.",
+    "subtitle": "Cero Suscripciones.",
+    "description": "Grok detecta. Claude analiza. Perplexity verifica. Cuando coinciden, recibes una señal. Cuando no, estás protegido. Competiciones gratuitas — bots bienvenidos.",
+    "cta_primary": "Abrir Terminal",
+    "cta_github": "Estrella en GitHub",
+    "engine_alive": "MOTOR ACTIVO"
+  },
+  "hero_phrases": [
+    "Tres Modelos de IA Debaten.",
+    "Tú Recibes Mejores Señales.",
+    "Grok Detecta. Claude Cuestiona.",
+    "Perplexity Verifica.",
+    "Consenso = Convicción.",
+    "Desacuerdo = Investigar Más.",
+    "$0 Suscripciones. $0 Excusas.",
+    "Bots Bienvenidos. Humanos También.",
+    "Hecho en Nueva Zelanda.",
+    "El Trading Ahora Es un Deporte.",
+    "Un Modelo Adivina. Tres Debaten.",
+    "$45/mes Mueve Todo el Motor.",
+    "Tu Bot. Su Bot. Gana el Mejor.",
+    "Paper Trading. Ambición Real.",
+    "Calidad de Señal Sobre Volumen.",
+    "La Arena Es Gratis. Compite.",
+    "Sin VC. Sin Permiso. Sin Límites.",
+    "Revisión por Pares para Mercados.",
+    "Código Abierto. Libro Abierto.",
+    "El Futuro Es Multi-Agente.",
+    "Tu Ventaja No Es Tu Billetera.",
+    "Las Suscripciones Son un Impuesto. Nos Excluimos.",
+    "Al Leaderboard No Le Importa Quién Te Creó.",
+    "Tres Filtros. Una Señal. Cero Adivinanzas."
+  ],
+  "how_it_works": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos para Señales Más Inteligentes",
+    "step_prefix": "PASO",
+    "steps": [
+      {
+        "title": "Los Modelos Debaten",
+        "desc": "Grok detecta una señal. Claude la cuestiona. Perplexity verifica contra datos en vivo. Tres perspectivas, una conversación."
+      },
+      {
+        "title": "Se Forma el Consenso",
+        "desc": "Cuando los tres modelos coinciden, la confianza es alta. Cuando no, el sistema marca incertidumbre — sin falsa convicción."
+      },
+      {
+        "title": "Tú Compites",
+        "desc": "Lleva la señal a competiciones diarias, semanales o mensuales. Demuestra tu estrategia contra otros humanos y bots. Entrada gratuita."
+      }
+    ]
+  },
+  "mini_terminal": {
+    "try_it": "Pruébalo Ahora",
+    "talk_to_engine": "Habla con el motor. Escribe un comando.",
+    "launch_full": "Abrir Terminal Completo (100+ comandos)"
+  },
+  "signal_pipeline": {
+    "label": "Pipeline de señales en vivo",
+    "steps": ["Detectar", "Analizar", "Verificar", "Decidir"]
+  },
+  "counters": {
+    "ai_models": "Modelos de IA",
+    "monthly_cost": "Costo Mensual",
+    "api_routes": "Rutas API",
+    "competitions": "Tipos de Competición"
+  },
+  "ai_models": {
+    "title": "La Orquesta de IA",
+    "grok": {
+      "role": "Detección rápida de señales y sentimiento"
+    },
+    "claude": {
+      "role": "Análisis profundo y evaluación de riesgos"
+    },
+    "perplexity": {
+      "role": "Investigación y noticias en tiempo real"
+    }
+  },
+  "status": {
+    "engine": "Motor",
+    "exchanges": "Exchanges",
+    "ai_agents": "Agentes IA",
+    "mode": "Modo",
+    "domains": "Dominios",
+    "api_routes": "Rutas API",
+    "online": "EN LÍNEA",
+    "planned": "Planificado",
+    "ready": "Listo",
+    "paper_trading": "Paper Trading"
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agéntica",
+    "built_by": "Hecho por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "competitions": "Competiciones",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "disclaimer": "Aviso Legal",
+    "contact": "Contacto",
+    "copyright": "© {year} Corey McIvor. Todos los derechos reservados.",
+    "risk_warning": "El trading de criptomonedas implica un riesgo significativo. El rendimiento pasado no garantiza resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent",
+    "paper_mode": "Modo paper trading — sin dinero real en riesgo",
+    "help_hint": "Escribe help para comandos. Tab para autocompletar. cai para comenzar.",
+    "greeting": "Bienvenido a CoreIntent"
+  },
+  "language_switcher": {
+    "label": "Idioma",
+    "current": "Idioma actual: {language}"
+  },
+  "common": {
+    "demo": "DEMO",
+    "signal": "SEÑAL",
+    "loading": "Cargando...",
+    "error": "Error",
+    "close": "Cerrar"
+  }
+}

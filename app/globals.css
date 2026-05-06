@@ -1198,3 +1198,46 @@ html {
   outline: 1px solid rgba(16, 185, 129, 0.5);
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════
+   RTL SUPPORT — Arabic and other RTL languages
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .ticker-track {
+  direction: ltr;
+}
+
+[dir="rtl"] .data-rain-column {
+  writing-mode: vertical-rl;
+}
+
+[dir="rtl"] nav[aria-label="Main navigation"] {
+  direction: ltr;
+}
+
+[dir="rtl"] .how-it-works-grid .step-connector {
+  right: auto;
+  left: -14px;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] footer nav {
+  direction: rtl;
+}
+
+[dir="rtl"] pre,
+[dir="rtl"] code,
+[dir="rtl"] .terminal-input,
+[dir="rtl"] .terminal-output {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: embed;
+}

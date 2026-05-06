@@ -1,20 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useI18n } from "@/lib/i18n-context";
+import { LOCALE_HTML_LANG } from "@/lib/i18n";
 
-const WELCOME_BANNER = `\x1b[36m
+const ASCII_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
 ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-\x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[0m`;
+
+function buildWelcomeBanner(t: (key: string) => string, htmlLang: string): string {
+  const time = new Date().toLocaleString(htmlLang, { timeZone: "Pacific/Auckland" });
+  return `${ASCII_BANNER}
+\x1b[33m${t("terminal.welcome")}\x1b[0m
+\x1b[90m${t("terminal.paper_mode")}\x1b[0m
+${t("terminal.help_hint").replace("help", "\x1b[32mhelp\x1b[0m").replace("cai", "\x1b[32mcai\x1b[0m")}
+\x1b[90m${time} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -647,6 +654,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { t, locale } = useI18n();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -675,8 +683,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(t, LOCALE_HTML_LANG[locale])]);
+  }, [t, locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {
@@ -708,7 +716,7 @@ export default function Terminal() {
 
     // ── COMMANDER: time ──
     if (trimmed === "time") {
-      const nz = new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" });
+      const nz = new Date().toLocaleString(LOCALE_HTML_LANG[locale], { timeZone: "Pacific/Auckland" });
       const uptime = Math.floor((Date.now() - startTime.current) / 1000);
       const mins = Math.floor(uptime / 60);
       const secs = uptime % 60;
@@ -2716,7 +2724,7 @@ export default function Terminal() {
       ""
     );
     return "";
-  }, [addLines, aliases, history, lastOutput, lines]);
+  }, [addLines, aliases, history, lastOutput, lines, locale]);
 
   // Process command with && chaining support
   const processCommand = useCallback(async (cmd: string) => {
