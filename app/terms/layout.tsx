@@ -61,7 +61,7 @@ const structuredData = {
         "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-04",
+      dateModified: "2026-05-06",
       inLanguage: "en-NZ",
     },
   ],

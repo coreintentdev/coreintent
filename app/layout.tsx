@@ -107,6 +107,8 @@ export const metadata: Metadata = {
   other: {
     "msapplication-TileColor": "#0a0e17",
     "color-scheme": "dark",
+    "geo.region": "NZ",
+    "geo.placename": "New Zealand",
   },
 };
 
@@ -232,7 +234,7 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-04",
+      dateModified: "2026-05-06",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
