@@ -67,7 +67,8 @@ export async function GET(req: NextRequest) {
         (p) => p.symbol === symbolParam || p.symbol.startsWith(symbolParam + "/")
       );
       if (pairs.length === 0) {
-        return notFound(`No market data for symbol: ${symbolParam}`);
+        const validSymbols = ALL_PAIRS.map((p) => p.symbol);
+        return notFound(`No market data for symbol: ${symbolParam}. Available: ${validSymbols.join(", ")}`);
       }
     } else {
       pairs = ALL_PAIRS;

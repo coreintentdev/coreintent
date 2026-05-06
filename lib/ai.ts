@@ -654,9 +654,11 @@ export async function callWithFallback(
 ): Promise<AIResponse> {
   const result = await primary();
   if (result.live && validateAiContent(result)) return result;
-  // When preserveErrors is true, keep a live error response (has errorType) rather than
-  // overwriting it with the fallback — the caller wants to see the upstream error detail.
-  if (options?.preserveErrors && result.live && result.errorType) return result;
+  // When preserveErrors is true, keep a failed-but-errored response (has errorType) rather
+  // than overwriting it with the fallback — the caller wants to surface the upstream error
+  // (e.g. rate_limit, auth_error) rather than silently falling back to demo.
+  // Note: errorType is only present when live === false; the live check is intentionally absent.
+  if (options?.preserveErrors && result.errorType) return result;
   return fallback();
 }
 

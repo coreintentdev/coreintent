@@ -43,6 +43,7 @@ export const CORS_HEADERS: Record<string, string> = {
   "X-Content-Type-Options":        "nosniff",
   "X-Frame-Options":               "DENY",
   "Referrer-Policy":               "strict-origin-when-cross-origin",
+  "X-Robots-Tag":                  "noindex, nofollow",
 };
 
 /** Generate a unique request trace ID for each response. */

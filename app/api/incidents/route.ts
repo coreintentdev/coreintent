@@ -64,7 +64,7 @@ const INCIDENTS: Incident[] = [
   {
     id: "INC-005", service: "Project Delivery", status: "detected", severity: "critical",
     message: "After months of AI sessions and real money spent: 14 API routes return demo data, 0 exchange connections are live, 0 VPS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
-    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: new Date().toISOString(),
+    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-04-30T00:00:00Z",
   },
   {
     id: "INC-006", service: "Linear Task Management", status: "detected", severity: "major",
@@ -74,7 +74,7 @@ const INCIDENTS: Incident[] = [
   {
     id: "INC-007", service: "Marketing Plan", status: "detected", severity: "minor",
     message: "Marketing plan still references Jan 17 launch date and old Free/Pro/Enterprise pricing model. 70+ days past launch date. Plan needs full rewrite to match competition/league model decided March 23.",
-    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: new Date().toISOString(),
+    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
 ];
 

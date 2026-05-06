@@ -12,7 +12,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { demoOk, badRequest, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { demoOk, badRequest, notFound, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Signal {
   id:         number;
@@ -81,6 +81,10 @@ export async function GET(req: NextRequest) {
 
     if (pairParam) {
       allSignals = allSignals.filter((s) => s.pair === pairParam);
+      if (allSignals.length === 0) {
+        const validPairs = SIGNAL_TEMPLATES.map((t) => t.pair);
+        return notFound(`No signals for pair: ${pairParam}. Available: ${validPairs.join(", ")}`);
+      }
     }
 
     const signals = allSignals.filter((s) => s.confidence >= minConfidence);
