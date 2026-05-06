@@ -364,7 +364,19 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
 /* ─── How It Works ─── */
 function HowItWorks() {
-  const { t } = useTranslation();
+  const { t, messages } = useTranslation();
+  const stepsMeta = [
+    { color: "#a855f7", icon: "AI" },
+    { color: "#10b981", icon: "OK" },
+    { color: "#3b82f6", icon: "GO" },
+  ];
+  const stepsData = (messages?.how_it_works as Record<string, unknown>)?.steps as Array<{ title: string; desc: string }> | undefined;
+  const steps = stepsMeta.map((meta, i) => ({
+    step: String(i + 1).padStart(2, "0"),
+    title: stepsData?.[i]?.title ?? t(`how_it_works.steps.${i}.title`),
+    desc: stepsData?.[i]?.desc ?? t(`how_it_works.steps.${i}.desc`),
+    ...meta,
+  }));
   return (
     <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
@@ -374,29 +386,7 @@ function HowItWorks() {
         {t("how_it_works.title")}
       </h2>
       <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
-        {[
-          {
-            step: "01",
-            title: "Models Debate",
-            desc: "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
-            color: "#a855f7",
-            icon: "AI",
-          },
-          {
-            step: "02",
-            title: "Consensus Forms",
-            desc: "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
-            color: "#10b981",
-            icon: "OK",
-          },
-          {
-            step: "03",
-            title: "You Compete",
-            desc: "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry.",
-            color: "#3b82f6",
-            icon: "GO",
-          },
-        ].map((item, i) => (
+        {steps.map((item, i) => (
           <div
             key={item.step}
             className="card-hover-glow how-it-works-card"

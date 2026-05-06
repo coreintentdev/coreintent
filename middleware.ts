@@ -42,11 +42,14 @@ export function middleware(req: NextRequest): NextResponse | undefined {
     return undefined;
   }
 
-  // --- Already on a locale path? Apply security headers and continue ---
+  // --- Already on a locale path? Apply security headers and forward locale ---
   const segments = pathname.split("/");
   const maybeLocale = segments[1];
   if (isLocale(maybeLocale)) {
-    const res = NextResponse.next();
+    const res = NextResponse.next({
+      request: { headers: new Headers(req.headers) },
+    });
+    res.headers.set("x-locale", maybeLocale);
     for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
       res.headers.set(k, v);
     }
