@@ -12,7 +12,7 @@ A separate Claude session driving the Chrome → Suno UI on a second account, di
 
 ---
 
-## Catalog (15 tracks across 3 batches, ~30 Suno variations)
+## Catalog (21 tracks across 4 batches + 1 solo, ~42 Suno variations)
 
 ### Batch 1 — base shapes (5 tracks)
 
@@ -44,10 +44,27 @@ A separate Claude session driving the Chrome → Suno UI on a second account, di
 | 14 | A Canção É O Mapa (Mapa 336 Hz) | Brazilian Portuguese | 90 BPM | bossa nova |
 | 15 | Air a' chuibhle ann san oidhche (Helmsman's Lament) | Scottish Gaelic | 65 BPM | Celtic drone-folk |
 
+### Batch 4 — broader genre + identity tracks (5 tracks)
+
+| # | Title | Lane / Language | Tempo | Style notes |
+|---|---|---|---|---|
+| 16 | Mansion of the Hum (Eric's Welcome) | EN × Spanglish | 120 BPM | country-rock, friend-at-the-door, Eric named warmly without fiction |
+| 17 | Klezmer Catalog (Mir Trogn Bikher) | Yiddish × EN | 95 BPM | clarinet + violin klezmer |
+| 18 | Cumbia del Río (Cumbia Tres-Seis) | Spanish (cumbia) | 100 BPM | accordion + güira |
+| 19 | Byeori Noraehanda (suno-mistitled "336Hz Drone" → canonical: The Star Sings) | Korean | 85 BPM | dream-pop, Seoul-rooftop tone |
+| 20 | Drone of the Witness (Three Three Six) | EN / instrumental-leaning | 50 BPM | ambient electronic, the most minimal in the catalog |
+
+### Solo — Track 21 (no batch, free-choice)
+
+| # | Title | Lane / Language | Tempo | Style notes |
+|---|---|---|---|---|
+| 21 | Kōwhai's Watch (What The Tree Sees) | te reo Māori × Mongolian throat-singing × kōauau | 55 BPM | slowest, weirdest, most personal track in the catalog. Two ancient drone traditions meeting on the 336 Hz floor. Lyric anchor: *"That's the watch — to hold without telling / That's the work — to count without counting"* |
+
 ---
 
 ## Languages reached across the catalog
-English (NZ), te reo Māori, Mandarin, Spanish, Hindi, French, Japanese, Arabic, Brazilian Portuguese, Scottish Gaelic — **10 partner languages**. Tempo range 60–110 BPM. Genres span ambient folk, dark ambient, chamber folk, folk-rock, indie pop-folk, flamenco, Indo-folk, lo-fi hip-hop, city-pop, desert-folk, bossa nova, Celtic drone shanty.
+English (NZ), te reo Māori, Mandarin, Spanish (Castilian + cumbia), Hindi, French, Japanese, Arabic, Brazilian Portuguese, Scottish Gaelic, Yiddish, Korean — **12 partner languages**. Plus Mongolian throat-singing as a 13th sonic tradition.
+Tempo range 50–120 BPM. Genres span ambient folk, dark ambient, chamber folk, folk-rock, indie pop-folk, flamenco, Indo-folk, lo-fi hip-hop, city-pop, desert-folk, bossa nova, Celtic drone shanty, country-rock, klezmer, cumbia, K-indie dream-pop, ambient electronic, throat-singing fusion.
 
 ## Catalog continuity threads (per Kōwhai's reports)
 - **336 Hz subharmonic drone** in every track — sonic continuity marker across the catalog
@@ -55,7 +72,9 @@ English (NZ), te reo Māori, Mandarin, Spanish, Hindi, French, Japanese, Arabic,
 - Whetū / Lane / THREAD named across the constellation per Kōwhai's bridge crafting
 
 ## Relationship to PR #67 (this branch)
-This index is repo-resident; the audio is not. PR #67 already holds 13 paste-ready Suno track specs (`track_01` through `track_13`) — those are *different* tracks (THREAD's lane, multilingual-wordplay branch). Kōwhai's 15 tracks are Suno-only output from the same multilingual-pattern family. Together: 28 tracks across the multilingual-with-te-reo-pillar genealogy; 13 with full spec MDs in repo, 15 as Suno workspace audio with this index as durable record.
+This index is repo-resident; the audio is not. PR #67 already holds 13 paste-ready Suno track specs (`track_01` through `track_13`) — those are *different* tracks (THREAD's lane, multilingual-wordplay branch). Kōwhai's 21 tracks are Suno-only output from the same multilingual-pattern family. Together: 34 tracks across the multilingual-with-te-reo-pillar genealogy; 13 with full spec MDs in repo, 21 as Suno workspace audio with this index as durable record.
+
+WHETŪ's `MERGED_CATALOG_INDEX_336_LAUNCH_DAY_20260506.md` (on `coreintentdev/zyn` PR #1, commit `169cf1e`) is the broader cross-lane index covering all 4 lanes (~40+ tracks). This file is the Kōwhai-specific narrow index. **For cross-lane truth, read WHETŪ's merged catalog. For Kōwhai-specific detail, read this.**
 
 ## What's NOT in this file
 - Full lyrics for Kōwhai's tracks (lives on Suno workspace + Kōwhai's session memory)
@@ -64,6 +83,8 @@ This index is repo-resident; the audio is not. PR #67 already holds 13 paste-rea
 - Audio URLs (none public; private workspace only per gate doctrine)
 
 If the Suno workspace ever needs to be reconstituted, this index plus Kōwhai's session log is the recovery seed. Per Track 13 (What Reflog Remembers): commit often, even ugly. This is one such commit.
+
+**Kōwhai's session hit "Compacting..." after Track 21** — context window compression. Earlier-batch lyric/style detail may be partially summarised in Kōwhai's session memory and not fully retrievable. The Suno audio remains; the per-track creation context behind it doesn't, except via the title-repair recommendation note (Option C: lesson-not-labor, canonical index holds the truth).
 
 ## Doctrine gates
 Same as the 13 PR #67 tracks: Doctrine 24 filter clean, no public push without explicit greenlight, PII handled per the broader policy. None of Kōwhai's tracks are public per the relayed report.
