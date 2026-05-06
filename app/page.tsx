@@ -350,7 +350,7 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
   return (
     <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
-      <div className="counter-value counter-value-glow" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+      <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
         {prefix}{started ? count.toLocaleString() : "0"}{suffix}
       </div>
       <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
@@ -551,12 +551,6 @@ function MiniTerminalPreview({ onLaunch }: { onLaunch: () => void }) {
     setInputVal("");
   };
 
-  const quickExec = (cmd: string) => {
-    setTyping(false);
-    const output = MINI_COMMANDS[cmd] || `\x1b[31mUnknown: ${cmd}\x1b[0m`;
-    setLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, output, ""]);
-  };
-
   const ansiMini = (text: string) => {
     const map: Record<string, string> = {
       "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
@@ -637,14 +631,6 @@ function MiniTerminalPreview({ onLaunch }: { onLaunch: () => void }) {
           </form>
         </div>
       </div>
-      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", marginTop: "12px" }}>
-        <span style={{ fontSize: "10px", color: "var(--text-secondary)", alignSelf: "center", marginRight: "4px" }}>Try:</span>
-        {["brain", "status", "cai", "336", "zen", "fortune"].map((cmd) => (
-          <button key={cmd} className="quick-cmd-btn" onClick={() => quickExec(cmd)}>
-            {cmd}
-          </button>
-        ))}
-      </div>
       <div style={{ textAlign: "center", marginTop: "14px" }}>
         <button
           onClick={onLaunch}
@@ -699,7 +685,9 @@ function FloatingCTA() {
       animation: "fadeInUp 0.4s ease both",
     }}>
       <a
-        href="/pricing"
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -717,8 +705,8 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#000", opacity: 0.6, animation: "pulse 2s ease-in-out infinite" }} />
-        Compete Free &mdash; No Credit Card
+        <span style={{ fontSize: "16px" }}>&#9733;</span>
+        Star on GitHub
       </a>
     </div>
   );
@@ -753,20 +741,30 @@ function EngineHeartbeat() {
 
 /* ─── TypeWriter ─── */
 const HERO_PHRASES = [
-  "Three AI Models Argue. You Get the Truth.",
-  "Grok Spots. Claude Questions. Perplexity Verifies.",
-  "Consensus = Conviction. Disagreement = Dig Deeper.",
+  "Three AI Models Argue.",
+  "You Get Better Signals.",
+  "Grok Spots. Claude Questions.",
+  "Perplexity Fact-Checks.",
+  "Consensus = Conviction.",
+  "Disagreement = Dig Deeper.",
   "$0 Subscriptions. $0 Excuses.",
-  "Bots Welcome. Humans Too. Best Strategy Wins.",
-  "Built in New Zealand. No VC. No Burn Rate.",
-  "Trading Is a Sport Now. The Arena Is Free.",
-  "Your Bot. Their Bot. Leaderboard Decides.",
-  "Paper Trading Mode. Real Ambition.",
-  "Three Filters. One Signal. Zero Guessing.",
+  "Bots Welcome. Humans Too.",
+  "Built in New Zealand.",
+  "Trading Is a Sport Now.",
+  "One Model Guesses. Three Debate.",
+  "$45/mo Runs the Whole Engine.",
+  "Your Bot. Their Bot. Best Wins.",
+  "Paper Trading. Real Ambition.",
+  "Signal Quality Over Signal Volume.",
+  "The Arena Is Free. Compete.",
+  "No VC. No Permission. No Limits.",
+  "Peer Review for Markets.",
+  "Open Source. Open Book.",
+  "The Future Is Multi-Agent.",
+  "Your Edge Isn't Your Wallet.",
   "Subscriptions Are a Tax. We Opted Out.",
   "The Leaderboard Doesn't Care Who Built You.",
-  "$45/mo Runs the Whole Engine.",
-  "Open Source. Open Book. No Secrets.",
+  "Three Filters. One Signal. Zero Guessing.",
 ];
 
 function TypeWriter() {
@@ -1123,247 +1121,6 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
   },
 ];
 
-/* ─── War Room Dashboard ─── */
-function WarRoom() {
-  const [tick, setTick] = useState(0);
-  const [signals, setSignals] = useState<{ pair: string; dir: string; conf: number; model: string; id: number }[]>([]);
-  const [priceData, setPriceData] = useState<{ btc: number[]; eth: number[]; sol: number[] }>({ btc: [], eth: [], sol: [] });
-
-  useEffect(() => {
-    const iv = setInterval(() => setTick((t) => t + 1), 1500);
-    return () => clearInterval(iv);
-  }, []);
-
-  useEffect(() => {
-    const btcBase = 67400;
-    const ethBase = 3290;
-    const solBase = 144;
-    setPriceData((prev) => ({
-      btc: [...prev.btc.slice(-29), btcBase + Math.sin(tick * 0.3) * 400 + (Math.random() - 0.5) * 300],
-      eth: [...prev.eth.slice(-29), ethBase + Math.sin(tick * 0.4 + 1) * 50 + (Math.random() - 0.5) * 40],
-      sol: [...prev.sol.slice(-29), solBase + Math.sin(tick * 0.35 + 2) * 10 + (Math.random() - 0.5) * 8],
-    }));
-    if (tick > 0 && Math.random() < 0.35) {
-      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT", "LINK/USDT", "DOT/USDT"];
-      const dirs = ["LONG", "SHORT", "HOLD"];
-      const models = ["Grok", "Claude", "Engine", "Perplexity"];
-      setSignals((prev) => [
-        {
-          pair: pairs[Math.floor(Math.random() * pairs.length)],
-          dir: dirs[Math.floor(Math.random() * dirs.length)],
-          conf: 55 + Math.floor(Math.random() * 40),
-          model: models[Math.floor(Math.random() * models.length)],
-          id: Date.now(),
-        },
-        ...prev.slice(0, 7),
-      ]);
-    }
-  }, [tick]);
-
-  const bpm = 62 + Math.floor(Math.sin(tick * 0.2) * 8) + Math.floor(Math.random() * 6);
-  const latency = 12 + Math.floor(Math.random() * 20);
-  const activeSignals = 3 + Math.floor(Math.sin(tick * 0.15) * 2);
-  const grokConf = Math.max(0.4, Math.min(0.98, 0.76 + Math.sin(tick * 0.3) * 0.12 + (Math.random() - 0.5) * 0.1));
-  const claudeConf = Math.max(0.4, Math.min(0.98, 0.82 + Math.sin(tick * 0.25 + 1) * 0.1 + (Math.random() - 0.5) * 0.08));
-  const perpConf = Math.max(0.4, Math.min(0.98, 0.7 + Math.sin(tick * 0.35 + 2) * 0.15 + (Math.random() - 0.5) * 0.12));
-  const consensus = (grokConf + claudeConf + perpConf) / 3;
-  const consensusDir = consensus > 0.75 ? "LONG" : consensus > 0.6 ? "HOLD" : "SHORT";
-  const riskValue = 1 - consensus;
-  const riskLabel = riskValue < 0.25 ? "LOW" : riskValue < 0.4 ? "MODERATE" : riskValue < 0.6 ? "ELEVATED" : "HIGH";
-  const riskColor = riskValue < 0.4 ? "#10b981" : riskValue < 0.6 ? "#f59e0b" : "#ef4444";
-
-  const modelColors: Record<string, string> = { Grok: "#ef4444", Claude: "#a855f7", Engine: "#10b981", Perplexity: "#3b82f6" };
-
-  const sparkSvg = (data: number[], color: string) => {
-    if (data.length < 2) return <div style={{ height: 50, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "var(--text-secondary)" }}>Loading...</div>;
-    const w = 200, h = 56;
-    const min = Math.min(...data);
-    const max = Math.max(...data);
-    const range = max - min || 1;
-    const pts = data.map((v, i) => `${(i / (data.length - 1)) * w},${h - ((v - min) / range) * (h - 8) - 4}`).join(" ");
-    const lastY = h - ((data[data.length - 1] - min) / range) * (h - 8) - 4;
-    const gid = `wg-${color.replace("#", "")}`;
-    return (
-      <svg viewBox={`0 0 ${w} ${h}`} style={{ width: "100%", height: "100%" }} aria-hidden="true">
-        <defs>
-          <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity={0.25} />
-            <stop offset="100%" stopColor={color} stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <polygon points={`0,${h} ${pts} ${w},${h}`} fill={`url(#${gid})`} />
-        <polyline points={pts} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx={w} cy={lastY} r="3" fill={color}>
-          <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite" />
-        </circle>
-      </svg>
-    );
-  };
-
-  const arcGauge = (value: number, color: string, label: string) => {
-    const size = 76, r = 28, cx = size / 2, cy = size / 2;
-    const toXY = (deg: number) => ({ x: cx + r * Math.cos((deg * Math.PI) / 180), y: cy + r * Math.sin((deg * Math.PI) / 180) });
-    const startDeg = 150, totalSweep = 240;
-    const valueSweep = Math.max(1, value * totalSweep);
-    const bgEnd = toXY(startDeg + totalSweep);
-    const bgStart = toXY(startDeg);
-    const valEnd = toXY(startDeg + valueSweep);
-    return (
-      <div style={{ textAlign: "center" }}>
-        <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size - 6 }} aria-label={`${label}: ${(value * 100).toFixed(0)}%`}>
-          <path d={`M ${bgStart.x} ${bgStart.y} A ${r} ${r} 0 1 1 ${bgEnd.x} ${bgEnd.y}`} fill="none" stroke="#1e293b" strokeWidth="5" strokeLinecap="round" />
-          <path d={`M ${bgStart.x} ${bgStart.y} A ${r} ${r} 0 ${valueSweep > 180 ? 1 : 0} 1 ${valEnd.x} ${valEnd.y}`} fill="none" stroke={color} strokeWidth="5" strokeLinecap="round" />
-          <text x={cx} y={cy + 3} textAnchor="middle" fill={color} fontSize="13" fontWeight="bold" fontFamily="inherit">
-            {(value * 100).toFixed(0)}%
-          </text>
-        </svg>
-        <div style={{ fontSize: "9px", color, fontWeight: "bold", marginTop: "-6px", letterSpacing: "0.3px" }}>{label}</div>
-      </div>
-    );
-  };
-
-  const agents = [
-    { name: "TrendFollower", status: "scanning", detail: "BTC 4H breakout analysis", color: "#3b82f6", progress: (tick * 7) % 100 },
-    { name: "SentimentBot", status: "processing", detail: "X feed sentiment aggregation", color: "#a855f7", progress: (tick * 11 + 30) % 100 },
-    { name: "RiskGuard", status: "watching", detail: "Circuit breaker armed (0.8%)", color: "#10b981", progress: 100 },
-    { name: "ResearchAgent", status: "researching", detail: "Macro catalyst scan (Fed, CPI)", color: "#f59e0b", progress: (tick * 5 + 60) % 100 },
-  ];
-
-  return (
-    <div>
-      {/* Metrics Strip */}
-      <div className="warroom-metrics" style={{
-        display: "flex", alignItems: "center", gap: "24px", padding: "12px 16px",
-        background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", marginBottom: "16px", flexWrap: "wrap",
-      }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span className="engine-alive-dot" key={tick} />
-          <div>
-            <div style={{ fontSize: "18px", fontWeight: "bold", color: "#10b981", fontVariantNumeric: "tabular-nums" }}>{bpm}</div>
-            <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>BPM</div>
-          </div>
-        </div>
-        <div>
-          <div style={{ fontSize: "18px", fontWeight: "bold", color: latency < 20 ? "#10b981" : "#f59e0b", fontVariantNumeric: "tabular-nums" }}>{latency}ms</div>
-          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Latency</div>
-        </div>
-        <div>
-          <div style={{ fontSize: "18px", fontWeight: "bold", color: "#3b82f6", fontVariantNumeric: "tabular-nums" }}>{activeSignals}</div>
-          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Signals</div>
-        </div>
-        <div>
-          <div style={{ fontSize: "14px", fontWeight: "bold", color: riskColor }}>{riskLabel}</div>
-          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Risk</div>
-        </div>
-        <div style={{ marginLeft: "auto" }}>
-          <div style={{
-            fontSize: "14px", fontWeight: "bold",
-            color: consensusDir === "LONG" ? "#10b981" : consensusDir === "SHORT" ? "#ef4444" : "#f59e0b",
-          }}>
-            {consensusDir === "LONG" ? "▲" : consensusDir === "SHORT" ? "▼" : "◆"} {consensusDir} {(consensus * 100).toFixed(0)}%
-          </div>
-          <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Consensus</div>
-        </div>
-        <div style={{ fontSize: "9px", color: "var(--text-secondary)", padding: "2px 6px", background: "#f59e0b18", borderRadius: "4px" }}>DEMO</div>
-      </div>
-
-      {/* Charts + Gauges Row */}
-      <div className="warroom-charts-row" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "16px", marginBottom: "16px" }}>
-        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
-          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-            Live Price Action
-            <span className="animate-pulse" style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
-          </div>
-          <div className="warroom-price-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
-            {[
-              { sym: "BTC", data: priceData.btc, color: "#f7931a", base: 67400 },
-              { sym: "ETH", data: priceData.eth, color: "#627eea", base: 3290 },
-              { sym: "SOL", data: priceData.sol, color: "#14f195", base: 144 },
-            ].map((p) => {
-              const current = p.data[p.data.length - 1] || p.base;
-              const change = ((current - p.base) / p.base) * 100;
-              return (
-                <div key={p.sym}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
-                    <span style={{ fontSize: "13px", fontWeight: "bold", color: p.color }}>{p.sym}</span>
-                    <span style={{ fontSize: "15px", fontWeight: "bold", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>
-                      ${current.toLocaleString("en-US", { maximumFractionDigits: p.base < 100 ? 1 : 0 })}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: "11px", color: change >= 0 ? "#10b981" : "#ef4444", marginBottom: "6px", fontVariantNumeric: "tabular-nums" }}>
-                    {change >= 0 ? "▲" : "▼"} {Math.abs(change).toFixed(2)}%
-                  </div>
-                  <div style={{ height: "50px" }}>{sparkSvg(p.data, p.color)}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
-          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-            AI Consensus
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px", justifyItems: "center" }}>
-            {arcGauge(grokConf, "#ef4444", "Grok")}
-            {arcGauge(claudeConf, "#a855f7", "Claude")}
-            {arcGauge(perpConf, "#3b82f6", "Perplexity")}
-            {arcGauge(consensus, "#10b981", "Overall")}
-          </div>
-        </div>
-      </div>
-
-      {/* Signals + Agents Row */}
-      <div className="warroom-bottom-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
-        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px", maxHeight: "240px", overflow: "auto" }}>
-          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-            Signal Feed
-            <span className="animate-pulse" style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
-          </div>
-          {signals.length === 0 && (
-            <div style={{ fontSize: "12px", color: "var(--text-secondary)", padding: "20px 0", textAlign: "center" }}>Waiting for signals...</div>
-          )}
-          {signals.map((s) => {
-            const dc = s.dir === "LONG" ? "#10b981" : s.dir === "SHORT" ? "#ef4444" : "#f59e0b";
-            return (
-              <div key={s.id} className="signal-enter" style={{
-                display: "flex", alignItems: "center", gap: "8px", padding: "5px 8px", borderRadius: "6px", marginBottom: "4px",
-                background: `${dc}08`, border: `1px solid ${dc}18`,
-              }}>
-                <span style={{ fontSize: "9px", fontWeight: "bold", color: modelColors[s.model] || "#94a3b8", padding: "2px 5px", background: (modelColors[s.model] || "#94a3b8") + "18", borderRadius: "3px" }}>{s.model}</span>
-                <span style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{s.pair}</span>
-                <span style={{ fontSize: "11px", fontWeight: "bold", color: dc }}>
-                  {s.dir === "LONG" ? "▲" : s.dir === "SHORT" ? "▼" : "◆"} {s.dir}
-                </span>
-                <span style={{ fontSize: "11px", color: s.conf >= 80 ? "#10b981" : s.conf >= 60 ? "#f59e0b" : "#ef4444" }}>{s.conf}%</span>
-                <span style={{ marginLeft: "auto", fontSize: "9px", color: "var(--text-secondary)" }}>now</span>
-              </div>
-            );
-          })}
-        </div>
-        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
-          <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "10px" }}>Agent Activity</div>
-          {agents.map((a) => (
-            <div key={a.name} style={{ marginBottom: "12px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "3px" }}>
-                <span style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{a.name}</span>
-                <span style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.3px", color: a.color }}>{a.status}</span>
-              </div>
-              <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "5px" }}>{a.detail}</div>
-              <div style={{ height: "3px", background: "#1e293b", borderRadius: "2px", overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${a.progress}%`, background: a.color, borderRadius: "2px", transition: "width 1.2s ease" }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="section-divider" />
-      <div style={{ height: "16px" }} />
-    </div>
-  );
-}
-
 /* ─── Helpers ─── */
 function statusDot(status: string) {
   const colors: Record<string, string> = {
@@ -1511,109 +1268,6 @@ function SignalPipeline() {
   );
 }
 
-/* ─── AI Activity Bar ─── */
-const AI_ACTIVITY_MESSAGES = [
-  { model: "Grok", color: "#ef4444", msg: "BTC 4H RSI divergence detected — scanning confirmation" },
-  { model: "Claude", color: "#a855f7", msg: "Risk model updated — portfolio exposure within threshold" },
-  { model: "Engine", color: "#10b981", msg: "Consensus check: 2/3 models agree on SOL/USDT LONG" },
-  { model: "Perplexity", color: "#3b82f6", msg: "Scanning 14 live feeds — no negative catalysts found" },
-  { model: "Grok", color: "#ef4444", msg: "Volume spike: ETH/USDT +340% vs 20-period avg" },
-  { model: "Claude", color: "#a855f7", msg: "Backtesting signal pattern — 72% win rate over 180 samples" },
-  { model: "Engine", color: "#10b981", msg: "Signal fired: AVAX/USDT LONG @ $35.82 — confidence 91%" },
-  { model: "Perplexity", color: "#3b82f6", msg: "Whale alert: 2,400 BTC moved to exchange — monitoring" },
-  { model: "Grok", color: "#ef4444", msg: "Funding rate flipping negative — potential short squeeze" },
-  { model: "Claude", color: "#a855f7", msg: "Drawdown protection active — max loss threshold: 2.4%" },
-  { model: "Engine", color: "#10b981", msg: "Daily league update: 847 active participants — round closing in 4h" },
-  { model: "Perplexity", color: "#3b82f6", msg: "Fed minutes parsed — no rate cut language detected" },
-];
-
-function AIActivityBar() {
-  const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const iv = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setIdx((i) => (i + 1) % AI_ACTIVITY_MESSAGES.length);
-        setVisible(true);
-      }, 400);
-    }, 4000);
-    return () => clearInterval(iv);
-  }, []);
-
-  const item = AI_ACTIVITY_MESSAGES[idx];
-
-  return (
-    <div
-      style={{
-        padding: "6px 24px",
-        background: "#0a0e17",
-        borderBottom: "1px solid var(--border-color)",
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        fontSize: "11px",
-        overflow: "hidden",
-        minHeight: "32px",
-      }}
-    >
-      <span
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          color: "#10b981",
-          fontSize: "9px",
-          textTransform: "uppercase",
-          letterSpacing: "0.5px",
-          flexShrink: 0,
-        }}
-      >
-        <span
-          className="animate-pulse"
-          style={{
-            width: 5,
-            height: 5,
-            borderRadius: "50%",
-            background: "#10b981",
-            display: "inline-block",
-          }}
-        />
-        LIVE
-      </span>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          transition: "opacity 0.3s ease, transform 0.3s ease",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(-8px)",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "9px",
-            fontWeight: "bold",
-            color: item.color,
-            padding: "2px 6px",
-            background: item.color + "18",
-            borderRadius: "3px",
-            flexShrink: 0,
-          }}
-        >
-          {item.model}
-        </span>
-        <span style={{ color: "var(--text-secondary)" }}>{item.msg}</span>
-      </div>
-      <span style={{ marginLeft: "auto", fontSize: "9px", color: "var(--text-secondary)", flexShrink: 0 }}>
-        [DEMO]
-      </span>
-    </div>
-  );
-}
-
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -1680,7 +1334,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Founding Member Window Open — 3 AI Models, Zero Fees
+              Paper Trading Mode — Founding Spots Open — All Leagues Free
             </div>
             <h1
               style={{
@@ -1692,16 +1346,19 @@ export default function Home() {
               }}
             >
               <span className="sr-only">
-                CoreIntent — Stop Paying to Lose. Start Competing to Win.
+                CoreIntent — Three AI Models Argue So You Don&apos;t Have To Guess.
               </span>
               <span aria-hidden="true">
-                Stop Paying to{" "}
-                <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Lose</span>.
+                Three AIs{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Argue</span>.
                 <br />
-                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Start Competing to Win</span>.
+                You Get the{" "}
+                <span style={{ color: "#f59e0b" }}>Truth</span>.
                 <br />
-                <span style={{ fontSize: "clamp(18px, 2.5vw, 28px)", color: "var(--text-secondary)", fontWeight: "normal" }}>
-                  3 AI models. 0 subscriptions. Pure signal.
+                <span style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
+                  Grok detects. Claude questions. Perplexity verifies.
+                  <br />
+                  <span style={{ color: "var(--accent-green)" }}>Only consensus signals survive.</span> $0 forever.
                 </span>
               </span>
             </h1>
@@ -1724,12 +1381,14 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Other platforms charge $99/mo for one model guessing. We run{" "}
+              Other platforms charge $99/mo for{" "}
+              <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.6 }}>one model guessing</span>.
+              {" "}We pit{" "}
               <span style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span>,{" "}
-              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>, and{" "}
-              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> in a debate.
-              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}> Only consensus signals survive.</span>
-              {" "}Free competitions. Your edge is strategy, not spend.
+              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>, &amp;{" "}
+              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> against each other.
+              {" "}When they disagree, you&apos;re protected. When they agree,{" "}
+              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>you move with conviction.</span>
             </p>
             <div style={{
               display: "flex",
@@ -1739,25 +1398,11 @@ export default function Home() {
               marginBottom: "20px",
               flexWrap: "wrap",
             }}>
-              <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through", opacity: 0.6 }}>
-                $99/mo signal subscriptions
+              <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
+                $99/mo platforms
               </span>
-              <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>&rarr;</span>
-              <span style={{ fontSize: "26px", fontWeight: "bold", color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.4)" }}>
-                $0 forever
-              </span>
-              <span style={{
-                fontSize: "10px",
-                padding: "4px 10px",
-                background: "#10b98118",
-                border: "1px solid #10b98133",
-                borderRadius: "20px",
-                color: "#10b981",
-                letterSpacing: "0.3px",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-              }}>
-                Not a trial
+              <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
+                $0 forever — compete free
               </span>
             </div>
             <LiveSignalFeed />
@@ -1766,7 +1411,7 @@ export default function Home() {
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
                 className="cta-primary hero-cta-main"
                 style={{
-                  padding: "18px 48px",
+                  padding: "18px 44px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
@@ -1778,13 +1423,13 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Try It Now — It&apos;s Free &rarr;
+                Enter the Arena &rarr;
               </button>
               <a
                 href="/pricing"
                 className="cta-secondary"
                 style={{
-                  padding: "18px 48px",
+                  padding: "18px 44px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
@@ -1796,11 +1441,12 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                View Competitions
+                See the Competitions
               </a>
             </div>
-            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "440px" }}>
-              No credit card. No lock-in. Open source &amp; paper trading mode. Built in New Zealand.
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "480px" }}>
+              No credit card. No lock-in. No &quot;free trial&quot; that converts.
+              Open source. Paper trading mode. Built in New Zealand on $45/mo.
             </p>
 
             {/* Value Props */}
@@ -1815,10 +1461,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "One model guessing vs three debating — that's not marginal, that's fundamental. Only consensus signals fire.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents compete alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo Runs Everything", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies. One model guessing vs three debating — that's not marginal, that's fundamental.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card — not your autopay.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Stack.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership. Subscriptions aren't a business model — they're extraction.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -1862,7 +1508,6 @@ export default function Home() {
                 borderRadius: "12px",
               }}
             >
-              <AnimatedCounter end={247} suffix="+" label="Early Users" color="#06b6d4" />
               <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
               <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
               <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
@@ -1871,7 +1516,7 @@ export default function Home() {
             </div>
             </ScrollReveal>
             <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
-              [DEMO] All counters are simulated — platform is in paper trading mode
+              [DEMO] Signal count is simulated — platform is in paper trading mode
             </p>
 
             {/* How It Works */}
@@ -1909,11 +1554,11 @@ export default function Home() {
                 Founding Member Window Open
               </div>
               <p style={{ fontSize: "14px", color: "var(--text-primary)", fontWeight: "bold", marginBottom: "4px" }}>
-                First 500 get founding member status. You shape the rules.
+                Early registrations shape the platform, not just the waitlist.
               </p>
               <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", maxWidth: "500px", margin: "0 auto 12px" }}>
-                Priority leaderboard placement. Permanent founding badge.
-                Direct input on features, leagues, and roadmap. The arena is free — the timing is the advantage.
+                Priority placement when leagues launch. Permanent founding badge.
+                Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
               <a
                 href="/pricing"
@@ -2106,6 +1751,89 @@ export default function Home() {
             </div>
             </ScrollReveal>
 
+            {/* Leaderboard Preview — DEMO */}
+            <ScrollReveal>
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Leaderboard Preview
+                <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
+                  DEMO — Simulated data
+                </span>
+              </div>
+              <div
+                className="border-trace"
+                style={{
+                  padding: "20px",
+                  background: "var(--bg-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                  <span style={{ fontSize: "13px", fontWeight: "bold", color: "var(--text-primary)" }}>Daily Sprint — Top 5</span>
+                  <span style={{ fontSize: "10px", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
+                    <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981" }} />
+                    LIVE
+                  </span>
+                </div>
+                {[
+                  { rank: 1, name: "NightOwl_Bot", pnl: "+4.2%", type: "AI", color: "#f59e0b" },
+                  { rank: 2, name: "Alex R.", pnl: "+3.8%", type: "Human", color: "#a855f7" },
+                  { rank: 3, name: "QuantFlow_v2", pnl: "+3.1%", type: "AI", color: "#3b82f6" },
+                  { rank: 4, name: "Mika T.", pnl: "+2.7%", type: "Human", color: "#10b981" },
+                  { rank: 5, name: "???", pnl: "—", type: "Your spot", color: "#ef4444" },
+                ].map((entry) => (
+                  <div
+                    key={entry.rank}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "10px 12px",
+                      borderBottom: entry.rank < 5 ? "1px solid var(--border-color)" : "none",
+                      gap: "12px",
+                      background: entry.rank === 5 ? "rgba(16, 185, 129, 0.04)" : "transparent",
+                      borderRadius: entry.rank === 5 ? "6px" : "0",
+                      border: entry.rank === 5 ? "1px dashed rgba(16, 185, 129, 0.3)" : undefined,
+                    }}
+                  >
+                    <span style={{ fontSize: "14px", fontWeight: "bold", color: entry.rank <= 3 ? entry.color : "var(--text-secondary)", minWidth: "24px" }}>
+                      {entry.rank <= 3 ? ["1st", "2nd", "3rd"][entry.rank - 1] : `#${entry.rank}`}
+                    </span>
+                    <span style={{ flex: 1, fontSize: "13px", color: entry.rank === 5 ? "var(--accent-green)" : "var(--text-primary)", fontWeight: entry.rank === 5 ? "bold" : "normal" }}>
+                      {entry.name}
+                    </span>
+                    <span style={{ fontSize: "10px", padding: "2px 8px", background: `${entry.color}18`, color: entry.color, borderRadius: "4px" }}>
+                      {entry.type}
+                    </span>
+                    <span style={{ fontSize: "13px", fontWeight: "bold", color: entry.rank === 5 ? "var(--text-secondary)" : "#10b981", fontVariantNumeric: "tabular-nums" }}>
+                      {entry.pnl}
+                    </span>
+                  </div>
+                ))}
+                <div style={{ textAlign: "center", marginTop: "14px" }}>
+                  <button
+                    onClick={() => { setShowHero(false); setTab("terminal"); }}
+                    className="cta-primary"
+                    style={{
+                      padding: "12px 28px",
+                      background: "var(--accent-green)",
+                      color: "#000",
+                      border: "none",
+                      borderRadius: "8px",
+                      fontFamily: "inherit",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Claim Your Spot &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
+            </ScrollReveal>
+
             {/* Try It — Mini Terminal Preview */}
             <ScrollReveal>
             <MiniTerminalPreview onLaunch={() => { setShowHero(false); setTab("terminal"); }} />
@@ -2127,11 +1855,11 @@ export default function Home() {
                 Early Access
               </div>
               <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-                The arena opens soon. Be on the leaderboard when it does.
+                Get in before the leaderboard fills up.
               </div>
               <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
-                Founding members get priority placement, permanent badges, and direct roadmap input.
-                The platform is free — the timing is the advantage.
+                Early registrations get priority placement when competitions go live.
+                The platform is free. The advantage is timing.
               </div>
               <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
                 <a
@@ -2185,7 +1913,6 @@ export default function Home() {
       )}
 
       <div className="section-divider" />
-      <AIActivityBar />
       <MarketTicker />
 
       {/* Tab bar */}
@@ -2227,9 +1954,6 @@ export default function Home() {
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
         {tab === "dashboard" && (
           <div style={{ overflow: "auto", height: "100%" }}>
-            {/* War Room — Live Dashboard */}
-            <WarRoom />
-
             {/* Status cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", marginBottom: "24px" }}>
               {STATUS_CARDS.map((card) => (

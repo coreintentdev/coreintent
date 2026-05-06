@@ -1200,164 +1200,8 @@ html {
 }
 
 /* ═══════════════════════════════════════════
-   INTERACTIVE LAYER — Phase 3 Additions
+   LANDING PAGE OPTIMIZER — Phase 4: Convert
    ═══════════════════════════════════════════ */
-
-/* ─── Quick Command Buttons ─── */
-.quick-cmd-btn {
-  padding: 6px 14px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  font-family: inherit;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.quick-cmd-btn:hover {
-  color: var(--accent-green);
-  border-color: var(--accent-green);
-  background: rgba(16, 185, 129, 0.08);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
-  transform: translateY(-1px);
-}
-
-.quick-cmd-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.1);
-}
-
-/* ─── Signal Pipeline ─── */
-@keyframes pipelinePulse {
-  0%, 100% { r: 4; opacity: 0.8; }
-  50% { r: 7; opacity: 1; }
-}
-
-@keyframes pipelineNodeGlow {
-  0%, 100% { filter: drop-shadow(0 0 4px var(--glow-color, #10b981)); opacity: 0.6; }
-  50% { filter: drop-shadow(0 0 16px var(--glow-color, #10b981)) drop-shadow(0 0 32px var(--glow-color, #10b981)); opacity: 1; }
-}
-
-@keyframes signalDot {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes dataStreamPulse {
-  0% { stroke-dashoffset: 16; }
-  100% { stroke-dashoffset: 0; }
-}
-
-.pipeline-node-active {
-  animation: pipelineNodeGlow 1.5s ease-in-out infinite;
-}
-
-.pipeline-connection-active {
-  stroke-dasharray: 8 4;
-  animation: dataStreamPulse 0.6s linear infinite;
-}
-
-/* ─── Pipeline Status Bar ─── */
-@keyframes statusSlide {
-  from { opacity: 0; transform: translateX(-8px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.pipeline-status-enter {
-  animation: statusSlide 0.3s ease both;
-}
-
-/* ─── Confidence Bar Fill ─── */
-@keyframes confFill {
-  from { width: 0; }
-  to { width: var(--conf-width, 0%); }
-}
-
-.conf-bar-fill {
-  animation: confFill 0.8s ease-out forwards;
-}
-
-/* ─── Model Card Glow on Hover (Stack page) ─── */
-.model-card-interactive {
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.model-card-interactive::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16, 185, 129, 0.06), transparent 60%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.model-card-interactive:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.12);
-}
-
-.model-card-interactive:hover::after {
-  opacity: 1;
-}
-
-/* ═══════════════════════════════════════════
-   LANDING PAGE OPTIMIZER — Phase 2
-   ═══════════════════════════════════════════ */
-
-/* ─── Hero section entrance ─── */
-@keyframes heroSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero-entrance {
-  animation: heroSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* ─── Gradient border shimmer for pricing cards ─── */
-@keyframes borderShimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.pricing-card-featured {
-  background-clip: padding-box;
-}
-
-/* ─── Counter glow effect ─── */
-@keyframes counterGlow {
-  0%, 100% { text-shadow: 0 0 8px currentColor; }
-  50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 80px currentColor; }
-}
-
-.counter-value-glow {
-  animation: counterGlow 3s ease-in-out infinite;
-}
-
-/* ─── Social proof slide ─── */
-@keyframes testimonialSlide {
-  from { opacity: 0; transform: translateX(12px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.testimonial-enter {
-  animation: testimonialSlide 0.5s ease both;
-}
 
 /* ─── CTA shimmer text ─── */
 @keyframes textShimmer {
@@ -1381,21 +1225,134 @@ html {
   animation: textShimmer 3s linear infinite;
 }
 
-/* ─── Pricing comparison highlight ─── */
-.pricing-row-highlight {
-  background: rgba(16, 185, 129, 0.04);
-  border-radius: 4px;
-}
-
-.pricing-row-highlight td {
+/* ─── Neon underline for key text ─── */
+.neon-underline {
   position: relative;
+  display: inline-block;
 }
 
-/* ─── Mobile: stacked pricing value ─── */
-@media (max-width: 480px) {
-  .savings-grid > div {
-    padding: 12px !important;
+.neon-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-green);
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4), 0 0 16px rgba(16, 185, 129, 0.2);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* ─── Stacked card depth effect ─── */
+.depth-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.depth-card::before {
+  content: '';
+  position: absolute;
+  inset: 4px 4px -4px -4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.5;
+  transition: transform 0.3s ease;
+}
+
+.depth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.depth-card:hover::before {
+  transform: translate(2px, 4px);
+}
+
+/* ─── Pulsing entry point indicator ─── */
+@keyframes entryPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    border-color: rgba(16, 185, 129, 0.4);
   }
+  50% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    border-color: rgba(16, 185, 129, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+}
+
+.entry-pulse {
+  animation: entryPulse 2.5s ease-in-out infinite;
+}
+
+/* ─── Glassmorphism card ─── */
+.glass-card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 41, 59, 0.8);
+}
+
+/* ─── Enhanced focus states for accessibility ─── */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+/* ─── Hero CTA Attention Pulse ─── */
+@keyframes ctaAttention {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 0 0 rgba(16, 185, 129, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+.hero-cta-main {
+  animation: ctaAttention 3s ease-in-out infinite;
+}
+
+.hero-cta-main:hover {
+  animation: none;
+}
+
+/* ─── Counter glow effect ─── */
+@keyframes counterGlow {
+  0%, 100% { text-shadow: 0 0 8px currentColor; }
+  50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+}
+
+.counter-value-glow {
+  animation: counterGlow 3s ease-in-out infinite;
+}
+
+/* ─── Smooth Scroll ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Floating CTA ─── */
+.floating-cta-btn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.5), 0 0 0 2px rgba(16, 185, 129, 0.3) !important;
+}
+
+.floating-cta-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* ─── Trust Badge Hover ─── */
+.trust-badge {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
 }
 
 /* ─── Premium hover lift for league cards ─── */
@@ -1408,71 +1365,56 @@ html {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.1);
 }
 
-/* ═══════════════════════════════════════════
-   LANDING PAGE OPTIMIZER — Phase 3
-   ═══════════════════════════════════════════ */
+/* ─── Mobile: Leaderboard responsive ─── */
+@media (max-width: 480px) {
+  .border-trace::before {
+    display: none;
+  }
 
-/* ─── Hero value prop emphasis ─── */
-@keyframes valueHighlight {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; text-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
-}
-
-/* ─── Sticky pricing CTA responsive ─── */
-@media (max-width: 640px) {
-  .sticky-pricing-cta {
-    flex-direction: column !important;
-    gap: 8px !important;
-    padding: 12px 16px !important;
+  .hero-cta-main {
+    padding: 16px 24px !important;
+    font-size: 15px !important;
   }
 }
-
-/* ─── Enhanced focus states for accessibility ─── */
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--accent-green);
-  outline-offset: 2px;
-}
-
-/* ─── Pricing page number emphasis ─── */
-.price-zero {
-  position: relative;
-}
-
-.price-zero::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: -4px;
-  right: -4px;
-  height: 3px;
-  background: var(--accent-green);
-  border-radius: 2px;
-  opacity: 0.4;
-}
-
-/* ─── Smooth counter transition ─── */
-.counter-value {
-  transition: color 0.3s ease;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ═══════════════════════════════════════════
-   WAR ROOM — Live Dashboard
-   ═══════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  .warroom-charts-row {
-    grid-template-columns: 1fr !important;
-  }
-  .warroom-bottom-row {
-    grid-template-columns: 1fr !important;
-  }
-  .warroom-price-grid {
+  .how-it-works-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
-  .warroom-metrics {
+
+  .step-connector {
+    display: none !important;
+  }
+
+  .counters-section {
+    gap: 20px !important;
+    padding: 20px 16px !important;
+  }
+
+  .floating-cta {
+    bottom: 16px !important;
+    right: 16px !important;
+    left: 16px !important;
+  }
+
+  .floating-cta-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .why-coreintent-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .league-grid {
+    grid-template-columns: 1fr !important;
     gap: 16px !important;
+  }
+
+  .league-grid article {
+    transform: none !important;
   }
 }
