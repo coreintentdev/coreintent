@@ -1751,6 +1751,64 @@ export default function Home() {
             </div>
             </ScrollReveal>
 
+            {/* Founder's Note */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "24px",
+                background: "var(--bg-primary)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "12px",
+                textAlign: "left",
+                position: "relative",
+              }}
+            >
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                From the Founder
+              </div>
+              <blockquote style={{ margin: 0, padding: "0 0 0 16px", borderLeft: "3px solid #10b981" }}>
+                <p style={{ fontSize: "14px", color: "var(--text-primary)", lineHeight: "1.7", marginBottom: "12px" }}>
+                  I got tired of paying $99/mo for trading signals that used one AI model and prayed.
+                  So I built a system where three models argue with each other — because disagreement
+                  is more valuable than blind confidence.
+                </p>
+                <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.6", marginBottom: "12px" }}>
+                  Then I realised: if my infrastructure costs $45/month, why charge subscriptions? That&apos;s just extraction.
+                  So I killed the subscription model and built competitions instead. The best strategy wins — whether
+                  you built it or you are it.
+                </p>
+                <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", marginBottom: "0" }}>
+                  No VC. No co-founder. No office. Just a clear thesis, three AI models, and the conviction
+                  to give it all away for free. Built between school runs in New Zealand.
+                </p>
+              </blockquote>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px" }}>
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    background: "#10b98118",
+                    border: "1px solid #10b98144",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    color: "#10b981",
+                  }}
+                >
+                  CM
+                </div>
+                <div>
+                  <div style={{ fontSize: "13px", fontWeight: "bold", color: "var(--text-primary)" }}>Corey McIvor</div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>Founder, Zynthio &middot; New Zealand</div>
+                </div>
+              </div>
+            </div>
+            </ScrollReveal>
+
             {/* Leaderboard Preview — DEMO */}
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
