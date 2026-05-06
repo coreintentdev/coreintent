@@ -1456,3 +1456,85 @@ a:focus-visible {
   transition: color 0.3s ease;
   font-variant-numeric: tabular-nums;
 }
+
+/* ═══════════════════════════════════════════
+   AI TWIN — CoreyAI Interactive Widget
+   ═══════════════════════════════════════════ */
+
+@keyframes aiTwinSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aiTwinBubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aiTwinMsgIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-twin-panel {
+  animation: aiTwinSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ai-twin-bubble {
+  animation: aiTwinBubbleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ai-twin-msg {
+  animation: aiTwinMsgIn 0.3s ease both;
+}
+
+.ai-twin-trigger {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-twin-trigger:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 28px rgba(16, 185, 129, 0.5) !important;
+}
+
+.ai-twin-trigger:active {
+  transform: scale(0.95) !important;
+}
+
+@media (max-width: 640px) {
+  .ai-twin-panel {
+    inset: 0 !important;
+    width: 100% !important;
+    max-height: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+  }
+
+  .ai-twin-bubble {
+    right: 16px !important;
+    bottom: 76px !important;
+  }
+
+  .ai-twin-trigger {
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+}
