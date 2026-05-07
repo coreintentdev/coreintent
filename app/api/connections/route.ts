@@ -76,7 +76,7 @@ export async function GET(req: NextRequest) {
     };
 
     const infrastructure: ConnectionsResponse["infrastructure"] = {
-      vps:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"     },
+      vds:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"     },
       cloudflare: { status: "active", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"       },
       github:     { status: "active", repos: 5,        role: "CI/CD, source control"     },
       linear:     { status: "active", tasks: 26, completed: 3, role: "Project management" },
