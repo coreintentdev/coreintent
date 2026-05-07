@@ -56,6 +56,98 @@ const AI_MODELS = [
   { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
 ];
 
+/* ─── Boot Sequence ─── */
+const BOOT_LINES = [
+  { text: "ZYNTHIO TRADING ENGINE v0.2.0", color: "#06b6d4", delay: 0 },
+  { text: "Initializing core systems...", color: "#64748b", delay: 300 },
+  { text: "[OK] Grok          — signal detection", color: "#ef4444", delay: 600 },
+  { text: "[OK] Claude         — deep analysis", color: "#a855f7", delay: 850 },
+  { text: "[OK] Perplexity     — research layer", color: "#3b82f6", delay: 1100 },
+  { text: "[OK] Consensus engine — ARMED", color: "#10b981", delay: 1350 },
+  { text: "[OK] Signal pipeline — ACTIVE", color: "#10b981", delay: 1550 },
+  { text: "SYSTEM READY", color: "#10b981", delay: 2200 },
+];
+
+function BootSequence({ onDone }: { onDone: () => void }) {
+  const [visible, setVisible] = useState(true);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDone(true);
+      setTimeout(() => {
+        setVisible(false);
+        onDone();
+      }, 600);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [onDone]);
+
+  if (!visible) return null;
+
+  return (
+    <div className={`boot-overlay ${done ? "boot-done" : ""}`}>
+      <div style={{ textAlign: "left", minWidth: "320px" }}>
+        {BOOT_LINES.map((line, i) => (
+          <div
+            key={i}
+            className="boot-line"
+            style={{
+              fontSize: line.delay === 0 ? "14px" : "12px",
+              fontWeight: line.delay === 0 ? "bold" : "normal",
+              color: line.color,
+              marginBottom: line.text === "SYSTEM READY" ? "0" : "6px",
+              animationDelay: `${line.delay}ms`,
+              letterSpacing: line.delay === 0 ? "2px" : "0",
+            }}
+          >
+            {line.text}
+          </div>
+        ))}
+        <div
+          className="boot-progress-bar boot-line"
+          style={{ animationDelay: "1700ms" }}
+        >
+          <div
+            className="boot-progress-fill"
+            style={{ animationDelay: "1700ms" }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── ECG Heartbeat ─── */
+function ECGHeartbeat() {
+  return (
+    <div className="ecg-container" style={{ marginTop: "8px", marginBottom: "4px" }}>
+      <div className="ecg-track" style={{ width: "640px" }}>
+        <svg width="320" height="40" viewBox="0 0 320 40" fill="none">
+          <polyline
+            points="0,20 30,20 40,20 50,18 55,22 60,20 80,20 90,20 95,10 100,35 105,5 110,30 115,20 130,20 160,20 170,20 180,18 185,22 190,20 210,20 220,20 225,10 230,35 235,5 240,30 245,20 260,20 290,20 300,20 310,20 320,20"
+            stroke="#10b981"
+            strokeWidth="1.5"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <svg width="320" height="40" viewBox="0 0 320 40" fill="none">
+          <polyline
+            points="0,20 30,20 40,20 50,18 55,22 60,20 80,20 90,20 95,10 100,35 105,5 110,30 115,20 130,20 160,20 170,20 180,18 185,22 190,20 210,20 220,20 225,10 230,35 235,5 240,30 245,20 260,20 290,20 300,20 310,20 320,20"
+            stroke="#10b981"
+            strokeWidth="1.5"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Konami Code Easter Egg ─── */
 const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
@@ -1272,9 +1364,13 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const [booted, setBooted] = useState(false);
+
+  const handleBootDone = useCallback(() => setBooted(true), []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      {!booted && <BootSequence onDone={handleBootDone} />}
       <SiteNav />
       <KonamiCode />
       <FloatingCTA />
@@ -1336,7 +1432,9 @@ export default function Home() {
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
               Paper Trading Mode — Founding Spots Open — All Leagues Free
             </div>
+            <ECGHeartbeat />
             <h1
+              className="hero-title-glitch"
               style={{
                 fontSize: "clamp(32px, 5vw, 56px)",
                 fontWeight: "bold",
