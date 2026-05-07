@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "Trading risk warnings and AI disclaimers. Paper trading mode only. Not financial advice.",
     url: "https://coreintent.dev/disclaimer",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
@@ -29,6 +31,7 @@ export const metadata: Metadata = {
       "Trading risk warnings and AI disclaimers. Paper trading only — not financial advice.",
     creator: "@coreintentai",
     site: "@coreintentai",
+    images: ["/opengraph-image.png"],
   },
 };
 
@@ -61,7 +64,7 @@ const structuredData = {
         "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-07",
       inLanguage: "en-NZ",
     },
   ],

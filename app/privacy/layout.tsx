@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "How CoreIntent handles your data. NZ Privacy Act 2020 compliant. Operated under New Zealand law.",
     url: "https://coreintent.dev/privacy",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
@@ -29,6 +31,7 @@ export const metadata: Metadata = {
       "How CoreIntent handles your data. NZ Privacy Act 2020 compliant.",
     creator: "@coreintentai",
     site: "@coreintentai",
+    images: ["/opengraph-image.png"],
   },
 };
 
@@ -61,7 +64,7 @@ const structuredData = {
         "CoreIntent privacy policy — how we handle your data. NZ Privacy Act 2020 compliant.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-07",
       inLanguage: "en-NZ",
     },
   ],
