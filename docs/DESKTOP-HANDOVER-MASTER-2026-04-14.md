@@ -47,7 +47,7 @@
   - `zynKYC` clarification mode
 
 ### Ops Scripts Present
-- VPS scripts exist:
+- VDS scripts exist:
   - `scripts/risk_monitor.ts`
   - `scripts/signal_listener.ts`
   - `scripts/gtrade_listener.ts`
@@ -55,7 +55,7 @@
   - `scripts/deploy-vps.sh`
   - `scripts/deploy-vercel.sh`
   - `scripts/deploy-all.sh`
-- Desktop organization + VPS lens helpers exist:
+- Desktop organization + VDS lens helpers exist:
   - `scripts/zynrip-organize.sh`
   - `scripts/vps-lens.sh`
 
@@ -106,14 +106,14 @@ Rules:
   - safe fallback
   - route-level integration test
 
-## Phase C — VPS productionization
+## Phase C — VDS productionization
 **Goal:** move script files from “exists” to “deployed + supervised + observable”.
 
-1. Configure VPS credentials/secrets and runtime env.
+1. Configure VDS credentials/secrets and runtime env.
 2. Deploy three listeners/monitors.
 3. Add process supervision (`systemd` or equivalent) + restart policy.
 4. Capture logs/health snapshots into a single handover location.
-5. Run `scripts/vps-lens.sh` to produce machine-verified VPS state output.
+5. Run `scripts/vps-lens.sh` to produce machine-verified VDS state output.
 
 **Done when:**
 - risk monitor, signal listener, and gTrade listener are all running under supervision.
@@ -177,7 +177,7 @@ From repo root:
    - `npm run build`
    - `./scripts/audit.sh`
 
-4. VPS state validation (when credentials/session are available)
+4. VDS state validation (when credentials/session are available)
    - `bash scripts/vps-lens.sh`
 
 5. Before every push

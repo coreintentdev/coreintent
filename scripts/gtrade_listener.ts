@@ -1,6 +1,6 @@
 #!/usr/bin/env npx tsx
 /**
- * gtrade_listener — Runs on VPS (Cloudzy)
+ * gtrade_listener — Runs on VDS (Cloudzy)
  * Monitors gTrade DeFi protocol on Polygon/Arbitrum for opportunities.
  * Deploy: COR-20
  */

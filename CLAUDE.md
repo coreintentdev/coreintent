@@ -22,7 +22,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
-5. Deploy files immediately — VPS, GitHub, Google Drive.
+5. Deploy files immediately — VDS, GitHub, Google Drive.
 6. Build passes clean or you don't push.
 7. If you see fake/demo data, label it honestly. Don't hide behind green dots.
 8. Run `./scripts/audit.sh` after making changes to verify nothing broke.
@@ -32,14 +32,15 @@ Based in: New Zealand (NEVER register anything in Australia)
 - 7 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer, /demo
 - 14 API routes in app/api/
 - AI service layer: lib/ai.ts (Grok, Claude, Perplexity with graceful fallback)
-- VPS scripts: scripts/risk_monitor.ts, signal_listener.ts, gtrade_listener.ts
-- Deploy scripts: scripts/deploy-vercel.sh, deploy-vps.sh, deploy-all.sh
+- VDS scripts: scripts/risk_monitor.ts, signal_listener.ts, gtrade_listener.ts
+- Deploy scripts: scripts/deploy-vercel.sh, deploy-vds.sh, deploy-all.sh, deploy-cf-skeletons.sh
 - Audit: scripts/audit.sh
-- VPS Lens: scripts/vps-lens.sh
+- VDS Lens: scripts/vds-lens.sh
 
-## VPS
+## VDS (Cloudzy markets these as VDS, not VPS — terminology matters)
 - Cloudzy: 100.122.99.34
-- VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
+- Auth: SSH key (VDS_SSH_KEY) + panel API token (VDS_TOKEN) for Cloudzy lifecycle ops
+- VDS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
 - 32,503 files, ~19GB
 
 ## Key Decisions (March 2026)
@@ -53,7 +54,9 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Exchange/market routes (market, portfolio, signals, agents) return hardcoded demo data — no live exchange connections
 - protect/research/content routes call live AI APIs when env keys are set; fall back to [DEMO] gracefully when not
 - health/status/connections derive real values from env vars (no hardcoded data)
-- VPS scripts written but never deployed (COR-20, overdue)
+- VDS scripts written but never deployed (COR-20, overdue)
+- 48 Cloudflare Pages skeleton sites pending deploy — Claude Desktop sessions report "no token". Set CLOUDFLARE_API_TOKEN in .env; use scripts/deploy-cf-skeletons.sh.
+- Terminology: it's VDS (Virtual Dedicated Server) per Cloudzy, NOT VPS. Earlier sessions used VPS; corrected on branch claude/fix-vds-token-tvSRH (2026-05-07).
 - No user authentication yet
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI rendering (XSS mitigated: HTML escaped first, only allowlisted ANSI codes converted to spans)

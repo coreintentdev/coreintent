@@ -91,7 +91,7 @@ npm start        # Start server
 ```
 
 Vercel: Connect repo → auto-deploys.
-VPS: `scripts/` directory for trading engine backend.
+VDS: `scripts/` directory for trading engine backend (Cloudzy VDS — set VDS_HOST / VDS_USER / VDS_SSH_KEY / VDS_TOKEN in .env).
 
 ## License
 

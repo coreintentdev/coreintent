@@ -1,6 +1,6 @@
 #!/usr/bin/env npx tsx
 /**
- * risk_monitor — Runs on VPS (Cloudzy)
+ * risk_monitor — Runs on VDS (Cloudzy)
  * Monitors portfolio risk, triggers circuit breakers at 0.8% loss.
  * Deploy: COR-20
  */

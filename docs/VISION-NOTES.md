@@ -92,9 +92,9 @@
 
 ---
 
-## VPS STATUS (NEEDS FIXING)
-- Cloudzy VPS credentials: EMPTY (never configured)
-- COR-20 (Deploy VPS Scripts): NEVER COMPLETED
+## VDS STATUS (NEEDS FIXING)
+- Cloudzy VDS credentials: EMPTY (never configured)
+- COR-20 (Deploy VDS Scripts): NEVER COMPLETED
 - Scripts needed: risk_monitor, gtrade_listener, signal_listener
 - 70 days past Jan 17 launch date
 

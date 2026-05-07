@@ -52,8 +52,8 @@ const INCIDENTS: Incident[] = [
     autoUpdate: true, detectedAt: "2026-01-13T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
   {
-    id: "INC-003", service: "VPS Deployment", status: "detected", severity: "critical",
-    message: "Cloudzy VPS has credentials but scripts were never deployed. COR-20 was 70+ days overdue. 3 scripts (risk_monitor, signal_listener, gtrade_listener) exist in repo but never reached the server.",
+    id: "INC-003", service: "VDS Deployment", status: "detected", severity: "critical",
+    message: "Cloudzy VDS has credentials but scripts were never deployed. COR-20 was 70+ days overdue. 3 scripts (risk_monitor, signal_listener, gtrade_listener) exist in repo but never reached the server.",
     autoUpdate: true, detectedAt: "2026-01-17T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
   {
@@ -63,7 +63,7 @@ const INCIDENTS: Incident[] = [
   },
   {
     id: "INC-005", service: "Project Delivery", status: "detected", severity: "critical",
-    message: "After months of AI sessions and real money spent: 14 API routes return demo data, 0 exchange connections are live, 0 VPS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
+    message: "After months of AI sessions and real money spent: 14 API routes return demo data, 0 exchange connections are live, 0 VDS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
     autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-04-30T00:00:00Z",
   },
   {
@@ -90,7 +90,7 @@ const MONITORED_SERVICES: readonly MonitoredService[] = [
   { name: "OpenClaw",             status: "degraded",       uptime: "0%",    note: "Frequently crashing, unknown service" },
   { name: "Cloudflare CDN",       status: "not_configured", uptime: "0%",    note: "Pro plan — not configured for coreintent.dev" },
   { name: "Vercel Hosting",       status: "not_deployed",   uptime: "0%",    note: "App ready for Vercel — never deployed" },
-  { name: "Cloudzy VPS",          status: "not_deployed",   uptime: "0%",    note: "Server provisioned — scripts never deployed" },
+  { name: "Cloudzy VDS",          status: "not_deployed",   uptime: "0%",    note: "Server provisioned — scripts never deployed" },
   { name: "X Premium+ API",       status: "not_configured", uptime: "0%",    note: "Account exists — API not wired" },
   { name: "Linear",               status: "operational",    uptime: "N/A",   note: "26 tasks, 3 completed, no cross-links" },
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },

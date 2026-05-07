@@ -105,7 +105,7 @@ These 4 branches have appeared in every health scan since the 5th pass with no a
 | XSS risk in `components/Terminal.tsx` | High | **Open** — `dangerouslySetInnerHTML` for ANSI; mitigated but not resolved; open since pass 1 |
 | 14 API routes return demo data | Medium | Open — intentional, correctly labelled |
 | No auth / no database | Medium | Open — intentional for now |
-| VPS scripts never deployed | Medium | Open — COR-20, overdue |
+| VDS scripts never deployed | Medium | Open — COR-20, overdue |
 
 ---
 
@@ -284,7 +284,7 @@ This branch contains Circuit Breaker, Correlation Engine, Anomaly Detection, Pip
 - [ ] **Review and create PRs for new coreintent cursor branches** (9 new this pass): `cursoraitwin-component-bugs-16c8`, `cursorcode-quality-and-audit-report-9199`, `cursorcounter-timer-and-arrows-d9e5`, `cursorlanding-page-data-consistency-1c0d`, etc.
 - [ ] **Delete Zynthio stale branches**: `music-pipeline`, `music-pipeline-setup`, `music/pipeline-setup` — superseded by feat/* branches
 - [ ] **Enable branch auto-delete on merge** in GitHub settings for all 3 repos (prevents future sprawl)
-- [ ] **Deploy VPS scripts** (coreintent — COR-20 overdue)
+- [ ] **Deploy VDS scripts** (coreintent — COR-20 overdue)
 
 ### 🔵 Low / Ongoing
 

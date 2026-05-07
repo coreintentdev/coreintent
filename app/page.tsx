@@ -1049,7 +1049,7 @@ const STACK_COSTS = [
   { service: "Cloudflare Pro", role: "CDN, WAF, DDoS", cost: "$20/mo" },
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },
-  { service: "Cloudzy VPS", role: "Trading backend", cost: "~$25/mo" },
+  { service: "Cloudzy VDS", role: "Trading backend", cost: "~$25/mo" },
 ];
 
 /* ─── Hard Rules ─── */
@@ -1464,7 +1464,7 @@ export default function Home() {
                 { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies. One model guessing vs three debating — that's not marginal, that's fundamental.", color: "#a855f7" },
                 { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card — not your autopay.", color: "#10b981" },
                 { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Stack.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership. Subscriptions aren't a business model — they're extraction.", color: "#f59e0b" },
+                { label: "$45/mo. The Whole Stack.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VDS: $25. Infrastructure costs less than a gym membership. Subscriptions aren't a business model — they're extraction.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -2277,7 +2277,7 @@ npm run build           # Production build`}
               <p>CoreIntent is organized into five pillars:</p>
               <ul style={{ paddingLeft: "20px", marginTop: "8px" }}>
                 <li><strong>BRAIN</strong> — AI model orchestration (Claude, Grok, Perplexity)</li>
-                <li><strong>OPS</strong> — VPS deployment, Docker, monitoring</li>
+                <li><strong>OPS</strong> — VDS deployment, Docker, monitoring</li>
                 <li><strong>GROWTH</strong> — Community, marketing, partnerships</li>
                 <li><strong>LAUNCH</strong> — Mainnet deployment &amp; release management</li>
                 <li><strong>COMMAND</strong> — Web terminal &amp; control center</li>

@@ -1,7 +1,7 @@
 /**
  * /api/agents — List all CoreIntent trading agents and their current status.
  *
- * Returns DEMO data until agents are deployed to the Cloudzy VPS (COR-20).
+ * Returns DEMO data until agents are deployed to the Cloudzy VDS (COR-20).
  * Agent names, models, and task descriptions reflect the real planned architecture.
  *
  * Query params:
@@ -28,7 +28,7 @@ interface AgentsResponse {
   totalActive:     number;
   totalPaused:     number;
   totalProcessing: number;
-  /** demo = VPS not yet deployed; live = agents running on Cloudzy */
+  /** demo = VDS not yet deployed; live = agents running on Cloudzy */
   mode:            "demo" | "live";
   timestamp:       string;
 }

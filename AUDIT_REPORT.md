@@ -69,16 +69,16 @@ Generated: Thu May  7 06:41:10 UTC 2026
 
 ## 9. Dependencies
 
-## 10. VPS & Deployment
-- PASS: VPS script exists: scripts/risk_monitor.ts
-- PASS: VPS script exists: scripts/signal_listener.ts
-- PASS: VPS script exists: scripts/gtrade_listener.ts
-- PASS: Deploy script exists: scripts/deploy-vps.sh
+## 10. VDS & Deployment
+- PASS: VDS script exists: scripts/risk_monitor.ts
+- PASS: VDS script exists: scripts/signal_listener.ts
+- PASS: VDS script exists: scripts/gtrade_listener.ts
+- PASS: Deploy script exists: scripts/deploy-vds.sh
 - PASS: Deploy script exists: scripts/deploy-vercel.sh
 - PASS: Deploy script exists: scripts/deploy-all.sh
 - PASS: Executable: scripts/deploy-all.sh
 - PASS: Executable: scripts/deploy-vercel.sh
-- PASS: Executable: scripts/deploy-vps.sh
+- PASS: Executable: scripts/deploy-vds.sh
 
 
 ## Summary

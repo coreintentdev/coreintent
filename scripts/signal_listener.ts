@@ -1,6 +1,6 @@
 #!/usr/bin/env npx tsx
 /**
- * signal_listener — Runs on VPS (Cloudzy)
+ * signal_listener — Runs on VDS (Cloudzy)
  * Listens for trading signals from AI agents, validates, and queues execution.
  * Deploy: COR-20
  */
