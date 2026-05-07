@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import AITwin from "@/components/AITwin";
+import AITwinLoader from "@/components/AITwinLoader";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -254,7 +254,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         {children}
-        <AITwin />
+        <AITwinLoader />
       </body>
     </html>
   );

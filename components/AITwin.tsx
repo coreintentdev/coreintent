@@ -326,9 +326,11 @@ export default function AITwin() {
 
     window.addEventListener("keydown", wake, { once: true });
     window.addEventListener("mousemove", wake, { once: true });
+    window.addEventListener("touchstart", wake, { once: true });
     return () => {
       window.removeEventListener("keydown", wake);
       window.removeEventListener("mousemove", wake);
+      window.removeEventListener("touchstart", wake);
     };
   }, [mounted, addMessage]);
 
