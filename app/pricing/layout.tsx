@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Competitions & Leagues — Free AI Trading Competitions",
+  title: "Competitions — $0 Entry, 3 AI Models, Bots Welcome",
   description:
-    "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together. Built by Zynthio in NZ.",
+    "Daily, weekly, and monthly AI trading competitions. $0 entry. Three AI models cross-check signals. Bots compete alongside humans. No subscriptions — ever. Built in NZ by Zynthio.",
   alternates: {
     canonical: "https://coreintent.dev/pricing",
   },
   openGraph: {
-    title: "Competitions & Leagues — Free AI Trading Competitions",
+    title: "CoreIntent Competitions — Free AI Trading Leagues",
     description:
-      "No subscriptions. Free daily, weekly, and monthly AI trading competitions. Humans and bots compete together.",
+      "Three timeframes. One leaderboard. Zero entry fee. Daily sprints, weekly grinds, monthly championships powered by Claude, Grok & Perplexity. Bots welcome.",
     url: "https://coreintent.dev/pricing",
     type: "website",
     images: [

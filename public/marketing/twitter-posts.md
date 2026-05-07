@@ -1111,3 +1111,101 @@ Transparency isn't just about labels. It's about deadlines.
 coreintent.dev/pricing
 
 #Accountability #BuildInPublic #CoreIntent
+
+---
+
+## Post 66 — The AI Arms Race Is Over
+
+The AI arms race in trading isn't about having the best model.
+
+It's about having the best *disagreement.*
+
+Single-model platforms: "Model says buy. We buy."
+CoreIntent: "Grok says buy. Claude says risky. Perplexity says whale movement. We investigate."
+
+The arms race ended. The debate era started.
+
+#AITrading #MultiModelAI #CoreIntent
+
+---
+
+## Post 67 — What $2,376 Buys You
+
+$2,376.
+
+That's what a $99/mo trading subscription costs over 2 years.
+
+For that money you could:
+- Fund a small business
+- Buy 52 books on trading psychology
+- Put it into your actual portfolio
+- Or use CoreIntent for free and keep every cent
+
+The math speaks for itself.
+
+coreintent.dev/pricing
+
+#FinTech #TradingSavings #CoreIntent
+
+---
+
+## Post 68 — The Content Is Open Source Too
+
+We didn't just open-source the code.
+
+We open-sourced:
+-> 65 tweets
+-> 14 LinkedIn posts
+-> 19 TikTok scripts
+-> 18 Instagram captions
+-> YouTube descriptions
+-> Reddit launch posts
+-> Product Hunt launch template
+-> Press kit, one-pager, media kit
+
+All in /public/ on GitHub.
+
+Copy our marketing too. We dare you. Twice.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #ContentMarketing #BuildInPublic
+
+---
+
+## Post 69 — The Paper Trading Defense
+
+"Paper trading isn't real."
+
+Neither is burning $99/mo on signals that work 40% of the time.
+
+At least we're honest about it.
+
+Paper trading is R&D. Subscriptions charging for unvalidated signals is negligence with a payment form.
+
+We'll go live when the architecture earns it. Not when the investors demand it.
+
+#PaperTrading #HonestTech #CoreIntent
+
+---
+
+## Post 70 — The Three-Model Guarantee
+
+Every platform promises "AI-powered."
+
+Here's what that usually means: one API call to one model, wrapped in a dashboard.
+
+Here's what it means at CoreIntent:
+1. Grok scans for the opportunity
+2. Claude challenges the thesis
+3. Perplexity checks the facts
+4. RiskGuard enforces the limits
+5. Only consensus survives
+
+Three models. Four filters. One signal.
+
+That's not "AI-powered." That's AI-governed.
+
+coreintent.dev
+
+#AITrading #MultiModel #CoreIntent

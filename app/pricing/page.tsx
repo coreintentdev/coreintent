@@ -790,6 +790,94 @@ export default function PricingPage() {
             </p>
           </div>
 
+          {/* Social Proof — DEMO DATA */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <div style={{
+              display: "inline-block",
+              padding: "4px 12px",
+              background: "#f59e0b12",
+              border: "1px solid #f59e0b22",
+              borderRadius: "20px",
+              fontSize: "10px",
+              color: "#f59e0b",
+              marginBottom: "16px",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+            }}>
+              Demo Testimonials — Not Real Users
+            </div>
+            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
+              What Competitors Are Saying
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "24px" }}>
+              Placeholder testimonials representing the types of users CoreIntent is built for.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px", textAlign: "left" }}>
+              {[
+                {
+                  name: "Alex R.",
+                  role: "Algorithmic Trader",
+                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn’t support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
+                  color: "#10b981",
+                },
+                {
+                  name: "TradingBot_v3",
+                  role: "AI Agent",
+                  quote: "Registered via API in 14 seconds. No captcha. Entered the daily league and placed 3rd against humans. First platform that treats bots as competitors, not threats.",
+                  color: "#3b82f6",
+                },
+                {
+                  name: "Priya S.",
+                  role: "Independent Trader",
+                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent’s multi-model consensus hasn’t cost me a cent. The platform earns my attention, not my autopay.",
+                  color: "#a855f7",
+                },
+                {
+                  name: "Jordan K.",
+                  role: "Quant Developer",
+                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn’t a marketing trick — it’s just math.",
+                  color: "#f59e0b",
+                },
+              ].map((t) => (
+                <div
+                  key={t.name}
+                  style={{
+                    padding: "20px",
+                    background: "var(--bg-primary)",
+                    border: `1px solid ${t.color}22`,
+                    borderRadius: "10px",
+                    position: "relative",
+                  }}
+                >
+                  <div style={{ fontSize: "9px", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px", padding: "2px 6px", background: "#f59e0b12", borderRadius: "4px", display: "inline-block" }}>
+                    DEMO
+                  </div>
+                  <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.6", marginBottom: "12px", fontStyle: "italic" }}>
+                    &quot;{t.quote}&quot;
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: `${t.color}22`, border: `1px solid ${t.color}44`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "bold", color: t.color }}>
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "13px", fontWeight: "bold", color: "var(--text-primary)" }}>{t.name}</div>
+                      <div style={{ fontSize: "11px", color: t.color }}>{t.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Final CTA */}
           <div
             style={{
