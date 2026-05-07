@@ -943,6 +943,7 @@ html {
     bottom: 16px !important;
     right: 16px !important;
     left: 16px !important;
+    flex-direction: column !important;
   }
 
   .floating-cta-btn {
@@ -1336,16 +1337,3 @@ a:focus-visible {
   }
 }
 
-@media (max-width: 768px) {
-  .floating-cta {
-    bottom: 16px !important;
-    right: 16px !important;
-    left: 16px !important;
-    flex-direction: column !important;
-  }
-
-  .floating-cta-btn {
-    width: 100% !important;
-    justify-content: center !important;
-  }
-}
