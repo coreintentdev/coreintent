@@ -40,7 +40,9 @@ export async function generateMetadata({
 
   const alternateLanguages: Record<string, string> = {};
   for (const loc of locales) {
-    alternateLanguages[localeBcp47[loc]] = `https://coreintent.dev/${loc}`;
+    alternateLanguages[localeBcp47[loc]] = loc === "en"
+      ? "https://coreintent.dev"
+      : `https://coreintent.dev/${loc}`;
   }
 
   return {
@@ -51,7 +53,9 @@ export async function generateMetadata({
     description,
     metadataBase: new URL("https://coreintent.dev"),
     alternates: {
-      canonical: `https://coreintent.dev/${locale === "en" ? "" : locale}`,
+      canonical: locale === "en"
+        ? "https://coreintent.dev"
+        : `https://coreintent.dev/${locale}`,
       languages: alternateLanguages,
     },
     openGraph: {

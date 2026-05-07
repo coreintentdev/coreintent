@@ -1427,7 +1427,7 @@ export default function Home() {
                 Enter the Arena &rarr;
               </button>
               <Link
-                href="/pricing"
+                href="pricing"
                 className="cta-secondary"
                 style={{
                   padding: "18px 44px",
@@ -1562,7 +1562,7 @@ export default function Home() {
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
               <Link
-                href="/pricing"
+                href="pricing"
                 style={{
                   display: "inline-block",
                   padding: "10px 24px",
