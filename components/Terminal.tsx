@@ -105,6 +105,13 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mtrain\x1b[0m       - Watch the neural network learn in real time
   \x1b[32mmission\x1b[0m     - Signal infiltration — interactive AI trading op
 
+  \x1b[33m── GAMES ──\x1b[0m
+  \x1b[32mblackjack\x1b[0m   - Play 21 against the trading engine
+  \x1b[32mtrivia\x1b[0m      - Crypto & trading knowledge quiz
+  \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds)
+  \x1b[32mslots\x1b[0m       - Crypto slot machine
+  \x1b[32mmission\x1b[0m     - Interactive AI trading operation
+
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
   \x1b[32mcowsay\x1b[0m      - ASCII cow wisdom
@@ -651,6 +658,7 @@ const ALL_COMMANDS = [
   "arena", "dna", "train",
   "quantum", "waveform", "worldmap", "spectrum",
   "mission", "accept", "abort", "analyze", "execute",
+  "blackjack", "hit", "stand", "trivia", "a", "b", "c", "d",
 ];
 
 export default function Terminal() {
@@ -688,6 +696,17 @@ export default function Terminal() {
     grokVote: string;
     claudeVote: string;
     perplexityVote: string;
+  } | null>(null);
+  const blackjackRef = useRef<{
+    deck: { rank: string; suit: string; value: number }[];
+    di: number;
+    playerHand: { rank: string; suit: string; value: number }[];
+    dealerHand: { rank: string; suit: string; value: number }[];
+    done: boolean;
+  } | null>(null);
+  const triviaRef = useRef<{
+    question: { q: string; opts: string[]; ans: number };
+    answered: boolean;
   } | null>(null);
 
   useEffect(() => {
@@ -2950,6 +2969,103 @@ export default function Terminal() {
       return "";
     }
 
+    // ── BLACKJACK: Play 21 against the trading engine ──
+    if (trimmed === "blackjack") {
+      const suits = ["♠", "♥", "♦", "♣"];
+      const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+      const deck: { rank: string; suit: string; value: number }[] = [];
+      for (const s of suits) {
+        for (let ri = 0; ri < ranks.length; ri++) {
+          const v = ri === 0 ? 11 : ri >= 10 ? 10 : ri + 1;
+          deck.push({ rank: ranks[ri], suit: s, value: v });
+        }
+      }
+      for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+      }
+      let di = 0;
+      const draw = () => deck[di++];
+      const handVal = (hand: typeof deck) => {
+        let total = hand.reduce((s, c) => s + c.value, 0);
+        let aces = hand.filter((c) => c.rank === "A").length;
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      };
+      const showCard = (c: typeof deck[0]) => {
+        const isRed = c.suit === "♥" || c.suit === "♦";
+        return isRed
+          ? `\x1b[31m[${c.rank}${c.suit}]\x1b[0m`
+          : `\x1b[37m[${c.rank}${c.suit}]\x1b[0m`;
+      };
+
+      const playerHand = [draw(), draw()];
+      const dealerHand = [draw(), draw()];
+
+      blackjackRef.current = { deck, di, playerHand, dealerHand, done: false };
+
+      const pCards = playerHand.map(showCard).join(" ");
+      const pVal = handVal(playerHand);
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ BLACKJACK — CoreIntent Casino ══\x1b[0m`,
+        `\x1b[90m  Beat the Trading Engine at 21. Paper chips only.\x1b[0m`,
+        ``,
+        `  \x1b[33mDealer:\x1b[0m ${showCard(dealerHand[0])} \x1b[90m[??]\x1b[0m`,
+        `  \x1b[33mYou:\x1b[0m    ${pCards}  \x1b[36m= ${pVal}\x1b[0m`,
+        ``
+      );
+      if (pVal === 21) {
+        const dVal = handVal(dealerHand);
+        const dCards = dealerHand.map(showCard).join(" ");
+        blackjackRef.current.done = true;
+        if (dVal === 21) {
+          addLines(`  \x1b[33mPush!\x1b[0m Both got Blackjack.`, `  \x1b[33mDealer:\x1b[0m ${dCards}  \x1b[36m= ${dVal}\x1b[0m`, ``);
+        } else {
+          addLines(`  \x1b[32m★ BLACKJACK! ★\x1b[0m You win!`, `  \x1b[33mDealer:\x1b[0m ${dCards}  \x1b[36m= ${dVal}\x1b[0m`, ``);
+        }
+      } else {
+        addLines(`  \x1b[90m→ Type\x1b[0m \x1b[32mhit\x1b[0m \x1b[90mor\x1b[0m \x1b[33mstand\x1b[0m`);
+      }
+      return "";
+    }
+
+    // ── TRIVIA: Crypto & trading knowledge quiz ──
+    if (trimmed === "trivia") {
+      const questions = [
+        { q: "What year was Bitcoin's genesis block mined?", opts: ["2007", "2008", "2009", "2010"], ans: 2 },
+        { q: "What is the maximum supply of Bitcoin?", opts: ["18M", "21M", "100M", "Unlimited"], ans: 1 },
+        { q: "Which consensus mechanism does Ethereum use post-Merge?", opts: ["Proof of Work", "Proof of Stake", "Proof of Authority", "DPoS"], ans: 1 },
+        { q: "What does 'HODL' stand for?", opts: ["Hold On for Dear Life", "A typo of 'hold'", "High Output Daily Leverage", "Holding Old Digital Loot"], ans: 1 },
+        { q: "What is the Fear & Greed Index range?", opts: ["1-10", "0-100", "-100 to 100", "1-1000"], ans: 1 },
+        { q: "What does RSI measure in trading?", opts: ["Risk Score Index", "Relative Strength Index", "Real Signal Indicator", "Revenue Share Income"], ans: 1 },
+        { q: "What is a 'dead cat bounce'?", opts: ["A new ATH after a crash", "A brief recovery in a downtrend", "A stablecoin depeg", "A mining term"], ans: 1 },
+        { q: "How many AI models does CoreIntent use for consensus?", opts: ["1", "2", "3", "5"], ans: 2 },
+        { q: "What is the 'halving' in Bitcoin?", opts: ["Price drops 50%", "Block reward is cut in half", "Network splits in two", "Hash rate halves"], ans: 1 },
+        { q: "What does DeFi stand for?", opts: ["Definite Finance", "Decentralized Finance", "Derivative Fidelity", "Digital Fintech"], ans: 1 },
+        { q: "What is CoreIntent's pricing model?", opts: ["$99/mo subscription", "Freemium", "Competitions, not subscriptions", "Pay per trade"], ans: 2 },
+        { q: "What is a 'rug pull' in crypto?", opts: ["A mining technique", "Devs abandon project with funds", "A bullish pattern", "A type of staking"], ans: 1 },
+      ];
+
+      const qi = Math.floor(Math.random() * questions.length);
+      const question = questions[qi];
+      triviaRef.current = { question, answered: false };
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ CRYPTO TRIVIA — Test Your Knowledge ══\x1b[0m`,
+        ``,
+        `  \x1b[33m${question.q}\x1b[0m`,
+        ``
+      );
+      question.opts.forEach((opt, i) => {
+        const letter = ["A", "B", "C", "D"][i];
+        addLines(`    \x1b[32m${letter}.\x1b[0m ${opt}`);
+      });
+      addLines(``, `  \x1b[90m→ Type\x1b[0m \x1b[32ma\x1b[0m\x1b[90m,\x1b[0m \x1b[32mb\x1b[0m\x1b[90m,\x1b[0m \x1b[32mc\x1b[0m\x1b[90m, or\x1b[0m \x1b[32md\x1b[0m`);
+      return "";
+    }
+
     // ── MISSION: Interactive signal infiltration narrative ──
     if (trimmed === "mission") {
       const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
@@ -3100,6 +3216,108 @@ export default function Terminal() {
 
   // Process command with && chaining support
   const processCommand = useCallback(async (cmd: string) => {
+    // ── Blackjack interactive handler ──
+    const bj = blackjackRef.current;
+    if (bj && !bj.done) {
+      const choice = cmd.trim().toLowerCase();
+      const handVal = (hand: typeof bj.playerHand) => {
+        let total = hand.reduce((s, c) => s + c.value, 0);
+        let aces = hand.filter((c) => c.rank === "A").length;
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      };
+      const showCard = (c: typeof bj.playerHand[0]) => {
+        const isRed = c.suit === "♥" || c.suit === "♦";
+        return isRed ? `\x1b[31m[${c.rank}${c.suit}]\x1b[0m` : `\x1b[37m[${c.rank}${c.suit}]\x1b[0m`;
+      };
+
+      if (choice === "hit") {
+        const card = bj.deck[bj.di++];
+        bj.playerHand.push(card);
+        const pCards = bj.playerHand.map(showCard).join(" ");
+        const pVal = handVal(bj.playerHand);
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `  \x1b[33mYou drew:\x1b[0m ${showCard(card)}`);
+        addLines(`  \x1b[33mYour hand:\x1b[0m ${pCards}  \x1b[36m= ${pVal}\x1b[0m`);
+        if (pVal > 21) {
+          bj.done = true;
+          addLines(``, `  \x1b[31m✗ BUST!\x1b[0m You went over 21. Dealer wins.`);
+          const dCards = bj.dealerHand.map(showCard).join(" ");
+          addLines(`  \x1b[33mDealer:\x1b[0m ${dCards}  \x1b[36m= ${handVal(bj.dealerHand)}\x1b[0m`, ``, `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``);
+        } else if (pVal === 21) {
+          addLines(`  \x1b[32m21!\x1b[0m Auto-standing...`, ``);
+          let dVal = handVal(bj.dealerHand);
+          while (dVal < 17) {
+            const dc = bj.deck[bj.di++];
+            bj.dealerHand.push(dc);
+            dVal = handVal(bj.dealerHand);
+          }
+          const dCards = bj.dealerHand.map(showCard).join(" ");
+          bj.done = true;
+          addLines(`  \x1b[33mDealer:\x1b[0m ${dCards}  \x1b[36m= ${dVal}\x1b[0m`);
+          if (dVal > 21) addLines(`  \x1b[32m★ Dealer BUSTS! You win! ★\x1b[0m`);
+          else if (pVal > dVal) addLines(`  \x1b[32m★ YOU WIN! ★\x1b[0m`);
+          else if (pVal === dVal) addLines(`  \x1b[33mPush! It's a tie.\x1b[0m`);
+          else addLines(`  \x1b[31mDealer wins.\x1b[0m`);
+          addLines(``, `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``);
+        } else {
+          addLines(``, `  \x1b[90m→ Type\x1b[0m \x1b[32mhit\x1b[0m \x1b[90mor\x1b[0m \x1b[33mstand\x1b[0m`);
+        }
+        return;
+      } else if (choice === "stand") {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `  \x1b[33mYou stand.\x1b[0m Dealer reveals...`, ``);
+        const pVal = handVal(bj.playerHand);
+        let dVal = handVal(bj.dealerHand);
+        while (dVal < 17) {
+          const dc = bj.deck[bj.di++];
+          bj.dealerHand.push(dc);
+          dVal = handVal(bj.dealerHand);
+        }
+        const dCards = bj.dealerHand.map(showCard).join(" ");
+        const pCards = bj.playerHand.map(showCard).join(" ");
+        bj.done = true;
+        addLines(`  \x1b[33mYour hand:\x1b[0m  ${pCards}  \x1b[36m= ${pVal}\x1b[0m`);
+        addLines(`  \x1b[33mDealer:\x1b[0m     ${dCards}  \x1b[36m= ${dVal}\x1b[0m`, ``);
+        if (dVal > 21) addLines(`  \x1b[32m★ Dealer BUSTS! You win! ★\x1b[0m`);
+        else if (pVal > dVal) addLines(`  \x1b[32m★ YOU WIN! ★\x1b[0m`);
+        else if (pVal === dVal) addLines(`  \x1b[33mPush! It's a tie.\x1b[0m`);
+        else addLines(`  \x1b[31mDealer wins. ${dVal} beats ${pVal}.\x1b[0m`);
+        addLines(``, `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``);
+        return;
+      }
+    }
+
+    // ── Trivia interactive handler ──
+    const trv = triviaRef.current;
+    if (trv && !trv.answered) {
+      const choice = cmd.trim().toLowerCase();
+      const ansMap: Record<string, number> = { a: 0, b: 1, c: 2, d: 3 };
+      if (choice in ansMap) {
+        trv.answered = true;
+        const picked = ansMap[choice];
+        const correct = trv.question.ans;
+        const letters = ["A", "B", "C", "D"];
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+        if (picked === correct) {
+          addLines(
+            ``,
+            `  \x1b[32m★ CORRECT! ★\x1b[0m`,
+            `  \x1b[90mThe answer is\x1b[0m \x1b[32m${letters[correct]}. ${trv.question.opts[correct]}\x1b[0m`,
+            ``,
+            `  \x1b[90mType \x1b[32mtrivia\x1b[90m for another question.\x1b[0m`, ``
+          );
+        } else {
+          addLines(
+            ``,
+            `  \x1b[31m✗ Wrong.\x1b[0m You picked \x1b[33m${letters[picked]}. ${trv.question.opts[picked]}\x1b[0m`,
+            `  \x1b[90mCorrect answer:\x1b[0m \x1b[32m${letters[correct]}. ${trv.question.opts[correct]}\x1b[0m`,
+            ``,
+            `  \x1b[90mType \x1b[32mtrivia\x1b[90m for another question.\x1b[0m`, ``
+          );
+        }
+        return;
+      }
+    }
+
     const mission = missionRef.current;
     if (mission && mission.phase === 1) {
       const choice = cmd.trim().toLowerCase();

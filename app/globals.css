@@ -1418,3 +1418,118 @@ html {
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   BOOT SEQUENCE
+   ═══════════════════════════════════════════ */
+
+@keyframes bootFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bootScanline {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+@keyframes bootProgressFill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes bootFlicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.8; }
+  97% { opacity: 1; }
+  98% { opacity: 0.6; }
+}
+
+.boot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #050810;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  animation: bootFlicker 4s ease-in-out;
+}
+
+.boot-overlay.boot-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.boot-overlay::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #10b98144, transparent);
+  animation: bootScanline 2s linear infinite;
+  pointer-events: none;
+}
+
+.boot-line {
+  opacity: 0;
+  animation: bootFadeIn 0.3s ease forwards;
+}
+
+.boot-progress-bar {
+  width: 200px;
+  height: 3px;
+  background: #1e293b;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.boot-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  border-radius: 2px;
+  animation: bootProgressFill 1.8s ease-in-out forwards;
+  box-shadow: 0 0 8px #10b98166;
+}
+
+/* ═══════════════════════════════════════════
+   ECG HEARTBEAT
+   ═══════════════════════════════════════════ */
+
+@keyframes ecgScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ecg-container {
+  overflow: hidden;
+  height: 40px;
+  max-width: 320px;
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+.ecg-track {
+  display: flex;
+  animation: ecgScroll 3s linear infinite;
+}
+
+/* ═══════════════════════════════════════════
+   HERO TITLE GLITCH
+   ═══════════════════════════════════════════ */
+
+@keyframes heroGlitch {
+  0%, 94%, 100% { transform: none; filter: none; }
+  95% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+  96% { transform: translate(2px, -1px); filter: hue-rotate(-90deg); }
+  97% { transform: translate(-1px, 0); filter: none; }
+}
+
+.hero-title-glitch {
+  animation: heroGlitch 8s ease-in-out infinite;
+}
