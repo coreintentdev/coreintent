@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
     url: "https://coreintent.dev/stack",
+    siteName: "CoreIntent",
+    locale: "en_NZ",
     type: "website",
     images: [
       {
@@ -60,7 +62,7 @@ const structuredData = {
         "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure.",
       url: "https://coreintent.dev/stack",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-07",
       author: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",

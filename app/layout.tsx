@@ -234,7 +234,7 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-07",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
