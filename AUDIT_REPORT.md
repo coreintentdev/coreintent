@@ -1,19 +1,19 @@
 # CoreIntent Audit Report
-Generated: Thu May  7 05:56:30 UTC 2026
+Generated: Thu May  7 06:35:14 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
-- INFO: Routes found: 35
+- INFO: Routes found: 29
 - PASS: TypeScript compiles (strict mode)
 - PASS: ESLint passes
 
 ## 2. Pages
 - PASS: Page exists: app/page.tsx
-- PASS: Page exists: app/pricing/page.tsx
-- PASS: Page exists: app/stack/page.tsx
-- PASS: Page exists: app/privacy/page.tsx
-- PASS: Page exists: app/terms/page.tsx
-- PASS: Page exists: app/disclaimer/page.tsx
+- PASS: Page exists: app/[locale]/pricing/page.tsx
+- PASS: Page exists: app/[locale]/stack/page.tsx
+- PASS: Page exists: app/[locale]/privacy/page.tsx
+- PASS: Page exists: app/[locale]/terms/page.tsx
+- PASS: Page exists: app/[locale]/disclaimer/page.tsx
 
 ## 3. Legal Compliance
 - PASS: Privacy policy page exists
@@ -28,9 +28,9 @@ Generated: Thu May  7 05:56:30 UTC 2026
 - PASS: robots.txt exists
 - PASS: Sitemap exists
 - PASS: Favicon exists
-- PASS: Page metadata: app/privacy/page.tsx
-- PASS: Page metadata: app/terms/page.tsx
-- PASS: Page metadata: app/disclaimer/page.tsx
+- PASS: Page metadata: app/[locale]/privacy/page.tsx
+- PASS: Page metadata: app/[locale]/terms/page.tsx
+- PASS: Page metadata: app/[locale]/disclaimer/page.tsx
 
 ## 5. Security
 - PASS: X-Frame-Options header configured
@@ -39,23 +39,23 @@ Generated: Thu May  7 05:56:30 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:3435:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:3453:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
 - PASS: Shared SiteFooter component exists
-- PASS: Shared nav/footer used: app/pricing/page.tsx
-- PASS: Shared nav/footer used: app/stack/page.tsx
-- PASS: Shared nav/footer used: app/privacy/page.tsx
-- PASS: Shared nav/footer used: app/terms/page.tsx
-- PASS: Shared nav/footer used: app/disclaimer/page.tsx
-- PASS: next/link used in 5 files
+- PASS: Shared nav/footer used: app/[locale]/pricing/page.tsx
+- PASS: Shared nav/footer used: app/[locale]/stack/page.tsx
+- PASS: Shared nav/footer used: app/[locale]/privacy/page.tsx
+- PASS: Shared nav/footer used: app/[locale]/terms/page.tsx
+- PASS: Shared nav/footer used: app/[locale]/disclaimer/page.tsx
+- PASS: next/link used in 6 files
 
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:292:  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
-  app/page.tsx:1006:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:1007:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/[locale]/page.tsx:293:  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
+  app/[locale]/page.tsx:1007:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/[locale]/page.tsx:1008:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -64,8 +64,8 @@ Generated: Thu May  7 05:56:30 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (18 instances)
-- PASS: HTML lang attribute set
+- PASS: ARIA attributes found (22 instances)
+- PASS: HTML lang attribute set (i18n-aware)
 
 ## 9. Dependencies
 

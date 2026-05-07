@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale } from "@/lib/locale-context";
 
 export default function SiteFooter() {
+  const { locale, t } = useLocale();
+
   return (
     <footer
       style={{
@@ -33,9 +38,9 @@ export default function SiteFooter() {
           >
             CoreIntent
           </div>
-          <p>Agentic AI Trading Engine</p>
+          <p>{t("footer.tagline")}</p>
           <p style={{ marginTop: "4px" }}>
-            Built by Corey McIvor | Zynthio.ai
+            {t("footer.builtBy")}
           </p>
         </div>
 
@@ -45,38 +50,38 @@ export default function SiteFooter() {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Product
+              {t("footer.product")}
             </span>
-            <Link href="/" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terminal
+            <Link href={`/${locale}`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.terminal")}
             </Link>
-            <Link href="/demo" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Demo
+            <Link href={`/${locale}/demo`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.demo")}
             </Link>
-            <Link href="/stack" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Stack
+            <Link href={`/${locale}/stack`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.stack")}
             </Link>
-            <Link href="/pricing" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Competitions
+            <Link href={`/${locale}/pricing`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.competitions")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Legal
+              {t("footer.legal")}
             </span>
-            <Link href="/privacy" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Privacy Policy
+            <Link href={`/${locale}/privacy`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.privacy")}
             </Link>
-            <Link href="/terms" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Terms of Service
+            <Link href={`/${locale}/terms`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.terms")}
             </Link>
-            <Link href="/disclaimer" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Disclaimer
+            <Link href={`/${locale}/disclaimer`} style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              {t("footer.disclaimer")}
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <span style={{ fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
-              Connect
+              {t("footer.connect")}
             </span>
             <a
               href="https://github.com/coreintentdev"
@@ -85,7 +90,7 @@ export default function SiteFooter() {
               style={{ color: "var(--text-secondary)", textDecoration: "none" }}
               aria-label="CoreIntent on GitHub"
             >
-              GitHub
+              {t("footer.github")}
             </a>
             <a
               href="https://x.com/coreintentai"
@@ -94,14 +99,14 @@ export default function SiteFooter() {
               style={{ color: "var(--text-secondary)", textDecoration: "none" }}
               aria-label="CoreIntent on X (Twitter)"
             >
-              X / Twitter
+              {t("footer.twitter")}
             </a>
             <a
               href="mailto:corey@coreyai.ai"
               style={{ color: "var(--text-secondary)", textDecoration: "none" }}
               aria-label="Email CoreIntent"
             >
-              Contact
+              {t("footer.contact")}
             </a>
           </div>
         </nav>
@@ -119,11 +124,8 @@ export default function SiteFooter() {
           gap: "8px",
         }}
       >
-        <small>&copy; {new Date().getFullYear()} Corey McIvor. All rights reserved.</small>
-        <small>
-          Trading cryptocurrency involves significant risk. Past performance does
-          not guarantee future results. Paper trading mode.
-        </small>
+        <small>{t("footer.copyright", { year: String(new Date().getFullYear()) })}</small>
+        <small>{t("footer.riskWarning")}</small>
       </div>
     </footer>
   );
