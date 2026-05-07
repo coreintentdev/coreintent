@@ -1,8 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useLocale } from "@/lib/locale-context";
 
-const WELCOME_BANNER = `\x1b[36m
+const LOCALE_GREETINGS: Record<string, { welcome: string; paper: string; help: string }> = {
+  en: { welcome: "Zynthio.ai Commander v0.2.0 — CoreIntent Trading Engine", paper: "Paper trading mode — no real money at risk", help: "Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start." },
+  es: { welcome: "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent", paper: "Modo paper trading — sin dinero real en riesgo", help: "Escribe \x1b[32mhelp\x1b[0m para comandos. Tab para autocompletar. \x1b[32mcai\x1b[0m para iniciar." },
+  mi: { welcome: "Zynthio.ai Commander v0.2.0 — Mihini Hokohoko CoreIntent", paper: "Aratau pepa hokohoko — kāore he moni tūturu i te tūraru", help: "Patohia \x1b[32mhelp\x1b[0m mō ngā tohutohu. Tab ki te whakakī aunoa. \x1b[32mcai\x1b[0m ki te tīmata." },
+  zh: { welcome: "Zynthio.ai Commander v0.2.0 — CoreIntent 交易引擎", paper: "模拟交易模式 — 无真实资金风险", help: "输入 \x1b[32mhelp\x1b[0m 查看命令。Tab 自动补全。\x1b[32mcai\x1b[0m 开始。" },
+  ja: { welcome: "Zynthio.ai Commander v0.2.0 — CoreIntent トレーディングエンジン", paper: "ペーパートレーディングモード — 実際の資金リスクなし", help: "\x1b[32mhelp\x1b[0m でコマンド一覧。Tab で補完。\x1b[32mcai\x1b[0m で開始。" },
+  pt: { welcome: "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent", paper: "Modo paper trading — sem dinheiro real em risco", help: "Digite \x1b[32mhelp\x1b[0m para comandos. Tab para autocompletar. \x1b[32mcai\x1b[0m para iniciar." },
+  fr: { welcome: "Zynthio.ai Commander v0.2.0 — Moteur de Trading CoreIntent", paper: "Mode paper trading — pas d'argent réel en jeu", help: "Tapez \x1b[32mhelp\x1b[0m pour les commandes. Tab pour autocompléter. \x1b[32mcai\x1b[0m pour commencer." },
+  de: { welcome: "Zynthio.ai Commander v0.2.0 — CoreIntent Trading-Engine", paper: "Paper-Trading-Modus — kein echtes Geld gefährdet", help: "Geben Sie \x1b[32mhelp\x1b[0m für Befehle ein. Tab zum Vervollständigen. \x1b[32mcai\x1b[0m zum Starten." },
+  ar: { welcome: "Zynthio.ai Commander v0.2.0 — محرك التداول CoreIntent", paper: "وضع التداول الورقي — لا أموال حقيقية معرضة للخطر", help: "اكتب \x1b[32mhelp\x1b[0m للأوامر. Tab للإكمال التلقائي. \x1b[32mcai\x1b[0m للبدء." },
+  hi: { welcome: "Zynthio.ai Commander v0.2.0 — CoreIntent ट्रेडिंग इंजन", paper: "पेपर ट्रेडिंग मोड — कोई वास्तविक धन जोखिम में नहीं", help: "कमांड के लिए \x1b[32mhelp\x1b[0m टाइप करें। Tab ऑटोकम्प्लीट। \x1b[32mcai\x1b[0m शुरू करने के लिए।" },
+};
+
+function buildWelcomeBanner(locale: string): string {
+  const g = LOCALE_GREETINGS[locale] || LOCALE_GREETINGS.en;
+  return `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
@@ -10,11 +26,12 @@ const WELCOME_BANNER = `\x1b[36m
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 \x1b[0m
-\x1b[33mZynthio.ai Commander v0.2.0 — CoreIntent Trading Engine\x1b[0m
-\x1b[90mPaper trading mode — no real money at risk\x1b[0m
-Type \x1b[32mhelp\x1b[0m for commands. Tab to autocomplete. \x1b[32mcai\x1b[0m to start.
-\x1b[90m${new Date().toLocaleString("en-NZ", { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+\x1b[33m${g.welcome}\x1b[0m
+\x1b[90m${g.paper}\x1b[0m
+${g.help}
+\x1b[90m${new Date().toLocaleString(locale, { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
 `;
+}
 
 // Static commands that don't need API calls
 const STATIC_COMMANDS: Record<string, string> = {
@@ -654,6 +671,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { locale } = useLocale();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -691,8 +709,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([buildWelcomeBanner(locale)]);
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

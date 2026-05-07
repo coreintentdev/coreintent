@@ -1418,3 +1418,26 @@ html {
     transform: none !important;
   }
 }
+
+/* ─── RTL Support (Arabic, Hebrew, etc.) ─── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] nav {
+  direction: rtl;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] .step-connector {
+  left: -14px !important;
+  right: auto !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+}
+
+[dir="rtl"] .data-rain {
+  direction: ltr;
+}

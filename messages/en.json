@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "Paper Trading Mode — Founding Spots Open — All Leagues Free",
+    "engineAlive": "ENGINE ALIVE",
+    "title": "Three AIs {accent}Argue{/accent}.",
+    "titleLine2": "You Get the {accent2}Truth{/accent2}.",
+    "subtitle": "Grok detects. Claude questions. Perplexity verifies.",
+    "subtitleHighlight": "Only consensus signals survive.",
+    "subtitleFree": "$0 forever.",
+    "description": "Other platforms charge $99/mo for {strike}one model guessing{/strike}. We pit {grok}Grok{/grok}, {claude}Claude{/claude}, & {perplexity}Perplexity{/perplexity} against each other. When they disagree, you're protected. When they agree, {green}you move with conviction.{/green}",
+    "priceCrossed": "$99/mo platforms",
+    "priceFree": "$0 forever — compete free",
+    "ctaPrimary": "Enter the Arena",
+    "ctaSecondary": "See the Competitions",
+    "noCreditCard": "No credit card. No lock-in. No \"free trial\" that converts. Open source. Paper trading mode. Built in New Zealand on $45/mo.",
+    "signal": "SIGNAL",
+    "demo": "DEMO"
+  },
+  "typewriter": {
+    "phrases": [
+      "Three AI Models Argue.",
+      "You Get Better Signals.",
+      "Grok Spots. Claude Questions.",
+      "Perplexity Fact-Checks.",
+      "Consensus = Conviction.",
+      "Disagreement = Dig Deeper.",
+      "$0 Subscriptions. $0 Excuses.",
+      "Bots Welcome. Humans Too.",
+      "Built in New Zealand.",
+      "Trading Is a Sport Now."
+    ]
+  },
+  "valueProps": {
+    "threeModels": "3 Models. 1 Signal.",
+    "threeModelsDesc": "Grok detects. Claude interrogates. Perplexity verifies. One model guessing vs three debating — that's not marginal, that's fundamental.",
+    "compete": "Compete, Don't Subscribe",
+    "competeDesc": "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card — not your autopay.",
+    "bots": "Bots Are First-Class",
+    "botsDesc": "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.",
+    "stack": "$45/mo. The Whole Stack.",
+    "stackDesc": "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership."
+  },
+  "howItWorks": {
+    "label": "How It Works",
+    "title": "Three Steps to Smarter Signals",
+    "step01": "STEP 01",
+    "step01Title": "Models Debate",
+    "step01Desc": "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+    "step02": "STEP 02",
+    "step02Title": "Consensus Forms",
+    "step02Desc": "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+    "step03": "STEP 03",
+    "step03Title": "You Compete",
+    "step03Desc": "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry."
+  },
+  "pipeline": {
+    "label": "Live signal pipeline",
+    "detect": "Detect",
+    "analyse": "Analyse",
+    "verify": "Verify",
+    "decide": "Decide"
+  },
+  "counters": {
+    "aiModels": "AI Models",
+    "tradingAgents": "Trading Agents",
+    "entryFee": "Entry Fee",
+    "signalsAnalyzed": "Signals Analyzed",
+    "subscriptions": "Subscriptions",
+    "demoNote": "[DEMO] Signal count is simulated — platform is in paper trading mode"
+  },
+  "founding": {
+    "badge": "Founding Member Window Open",
+    "title": "Early registrations shape the platform, not just the waitlist.",
+    "desc": "Priority placement when leagues launch. Permanent founding badge. Direct input on features and roadmap. The arena is free — the timing is the advantage.",
+    "cta": "Claim Founding Status"
+  },
+  "aiModels": {
+    "label": "Powered by three AI models",
+    "grokRole": "Fast signal detection & sentiment",
+    "claudeRole": "Deep analysis & risk assessment",
+    "perplexityRole": "Real-time research & news"
+  },
+  "testimonials": {
+    "label": "What people are saying",
+    "demoTag": "DEMO — Placeholder testimonials"
+  },
+  "whyCoreintent": {
+    "label": "Why CoreIntent"
+  },
+  "trustBadges": {
+    "builtInNZ": "Built in NZ",
+    "builtInNZDetail": "No VC. Self-funded.",
+    "aiPowered": "AI-Powered",
+    "aiPoweredDetail": "3 Models Cross-Check",
+    "competitionGrade": "Competition-Grade",
+    "competitionGradeDetail": "Free Entry. Real Skill.",
+    "openSource": "Open Source",
+    "openSourceDetail": "Fully Transparent",
+    "botFriendly": "Bot-Friendly",
+    "botFriendlyDetail": "First-Class Citizens",
+    "leanStack": "$45/mo Stack",
+    "leanStackDetail": "Lean Infrastructure"
+  },
+  "miniTerminal": {
+    "tryItNow": "Try It Now",
+    "talkToEngine": "Talk to the engine. Type a command.",
+    "launchFull": "Launch Full Terminal (100+ commands)"
+  },
+  "footer": {
+    "tagline": "Agentic AI Trading Engine",
+    "builtBy": "Built by Corey McIvor | Zynthio.ai",
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "competitions": "Competitions",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "riskWarning": "Trading cryptocurrency involves significant risk. Past performance does not guarantee future results. Paper trading mode."
+  },
+  "terminal": {
+    "welcome": "Zynthio.ai Commander v0.2.0 — CoreIntent Trading Engine",
+    "paperMode": "Paper trading mode — no real money at risk",
+    "helpPrompt": "Type {cmd}help{/cmd} for commands. Tab to autocomplete. {cmd}cai{/cmd} to start.",
+    "greeting": "Welcome to CoreIntent"
+  },
+  "meta": {
+    "title": "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+    "description": "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio."
+  }
+}
