@@ -1,9 +1,121 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+
+/* ─── Scroll Reveal ─── */
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add("revealed"); obs.disconnect(); } },
+      { threshold: 0.12 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+}
+
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useScrollReveal();
+  return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
+}
+
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end: number; suffix?: string; prefix?: string; label: string; color: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = end / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [started, end]);
+
+  return (
+    <div ref={ref} style={{ textAlign: "center", minWidth: "80px" }}>
+      <div className="counter-value" style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+        {prefix}{started ? count.toLocaleString() : "0"}{suffix}
+      </div>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px", marginTop: "4px" }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating CTA ─── */
+function FloatingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setVisible(window.scrollY > 400);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div className="floating-cta" style={{
+      position: "fixed",
+      bottom: "24px",
+      right: "24px",
+      zIndex: 1000,
+      animation: "fadeInUp 0.4s ease both",
+    }}>
+      <Link
+        href="/"
+        className="floating-cta-btn"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "14px 24px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "50px",
+          fontSize: "13px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+          boxShadow: "0 4px 24px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)",
+        }}
+      >
+        Enter the Arena &rarr;
+      </Link>
+    </div>
+  );
+}
 
 function LaunchCountdown() {
   const [now, setNow] = useState(Date.now());
@@ -112,6 +224,7 @@ export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
+      <FloatingCTA />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
           <div
@@ -202,7 +315,9 @@ export default function PricingPage() {
           </p>
 
           {/* How It Works */}
+          <ScrollReveal>
           <div
+            className="pricing-steps-grid"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -214,6 +329,7 @@ export default function PricingPage() {
             {STEPS.map((s) => (
               <div
                 key={s.label}
+                className="card-hover-glow"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -225,10 +341,18 @@ export default function PricingPage() {
               >
                 <div
                   style={{
-                    fontSize: "24px",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    background: `${s.color}15`,
+                    border: `2px solid ${s.color}44`,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px",
                     fontWeight: "bold",
                     color: s.color,
-                    marginBottom: "4px",
+                    marginBottom: "8px",
                   }}
                 >
                   {s.step}
@@ -240,8 +364,10 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Competition Leagues */}
+          <ScrollReveal>
           <h2 style={{ fontSize: "clamp(22px, 4vw, 30px)", marginBottom: "8px" }}>Pick Your Arena. Prove Your Edge.</h2>
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "15px" }}>
             Three timeframes. One leaderboard. One rule:{" "}
@@ -379,8 +505,10 @@ export default function PricingPage() {
               </article>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Who's This For */}
+          <ScrollReveal>
           <div style={{ marginTop: "48px" }}>
             <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who Is This For?</h2>
             <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
@@ -430,7 +558,10 @@ export default function PricingPage() {
             </div>
           </div>
 
+          </ScrollReveal>
+
           {/* How CoreIntent Makes Money */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -500,7 +631,10 @@ export default function PricingPage() {
             </p>
           </div>
 
+          </ScrollReveal>
+
           {/* Philosophy */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -544,7 +678,10 @@ export default function PricingPage() {
             </ul>
           </div>
 
+          </ScrollReveal>
+
           {/* CoreIntent vs Traditional */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -585,7 +722,10 @@ export default function PricingPage() {
             </table>
           </div>
 
+          </ScrollReveal>
+
           {/* Build Quality Signal */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -600,18 +740,11 @@ export default function PricingPage() {
             <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "20px" }}>
               Every change runs through a 54-point automated audit. No exceptions.
             </p>
-            <div style={{ display: "flex", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
-              {[
-                { value: "96%", label: "Audit Score", color: "#10b981" },
-                { value: "52/54", label: "Checks Passing", color: "#3b82f6" },
-                { value: "0", label: "Failures", color: "#a855f7" },
-                { value: "100%", label: "Open Source", color: "#f59e0b" },
-              ].map((stat) => (
-                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
-                  <div style={{ fontSize: "24px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
-                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
-                </div>
-              ))}
+            <div className="pricing-stats-grid" style={{ display: "flex", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
+              <AnimatedCounter end={96} suffix="%" label="Audit Score" color="#10b981" />
+              <AnimatedCounter end={52} suffix="/54" label="Checks Passing" color="#3b82f6" />
+              <AnimatedCounter end={0} label="Failures" color="#a855f7" />
+              <AnimatedCounter end={100} suffix="%" label="Open Source" color="#f59e0b" />
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "16px" }}>
               Don&apos;t trust us — audit us.{" "}
@@ -626,7 +759,10 @@ export default function PricingPage() {
             </p>
           </div>
 
+          </ScrollReveal>
+
           {/* FAQ */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -681,7 +817,10 @@ export default function PricingPage() {
             ))}
           </div>
 
+          </ScrollReveal>
+
           {/* Savings Calculator */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -734,7 +873,10 @@ export default function PricingPage() {
             </p>
           </div>
 
+          </ScrollReveal>
+
           {/* Early Mover */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -790,8 +932,12 @@ export default function PricingPage() {
             </p>
           </div>
 
+          </ScrollReveal>
+
           {/* Final CTA */}
+          <ScrollReveal>
           <div
+            className="holo-border"
             style={{
               marginTop: "48px",
               padding: "32px 24px",
@@ -862,6 +1008,7 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
             All leagues include full terminal access, AI agents, docs, and community.
