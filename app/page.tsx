@@ -683,11 +683,38 @@ function FloatingCTA() {
       right: "24px",
       zIndex: 1000,
       animation: "fadeInUp 0.4s ease both",
+      display: "flex",
+      gap: "10px",
+      alignItems: "center",
     }}>
       <a
         href="https://github.com/coreintentdev/coreintent"
         target="_blank"
         rel="noopener noreferrer"
+        className="floating-cta-btn"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          padding: "12px 18px",
+          background: "rgba(17, 24, 39, 0.9)",
+          backdropFilter: "blur(8px)",
+          color: "var(--text-primary)",
+          borderRadius: "50px",
+          fontSize: "12px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+          border: "1px solid var(--border-color)",
+          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.3)",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}
+      >
+        <span style={{ fontSize: "14px" }}>&#9733;</span>
+        GitHub
+      </a>
+      <a
+        href="/pricing"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -705,8 +732,7 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        Enter Competitions &rarr;
       </a>
     </div>
   );
