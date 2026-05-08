@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import AITwinLoader from "@/components/AITwinLoader";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -269,6 +270,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         {children}
+        <AITwinLoader />
       </body>
     </html>
   );
