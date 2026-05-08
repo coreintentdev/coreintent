@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/disclaimer/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Disclaimer",
+        alt: "CoreIntent Disclaimer — Paper Trading Only, Not Financial Advice",
       },
     ],
   },
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
       "Trading risk warnings and AI disclaimers. Paper trading only — not financial advice.",
     creator: "@coreintentai",
     site: "@coreintentai",
+    images: ["/disclaimer/opengraph-image"],
   },
 };
 
@@ -61,7 +62,7 @@ const structuredData = {
         "CoreIntent trading and AI disclaimers — paper trading only, not financial advice. Risk warnings for cryptocurrency trading.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-08",
       inLanguage: "en-NZ",
     },
   ],
