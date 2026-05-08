@@ -69,6 +69,8 @@ const SERVICES_REPLACED = [
 
 const TOTAL_MONTHLY_COST = 66;
 
+const VALID_SAVE_TYPES: readonly SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
+
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "anon";
   const limit = await checkRateLimit(ip, "autosave");
@@ -130,7 +132,6 @@ export async function POST(req: NextRequest) {
     return badRequest("Invalid JSON body");
   }
 
-  const VALID_SAVE_TYPES: readonly SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
   const type: SaveType = validateEnum(body.type, VALID_SAVE_TYPES) ?? "state";
 
   if (body.content !== undefined) {

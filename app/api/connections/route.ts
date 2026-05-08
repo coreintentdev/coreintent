@@ -109,7 +109,7 @@ export async function GET(req: NextRequest) {
       ready:   toolValues.filter((s) => s.status === "ready").length,
     };
 
-    return ok({ ai, exchanges, infrastructure, tools, summary });
+    return ok({ ai, exchanges, infrastructure, tools, summary, timestamp: new Date().toISOString() });
   } catch (e) {
     return serverError(e);
   }
