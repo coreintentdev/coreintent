@@ -1,6 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslations, useLocale } from "@/lib/i18n-client";
+import { getIntlLocale, type Locale } from "@/lib/i18n";
+
+function getWelcomeBanner(t: (key: string) => string, locale: Locale): string {
+  const intlLocale = getIntlLocale(locale);
+  return `\x1b[36m
+ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
+██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
+██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+\x1b[0m
+\x1b[33m${t("terminal.welcome_title")}\x1b[0m
+\x1b[90m${t("terminal.welcome_mode")}\x1b[0m
+${t("terminal.welcome_help").replace("help", "\x1b[32mhelp\x1b[0m").replace("cai", "\x1b[32mcai\x1b[0m")}
+\x1b[32m${t("terminal.greeting")}\x1b[0m
+\x1b[90m${new Date().toLocaleString(intlLocale, { timeZone: "Pacific/Auckland" })} NZST\x1b[0m
+`;
+}
 
 const WELCOME_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
@@ -658,6 +678,8 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { t } = useTranslations();
+  const locale = useLocale();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -695,8 +717,8 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    setLines([getWelcomeBanner(t, locale)]);
+  }, [t, locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

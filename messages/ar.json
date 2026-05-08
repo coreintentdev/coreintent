@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "terminal": "الطرفية",
+    "demo": "عرض توضيحي",
+    "stack": "البنية التقنية",
+    "pricing": "الأسعار"
+  },
+  "hero": {
+    "title_line1": "ثلاثة نماذج ذكاء اصطناعي",
+    "title_verb": "تتناقش",
+    "title_line2": "أنت تحصل على",
+    "title_truth": "الحقيقة",
+    "subtitle": "Grok يكتشف. Claude يسأل. Perplexity يتحقق.",
+    "consensus": "فقط إشارات الإجماع تنجو.",
+    "free_forever": "$0 إلى الأبد.",
+    "cta_primary": "ادخل الحلبة",
+    "cta_secondary": "شاهد المسابقات"
+  },
+  "terminal": {
+    "greeting": "مرحباً بك في CoreIntent"
+  },
+  "language_switcher": {
+    "label": "اللغة"
+  },
+  "engine": {
+    "alive": "المحرك نشط"
+  },
+  "star_github": "نجمة على GitHub"
+}

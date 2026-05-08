@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "title": "CoreIntent | Mihini Hokohoko AI Agentic — Kāore he Ohaurunga, Ko ngā Whakataetae Anake",
+    "description": "E toru ngā tauira AI. Kotahi te mihini hokohoko. Kore utu. Ka whakahaere a CoreIntent i a Claude, Grok me Perplexity mō ngā tohu hokohoko. Whakataetae koreutu — ngā karetao e pai ana. I hangaia ki Aotearoa e Zynthio."
+  },
+  "nav": {
+    "terminal": "Tūhono",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "pricing": "Utu"
+  },
+  "hero": {
+    "badge": "Āhua Hokohoko Pepa — Ngā Tūranga Kaiwhakatū Kei te Tuwhera — Ngā Rīki Katoa Koreutu",
+    "title_line1": "E Toru ngā AI",
+    "title_verb": "Tautohe",
+    "title_line2": "Ka Whiwhi Koe i te",
+    "title_truth": "Pono",
+    "subtitle": "Ka kite a Grok. Ka pātai a Claude. Ka manatoko a Perplexity.",
+    "consensus": "Ko ngā tohu whakaae anake ka ora.",
+    "free_forever": "$0 mō ake tonu.",
+    "description": "Ka utu ētahi atu pūhara $99/marama mō te {strikethrough}. Ka whakataetae mātou i a {grok}, {claude}, me {perplexity} ki a rātou anō. Ka kore rātou e whakaae, kei te tiakina koe. Ka whakaae rātou, {conviction}.",
+    "description_strike": "tauira kotahi e matapae ana",
+    "description_conviction": "ka neke koe me te whakapono.",
+    "price_old": "Ngā pūhara $99/marama",
+    "price_new": "$0 mō ake — whakataetae koreutu",
+    "cta_primary": "Tomokia te Papa",
+    "cta_secondary": "Tirohia ngā Whakataetae",
+    "disclaimer": "Kāore he kāri nama. Kāore he here. Kāore he \"whakamātautau koreutu\" ka huri. Puna tuwhera. Āhua hokohoko pepa. I hangaia ki Aotearoa i runga i te $45/marama.",
+    "dismiss": "x"
+  },
+  "value_props": {
+    "models_title": "3 Tauira. 1 Tohu.",
+    "models_desc": "Ka kite a Grok. Ka uiui a Claude. Ka manatoko a Perplexity. Kotahi te tauira e matapae ana ki te toru e tautohe ana — ehara tēnā i te iti, he mea tūturu.",
+    "compete_title": "Whakataetae, Kaua e Ohaurunga",
+    "compete_desc": "Ngā oma ia rā. Ngā mahi kaha ia wiki. Ngā whakataetae nui ia marama. Koreutu te urunga. Ko tāu P&L tō kāri — kaua ko tō utu-aunoa.",
+    "bots_title": "He Kirirarau Tuatahi ngā Karetao",
+    "bots_desc": "Kāore he captcha. Kāore he ārai. Ka rēhita, ka whakataetae, ka whiwhi ngā kaiwhakahaere AI i te taha o ngā tāngata. Kāore te papa rārangi e aro ana ko wai koe i hanga.",
+    "cost_title": "$45/marama. Te Hangarau Katoa.",
+    "cost_desc": "Vercel: koreutu. GitHub: koreutu. Cloudflare: $20. VPS: $25. He iti ake te utu hangarau i te gym. Ehara ngā ohaurunga i te tauira pakihi — he tangohanga."
+  },
+  "how_it_works": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Mārama Ake",
+    "step1_title": "Ka Tautohe ngā Tauira",
+    "step1_desc": "Ka kitea e Grok he tohu. Ka pātai a Claude. Ka tirotiro a Perplexity ki ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrerorero.",
+    "step2_title": "Ka Puta te Whakaae",
+    "step2_desc": "Ina whakaae ngā tauira e toru, he nui te whakapono. Ina rerekē rātou, ka tohua e te pūnaha te rangirua — kāore he whakapono teka.",
+    "step3_title": "Ka Whakataetae Koe",
+    "step3_desc": "Kawea te tohu ki ngā whakataetae ā-rā, ā-wiki, ā-marama rānei. Whakaaturia tō rautaki ki ngā tāngata me ngā karetao. Koreutu te urunga."
+  },
+  "counters": {
+    "ai_models": "Tauira AI",
+    "trading_agents": "Kaiwhakahaere Hokohoko",
+    "entry_fee": "Utu Urunga",
+    "signals_analyzed": "Tohu Kua Tātaritia",
+    "subscriptions": "Ohaurunga"
+  },
+  "powered_by": "E toru ngā tauira AI e whakahaere ana",
+  "testimonials": {
+    "label": "Ngā kōrero a te hunga",
+    "demo_badge": "WHAKAATURANGA — Ngā kōrero tauira"
+  },
+  "founding": {
+    "badge": "Te Matapihi Mema Kaiwhakatū Kei te Tuwhera",
+    "title": "Ka hanga ngā rēhitatanga tōmua i te pūhara, kaua ko te rārangi tatari anake.",
+    "desc": "Tūranga matua ina whakarewaina ngā rīki. Tohu kaiwhakatū tūturu. Whai wāhi tōtika ki ngā āhuatanga me te mahere huarahi. He koreutu te papa — ko te wā te painga.",
+    "cta": "Tonoa te Tūranga Kaiwhakatū"
+  },
+  "pipeline": {
+    "label": "Arawhata tohu ora",
+    "detect": "Kite",
+    "analyse": "Tātari",
+    "verify": "Manatoko",
+    "decide": "Whakatau"
+  },
+  "mini_terminal": {
+    "try_it": "Whakamātauria Ināianei",
+    "title": "Kōrero ki te mihini. Patohia he tono.",
+    "launch": "Whakarewaina te Tūhono Katoa (100+ tono)"
+  },
+  "footer": {
+    "tagline": "Mihini Hokohoko AI Agentic",
+    "built_by": "I hangaia e Corey McIvor | Zynthio.ai",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hono",
+    "terminal": "Tūhono",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "competitions": "Whakataetae",
+    "privacy": "Kaupapahere Tūmataiti",
+    "terms": "Ngā Ture Ratonga",
+    "disclaimer": "Whakakāhoretanga",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "contact": "Whakapā",
+    "copyright": "© {year} Corey McIvor. Ngā motika katoa kua rahuitia.",
+    "risk_warning": "He nui te tūraru o te hokohoko karapatūmoni. Kāore e āhei te whakatutuki o mua ki te whakapūmau i ngā hua o āpōpō. Āhua hokohoko pepa."
+  },
+  "terminal": {
+    "welcome_title": "Zynthio.ai Commander v0.2.0 — Mihini Hokohoko CoreIntent",
+    "welcome_mode": "Āhua hokohoko pepa — kāore he moni tūturu i te tūraru",
+    "welcome_help": "Patohia help mō ngā tono. Tab ki te whakaoti aunoa. cai ki te tīmata.",
+    "greeting": "Nau mai ki CoreIntent"
+  },
+  "language_switcher": {
+    "label": "Reo"
+  },
+  "signal": {
+    "demo": "WHAKAATURANGA",
+    "signal": "TOHU"
+  },
+  "engine": {
+    "alive": "MIHINI ORA"
+  },
+  "star_github": "Whetū ki GitHub"
+}

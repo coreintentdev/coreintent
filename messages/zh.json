@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "价格"
+  },
+  "hero": {
+    "title_line1": "三个AI",
+    "title_verb": "辩论",
+    "title_line2": "你获得",
+    "title_truth": "真相",
+    "subtitle": "Grok 检测。Claude 质疑。Perplexity 验证。",
+    "consensus": "只有共识信号才能存活。",
+    "free_forever": "永远 $0。",
+    "cta_primary": "进入竞技场",
+    "cta_secondary": "查看比赛"
+  },
+  "terminal": {
+    "greeting": "欢迎来到 CoreIntent"
+  },
+  "language_switcher": {
+    "label": "语言"
+  },
+  "engine": {
+    "alive": "引擎运行中"
+  },
+  "star_github": "在 GitHub 上加星"
+}

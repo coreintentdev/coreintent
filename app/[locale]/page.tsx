@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslations, useLocale } from "@/lib/i18n-client";
+import { formatNumber, formatDate, type Locale } from "@/lib/i18n";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -362,13 +364,14 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
 /* ─── How It Works ─── */
 function HowItWorks() {
+  const { t } = useTranslations();
   return (
     <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-        How It Works
+        {t("how_it_works.label")}
       </div>
       <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
-        Three Steps to Smarter Signals
+        {t("how_it_works.title")}
       </h2>
       <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
         {[
@@ -1272,6 +1275,8 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const { t } = useTranslations();
+  const locale = useLocale();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -1334,7 +1339,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Founding Spots Open — All Leagues Free
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -1349,16 +1354,16 @@ export default function Home() {
                 CoreIntent — Three AI Models Argue So You Don&apos;t Have To Guess.
               </span>
               <span aria-hidden="true">
-                Three AIs{" "}
-                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Argue</span>.
+                {t("hero.title_line1")}{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>{t("hero.title_verb")}</span>.
                 <br />
-                You Get the{" "}
-                <span style={{ color: "#f59e0b" }}>Truth</span>.
+                {t("hero.title_line2")}{" "}
+                <span style={{ color: "#f59e0b" }}>{t("hero.title_truth")}</span>.
                 <br />
                 <span style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
-                  Grok detects. Claude questions. Perplexity verifies.
+                  {t("hero.subtitle")}
                   <br />
-                  <span style={{ color: "var(--accent-green)" }}>Only consensus signals survive.</span> $0 forever.
+                  <span style={{ color: "var(--accent-green)" }}>{t("hero.consensus")}</span> {t("hero.free_forever")}
                 </span>
               </span>
             </h1>
@@ -1399,10 +1404,10 @@ export default function Home() {
               flexWrap: "wrap",
             }}>
               <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
-                $99/mo platforms
+                {t("hero.price_old")}
               </span>
               <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
-                $0 forever — compete free
+                {t("hero.price_new")}
               </span>
             </div>
             <LiveSignalFeed />
@@ -1423,10 +1428,10 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Enter the Arena &rarr;
+                {t("hero.cta_primary")} &rarr;
               </button>
               <a
-                href="/pricing"
+                href={`/${locale}/pricing`}
                 className="cta-secondary"
                 style={{
                   padding: "18px 44px",
@@ -1441,7 +1446,7 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                {t("hero.cta_secondary")}
               </a>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "480px" }}>
@@ -1508,11 +1513,11 @@ export default function Home() {
                 borderRadius: "12px",
               }}
             >
-              <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
-              <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
-              <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
-              <AnimatedCounter end={12847} suffix="+" label="Signals Analyzed" color="#f59e0b" />
-              <AnimatedCounter end={0} label="Subscriptions" color="#ef4444" />
+              <AnimatedCounter end={3} label={t("counters.ai_models")} color="#a855f7" />
+              <AnimatedCounter end={6} label={t("counters.trading_agents")} color="#3b82f6" />
+              <AnimatedCounter end={0} prefix="$" label={t("counters.entry_fee")} color="#10b981" />
+              <AnimatedCounter end={12847} suffix="+" label={t("counters.signals_analyzed")} color="#f59e0b" />
+              <AnimatedCounter end={0} label={t("counters.subscriptions")} color="#ef4444" />
             </div>
             </ScrollReveal>
             <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
@@ -1561,7 +1566,7 @@ export default function Home() {
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
               <a
-                href="/pricing"
+                href={`/${locale}/pricing`}
                 style={{
                   display: "inline-block",
                   padding: "10px 24px",
@@ -1583,7 +1588,7 @@ export default function Home() {
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
-                Powered by three AI models
+                {t("powered_by")}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
