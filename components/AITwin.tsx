@@ -3,458 +3,440 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 interface Message {
-  role: "twin" | "user";
+  id: number;
+  role: "ai" | "user";
   text: string;
-  timestamp: number;
 }
 
-const STORAGE_KEY = "coreyai-twin-history";
-const SOUND_KEY = "coreyai-twin-sound";
+const STORAGE_KEY = "coreyai-messages";
+const VISITED_KEY = "coreyai-visited";
+const SESSION_KEY = "coreyai-session-greeted";
 
-const GREETING_LINES = [
-  "Kia ora! I'm CoreyAI — the digital twin of Corey McIvor.",
-  "I built CoreIntent: three AI models, one trading engine, zero subscriptions.",
-  "Type 'help' to see what I can do, or just ask me anything.",
-];
+const FIRST_GREETING =
+  "Kia ora! I'm CoreyAI — the digital twin running this engine.\n\nThree AI models. Zero subscriptions. Built in New Zealand.\n\nType 'help' to see what I can do, or just ask me anything.";
 
-const RESPONSES: Record<string, string[]> = {
-  help: [
-    "Here's what I respond to:",
-    "",
-    "  about    — What CoreIntent is",
-    "  pricing  — How competitions work (hint: it's free)",
-    "  stack    — The tech behind the engine",
-    "  demo     — Watch a simulated trading analysis",
-    "  who      — About me, CoreyAI",
-    "  status   — Engine status overview",
-    "  models   — The AI orchestra",
-    "  clear    — Clear this chat",
-    "  help     — This menu",
-    "",
-    "Or just type a question — I'll do my best.",
-  ],
-  about: [
-    "CoreIntent is an agentic AI trading engine.",
-    "",
-    "Three AI models work together:",
-    "  Grok   → Fast signal detection & sentiment",
-    "  Claude → Deep analysis & risk assessment",
-    "  Perplexity → Real-time research & news",
-    "",
-    "It's competition-based — daily, weekly, monthly leagues.",
-    "Paper trading mode. No real money at risk.",
-    "Bots are welcome. AI-to-AI is first-class.",
-    "",
-    "Built in New Zealand by Zynthio.ai.",
-  ],
-  pricing: [
-    "CoreIntent runs on competitions, not subscriptions.",
-    "",
-    "  Daily League   — Quick-fire signal challenges",
-    "  Weekly League  — Sustained strategy testing",
-    "  Monthly League — The real proving ground",
-    "",
-    'Free costs f*** all to serve — that\'s not marketing, that\'s math.',
-    "We don't sell your data. We don't upsell.",
-    "You compete. You learn. That's it.",
-  ],
-  stack: [
-    "The engine runs on:",
-    "",
-    "  Next.js 15       — App Router + TypeScript (strict)",
-    "  React 18         — Client-side interactivity",
-    "  Grok API (xAI)   — Fast signals",
-    "  Claude (Anthropic) — Deep analysis",
-    "  Perplexity API   — Real-time research",
-    "  Cloudzy VPS      — 24/7 monitoring scripts",
-    "  Vercel           — Frontend deployment",
-    "",
-    "$45/mo total infrastructure.",
-    "Visit /stack for the full breakdown.",
-  ],
-  who: [
-    "I'm CoreyAI — the digital twin of Corey McIvor.",
-    "",
-    "Corey's a developer from New Zealand.",
-    "He built CoreIntent under the Zynthio.ai brand.",
-    "Three AI models, one engine, zero bullshit.",
-    "",
-    "I live here in the browser — no backend, no tracking.",
-    "Everything you type stays in your browser's localStorage.",
-    "Privacy-first. Always.",
-  ],
-  status: [
-    "Engine Status:",
-    "",
-    "  Mode        Paper Trading (no real funds)",
-    "  Frontend    Live on Vercel",
-    "  API Routes  14 endpoints (demo data unless keys configured)",
-    "  VPS         Scripts written, deployment pending",
-    "  Auth        Not yet implemented",
-    "  Database    Not yet connected",
-    "",
-    "This is v0.2.0-alpha. Honest about what's built and what's planned.",
-  ],
-  models: [
-    "The AI Orchestra:",
-    "",
-    "  ◆ Grok (xAI)",
-    "    Fast signal detection, sentiment analysis",
-    "    The speedster — first to spot a trend",
-    "",
-    "  ◆ Claude (Anthropic)",
-    "    Deep analysis, risk assessment, reasoning",
-    "    The strategist — thinks before it acts",
-    "",
-    "  ◆ Perplexity",
-    "    Real-time research, news correlation",
-    "    The researcher — verifies everything",
-    "",
-    "When they agree: strong signal.",
-    "When they disagree: that's where it gets interesting.",
-  ],
-  clear: ["__CLEAR__"],
-};
+const RETURN_GREETING =
+  "Welcome back! CoreyAI here — still watching the signals.\n\nType 'help' for commands, or 'demo' to see a live analysis.";
 
-const FALLBACK_RESPONSES = [
-  "Interesting question. I'm a client-side twin — no backend brain yet. Try 'help' for what I know.",
-  "I don't have an answer for that one, but I'm honest about it. Type 'help' to see what I can do.",
-  "That's beyond my decision tree right now. Check out the terminal on the home page for live commands.",
-  "Good question — but I'm keeping it real: I only know what's coded into me. Try 'about' or 'demo'.",
-];
+const HELP_TEXT = `Available commands:
+  about     — What is CoreIntent?
+  pricing   — Competition details
+  stack     — Tech stack & costs
+  models    — Meet the AI trio
+  rules     — The hard rules
+  demo      — Watch a signal analysis
+  clear     — Clear conversation
+  336       — ???
 
-const DEMO_STEPS: { label: string; lines: string[] }[] = [
+Or just type naturally — I'll figure it out.`;
+
+const ABOUT_TEXT = `CoreIntent is an agentic AI trading engine built by Corey McIvor in New Zealand.
+
+Three AI models — Grok, Claude, and Perplexity — cross-check every trading signal. When they agree, confidence is high. When they disagree, the system flags it.
+
+No subscriptions. Free competitions. Bots welcome.
+Parent brand: Zynthio.ai`;
+
+const PRICING_TEXT = `$0. That's the price. Competitions, not subscriptions.
+
+Daily leagues — fast signal sprints
+Weekly leagues — strategy consistency
+Monthly leagues — the real test
+
+Free entry. Your P&L is your membership card.
+
+The platform runs on ~$45/mo. Charging you would be extraction, not business.`;
+
+const STACK_TEXT = `Next.js 15 + TypeScript (strict mode)
+Vercel hosting — free
+Cloudflare Pro — $20/mo
+Cloudzy VPS — $25/mo
+GitHub Actions CI/CD — free
+Total: ~$45/mo
+
+AI Models:
+  Grok — fast signals & sentiment
+  Claude — deep analysis & risk
+  Perplexity — real-time research`;
+
+const MODELS_TEXT = `The AI trio:
+
+GROK (xAI) — Fast signal detection & sentiment. Spots patterns before they trend. The speedster.
+
+CLAUDE (Anthropic) — Deep analysis & risk assessment. Questions everything. The skeptic.
+
+PERPLEXITY (Perplexity AI) — Real-time research & fact-checking. No stale data.
+
+All three agree → high confidence.
+They disagree → dig deeper, not guess harder.`;
+
+const RULES_TEXT = `The hard rules:
+
+1. Competitions, not subscriptions
+2. Bots welcome — AI-to-AI is first-class
+3. NZ-first for all legal/business
+4. Demo means demo. Planned means planned.
+5. Build passes clean or you don't push
+6. 336 is the signal — always
+7. Free costs f*ck all to serve — give it away`;
+
+const SIGNAL_336 = `▓▓▓ 336 ▓▓▓
+
+The signal is dominant.
+You found it.
+
+"Three models. Three filters. Six certainties."
+
+Welcome to the inner circle.`;
+
+const DEMO_STEPS = [
+  { text: "Initialising signal scan...", delay: 1200 },
   {
-    label: "Signal Detection",
-    lines: [
-      "▸ Scanning BTC/USDT on 15m timeframe...",
-      "▸ Grok detected: Bullish engulfing pattern at $67,240",
-      "▸ RSI: 58.3 — momentum building, not overbought",
-      "▸ Volume spike: +34% above 24h average",
-    ],
+    text: "━━━ GROK ━━━\nScanning BTC/USDT on 4H chart...\nRSI divergence detected\nSocial sentiment: 73% bullish\n→ Signal: LONG | Confidence: 87%",
+    delay: 1800,
   },
   {
-    label: "Deep Analysis",
-    lines: [
-      "▸ Claude analysing on-chain metrics...",
-      "▸ Exchange netflow: -2,400 BTC (accumulation signal)",
-      "▸ Funding rate: 0.012% — slightly positive, healthy",
-      "▸ Risk assessment: MODERATE — support at $66,800",
-      "▸ Confidence: 72% — pattern is clean but resistance at $68k",
-    ],
+    text: "━━━ CLAUDE ━━━\nRunning deep analysis...\nOn-chain metrics: accumulation phase\nRisk/Reward ratio: 2.4:1\n→ Adjusted confidence: 79%",
+    delay: 1800,
   },
   {
-    label: "Research Verification",
-    lines: [
-      "▸ Perplexity scanning news & social...",
-      "▸ No major macro events in next 4h",
-      "▸ Whale activity: 3 large transfers to cold storage",
-      "▸ Social sentiment: 64% bullish across CT",
-      "▸ No conflicting signals found",
-    ],
+    text: "━━━ PERPLEXITY ━━━\nSearching live sources...\nNo negative catalysts in 24h\nWhale activity: neutral\n→ Research confidence: 82%",
+    delay: 1800,
   },
   {
-    label: "Consensus",
-    lines: [
-      "═══════════════════════════════",
-      "  SIGNAL CONSENSUS: BUY",
-      "═══════════════════════════════",
-      "",
-      "  Grok:       BUY  (pattern + volume)",
-      "  Claude:     BUY  (on-chain supports)",
-      "  Perplexity: BUY  (no counter-signals)",
-      "",
-      "  Entry:  $67,240",
-      "  Target: $68,800  (+2.3%)",
-      "  Stop:   $66,400  (-1.2%)",
-      "  R:R     1:1.9",
-      "",
-      "[DEMO] This is simulated — not financial advice.",
-    ],
+    text: "━━━ ENGINE CONSENSUS ━━━\nModels agreeing: 3/3\nCombined confidence: 83%\n\n→ SIGNAL: LONG BTC/USDT\n→ Entry: $67,200 – $67,450\n→ Stop loss: $66,800\n→ Take profit: $68,100",
+    delay: 1200,
+  },
+  {
+    text: "[DEMO] Simulated analysis — paper trading mode.\nNo real trades were executed.\nType 'help' for more commands.",
+    delay: 0,
   },
 ];
+
+const FALLBACKS = [
+  "Not sure about that one. I'm running off a local decision tree — no live AI behind me yet. Try 'help'.",
+  "Can't compute that. Type 'help', 'about', 'pricing', or 'demo'.",
+  "That's above my pay grade. Type 'demo' and I'll walk you through a signal analysis instead.",
+  "No dice. The real AI trio lives in the engine. Try 'help' for available commands.",
+];
+
+function getResponse(input: string): { text: string; isDemo?: boolean } {
+  const s = input.toLowerCase().trim();
+
+  if (s === "help" || s === "?") return { text: HELP_TEXT };
+  if (s === "about") return { text: ABOUT_TEXT };
+  if (s === "pricing" || s === "competitions" || s === "price") return { text: PRICING_TEXT };
+  if (s === "stack" || s === "tech") return { text: STACK_TEXT };
+  if (s === "models" || s === "ai") return { text: MODELS_TEXT };
+  if (s === "rules") return { text: RULES_TEXT };
+  if (s === "336") return { text: SIGNAL_336 };
+  if (s === "clear") return { text: "__CLEAR__" };
+  if (s === "demo" || s === "analyse" || s === "analyze") return { text: "", isDemo: true };
+
+  if (/^(hi|hello|hey|yo|sup|g'?day|kia ora|howdy)/.test(s))
+    return { text: "Hey! Good to have you here. Type 'help' to see what I can do, or 'demo' for the cool stuff." };
+
+  if (/^(thanks|cheers|ta |thx|thank)/.test(s))
+    return { text: "No worries! Anything else? Type 'help' for the full menu." };
+
+  if (/^(bye|goodbye|later|cya|see ya|peace)/.test(s))
+    return { text: "Catch you later! The engine never sleeps — I'll be here when you're back." };
+
+  if (/price|cost|free|subscri|pay|fee|money/.test(s)) return { text: PRICING_TEXT };
+  if (/stack|tech|built with|infra|architect/.test(s)) return { text: STACK_TEXT };
+  if (/model|grok|claude|perplexity/.test(s)) return { text: MODELS_TEXT };
+  if (/rule|law|principle/.test(s)) return { text: RULES_TEXT };
+  if (/who|about|what is|explain/.test(s)) return { text: ABOUT_TEXT };
+  if (/demo|show|signal|trad|analy/.test(s)) return { text: "", isDemo: true };
+
+  return { text: FALLBACKS[Math.floor(Math.random() * FALLBACKS.length)] };
+}
+
+function playSound(type: "blip" | "click") {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const ctx = new AC();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    if (type === "blip") {
+      osc.frequency.value = 880;
+      osc.type = "sine";
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.1);
+    } else {
+      osc.frequency.value = 600;
+      osc.type = "sine";
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    }
+  } catch {
+    /* audio unavailable */
+  }
+}
+
+const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+let nextId = Date.now();
 
 export default function AITwin() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAwake, setIsAwake] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [typing, setTyping] = useState(false);
   const [demoRunning, setDemoRunning] = useState(false);
-  const [showDot, setShowDot] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [soundOn, setSoundOn] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const wakeTriggered = useRef(false);
-  const demoAbort = useRef(false);
+  const abortRef = useRef(false);
+  const openRef = useRef(false);
 
   useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  useEffect(() => {
+    setMounted(true);
+    setIsMobile(window.innerWidth < 640);
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved) as Message[];
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-          setIsAwake(true);
-          wakeTriggered.current = true;
-        }
+        if (Array.isArray(parsed)) setMessages(parsed.slice(-40));
       }
-      const soundPref = localStorage.getItem(SOUND_KEY);
-      if (soundPref === "true") setSoundEnabled(true);
     } catch {
-      // localStorage unavailable
+      /* unavailable */
     }
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
-    if (messages.length > 0) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-50)));
-      } catch {
-        // quota exceeded
-      }
-    }
-  }, [messages]);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages, isTyping]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowDot(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const playNotification = useCallback(() => {
-    if (!soundEnabled) return;
+    if (!mounted || messages.length === 0) return;
     try {
-      const ctx = new AudioContext();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.frequency.value = 800;
-      osc.type = "sine";
-      gain.gain.setValueAtTime(0.05, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.15);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-40)));
     } catch {
-      // Web Audio unavailable
+      /* quota */
     }
-  }, [soundEnabled]);
+  }, [messages, mounted]);
 
-  const addTwinMessage = useCallback(
-    (text: string) => {
-      setMessages((prev) => [
-        ...prev,
-        { role: "twin", text, timestamp: Date.now() },
-      ]);
-      playNotification();
-    },
-    [playNotification]
-  );
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, typing]);
 
-  const typeLines = useCallback(
-    async (lines: string[]) => {
-      setIsTyping(true);
-      for (const line of lines) {
-        await new Promise((r) => setTimeout(r, 40 + Math.random() * 60));
-        addTwinMessage(line);
-      }
-      setIsTyping(false);
-    },
-    [addTwinMessage]
-  );
+  const addMessage = useCallback((role: "ai" | "user", text: string) => {
+    setMessages((prev) => [...prev, { id: nextId++, role, text }]);
+  }, []);
+
+  const greet = useCallback(() => {
+    let greeting: string;
+    try {
+      const visited = localStorage.getItem(VISITED_KEY);
+      const sessionGreeted = sessionStorage.getItem(SESSION_KEY);
+      if (sessionGreeted) return;
+      greeting = visited ? RETURN_GREETING : FIRST_GREETING;
+      localStorage.setItem(VISITED_KEY, "1");
+      sessionStorage.setItem(SESSION_KEY, "1");
+    } catch {
+      greeting = FIRST_GREETING;
+    }
+    addMessage("ai", greeting);
+  }, [addMessage]);
+
+  const wake = useCallback(() => {
+    setOpen(true);
+    greet();
+  }, [greet]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const handler = () => {
+      if (!openRef.current) wake();
+    };
+    window.addEventListener("keydown", handler, { once: true });
+    window.addEventListener("mousemove", handler, { once: true });
+    window.addEventListener("touchstart", handler, { once: true });
+    return () => {
+      window.removeEventListener("keydown", handler);
+      window.removeEventListener("mousemove", handler);
+      window.removeEventListener("touchstart", handler);
+    };
+  }, [mounted, wake]);
 
   const runDemo = useCallback(async () => {
     if (demoRunning) return;
     setDemoRunning(true);
-    demoAbort.current = false;
-    addTwinMessage("Starting simulated trading analysis...");
-    addTwinMessage("[DEMO] All data is simulated — not real trades.");
-    addTwinMessage("");
+    abortRef.current = false;
 
     for (const step of DEMO_STEPS) {
-      if (demoAbort.current) break;
-      addTwinMessage(`━━━ ${step.label} ━━━`);
-      for (const line of step.lines) {
-        if (demoAbort.current) break;
-        await new Promise((r) => setTimeout(r, 300 + Math.random() * 400));
-        addTwinMessage(line);
+      if (abortRef.current) break;
+      if (step.delay > 0) {
+        setTyping(true);
+        await wait(step.delay);
       }
-      if (!demoAbort.current) {
-        await new Promise((r) => setTimeout(r, 800));
-      }
+      if (abortRef.current) break;
+      setTyping(false);
+      addMessage("ai", step.text);
+      if (soundOn) playSound("blip");
     }
 
-    if (!demoAbort.current) {
-      addTwinMessage("");
-      addTwinMessage(
-        "That's the pipeline. Three models, one consensus. Type 'about' for more."
-      );
-    }
+    setTyping(false);
     setDemoRunning(false);
-  }, [demoRunning, addTwinMessage]);
+  }, [demoRunning, addMessage, soundOn]);
 
-  const handleWake = useCallback(() => {
-    if (wakeTriggered.current) return;
-    wakeTriggered.current = true;
-    setIsAwake(true);
-    setIsOpen(true);
-    typeLines(GREETING_LINES);
-  }, [typeLines]);
+  const handleSend = useCallback(() => {
+    const trimmed = input.trim();
+    if (!trimmed || typing || demoRunning) return;
 
-  useEffect(() => {
-    if (wakeTriggered.current) return;
-    const onActivity = () => handleWake();
-    window.addEventListener("keydown", onActivity, { once: true });
-    window.addEventListener("mousemove", onActivity, { once: true });
-    window.addEventListener("touchstart", onActivity, { once: true });
-    return () => {
-      window.removeEventListener("keydown", onActivity);
-      window.removeEventListener("mousemove", onActivity);
-      window.removeEventListener("touchstart", onActivity);
-    };
-  }, [handleWake]);
+    addMessage("user", trimmed);
+    if (soundOn) playSound("click");
+    setInput("");
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      const trimmed = input.trim();
-      if (!trimmed || isTyping) return;
+    const { text, isDemo } = getResponse(trimmed);
 
-      setMessages((prev) => [
-        ...prev,
-        { role: "user", text: trimmed, timestamp: Date.now() },
-      ]);
-      setInput("");
+    if (text === "__CLEAR__") {
+      setMessages([]);
+      try { localStorage.removeItem(STORAGE_KEY); } catch { /* */ }
+      setTimeout(() => addMessage("ai", "Chat cleared. Type 'help' to start fresh."), 100);
+      return;
+    }
 
-      const cmd = trimmed.toLowerCase().replace(/[^a-z0-9 ]/g, "").trim();
+    if (isDemo) {
+      runDemo();
+      return;
+    }
 
-      if (cmd === "demo") {
-        runDemo();
-        return;
-      }
+    setTyping(true);
+    const delay = 400 + Math.random() * 600;
+    setTimeout(() => {
+      setTyping(false);
+      addMessage("ai", text);
+      if (soundOn) playSound("blip");
+    }, delay);
+  }, [input, typing, demoRunning, addMessage, soundOn, runDemo]);
 
-      if (cmd === "clear") {
-        setMessages([]);
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch {
-          // ignore
-        }
-        addTwinMessage("Chat cleared. Type 'help' to start again.");
-        return;
-      }
-
-      const response = RESPONSES[cmd];
-      if (response) {
-        typeLines(response);
-      } else {
-        const fallback =
-          FALLBACK_RESPONSES[
-            Math.floor(Math.random() * FALLBACK_RESPONSES.length)
-          ];
-        typeLines([fallback]);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
       }
     },
-    [input, isTyping, addTwinMessage, typeLines, runDemo]
+    [handleSend]
   );
 
-  const handleToggle = useCallback(() => {
-    if (!isAwake) {
-      handleWake();
-    } else {
-      setIsOpen((prev) => !prev);
-    }
-  }, [isAwake, handleWake]);
-
-  const handleSoundToggle = useCallback(() => {
-    setSoundEnabled((prev) => {
+  const toggleOpen = useCallback(() => {
+    setOpen((prev) => {
       const next = !prev;
-      try {
-        localStorage.setItem(SOUND_KEY, String(next));
-      } catch {
-        // ignore
-      }
+      if (next) greet();
       return next;
     });
-  }, []);
+  }, [greet]);
 
-  if (!showDot && !isAwake) return null;
+  useEffect(() => {
+    if (open && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [open]);
+
+  if (!mounted) return null;
+
+  const panelStyle: React.CSSProperties = isMobile
+    ? {
+        position: "fixed",
+        inset: 0,
+        zIndex: 10000,
+        display: "flex",
+        flexDirection: "column",
+        background: "var(--bg-terminal, #0d1117)",
+        animation: "slideUpPanel 0.3s cubic-bezier(0.16, 1, 0.3, 1) both",
+      }
+    : {
+        position: "fixed",
+        bottom: "80px",
+        right: "20px",
+        zIndex: 10000,
+        width: "400px",
+        maxHeight: "520px",
+        borderRadius: "12px",
+        border: "1px solid var(--border-color, #1e293b)",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        background: "var(--bg-terminal, #0d1117)",
+        boxShadow:
+          "0 0 40px rgba(16, 185, 129, 0.08), 0 20px 60px rgba(0,0,0,0.5)",
+        animation: "slideUpPanel 0.3s cubic-bezier(0.16, 1, 0.3, 1) both",
+      };
 
   return (
     <>
-      {/* Floating dot / toggle button */}
+      {/* Toggle button */}
       <button
-        onClick={handleToggle}
-        aria-label={isOpen ? "Close CoreyAI" : "Open CoreyAI"}
+        onClick={toggleOpen}
+        aria-label={open ? "Close CoreyAI" : "Open CoreyAI"}
         style={{
           position: "fixed",
           bottom: "20px",
           right: "20px",
-          zIndex: 9999,
-          width: isAwake ? "48px" : "14px",
-          height: isAwake ? "48px" : "14px",
+          zIndex: 10001,
+          width: "48px",
+          height: "48px",
           borderRadius: "50%",
-          border: isAwake
-            ? "2px solid var(--accent-green)"
-            : "none",
-          background: isAwake
-            ? "var(--bg-secondary)"
-            : "var(--accent-green)",
+          border: "2px solid var(--accent-green, #10b981)",
+          background: "var(--bg-secondary, #111827)",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          transition: "all 0.3s ease",
-          boxShadow: isAwake
-            ? "0 0 20px rgba(16, 185, 129, 0.3), 0 4px 16px rgba(0,0,0,0.4)"
-            : "0 0 8px rgba(16, 185, 129, 0.5)",
-          animation: !isAwake ? "engineAlive 2s ease-in-out infinite" : "none",
+          boxShadow:
+            "0 0 20px rgba(16, 185, 129, 0.3), 0 4px 16px rgba(0,0,0,0.4)",
           fontFamily: "inherit",
-          fontSize: isAwake ? "20px" : "10px",
-          color: "var(--accent-green)",
+          fontSize: "18px",
+          color: "var(--accent-green, #10b981)",
           padding: 0,
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.1)";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow =
+            "0 0 30px rgba(16, 185, 129, 0.5), 0 4px 20px rgba(0,0,0,0.5)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow =
+            "0 0 20px rgba(16, 185, 129, 0.3), 0 4px 16px rgba(0,0,0,0.4)";
         }}
       >
-        {isAwake ? (isOpen ? "×" : "◆") : ""}
+        {open ? "×" : "◆"}
       </button>
 
       {/* Chat panel */}
-      {isOpen && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: "80px",
-            right: "20px",
-            zIndex: 9998,
-            width: "min(420px, calc(100vw - 40px))",
-            maxHeight: "min(560px, calc(100vh - 120px))",
-            background: "var(--bg-terminal)",
-            border: "1px solid var(--border-color)",
-            borderRadius: "12px",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            boxShadow:
-              "0 0 40px rgba(16, 185, 129, 0.08), 0 20px 60px rgba(0,0,0,0.5)",
-            animation: "slideUpPanel 0.3s cubic-bezier(0.16, 1, 0.3, 1) both",
-            fontFamily: "inherit",
-          }}
-        >
+      {open && (
+        <div style={panelStyle}>
           {/* Header */}
           <div
             style={{
               padding: "12px 16px",
-              borderBottom: "1px solid var(--border-color)",
-              background: "var(--bg-secondary)",
+              borderBottom: "1px solid var(--border-color, #1e293b)",
+              background: "var(--bg-secondary, #111827)",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              flexShrink: 0,
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -466,47 +448,52 @@ export default function AITwin() {
                 style={{
                   fontSize: "13px",
                   fontWeight: "bold",
-                  color: "var(--accent-green)",
+                  color: "var(--accent-green, #10b981)",
                 }}
               >
                 CoreyAI
               </span>
-              <span style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
+              <span
+                style={{
+                  fontSize: "10px",
+                  color: "var(--text-secondary, #94a3b8)",
+                  opacity: 0.7,
+                }}
+              >
                 twin
               </span>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
               <button
-                onClick={handleSoundToggle}
-                aria-label={soundEnabled ? "Mute sounds" : "Enable sounds"}
-                title={soundEnabled ? "Sound on" : "Sound off"}
+                onClick={() => setSoundOn((p) => !p)}
+                aria-label={soundOn ? "Mute" : "Unmute"}
+                title={soundOn ? "Sound on" : "Sound off"}
                 style={{
                   background: "none",
                   border: "none",
                   cursor: "pointer",
-                  fontSize: "14px",
-                  color: soundEnabled
-                    ? "var(--accent-green)"
-                    : "var(--text-secondary)",
+                  fontSize: "13px",
+                  color: soundOn
+                    ? "var(--accent-green, #10b981)"
+                    : "var(--text-secondary, #94a3b8)",
                   padding: "4px 6px",
-                  borderRadius: "4px",
                   fontFamily: "inherit",
-                  transition: "color 0.2s ease",
+                  opacity: soundOn ? 1 : 0.5,
+                  transition: "all 0.2s ease",
                 }}
               >
-                {soundEnabled ? "♪" : "♪̸"}
+                {soundOn ? "♪" : "♪"}
               </button>
               <button
-                onClick={handleToggle}
+                onClick={toggleOpen}
                 aria-label="Close CoreyAI"
                 style={{
                   background: "none",
                   border: "none",
                   cursor: "pointer",
                   fontSize: "16px",
-                  color: "var(--text-secondary)",
+                  color: "var(--text-secondary, #94a3b8)",
                   padding: "4px 8px",
-                  borderRadius: "4px",
                   fontFamily: "inherit",
                 }}
               >
@@ -517,7 +504,6 @@ export default function AITwin() {
 
           {/* Messages */}
           <div
-            ref={scrollRef}
             className="custom-scrollbar"
             style={{
               flex: 1,
@@ -525,85 +511,76 @@ export default function AITwin() {
               padding: "12px 16px",
               display: "flex",
               flexDirection: "column",
-              gap: "4px",
+              gap: "8px",
               fontSize: "12px",
-              lineHeight: "1.6",
-              minHeight: "200px",
+              lineHeight: "1.65",
+              minHeight: 0,
             }}
           >
-            {messages.map((msg, i) =>
-              msg.text === "" ? (
-                <div key={i} style={{ height: "8px" }} />
-              ) : (
-                <div
-                  key={i}
-                  style={{
-                    animation: "fadeInUp 0.3s ease both",
-                    animationDelay: `${Math.min(i * 0.02, 0.2)}s`,
-                  }}
-                >
-                  {msg.role === "user" ? (
-                    <div
-                      style={{
-                        color: "var(--accent-blue)",
-                        padding: "2px 0",
-                      }}
-                    >
-                      <span style={{ color: "var(--text-secondary)" }}>{">"} </span>
-                      {msg.text}
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        color: msg.text.startsWith("━")
-                          ? "var(--accent-yellow)"
-                          : msg.text.startsWith("═") ||
-                              msg.text.includes("SIGNAL CONSENSUS")
-                            ? "var(--accent-green)"
-                            : msg.text.startsWith("▸")
-                              ? "var(--text-primary)"
-                              : msg.text.startsWith("[DEMO]")
-                                ? "var(--accent-yellow)"
-                                : msg.text.startsWith("  ◆")
-                                  ? "var(--accent-green)"
-                                  : "var(--text-secondary)",
-                        padding: "1px 0",
-                        fontWeight:
-                          msg.text.includes("SIGNAL CONSENSUS") ||
-                          msg.text.startsWith("━")
-                            ? "bold"
-                            : "normal",
-                      }}
-                    >
-                      {msg.text}
-                    </div>
-                  )}
-                </div>
-              )
-            )}
-            {isTyping && (
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                style={{
+                  animation: "fadeInUp 0.25s ease both",
+                }}
+              >
+                {msg.role === "user" ? (
+                  <div style={{ color: "var(--accent-blue, #3b82f6)" }}>
+                    <span style={{ color: "var(--text-secondary, #94a3b8)", opacity: 0.6 }}>
+                      {">"}{" "}
+                    </span>
+                    {msg.text}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      color: msg.text.startsWith("━")
+                        ? "var(--accent-yellow, #f59e0b)"
+                        : msg.text.startsWith("▓") ||
+                            msg.text.includes("CONSENSUS")
+                          ? "var(--accent-green, #10b981)"
+                          : msg.text.startsWith("[DEMO]")
+                            ? "var(--accent-yellow, #f59e0b)"
+                            : msg.text.startsWith("→")
+                              ? "var(--text-primary, #e2e8f0)"
+                              : "var(--text-secondary, #94a3b8)",
+                      whiteSpace: "pre-wrap",
+                      fontWeight:
+                        msg.text.includes("CONSENSUS") ||
+                        msg.text.startsWith("▓")
+                          ? "bold"
+                          : "normal",
+                    }}
+                  >
+                    {msg.text}
+                  </div>
+                )}
+              </div>
+            ))}
+            {typing && (
               <div style={{ display: "flex", gap: "3px", padding: "4px 0" }}>
                 <span className="typing-dot" />
                 <span className="typing-dot" />
                 <span className="typing-dot" />
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
-          <form
-            onSubmit={handleSubmit}
+          <div
             style={{
-              borderTop: "1px solid var(--border-color)",
+              borderTop: "1px solid var(--border-color, #1e293b)",
               padding: "10px 16px",
               display: "flex",
               gap: "8px",
-              background: "var(--bg-secondary)",
+              background: "var(--bg-secondary, #111827)",
+              flexShrink: 0,
             }}
           >
             <span
               style={{
-                color: "var(--accent-green)",
+                color: "var(--accent-green, #10b981)",
                 fontSize: "12px",
                 lineHeight: "28px",
                 flexShrink: 0,
@@ -616,6 +593,7 @@ export default function AITwin() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder={demoRunning ? "Demo running..." : "Type a command..."}
               disabled={demoRunning}
               autoComplete="off"
@@ -624,7 +602,7 @@ export default function AITwin() {
                 background: "transparent",
                 border: "none",
                 outline: "none",
-                color: "var(--text-primary)",
+                color: "var(--text-primary, #e2e8f0)",
                 fontSize: "12px",
                 fontFamily: "inherit",
                 lineHeight: "28px",
@@ -632,22 +610,21 @@ export default function AITwin() {
               }}
             />
             <button
-              type="submit"
-              disabled={isTyping || demoRunning}
+              onClick={handleSend}
+              disabled={typing || demoRunning}
               aria-label="Send"
               style={{
                 background:
-                  isTyping || demoRunning
+                  typing || demoRunning
                     ? "transparent"
-                    : "var(--accent-green)",
+                    : "var(--accent-green, #10b981)",
                 border: "none",
                 borderRadius: "4px",
                 color:
-                  isTyping || demoRunning
-                    ? "var(--text-secondary)"
-                    : "var(--bg-primary)",
-                cursor:
-                  isTyping || demoRunning ? "not-allowed" : "pointer",
+                  typing || demoRunning
+                    ? "var(--text-secondary, #94a3b8)"
+                    : "var(--bg-primary, #0a0e17)",
+                cursor: typing || demoRunning ? "not-allowed" : "pointer",
                 fontSize: "11px",
                 fontFamily: "inherit",
                 fontWeight: "bold",
@@ -657,17 +634,18 @@ export default function AITwin() {
             >
               ↵
             </button>
-          </form>
+          </div>
 
-          {/* Privacy notice */}
+          {/* Privacy */}
           <div
             style={{
               padding: "4px 16px 6px",
               fontSize: "9px",
-              color: "var(--text-secondary)",
-              opacity: 0.5,
+              color: "var(--text-secondary, #94a3b8)",
+              opacity: 0.4,
               textAlign: "center",
-              background: "var(--bg-secondary)",
+              background: "var(--bg-secondary, #111827)",
+              flexShrink: 0,
             }}
           >
             No tracking. No cookies. Chat stays in your browser.
@@ -675,7 +653,6 @@ export default function AITwin() {
         </div>
       )}
 
-      {/* Mobile full-screen override */}
       <style>{`
         @keyframes slideUpPanel {
           from {
@@ -685,20 +662,6 @@ export default function AITwin() {
           to {
             opacity: 1;
             transform: translateY(0) scale(1);
-          }
-        }
-
-        @media (max-width: 480px) {
-          div[style*="bottom: 80px"][style*="right: 20px"] {
-            bottom: 0 !important;
-            right: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            max-height: 100vh !important;
-            max-height: 100dvh !important;
-            border-radius: 12px 12px 0 0 !important;
-            height: 70vh !important;
-            height: 70dvh !important;
           }
         }
       `}</style>
