@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callClaudeDeep, callGrok, validateAiContent, sanitizeForPrompt, type AIResponse } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callClaudeDeep, callGrok, validateAiContent, sanitizeForPrompt, CLAUDE_SELF_AWARENESS_SYSTEM, GROK_SYSTEM, PERPLEXITY_SYSTEM, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, serviceUnavailable, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
         `Summarize the current project state, identify the top 3 risks to the digital identity, ` +
         `and suggest 3 immediate actions to strengthen online presence and protect the brand.`,
       systems: {
-        claude: "You are CoreIntent's self-awareness module. Be precise, honest, and direct.",
+        claude: CLAUDE_SELF_AWARENESS_SYSTEM,
       },
       claudeModel: "claude-opus-4-7",
     });
@@ -97,10 +97,30 @@ export async function POST(req: NextRequest) {
   try {
     type TaskFn = () => Promise<AIResponse>;
     const taskMap: Record<ResearchTask, TaskFn> = {
-      research:  () => callPerplexity(safeTopic),
-      analysis:  () => callClaudeDeep(safeTopic),
-      signal:    () => callGrok(safeTopic),
-      sentiment: () => callGrok(`Analyze market and social sentiment for: ${safeTopic}`),
+      research: () => callPerplexity(
+        `Research the following topic thoroughly, citing sources where available: "${safeTopic}". ` +
+        `Prioritise sources from the last 90 days. Flag any data older than 90 days. ` +
+        `Distinguish confirmed facts from speculation clearly.`,
+        PERPLEXITY_SYSTEM
+      ),
+      analysis: () => callClaudeDeep(
+        `Provide a deep analysis of the following for CoreIntent / Zynthio.ai context: "${safeTopic}". ` +
+        `Structure your response: ## Summary, ## Key Findings, ## Risks, ## Recommended Actions. ` +
+        `Be precise and actionable. Label any uncertain claims with [UNCERTAIN: <reason>].`
+      ),
+      signal: () => callGrok(
+        `Generate a trading signal assessment for: "${safeTopic}". ` +
+        `Apply the signal output format: Pair | Direction | Confidence | Entry zone | Stop level | Rationale. ` +
+        `Do not fabricate price data — flag as INSUFFICIENT DATA if current market data is unavailable.`,
+        GROK_SYSTEM
+      ),
+      sentiment: () => callGrok(
+        `Analyze market and social sentiment for: "${safeTopic}". ` +
+        `Cover: (1) Social media tone (X/Twitter, Reddit), (2) News sentiment (positive/negative/neutral), ` +
+        `(3) Overall sentiment score (0–10, where 10 = maximum bullish). ` +
+        `Flag any data gaps with [UNCERTAIN: <reason>].`,
+        GROK_SYSTEM
+      ),
     };
 
     const result = await taskMap[task]();
