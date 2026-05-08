@@ -350,7 +350,7 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
   return (
     <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
-      <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+      <div className="counter-value counter-value-glow" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
         {prefix}{started ? count.toLocaleString() : "0"}{suffix}
       </div>
       <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
@@ -685,9 +685,7 @@ function FloatingCTA() {
       animation: "fadeInUp 0.4s ease both",
     }}>
       <a
-        href="https://github.com/coreintentdev/coreintent"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/pricing"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -705,8 +703,8 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        <span style={{ fontSize: "14px" }}>&#9889;</span>
+        Compete Free &rarr;
       </a>
     </div>
   );
@@ -1349,16 +1347,20 @@ export default function Home() {
                 CoreIntent — Three AI Models Argue So You Don&apos;t Have To Guess.
               </span>
               <span aria-hidden="true">
-                Three AIs{" "}
-                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Argue</span>.
+                One Model{" "}
+                <span style={{ color: "#ef4444", opacity: 0.5, textDecoration: "line-through" }}>Guesses</span>.
                 <br />
-                You Get the{" "}
-                <span style={{ color: "#f59e0b" }}>Truth</span>.
+                Three Models{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Debate</span>.
+                <br />
+                You Get{" "}
+                <span style={{ color: "#f59e0b" }}>Conviction</span>.
                 <br />
                 <span style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
-                  Grok detects. Claude questions. Perplexity verifies.
+                  Grok detects. Claude interrogates. Perplexity fact-checks.
                   <br />
-                  <span style={{ color: "var(--accent-green)" }}>Only consensus signals survive.</span> $0 forever.
+                  <span style={{ color: "var(--accent-green)" }}>Only consensus signals survive.</span>{" "}
+                  <span className="neon-underline">$0 forever</span>.
                 </span>
               </span>
             </h1>
