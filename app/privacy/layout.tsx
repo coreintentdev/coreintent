@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/privacy/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Privacy Policy",
+        alt: "CoreIntent Privacy Policy — NZ Privacy Act 2020 Compliant",
       },
     ],
   },
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
       "How CoreIntent handles your data. NZ Privacy Act 2020 compliant.",
     creator: "@coreintentai",
     site: "@coreintentai",
+    images: ["/privacy/opengraph-image"],
   },
 };
 
@@ -61,7 +62,7 @@ const structuredData = {
         "CoreIntent privacy policy — how we handle your data. NZ Privacy Act 2020 compliant.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-08",
       inLanguage: "en-NZ",
     },
   ],

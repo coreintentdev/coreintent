@@ -35,21 +35,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${base}/privacy`,
-      lastModified: new Date("2026-05-06"),
+      lastModified: new Date("2026-05-08"),
       changeFrequency: "yearly",
       priority: 0.3,
+      images: [`${base}/privacy/opengraph-image`],
     },
     {
       url: `${base}/terms`,
-      lastModified: new Date("2026-05-06"),
+      lastModified: new Date("2026-05-08"),
       changeFrequency: "yearly",
       priority: 0.3,
+      images: [`${base}/terms/opengraph-image`],
     },
     {
       url: `${base}/disclaimer`,
-      lastModified: new Date("2026-05-06"),
+      lastModified: new Date("2026-05-08"),
       changeFrequency: "yearly",
       priority: 0.3,
+      images: [`${base}/disclaimer/opengraph-image`],
     },
   ];
 }
