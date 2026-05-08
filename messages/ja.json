@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "スタック",
+    "pricing": "料金"
+  },
+  "hero": {
+    "title_line1": "3つのAIが",
+    "title_verb": "議論する",
+    "title_line2": "あなたが手に入れるのは",
+    "title_truth": "真実",
+    "subtitle": "Grokが検出。Claudeが質問。Perplexityが検証。",
+    "consensus": "合意されたシグナルだけが生き残る。",
+    "free_forever": "永久に $0。",
+    "cta_primary": "アリーナに入る",
+    "cta_secondary": "大会を見る"
+  },
+  "terminal": {
+    "greeting": "CoreIntentへようこそ"
+  },
+  "language_switcher": {
+    "label": "言語"
+  },
+  "engine": {
+    "alive": "エンジン稼働中"
+  },
+  "star_github": "GitHubでスター"
+}

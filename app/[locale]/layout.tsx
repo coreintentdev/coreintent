@@ -1,0 +1,300 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import {
+  locales,
+  type Locale,
+  isValidLocale,
+  getMessages,
+  getIntlLocale,
+  createTranslator,
+} from "@/lib/i18n";
+import { I18nProvider } from "@/lib/i18n-client";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isValidLocale(locale)) return {};
+
+  const messages = await getMessages(locale);
+  const t = createTranslator(messages);
+
+  const alternateLanguages: Record<string, string> = {};
+  for (const l of locales) {
+    alternateLanguages[l] = `https://coreintent.dev/${l}`;
+  }
+
+  return {
+    title: {
+      default: t("meta.title"),
+      template: "%s | CoreIntent",
+    },
+    description: t("meta.description"),
+    metadataBase: new URL("https://coreintent.dev"),
+    alternates: {
+      canonical: `https://coreintent.dev/${locale}`,
+      languages: alternateLanguages,
+    },
+    openGraph: {
+      type: "website",
+      locale: getIntlLocale(locale).replace("-", "_"),
+      url: `https://coreintent.dev/${locale}`,
+      siteName: "CoreIntent",
+      title: "CoreIntent | Three AI Models. One Engine. Zero Subscriptions.",
+      description: t("meta.description"),
+      images: [
+        {
+          url: "/opengraph-image.png",
+          width: 1200,
+          height: 630,
+          alt: "CoreIntent — Agentic AI Trading Engine powered by Claude, Grok & Perplexity",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "CoreIntent | AI Trading Competitions",
+      description: t("meta.description"),
+      creator: "@coreintentai",
+      site: "@coreintentai",
+      images: ["/opengraph-image.png"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    authors: [{ name: "Corey McIvor", url: "https://zynthio.ai" }],
+    creator: "Corey McIvor",
+    publisher: "Zynthio",
+    keywords: [
+      "AI trading",
+      "trading signals",
+      "paper trading",
+      "trading competitions",
+      "Claude",
+      "Grok",
+      "Perplexity",
+      "crypto",
+      "cryptocurrency",
+      "agentic AI",
+      "multi-model AI",
+      "algorithmic trading",
+      "AI agents",
+      "CoreIntent",
+      "Zynthio",
+      "New Zealand",
+    ],
+    category: "Finance",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    other: {
+      "msapplication-TileColor": "#0a0e17",
+      "color-scheme": "dark",
+      "geo.region": "NZ",
+      "geo.placename": "New Zealand",
+    },
+  };
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://coreintent.dev/#person",
+      name: "Corey McIvor",
+      email: "corey@coreyai.ai",
+      url: "https://zynthio.ai",
+      jobTitle: "Founder & Developer",
+      worksFor: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      sameAs: [
+        "https://github.com/coreintentdev",
+        "https://x.com/coreintentai",
+      ],
+      knowsAbout: [
+        "Artificial Intelligence",
+        "Cryptocurrency Trading",
+        "Multi-Model AI Orchestration",
+        "Software Engineering",
+      ],
+      nationality: { "@type": "Country", name: "New Zealand" },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://zynthio.ai/#organization",
+      name: "Zynthio",
+      alternateName: "Zynthio.ai",
+      url: "https://zynthio.ai",
+      description:
+        "Parent brand behind CoreIntent — building agentic AI trading tools with multi-model orchestration. Based in New Zealand.",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
+      founder: { "@type": "Person", "@id": "https://coreintent.dev/#person" },
+      foundingDate: "2026",
+      foundingLocation: {
+        "@type": "Place",
+        address: { "@type": "PostalAddress", addressCountry: "NZ" },
+      },
+      areaServed: { "@type": "Country", name: "New Zealand" },
+      sameAs: [
+        "https://github.com/coreintentdev",
+        "https://x.com/coreintentai",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer support",
+        availableLanguage: "English",
+      },
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://coreintent.dev/#application",
+      name: "CoreIntent",
+      url: "https://coreintent.dev",
+      description:
+        "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
+      applicationCategory: "FinanceApplication",
+      applicationSubCategory: "Trading Platform",
+      operatingSystem: "Web",
+      browserRequirements: "Requires JavaScript. Requires a modern browser.",
+      softwareVersion: "0.2.0-alpha",
+      inLanguage: ["en-NZ", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
+      isAccessibleForFree: true,
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "NZD",
+        description: "Free competition-based AI trading platform",
+        availability: "https://schema.org/InStock",
+      },
+      author: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      creator: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      featureList: [
+        "Multi-AI orchestration (Claude, Grok, Perplexity)",
+        "Paper trading competitions",
+        "Daily, weekly, monthly leagues",
+        "Interactive web terminal",
+        "AI agent fleet",
+        "Bot-friendly competitions",
+        "10 language support",
+      ],
+      screenshot: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://coreintent.dev/#website",
+      url: "https://coreintent.dev",
+      name: "CoreIntent",
+      description:
+        "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      inLanguage: ["en-NZ", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-08",
+      publisher: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+    },
+    {
+      "@type": "SiteNavigationElement",
+      name: "Main Navigation",
+      hasPart: [
+        {
+          "@type": "WebPage",
+          name: "Terminal",
+          url: "https://coreintent.dev",
+        },
+        {
+          "@type": "WebPage",
+          name: "Demo",
+          url: "https://coreintent.dev/en/demo",
+        },
+        {
+          "@type": "WebPage",
+          name: "Stack",
+          url: "https://coreintent.dev/en/stack",
+        },
+        {
+          "@type": "WebPage",
+          name: "Competitions",
+          url: "https://coreintent.dev/en/pricing",
+        },
+        {
+          "@type": "WebPage",
+          name: "Privacy Policy",
+          url: "https://coreintent.dev/en/privacy",
+        },
+        {
+          "@type": "WebPage",
+          name: "Terms of Service",
+          url: "https://coreintent.dev/en/terms",
+        },
+        {
+          "@type": "WebPage",
+          name: "Disclaimer",
+          url: "https://coreintent.dev/en/disclaimer",
+        },
+      ],
+    },
+  ],
+};
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isValidLocale(locale)) notFound();
+
+  const messages = await getMessages(locale);
+
+  return (
+    <I18nProvider locale={locale} messages={messages}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      {children}
+    </I18nProvider>
+  );
+}

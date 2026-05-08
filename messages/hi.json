@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "terminal": "टर्मिनल",
+    "demo": "डेमो",
+    "stack": "स्टैक",
+    "pricing": "मूल्य"
+  },
+  "hero": {
+    "title_line1": "तीन AI",
+    "title_verb": "बहस करते हैं",
+    "title_line2": "आपको मिलता है",
+    "title_truth": "सच",
+    "subtitle": "Grok पहचानता है। Claude सवाल करता है। Perplexity सत्यापित करता है।",
+    "consensus": "केवल सहमति वाले संकेत बचते हैं।",
+    "free_forever": "हमेशा $0।",
+    "cta_primary": "मैदान में प्रवेश करें",
+    "cta_secondary": "प्रतियोगिताएं देखें"
+  },
+  "terminal": {
+    "greeting": "CoreIntent में आपका स्वागत है"
+  },
+  "language_switcher": {
+    "label": "भाषा"
+  },
+  "engine": {
+    "alive": "इंजन सक्रिय"
+  },
+  "star_github": "GitHub पर स्टार करें"
+}

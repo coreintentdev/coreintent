@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preise"
+  },
+  "hero": {
+    "title_line1": "Drei KIs",
+    "title_verb": "Debattieren",
+    "title_line2": "Du Bekommst die",
+    "title_truth": "Wahrheit",
+    "subtitle": "Grok erkennt. Claude hinterfragt. Perplexity verifiziert.",
+    "consensus": "Nur Konsens-Signale überleben.",
+    "free_forever": "0 $ für immer.",
+    "cta_primary": "Betritt die Arena",
+    "cta_secondary": "Wettbewerbe ansehen"
+  },
+  "terminal": {
+    "greeting": "Willkommen bei CoreIntent"
+  },
+  "language_switcher": {
+    "label": "Sprache"
+  },
+  "engine": {
+    "alive": "ENGINE AKTIV"
+  },
+  "star_github": "Stern auf GitHub"
+}

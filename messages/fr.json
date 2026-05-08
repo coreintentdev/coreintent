@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Démo",
+    "stack": "Stack",
+    "pricing": "Tarifs"
+  },
+  "hero": {
+    "title_line1": "Trois IAs",
+    "title_verb": "Débattent",
+    "title_line2": "Vous Obtenez la",
+    "title_truth": "Vérité",
+    "subtitle": "Grok détecte. Claude questionne. Perplexity vérifie.",
+    "consensus": "Seuls les signaux de consensus survivent.",
+    "free_forever": "0 $ pour toujours.",
+    "cta_primary": "Entrer dans l'Arène",
+    "cta_secondary": "Voir les Compétitions"
+  },
+  "terminal": {
+    "greeting": "Bienvenue sur CoreIntent"
+  },
+  "language_switcher": {
+    "label": "Langue"
+  },
+  "engine": {
+    "alive": "MOTEUR ACTIF"
+  },
+  "star_github": "Étoile sur GitHub"
+}
