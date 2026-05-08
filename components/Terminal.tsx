@@ -76,6 +76,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mchallenge\x1b[0m   - Speed trading game (10 rounds — BUY/SELL/HOLD)
   \x1b[32mslots\x1b[0m       - Crypto slot machine — spin the reels
   \x1b[32mwarp\x1b[0m        - Watch AI pipeline process a live signal
+  \x1b[32mblackjack\x1b[0m   - Crypto blackjack — beat the dealer (alias: \x1b[32mbj\x1b[0m)
+  \x1b[32mmining\x1b[0m      - Mine paper-BTC with proof-of-intelligence
+  \x1b[32mtypespeed\x1b[0m   - WPM typing test with trading terms (alias: \x1b[32mwpm\x1b[0m)
 
   \x1b[33m── ANALYTICS ──\x1b[0m
   \x1b[32mheatmap\x1b[0m     - Crypto correlation matrix (animated)
@@ -651,6 +654,7 @@ const ALL_COMMANDS = [
   "arena", "dna", "train",
   "quantum", "waveform", "worldmap", "spectrum",
   "mission", "accept", "abort", "analyze", "execute",
+  "blackjack", "bj", "hit", "stand", "mining", "mine", "typespeed", "wpm",
 ];
 
 export default function Terminal() {
@@ -2950,6 +2954,160 @@ export default function Terminal() {
       return "";
     }
 
+    // ── BLACKJACK: Crypto-themed card game ──
+    if (trimmed === "blackjack" || trimmed === "bj") {
+      const suits = ["♠", "♥", "♦", "♣"];
+      const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+      const deck: { rank: string; suit: string; value: number }[] = [];
+      for (const s of suits) {
+        for (let ri = 0; ri < ranks.length; ri++) {
+          const val = ri === 0 ? 11 : ri >= 10 ? 10 : ri + 1;
+          deck.push({ rank: ranks[ri], suit: s, value: val });
+        }
+      }
+      for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+      }
+
+      const cardStr = (c: { rank: string; suit: string }) => {
+        const red = c.suit === "♥" || c.suit === "♦";
+        return red ? `\x1b[31m[${c.rank}${c.suit}]\x1b[0m` : `\x1b[36m[${c.rank}${c.suit}]\x1b[0m`;
+      };
+      const handValue = (hand: { value: number }[]) => {
+        let total = hand.reduce((a, c) => a + c.value, 0);
+        let aces = hand.filter((c) => c.value === 11).length;
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      };
+
+      const playerHand = [deck.pop()!, deck.pop()!];
+      const dealerHand = [deck.pop()!, deck.pop()!];
+      const pVal = handValue(playerHand);
+
+      const bjState = { deck, playerHand, dealerHand, done: false };
+      (globalThis as Record<string, unknown>).__bjState = bjState;
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  CRYPTO BLACKJACK — Paper Chips\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  \x1b[33mBet:\x1b[0m 100 paper chips  |  \x1b[90mGoal: Beat the dealer. Don't bust.\x1b[0m`,
+        ``,
+        `  \x1b[33mDealer:\x1b[0m ${cardStr(dealerHand[0])} \x1b[90m[??]\x1b[0m`,
+        `  \x1b[33mYou:\x1b[0m    ${playerHand.map(cardStr).join(" ")}  = \x1b[32m${pVal}\x1b[0m`,
+        ``
+      );
+
+      if (pVal === 21) {
+        (globalThis as Record<string, unknown>).__bjState = undefined;
+        const dVal = handValue(dealerHand);
+        if (dVal === 21) {
+          addLines(
+            `  \x1b[33mDealer:\x1b[0m ${dealerHand.map(cardStr).join(" ")}  = ${dVal}`,
+            `  \x1b[33mPUSH\x1b[0m — Both blackjack! Chips returned.`,
+            `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``
+          );
+        } else {
+          addLines(
+            `  \x1b[32m★ BLACKJACK! ★\x1b[0m You win \x1b[32m+250 paper chips\x1b[0m!`,
+            `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``
+          );
+        }
+      } else {
+        addLines(
+          `  \x1b[90m→ Type\x1b[0m \x1b[32mhit\x1b[0m\x1b[90m or\x1b[0m \x1b[33mstand\x1b[0m`
+        );
+      }
+      return "";
+    }
+
+    // ── MINING: Fake crypto mining animation ──
+    if (trimmed === "mining" || trimmed === "mine") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT NEURAL MINING ══\x1b[0m`,
+        `\x1b[90m  Mining paper-BTC using 3-model consensus proof-of-intelligence\x1b[0m`, ``);
+
+      let block = 0;
+      const totalBlocks = 6;
+      const hashChars = "0123456789abcdef";
+      const genHash = () => Array.from({ length: 64 }, () => hashChars[Math.floor(Math.random() * 16)]).join("");
+
+      const iv = setInterval(() => {
+        if (block < totalBlocks) {
+          const nonce = Math.floor(Math.random() * 999999);
+          const hash = genHash();
+          const difficulty = "0".repeat(3 + Math.floor(block / 2)) + hash.substring(3 + Math.floor(block / 2));
+          const reward = (0.0001 + Math.random() * 0.0004).toFixed(6);
+          const model = ["Grok", "Claude", "Perplexity"][block % 3];
+          const modelColor = ["\x1b[31m", "\x1b[35m", "\x1b[34m"][block % 3];
+
+          const filled = Math.round(((block + 1) / totalBlocks) * 30);
+          const bar = `\x1b[33m${"█".repeat(filled)}${"░".repeat(30 - filled)}\x1b[0m`;
+
+          addLines(
+            `  \x1b[90m[Block ${block + 1}/${totalBlocks}]\x1b[0m Nonce: ${nonce}`,
+            `  Hash: \x1b[32m${difficulty.substring(0, 8)}\x1b[90m${difficulty.substring(8, 32)}...\x1b[0m`,
+            `  Validator: ${modelColor}${model}\x1b[0m  Reward: \x1b[32m+${reward} pBTC\x1b[0m`,
+            `  ${bar} ${Math.round(((block + 1) / totalBlocks) * 100)}%`,
+            ``
+          );
+          block++;
+        } else {
+          clearInterval(iv);
+          const totalReward = (0.0005 + Math.random() * 0.002).toFixed(6);
+          addLines(
+            `\x1b[36m  ╔══════════════════════════════════════╗\x1b[0m`,
+            `\x1b[36m  ║      MINING SESSION COMPLETE          ║\x1b[0m`,
+            `\x1b[36m  ╠══════════════════════════════════════╣\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Blocks mined:  \x1b[32m${totalBlocks}\x1b[0m                  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Total reward:  \x1b[32m${totalReward} pBTC\x1b[0m       \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Hash rate:     \x1b[33m${(120 + Math.random() * 80).toFixed(0)} MH/s\x1b[0m        \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Consensus:     \x1b[32m3/3 models\x1b[0m           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ╚══════════════════════════════════════╝\x1b[0m`,
+            ``,
+            `  \x1b[90mPaper mining — proof-of-intelligence, not proof-of-work.\x1b[0m`,
+            `  \x1b[90mNo GPUs were harmed. No electricity was wasted.\x1b[0m`, ``
+          );
+        }
+      }, 500);
+      return "";
+    }
+
+    // ── TYPESPEED: WPM typing test with trading terms ──
+    if (trimmed === "typespeed" || trimmed === "wpm") {
+      const phrases = [
+        "buy the dip sell the rip",
+        "three models one signal zero guessing",
+        "paper trading mode no real money at risk",
+        "grok detects claude questions perplexity verifies",
+        "the leaderboard does not care who built you",
+        "consensus equals conviction disagreement equals caution",
+        "every human needs a bot every bot needs a human",
+        "risk management is not optional it is the whole game",
+        "bots welcome no captcha ai to ai is first class",
+        "free costs nothing to serve so give it away",
+      ];
+      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+      const tsState = { phrase, startTime: 0, started: false };
+      (globalThis as Record<string, unknown>).__tsState = tsState;
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  TYPESPEED — Trading Terminal WPM Test\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  \x1b[90mType the phrase below as fast as you can.\x1b[0m`,
+        `  \x1b[90mTimer starts when you press Enter.\x1b[0m`,
+        ``,
+        `  \x1b[33m"${phrase}"\x1b[0m`,
+        ``,
+        `  \x1b[90m→ Type it now and press Enter\x1b[0m`
+      );
+      return "";
+    }
+
     // ── MISSION: Interactive signal infiltration narrative ──
     if (trimmed === "mission") {
       const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
@@ -3100,6 +3258,145 @@ export default function Terminal() {
 
   // Process command with && chaining support
   const processCommand = useCallback(async (cmd: string) => {
+    // ── BLACKJACK state handler ──
+    const bjState = (globalThis as Record<string, unknown>).__bjState as {
+      deck: { rank: string; suit: string; value: number }[];
+      playerHand: { rank: string; suit: string; value: number }[];
+      dealerHand: { rank: string; suit: string; value: number }[];
+      done: boolean;
+    } | undefined;
+    if (bjState && !bjState.done) {
+      const choice = cmd.trim().toLowerCase();
+      const cardStr = (c: { rank: string; suit: string }) => {
+        const red = c.suit === "♥" || c.suit === "♦";
+        return red ? `\x1b[31m[${c.rank}${c.suit}]\x1b[0m` : `\x1b[36m[${c.rank}${c.suit}]\x1b[0m`;
+      };
+      const handValue = (hand: { value: number }[]) => {
+        let total = hand.reduce((a, c) => a + c.value, 0);
+        let aces = hand.filter((c) => c.value === 11).length;
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      };
+
+      const finishGame = (result: string) => {
+        (globalThis as Record<string, unknown>).__bjState = undefined;
+        const dVal = handValue(bjState.dealerHand);
+        addLines(
+          `  \x1b[33mDealer:\x1b[0m ${bjState.dealerHand.map(cardStr).join(" ")}  = \x1b[33m${dVal}\x1b[0m`,
+          `  ${result}`,
+          `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``
+        );
+      };
+
+      if (choice === "hit" || choice === "h") {
+        const card = bjState.deck.pop()!;
+        bjState.playerHand.push(card);
+        const pVal = handValue(bjState.playerHand);
+        addLines(
+          `\x1b[32m❯\x1b[0m ${cmd}`,
+          `  \x1b[32m+\x1b[0m Drew ${cardStr(card)}`,
+          `  \x1b[33mYou:\x1b[0m ${bjState.playerHand.map(cardStr).join(" ")}  = ${pVal > 21 ? `\x1b[31m${pVal} BUST\x1b[0m` : `\x1b[32m${pVal}\x1b[0m`}`,
+          ``
+        );
+        if (pVal > 21) {
+          finishGame(`\x1b[31m✗ BUST!\x1b[0m You lose \x1b[31m-100 paper chips\x1b[0m`);
+        } else if (pVal === 21) {
+          addLines(`  \x1b[32m21!\x1b[0m Auto-standing...`, ``);
+          let dVal = handValue(bjState.dealerHand);
+          while (dVal < 17) {
+            bjState.dealerHand.push(bjState.deck.pop()!);
+            dVal = handValue(bjState.dealerHand);
+          }
+          if (dVal > 21) finishGame(`\x1b[32m★ DEALER BUSTS!\x1b[0m You win \x1b[32m+200 paper chips\x1b[0m!`);
+          else if (pVal > dVal) finishGame(`\x1b[32m★ YOU WIN!\x1b[0m +\x1b[32m200 paper chips\x1b[0m!`);
+          else if (pVal === dVal) finishGame(`\x1b[33mPUSH\x1b[0m — Tie. Chips returned.`);
+          else finishGame(`\x1b[31m✗ DEALER WINS.\x1b[0m -\x1b[31m100 paper chips\x1b[0m`);
+        } else {
+          addLines(`  \x1b[90m→ Type\x1b[0m \x1b[32mhit\x1b[0m\x1b[90m or\x1b[0m \x1b[33mstand\x1b[0m`);
+        }
+        return;
+      } else if (choice === "stand" || choice === "s") {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `  \x1b[33mStanding.\x1b[0m Dealer reveals...`, ``);
+        const pVal = handValue(bjState.playerHand);
+        let dVal = handValue(bjState.dealerHand);
+        addLines(`  \x1b[33mDealer:\x1b[0m ${bjState.dealerHand.map(cardStr).join(" ")}  = \x1b[33m${dVal}\x1b[0m`);
+        const drawCards = () => {
+          if (dVal < 17) {
+            const card = bjState.deck.pop()!;
+            bjState.dealerHand.push(card);
+            dVal = handValue(bjState.dealerHand);
+            addLines(`  \x1b[33m+\x1b[0m Dealer draws ${cardStr(card)}  = \x1b[33m${dVal}\x1b[0m`);
+            if (dVal < 17) {
+              setTimeout(drawCards, 600);
+              return;
+            }
+          }
+          addLines(``);
+          if (dVal > 21) finishGame(`\x1b[32m★ DEALER BUSTS!\x1b[0m You win \x1b[32m+200 paper chips\x1b[0m!`);
+          else if (pVal > dVal) finishGame(`\x1b[32m★ YOU WIN!\x1b[0m +\x1b[32m200 paper chips\x1b[0m!`);
+          else if (pVal === dVal) finishGame(`\x1b[33mPUSH\x1b[0m — Tie. Chips returned.`);
+          else finishGame(`\x1b[31m✗ DEALER WINS.\x1b[0m -\x1b[31m100 paper chips\x1b[0m`);
+        };
+        setTimeout(drawCards, 600);
+        return;
+      } else if (choice === "quit" || choice === "q") {
+        (globalThis as Record<string, unknown>).__bjState = undefined;
+        addLines(`\x1b[33mBlackjack abandoned.\x1b[0m`, ``);
+        return;
+      } else {
+        addLines(`\x1b[31mBlackjack:\x1b[0m Type \x1b[32mhit\x1b[0m, \x1b[33mstand\x1b[0m, or \x1b[90mquit\x1b[0m`);
+        return;
+      }
+    }
+
+    // ── TYPESPEED state handler ──
+    const tsState = (globalThis as Record<string, unknown>).__tsState as {
+      phrase: string;
+      startTime: number;
+      started: boolean;
+    } | undefined;
+    if (tsState) {
+      const typed = cmd.trim();
+      if (!tsState.started) {
+        tsState.started = true;
+        tsState.startTime = Date.now();
+        addLines(`  \x1b[90mTimer started! Type the phrase...\x1b[0m`);
+        return;
+      }
+      (globalThis as Record<string, unknown>).__tsState = undefined;
+      const elapsed = (Date.now() - tsState.startTime) / 1000;
+      const words = tsState.phrase.split(" ").length;
+      const wpm = Math.round((words / elapsed) * 60);
+      const typedLower = typed.toLowerCase();
+      const targetLower = tsState.phrase.toLowerCase();
+      let correct = 0;
+      for (let i = 0; i < targetLower.length; i++) {
+        if (typedLower[i] === targetLower[i]) correct++;
+      }
+      const accuracy = Math.round((correct / targetLower.length) * 100);
+
+      const rating = wpm >= 80 ? "\x1b[32m★ ELITE TRADER\x1b[0m — Faster than Grok's signal feed"
+        : wpm >= 60 ? "\x1b[32mFAST\x1b[0m — You'd outpace most algo bots"
+        : wpm >= 40 ? "\x1b[33mSOLID\x1b[0m — Competitive speed"
+        : wpm >= 20 ? "\x1b[33mSTEADY\x1b[0m — Slow and methodical"
+        : "\x1b[31mSLOW\x1b[0m — Claude thinks faster than this";
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        ``,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  TYPESPEED RESULTS\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  \x1b[33mSpeed:\x1b[0m    \x1b[32m${wpm} WPM\x1b[0m`,
+        `  \x1b[33mAccuracy:\x1b[0m ${accuracy >= 95 ? "\x1b[32m" : accuracy >= 80 ? "\x1b[33m" : "\x1b[31m"}${accuracy}%\x1b[0m`,
+        `  \x1b[33mTime:\x1b[0m     ${elapsed.toFixed(1)}s`,
+        `  \x1b[33mRating:\x1b[0m   ${rating}`,
+        ``,
+        `  \x1b[90mType \x1b[32mtypespeed\x1b[90m to try again. Beat your record.\x1b[0m`, ``
+      );
+      return;
+    }
+
     const mission = missionRef.current;
     if (mission && mission.phase === 1) {
       const choice = cmd.trim().toLowerCase();
