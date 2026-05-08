@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useContext, useCallback } from "react";
-import type { Locale } from "./i18n";
+import { getNestedValue, type Locale, type NestedMessages } from "./i18n";
 
-type Messages = { [key: string]: string | Messages };
+type Messages = NestedMessages;
 
 interface I18nContextValue {
   locale: Locale;
@@ -12,16 +12,6 @@ interface I18nContextValue {
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null);
-
-function getNestedValue(obj: Messages, path: string): string | undefined {
-  const keys = path.split(".");
-  let current: Messages | string = obj;
-  for (const key of keys) {
-    if (typeof current !== "object" || current === null) return undefined;
-    current = current[key];
-  }
-  return typeof current === "string" ? current : undefined;
-}
 
 export function I18nProvider({
   locale,

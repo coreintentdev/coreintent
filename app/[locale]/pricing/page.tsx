@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useLocale } from "@/lib/i18n-client";
 
 function LaunchCountdown() {
   const [now, setNow] = useState(Date.now());
@@ -109,6 +110,7 @@ const STEPS = [
 ];
 
 export default function PricingPage() {
+  const locale = useLocale();
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
@@ -957,7 +959,7 @@ export default function PricingPage() {
             Risk warnings: Trading cryptocurrency involves significant risk. Past performance does not guarantee future results.
             <br />
             See our{" "}
-            <Link href="/disclaimer" style={{ color: "var(--accent-blue)" }}>
+            <Link href={`/${locale}/disclaimer`} style={{ color: "var(--accent-blue)" }}>
               full disclaimer
             </Link>{" "}
             for more information.

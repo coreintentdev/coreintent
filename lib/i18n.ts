@@ -41,7 +41,7 @@ export function detectLocale(acceptLanguage: string | null): Locale {
   return defaultLocale;
 }
 
-type NestedMessages = { [key: string]: string | NestedMessages };
+export type NestedMessages = { [key: string]: string | NestedMessages };
 
 function deepMerge(base: NestedMessages, overlay: NestedMessages): NestedMessages {
   const result: NestedMessages = { ...base };
@@ -99,7 +99,7 @@ export async function getMessages(locale: Locale): Promise<NestedMessages> {
   }
 }
 
-function getNestedValue(obj: NestedMessages, path: string): string | undefined {
+export function getNestedValue(obj: NestedMessages, path: string): string | undefined {
   const keys = path.split(".");
   let current: NestedMessages | string = obj;
   for (const key of keys) {
