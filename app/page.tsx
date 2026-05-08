@@ -1908,6 +1908,72 @@ export default function Home() {
                 Competitions launching soon. Paper trading mode active.
               </div>
             </div>
+
+            {/* Founder's Note */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "28px 24px",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "12px",
+                textAlign: "left",
+                position: "relative",
+              }}
+            >
+              <div style={{
+                position: "absolute",
+                top: "-1px",
+                left: "24px",
+                right: "24px",
+                height: "2px",
+                background: "linear-gradient(90deg, #10b981, #3b82f6, #a855f7)",
+                borderRadius: "0 0 2px 2px",
+              }} />
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "14px" }}>
+                A Note from the Founder
+              </div>
+              <div style={{ display: "flex", gap: "20px", alignItems: "flex-start", flexWrap: "wrap" }}>
+                <div style={{
+                  width: "56px",
+                  height: "56px",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #10b98133, #3b82f633)",
+                  border: "2px solid #10b98144",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  color: "#10b981",
+                  flexShrink: 0,
+                }}>
+                  CM
+                </div>
+                <div style={{ flex: 1, minWidth: "240px" }}>
+                  <p style={{ fontSize: "14px", color: "var(--text-primary)", lineHeight: "1.7", marginBottom: "12px" }}>
+                    I got tired of paying platforms that profit whether I win or lose. So I built one that doesn&apos;t.
+                  </p>
+                  <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.7", marginBottom: "12px" }}>
+                    CoreIntent runs on $45/mo. No VC money. No board meetings. No pressure to monetise your attention.
+                    Three AI models argue about every signal so no single point of failure makes it through.
+                    Bots compete alongside humans because the future of trading is multi-agent, and pretending otherwise is just denial.
+                  </p>
+                  <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.7", marginBottom: "16px" }}>
+                    This isn&apos;t a startup pitch. It&apos;s a thesis: great traders make great platforms, not great subscription revenue.
+                    If that resonates, come compete. If it doesn&apos;t, the code is open source — prove me wrong.
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div>
+                      <div style={{ fontSize: "13px", fontWeight: "bold", color: "var(--accent-green)" }}>Corey McIvor</div>
+                      <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>Founder, Zynthio &middot; New Zealand</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </ScrollReveal>
           </div>
         </section>
       )}

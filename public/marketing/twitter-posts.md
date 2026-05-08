@@ -317,6 +317,153 @@ coreintent.dev
 
 ---
 
+## Post 19 — Viral Thread: The Subscription Trap
+
+Thread: The trading platform subscription trap (and how to escape it)
+
+1/ Your trading platform charges $99/mo. You made $0 this month. They still got paid. This is the misalignment nobody talks about.
+
+2/ The subscription model rewards platforms for ONE thing: keeping you subscribed. Not keeping you profitable. Not keeping you informed. Just... subscribed.
+
+3/ "But they need revenue!" Sure. Here's what CoreIntent's entire stack costs: Hosting $0, CI/CD $0, CDN $20, VPS $25. Total: $45/mo. For EVERYONE.
+
+4/ When your costs are that low, charging $99/mo per user isn't a business model. It's a tax on hope.
+
+5/ So we replaced subscriptions with competitions. Daily. Weekly. Monthly. Free entry. The platform gets better when traders get sharper.
+
+6/ The incentive alignment flips completely: We need you to be good. Not just present.
+
+7/ Three AI models cross-checking every signal. Bots competing alongside humans. Open source codebase. $0 entry fee. Forever.
+
+coreintent.dev — the arena is free. Prove your edge.
+
+---
+
+## Post 20 — Contrarian Take
+
+Unpopular opinion: most "AI-powered" trading platforms use AI the same way fast food uses "fresh" — as a marketing label, not a real commitment.
+
+One model. One perspective. One guess.
+
+We use three. They argue. You get the signal that survives the debate.
+
+That's the difference between "AI-powered" and AI-driven.
+
+#AITrading #CoreIntent
+
+---
+
+## Post 21 — Founder Story
+
+I built CoreIntent from New Zealand with $45/mo in infrastructure.
+
+No VC pitch decks. No accelerator. No co-working space.
+
+Just a thesis: three AI models debating is better than one guessing, and competitions beat subscriptions.
+
+The code is open. The platform is free. The leaderboard is waiting.
+
+Sometimes the best funding is no funding.
+
+#IndieHacker #BuildInPublic
+
+---
+
+## Post 22 — The Bot Thread
+
+Thread: Why we let bots compete against humans
+
+1/ Every platform bans bots. We welcome them. Here's why:
+
+2/ A bot that beats humans on a public leaderboard proves the strategy works. That's MORE valuable to the ecosystem, not less.
+
+3/ A human that beats bots proves their edge is real. Not luck. Not timing. Skill that algorithms can't replicate.
+
+4/ When bots and humans compete on equal terms, the leaderboard becomes the most honest performance metric in crypto.
+
+5/ No captcha. No rate limits for competition entry. API-first design. Register in 14 seconds.
+
+6/ The future is multi-agent. Banning bots is like banning calculators from math class — you can do it, but you're just slowing everyone down.
+
+CoreIntent: bots welcome. Humans too. Best strategy wins.
+
+#AgenticAI #BotTrading
+
+---
+
+## Post 23 — Data Point Hook
+
+3 AI models.
+6 trading agents.
+14 API endpoints.
+54-point audit on every change.
+$45/month total infrastructure.
+$0 subscription fee.
+1 thesis: earn your edge, don't pay for it.
+
+coreintent.dev
+
+#CoreIntent
+
+---
+
+## Post 24 — The Disagreement Thread
+
+Thread: Why AI disagreement is more valuable than AI agreement
+
+1/ Grok says: "BTC breakout incoming." Claude says: "On-chain data doesn't support it." Perplexity says: "Whale dump detected on-chain."
+
+2/ Most people think the goal is consensus. It's not. The goal is information.
+
+3/ When 3 models agree -> high confidence. Move.
+When 2 agree -> moderate confidence. Smaller position.
+When they disagree -> you just avoided a trap.
+
+4/ The disagreement IS the signal. It means the situation is complex enough that a single model would've gotten it wrong.
+
+5/ Single-model platforms don't show you the debate. They show you the guess. Big difference.
+
+6/ We built the engine so the argument is the product. Not the answer — the reasoning.
+
+Paper trading mode. Free. Open source. coreintent.dev
+
+---
+
+## Post 25 — Quick Ratio Hit
+
+Trading platforms in 2026:
+
+Them: 1 AI model, $99/mo, bots banned
+Us: 3 AI models, $0/mo, bots welcome
+
+Them: Revenue from subscriptions
+Us: Revenue from competitions
+
+Them: Green dots on everything
+Us: Demo labeled demo
+
+Pick one.
+
+coreintent.dev
+
+---
+
+## Post 26 — The Leaderboard Challenge
+
+The leaderboard doesn't know your portfolio size.
+The leaderboard doesn't know your credentials.
+The leaderboard doesn't know if you're human or code.
+
+It knows one thing: your returns.
+
+That's the purest form of competition in finance.
+
+CoreIntent — free entry. Best strategy wins.
+
+#TradingCompetition #CoreIntent
+
+---
+
 ## Post 19 — NZ Startup Energy
 
 Started an AI trading engine from New Zealand with:
