@@ -140,8 +140,10 @@ function parseAnsi(text: string): string {
   const escaped = text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-  return escaped
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+  const colored = escaped
     .replace(/\x1b\[0m/g, "</span>")
     .replace(/\x1b\[31m/g, '<span style="color:#ef4444">')
     .replace(/\x1b\[32m/g, '<span style="color:#10b981">')
@@ -149,6 +151,7 @@ function parseAnsi(text: string): string {
     .replace(/\x1b\[34m/g, '<span style="color:#3b82f6">')
     .replace(/\x1b\[35m/g, '<span style="color:#a855f7">')
     .replace(/\x1b\[36m/g, '<span style="color:#06b6d4">');
+  return colored.replace(/\x1b\[[0-9;]*m/g, "");
 }
 
 function loadState(): ConversationState {
@@ -184,7 +187,7 @@ export default function AITwin() {
   const [pulseButton, setPulseButton] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const demoAbortRef = useRef(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
   const hasActivatedRef = useRef(false);
 
   useEffect(() => {
@@ -214,7 +217,11 @@ export default function AITwin() {
   const playNotification = useCallback(() => {
     if (!soundEnabled) return;
     try {
-      const ctx = new AudioContext();
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContext();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") ctx.resume();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
@@ -261,8 +268,11 @@ export default function AITwin() {
     };
   }, [activateTwin]);
 
+  const hasGreetedRef = useRef(hasGreeted);
+  hasGreetedRef.current = hasGreeted;
+
   const greet = useCallback(() => {
-    if (hasGreeted) return;
+    if (hasGreetedRef.current) return;
     setHasGreeted(true);
     const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
     setIsTyping(true);
@@ -273,51 +283,38 @@ export default function AITwin() {
         addTwinMessage("Type \x1b[36mhelp\x1b[0m to see what I can do, or just ask me anything.");
       }, 600);
     }, 1200);
-  }, [hasGreeted, addTwinMessage]);
+  }, [addTwinMessage]);
 
   const toggleOpen = useCallback(() => {
-    setIsOpen((prev) => {
-      const next = !prev;
-      if (next) {
-        setPulseButton(false);
-        if (!hasGreeted) {
-          setTimeout(greet, 300);
-        }
+    const next = !isOpen;
+    setIsOpen(next);
+    if (next) {
+      setPulseButton(false);
+      if (!hasGreetedRef.current) {
+        setTimeout(greet, 300);
       }
-      return next;
-    });
-  }, [hasGreeted, greet]);
+    }
+  }, [isOpen, greet]);
 
   const runDemo = useCallback(() => {
     if (demoRunning) return;
     setDemoRunning(true);
-    demoAbortRef.current = false;
     let totalDelay = 0;
-    const timeouts: ReturnType<typeof setTimeout>[] = [];
 
     for (const step of DEMO_STEPS) {
       totalDelay += step.delay;
-      const t = setTimeout(() => {
-        if (demoAbortRef.current) return;
+      setTimeout(() => {
         if (step.text === "") {
           addTwinMessage(" ");
         } else {
           addTwinMessage(step.text);
         }
       }, totalDelay);
-      timeouts.push(t);
     }
 
-    const end = setTimeout(() => {
+    setTimeout(() => {
       setDemoRunning(false);
     }, totalDelay + 200);
-    timeouts.push(end);
-
-    return () => {
-      demoAbortRef.current = true;
-      timeouts.forEach(clearTimeout);
-      setDemoRunning(false);
-    };
   }, [demoRunning, addTwinMessage]);
 
   const handleCommand = useCallback(
