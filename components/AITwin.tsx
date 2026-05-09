@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface Message {
   role: "twin" | "user";
@@ -11,7 +11,7 @@ const STORAGE_KEY = "coreintent-ai-twin";
 const TYPE_SPEED = 16;
 
 const GREETING =
-  "Kia ora! I\u2019m CoreyAI \u2014 the digital twin behind CoreIntent.\n\nThree AI models. Zero subscriptions. Pure NZ engineering.\n\nType \u2018help\u2019 to see what I can do.";
+  "Kia ora! I’m CoreyAI — the digital twin behind CoreIntent.\n\nThree AI models. Zero subscriptions. Pure NZ engineering.\n\nType ‘help’ to see what I can do.";
 
 function getResponses(raw: string): { texts: string[]; clear?: boolean } {
   const cmd = raw.toLowerCase().trim();
@@ -19,14 +19,14 @@ function getResponses(raw: string): { texts: string[]; clear?: boolean } {
   if (cmd === "help")
     return {
       texts: [
-        "Commands:\n  help     \u2014 This menu\n  about    \u2014 What is CoreIntent?\n  pricing  \u2014 How much? (spoiler: free)\n  stack    \u2014 The tech under the hood\n  demo     \u2014 Simulated trade analysis\n  who      \u2014 About CoreyAI\n  clear    \u2014 Clear conversation\n\nOr just type naturally.",
+        "Commands:\n  help     — This menu\n  about    — What is CoreIntent?\n  pricing  — How much? (spoiler: free)\n  stack    — The tech under the hood\n  demo     — Simulated trade analysis\n  who      — About CoreyAI\n  clear    — Clear conversation\n\nOr just type naturally.",
       ],
     };
 
   if (cmd === "about")
     return {
       texts: [
-        "CoreIntent is an agentic AI trading engine.\n\nThree models work together \u2014 Grok for speed, Claude for depth, Perplexity for research \u2014 to find and validate trading signals.\n\nNo subscriptions. Competition-based. Daily, weekly, and monthly leagues where traders and bots compete.\n\nBuilt in New Zealand by Corey McIvor. Currently in paper trading mode.",
+        "CoreIntent is an agentic AI trading engine.\n\nThree models work together — Grok for speed, Claude for depth, Perplexity for research — to find and validate trading signals.\n\nNo subscriptions. Competition-based. Daily, weekly, and monthly leagues where traders and bots compete.\n\nBuilt in New Zealand by Corey McIvor. Currently in paper trading mode.",
       ],
     };
 
@@ -40,14 +40,14 @@ function getResponses(raw: string): { texts: string[]; clear?: boolean } {
   if (cmd === "stack")
     return {
       texts: [
-        "The engine:\n  Next.js 14 + TypeScript (strict mode)\n  AI: Claude, Grok, Perplexity\n  Risk monitoring + signal detection\n  VPS on Cloudzy, NZ-routed\n\nPhilosophy:\n  No unnecessary frameworks\n  No un-auditable dependencies\n  ~$45/month total infra cost\n  Security headers locked tight\n\nVisit /stack for the full architecture.",
+        "The engine:\n  Next.js 15 + TypeScript (strict mode)\n  AI: Claude, Grok, Perplexity\n  Risk monitoring + signal detection\n  VPS on Cloudzy, NZ-routed\n\nPhilosophy:\n  No unnecessary frameworks\n  No un-auditable dependencies\n  ~$45/month total infra cost\n  Security headers locked tight\n\nVisit /stack for the full architecture.",
       ],
     };
 
   if (cmd === "who" || cmd === "whoami" || cmd === "who are you")
     return {
       texts: [
-        "I\u2019m CoreyAI \u2014 a client-side digital twin.\n\nBuilt by Corey McIvor from New Zealand. One developer, multiple AI models, zero corporate overhead.\n\nYour conversation stays in your browser. No tracking, no cookies, no data leaves your machine.\n\nParent brand: Zynthio.ai",
+        "I’m CoreyAI — a client-side digital twin.\n\nBuilt by Corey McIvor from New Zealand. One developer, multiple AI models, zero corporate overhead.\n\nYour conversation stays in your browser. No tracking, no cookies, no data leaves your machine.\n\nParent brand: Zynthio.ai",
       ],
     };
 
@@ -55,12 +55,12 @@ function getResponses(raw: string): { texts: string[]; clear?: boolean } {
     return {
       texts: [
         "[SCAN] Initiating market analysis...",
-        "[SIGNAL] BTC/USDT \u2014 Bullish divergence on 4H. RSI: 34 \u2192 42 while price held $67,200 support.",
+        "[SIGNAL] BTC/USDT — Bullish divergence on 4H. RSI: 34 → 42 while price held $67,200 support.",
         "[GROK] Fast signal confirmed. Volume +340% above 20MA. Momentum shifting. Confidence: HIGH.",
         "[CLAUDE] Deep analysis agrees. Pattern match: 87%. Macro: neutral-bullish. No conflicting signals on higher TFs.",
         "[PERPLEXITY] No contrary news. ETF inflows $274M today. Sentiment: cautiously bullish.",
-        "[CONSENSUS] 3/3 \u2192 LONG\n  Entry:  $67,420\n  Stop:   $66,100  (-1.96%)\n  Target: $69,800  (+3.52%)\n  R/R:    1:1.8\n  Size:   2% portfolio",
-        "[EXECUTED] Paper trade placed. Monitoring...\n\nThis is demo data \u2014 no real trades executed.\nType \u2018about\u2019 to learn more.",
+        "[CONSENSUS] 3/3 → LONG\n  Entry:  $67,420\n  Stop:   $66,100  (-1.96%)\n  Target: $69,800  (+3.52%)\n  R/R:    1:1.8\n  Size:   2% portfolio",
+        "[EXECUTED] Paper trade placed. Monitoring...\n\nThis is demo data — no real trades executed.\nType ‘about’ to learn more.",
       ],
     };
 
@@ -69,28 +69,28 @@ function getResponses(raw: string): { texts: string[]; clear?: boolean } {
   if (/\b(trade|trading|signal)\b/i.test(cmd))
     return {
       texts: [
-        "CoreIntent validates signals across three AI models before any trade. Paper mode for now.\n\nType \u2018demo\u2019 for a simulated analysis.",
+        "CoreIntent validates signals across three AI models before any trade. Paper mode for now.\n\nType ‘demo’ for a simulated analysis.",
       ],
     };
 
   if (/\b(ai|model|grok|claude|perplexity)\b/i.test(cmd))
     return {
       texts: [
-        "Three models, one consensus:\n  Grok \u2014 fast pattern detection\n  Claude \u2014 deep analysis\n  Perplexity \u2014 real-time research\n\nNo single model trades alone. Type \u2018stack\u2019 for details.",
+        "Three models, one consensus:\n  Grok — fast pattern detection\n  Claude — deep analysis\n  Perplexity — real-time research\n\nNo single model trades alone. Type ‘stack’ for details.",
       ],
     };
 
   if (/\b(hi|hey|hello|g'?day|sup)\b/i.test(cmd))
     return {
       texts: [
-        "Hey! Good to have you. Type \u2018help\u2019 to explore, or just ask me anything.",
+        "Hey! Good to have you. Type ‘help’ to explore, or just ask me anything.",
       ],
     };
 
   if (/\b(bye|later|cya|cheers)\b/i.test(cmd))
     return {
       texts: [
-        "Catch you later. Conversation saved locally \u2014 no data goes anywhere.",
+        "Catch you later. Conversation saved locally — no data goes anywhere.",
       ],
     };
 
@@ -111,7 +111,7 @@ function getResponses(raw: string): { texts: string[]; clear?: boolean } {
   if (/\b(mansion|game|gamif)\b/i.test(cmd))
     return {
       texts: [
-        "The Mansion is coming \u2014 a gamified world with rooms, story missions, and AI challenges. Not built yet, but it\u2019s on the roadmap.",
+        "The Mansion is coming — a gamified world with rooms, story missions, and AI challenges. Not built yet, but it’s on the roadmap.",
       ],
     };
 
@@ -125,13 +125,13 @@ function getResponses(raw: string): { texts: string[]; clear?: boolean } {
   if (/\b(corey|mciv)\b/i.test(cmd))
     return {
       texts: [
-        "Corey McIvor \u2014 founder, developer, and the human behind this digital twin. Based in New Zealand. Builds things that work without charging you monthly for the privilege.",
+        "Corey McIvor — founder, developer, and the human behind this digital twin. Based in New Zealand. Builds things that work without charging you monthly for the privilege.",
       ],
     };
 
   return {
     texts: [
-      "Not sure about that one. Type \u2018help\u2019 for available commands, or ask about trading, AI models, or pricing.",
+      "Not sure about that one. Type ‘help’ for available commands, or ask about trading, AI models, or pricing.",
     ],
   };
 }
@@ -150,6 +150,35 @@ function playBeep(ctx: AudioContext) {
   } catch {
     /* audio unavailable */
   }
+}
+
+const MODEL_COLORS: Record<string, string> = {
+  "[GROK]": "#ef4444",
+  "[CLAUDE]": "#a855f7",
+  "[PERPLEXITY]": "#3b82f6",
+  "[SIGNAL]": "#f59e0b",
+  "[SCAN]": "#64748b",
+  "[CONSENSUS]": "#10b981",
+  "[EXECUTED]": "#64748b",
+};
+
+function colorizeContent(text: string): React.ReactNode {
+  const lines = text.split("\n");
+  return lines.map((line, i) => {
+    let tagColor: string | null = null;
+    for (const [tag, color] of Object.entries(MODEL_COLORS)) {
+      if (line.startsWith(tag)) {
+        tagColor = color;
+        break;
+      }
+    }
+    return (
+      <span key={i}>
+        {i > 0 && "\n"}
+        {tagColor ? <span style={{ color: tagColor }}>{line}</span> : line}
+      </span>
+    );
+  });
 }
 
 export default function AITwin() {
@@ -524,7 +553,7 @@ export default function AITwin() {
               transition: "color 0.2s",
             }}
           >
-            {"\u266A"}
+            {"♪"}
           </button>
           <button
             onClick={() => setIsOpen(false)}
@@ -548,7 +577,7 @@ export default function AITwin() {
               e.currentTarget.style.color = "var(--text-secondary)";
             }}
           >
-            {"\u00D7"}
+            {"×"}
           </button>
         </div>
       </div>
@@ -587,9 +616,9 @@ export default function AITwin() {
                     : "var(--accent-green)",
               }}
             >
-              {msg.role === "user" ? "> " : "\u25B8 "}
+              {msg.role === "user" ? "> " : "▸ "}
             </span>
-            {msg.content}
+            {msg.role === "twin" ? colorizeContent(msg.content) : msg.content}
           </div>
         ))}
         {typingText !== null && (
@@ -602,13 +631,13 @@ export default function AITwin() {
               color: "var(--text-primary)",
             }}
           >
-            <span style={{ color: "var(--accent-green)" }}>{"\u25B8 "}</span>
-            {typingText}
+            <span style={{ color: "var(--accent-green)" }}>{"▸ "}</span>
+            {colorizeContent(typingText)}
             <span
               className="cursor-blink"
               style={{ color: "var(--accent-green)" }}
             >
-              {"\u2588"}
+              {"█"}
             </span>
           </div>
         )}
