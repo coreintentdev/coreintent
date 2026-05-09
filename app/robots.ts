@@ -57,6 +57,14 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/",
       },
       {
+        userAgent: "SemrushBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "DotBot",
+        disallow: "/",
+      },
+      {
         userAgent: "AhrefsBot",
         allow: "/",
         disallow: "/api/",
