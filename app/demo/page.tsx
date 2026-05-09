@@ -819,6 +819,7 @@ function TradingChallenge() {
   const [currentPair, setCurrentPair] = useState("BTC/USDT");
   const totalRounds = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const tradeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startGame = () => {
     setState("playing");
@@ -838,6 +839,7 @@ function TradingChallenge() {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           if (timerRef.current) clearInterval(timerRef.current);
+          if (tradeTimeoutRef.current) { clearTimeout(tradeTimeoutRef.current); tradeTimeoutRef.current = null; }
           setState("result");
           return 0;
         }
@@ -847,18 +849,22 @@ function TradingChallenge() {
   };
 
   useEffect(() => {
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (tradeTimeoutRef.current) clearTimeout(tradeTimeoutRef.current);
+    };
   }, []);
 
   const makeTrade = (direction: "long" | "short") => {
     if (waiting || state !== "playing") return;
     setWaiting(true);
 
-    const move = (Math.random() - 0.45) * currentPrice * 0.006;
+    const move = (Math.random() - 0.5) * currentPrice * 0.006;
     const newPrice = +(currentPrice + move).toFixed(2);
     const won = (direction === "long" && move > 0) || (direction === "short" && move < 0);
 
-    setTimeout(() => {
+    tradeTimeoutRef.current = setTimeout(() => {
+      tradeTimeoutRef.current = null;
       setCurrentPrice(newPrice);
       setPriceHistory((prev) => [...prev.slice(-19), newPrice]);
       setCurrentPair(CHALLENGE_PAIRS[(totalRounds.current + 1) % CHALLENGE_PAIRS.length]);
@@ -1436,7 +1442,7 @@ export default function DemoPage() {
                   >
                     {p.change >= 0 ? "+" : ""}
                     {p.change.toFixed(2)}%
-                    <span style={{ marginLeft: "4px" }}>{p.change >= 0 ? "\u25B2" : "\u25BC"}</span>
+                    <span style={{ marginLeft: "4px" }}>{p.change >= 0 ? "▲" : "▼"}</span>
                   </div>
                 </div>
               ))}
@@ -1564,7 +1570,7 @@ export default function DemoPage() {
                           fontWeight: "bold",
                         }}
                       >
-                        {s.direction === "long" ? "\u25B2 LONG" : "\u25BC SHORT"}
+                        {s.direction === "long" ? "▲ LONG" : "▼ SHORT"}
                       </span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px" }}>
