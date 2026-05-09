@@ -399,14 +399,14 @@ export async function callClaude(
     }
 
     const data = await res.json();
-    // Anthropic returns content as an array of typed blocks; extract the first text block.
+    // Claude can return non-text blocks (tool_use, etc.) before the text block — .find() is required.
     const textBlock = Array.isArray(data.content)
       ? (data.content as Array<{ type: string; text?: string }>).find((b) => b.type === "text")
       : undefined;
     return {
       source:  "claude",
       model:   data.model ?? modelId,
-      content: data.content?.[0]?.text ?? "",
+      content: textBlock?.text ?? "",
       live: true,
     };
   } catch (e) {
