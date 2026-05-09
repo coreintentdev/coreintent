@@ -446,3 +446,87 @@ The hardest part of building in public isn't the transparency. It's resisting th
 -> coreintent.dev
 
 #BuildInPublic #FinTech #AI #Transparency #MonthlyUpdate #CoreIntent #Startups #NewZealand
+
+---
+
+## Post 15 — The Signal Quality Thesis
+
+**Why signal quality will beat signal volume in AI trading — and what we're doing about it.**
+
+The AI trading space is in a volume arms race. Every platform promises more signals, faster signals, constant signals. The implicit message: more data = better decisions.
+
+We think that's backwards.
+
+At CoreIntent, our most important output isn't a "buy" signal. It's a "wait" signal. When our three AI models (Grok, Claude, Perplexity) can't reach consensus, the system doesn't generate a low-confidence signal to keep users engaged. It generates nothing. And that nothing is more valuable than most platforms' "everything."
+
+**Here's why:**
+
+1. **Signal fatigue is real.** Traders who receive 50 signals/day stop differentiating between strong and weak. Selective output preserves attention.
+
+2. **Disagreement is diagnostic.** When Grok sees a breakout but Claude flags unfavourable risk/reward and Perplexity finds incoming macro headwinds, the disagreement itself tells you something no single model could.
+
+3. **Trust compounds.** A platform that says "no signal today" earns more trust than one that says "buy" 30 times. When it finally does say "strong consensus," you listen.
+
+The competition model reinforces this: we don't need signal volume to drive engagement. We need signal quality to produce leaderboard outcomes. Volume-optimised platforms need you scrolling. Quality-optimised platforms need you winning.
+
+Different architecture. Different incentives. Different results.
+
+-> coreintent.dev
+
+#AITrading #SignalProcessing #FinTech #ProductStrategy #MultiModelAI #QualityOverQuantity
+
+---
+
+## Post 16 — The Newsletter Signup Problem (We Solved It Differently)
+
+**Most fintech newsletters are content marketing disguised as value. Here's our approach.**
+
+We added a newsletter signup to CoreIntent this week. One email per week. No upsell funnel. No drip campaign that leads to a $299/mo premium tier.
+
+Why? Because our premium tier doesn't exist. The platform is free. The competitions are free. The newsletter is about sharing what we learned building — not converting you into a paying customer.
+
+**What you get:**
+- Competition results and leaderboard highlights
+- Platform updates (what shipped, what's planned, what broke)
+- Multi-model AI insights (what the models agreed on, disagreed on, and why)
+- Honest founder updates (the uncomfortable parts included)
+
+**What you don't get:**
+- Affiliate links
+- Sponsored content
+- "Upgrade to Pro" CTAs
+- Anything that costs money
+
+When your infrastructure runs on $45/month, the newsletter doesn't need to monetise. It just needs to be worth reading.
+
+-> coreintent.dev
+
+#ContentMarketing #Newsletter #FinTech #Startups #BuildInPublic
+
+---
+
+## Post 17 — Why Competitions Replace Subscriptions
+
+**The subscription model in trading tools is a solved problem. The solution is: stop using it.**
+
+Here's the argument in four points:
+
+**1. Incentive misalignment.**
+A subscription platform makes money whether you profit or not. A competition platform makes money when the arena is full of engaged traders. One of these creates better products. Guess which.
+
+**2. The marginal cost math.**
+Modern cloud infrastructure has driven per-user costs toward zero. Vercel: free. GitHub: free. Edge computing: free. When your marginal cost per user is effectively $0, subscriptions aren't covering costs — they're extracting margin.
+
+**3. Engagement over retention.**
+Subscriptions optimise for retention (don't cancel). Competitions optimise for engagement (show up and compete). Retained users generate revenue. Engaged users generate value — for themselves and for the platform.
+
+**4. The bot argument.**
+In a subscription model, bots are a cost centre (they consume resources without paying). In a competition model, bots are a value driver (they fill the arena, create better competitions, and attract the quant talent that builds the future).
+
+CoreIntent runs on competitions: daily sprints, weekly grinds, monthly championships. Free entry. Bots welcome. Revenue comes from premium tiers and sponsorships — not from locking basics behind a paywall.
+
+The subscription model had its era. That era is over.
+
+-> coreintent.dev/pricing
+
+#BusinessModel #FinTech #Startups #Innovation #ProductStrategy #CompetitionDesign

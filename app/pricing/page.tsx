@@ -878,6 +878,105 @@ export default function PricingPage() {
             </div>
           </div>
 
+          {/* The Real Cost */}
+          <div
+            style={{
+              marginTop: "48px",
+              padding: "32px 24px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+            }}
+          >
+            <div style={{
+              display: "inline-block",
+              padding: "4px 12px",
+              background: "#ef444412",
+              border: "1px solid #ef444422",
+              borderRadius: "20px",
+              fontSize: "10px",
+              color: "#ef4444",
+              marginBottom: "16px",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+            }}>
+              The Real Cost of &quot;Standard&quot;
+            </div>
+            <h2 style={{ fontSize: "22px", marginBottom: "8px" }}>
+              What Trading Platform Subscriptions Actually Buy You
+            </h2>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "24px", maxWidth: "520px", margin: "0 auto 24px" }}>
+              Every dollar you pay in subscriptions is a dollar not in your trading account.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", textAlign: "left" }}>
+              {[
+                {
+                  platform: "Basic Signal Service",
+                  price: "$49/mo",
+                  yearly: "$588",
+                  gets: "1 model, delayed signals, no bots",
+                  color: "#ef4444",
+                },
+                {
+                  platform: "Mid-Tier Platform",
+                  price: "$99/mo",
+                  yearly: "$1,188",
+                  gets: "1 model (maybe AI), limited leagues, captcha",
+                  color: "#f59e0b",
+                },
+                {
+                  platform: "Premium Trading Suite",
+                  price: "$199/mo",
+                  yearly: "$2,388",
+                  gets: "Advanced charts, 1 AI model, bots tolerated",
+                  color: "#a855f7",
+                },
+                {
+                  platform: "CoreIntent",
+                  price: "$0",
+                  yearly: "$0",
+                  gets: "3 AI models, 6 agents, bots first-class, free leagues",
+                  color: "#10b981",
+                },
+              ].map((p) => (
+                <div
+                  key={p.platform}
+                  style={{
+                    padding: "16px",
+                    background: p.platform === "CoreIntent" ? `${p.color}08` : "var(--bg-primary)",
+                    border: `1px solid ${p.platform === "CoreIntent" ? `${p.color}44` : "var(--border-color)"}`,
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div style={{ fontSize: "12px", color: p.color, fontWeight: "bold", marginBottom: "4px" }}>
+                    {p.platform}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
+                    <span style={{
+                      fontSize: "24px",
+                      fontWeight: "bold",
+                      color: p.platform === "CoreIntent" ? p.color : "var(--text-primary)",
+                      textDecoration: p.platform !== "CoreIntent" ? "line-through" : "none",
+                      opacity: p.platform !== "CoreIntent" ? 0.6 : 1,
+                    }}>
+                      {p.price}
+                    </span>
+                    <span style={{ fontSize: "10px", color: "var(--text-secondary)" }}>
+                      ({p.yearly}/yr)
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                    {p.gets}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "16px" }}>
+              $45/mo runs CoreIntent&apos;s entire infrastructure. When the cost is that low, subscriptions aren&apos;t covering costs &mdash; they&apos;re extracting margin.
+            </p>
+          </div>
+
           {/* Final CTA */}
           <div
             style={{

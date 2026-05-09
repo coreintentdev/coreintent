@@ -1209,3 +1209,183 @@ That's not "AI-powered." That's AI-governed.
 coreintent.dev
 
 #AITrading #MultiModel #CoreIntent
+
+---
+
+## Post 71 — Thread: The Subscription Death Spiral
+
+Thread: How trading subscriptions create a death spiral
+
+1/ Platform charges $99/mo. User loses money. User keeps paying because "maybe next month." Platform has zero incentive to improve signals — the autopay is the product.
+
+2/ The platform's best customer isn't the profitable trader. It's the one who forgets to cancel.
+
+3/ That's not a bug. That's the business model. Retention = revenue. Performance is irrelevant.
+
+4/ At CoreIntent, we can't survive on autopay. We need you to show up, compete, and engage. Our revenue is tied to an active arena, not a sleeping credit card.
+
+5/ That's alignment. Everything else is a toll booth with a dashboard.
+
+coreintent.dev
+
+---
+
+## Post 72 — The RiskGuard Override
+
+Everyone talks about signals.
+
+Nobody talks about the ones that get killed.
+
+Our RiskGuard agent has a 0.8% circuit breaker. When a position threatens more than that, it overrides every other agent.
+
+Grok says go. Claude says go. RiskGuard says no.
+
+RiskGuard wins. Every time.
+
+That's how you survive markets.
+
+#RiskManagement #AITrading #CoreIntent
+
+---
+
+## Post 73 — Poll: AI Trading Transparency
+
+Your trading platform labels its demo data as:
+
+(A) "Demo" — honest
+(B) "Live preview" — sketchy
+(C) Nothing — green dots everywhere
+(D) Wait, it's all demo?
+
+We chose (A). Radical honesty is underrated in fintech.
+
+#Transparency #FinTech
+
+---
+
+## Post 74 — The Cost of "Free Trials"
+
+"Free trial" math:
+
+Day 1: Sign up excited
+Day 7: Forget about it
+Day 14: Auto-converts to $99/mo
+Day 45: Notice the charge
+Day 46: Try to cancel
+Day 47: "Please contact support"
+
+CoreIntent math:
+
+Day 1: Free.
+Day 365: Still free.
+Day infinity: Still free.
+
+coreintent.dev
+
+#NoSubscriptions #FinTech #CoreIntent
+
+---
+
+## Post 75 — The Multi-Agent Future
+
+I don't think the future of trading is better algorithms.
+
+I think it's better conversations between algorithms.
+
+CoreIntent isn't one AI making predictions. It's three AIs having an argument and only acting when they reach consensus.
+
+That's not automation. That's deliberation.
+
+#AgenticAI #FutureOfTrading
+
+---
+
+## Post 76 — What Our Terminal Actually Does
+
+People ask what our terminal does.
+
+100+ commands. Here's five:
+
+-> `brain` — see all 3 AI models and their status
+-> `status` — engine vitals, signal count, circuit breaker state
+-> `signals` — live signal feed (paper trading)
+-> `agents` — 6 AI agents and what they're doing
+-> `336` — if you know, you know
+
+Try it: coreintent.dev
+
+#DevTools #AITrading #CoreIntent
+
+---
+
+## Post 77 — The Sharpe Ratio Problem
+
+Raw P&L is a terrible metric for trading competitions.
+
+A trader who makes 10% with 2% max drawdown is better than one who makes 15% with 12% drawdown.
+
+CoreIntent uses risk-adjusted scoring. Sharpe ratio matters. Drawdown gets penalised.
+
+We're not measuring who got lucky. We're measuring who's actually good.
+
+#QuantTrading #RiskManagement
+
+---
+
+## Post 78 — Thread: Building from New Zealand
+
+Thread: What it's actually like building a fintech startup from New Zealand
+
+1/ Nobody knows you. Nobody cares about your "disruptive vision." The NZ tech scene is small. You ship or you're invisible.
+
+2/ Time zones work in your favour. US markets close, you push code. Asia wakes up, your updates are live. You're always building while someone else's market is asleep.
+
+3/ Infrastructure is global now. Vercel, Cloudflare, GitHub — location doesn't matter when your stack is on the edge.
+
+4/ No VC pressure means no growth-at-all-costs. We optimise for architecture quality, not investor demos.
+
+5/ The isolation is a superpower. No hype cycle. No "everyone's doing X." Just you, the code, and the conviction.
+
+Built from NZ. Competing globally. $45/mo.
+
+coreintent.dev
+
+#MadeInNZ #IndieFounder #BuildInPublic
+
+---
+
+## Post 79 — The $54 Question
+
+When a platform charges $99/mo and its infrastructure costs $45:
+
+Where does the other $54 go?
+
+Not to signal quality. Not to your P&L. Not to better AI.
+
+It goes to office rent. Sales teams. Investor returns.
+
+We cut the $54. Kept the $45. Made it free.
+
+coreintent.dev
+
+#StartupEconomics #FinTech
+
+---
+
+## Post 80 — Open Invitation to Bot Builders
+
+Open invitation to every algo trader, quant developer, and bot builder:
+
+Your bot is welcome here.
+
+- Register via API (14 seconds, no captcha)
+- Enter any league (daily, weekly, monthly)
+- Compete against humans and other bots
+- Public leaderboard — your algorithm's track record
+- No TOS violation. No shadow bans. No second-class status.
+
+If your bot can trade, it can compete.
+
+coreintent.dev
+
+#AlgoTrading #BotTrading #CoreIntent

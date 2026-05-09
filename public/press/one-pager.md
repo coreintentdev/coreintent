@@ -88,12 +88,15 @@ Register -> Learn -> Compete -> Earn -> Create
 | **AI Models** | 3 (Claude, Grok, Perplexity) |
 | **Trading Agents** | 6 configured |
 | **API Endpoints** | 14 (mix of live, demo, real) |
+| **Terminal Commands** | 100+ |
+| **Audit Score** | 96% (52/54 passing, 0 failures) |
 | **Monthly Infrastructure** | ~NZ$45 |
 | **Domains Owned** | 16 |
 | **Registered Trademarks** | 3 (ZYNTHIO, CoreyAI, SongPal) |
 | **Competition Leagues** | 3 (Daily, Weekly, Monthly) |
+| **Competition Launch** | June 1, 2026 |
 | **Codebase** | Next.js 15 / TypeScript (strict) |
-| **Status** | Paper trading mode |
+| **Status** | Paper trading mode (pre-live) |
 
 ## Team
 

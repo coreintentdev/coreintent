@@ -40,10 +40,13 @@ Revenue is generated through premium competition tiers, while all foundational f
 - 3 AI models orchestrated in a multi-layer signal pipeline
 - 6 specialised AI trading agents configured and paper trading
 - 14 API endpoints (mix of live, demo, and real)
-- Full interactive web terminal with real command execution
+- Full interactive web terminal with 100+ real commands
 - Open-source codebase on GitHub
 - 16 domains secured across the Zynthio ecosystem
 - 3 registered trademarks (ZYNTHIO, CoreyAI, SongPal)
+- 54-point automated audit at 96% pass rate (0 failures)
+- Competition infrastructure ready — Daily, Weekly, Monthly leagues launching June 1, 2026
+- Full marketing kit open-sourced (80+ social posts, press kit, newsletter template)
 
 ### Key Facts
 
