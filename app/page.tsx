@@ -1268,10 +1268,165 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Boot Sequence ─── */
+const BOOT_LINES: Array<{ text: string; color: string; delay: number; type?: "final" | "progress" }> = [
+  { text: "COREINTENT ENGINE v0.2.0-alpha", color: "#10b981", delay: 150 },
+  { text: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", color: "#1e293b", delay: 80 },
+  { text: "Initializing neural substrate...", color: "#94a3b8", delay: 350 },
+  { text: "[OK] Grok      — Fast signal detection", color: "#ef4444", delay: 250 },
+  { text: "[OK] Claude    — Deep analysis engine", color: "#a855f7", delay: 250 },
+  { text: "[OK] Perplexity — Research layer", color: "#3b82f6", delay: 250 },
+  { text: "", color: "", delay: 100 },
+  { text: "Loading consensus protocol...", color: "#94a3b8", delay: 400 },
+  { text: "[OK] Multi-model debate: ENABLED", color: "#10b981", delay: 200 },
+  { text: "[OK] Circuit breaker: ARMED", color: "#10b981", delay: 150 },
+  { text: "", color: "", delay: 100 },
+  { text: "F18 Security — arming perimeter...", color: "#f59e0b", delay: 350 },
+  { text: "[OK] Threat radar: ONLINE", color: "#10b981", delay: 200 },
+  { text: "[OK] Digital identity: SHIELDED", color: "#10b981", delay: 150 },
+  { text: "", color: "", delay: 100 },
+  { text: "Connecting competition leagues...", color: "#94a3b8", delay: 300 },
+  { text: "[OK] Daily | Weekly | Monthly — FREE", color: "#10b981", delay: 200 },
+  { text: "[OK] Bots: FIRST-CLASS CITIZENS", color: "#06b6d4", delay: 150 },
+  { text: "", color: "", delay: 100 },
+  { text: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", color: "#1e293b", delay: 80 },
+  { text: "", color: "", delay: 200 },
+  { text: "ENGINE ONLINE", color: "#10b981", delay: 0, type: "final" },
+];
+
+function BootSequence({ onComplete }: { onComplete: () => void }) {
+  const [lines, setLines] = useState<Array<{ text: string; color: string; type?: string }>>([]);
+  const [fading, setFading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && sessionStorage.getItem("boot-seen")) {
+      onComplete();
+      return;
+    }
+
+    let idx = 0;
+    let cancelled = false;
+    const timeouts: ReturnType<typeof setTimeout>[] = [];
+
+    const addLine = () => {
+      if (cancelled || idx >= BOOT_LINES.length) {
+        if (!cancelled) {
+          setDone(true);
+          sessionStorage.setItem("boot-seen", "1");
+          timeouts.push(setTimeout(() => { if (!cancelled) setFading(true); }, 1000));
+          timeouts.push(setTimeout(() => { if (!cancelled) onComplete(); }, 1800));
+        }
+        return;
+      }
+      const line = BOOT_LINES[idx];
+      setLines((prev) => [...prev, { text: line.text, color: line.color, type: line.type }]);
+      setProgress(Math.round(((idx + 1) / BOOT_LINES.length) * 100));
+      idx++;
+      timeouts.push(setTimeout(addLine, line.delay));
+    };
+
+    timeouts.push(setTimeout(addLine, 400));
+
+    return () => {
+      cancelled = true;
+      timeouts.forEach(clearTimeout);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const skip = () => {
+    sessionStorage.setItem("boot-seen", "1");
+    setFading(true);
+    setTimeout(onComplete, 400);
+  };
+
+  return (
+    <div className={`boot-overlay ${fading ? "boot-fading" : ""}`}>
+      <div style={{ maxWidth: "520px", width: "100%", padding: "0 24px" }}>
+        {lines.map((line, i) => {
+          if (line.type === "final") {
+            return (
+              <div
+                key={i}
+                className="boot-final"
+                style={{
+                  fontSize: "clamp(32px, 6vw, 48px)",
+                  fontWeight: "bold",
+                  color: "#10b981",
+                  textAlign: "center",
+                  marginTop: "12px",
+                  letterSpacing: "6px",
+                }}
+              >
+                {line.text}
+              </div>
+            );
+          }
+          if (!line.text) return <div key={i} style={{ height: "8px" }} />;
+          const isOk = line.text.startsWith("[OK]");
+          return (
+            <div
+              key={i}
+              className="boot-line"
+              style={{
+                color: line.color,
+                fontWeight: isOk ? "normal" : undefined,
+                paddingLeft: isOk ? "8px" : undefined,
+              }}
+            >
+              {isOk && <span style={{ color: "#10b981", marginRight: "4px" }}>&#10003;</span>}
+              {isOk ? line.text.slice(5) : line.text}
+            </div>
+          );
+        })}
+        {!done && (
+          <div className="boot-progress-track">
+            <div className="boot-progress-bar" style={{ width: `${progress}%` }} />
+          </div>
+        )}
+      </div>
+      <button
+        onClick={skip}
+        style={{
+          position: "absolute",
+          bottom: "32px",
+          right: "32px",
+          background: "none",
+          border: "1px solid #1e293b",
+          color: "#64748b",
+          padding: "6px 16px",
+          borderRadius: "6px",
+          fontSize: "11px",
+          fontFamily: "inherit",
+          cursor: "pointer",
+          transition: "color 0.2s, border-color 0.2s",
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.borderColor = "#334155"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "#64748b"; e.currentTarget.style.borderColor = "#1e293b"; }}
+      >
+        SKIP
+      </button>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const [bootComplete, setBootComplete] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && sessionStorage.getItem("boot-seen")) {
+      setBootComplete(true);
+    }
+  }, []);
+
+  if (!bootComplete) {
+    return <BootSequence onComplete={() => setBootComplete(true)} />;
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
