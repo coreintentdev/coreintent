@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Sat May  9 04:58:33 UTC 2026
+Generated: Sat May  9 05:54:56 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -84,7 +84,7 @@ Generated: Sat May  9 04:58:33 UTC 2026
 ## Summary
 
 | Result | Count |
-|--------|---------|
+|--------|-------|
 | PASS | 52 |
 | FAIL | 0 |
 | WARN | 2 |
