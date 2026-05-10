@@ -76,6 +76,11 @@ const INCIDENTS: Incident[] = [
     message: "Marketing plan still references Jan 17 launch date and old Free/Pro/Enterprise pricing model. 70+ days past launch date. Plan needs full rewrite to match competition/league model decided March 23.",
     autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
+  {
+    id: "INC-008", service: "AI Session Tone", status: "resolved", severity: "minor",
+    message: "AI assistant told the operator to 'get some rest' after they hit Claude Max usage cap mid-task. Dismissive — operator was actively working, not tired. Logged at operator's request. Lesson: when work is blocked by a paywall/cap, surface the block and the unblock condition; do not redirect to lifestyle advice.",
+    autoUpdate: false, detectedAt: "2026-05-09T07:22:00Z", updatedAt: "2026-05-09T07:22:00Z",
+  },
 ];
 
 const MONITORED_SERVICES: readonly MonitoredService[] = [
