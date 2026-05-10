@@ -104,11 +104,16 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || "",
+    yandex: process.env.YANDEX_VERIFICATION || "",
+  },
   other: {
     "msapplication-TileColor": "#0a0e17",
     "color-scheme": "dark",
     "geo.region": "NZ",
     "geo.placename": "New Zealand",
+    "msvalidate.01": process.env.BING_SITE_VERIFICATION || "",
   },
 };
 
@@ -167,10 +172,7 @@ const jsonLd = {
           addressCountry: "NZ",
         },
       },
-      areaServed: {
-        "@type": "Country",
-        name: "New Zealand",
-      },
+      areaServed: "Worldwide",
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
@@ -234,10 +236,40 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-09",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/#homepage",
+      url: "https://coreintent.dev",
+      name: "CoreIntent — Agentic AI Trading Engine",
+      description:
+        "Three AI models. One trading engine. Zero subscriptions. Free trading competitions powered by Claude, Grok & Perplexity. Built in NZ by Zynthio.",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      about: { "@id": "https://coreintent.dev/#application" },
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-09",
+      inLanguage: "en-NZ",
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://coreintent.dev",
+          },
+        ],
       },
     },
     {
