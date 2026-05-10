@@ -685,9 +685,7 @@ function FloatingCTA() {
       animation: "fadeInUp 0.4s ease both",
     }}>
       <a
-        href="https://github.com/coreintentdev/coreintent"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/pricing"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -705,8 +703,8 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        <span style={{ fontSize: "16px" }}>&#9889;</span>
+        Claim Founding Status &rarr;
       </a>
     </div>
   );
@@ -1381,14 +1379,15 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Other platforms charge $99/mo for{" "}
-              <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.6 }}>one model guessing</span>.
-              {" "}We pit{" "}
-              <span style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span>,{" "}
-              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>, &amp;{" "}
-              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> against each other.
-              {" "}When they disagree, you&apos;re protected. When they agree,{" "}
+              <span style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span> spots it.{" "}
+              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span> stress-tests it.{" "}
+              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> fact-checks it.{" "}
+              Three models. One signal. If they disagree, you&apos;re protected.
+              If they agree,{" "}
               <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>you move with conviction.</span>
+              {" "}No subscription.{" "}
+              <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.6 }}>$99/mo</span>{" "}
+              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>$0 forever.</span>
             </p>
             <div style={{
               display: "flex",

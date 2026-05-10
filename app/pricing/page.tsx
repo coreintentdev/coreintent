@@ -137,6 +137,11 @@ export default function PricingPage() {
             <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
               We Profit When You Win.
             </span>
+            <br />
+            <span style={{ fontSize: "clamp(14px, 2vw, 18px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
+              Every league. Every feature. Every AI model.{" "}
+              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>Zero dollars. Zero catches.</span>
+            </span>
           </h1>
           <div style={{
             display: "flex",
@@ -165,7 +170,7 @@ export default function PricingPage() {
             Subscription platforms profit whether you win or lose. Their incentive is your autopay — not your alpha.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
-            Our stack costs $45/mo total. Free entry isn&apos;t charity — it&apos;s competitive advantage. Great traders make great platforms.
+            Our stack costs $45/mo total. Free isn&apos;t charity — it&apos;s math. Great traders make great platforms.
           </p>
 
           <div style={{
