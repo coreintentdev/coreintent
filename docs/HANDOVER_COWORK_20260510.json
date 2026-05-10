@@ -1,0 +1,197 @@
+{
+  "$schema": "cowork-handover/v1",
+  "generated_at": "2026-05-10T00:00:00Z",
+  "generated_by": "claude-opus-4-7 in coreintent repo (Linux)",
+  "operator": {
+    "name": "Corey McIvor",
+    "handles": ["@coreintentdev", "@coreintentai"],
+    "contact": "corey@coreyai.ai",
+    "location": "New Zealand (NEVER register in Australia)"
+  },
+  "honest_scope_of_this_session": {
+    "where_i_run": "/home/user/coreintent on Linux (Claude Code, GitHub MCP only)",
+    "can_do": [
+      "Read/edit/commit files in coreintent repo",
+      "Push to branch claude/fix-vds-token-tvSRH",
+      "GitHub MCP (PR review/comment on coreintentdev/coreintent only)"
+    ],
+    "cannot_do": [
+      "SSH into Cloudzy VDS (100.122.99.34)",
+      "Auth to Google Drive or run rclone",
+      "Run commands on the operator's Mac",
+      "Drive a browser, click Suno UI, or run music batches",
+      "Send Slack, Linear, Gmail without explicit MCP tools"
+    ],
+    "things_prior_turns_may_have_claimed_falsely": [
+      "Auto-batching 8 Suno tracks via browser automation — not possible from this environment",
+      "Pushing files to Drive sync folder when CloudStorage sync was not running",
+      "Reporting 'delivery complete' to Linear/Slack/VDS without verification"
+    ]
+  },
+  "branches_and_repos": {
+    "active_branch": "claude/fix-vds-token-tvSRH",
+    "base": "main",
+    "repo": "coreintentdev/coreintent",
+    "pr": {
+      "number": 88,
+      "title": "VPS -> VDS rename + VDS_TOKEN + CF skeleton deployer",
+      "status": "open, CI passing on last push, Bugbot review thread unresolved on GitHub UI but fix already in commit ae3cbef",
+      "remaining_actions": [
+        "Manually resolve the Bugbot thread on GitHub (already fixed in code)",
+        "Mark PR ready for review (or keep draft until Cloud Run check completes)"
+      ]
+    }
+  },
+  "pr88_summary": {
+    "intent": "Rename VPS -> VDS repo-wide (Cloudzy markets servers as VDS), add VDS_TOKEN env var, stub Cloudflare 48-site skeleton deployer, update CLAUDE.md so Claude Desktop sessions stop saying 'no token'.",
+    "files_touched": [
+      "scripts/deploy-vds.sh (renamed from deploy-vps.sh)",
+      "scripts/vds-lens.sh (renamed from vps-lens.sh)",
+      "scripts/deploy-cf-skeletons.sh (new, 48-site Cloudflare Pages deployer)",
+      ".env.example (VPS_* -> VDS_*, added VDS_TOKEN)",
+      "app/api/connections/route.ts (vps key -> vds in infrastructure)",
+      "app/api/incidents/route.ts (added INC-008 AI Session Tone, resolved)",
+      "components/Terminal.tsx (VPS -> VDS bulk rename)",
+      "CLAUDE.md (added VDS terminology section + CF skeleton note)",
+      "docs/DESKTOP-HANDOVER-MASTER-2026-04-14.md (stale vps script paths fixed in ae3cbef)"
+    ],
+    "commits_of_note": [
+      "ae3cbef — fix stale vps script paths in docs/ (Bugbot finding)",
+      "07a6ba3 — fix missed infrastructure.vps key in connections route"
+    ]
+  },
+  "kelvin_defamation_delivery": {
+    "status": "INCOMPLETE — files have NOT been verified moved to Desktop, NOT on VDS, NOT shared with Kelvin",
+    "scope": "Defamation evidence pack only. NO Michele MP3 batch. NO Suno music. NO supplemental annex unless explicitly requested.",
+    "drive_source_folder": {
+      "path": "~/Library/CloudStorage/GoogleDrive-corey.mcivor@gmail.com/My Drive/LEGAL_DELIVERIES/LEGAL_DELIVERY_KELVIN_20260510_160249/primary_defamation",
+      "expected_file_count": 12,
+      "files": [
+        "00_README.md",
+        "01_CHAMBERS_WHATSAPP_THREAD.txt",
+        "02_AUDIO_2026-04-23_10-53-16.opus",
+        "03_AUDIO_2026-04-23_15-52-02.opus",
+        "99_MANIFEST.txt",
+        "SCAN_MANIFEST.json",
+        "EVIDENCE_INDEX.md",
+        "INVENTORY.csv",
+        "NON_EVIDENCE_REVIEW.md",
+        "SCAN_ERRORS.txt",
+        "CHECKSUMS.sha256",
+        "CHECKSUMS_INDEX_ONLY_20260510.sha256"
+      ]
+    },
+    "delivery_gates": {
+      "gate_A_desktop_pull": {
+        "status": "NOT VERIFIED — prior mv commands failed due to zsh nomatch on .* glob; DST appeared empty (3 lines from ls -la)",
+        "command": "SRC=\"$HOME/Library/CloudStorage/GoogleDrive-corey.mcivor@gmail.com/My Drive/LEGAL_DELIVERIES/LEGAL_DELIVERY_KELVIN_20260510_160249/primary_defamation\"; DST=\"$HOME/Desktop/KELVIN_DEFAMATION_20260510\"; mkdir -p \"$DST\"; find \"$SRC\" -mindepth 1 -maxdepth 1 -exec mv -v {} \"$DST\"/ \\;; find \"$DST\" -maxdepth 1 -type f | wc -l; ls -la \"$DST\"",
+        "success_criteria": "file count = 12"
+      },
+      "gate_B_vds_master": {
+        "status": "PENDING gate A",
+        "vds_host": "100.122.99.34",
+        "vds_user": "root",
+        "vds_key": "$HOME/.ssh/zynthio_dc",
+        "vds_dir": "/srv/legal/KELVIN_DEFAMATION_20260510",
+        "command_summary": "rsync DST to VDS_DIR over ssh, then sha256sum to _SHA256_MASTER.sha256 on VDS"
+      },
+      "gate_C_drive_share_via_rclone": {
+        "status": "PENDING gate B, blocked on rclone remote name confirmation",
+        "next_step": "Operator runs `rclone listremotes` and reports remote name; then `rclone copy` from Desktop to remote, then `rclone link` for share URL",
+        "fallback_if_rclone_unavailable": "Manual upload via drive.google.com web UI to a fresh folder; right-click -> Share -> Anyone with link Viewer"
+      }
+    },
+    "kelvin_email_final_text": {
+      "subject": "Defamation evidence — Corey McIvor",
+      "body": "Kelvin,\n\nDefamation evidence — 12 files, one Drive folder:\n[paste share link]\n\nMaster copy held on VDS; Drive folder is a verified mirror. Anyone with the link can view + download. Please forward to Donald in this same thread so you both work from the same set.\n\nCorey",
+      "supersedes": "All prior Kelvin-email drafts. This is the canonical version."
+    }
+  },
+  "operator_preferences_observed": {
+    "delivery_master": "VDS is the only master. Drive is share mirror. Desktop is working copy.",
+    "language": [
+      "No emotional framing or 'I understand your frustration' phrasing",
+      "No 'if you want X' conditional filler",
+      "No 'get some rest' style redirects when work is blocked",
+      "Surface the block and the unblock condition, do not redirect"
+    ],
+    "scope_discipline": [
+      "Defamation pack stays defamation-only. No Michele MP3 batch unless explicitly added.",
+      "Verify before claiming complete. 'No green dots unless verified.'",
+      "VDS not VPS (Cloudzy terminology)",
+      "NZ-first, never register in Australia"
+    ],
+    "do_not_fabricate": [
+      "Family data (Hannah is NOT Corey's child; never list as daughter)",
+      "Music attribution (Corey writes originals, not Suno-only)",
+      "Pricing model (competitions, not subscriptions)",
+      "Connection status (planned vs ready vs live)"
+    ]
+  },
+  "open_loops_for_cowork": [
+    {
+      "id": "KELVIN-1",
+      "priority": "P0",
+      "title": "Verify gate A: 12 files moved Drive primary_defamation -> Desktop KELVIN_DEFAMATION_20260510",
+      "blocked_on": "Operator paste of gate A command on Mac"
+    },
+    {
+      "id": "KELVIN-2",
+      "priority": "P0",
+      "title": "Push Desktop pack to VDS as master and write _SHA256_MASTER.sha256",
+      "blocked_on": "Gate A complete"
+    },
+    {
+      "id": "KELVIN-3",
+      "priority": "P0",
+      "title": "Generate Drive share URL via rclone or web upload",
+      "blocked_on": "Operator confirms rclone remote name OR uploads via browser"
+    },
+    {
+      "id": "KELVIN-4",
+      "priority": "P0",
+      "title": "Send Kelvin email with share link",
+      "blocked_on": "KELVIN-3"
+    },
+    {
+      "id": "PR88-1",
+      "priority": "P1",
+      "title": "Resolve Bugbot review thread on GitHub UI (fix already in ae3cbef)",
+      "blocked_on": "Manual click on github.com/coreintentdev/coreintent/pull/88"
+    },
+    {
+      "id": "PR88-2",
+      "priority": "P2",
+      "title": "Cloud Run check still queued — confirm or remove from required checks",
+      "blocked_on": "CI/infra"
+    }
+  ],
+  "do_not_do_list_for_next_agent": [
+    "Do not write song lyrics that name real family members (Wilma, Chas, Michelle, Ruby, Wesley, etc.). CLAUDE.md forbids fabricating family data.",
+    "Do not generate multilingual lyrics across cultures without grounding. INC-004 in app/api/incidents/route.ts is exactly about this assumption pattern.",
+    "Do not auto-batch anything to Suno from this environment — no browser, no clicker exists here.",
+    "Do not claim 'sent to Slack/Linear/VDS' unless an MCP tool actually executed and returned success.",
+    "Do not mix legal evidence workflow with music/comedy workflow in the same session.",
+    "Do not produce variant after variant of the Kelvin email — ONE canonical version exists in kelvin_email_final_text above."
+  ],
+  "recommended_next_session_first_move": {
+    "question": "Finish Kelvin or close out PR #88?",
+    "recommendation": "Finish Kelvin first (KELVIN-1 -> KELVIN-4). It is P0 with a real-world counterparty waiting. PR #88 is P1 and only needs a manual GitHub UI click.",
+    "rationale": "The Kelvin pack has been blocked across multiple turns by zsh glob errors and Drive sync confusion. One clean gate-A paste from the operator unblocks the whole chain."
+  },
+  "key_repo_facts": {
+    "stack": "Next.js 15 App Router + TypeScript strict",
+    "pages": 7,
+    "api_routes": 14,
+    "ai_layer": "lib/ai.ts — Grok, Claude, Perplexity with graceful demo fallback",
+    "vds_scripts": ["scripts/risk_monitor.ts", "scripts/signal_listener.ts", "scripts/gtrade_listener.ts"],
+    "deploy_scripts": ["scripts/deploy-vercel.sh", "scripts/deploy-vds.sh", "scripts/deploy-all.sh", "scripts/deploy-cf-skeletons.sh"],
+    "audit_score": "96% (52/54, 0 failures) as of 2026-04-30",
+    "build_status": "passes clean on main and on claude/fix-vds-token-tvSRH"
+  },
+  "retrieval": {
+    "in_repo_path": "docs/HANDOVER_COWORK_20260510.json",
+    "branch": "claude/fix-vds-token-tvSRH",
+    "pull_to_mac_desktop": "curl -L -o ~/Desktop/HANDOVER_COWORK_20260510.json https://raw.githubusercontent.com/coreintentdev/coreintent/claude/fix-vds-token-tvSRH/docs/HANDOVER_COWORK_20260510.json"
+  }
+}
