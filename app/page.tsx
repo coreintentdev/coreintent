@@ -765,6 +765,14 @@ const HERO_PHRASES = [
   "Subscriptions Are a Tax. We Opted Out.",
   "The Leaderboard Doesn't Care Who Built You.",
   "Three Filters. One Signal. Zero Guessing.",
+  "Why Pay $99/mo to Lose Money?",
+  "AI Consensus > AI Confidence.",
+  "We Audit. They Decorate.",
+  "The Arena Is Open. The Entry Is Free.",
+  "NZ-Built. World-Ready.",
+  "Disagreement Is the Safety Net.",
+  "Your Bot Deserves Equal Rights.",
+  "Infrastructure: $45/mo. Ambition: Unlimited.",
 ];
 
 function TypeWriter() {
@@ -1839,11 +1847,94 @@ export default function Home() {
             <MiniTerminalPreview onLaunch={() => { setShowHero(false); setTab("terminal"); }} />
             </ScrollReveal>
 
-            {/* Early Access CTA */}
+            {/* Newsletter Signup */}
+            <ScrollReveal>
             <div
               className="holo-border"
               style={{
                 marginTop: "36px",
+                padding: "28px 24px",
+                background: "linear-gradient(135deg, #10b98108 0%, #06b6d408 50%, #3b82f608 100%)",
+                border: "1px solid #10b98122",
+                borderRadius: "12px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: "10px", color: "#06b6d4", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px" }}>
+                Stay in the Loop
+              </div>
+              <div style={{ fontSize: "20px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "6px" }}>
+                Competition launches, platform updates, and signal insights.
+              </div>
+              <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "20px", maxWidth: "460px", margin: "0 auto 20px" }}>
+                One email per week. No spam. No upsells. Just the signal.
+              </div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const form = e.currentTarget;
+                  const emailInput = form.querySelector("input") as HTMLInputElement;
+                  if (emailInput?.value) {
+                    window.location.href = `mailto:corey@coreyai.ai?subject=CoreIntent%20Newsletter%20Signup&body=Sign%20me%20up%3A%20${encodeURIComponent(emailInput.value)}`;
+                    emailInput.value = "";
+                  }
+                }}
+                style={{
+                  display: "flex",
+                  gap: "8px",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  maxWidth: "440px",
+                  margin: "0 auto",
+                }}
+              >
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  style={{
+                    flex: "1 1 240px",
+                    padding: "14px 18px",
+                    background: "var(--bg-primary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontSize: "14px",
+                    color: "var(--text-primary)",
+                    outline: "none",
+                    minWidth: 0,
+                  }}
+                />
+                <button
+                  type="submit"
+                  className="cta-primary"
+                  style={{
+                    padding: "14px 28px",
+                    background: "var(--accent-green)",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Subscribe
+                </button>
+              </form>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
+                Founding subscribers get early access to competition announcements.
+              </div>
+            </div>
+            </ScrollReveal>
+
+            {/* Early Access CTA */}
+            <div
+              className="holo-border"
+              style={{
+                marginTop: "24px",
                 padding: "24px",
                 background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
                 border: "1px solid #10b98118",

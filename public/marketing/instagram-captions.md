@@ -440,3 +440,135 @@ Build in public means showing the uncomfortable parts too.
 .
 .
 #BuildInPublic #MonthlyUpdate #CoreIntent #Zynthio #AITrading #FinTech #MadeInNZ #Transparency #HonestTech #StartupUpdate #IndieFounder #SoloFounder #TechStartup #OpenSource #ProductUpdate
+
+---
+
+## Caption 19 — The Newsletter Drop (Announcement)
+
+Something new on CoreIntent: the newsletter signup is live.
+
+One email per week. No upsells. No drip campaigns. No "upgrade to Pro" links.
+
+What you get:
+-> Competition results and leaderboard highlights
+-> Platform updates (what shipped, what broke, what's next)
+-> Signal insights (what the models agreed on, disagreed on)
+-> Founder updates (the uncomfortable parts included)
+
+What you don't get:
+-> Spam
+-> Affiliate links
+-> Anything that costs money
+
+When your platform costs $45/month to run, the newsletter doesn't need to monetise. It just needs to be worth reading.
+
+Sign up at coreintent.dev (link in bio)
+
+.
+.
+.
+#Newsletter #EmailMarketing #CoreIntent #Zynthio #AITrading #BuildInPublic #FinTech #FreeContent #NoSpam #IndieFounder #MadeInNZ #StartupMarketing #ContentCreator #TradingInsights #WeeklyUpdate
+
+---
+
+## Caption 20 — The Peer Review Analogy (Static/Carousel)
+
+Slide 1: "Trading signals need peer review."
+Slide 2: "Science doesn't trust one study."
+Slide 3: "Courts don't trust one witness."
+Slide 4: "Medicine doesn't trust one trial."
+Slide 5: "Why trust one AI model with your trades?"
+Slide 6: "CoreIntent: Three models. Three perspectives. One signal — or none."
+
+Caption:
+Peer review isn't just for science papers.
+
+At CoreIntent, every trading signal goes through three filters:
+1. Does the opportunity exist? (Grok)
+2. Should we act on it? (Claude)
+3. Does the context support it? (Perplexity)
+
+Most signals fail at filter 2. That's the whole point.
+
+The most valuable output from our engine isn't "buy." It's "wait."
+
+.
+.
+.
+#PeerReview #MultiModelAI #CoreIntent #AITrading #CriticalThinking #TradingSignals #FinTech #Zynthio #RiskManagement #MadeInNZ #BuildInPublic #SmartTrading #SignalQuality #AgenticAI #InvestSmart
+
+---
+
+## Caption 21 — The Circuit Breaker (Reel/Short)
+
+RiskGuard just killed a trade.
+
+Three models said go. The signal was strong. The opportunity was clear.
+
+But the portfolio was at 0.7% drawdown. One more trade pushes past the 0.8% circuit breaker.
+
+Trade cancelled. Position zeroed. Signal overridden.
+
+That's not a bug. That's exactly what we designed it to do.
+
+Most platforms optimise for volume — more trades, more signals, more activity. We optimise for survival.
+
+The best trade is often the one you don't take.
+
+> Note: Demo scenario using paper trading data. No real funds involved.
+
+.
+.
+.
+#RiskManagement #CircuitBreaker #CoreIntent #Zynthio #AITrading #TradingDiscipline #SmartMoney #RiskFirst #FinTech #BuildInPublic #MadeInNZ #TradingStrategy #AgenticAI #DrawdownControl #PortfolioManagement
+
+---
+
+## Caption 22 — Open Source Everything (Static)
+
+We open-sourced the code.
+We open-sourced the marketing.
+We open-sourced the press kit.
+
+80 tweets. 17 LinkedIn posts. 24 TikTok scripts. 21 Instagram captions. Email templates. Content calendar.
+
+All on GitHub. All forkable. All free.
+
+"Won't competitors copy it?"
+
+They can copy the words. They can't copy $45/month infrastructure, radical transparency, or the conviction to make everything free.
+
+The moat isn't the content. It's the decisions behind it.
+
+-> github.com/coreintentdev/coreintent
+
+.
+.
+.
+#OpenSource #BuildInPublic #CoreIntent #Zynthio #ContentMarketing #FreeMarketing #IndieHacker #FinTech #AITrading #StartupMarketing #MadeInNZ #Transparency #GitHub #ForkIt #ContentStrategy
+
+---
+
+## Caption 23 — Founding Members (Urgency Post)
+
+The leaderboard is empty. Right now.
+
+On June 2nd, it won't be.
+
+Early registrations get:
+-> Priority placement when leagues launch
+-> Permanent founding member badge
+-> Direct input on features and roadmap
+
+The platform is free forever. But the founding window closes.
+
+First-day competitors set the standard. First-week consistency gets featured. First-month champions define the meta.
+
+Your strategy is the only entry fee.
+
+-> coreintent.dev (link in bio)
+
+.
+.
+.
+#FoundingMember #EarlyAccess #CoreIntent #Zynthio #AITrading #TradingCompetition #FreeEntry #CryptoTrading #FinTech #MadeInNZ #CompetitionLaunch #June1st #Leaderboard #GetInEarly #BuildInPublic #IndieFounder

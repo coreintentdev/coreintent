@@ -438,3 +438,125 @@
 
 **CTA (25-30s):**
 "June 1st. Your strategy. Your bot. Your move. coreintent.dev"
+
+---
+
+## Script 20 — "The RiskGuard Override" (Dramatic)
+
+**Hook (0-3s):** "Our most important AI agent has one job: say no."
+
+**Body (3-25s):**
+"Meet RiskGuard. It doesn't find signals. It doesn't predict markets. It kills trades."
+
+"Grok says go. Claude says go. Perplexity says go. The position is sized. The order is ready."
+
+"RiskGuard checks the portfolio. Drawdown at 0.7%. One more trade pushes it past the 0.8% circuit breaker."
+
+*[Beat]*
+
+"Trade killed. Position cancelled. Three models overruled by one."
+
+"Most platforms optimise for action. We optimise for survival."
+
+"Because in trading, the best trade you make is often the one you don't."
+
+**CTA (25-30s):**
+"Risk management that actually works. coreintent.dev"
+
+---
+
+## Script 21 — "I Open-Sourced My Trading Platform. And My Marketing." (Flex)
+
+**Hook (0-3s):** "I open-sourced my trading platform. Then I open-sourced the marketing."
+
+**Body (3-25s):**
+"On our GitHub: the entire codebase. Every line of code. Every AI agent. Every API route."
+
+"Also on our GitHub: 80 tweets. 17 LinkedIn posts. 22 TikTok scripts. Press kit. Media kit. Newsletter template."
+
+*[Show GitHub directory]*
+
+"'Won't competitors copy it?'"
+
+"Good. Copy the code. Copy the tweets. Copy the strategy."
+
+"But you can't copy $45/month infrastructure. You can't copy giving everything away for free when your investors expect subscription MRR."
+
+"The conviction is the moat. Not the code."
+
+**CTA (25-30s):**
+"Fork it. Clone it. Build on it. coreintent.dev"
+
+---
+
+## Script 22 — "Paper Trading Is Not a Weakness" (Reframe)
+
+**Hook (0-3s):** "Everyone roasts us for paper trading. Here's why we're proud of it."
+
+**Body (3-25s):**
+"SpaceX didn't put astronauts on the first rocket. Tesla didn't sell the first prototype."
+
+"We're running R&D. Three AI models. Six agents. Thousands of signals. Zero risk to anyone's capital."
+
+"Meanwhile, other platforms shipped 'live' trading with untested models and are quietly liquidating user positions."
+
+"Paper trading isn't cautious. It's responsible."
+
+"We'll go live when the architecture earns it. Not when a pitch deck demands it."
+
+"When we do, the engine will be battle-tested. The agents will be calibrated. And nobody will have lost a dollar in the process."
+
+**CTA (25-30s):**
+"Built right. Launching soon. coreintent.dev"
+
+---
+
+## Script 23 — "Ask Me How Much My AI Trading Platform Costs to Run" (Challenge)
+
+**Hook (0-3s):** "Ask me how much my AI trading platform costs to run. I dare you."
+
+**Body (3-25s):**
+*[Hold up phone, swipe through bills]*
+
+"Vercel. Zero. GitHub Actions. Zero. Grok. Basically zero."
+
+"Cloudflare Pro. Twenty dollars."
+
+"VPS for the trading backend. Twenty-five dollars."
+
+*[Show total]*
+
+"Forty-five dollars. Not per feature. Not per user. For the WHOLE thing."
+
+"Three AI models arguing about your trades. Six agents running strategies. An interactive terminal with a hundred commands. Free competitions."
+
+"All of it. Forty-five bucks."
+
+"So when someone charges you ninety-nine dollars a month for less... ask yourself: where's the other fifty-four going?"
+
+*[Long pause, stare at camera]*
+
+**CTA (25-30s):**
+"The math. coreintent.dev"
+
+---
+
+## Script 24 — "NZ Timezone Hack" (Founder Life)
+
+**Hook (0-3s):** "Building from New Zealand gives me a deployment hack nobody talks about."
+
+**Body (3-25s):**
+"I'm 12 hours ahead of Silicon Valley. That sounds like a disadvantage. It's not."
+
+"US markets close. I push code. Bug fixes, new features, competition updates."
+
+"By the time the US wakes up, the new version is deployed, tested, and live."
+
+"Asia wakes up, I'm asleep, they're using the latest build."
+
+"The 12-hour offset isn't jet lag. It's a production deployment window."
+
+"Between school runs and timezone gaps. That's the founder life nobody posts about."
+
+**CTA (25-30s):**
+"Built from NZ. Competing globally. coreintent.dev"
