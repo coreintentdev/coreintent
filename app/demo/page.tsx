@@ -802,6 +802,444 @@ function LiveCandlestickChart() {
   );
 }
 
+/* ─── Trading Challenge — Speed Trading Mini-Game ─── */
+const CHALLENGE_PAIRS = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+
+function TradingChallenge() {
+  const [state, setState] = useState<"idle" | "playing" | "result">("idle");
+  const [round, setRound] = useState(0);
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [currentPrice, setCurrentPrice] = useState(67420);
+  const [priceHistory, setPriceHistory] = useState<number[]>([67420]);
+  const [lastResult, setLastResult] = useState<"win" | "loss" | null>(null);
+  const [waiting, setWaiting] = useState(false);
+  const [currentPair, setCurrentPair] = useState("BTC/USDT");
+  const totalRounds = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const tradeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const startGame = () => {
+    setState("playing");
+    setRound(0);
+    setScore(0);
+    setStreak(0);
+    setBestStreak(0);
+    setTimeLeft(30);
+    setCurrentPrice(67420);
+    setPriceHistory([67420]);
+    setLastResult(null);
+    setWaiting(false);
+    totalRounds.current = 0;
+    setCurrentPair(CHALLENGE_PAIRS[0]);
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          if (tradeTimeoutRef.current) { clearTimeout(tradeTimeoutRef.current); tradeTimeoutRef.current = null; }
+          setState("result");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (tradeTimeoutRef.current) clearTimeout(tradeTimeoutRef.current);
+    };
+  }, []);
+
+  const makeTrade = (direction: "long" | "short") => {
+    if (waiting || state !== "playing") return;
+    setWaiting(true);
+
+    const move = (Math.random() - 0.5) * currentPrice * 0.006;
+    const newPrice = +(currentPrice + move).toFixed(2);
+    const won = (direction === "long" && move > 0) || (direction === "short" && move < 0);
+
+    tradeTimeoutRef.current = setTimeout(() => {
+      tradeTimeoutRef.current = null;
+      setCurrentPrice(newPrice);
+      setPriceHistory((prev) => [...prev.slice(-19), newPrice]);
+      setCurrentPair(CHALLENGE_PAIRS[(totalRounds.current + 1) % CHALLENGE_PAIRS.length]);
+      totalRounds.current++;
+      setRound((r) => r + 1);
+
+      if (won) {
+        setScore((s) => s + 1);
+        setStreak((s) => {
+          const next = s + 1;
+          setBestStreak((b) => Math.max(b, next));
+          return next;
+        });
+        setLastResult("win");
+      } else {
+        setStreak(0);
+        setLastResult("loss");
+      }
+      setWaiting(false);
+    }, 600);
+  };
+
+  const accuracy = round > 0 ? Math.round((score / round) * 100) : 0;
+
+  const svgW = 300;
+  const svgH = 80;
+  const prices = priceHistory;
+  const minP = Math.min(...prices);
+  const maxP = Math.max(...prices);
+  const range = maxP - minP || 1;
+  const points = prices.map((p, i) => {
+    const x = (i / Math.max(prices.length - 1, 1)) * svgW;
+    const y = svgH - 8 - ((p - minP) / range) * (svgH - 16);
+    return `${x},${y}`;
+  }).join(" ");
+
+  const getVerdict = () => {
+    if (accuracy >= 70) return { text: "SIGNAL DOMINANT", color: "#10b981", rank: "Top Tier" };
+    if (accuracy >= 55) return { text: "SOLID INSTINCTS", color: "#3b82f6", rank: "Competitive" };
+    if (accuracy >= 45) return { text: "COIN FLIP TERRITORY", color: "#f59e0b", rank: "Average" };
+    return { text: "INVERSE YOUR CALLS", color: "#ef4444", rank: "Contrarian" };
+  };
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        Speed Trading Challenge
+        {state === "playing" && (
+          <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#ef4444", marginLeft: 8, verticalAlign: "middle" }} />
+        )}
+      </h2>
+      <div className="challenge-card">
+        {state === "idle" && (
+          <div style={{ textAlign: "center", padding: "24px 0" }}>
+            <div style={{ fontSize: "32px", marginBottom: "12px" }}>&#9889;</div>
+            <h3 style={{ fontSize: "20px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "8px" }}>
+              Can You Beat the Market?
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: "13px", maxWidth: "400px", margin: "0 auto 20px", lineHeight: "1.6" }}>
+              30 seconds. Predict if the next candle goes up or down.
+              No indicators, no AI help &mdash; just your gut.
+            </p>
+            <button className="challenge-btn challenge-btn-long" onClick={startGame}>
+              Start Challenge
+            </button>
+          </div>
+        )}
+
+        {state === "playing" && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                <div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Time</div>
+                  <div style={{ fontSize: "24px", fontWeight: "bold", color: timeLeft <= 10 ? "#ef4444" : timeLeft <= 20 ? "#f59e0b" : "#10b981", fontVariantNumeric: "tabular-nums" }}>
+                    {timeLeft}s
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Score</div>
+                  <div style={{ fontSize: "24px", fontWeight: "bold", color: "#10b981" }}>{score}/{round}</div>
+                </div>
+                {streak >= 3 && (
+                  <div className="streak-text" style={{ fontSize: "14px", fontWeight: "bold", color: "#f59e0b" }}>
+                    {streak}x STREAK
+                  </div>
+                )}
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{currentPair}</div>
+                <div style={{ fontSize: "22px", fontWeight: "bold", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>
+                  ${currentPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{ width: "100%", height: "auto", background: "var(--bg-primary)", borderRadius: "6px" }}>
+                <defs>
+                  <linearGradient id="challengeGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {prices.length > 1 && (
+                  <>
+                    <polygon points={`0,${svgH} ${points} ${svgW},${svgH}`} fill="url(#challengeGrad)" />
+                    <polyline points={points} fill="none" stroke="#10b981" strokeWidth="2" />
+                    <circle cx={points.split(" ").pop()?.split(",")[0]} cy={points.split(" ").pop()?.split(",")[1]} r="4" fill="#10b981" style={{ filter: "drop-shadow(0 0 4px #10b981)" }} />
+                  </>
+                )}
+              </svg>
+            </div>
+
+            {lastResult && (
+              <div style={{
+                textAlign: "center",
+                padding: "6px",
+                marginBottom: "12px",
+                borderRadius: "6px",
+                fontSize: "12px",
+                fontWeight: "bold",
+                background: lastResult === "win" ? "#10b98115" : "#ef444415",
+                color: lastResult === "win" ? "#10b981" : "#ef4444",
+                transition: "all 0.3s ease",
+              }}>
+                {lastResult === "win" ? "CORRECT — Nice call!" : "WRONG — Market disagreed."}
+              </div>
+            )}
+
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+              <button
+                className="challenge-btn challenge-btn-long"
+                onClick={() => makeTrade("long")}
+                disabled={waiting}
+                style={{ opacity: waiting ? 0.5 : 1, flex: 1, maxWidth: "200px" }}
+              >
+                {waiting ? "..." : "LONG"}
+              </button>
+              <button
+                className="challenge-btn challenge-btn-short"
+                onClick={() => makeTrade("short")}
+                disabled={waiting}
+                style={{ opacity: waiting ? 0.5 : 1, flex: 1, maxWidth: "200px" }}
+              >
+                {waiting ? "..." : "SHORT"}
+              </button>
+            </div>
+
+            <div style={{ marginTop: "12px" }}>
+              <div style={{ height: "3px", background: "#1e293b", borderRadius: "2px", overflow: "hidden" }}>
+                <div style={{
+                  height: "100%",
+                  width: `${(timeLeft / 30) * 100}%`,
+                  background: timeLeft <= 10 ? "#ef4444" : timeLeft <= 20 ? "#f59e0b" : "#10b981",
+                  borderRadius: "2px",
+                  transition: "width 1s linear, background 0.5s ease",
+                }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {state === "result" && (() => {
+          const verdict = getVerdict();
+          return (
+            <div style={{ textAlign: "center", padding: "16px 0" }}>
+              <div style={{ fontSize: "48px", fontWeight: "bold", color: verdict.color, marginBottom: "4px" }}>
+                {accuracy}%
+              </div>
+              <div style={{ fontSize: "14px", fontWeight: "bold", color: verdict.color, marginBottom: "4px", letterSpacing: "2px" }}>
+                {verdict.text}
+              </div>
+              <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "20px" }}>
+                {score} correct out of {round} trades | Best streak: {bestStreak}x | Rank: {verdict.rank}
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", maxWidth: "400px", margin: "0 auto 20px" }}>
+                {[
+                  { label: "Trades", value: round.toString(), color: "#3b82f6" },
+                  { label: "Accuracy", value: `${accuracy}%`, color: accuracy >= 55 ? "#10b981" : "#ef4444" },
+                  { label: "Best Streak", value: `${bestStreak}x`, color: "#f59e0b" },
+                ].map((s) => (
+                  <div key={s.label} style={{ padding: "12px", background: "var(--bg-primary)", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase" }}>{s.label}</div>
+                    <div style={{ fontSize: "20px", fontWeight: "bold", color: s.color }}>{s.value}</div>
+                  </div>
+                ))}
+              </div>
+              <button className="challenge-btn challenge-btn-long" onClick={startGame}>
+                Play Again
+              </button>
+              <p style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
+                Now imagine three AI models doing this at machine speed. That&apos;s CoreIntent.
+              </p>
+            </div>
+          );
+        })()}
+      </div>
+    </section>
+  );
+}
+
+/* ─── F18 Threat Radar ─── */
+function F18ThreatRadar() {
+  const [sweep, setSweep] = useState(0);
+  const [threats, setThreats] = useState<Array<{ id: number; x: number; y: number; type: string; age: number }>>([]);
+  const [stats, setStats] = useState({ detected: 0, neutralized: 0, active: 0 });
+  const threatId = useRef(0);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setSweep((s) => (s + 3) % 360);
+    }, 50);
+    return () => clearInterval(iv);
+  }, []);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setThreats((prev) => {
+        const aged = prev.map((t) => ({ ...t, age: t.age + 1 })).filter((t) => t.age < 30);
+        if (Math.random() > 0.4) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 30 + Math.random() * 55;
+          threatId.current++;
+          const types = ["PROBE", "SCAN", "INJECT", "BRUTE", "SPOOF", "PHISH"];
+          aged.push({
+            id: threatId.current,
+            x: 50 + Math.cos(angle) * dist,
+            y: 50 + Math.sin(angle) * dist,
+            type: types[Math.floor(Math.random() * types.length)],
+            age: 0,
+          });
+          setStats((s) => ({ ...s, detected: s.detected + 1, active: aged.length }));
+        }
+        if (aged.length > 0 && Math.random() > 0.5) {
+          const idx = Math.floor(Math.random() * aged.length);
+          aged.splice(idx, 1);
+          setStats((s) => ({ ...s, neutralized: s.neutralized + 1, active: aged.length }));
+        }
+        return aged;
+      });
+    }, 1500);
+    return () => clearInterval(iv);
+  }, []);
+
+  const cx = 120;
+  const cy = 120;
+  const r = 100;
+  const sweepRad = (sweep * Math.PI) / 180;
+  const sweepX = cx + Math.cos(sweepRad) * r;
+  const sweepY = cy + Math.sin(sweepRad) * r;
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        F18 Security — Threat Radar
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b", marginLeft: 8, verticalAlign: "middle" }} />
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+        <div className="radar-container" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg viewBox="0 0 240 240" style={{ width: "100%", maxWidth: "280px", height: "auto" }}>
+            <defs>
+              <radialGradient id="radarGlow">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+              </radialGradient>
+              <linearGradient id="sweepGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+
+            <circle cx={cx} cy={cy} r={r} fill="url(#radarGlow)" stroke="#10b98133" strokeWidth="1" />
+            {[0.25, 0.5, 0.75, 1].map((pct) => (
+              <circle key={pct} cx={cx} cy={cy} r={r * pct} fill="none" stroke="#10b98118" strokeWidth="0.5" style={{ animation: "radarRingPulse 4s ease-in-out infinite" }} />
+            ))}
+
+            <line x1={cx} y1={cy - r} x2={cx} y2={cy + r} stroke="#10b98112" strokeWidth="0.5" />
+            <line x1={cx - r} y1={cy} x2={cx + r} y2={cy} stroke="#10b98112" strokeWidth="0.5" />
+
+            <line x1={cx} y1={cy} x2={sweepX} y2={sweepY} stroke="#10b981" strokeWidth="2" strokeLinecap="round" style={{ filter: "drop-shadow(0 0 6px #10b981)" }} />
+            <path
+              d={`M ${cx} ${cy} L ${cx + Math.cos(sweepRad) * r} ${cy + Math.sin(sweepRad) * r} A ${r} ${r} 0 0 0 ${cx + Math.cos(sweepRad - 0.5) * r} ${cy + Math.sin(sweepRad - 0.5) * r} Z`}
+              fill="#10b981"
+              opacity="0.08"
+            />
+
+            {threats.map((t) => {
+              const tx = (t.x / 100) * r * 2 + cx - r;
+              const ty = (t.y / 100) * r * 2 + cy - r;
+              const opacity = t.age < 3 ? 1 : Math.max(0.3, 1 - t.age * 0.03);
+              const color = t.type === "INJECT" || t.type === "BRUTE" ? "#ef4444" : t.type === "PHISH" ? "#f59e0b" : "#ef444499";
+              return (
+                <g key={t.id}>
+                  <circle cx={tx} cy={ty} r={3} fill={color} opacity={opacity} style={{ animation: t.age < 3 ? "threatPing 1s ease-in-out infinite" : "none" }} />
+                  {t.age < 5 && (
+                    <circle cx={tx} cy={ty} r={8} fill="none" stroke={color} strokeWidth="0.5" opacity={0.4} />
+                  )}
+                </g>
+              );
+            })}
+
+            <circle cx={cx} cy={cy} r={4} fill="#10b981" style={{ filter: "drop-shadow(0 0 8px #10b981)" }} />
+            <text x={cx} y={cy + 3} textAnchor="middle" fill="#000" fontSize="5" fontWeight="bold" fontFamily="monospace">F18</text>
+          </svg>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+            <div style={{ fontSize: "10px", textTransform: "uppercase", color: "var(--text-secondary)", marginBottom: "12px", letterSpacing: "0.5px" }}>
+              Threat Intelligence
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+              {[
+                { label: "Detected", value: stats.detected, color: "#ef4444" },
+                { label: "Neutralized", value: stats.neutralized, color: "#10b981" },
+                { label: "Active", value: threats.length, color: threats.length > 3 ? "#f59e0b" : "#10b981" },
+              ].map((s) => (
+                <div key={s.label} style={{ textAlign: "center", padding: "8px", background: "var(--bg-primary)", borderRadius: "6px" }}>
+                  <div style={{ fontSize: "18px", fontWeight: "bold", color: s.color, fontVariantNumeric: "tabular-nums" }}>{s.value}</div>
+                  <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px", flex: 1 }}>
+            <div style={{ fontSize: "10px", textTransform: "uppercase", color: "var(--text-secondary)", marginBottom: "10px", letterSpacing: "0.5px" }}>
+              Live Threat Feed
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {threats.slice(-5).reverse().map((t) => {
+                const severity = t.type === "INJECT" || t.type === "BRUTE" ? "HIGH" : t.type === "PHISH" ? "MED" : "LOW";
+                const sevColor = severity === "HIGH" ? "#ef4444" : severity === "MED" ? "#f59e0b" : "#3b82f6";
+                return (
+                  <div key={t.id} style={{
+                    display: "flex", alignItems: "center", gap: "8px", padding: "6px 8px",
+                    background: "var(--bg-primary)", borderRadius: "4px", fontSize: "11px",
+                    borderLeft: `2px solid ${sevColor}`,
+                  }}>
+                    <span style={{ color: sevColor, fontWeight: "bold", fontSize: "9px", padding: "1px 4px", background: `${sevColor}18`, borderRadius: "3px" }}>
+                      {severity}
+                    </span>
+                    <span style={{ color: "var(--text-primary)", fontWeight: "bold" }}>{t.type}</span>
+                    <span style={{ color: "var(--text-secondary)", fontSize: "10px", marginLeft: "auto" }}>
+                      ({Math.round(t.x)}, {Math.round(t.y)})
+                    </span>
+                  </div>
+                );
+              })}
+              {threats.length === 0 && (
+                <div style={{ fontSize: "11px", color: "#10b981", textAlign: "center", padding: "12px 0" }}>
+                  Perimeter clear. No active threats.
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div style={{
+            padding: "10px 14px", background: "#10b98108", border: "1px solid #10b98122",
+            borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px",
+          }}>
+            <span className="animate-pulse" style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
+            <span style={{ fontSize: "11px", color: "#10b981", fontWeight: "bold" }}>F18 SHIELD ACTIVE</span>
+            <span style={{ fontSize: "10px", color: "var(--text-secondary)", marginLeft: "auto" }}>Simulated</span>
+          </div>
+        </div>
+      </div>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textAlign: "center", marginTop: "8px" }}>
+        F18 Security: Digital identity protection with automated threat detection. Simulated data.
+      </div>
+    </section>
+  );
+}
+
 export default function DemoPage() {
   const [prices, setPrices] = useState(
     TOKENS.map((t) => ({ ...t, price: t.basePrice, change: 0, flash: "" }))
@@ -1004,7 +1442,7 @@ export default function DemoPage() {
                   >
                     {p.change >= 0 ? "+" : ""}
                     {p.change.toFixed(2)}%
-                    <span style={{ marginLeft: "4px" }}>{p.change >= 0 ? "\u25B2" : "\u25BC"}</span>
+                    <span style={{ marginLeft: "4px" }}>{p.change >= 0 ? "▲" : "▼"}</span>
                   </div>
                 </div>
               ))}
@@ -1132,7 +1570,7 @@ export default function DemoPage() {
                           fontWeight: "bold",
                         }}
                       >
-                        {s.direction === "long" ? "\u25B2 LONG" : "\u25BC SHORT"}
+                        {s.direction === "long" ? "▲ LONG" : "▼ SHORT"}
                       </span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px" }}>
@@ -1300,6 +1738,16 @@ export default function DemoPage() {
           {/* ═══ AI DEBATE ═══ */}
           <ScrollReveal>
           <AIDebate />
+          </ScrollReveal>
+
+          {/* ═══ TRADING CHALLENGE ═══ */}
+          <ScrollReveal>
+          <TradingChallenge />
+          </ScrollReveal>
+
+          {/* ═══ F18 THREAT RADAR ═══ */}
+          <ScrollReveal>
+          <F18ThreatRadar />
           </ScrollReveal>
 
           {/* ═══ CTA ═══ */}
