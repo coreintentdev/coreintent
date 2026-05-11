@@ -227,7 +227,8 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        Claim Founding Status &rarr;
+        <span style={{ fontSize: "16px" }}>&#9733;</span>
+        Star on GitHub
       </a>
     </div>
   );
