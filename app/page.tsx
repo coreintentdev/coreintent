@@ -1305,7 +1305,6 @@ function SignalInterceptor() {
   const [gameOver, setGameOver] = useState(false);
   const [highScore, setHighScore] = useState(0);
   const nextId = useRef(0);
-  const fieldRef = useRef<HTMLDivElement>(null);
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const flyingRef = useRef<FlyingSignal[]>([]);
   const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -1435,7 +1434,6 @@ function SignalInterceptor() {
       </p>
 
       <div
-        ref={fieldRef}
         className="signal-game-field"
         style={{
           background: "var(--bg-terminal)",
