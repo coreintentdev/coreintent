@@ -3231,7 +3231,7 @@ export default function Terminal() {
 
       addLines(
         `\x1b[36m  ╔══════════════════════════════════════════════════╗\x1b[0m`,
-        `\x1b[36m  ║              GAME RESULTS                         ║\x1b[0m`,
+        `\x1b[36m  ║              GAME RESULTS                        ║\x1b[0m`,
         `\x1b[36m  ╚══════════════════════════════════════════════════╝\x1b[0m`,
         ``
       );

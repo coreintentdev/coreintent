@@ -1427,7 +1427,7 @@ html {
   0% { transform: translateX(-60px); opacity: 0; }
   8% { opacity: 1; }
   92% { opacity: 1; }
-  100% { transform: translateX(calc(100% + 60px)); opacity: 0; }
+  100% { transform: translateX(calc(100vw - 60px)); opacity: 0; }
 }
 
 @keyframes interceptFlash {
@@ -1481,16 +1481,15 @@ html {
   font-weight: bold;
   white-space: nowrap;
   cursor: pointer;
-  transition: transform 0.1s ease;
   z-index: 2;
 }
 
 .signal-game-token:hover {
-  transform: scale(1.15) !important;
+  filter: brightness(1.4);
 }
 
 .signal-game-token:active {
-  transform: scale(0.95) !important;
+  filter: brightness(0.8);
 }
 
 .intercept-flash {

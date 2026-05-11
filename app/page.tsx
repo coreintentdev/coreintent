@@ -1355,14 +1355,16 @@ function SignalInterceptor() {
   useEffect(() => {
     if (!started) return;
     const cleanup = setInterval(() => {
+      const now = Date.now();
+      let expiredCount = 0;
       setFlying(prev => {
-        const now = Date.now();
-        const expired = prev.filter(s => (now - s.startTime) > s.signal.speed * 1000);
-        if (expired.length > 0) {
-          setMissed(m => m + expired.length);
-        }
-        return prev.filter(s => (now - s.startTime) <= s.signal.speed * 1000);
+        const alive = prev.filter(s => (now - s.startTime) <= s.signal.speed * 1000);
+        expiredCount = prev.length - alive.length;
+        return alive;
       });
+      if (expiredCount > 0) {
+        setMissed(m => m + expiredCount);
+      }
     }, 500);
     return () => clearInterval(cleanup);
   }, [started]);
