@@ -3145,14 +3145,17 @@ export default function Terminal() {
 
       const models = ["Grok", "Claude", "Perplexity"];
       const modelColors = ["\x1b[31m", "\x1b[35m", "\x1b[34m"];
-      const scenarios = [
+      const allScenarios = [
         {
           pair: "BTC/USDT", price: 67420,
           grok: "LONG — X sentiment surge detected, 73% bullish volume",
           claude: "CAUTION — RSI overbought at 78, resistance at $68,200",
           perplexity: "LONG — BlackRock ETF inflows $340M today, on-chain accumulation",
           consensus: "CONTESTED",
-          outcome: { dir: "UP", pct: 2.1, reason: "ETF inflows overwhelmed technical resistance" },
+          outcomes: [
+            { dir: "UP", pct: 2.1, reason: "ETF inflows overwhelmed technical resistance" },
+            { dir: "DOWN", pct: 3.5, reason: "Resistance held, profit-taking cascade" },
+          ],
         },
         {
           pair: "ETH/USDT", price: 3285,
@@ -3160,7 +3163,10 @@ export default function Terminal() {
           claude: "SHORT — Breakdown below 200 EMA, risk/reward 3.8:1 short",
           perplexity: "HOLD — SEC meeting tomorrow could swing either way",
           consensus: "BEARISH",
-          outcome: { dir: "DOWN", pct: 4.3, reason: "Whale dump + technical breakdown confirmed" },
+          outcomes: [
+            { dir: "DOWN", pct: 4.3, reason: "Whale dump + technical breakdown confirmed" },
+            { dir: "UP", pct: 6.2, reason: "SEC approved staking — short squeeze triggered" },
+          ],
         },
         {
           pair: "SOL/USDT", price: 142,
@@ -3168,9 +3174,36 @@ export default function Terminal() {
           claude: "LONG — Strong momentum, support at $138, targets $155",
           perplexity: "LONG — Jupiter DEX volume ATH, ecosystem expansion confirmed",
           consensus: "UNANIMOUS BULLISH",
-          outcome: { dir: "UP", pct: 8.7, reason: "Full model consensus + ecosystem catalysts" },
+          outcomes: [
+            { dir: "UP", pct: 8.7, reason: "Full model consensus + ecosystem catalysts" },
+            { dir: "DOWN", pct: 5.1, reason: "Network outage tanked confidence despite fundamentals" },
+          ],
+        },
+        {
+          pair: "DOGE/USDT", price: 0.182,
+          grok: "LONG — Elon tweet detected, social volume 12x normal",
+          claude: "SHORT — No fundamental catalyst, RSI divergence forming",
+          perplexity: "HOLD — Meme momentum fading, but influencer cycle unclear",
+          consensus: "CONTESTED",
+          outcomes: [
+            { dir: "UP", pct: 15.3, reason: "Meme rally defied technicals — social momentum won" },
+            { dir: "DOWN", pct: 8.9, reason: "Pump exhausted, late longs liquidated" },
+          ],
+        },
+        {
+          pair: "AVAX/USDT", price: 38.5,
+          grok: "HOLD — Low social signal, no clear direction",
+          claude: "LONG — Accumulation pattern on 4H, breakout above $39.2 likely",
+          perplexity: "LONG — Gaming subnet launch imminent, institutional interest rising",
+          consensus: "BULLISH",
+          outcomes: [
+            { dir: "UP", pct: 5.8, reason: "Subnet launch drove breakout as predicted" },
+            { dir: "DOWN", pct: 2.4, reason: "BTC correlation dragged altcoins despite good news" },
+          ],
         },
       ];
+      const shuffled = allScenarios.sort(() => Math.random() - 0.5);
+      const scenarios = shuffled.slice(0, 3);
 
       let wgScore = 0;
       const results: string[] = [];
@@ -3196,8 +3229,9 @@ export default function Terminal() {
         );
         await delay(500);
 
-        const dir = sc.outcome.dir;
-        const pct = sc.outcome.pct;
+        const outcome = sc.outcomes[Math.random() < 0.5 ? 0 : 1];
+        const dir = outcome.dir;
+        const pct = outcome.pct;
         const dirColor = dir === "UP" ? "\x1b[32m" : "\x1b[31m";
         const dirArrow = dir === "UP" ? "▲" : "▼";
 
@@ -3207,7 +3241,7 @@ export default function Terminal() {
         await delay(1000);
 
         addLines(
-          `  ${dirColor}  ${dirArrow} OUTCOME: ${dir} ${pct}%\x1b[0m — ${sc.outcome.reason}`,
+          `  ${dirColor}  ${dirArrow} OUTCOME: ${dir} ${pct}%\x1b[0m — ${outcome.reason}`,
           ``
         );
 
