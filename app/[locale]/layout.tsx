@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { LOCALES, type Locale, isValidLocale, loadMessages, getDir, getHtmlLang, getAlternateLinks } from "@/lib/i18n";
+import { LOCALES, type Locale, isValidLocale, loadMessages, getDir, getHtmlLang } from "@/lib/i18n";
 import { I18nProvider } from "@/lib/i18n-context";
 import type { Metadata } from "next";
 
@@ -23,19 +23,9 @@ export async function generateMetadata({
     ? (messages.meta as Record<string, string>).description
     : undefined;
 
-  const alternates = getAlternateLinks("/");
-  const languages: Record<string, string> = {};
-  for (const alt of alternates) {
-    languages[alt.locale] = alt.href;
-  }
-
   return {
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
-    alternates: {
-      canonical: `https://coreintent.dev/${locale}`,
-      languages,
-    },
   };
 }
 
