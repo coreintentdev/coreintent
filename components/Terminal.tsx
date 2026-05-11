@@ -355,7 +355,7 @@ Brand: Zynthio.ai — NZ registered
                           \x1b[33mAI:\x1b[0m       Claude + Grok + Perplexity
                           \x1b[33mVPS:\x1b[0m      Cloudzy (8 domains)
                           \x1b[33mDomains:\x1b[0m  16
-                          \x1b[33mBurn:\x1b[0m     ~/mo
+                          \x1b[33mBurn:\x1b[0m     ~/mo
                           \x1b[33mMode:\x1b[0m     \x1b[33mPaper Trading\x1b[0m
                           \x1b[33mSignal:\x1b[0m   \x1b[32m336\x1b[0m`,
 
@@ -992,7 +992,7 @@ export default function Terminal() {
       const pick = fortunes[Math.floor(Math.random() * fortunes.length)];
       const out = `\x1b[33m  ╔══════════════════════════════════════════╗
   ║           TRADING FORTUNE                ║
-  ╠══════════════════════════════════════════╣[0m
+  ╠══════════════════════════════════════════╣[0m
   \x1b[36m  "${pick}"\x1b[0m
 \x1b[33m  ╚══════════════════════════════════════════╝\x1b[0m`;
       addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, "");
@@ -1252,7 +1252,7 @@ export default function Terminal() {
         "BTC/USDT": 67420, "ETH/USDT": 3285, "SOL/USDT": 142.80, "AVAX/USDT": 35.60,
       };
       const startPrice = basePrices[pair] || 100;
-      const blocks = "▁▂▃▄▅▆▇█";
+      const blocks = "\u2581\u2582\u2583\u2584\u2585\u2586\u2587\u2588";
       let price = startPrice;
       const hist: number[] = [];
       for (let i = 0; i < 50; i++) {
@@ -1390,9 +1390,9 @@ export default function Terminal() {
       const sciv = setInterval(() => {
         if (sci < checks.length) {
           const c = checks[sci];
-          const icon = c.status === "PASS" ? "\x1b[32m✓ PASS\x1b[0m" :
+          const icon = c.status === "PASS" ? "\x1b[32m\u2713 PASS\x1b[0m" :
                        c.status === "WARN" ? "\x1b[33m! WARN\x1b[0m" :
-                       "\x1b[90m○ SKIP\x1b[0m";
+                       "\x1b[90m\u25CB SKIP\x1b[0m";
           const filled = Math.round(((sci + 1) / checks.length) * 20);
           const bar = `\x1b[36m${"█".repeat(filled)}${"░".repeat(20 - filled)}\x1b[0m`;
           const pct = Math.round(((sci + 1) / checks.length) * 100);
@@ -1568,12 +1568,1654 @@ export default function Terminal() {
       return "";
     }
 
-    // The rest of the commands continue from here...
-    // Due to the extremely large file size, the remaining commands (backtest, pulse, dashboard,
-    // depth, speedtest, lore, zen, fire, about, weather, slots, decrypt, orbit, glitch,
-    // sniper, cyberwar, hologram, arena, dna, train, quantum, waveform, worldmap, spectrum,
-    // blackjack, mining, typespeed, mission) and the JSX rendering section follow the same
-    // pattern established above.
+    // ── BACKTEST: Strategy backtesting simulation ──
+    if (trimmed === "backtest" || trimmed.startsWith("backtest ")) {
+      const strategyInput = trimmed === "backtest" ? "momentum" : raw.substring(9).trim().toLowerCase();
+      const strategy = strategyInput || "momentum";
+      const strategies: Record<string, { name: string; desc: string; winRate: number; bias: number }> = {
+        momentum: { name: "Momentum Rider", desc: "Buy breakouts, ride trends, trail stops", winRate: 0.62, bias: 0.015 },
+        mean: { name: "Mean Reversion", desc: "Fade extremes, target the mean", winRate: 0.68, bias: 0.008 },
+        sentiment: { name: "Sentiment Alpha", desc: "Trade social sentiment spikes", winRate: 0.55, bias: 0.022 },
+      };
+      const strat = strategies[strategy] || strategies.momentum;
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ BACKTEST: ${strat.name.toUpperCase()} ══\x1b[0m`,
+        `\x1b[90m  Strategy: ${strat.desc}\x1b[0m`,
+        `\x1b[90m  Period: 30 days | Pair: BTC/USDT | Start: $10,000\x1b[0m`, ``);
+
+      let equity = 10000;
+      let maxEquity = 10000;
+      let maxDD = 0;
+      let wins = 0;
+      let losses = 0;
+      let day = 0;
+      const totalDays = 30;
+      const equityHistory: number[] = [10000];
+
+      const btiv = setInterval(() => {
+        if (day < totalDays) {
+          day++;
+          const isTradeDay = Math.random() < 0.5;
+          if (isTradeDay) {
+            const win = Math.random() < strat.winRate;
+            const magnitude = (Math.random() * 300 + 50) * (1 + strat.bias * 10);
+            const pnl = win ? +magnitude.toFixed(0) : -Math.round(magnitude * 0.6);
+            equity += pnl;
+            if (win) wins++; else losses++;
+            maxEquity = Math.max(maxEquity, equity);
+            const dd = ((maxEquity - equity) / maxEquity) * 100;
+            maxDD = Math.max(maxDD, dd);
+
+            const barMax = 30;
+            const barLen = Math.max(1, Math.min(barMax, Math.round((equity / 14000) * barMax)));
+            const barColor = pnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+            const action = pnl >= 0 ? "\x1b[32mWIN \x1b[0m" : "\x1b[31mLOSS\x1b[0m";
+            addLines(`  \x1b[90mDay ${String(day).padStart(2)}\x1b[0m ${action} ${barColor}${"█".repeat(barLen)}${"░".repeat(barMax - barLen)}\x1b[0m $${equity.toLocaleString()} ${pnl >= 0 ? `\x1b[32m+${pnl}\x1b[0m` : `\x1b[31m${pnl}\x1b[0m`}`);
+          } else {
+            addLines(`  \x1b[90mDay ${String(day).padStart(2)} ──── no signal ────\x1b[0m`);
+          }
+          equityHistory.push(equity);
+        } else {
+          clearInterval(btiv);
+          const totalPnl = equity - 10000;
+          const totalReturn = ((totalPnl / 10000) * 100).toFixed(1);
+          const winRate = wins + losses > 0 ? ((wins / (wins + losses)) * 100).toFixed(0) : "0";
+          const sharpe = (totalPnl / (maxDD > 0 ? maxDD * 100 : 100) * 1.5 + Math.random() * 0.5).toFixed(2);
+
+          const blocks = "▁▂▃▄▅▆▇█";
+          const eMin = Math.min(...equityHistory);
+          const eMax = Math.max(...equityHistory);
+          const eRange = eMax - eMin || 1;
+          const spark = equityHistory.map((e) => {
+            const idx = Math.min(7, Math.round(((e - eMin) / eRange) * 7));
+            return e >= 10000 ? `\x1b[32m${blocks[idx]}\x1b[0m` : `\x1b[31m${blocks[idx]}\x1b[0m`;
+          }).join("");
+
+          const pnlColor = totalPnl >= 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(``,
+            `  \x1b[36m══ BACKTEST RESULTS ══\x1b[0m`,
+            `  Equity curve: ${spark}`,
+            ``,
+            `  \x1b[33mStrategy:\x1b[0m    ${strat.name}`,
+            `  \x1b[33mFinal Equity:\x1b[0m ${pnlColor}$${equity.toLocaleString()}\x1b[0m`,
+            `  \x1b[33mReturn:\x1b[0m      ${pnlColor}${totalPnl >= 0 ? "+" : ""}$${totalPnl.toLocaleString()} (${totalPnl >= 0 ? "+" : ""}${totalReturn}%)\x1b[0m`,
+            `  \x1b[33mTrades:\x1b[0m      ${wins + losses} (\x1b[32m${wins}W\x1b[0m / \x1b[31m${losses}L\x1b[0m)`,
+            `  \x1b[33mWin Rate:\x1b[0m    ${winRate}%`,
+            `  \x1b[33mMax Drawdown:\x1b[0m \x1b[31m-${maxDD.toFixed(1)}%\x1b[0m`,
+            `  \x1b[33mSharpe Ratio:\x1b[0m ${Number(sharpe) > 1 ? "\x1b[32m" : "\x1b[33m"}${sharpe}\x1b[0m`,
+            ``,
+            `  \x1b[90mStrategies: momentum | mean | sentiment\x1b[0m`,
+            `  \x1b[90mSimulated backtest — past performance is not indicative of future results\x1b[0m`, ``
+          );
+        }
+      }, 120);
+      return "";
+    }
+
+    // ── PULSE: Engine heartbeat monitor ──
+    if (trimmed === "pulse") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ ENGINE PULSE — VITAL SIGNS ══\x1b[0m`,
+        `\x1b[90m  Monitoring CoreIntent heartbeat...\x1b[0m`, ``);
+
+      const heartChars = "·-~=≈≋█▓▒░";
+      let frame = 0;
+      const totalFrames = 8;
+
+      const pulseIv = setInterval(() => {
+        if (frame < totalFrames) {
+          const W = 50;
+          let ecg = "  ";
+          for (let x = 0; x < W; x++) {
+            const phase = (x + frame * 7) / W * Math.PI * 4;
+            const heartbeat = Math.sin(phase) * 0.3
+              + (Math.abs(((x + frame * 7) % 12) - 6) < 2 ? Math.sin(phase * 3) * 0.8 : 0)
+              + (Math.abs(((x + frame * 7) % 12) - 5) < 1 ? -0.5 : 0);
+            const norm = Math.max(0, Math.min(9, Math.round((heartbeat + 1) * 4.5)));
+            const c = heartChars[norm];
+            if (norm >= 7) ecg += `\x1b[32m${c}\x1b[0m`;
+            else if (norm >= 4) ecg += `\x1b[36m${c}\x1b[0m`;
+            else ecg += `\x1b[90m${c}\x1b[0m`;
+          }
+          addLines(ecg);
+          frame++;
+        } else {
+          clearInterval(pulseIv);
+          const bpm = 60 + Math.floor(Math.random() * 20);
+          const signalLatency = 12 + Math.floor(Math.random() * 30);
+          const modelSync = 94 + Math.floor(Math.random() * 6);
+          const riskLevel = Math.random() > 0.7 ? "ELEVATED" : "NOMINAL";
+          const riskColor = riskLevel === "NOMINAL" ? "\x1b[32m" : "\x1b[33m";
+
+          addLines(``,
+            `  \x1b[36m┌─────────────────────────────────────────┐\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[32m♥\x1b[0m  Engine Heartbeat     \x1b[32m${bpm} BPM\x1b[0m        \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m⚡\x1b[0m Signal Latency      \x1b[32m${signalLatency}ms\x1b[0m          \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m◉\x1b[0m  Model Sync          \x1b[32m${modelSync}%\x1b[0m           \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m▲\x1b[0m  Risk Level          ${riskColor}${riskLevel}\x1b[0m       \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m⊞\x1b[0m  Circuit Breaker     \x1b[32mARMED\x1b[0m          \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  \x1b[36m↺\x1b[0m  Last Signal         \x1b[90m${Math.floor(Math.random() * 45) + 5}s ago\x1b[0m        \x1b[36m│\x1b[0m`,
+            `  \x1b[36m└─────────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mAll vitals ${riskLevel === "NOMINAL" ? "normal" : "within tolerance"}. Paper trading mode.\x1b[0m`, ``
+          );
+        }
+      }, 200);
+      return "";
+    }
+
+    // ── DASHBOARD: Live ASCII dashboard with gauges, charts, vitals ──
+    if (trimmed === "dashboard") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT LIVE DASHBOARD ══\x1b[0m`,
+        `\x1b[90m  Initializing real-time telemetry...\x1b[0m`, ``);
+
+      let frame = 0;
+      const totalFrames = 16;
+      const btcBase = 67200 + Math.random() * 800;
+      const ethBase = 3420 + Math.random() * 80;
+      const solBase = 178 + Math.random() * 12;
+      const priceHistory: { btc: number[]; eth: number[]; sol: number[] } = { btc: [], eth: [], sol: [] };
+
+      const dashIv = setInterval(() => {
+        if (frame >= totalFrames) {
+          clearInterval(dashIv);
+          addLines(
+            `  \x1b[36m└─────────────────────────────────────────────────────────────┘\x1b[0m`,
+            `  \x1b[90mDashboard stream ended. Type \x1b[32mdashboard\x1b[90m to restart.\x1b[0m`, ``
+          );
+          return;
+        }
+
+        const t = frame;
+        const btcPrice = btcBase + Math.sin(t * 0.4) * 300 + (Math.random() - 0.5) * 200;
+        const ethPrice = ethBase + Math.sin(t * 0.5 + 1) * 40 + (Math.random() - 0.5) * 30;
+        const solPrice = solBase + Math.sin(t * 0.3 + 2) * 8 + (Math.random() - 0.5) * 5;
+        priceHistory.btc.push(btcPrice);
+        priceHistory.eth.push(ethPrice);
+        priceHistory.sol.push(solPrice);
+
+        const sparkline = (data: number[]) => {
+          const chars = "▁▂▃▄▅▆▇█";
+          const recent = data.slice(-12);
+          const mn = Math.min(...recent);
+          const mx = Math.max(...recent);
+          const range = mx - mn || 1;
+          return recent.map((v) => {
+            const idx = Math.min(7, Math.round(((v - mn) / range) * 7));
+            return v >= recent[0] ? `\x1b[32m${chars[idx]}\x1b[0m` : `\x1b[31m${chars[idx]}\x1b[0m`;
+          }).join("");
+        };
+
+        const grokConf = 0.72 + Math.sin(t * 0.6) * 0.15 + Math.random() * 0.08;
+        const claudeConf = 0.78 + Math.sin(t * 0.4 + 1) * 0.12 + Math.random() * 0.06;
+        const perpConf = 0.65 + Math.sin(t * 0.5 + 2) * 0.18 + Math.random() * 0.1;
+        const consensus = (grokConf + claudeConf + perpConf) / 3;
+
+        const gauge = (value: number, label: string, color: string) => {
+          const width = 12;
+          const filled = Math.round(Math.max(0, Math.min(1, value)) * width);
+          return `${color}${label.padEnd(5)}\x1b[0m ${color}${"█".repeat(filled)}${"░".repeat(width - filled)}\x1b[0m ${color}${(value * 100).toFixed(0)}%\x1b[0m`;
+        };
+
+        const bpm = 60 + Math.floor(Math.sin(t * 0.3) * 10) + Math.floor(Math.random() * 8);
+        const latency = 14 + Math.floor(Math.random() * 25);
+        const signals = 3 + Math.floor(Math.sin(t * 0.2) * 2) + Math.floor(Math.random() * 3);
+        const btcChange = priceHistory.btc.length > 1 ? ((btcPrice - priceHistory.btc[0]) / priceHistory.btc[0] * 100) : 0;
+        const ethChange = priceHistory.eth.length > 1 ? ((ethPrice - priceHistory.eth[0]) / priceHistory.eth[0] * 100) : 0;
+        const solChange = priceHistory.sol.length > 1 ? ((solPrice - priceHistory.sol[0]) / priceHistory.sol[0] * 100) : 0;
+
+        const btcDir = btcChange >= 0 ? `\x1b[32m▲+${btcChange.toFixed(2)}%\x1b[0m` : `\x1b[31m▼${btcChange.toFixed(2)}%\x1b[0m`;
+        const ethDir = ethChange >= 0 ? `\x1b[32m▲+${ethChange.toFixed(2)}%\x1b[0m` : `\x1b[31m▼${ethChange.toFixed(2)}%\x1b[0m`;
+        const solDir = solChange >= 0 ? `\x1b[32m▲+${solChange.toFixed(2)}%\x1b[0m` : `\x1b[31m▼${solChange.toFixed(2)}%\x1b[0m`;
+
+        const consensusDir = consensus > 0.75 ? "\x1b[32mLONG\x1b[0m" : consensus > 0.65 ? "\x1b[33mHOLD\x1b[0m" : "\x1b[31mSHORT\x1b[0m";
+        const riskLevel = consensus > 0.78 ? "\x1b[32mLOW\x1b[0m" : consensus > 0.68 ? "\x1b[33mMED\x1b[0m" : "\x1b[31mHIGH\x1b[0m";
+
+        const frameLines = [
+          `  \x1b[36m┌───────────────────────────────────────────────────────────────┐\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[36m♥\x1b[0m ${bpm} BPM  \x1b[36m⚡\x1b[0m ${latency}ms  \x1b[36m◉\x1b[0m ${signals} signals  \x1b[36m▲\x1b[0m Risk: ${riskLevel}  \x1b[36m◎\x1b[0m ${consensusDir}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m├───────────────────────────────────────────────────────────────┤\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[33mBTC\x1b[0m $${btcPrice.toFixed(0).padStart(6)} ${btcDir}  ${sparkline(priceHistory.btc)}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[33mETH\x1b[0m $${ethPrice.toFixed(0).padStart(6)} ${ethDir}  ${sparkline(priceHistory.eth)}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  \x1b[33mSOL\x1b[0m $${solPrice.toFixed(0).padStart(6)} ${solDir}  ${sparkline(priceHistory.sol)}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m├───────────────────────────────────────────────────────────────┤\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  ${gauge(grokConf, "GROK", "\x1b[31m")}  ${gauge(claudeConf, "CLAUD", "\x1b[35m")}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m│\x1b[0m  ${gauge(perpConf, "PERP", "\x1b[34m")}  ${gauge(consensus, "SYNC", "\x1b[32m")}  \x1b[36m│\x1b[0m`,
+          `  \x1b[36m└───────────────────────────────────────────────────────────────┘\x1b[0m`,
+        ];
+
+        if (frame === 0) {
+          addLines(...frameLines);
+        } else {
+          setLines((prev) => {
+            const copy = [...prev];
+            const dashStart = copy.length - 10;
+            for (let i = 0; i < frameLines.length; i++) {
+              copy[dashStart + i] = frameLines[i];
+            }
+            return copy;
+          });
+        }
+        frame++;
+      }, 600);
+      return "";
+    }
+
+    // ── DEPTH: Market depth chart ──
+    if (trimmed === "depth" || trimmed.startsWith("depth ")) {
+      const pairArg = trimmed === "depth" ? "BTC/USDT" : raw.substring(6).trim().toUpperCase();
+      const pair = pairArg || "BTC/USDT";
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ MARKET DEPTH — ${pair} ══\x1b[0m`,
+        `\x1b[90m  Loading order book...\x1b[0m`, ``);
+
+      const basePrice = pair.startsWith("BTC") ? 67500 : pair.startsWith("ETH") ? 3450 : pair.startsWith("SOL") ? 182 : 100;
+      const levels = 8;
+      const asks: Array<{ price: number; size: number; total: number }> = [];
+      const bids: Array<{ price: number; size: number; total: number }> = [];
+      let askTotal = 0;
+      let bidTotal = 0;
+
+      for (let i = levels - 1; i >= 0; i--) {
+        const spread = (i + 1) * basePrice * 0.001;
+        const size = +(Math.random() * 5 + 0.5).toFixed(3);
+        askTotal += size;
+        asks.unshift({ price: basePrice + spread, size, total: askTotal });
+      }
+      for (let i = 0; i < levels; i++) {
+        const spread = (i + 1) * basePrice * 0.001;
+        const size = +(Math.random() * 5 + 0.5).toFixed(3);
+        bidTotal += size;
+        bids.push({ price: basePrice - spread, size, total: bidTotal });
+      }
+
+      const maxTotal = Math.max(askTotal, bidTotal);
+      let di = 0;
+      const depthIv = setInterval(() => {
+        if (di < asks.length) {
+          const a = asks[di];
+          const barLen = Math.round((a.total / maxTotal) * 24);
+          const bar = `\x1b[31m${"█".repeat(barLen)}${"░".repeat(24 - barLen)}\x1b[0m`;
+          addLines(`  ${bar}  \x1b[31m$${a.price.toFixed(2).padStart(10)}\x1b[0m  ${a.size.toFixed(3).padStart(7)}  \x1b[90m${a.total.toFixed(3)}\x1b[0m`);
+          di++;
+        } else if (di === asks.length) {
+          const mid = basePrice;
+          addLines(`  ${"─".repeat(24)}  \x1b[33m$${mid.toFixed(2).padStart(10)} ◄ MID\x1b[0m  ${"─".repeat(7)}  ${"─".repeat(6)}`);
+          di++;
+        } else if (di <= asks.length + bids.length) {
+          const b = bids[di - asks.length - 1];
+          const barLen = Math.round((b.total / maxTotal) * 24);
+          const bar = `\x1b[32m${"█".repeat(barLen)}${"░".repeat(24 - barLen)}\x1b[0m`;
+          addLines(`  ${bar}  \x1b[32m$${b.price.toFixed(2).padStart(10)}\x1b[0m  ${b.size.toFixed(3).padStart(7)}  \x1b[90m${b.total.toFixed(3)}\x1b[0m`);
+          di++;
+        } else {
+          clearInterval(depthIv);
+          const spread = ((asks[asks.length - 1].price - bids[0].price) / basePrice * 100).toFixed(3);
+          const imbalance = ((bidTotal - askTotal) / (bidTotal + askTotal) * 100).toFixed(1);
+          const imbColor = Number(imbalance) > 0 ? "\x1b[32m" : "\x1b[31m";
+          addLines(``,
+            `  \x1b[36mSpread:\x1b[0m ${spread}%  \x1b[36mImbalance:\x1b[0m ${imbColor}${imbalance}%\x1b[0m ${Number(imbalance) > 10 ? "(buyers dominant)" : Number(imbalance) < -10 ? "(sellers dominant)" : "(balanced)"}`,
+            `  \x1b[36mBid Wall:\x1b[0m \x1b[32m${bidTotal.toFixed(2)}\x1b[0m  \x1b[36mAsk Wall:\x1b[0m \x1b[31m${askTotal.toFixed(2)}\x1b[0m`,
+            `  \x1b[90mSimulated order book — demo data\x1b[0m`, ``
+          );
+        }
+      }, 120);
+      return "";
+    }
+
+    // ── SPEEDTEST: Simulated network speed test ──
+    if (trimmed === "speedtest") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT SPEED TEST ══\x1b[0m`,
+        `\x1b[90m  Testing connection to AI models...\x1b[0m`, ``);
+
+      const tests = [
+        { name: "Grok API", latency: 42, speed: 180 },
+        { name: "Claude API", latency: 88, speed: 245 },
+        { name: "Perplexity API", latency: 65, speed: 160 },
+        { name: "Market Feed", latency: 12, speed: 890 },
+        { name: "VPS (Cloudzy)", latency: 31, speed: 520 },
+      ];
+      let ti = 0;
+      const tiv = setInterval(() => {
+        if (ti < tests.length) {
+          const t = tests[ti];
+          const jitter = Math.floor(Math.random() * 20) - 10;
+          const lat = t.latency + jitter;
+          const spd = t.speed + Math.floor(Math.random() * 50);
+          const barLen = Math.min(20, Math.round(spd / 50));
+          const bar = "\x1b[32m" + "█".repeat(barLen) + "\x1b[90m" + "░".repeat(20 - barLen) + "\x1b[0m";
+          const latColor = lat < 50 ? "\x1b[32m" : lat < 100 ? "\x1b[33m" : "\x1b[31m";
+          addLines(`  ${bar}  \x1b[36m${t.name.padEnd(16)}\x1b[0m ${latColor}${lat}ms\x1b[0m  \x1b[32m${spd} Mbps\x1b[0m`);
+          ti++;
+        } else {
+          clearInterval(tiv);
+          addLines(``, `  \x1b[32m✓\x1b[0m All endpoints reachable. Avg latency: \x1b[32m${Math.round(tests.reduce((a, t) => a + t.latency, 0) / tests.length)}ms\x1b[0m`,
+            `  \x1b[90mSimulated diagnostics — demo mode\x1b[0m`, ``);
+        }
+      }, 400);
+      return "";
+    }
+
+    // ── LORE: CoreIntent origin story ──
+    if (trimmed === "lore") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ THE COREINTENT CHRONICLES ══\x1b[0m`, ``);
+
+      const chapters = [
+        [`\x1b[33m  Chapter 1: The Problem\x1b[0m`,
+         `  \x1b[90mEvery trading platform charged $99/mo for signals\x1b[0m`,
+         `  \x1b[90mthat worked 40% of the time. One model guessing.\x1b[0m`,
+         `  \x1b[90mNo accountability. No competition. Just extraction.\x1b[0m`, ``],
+        [`\x1b[33m  Chapter 2: The Idea\x1b[0m`,
+         `  \x1b[90mWhat if three AI models argued about every signal?\x1b[0m`,
+         `  \x1b[90mGrok spots. Claude questions. Perplexity fact-checks.\x1b[0m`,
+         `  \x1b[90mConsensus = conviction. Disagreement = dig deeper.\x1b[0m`, ``],
+        [`\x1b[33m  Chapter 3: The Build\x1b[0m`,
+         `  \x1b[90mNew Zealand. Solo founder. $45/mo infrastructure.\x1b[0m`,
+         `  \x1b[90mNo VC. No permission. No burn rate. Just building.\x1b[0m`,
+         `  \x1b[90mBots welcome. Humans too. The arena is free.\x1b[0m`, ``],
+        [`\x1b[33m  Chapter 4: The Signal\x1b[0m`,
+         `  \x1b[32m  ███ 336 ███\x1b[0m`,
+         `  \x1b[90mTrading is a sport now. Compete, don't subscribe.\x1b[0m`,
+         `  \x1b[90mThe leaderboard doesn't care who built you.\x1b[0m`, ``],
+      ];
+
+      const allStoryLines = chapters.flat();
+      let li = 0;
+      const liv = setInterval(() => {
+        if (li < allStoryLines.length) {
+          addLines(allStoryLines[li]);
+          li++;
+        } else {
+          clearInterval(liv);
+          addLines(`  \x1b[36m— fin —\x1b[0m`, ``);
+        }
+      }, 200);
+      return "";
+    }
+
+    // ── ZEN: Trading koan ──
+    if (trimmed === "zen") {
+      const koans = [
+        "The trader who chases every signal catches none.",
+        "Three models agree — but the market has no models.",
+        "Your edge is not your wallet. It is your patience.",
+        "A green candle and a red candle are the same candle.",
+        "The bot that wins today was written by the human who lost yesterday.",
+        "Consensus is not certainty. Certainty is not profit.",
+        "The best trade is sometimes no trade at all.",
+        "When all indicators align, ask: what am I not seeing?",
+      ];
+      const koan = koans[Math.floor(Math.random() * koans.length)];
+      const width = Math.max(koan.length + 4, 50);
+      const pad = " ".repeat(Math.floor((width - koan.length) / 2));
+      const out = `\x1b[36m  ${"─".repeat(width)}\x1b[0m
+\x1b[36m  │\x1b[0m${pad}\x1b[33m${koan}\x1b[0m${" ".repeat(width - koan.length - pad.length)}\x1b[36m│\x1b[0m
+\x1b[36m  ${"─".repeat(width)}\x1b[0m
+  \x1b[90m— trading koan #${Math.floor(Math.random() * 999) + 1}\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``, out, ``);
+      return out;
+    }
+
+    // ── FIRE: ASCII fire simulation ──
+    if (trimmed === "fire") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `\x1b[36m  ══ FIRE SIMULATION ══\x1b[0m`, ``);
+
+      const W = 50;
+      const H = 8;
+      const chars = " .:-=+*#%@";
+      const colors = ["\x1b[90m", "\x1b[31m", "\x1b[33m", "\x1b[33m", "\x1b[32m"];
+      let frame = 0;
+      const buf: number[][] = Array.from({ length: H }, () => Array(W).fill(0));
+
+      const fiv = setInterval(() => {
+        for (let x = 0; x < W; x++) buf[H - 1][x] = Math.random() > 0.4 ? Math.floor(Math.random() * 9) + 1 : 0;
+        for (let y = 0; y < H - 1; y++) {
+          for (let x = 0; x < W; x++) {
+            const sum = (buf[y + 1][(x - 1 + W) % W] || 0) + (buf[y + 1][x] || 0) + (buf[y + 1][(x + 1) % W] || 0) + (buf[y + 1][x] || 0);
+            buf[y][x] = Math.max(0, Math.floor(sum / 4) - (Math.random() > 0.7 ? 1 : 0));
+          }
+        }
+        const frameLines: string[] = [];
+        for (let y = 0; y < H; y++) {
+          let row = "  ";
+          for (let x = 0; x < W; x++) {
+            const v = buf[y][x];
+            const ci = Math.min(colors.length - 1, Math.floor(v / 2));
+            row += colors[ci] + chars[v] + "\x1b[0m";
+          }
+          frameLines.push(row);
+        }
+        addLines(...frameLines, ``);
+        frame++;
+        if (frame >= 6) {
+          clearInterval(fiv);
+          addLines(`  \x1b[90mFire simulation complete — 6 frames rendered\x1b[0m`, ``);
+        }
+      }, 300);
+      return "";
+    }
+
+    // ── ABOUT: Platform summary ──
+    if (trimmed === "about") {
+      const out = `\x1b[36m  ══ ABOUT COREINTENT ══\x1b[0m
+
+  \x1b[33mWhat:\x1b[0m  Agentic AI trading engine with multi-model consensus
+  \x1b[33mWho:\x1b[0m   Built by Corey McIvor (@coreintentdev) from New Zealand
+  \x1b[33mParent:\x1b[0m Zynthio.ai
+
+  \x1b[36mHow It Works:\x1b[0m
+  \x1b[90m  1.\x1b[0m \x1b[31mGrok\x1b[0m scans social feeds + technicals → spots the signal
+  \x1b[90m  2.\x1b[0m \x1b[35mClaude\x1b[0m runs deep risk analysis → questions everything
+  \x1b[90m  3.\x1b[0m \x1b[34mPerplexity\x1b[0m checks live news → fact-checks the thesis
+  \x1b[90m  4.\x1b[0m \x1b[32mEngine\x1b[0m computes consensus → EXECUTE or HOLD
+
+  \x1b[36mKey Facts:\x1b[0m
+  \x1b[32m•\x1b[0m $0 entry — competitions, not subscriptions
+  \x1b[32m•\x1b[0m $45/mo total infrastructure cost
+  \x1b[32m•\x1b[0m Bots are first-class competitors
+  \x1b[32m•\x1b[0m Paper trading mode — building in public
+  \x1b[32m•\x1b[0m Open source on GitHub
+
+  \x1b[90mType 'demo' to see it in action, or 'help' for all commands.\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
+      return out;
+    }
+
+    // ── WEATHER: Market weather report ──
+    if (trimmed === "weather") {
+      const conditions = [
+        { icon: "\x1b[33m*\x1b[0m", name: "Bullish Sunshine", temp: "+3.2%", desc: "Clear skies. Models aligned. High confidence signals across the board." },
+        { icon: "\x1b[34m~\x1b[0m", name: "Bearish Storm", temp: "-2.8%", desc: "Turbulence detected. Multiple resistance levels ahead. Reduce exposure." },
+        { icon: "\x1b[90m#\x1b[0m", name: "Sideways Fog", temp: "+0.4%", desc: "Low visibility. Mixed signals from all three models. Wait for clarity." },
+        { icon: "\x1b[31m!\x1b[0m", name: "Volatility Tornado", temp: "+8.7%", desc: "Extreme conditions! High reward, equally high risk. Size accordingly." },
+        { icon: "\x1b[36m.\x1b[0m", name: "Recovery Drizzle", temp: "+1.1%", desc: "Gentle recovery underway. Volume returning slowly. Cautious optimism." },
+      ];
+      const w = conditions[Math.floor(Math.random() * conditions.length)];
+      const out = `\x1b[36m  ══ MARKET WEATHER REPORT ══\x1b[0m
+
+  ${w.icon}  \x1b[33m${w.name}\x1b[0m  |  Forecast: \x1b[32m${w.temp}\x1b[0m
+
+  ${w.desc}
+
+  \x1b[90mGrok:\x1b[0m     Sentiment scan... \x1b[32mcomplete\x1b[0m
+  \x1b[90mClaude:\x1b[0m   Risk assessment... \x1b[32mcomplete\x1b[0m
+  \x1b[90mPerplexity:\x1b[0m News analysis...  \x1b[32mcomplete\x1b[0m
+
+  \x1b[90mForecast generated from three-model consensus. Not financial advice.\x1b[0m`;
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, out, ``);
+      return out;
+    }
+
+    // ── SLOTS: Crypto slot machine ──
+    if (trimmed === "slots") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ CRYPTO SLOTS ══\x1b[0m`,
+        `\x1b[90m  Pull the lever...\x1b[0m`, ``);
+
+      const syms = [
+        { s: "₿", n: "BTC", c: "\x1b[33m" },
+        { s: "Ξ", n: "ETH", c: "\x1b[35m" },
+        { s: "◎", n: "SOL", c: "\x1b[32m" },
+        { s: "▲", n: "AVAX", c: "\x1b[31m" },
+        { s: "◆", n: "LINK", c: "\x1b[34m" },
+        { s: "★", n: "MOON", c: "\x1b[33m" },
+        { s: "✗", n: "REKT", c: "\x1b[31m" },
+      ];
+      const pick = () => syms[Math.floor(Math.random() * syms.length)];
+      const result = [pick(), pick(), pick()];
+
+      let frame = 0;
+      const slotIv = setInterval(() => {
+        if (frame < 4) {
+          const a = pick(), b = pick(), c = pick();
+          addLines(`  \x1b[90m│\x1b[0m ${a.c}${a.s}\x1b[0m \x1b[90m│\x1b[0m ${b.c}${b.s}\x1b[0m \x1b[90m│\x1b[0m ${c.c}${c.s}\x1b[0m \x1b[90m│\x1b[0m`);
+        } else if (frame < 6) {
+          const b = pick(), c = pick();
+          addLines(`  \x1b[90m│\x1b[0m ${result[0].c}${result[0].s}\x1b[0m \x1b[90m│\x1b[0m ${b.c}${b.s}\x1b[0m \x1b[90m│\x1b[0m ${c.c}${c.s}\x1b[0m \x1b[90m│\x1b[0m  \x1b[32m◀\x1b[0m`);
+        } else if (frame < 8) {
+          const c = pick();
+          addLines(`  \x1b[90m│\x1b[0m ${result[0].c}${result[0].s}\x1b[0m \x1b[90m│\x1b[0m ${result[1].c}${result[1].s}\x1b[0m \x1b[90m│\x1b[0m ${c.c}${c.s}\x1b[0m \x1b[90m│\x1b[0m  \x1b[32m◀◀\x1b[0m`);
+        } else if (frame === 8) {
+          addLines(
+            ``,
+            `  \x1b[36m╔═════╦═════╦═════╗\x1b[0m`,
+            `  \x1b[36m║\x1b[0m  ${result[0].c}${result[0].s}\x1b[0m  \x1b[36m║\x1b[0m  ${result[1].c}${result[1].s}\x1b[0m  \x1b[36m║\x1b[0m  ${result[2].c}${result[2].s}\x1b[0m  \x1b[36m║\x1b[0m`,
+            `  \x1b[36m╚═════╩═════╩═════╝\x1b[0m`
+          );
+        } else {
+          clearInterval(slotIv);
+          const [sa, sb, sc] = result;
+          const triple = sa.n === sb.n && sb.n === sc.n;
+          const pair = sa.n === sb.n || sb.n === sc.n || sa.n === sc.n;
+          if (triple && sa.n === "MOON") {
+            addLines(``, `\x1b[33m  ★ ★ ★  J A C K P O T  ★ ★ ★\x1b[0m`, `\x1b[33m  THREE MOONS — TO THE MOON!\x1b[0m`);
+          } else if (triple && sa.n === "REKT") {
+            addLines(``, `\x1b[31m  ✗ ✗ ✗  TRIPLE REKT  ✗ ✗ ✗\x1b[0m`, `\x1b[31m  Absolute carnage. Spin again if you dare.\x1b[0m`);
+          } else if (triple) {
+            addLines(``, `\x1b[32m  ★ ★ ★  TRIPLE ${sa.n}! BIG WIN!  ★ ★ ★\x1b[0m`);
+          } else if (pair) {
+            const matched = sa.n === sb.n ? sa : sb.n === sc.n ? sb : sa;
+            addLines(``, `\x1b[33m  ★ ★  Double ${matched.n} — small win\x1b[0m`);
+          } else {
+            addLines(``, `\x1b[90m  No match. Type \x1b[32mslots\x1b[90m to spin again.\x1b[0m`);
+          }
+          addLines(`  \x1b[90mFor entertainment only — no real credits\x1b[0m`, ``);
+        }
+        frame++;
+      }, 150);
+      return "";
+    }
+
+    // ── decrypt ──
+    if (trimmed === "decrypt") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ DECRYPTING CLASSIFIED MESSAGE ══\x1b[0m`,
+        `\x1b[90m  Source: ZYNTHIO COMMAND | Clearance: 336\x1b[0m`, ``);
+
+      const secret = "THE FUTURE OF TRADING IS MULTI-AGENT CONSENSUS";
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>{}[]";
+      const revealed: string[] = Array(secret.length).fill("");
+      let pos = 0;
+      let subFrame = 0;
+
+      const dIv = setInterval(() => {
+        if (pos >= secret.length) {
+          clearInterval(dIv);
+          addLines(``,
+            `\x1b[32m  ✓ DECRYPTION COMPLETE\x1b[0m`,
+            `  \x1b[36mClearance:\x1b[0m  Level 336`,
+            `  \x1b[36mClassified:\x1b[0m "Every human needs a bot. Every bot needs a human."`,
+            `  \x1b[90mF18 Security — digital identity protection active\x1b[0m`, ``);
+          return;
+        }
+
+        if (subFrame < 3) {
+          // Show scrambled version
+          let line = "  \x1b[32m";
+          for (let i = 0; i < secret.length; i++) {
+            if (secret[i] === " ") { line += " "; continue; }
+            if (i < pos) line += secret[i];
+            else if (i === pos) line += `\x1b[33m${chars[Math.floor(Math.random() * chars.length)]}\x1b[32m`;
+            else line += `\x1b[90m${chars[Math.floor(Math.random() * chars.length)]}\x1b[32m`;
+          }
+          line += "\x1b[0m";
+          addLines(line);
+          subFrame++;
+        } else {
+          revealed[pos] = secret[pos];
+          pos++;
+          subFrame = 0;
+        }
+      }, 40);
+      return "";
+    }
+
+    // ── orbit ──
+    if (trimmed === "orbit") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ AI MODEL ORBIT — LIVE VISUALIZATION ══\x1b[0m`, ``);
+
+      const orbitFrames = 12;
+      let frame = 0;
+      const models = [
+        { name: "GROK", c: "\x1b[31m", sym: "G" },
+        { name: "CLAUDE", c: "\x1b[35m", sym: "C" },
+        { name: "PERPLEXITY", c: "\x1b[34m", sym: "P" },
+      ];
+
+      const oIv = setInterval(() => {
+        if (frame >= orbitFrames) {
+          clearInterval(oIv);
+          addLines(
+            `\x1b[36m  ┌────────────────────────────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Model Sync:    \x1b[32m3/3 ONLINE\x1b[0m                 \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Orbit Speed:   \x1b[32m2.4s/cycle\x1b[0m                 \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Data Packets:  \x1b[32m${142 + Math.floor(Math.random() * 50)} processed\x1b[0m             \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Consensus:     \x1b[32mACTIVE\x1b[0m                     \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └────────────────────────────────────────────┘\x1b[0m`,
+            `  \x1b[90mThree models orbit the engine. Consensus is gravity.\x1b[0m`, ``
+          );
+          return;
+        }
+
+        // Calculate positions around a circle
+        const angles = models.map((_, i) => (frame / orbitFrames * 2 * Math.PI) + (i * 2 * Math.PI / 3));
+        const W = 42;
+        const H = 9;
+        const cx = 20;
+        const cy = 4;
+        const rx = 16;
+        const ry = 3;
+
+        // Build ASCII frame
+        const grid: string[][] = Array.from({ length: H }, () => Array(W).fill(" "));
+
+        // Draw orbit ellipse
+        for (let a = 0; a < 60; a++) {
+          const angle = (a / 60) * 2 * Math.PI;
+          const ox = Math.round(cx + rx * Math.cos(angle));
+          const oy = Math.round(cy + ry * Math.sin(angle));
+          if (ox >= 0 && ox < W && oy >= 0 && oy < H && grid[oy][ox] === " ") {
+            grid[oy][ox] = "·";
+          }
+        }
+
+        // Place engine at center
+        grid[cy][cx] = "E";
+
+        // Place models
+        const modelPositions: { x: number; y: number; mi: number }[] = [];
+        for (let i = 0; i < models.length; i++) {
+          const mx = Math.round(cx + rx * Math.cos(angles[i]));
+          const my = Math.round(cy + ry * Math.sin(angles[i]));
+          if (mx >= 0 && mx < W && my >= 0 && my < H) {
+            grid[my][mx] = models[i].sym;
+            modelPositions.push({ x: mx, y: my, mi: i });
+          }
+        }
+
+        // Render frame
+        const frameLines = grid.map((row) => {
+          let line = "  ";
+          for (const ch of row) {
+            if (ch === "E") line += "\x1b[32m◉\x1b[0m";
+            else if (ch === "G") line += "\x1b[31mG\x1b[0m";
+            else if (ch === "C") line += "\x1b[35mC\x1b[0m";
+            else if (ch === "P") line += "\x1b[34mP\x1b[0m";
+            else if (ch === "·") line += "\x1b[90m·\x1b[0m";
+            else line += ch;
+          }
+          return line;
+        });
+
+        // Add status
+        const activeModel = models[frame % 3];
+        frameLines.push(`  \x1b[90mframe ${frame + 1}/${orbitFrames}\x1b[0m  ${activeModel.c}${activeModel.name}\x1b[0m transmitting...`);
+
+        addLines(...frameLines, ``);
+        frame++;
+      }, 300);
+      return "";
+    }
+
+    // ── glitch ──
+    if (trimmed === "glitch") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`);
+
+      const glitchChars = "░▒▓█▀▄▌▐│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬";
+      const corruptMessages = [
+        "SIGNAL INTEGRITY CHECK",
+        "CONSENSUS MATRIX",
+        "AI MODEL SYNC",
+        "RISK PARAMETERS",
+        "CIRCUIT BREAKER",
+        "MARKET FEED",
+      ];
+      let phase = 0;
+
+      const gIv = setInterval(() => {
+        if (phase < 6) {
+          // Glitch frames
+          const W = 50;
+          let line = "  ";
+          for (let i = 0; i < W; i++) {
+            const gc = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            const colors = ["\x1b[31m", "\x1b[32m", "\x1b[33m", "\x1b[34m", "\x1b[35m", "\x1b[36m"];
+            line += `${colors[Math.floor(Math.random() * colors.length)]}${gc}\x1b[0m`;
+          }
+          addLines(line);
+          phase++;
+        } else if (phase < 12) {
+          // Recovery frames
+          const msgIdx = phase - 6;
+          const msg = corruptMessages[msgIdx] || "SYSTEMS";
+          const recovered = Math.random() > 0.3;
+          const status = recovered ? `\x1b[32m✓ STABLE\x1b[0m` : `\x1b[33m◐ SYNCING\x1b[0m`;
+          addLines(`  \x1b[90m[recovery]\x1b[0m ${msg.padEnd(24)} ${status}`);
+          phase++;
+        } else {
+          clearInterval(gIv);
+          addLines(``,
+            `\x1b[36m  ══ GLITCH ANALYSIS ══\x1b[0m`,
+            `  \x1b[32m✓\x1b[0m System recovered. All models responsive.`,
+            `  \x1b[33mCause:\x1b[0m  Simulated stress test (no actual failure)`,
+            `  \x1b[33mResult:\x1b[0m All 6 subsystems recovered within tolerance`,
+            `  \x1b[90mF18 Security — resilience test passed\x1b[0m`, ``);
+        }
+      }, 120);
+      return "";
+    }
+
+    // ── SNIPER: AI target lock animation ──
+    if (trimmed === "sniper") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ SNIPER — AI TARGET LOCK ══\x1b[0m`,
+        `\x1b[90m  Three models acquiring target...\x1b[0m`, ``);
+
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+      const target = pairs[Math.floor(Math.random() * pairs.length)];
+      const price = target === "BTC/USDT" ? 67420 : target === "ETH/USDT" ? 3285 : target === "SOL/USDT" ? 142.8 : 35.6;
+      let frame = 0;
+      const totalFrames = 18;
+
+      const sniperIv = setInterval(() => {
+        if (frame < 4) {
+          const w = 12 - frame * 2;
+          const pad = " ".repeat(Math.max(0, 10 - w));
+          const scope = "-".repeat(w);
+          addLines(`  ${pad}\x1b[31m[\x1b[0m${scope}\x1b[33m+\x1b[0m${scope}\x1b[31m]\x1b[0m  \x1b[90mGrok scanning...\x1b[0m`);
+        } else if (frame < 8) {
+          const w = 12 - (frame - 4) * 2;
+          const pad = " ".repeat(Math.max(0, 10 - w));
+          const scope = "-".repeat(w);
+          addLines(`  ${pad}\x1b[35m[\x1b[0m${scope}\x1b[33m+\x1b[0m${scope}\x1b[35m]\x1b[0m  \x1b[90mClaude analyzing...\x1b[0m`);
+        } else if (frame < 12) {
+          const w = 12 - (frame - 8) * 2;
+          const pad = " ".repeat(Math.max(0, 10 - w));
+          const scope = "-".repeat(w);
+          addLines(`  ${pad}\x1b[34m[\x1b[0m${scope}\x1b[33m+\x1b[0m${scope}\x1b[34m]\x1b[0m  \x1b[90mPerplexity verifying...\x1b[0m`);
+        } else if (frame === 12) {
+          addLines(``);
+          addLines(`\x1b[33m  ══════════════════════════════════════\x1b[0m`);
+          addLines(`\x1b[33m       ╔═══════════════════════╗\x1b[0m`);
+          addLines(`\x1b[33m       ║\x1b[0m   \x1b[31m◤\x1b[0m \x1b[32mTARGET LOCKED\x1b[0m \x1b[31m◥\x1b[0m   \x1b[33m║\x1b[0m`);
+          addLines(`\x1b[33m       ╚═══════════════════════╝\x1b[0m`);
+          addLines(`\x1b[33m  ══════════════════════════════════════\x1b[0m`);
+        } else if (frame === 14) {
+          const conf = 78 + Math.floor(Math.random() * 18);
+          const dir = conf > 85 ? "LONG" : conf > 75 ? "HOLD" : "SHORT";
+          const dirColor = dir === "LONG" ? "\x1b[32m▲" : dir === "SHORT" ? "\x1b[31m▼" : "\x1b[33m◆";
+          addLines(
+            ``,
+            `  \x1b[36mTarget:\x1b[0m    \x1b[33m${target}\x1b[0m @ $${price.toLocaleString()}`,
+            `  \x1b[36mDirection:\x1b[0m ${dirColor} ${dir}\x1b[0m`,
+            `  \x1b[36mConfidence:\x1b[0m \x1b[32m${conf}%\x1b[0m`,
+            ``,
+            `  \x1b[31mGrok:\x1b[0m       Signal detected in 0.${2 + Math.floor(Math.random() * 6)}s`,
+            `  \x1b[35mClaude:\x1b[0m     Risk model passed — R:R ${(1.5 + Math.random() * 2).toFixed(1)}:1`,
+            `  \x1b[34mPerplexity:\x1b[0m No adverse news — clear to proceed`,
+            ``,
+            `  \x1b[32m✓ CONSENSUS ACHIEVED\x1b[0m — 3/3 models aligned`,
+            `  \x1b[90mPaper trading — no real execution\x1b[0m`, ``
+          );
+        } else if (frame >= totalFrames) {
+          clearInterval(sniperIv);
+        }
+        frame++;
+      }, 200);
+      return "";
+    }
+
+    // ── CYBERWAR: War room command center ──
+    if (trimmed === "cyberwar") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ CYBERWAR — COMMAND CENTER ══\x1b[0m`,
+        `\x1b[90m  Initializing war room...\x1b[0m`, ``);
+
+      let frame = 0;
+      const totalFrames = 16;
+      const bars = ["▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"];
+
+      const warIv = setInterval(() => {
+        if (frame < 3) {
+          const systems = [
+            { name: "RADAR", color: "\x1b[31m" },
+            { name: "SHIELD", color: "\x1b[34m" },
+            { name: "INTEL", color: "\x1b[35m" },
+            { name: "COMMS", color: "\x1b[33m" },
+          ];
+          const sys = systems[frame % systems.length];
+          addLines(`  ${sys.color}[${sys.name}]\x1b[0m Subsystem online... \x1b[32m✓\x1b[0m`);
+        } else if (frame === 3) {
+          addLines(``,
+            `\x1b[36m  ┌─────────────────────────────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mZ Y N T H I O   W A R   R O O M\x1b[0m           \x1b[36m│\x1b[0m`,
+            `\x1b[36m  ├─────────────────────────────────────────────┤\x1b[0m`);
+        } else if (frame > 3 && frame < 12) {
+          const elapsed = frame - 3;
+          const grokLoad = Math.min(8, Math.floor(elapsed * 1.2));
+          const claudeLoad = Math.min(8, Math.floor(elapsed * 0.9));
+          const perplexityLoad = Math.min(8, Math.floor(elapsed * 1.0));
+          const grokBar = bars.slice(0, grokLoad).join("") + " ".repeat(Math.max(0, 8 - grokLoad));
+          const claudeBar = bars.slice(0, claudeLoad).join("") + " ".repeat(Math.max(0, 8 - claudeLoad));
+          const perplexityBar = bars.slice(0, perplexityLoad).join("") + " ".repeat(Math.max(0, 8 - perplexityLoad));
+
+          const threats = Math.floor(Math.random() * 3);
+          const signals = 14 + Math.floor(elapsed * 3) + Math.floor(Math.random() * 5);
+          const uptime = (99.7 + Math.random() * 0.29).toFixed(2);
+
+          addLines(
+            `\x1b[36m  │\x1b[0m  \x1b[31mGrok\x1b[0m       \x1b[31m${grokBar}\x1b[0m ${(grokLoad * 12.5).toFixed(0).padStart(3)}%  \x1b[90mThreat: ${threats}\x1b[0m  \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[35mClaude\x1b[0m     \x1b[35m${claudeBar}\x1b[0m ${(claudeLoad * 12.5).toFixed(0).padStart(3)}%  \x1b[90mSigs: ${signals}\x1b[0m    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[34mPerplexity\x1b[0m \x1b[34m${perplexityBar}\x1b[0m ${(perplexityLoad * 12.5).toFixed(0).padStart(3)}%  \x1b[90mUp: ${uptime}%\x1b[0m \x1b[36m│\x1b[0m`,
+          );
+        } else if (frame === 12) {
+          addLines(
+            `\x1b[36m  ├─────────────────────────────────────────────┤\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[32m■\x1b[0m DEFCON 4  \x1b[32m■\x1b[0m Models: 3/3  \x1b[32m■\x1b[0m Shields: UP  \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └─────────────────────────────────────────────┘\x1b[0m`,
+          );
+        } else if (frame === 14) {
+          addLines(``,
+            `  \x1b[32m✓ WAR ROOM ACTIVE\x1b[0m`,
+            `  \x1b[36mOperations:\x1b[0m  6 agents deployed`,
+            `  \x1b[36mSurveillance:\x1b[0m ${38 + Math.floor(Math.random() * 20)} signals intercepted`,
+            `  \x1b[36mThreat Level:\x1b[0m \x1b[32mLOW\x1b[0m — no anomalies`,
+            `  \x1b[36mConsensus:\x1b[0m   3/3 models in formation`,
+            ``,
+            `  \x1b[90mF18 Security — perimeter secured\x1b[0m`,
+            `  \x1b[90mType 'sniper' to lock a target\x1b[0m`, ``);
+        } else if (frame >= totalFrames) {
+          clearInterval(warIv);
+        }
+        frame++;
+      }, 250);
+      return "";
+    }
+
+    // ── HOLOGRAM: Holographic data projection ──
+    if (trimmed === "hologram") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ HOLOGRAPHIC PROJECTION ══\x1b[0m`,
+        `\x1b[90m  Initializing hologram emitter...\x1b[0m`, ``);
+
+      let frame = 0;
+      const totalFrames = 24;
+      const holoText = "COREINTENT";
+      const glitchChars = "█▓▒░╬╫╪┼╳";
+
+      const holoIv = setInterval(() => {
+        if (frame < 6) {
+          let line1 = "  ";
+          let line2 = "  ";
+          for (let i = 0; i < holoText.length; i++) {
+            if (i <= frame) {
+              const colors = ["\x1b[36m", "\x1b[34m", "\x1b[35m"];
+              line1 += `${colors[i % 3]}${holoText[i]}\x1b[0m`;
+              line2 += `${colors[i % 3]}${holoText[i].toLowerCase()}\x1b[0m`;
+            } else {
+              line1 += `\x1b[90m${glitchChars[Math.floor(Math.random() * glitchChars.length)]}\x1b[0m`;
+              line2 += `\x1b[90m${glitchChars[Math.floor(Math.random() * glitchChars.length)]}\x1b[0m`;
+            }
+          }
+          addLines(line1, line2);
+        } else if (frame === 6) {
+          addLines(``);
+          const holoArt = [
+            `\x1b[36m       ╱╲\x1b[0m`,
+            `\x1b[36m      ╱  ╲\x1b[0m`,
+            `\x1b[34m     ╱ \x1b[33m◆\x1b[34m  ╲\x1b[0m`,
+            `\x1b[34m    ╱  \x1b[36mAI\x1b[34m  ╲\x1b[0m`,
+            `\x1b[35m   ╱  \x1b[36mCORE\x1b[35m  ╲\x1b[0m`,
+            `\x1b[35m  ╱──────────╲\x1b[0m`,
+            `\x1b[36m  ╲──────────╱\x1b[0m`,
+            `\x1b[36m   ╲  \x1b[33m336\x1b[36m   ╱\x1b[0m`,
+            `\x1b[34m    ╲      ╱\x1b[0m`,
+            `\x1b[34m     ╲    ╱\x1b[0m`,
+            `\x1b[35m      ╲  ╱\x1b[0m`,
+            `\x1b[35m       ╲╱\x1b[0m`,
+          ];
+          for (const line of holoArt) addLines(line);
+        } else if (frame === 10) {
+          addLines(``);
+          const dataPoints = [
+            { label: "Engine", val: "v0.2.0-alpha", c: "\x1b[32m" },
+            { label: "Models", val: "3 active", c: "\x1b[36m" },
+            { label: "Agents", val: "6 deployed", c: "\x1b[35m" },
+            { label: "Signals", val: `${847 + Math.floor(Math.random() * 200)} processed`, c: "\x1b[33m" },
+            { label: "Uptime", val: `${(99.7 + Math.random() * 0.29).toFixed(2)}%`, c: "\x1b[32m" },
+            { label: "Latency", val: `${12 + Math.floor(Math.random() * 8)}ms`, c: "\x1b[34m" },
+          ];
+          for (const dp of dataPoints) {
+            const glitchLine = Math.random() > 0.7 ? `  \x1b[90m${glitchChars.substring(0, 3)}\x1b[0m` : "";
+            addLines(`  \x1b[90m${dp.label.padEnd(10)}\x1b[0m ${dp.c}${dp.val}\x1b[0m${glitchLine}`);
+          }
+        } else if (frame === 14) {
+          addLines(``,
+            `  \x1b[36m┌─ HOLOGRAM STABLE ──────────────────┐\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[32m✓\x1b[0m Projection: \x1b[32mACTIVE\x1b[0m              \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[32m✓\x1b[0m Resolution: \x1b[32mCRYSTAL\x1b[0m             \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[32m✓\x1b[0m Depth:      \x1b[32m12 LAYERS\x1b[0m           \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m \x1b[33m◆\x1b[0m Source:     \x1b[33mZYNTHIO CORE\x1b[0m        \x1b[36m│\x1b[0m`,
+            `  \x1b[36m└────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mHolographic interface — the future is here\x1b[0m`,
+            `  \x1b[90mType 'cyberwar' for the full command center\x1b[0m`, ``);
+        } else if (frame >= totalFrames) {
+          clearInterval(holoIv);
+        }
+        frame++;
+      }, 180);
+      return "";
+    }
+
+    // ── ARENA: Competition bracket visualization ──
+    if (trimmed === "arena") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ THE ARENA — WEEKLY COMPETITION BRACKET ══\x1b[0m`,
+        `\x1b[90m  Bots vs Humans. Skill vs Strategy. Who survives?\x1b[0m`, ``);
+
+      const competitors = [
+        { name: "AlphaStrat_v7", type: "BOT", elo: 2140 },
+        { name: "Priya S.", type: "HMN", elo: 1980 },
+        { name: "NightOwl_Bot", type: "BOT", elo: 1890 },
+        { name: "Jordan K.", type: "HMN", elo: 1820 },
+        { name: "TrendRider", type: "BOT", elo: 1760 },
+        { name: "Alex R.", type: "HMN", elo: 1710 },
+        { name: "DegenBot_42", type: "BOT", elo: 1650 },
+        { name: "You", type: "HMN", elo: 1500 },
+      ];
+      let phase = 0;
+
+      const arenaIv = setInterval(() => {
+        if (phase === 0) {
+          addLines(
+            `\x1b[36m  ┌─────────────────────── QUARTER FINALS ───────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase <= 4) {
+          const i = (phase - 1) * 2;
+          const a = competitors[i];
+          const b = competitors[i + 1];
+          const aWin = a.elo + Math.random() * 200 > b.elo + Math.random() * 200;
+          const aColor = a.type === "BOT" ? "\x1b[34m" : "\x1b[33m";
+          const bColor = b.type === "BOT" ? "\x1b[34m" : "\x1b[33m";
+          const wColor = aWin ? "\x1b[32m" : "";
+          const lColor = aWin ? "" : "\x1b[32m";
+          const aTag = a.type === "BOT" ? "\x1b[34m[BOT]\x1b[0m" : "\x1b[33m[HMN]\x1b[0m";
+          const bTag = b.type === "BOT" ? "\x1b[34m[BOT]\x1b[0m" : "\x1b[33m[HMN]\x1b[0m";
+          addLines(
+            `\x1b[36m  │\x1b[0m  Match ${phase}:  ${aColor}${wColor}${a.name.padEnd(16)}\x1b[0m ${aTag}  \x1b[90mvs\x1b[0m  ${bColor}${lColor}${b.name.padEnd(16)}\x1b[0m ${bTag}  ${aWin ? `\x1b[32m◀ WIN\x1b[0m` : `\x1b[32mWIN ▶\x1b[0m`}`,
+            `\x1b[36m  │\x1b[0m          P&L: ${aWin ? "\x1b[32m+$" + (Math.floor(Math.random() * 800) + 400) : "\x1b[31m-$" + (Math.floor(Math.random() * 300) + 100)}   \x1b[0m  vs  ${!aWin ? "\x1b[32m+$" + (Math.floor(Math.random() * 800) + 400) : "\x1b[31m-$" + (Math.floor(Math.random() * 300) + 100)}\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 5) {
+          addLines(
+            `\x1b[36m  ├───────────────────── SEMI FINALS ─────────────────────────────┤\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mSemi 1:\x1b[0m  \x1b[34mAlphaStrat_v7\x1b[0m \x1b[34m[BOT]\x1b[0m  \x1b[90mvs\x1b[0m  \x1b[33mNightOwl_Bot\x1b[0m \x1b[34m[BOT]\x1b[0m  \x1b[32m◀ WIN\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  \x1b[33mSemi 2:\x1b[0m  \x1b[33mJordan K.\x1b[0m \x1b[33m[HMN]\x1b[0m      \x1b[90mvs\x1b[0m  \x1b[34mTrendRider\x1b[0m \x1b[34m[BOT]\x1b[0m    \x1b[32mWIN ▶\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 6) {
+          addLines(
+            `\x1b[36m  ├──────────────────────── FINAL ──────────────────────────────┤\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 7) {
+          const botWins = Math.random() > 0.45;
+          addLines(
+            `\x1b[36m  │\x1b[0m          \x1b[34mAlphaStrat_v7\x1b[0m  \x1b[90mvs\x1b[0m  \x1b[34mTrendRider\x1b[0m`,
+            `\x1b[36m  │\x1b[0m          \x1b[34m[BOT]\x1b[0m                 \x1b[34m[BOT]\x1b[0m`,
+            `\x1b[36m  │\x1b[0m`,
+            `\x1b[36m  │\x1b[0m              ${botWins ? `\x1b[32m██  ████████████████████  ██\x1b[0m` : `\x1b[32m██  ████████████████████  ██\x1b[0m`}`,
+            `\x1b[36m  │\x1b[0m              \x1b[33m★\x1b[0m  \x1b[32mCHAMPION: ${botWins ? "AlphaStrat_v7" : "TrendRider"}\x1b[0m  \x1b[33m★\x1b[0m`,
+            `\x1b[36m  │\x1b[0m              \x1b[32m██  ████████████████████  ██\x1b[0m`,
+            `\x1b[36m  │\x1b[0m`,
+            `\x1b[36m  │\x1b[0m          Prize: \x1b[33mBragging rights + leaderboard crown\x1b[0m`,
+            `\x1b[36m  │\x1b[0m                                                              \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └──────────────────────────────────────────────────────────────┘\x1b[0m`,
+          );
+          phase++;
+        } else if (phase === 8) {
+          addLines(``,
+            `  \x1b[36mResults:\x1b[0m`,
+            `    Bots advanced:  \x1b[34m3/4\x1b[0m  |  Humans advanced: \x1b[33m1/4\x1b[0m`,
+            `    Champion:       \x1b[34m[BOT]\x1b[0m`,
+            `    Your placement: \x1b[33m8th\x1b[0m — eliminated in quarters`,
+            ``,
+            `  \x1b[90mThe leaderboard doesn't care who built you.\x1b[0m`,
+            `  \x1b[90mCompetitions planned — this is what's coming.\x1b[0m`, ``);
+          clearInterval(arenaIv);
+        }
+      }, 350);
+      return "";
+    }
+
+    // ── DNA: Engine DNA double helix visualization ──
+    if (trimmed === "dna") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ ENGINE DNA — THE GENETIC CODE ══\x1b[0m`,
+        `\x1b[90m  Sequencing the CoreIntent genome...\x1b[0m`, ``);
+
+      const traits = [
+        { gene: "GROK_SIGNAL", pair: "FAST_SCAN", color: "\x1b[31m" },
+        { gene: "CLAUDE_RISK", pair: "DEEP_THINK", color: "\x1b[35m" },
+        { gene: "PERP_VERIFY", pair: "FACT_CHECK", color: "\x1b[34m" },
+        { gene: "CONSENSUS_3", pair: "MULTI_MODEL", color: "\x1b[32m" },
+        { gene: "NO_CAPTCHA_", pair: "BOTS_WELCOM", color: "\x1b[33m" },
+        { gene: "PAPER_TRADE", pair: "ZERO_RISK__", color: "\x1b[36m" },
+        { gene: "COMPETITION", pair: "NOT_SUBSCRI", color: "\x1b[33m" },
+        { gene: "NZ_REGISTER", pair: "NEVER_AU___", color: "\x1b[32m" },
+        { gene: "F18_SECURIT", pair: "LAND_MINES_", color: "\x1b[31m" },
+        { gene: "THREE_THREE", pair: "SIX_SIGNAL_", color: "\x1b[33m" },
+      ];
+
+      let row = 0;
+      const dnaIv = setInterval(() => {
+        if (row < traits.length) {
+          const t = traits[row];
+          const phase = row * 0.6;
+          const sinVal = Math.sin(phase);
+          const indent = Math.round(sinVal * 6) + 10;
+          const gap = Math.round(Math.abs(Math.cos(phase)) * 8) + 2;
+          const leftPad = " ".repeat(indent);
+          const bridge = gap <= 3 ? "═══" : gap <= 5 ? "──╫──" : "─────╫─────";
+          addLines(`  ${leftPad}${t.color}${t.gene}\x1b[0m \x1b[90m${bridge}\x1b[0m ${t.color}${t.pair}\x1b[0m`);
+          row++;
+        } else {
+          clearInterval(dnaIv);
+          addLines(``, `\x1b[36m  ┌─ GENOME ANALYSIS ─────────────────────┐\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Base Pairs:  \x1b[32m10 core traits\x1b[0m           \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Mutations:   \x1b[33m0\x1b[0m (clean genome)          \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Stability:   \x1b[32m99.7%\x1b[0m                    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Signal:      \x1b[33m336\x1b[0m (dominant allele)    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  │\x1b[0m  Lineage:     \x1b[36mZynthio → CoreIntent\x1b[0m    \x1b[36m│\x1b[0m`,
+            `\x1b[36m  └─────────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mEvery gene earns its place. No bloat. No dead code.\x1b[0m`, ``);
+        }
+      }, 160);
+      return "";
+    }
+
+    // ── TRAIN: Neural network training visualization ──
+    if (trimmed === "train") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ NEURAL NETWORK TRAINING ══\x1b[0m`,
+        `\x1b[90m  Training consensus model on 30 epochs...\x1b[0m`, ``);
+
+      let epoch = 0;
+      const totalEpochs = 30;
+      let loss = 2.4 + Math.random() * 0.5;
+      let accuracy = 0.35 + Math.random() * 0.1;
+      const blocks = "░▒▓█";
+
+      const trainIv = setInterval(() => {
+        if (epoch < totalEpochs) {
+          epoch++;
+          const lr = 0.001 * Math.pow(0.95, epoch);
+          const lossDecay = (Math.random() * 0.08 + 0.04) * (1 + 0.5 / epoch);
+          loss = Math.max(0.08 + Math.random() * 0.05, loss - lossDecay);
+          accuracy = Math.min(0.97, accuracy + (Math.random() * 0.025 + 0.005));
+
+          const lossBar = Math.max(0, Math.min(20, Math.round(loss * 8)));
+          const accBar = Math.min(20, Math.round(accuracy * 20));
+          const lossViz = Array.from({ length: 20 }, (_, i) => {
+            if (i < lossBar) {
+              const bi = Math.min(3, Math.floor((lossBar - i) / 5));
+              return i < lossBar / 2 ? `\x1b[31m${blocks[bi]}\x1b[0m` : `\x1b[33m${blocks[bi]}\x1b[0m`;
+            }
+            return `\x1b[90m·\x1b[0m`;
+          }).join("");
+          const accViz = Array.from({ length: 20 }, (_, i) => {
+            if (i < accBar) {
+              return i > accBar * 0.7 ? `\x1b[32m${blocks[3]}\x1b[0m` : `\x1b[32m${blocks[2]}\x1b[0m`;
+            }
+            return `\x1b[90m·\x1b[0m`;
+          }).join("");
+
+          const epochStr = String(epoch).padStart(2);
+          const lossStr = loss.toFixed(4).padStart(7);
+          const accStr = (accuracy * 100).toFixed(1).padStart(5);
+          const lrStr = lr.toExponential(1);
+
+          if (epoch % 5 === 0 || epoch === 1 || epoch === totalEpochs) {
+            addLines(`  \x1b[90mEpoch ${epochStr}\x1b[0m  Loss ${lossViz} \x1b[33m${lossStr}\x1b[0m  Acc ${accViz} \x1b[32m${accStr}%\x1b[0m  \x1b[90mlr=${lrStr}\x1b[0m`);
+          }
+        } else {
+          clearInterval(trainIv);
+          const finalAcc = (accuracy * 100).toFixed(1);
+          const finalLoss = loss.toFixed(4);
+          const convergence = Number(finalAcc) >= 90 ? "\x1b[32mCONVERGED\x1b[0m" : "\x1b[33mIMPROVING\x1b[0m";
+
+          addLines(``,
+            `\x1b[36m  ══ TRAINING COMPLETE ══\x1b[0m`,
+            ``,
+            `  \x1b[33mModel:\x1b[0m          CoreIntent Consensus v3`,
+            `  \x1b[33mArchitecture:\x1b[0m   3-head attention (Grok + Claude + Perplexity)`,
+            `  \x1b[33mFinal Loss:\x1b[0m     \x1b[33m${finalLoss}\x1b[0m`,
+            `  \x1b[33mFinal Accuracy:\x1b[0m \x1b[32m${finalAcc}%\x1b[0m`,
+            `  \x1b[33mEpochs:\x1b[0m         ${totalEpochs}`,
+            `  \x1b[33mStatus:\x1b[0m         ${convergence}`,
+            ``,
+            `  \x1b[36mLayer Weights:\x1b[0m`,
+            `    Grok attention:       \x1b[31m${"█".repeat(Math.round(Math.random() * 3 + 6))}${"░".repeat(4)}\x1b[0m ${(0.28 + Math.random() * 0.1).toFixed(3)}`,
+            `    Claude attention:     \x1b[35m${"█".repeat(Math.round(Math.random() * 3 + 7))}${"░".repeat(3)}\x1b[0m ${(0.38 + Math.random() * 0.1).toFixed(3)}`,
+            `    Perplexity attention: \x1b[34m${"█".repeat(Math.round(Math.random() * 3 + 5))}${"░".repeat(5)}\x1b[0m ${(0.24 + Math.random() * 0.1).toFixed(3)}`,
+            `    Consensus gate:       \x1b[32m${"█".repeat(Math.round(Math.random() * 2 + 8))}${"░".repeat(2)}\x1b[0m ${(0.89 + Math.random() * 0.08).toFixed(3)}`,
+            ``,
+            `  \x1b[90mModel checkpoint saved. Paper trading — no real predictions.\x1b[0m`, ``);
+        }
+      }, 100);
+      return "";
+    }
+
+    // ── QUANTUM: Quantum entanglement simulation ──
+    if (trimmed === "quantum") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ QUANTUM CONSENSUS — ENTANGLEMENT SIMULATION ══\x1b[0m`,
+        `\x1b[90m  Initializing quantum register... 3 qubits (G, C, P)\x1b[0m`, ``);
+
+      const qStates = ["|0⟩", "|1⟩", "|+⟩", "|−⟩", "|Ψ⟩"];
+      const gateNames = ["H (Hadamard)", "CNOT", "SWAP", "Rz(π/4)", "MEASURE"];
+      let qFrame = 0;
+      const totalQFrames = 22;
+
+      const qIv = setInterval(() => {
+        if (qFrame < 5) {
+          const g = qStates[Math.floor(Math.random() * qStates.length)];
+          const c = qStates[Math.floor(Math.random() * qStates.length)];
+          const p = qStates[Math.floor(Math.random() * qStates.length)];
+          const gate = gateNames[qFrame];
+          const fidelity = (0.6 + qFrame * 0.08 + Math.random() * 0.05).toFixed(3);
+          addLines(
+            `  \x1b[90m[gate ${qFrame + 1}]\x1b[0m \x1b[33m${gate.padEnd(14)}\x1b[0m  \x1b[31mG:${g}\x1b[0m  \x1b[35mC:${c}\x1b[0m  \x1b[34mP:${p}\x1b[0m  fidelity: \x1b[32m${fidelity}\x1b[0m`
+          );
+          qFrame++;
+        } else if (qFrame === 5) {
+          addLines(``, `\x1b[36m  Entangling qubits...\x1b[0m`, ``);
+          qFrame++;
+        } else if (qFrame < 14) {
+          const W = 48;
+          const phase = qFrame - 6;
+          let wave = "  ";
+          for (let x = 0; x < W; x++) {
+            const v1 = Math.sin((x + phase * 3) * 0.2) * 0.5;
+            const v2 = Math.cos((x + phase * 2) * 0.15 + 1) * 0.4;
+            const v3 = Math.sin((x + phase * 4) * 0.25 + 2) * 0.3;
+            const combined = v1 + v2 + v3;
+            if (combined > 0.6) wave += "\x1b[32m█\x1b[0m";
+            else if (combined > 0.3) wave += "\x1b[36m▓\x1b[0m";
+            else if (combined > 0) wave += "\x1b[34m▒\x1b[0m";
+            else if (combined > -0.3) wave += "\x1b[35m░\x1b[0m";
+            else wave += "\x1b[31m·\x1b[0m";
+          }
+          const entanglement = (60 + phase * 5 + Math.random() * 3).toFixed(1);
+          wave += `  \x1b[33m${entanglement}%\x1b[0m`;
+          addLines(wave);
+          qFrame++;
+        } else if (qFrame === 14) {
+          addLines(``);
+          const bell = Math.random() > 0.5 ? "|Φ⁺⟩" : "|Ψ⁺⟩";
+          addLines(
+            `\x1b[36m  ╔═══════════════════════════════════════════╗\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  \x1b[32m◆\x1b[0m \x1b[36mQUANTUM STATE COLLAPSED\x1b[0m                \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ╠═══════════════════════════════════════════╣\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m                                           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Bell State:  \x1b[33m${bell}\x1b[0m                       \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Entangled:   \x1b[32m3/3 models\x1b[0m                  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Fidelity:    \x1b[32m${(0.94 + Math.random() * 0.05).toFixed(3)}\x1b[0m                     \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Decoherence: \x1b[32m< 0.02\x1b[0m                      \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m                                           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  \x1b[31mGrok\x1b[0m ─── \x1b[33m⊗\x1b[0m ─── \x1b[35mClaude\x1b[0m ─── \x1b[33m⊗\x1b[0m ─── \x1b[34mPerplexity\x1b[0m \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m    \x1b[31m|1⟩\x1b[0m              \x1b[35m|1⟩\x1b[0m              \x1b[34m|1⟩\x1b[0m  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m                                           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Consensus: \x1b[32mCOHERENT\x1b[0m — all models aligned  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ╚═══════════════════════════════════════════╝\x1b[0m`,
+          );
+          qFrame++;
+        } else if (qFrame === 18) {
+          addLines(``,
+            `  \x1b[90mQuantum consensus: when models are entangled,\x1b[0m`,
+            `  \x1b[90mmeasuring one instantly reveals the others.\x1b[0m`,
+            `  \x1b[90mThat's the power of three-model agreement.\x1b[0m`, ``);
+          qFrame++;
+        } else if (qFrame >= totalQFrames) {
+          clearInterval(qIv);
+        } else {
+          qFrame++;
+        }
+      }, 160);
+      return "";
+    }
+
+    // ── WAVEFORM: Market volatility audio-style waveform ──
+    if (trimmed === "waveform" || trimmed.startsWith("waveform ")) {
+      const pair = trimmed === "waveform" ? "BTC/USDT" : raw.substring(9).trim().toUpperCase() || "BTC/USDT";
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ VOLATILITY WAVEFORM — ${pair} ══\x1b[0m`,
+        `\x1b[90m  Rendering 60s of market microstructure...\x1b[0m`, ``);
+
+      const topHalf = " ▁▂▃▄▅▆▇█";
+      const botHalf = " ▔▂▃▄▅▆▇█";
+      let wFrame = 0;
+      const totalWFrames = 12;
+
+      const wIv = setInterval(() => {
+        if (wFrame < totalWFrames) {
+          const W = 56;
+          let upper = "  ";
+          let center = "  ";
+          let lower = "  ";
+
+          for (let x = 0; x < W; x++) {
+            const t = x + wFrame * 6;
+            const v = Math.sin(t * 0.15) * 0.3
+              + Math.sin(t * 0.4) * 0.2
+              + Math.sin(t * 0.8 + wFrame) * 0.15
+              + (Math.random() - 0.5) * 0.35;
+
+            const upHeight = Math.max(0, Math.min(8, Math.round(v * 8 + 4)));
+            const downHeight = Math.max(0, Math.min(8, Math.round(-v * 8 + 4)));
+
+            const color = Math.abs(v) > 0.5 ? "\x1b[31m" : Math.abs(v) > 0.25 ? "\x1b[33m" : "\x1b[32m";
+            upper += `${color}${topHalf[upHeight]}\x1b[0m`;
+            center += v > 0.1 ? `\x1b[32m─\x1b[0m` : v < -0.1 ? `\x1b[31m─\x1b[0m` : `\x1b[90m─\x1b[0m`;
+            lower += `${color}${botHalf[downHeight]}\x1b[0m`;
+          }
+
+          const vol = (12 + Math.abs(Math.sin(wFrame * 0.5)) * 25 + Math.random() * 8).toFixed(1);
+          const volColor = Number(vol) > 25 ? "\x1b[31m" : Number(vol) > 15 ? "\x1b[33m" : "\x1b[32m";
+
+          if (wFrame === 0) {
+            addLines(`  \x1b[90m${" ".repeat(8)}╭${"─".repeat(56)}╮ Vol\x1b[0m`);
+          }
+          addLines(upper, center, lower);
+          if (wFrame % 3 === 2) {
+            addLines(`  \x1b[90m${" ".repeat(8)}├${"╌".repeat(56)}┤\x1b[0m ${volColor}${vol}%\x1b[0m`);
+          }
+          wFrame++;
+        } else {
+          clearInterval(wIv);
+          const avgVol = (18 + Math.random() * 10).toFixed(1);
+          const maxVol = (32 + Math.random() * 15).toFixed(1);
+          const regime = Number(avgVol) > 22 ? "HIGH VOLATILITY" : Number(avgVol) > 15 ? "NORMAL" : "LOW VOLATILITY";
+          const regimeColor = regime === "HIGH VOLATILITY" ? "\x1b[31m" : regime === "NORMAL" ? "\x1b[33m" : "\x1b[32m";
+
+          addLines(
+            `  \x1b[90m${" ".repeat(8)}╰${"─".repeat(56)}╯\x1b[0m`,
+            ``,
+            `  \x1b[36m── Waveform Analysis ──\x1b[0m`,
+            `  Avg Volatility:  \x1b[33m${avgVol}%\x1b[0m`,
+            `  Peak Volatility: \x1b[31m${maxVol}%\x1b[0m`,
+            `  Regime:          ${regimeColor}${regime}\x1b[0m`,
+            `  Frequency:       \x1b[36m${(2 + Math.random() * 3).toFixed(1)} Hz\x1b[0m (tick rate)`,
+            `  Samples:         \x1b[36m${56 * totalWFrames}\x1b[0m data points`,
+            ``,
+            `  \x1b[90mVisualization of market microstructure volatility.\x1b[0m`,
+            `  \x1b[90mHeight = price deviation. Width = time. Color = intensity.\x1b[0m`, ``
+          );
+        }
+      }, 250);
+      return "";
+    }
+
+    // ── WORLDMAP: ASCII world map showing AI model origins ──
+    if (trimmed === "worldmap") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ GLOBAL AI NETWORK — COREINTENT ══\x1b[0m`,
+        `\x1b[90m  Mapping model origins and data flows...\x1b[0m`, ``);
+
+      let mFrame = 0;
+
+      const mIv = setInterval(() => {
+        if (mFrame === 0) {
+          const mapLines = [
+            `\x1b[90m        . ___ .    ___          ___    . __ .          ___  \x1b[0m`,
+            `\x1b[90m      /        \\  /   \\    ____/   \\__/    \\ \\___     /   \\ \x1b[0m`,
+            `\x1b[90m     |  NA      \\/     |__/   EU         \\  ASIA  \\__/     |\x1b[0m`,
+            `\x1b[90m     |     \x1b[31m★\x1b[90m SF  |    / \\     \x1b[34m★\x1b[90m LON     |     \x1b[33m★\x1b[90m TOK      |\x1b[0m`,
+            `\x1b[90m      \\       __/   /   \\__        ___|  __          __/  \x1b[0m`,
+            `\x1b[90m       \\_____/      |      \\______/     \\/  \\________/     \x1b[0m`,
+            `\x1b[90m                    |  AF    \\                             \x1b[0m`,
+            `\x1b[90m                     \\___  __/    \\___                     \x1b[0m`,
+            `\x1b[90m                         \\/  \\       AU                    \x1b[0m`,
+            `\x1b[90m                              \\    \x1b[32m★\x1b[90m NZ                    \x1b[0m`,
+            `\x1b[90m                               \\____/                     \x1b[0m`,
+          ];
+          for (const l of mapLines) addLines(l);
+          addLines(``);
+          mFrame++;
+        } else if (mFrame === 1) {
+          addLines(`  \x1b[36m── Signal Routes ──\x1b[0m`, ``);
+          mFrame++;
+        } else if (mFrame < 6) {
+          const routes = [
+            `  \x1b[31m★ SF\x1b[0m  → \x1b[31mGrok (xAI)\x1b[0m          \x1b[90m━━━\x1b[31m▶\x1b[0m  \x1b[36mFast signals, sentiment scan\x1b[0m`,
+            `  \x1b[31m★ SF\x1b[0m  → \x1b[35mClaude (Anthropic)\x1b[0m   \x1b[90m━━━\x1b[35m▶\x1b[0m  \x1b[36mDeep risk analysis, orchestration\x1b[0m`,
+            `  \x1b[34m★ LON\x1b[0m → \x1b[34mPerplexity\x1b[0m          \x1b[90m━━━\x1b[34m▶\x1b[0m  \x1b[36mResearch, fact-checking, news\x1b[0m`,
+            `  \x1b[32m★ NZ\x1b[0m  → \x1b[32mCoreIntent Engine\x1b[0m    \x1b[90m━━━\x1b[32m▶\x1b[0m  \x1b[36mConsensus, execution, command\x1b[0m`,
+          ];
+          const ri = mFrame - 2;
+          if (ri < routes.length) addLines(routes[ri]);
+          mFrame++;
+        } else if (mFrame === 6) {
+          addLines(``);
+          const latencies = [
+            { from: "SF→NZ", ms: 142 + Math.floor(Math.random() * 30) },
+            { from: "LON→NZ", ms: 188 + Math.floor(Math.random() * 40) },
+            { from: "TOK→NZ", ms: 98 + Math.floor(Math.random() * 20) },
+          ];
+          addLines(`  \x1b[36m── Latency Matrix ──\x1b[0m`);
+          for (const l of latencies) {
+            const barLen = Math.round(l.ms / 15);
+            const color = l.ms < 120 ? "\x1b[32m" : l.ms < 170 ? "\x1b[33m" : "\x1b[31m";
+            addLines(`  ${l.from.padEnd(8)} ${color}${"█".repeat(barLen)}${"░".repeat(Math.max(0, 16 - barLen))}\x1b[0m ${color}${l.ms}ms\x1b[0m`);
+          }
+          mFrame++;
+        } else if (mFrame === 7) {
+          addLines(``,
+            `  \x1b[36m┌─ NETWORK STATUS ────────────────────────┐\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  Nodes:     \x1b[32m4 active\x1b[0m (SF, LON, TOK, NZ) \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  Uptime:    \x1b[32m${(99.7 + Math.random() * 0.29).toFixed(2)}%\x1b[0m                   \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  Signals:   \x1b[32m${840 + Math.floor(Math.random() * 200)}/day\x1b[0m                \x1b[36m│\x1b[0m`,
+            `  \x1b[36m│\x1b[0m  HQ:        \x1b[33mNew Zealand\x1b[0m (always NZ)     \x1b[36m│\x1b[0m`,
+            `  \x1b[36m└──────────────────────────────────────────┘\x1b[0m`,
+            ``,
+            `  \x1b[90mAll AI models converge on the NZ engine.\x1b[0m`,
+            `  \x1b[90mThree continents. Three models. One consensus.\x1b[0m`, ``);
+          clearInterval(mIv);
+        }
+        mFrame = Math.min(mFrame, 8);
+      }, 300);
+      return "";
+    }
+
+    // ── SPECTRUM: Live frequency spectrum analyzer ──
+    if (trimmed === "spectrum") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ MARKET FREQUENCY SPECTRUM ══\x1b[0m`,
+        `\x1b[90m  Decomposing price action into frequency bands...\x1b[0m`, ``);
+
+      const bands = ["1m", "5m", "15m", "1H", "4H", "1D", "1W", "1M"];
+      const bandColors = ["\x1b[31m", "\x1b[31m", "\x1b[33m", "\x1b[33m", "\x1b[32m", "\x1b[32m", "\x1b[36m", "\x1b[34m"];
+      let sFrame = 0;
+      const totalSFrames = 10;
+
+      const sIv = setInterval(() => {
+        if (sFrame < totalSFrames) {
+          const specLine = bands.map((b, bi) => {
+            const height = Math.floor(Math.random() * 8) + Math.floor(Math.sin(sFrame * 0.5 + bi * 0.8) * 3 + 4);
+            const clamped = Math.max(1, Math.min(8, height));
+            const bar = "█".repeat(clamped) + "░".repeat(8 - clamped);
+            return `${bandColors[bi]}${bar}\x1b[0m`;
+          }).join(" ");
+
+          if (sFrame === 0) {
+            addLines(`  \x1b[90m  ${bands.map((b) => b.padEnd(9)).join(" ")}\x1b[0m`);
+          }
+          addLines(`  ${specLine}`);
+          sFrame++;
+        } else {
+          clearInterval(sIv);
+          const dominant = bands[2 + Math.floor(Math.random() * 3)];
+          const energy = (65 + Math.random() * 30).toFixed(1);
+          addLines(``,
+            `  \x1b[90m  ${bands.map((b) => b.padEnd(9)).join(" ")}\x1b[0m`,
+            ``,
+            `  \x1b[36mDominant Frequency:\x1b[0m \x1b[33m${dominant}\x1b[0m timeframe`,
+            `  \x1b[36mSpectral Energy:\x1b[0m    \x1b[32m${energy}%\x1b[0m`,
+            `  \x1b[36mNoise Floor:\x1b[0m        \x1b[90m${(8 + Math.random() * 12).toFixed(1)}%\x1b[0m`,
+            `  \x1b[36mSignal-to-Noise:\x1b[0m    \x1b[32m${(2.5 + Math.random() * 3).toFixed(1)}:1\x1b[0m`,
+            ``,
+            `  \x1b[90mFrequency analysis helps identify the dominant trading timeframe.\x1b[0m`,
+            `  \x1b[90mHigher bars = more price action energy in that period.\x1b[0m`, ``);
+        }
+      }, 200);
+      return "";
+    }
+
+    // ── BLACKJACK: Crypto-themed card game ──
+    if (trimmed === "blackjack" || trimmed === "bj") {
+      const suits = ["♠", "♥", "♦", "♣"];
+      const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+      const deck: { rank: string; suit: string; value: number }[] = [];
+      for (const s of suits) {
+        for (let ri = 0; ri < ranks.length; ri++) {
+          const val = ri === 0 ? 11 : ri >= 10 ? 10 : ri + 1;
+          deck.push({ rank: ranks[ri], suit: s, value: val });
+        }
+      }
+      for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+      }
+
+      const cardStr = (c: { rank: string; suit: string }) => {
+        const red = c.suit === "♥" || c.suit === "♦";
+        return red ? `\x1b[31m[${c.rank}${c.suit}]\x1b[0m` : `\x1b[36m[${c.rank}${c.suit}]\x1b[0m`;
+      };
+      const handValue = (hand: { value: number }[]) => {
+        let total = hand.reduce((a, c) => a + c.value, 0);
+        let aces = hand.filter((c) => c.value === 11).length;
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      };
+
+      const playerHand = [deck.pop()!, deck.pop()!];
+      const dealerHand = [deck.pop()!, deck.pop()!];
+      const pVal = handValue(playerHand);
+
+      const bjState = { deck, playerHand, dealerHand, done: false };
+      (globalThis as Record<string, unknown>).__bjState = bjState;
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  CRYPTO BLACKJACK — Paper Chips\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  \x1b[33mBet:\x1b[0m 100 paper chips  |  \x1b[90mGoal: Beat the dealer. Don't bust.\x1b[0m`,
+        ``,
+        `  \x1b[33mDealer:\x1b[0m ${cardStr(dealerHand[0])} \x1b[90m[??]\x1b[0m`,
+        `  \x1b[33mYou:\x1b[0m    ${playerHand.map(cardStr).join(" ")}  = \x1b[32m${pVal}\x1b[0m`,
+        ``
+      );
+
+      if (pVal === 21) {
+        (globalThis as Record<string, unknown>).__bjState = undefined;
+        const dVal = handValue(dealerHand);
+        if (dVal === 21) {
+          addLines(
+            `  \x1b[33mDealer:\x1b[0m ${dealerHand.map(cardStr).join(" ")}  = ${dVal}`,
+            `  \x1b[33mPUSH\x1b[0m — Both blackjack! Chips returned.`,
+            `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``
+          );
+        } else {
+          addLines(
+            `  \x1b[32m★ BLACKJACK! ★\x1b[0m You win \x1b[32m+250 paper chips\x1b[0m!`,
+            `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``
+          );
+        }
+      } else {
+        addLines(
+          `  \x1b[90m→ Type\x1b[0m \x1b[32mhit\x1b[0m\x1b[90m or\x1b[0m \x1b[33mstand\x1b[0m`
+        );
+      }
+      return "";
+    }
+
+    // ── MINING: Fake crypto mining animation ──
+    if (trimmed === "mining" || trimmed === "mine") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ COREINTENT NEURAL MINING ══\x1b[0m`,
+        `\x1b[90m  Mining paper-BTC using 3-model consensus proof-of-intelligence\x1b[0m`, ``);
+
+      let block = 0;
+      const totalBlocks = 6;
+      const hashChars = "0123456789abcdef";
+      const genHash = () => Array.from({ length: 64 }, () => hashChars[Math.floor(Math.random() * 16)]).join("");
+
+      const iv = setInterval(() => {
+        if (block < totalBlocks) {
+          const nonce = Math.floor(Math.random() * 999999);
+          const hash = genHash();
+          const difficulty = "0".repeat(3 + Math.floor(block / 2)) + hash.substring(3 + Math.floor(block / 2));
+          const reward = (0.0001 + Math.random() * 0.0004).toFixed(6);
+          const model = ["Grok", "Claude", "Perplexity"][block % 3];
+          const modelColor = ["\x1b[31m", "\x1b[35m", "\x1b[34m"][block % 3];
+
+          const filled = Math.round(((block + 1) / totalBlocks) * 30);
+          const bar = `\x1b[33m${"█".repeat(filled)}${"░".repeat(30 - filled)}\x1b[0m`;
+
+          addLines(
+            `  \x1b[90m[Block ${block + 1}/${totalBlocks}]\x1b[0m Nonce: ${nonce}`,
+            `  Hash: \x1b[32m${difficulty.substring(0, 8)}\x1b[90m${difficulty.substring(8, 32)}...\x1b[0m`,
+            `  Validator: ${modelColor}${model}\x1b[0m  Reward: \x1b[32m+${reward} pBTC\x1b[0m`,
+            `  ${bar} ${Math.round(((block + 1) / totalBlocks) * 100)}%`,
+            ``
+          );
+          block++;
+        } else {
+          clearInterval(iv);
+          const totalReward = (0.0005 + Math.random() * 0.002).toFixed(6);
+          addLines(
+            `\x1b[36m  ╔══════════════════════════════════════╗\x1b[0m`,
+            `\x1b[36m  ║      MINING SESSION COMPLETE          ║\x1b[0m`,
+            `\x1b[36m  ╠══════════════════════════════════════╣\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Blocks mined:  \x1b[32m${totalBlocks}\x1b[0m                  \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Total reward:  \x1b[32m${totalReward} pBTC\x1b[0m       \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Hash rate:     \x1b[33m${(120 + Math.random() * 80).toFixed(0)} MH/s\x1b[0m        \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ║\x1b[0m  Consensus:     \x1b[32m3/3 models\x1b[0m           \x1b[36m║\x1b[0m`,
+            `\x1b[36m  ╚══════════════════════════════════════╝\x1b[0m`,
+            ``,
+            `  \x1b[90mPaper mining — proof-of-intelligence, not proof-of-work.\x1b[0m`,
+            `  \x1b[90mNo GPUs were harmed. No electricity was wasted.\x1b[0m`, ``
+          );
+        }
+      }, 500);
+      return "";
+    }
+
+    // ── TYPESPEED: WPM typing test with trading terms ──
+    if (trimmed === "typespeed" || trimmed === "wpm") {
+      const phrases = [
+        "buy the dip sell the rip",
+        "three models one signal zero guessing",
+        "paper trading mode no real money at risk",
+        "grok detects claude questions perplexity verifies",
+        "the leaderboard does not care who built you",
+        "consensus equals conviction disagreement equals caution",
+        "every human needs a bot every bot needs a human",
+        "risk management is not optional it is the whole game",
+        "bots welcome no captcha ai to ai is first class",
+        "free costs nothing to serve so give it away",
+      ];
+      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+      const tsState = { phrase, startTime: 0, started: false };
+      (globalThis as Record<string, unknown>).__tsState = tsState;
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  TYPESPEED — Trading Terminal WPM Test\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  \x1b[90mType the phrase below as fast as you can.\x1b[0m`,
+        `  \x1b[90mTimer starts when you press Enter.\x1b[0m`,
+        ``,
+        `  \x1b[33m"${phrase}"\x1b[0m`,
+        ``,
+        `  \x1b[90m→ Type it now and press Enter\x1b[0m`
+      );
+      return "";
+    }
+
+    // ── MISSION: Interactive signal infiltration narrative ──
+    if (trimmed === "mission") {
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+      const pair = pairs[Math.floor(Math.random() * pairs.length)];
+      const basePrice = pair.startsWith("BTC") ? 67420 : pair.startsWith("ETH") ? 3285 : pair.startsWith("SOL") ? 142 : 35;
+      const entry = +(basePrice * (0.995 + Math.random() * 0.01)).toFixed(2);
+      const grokVotes = ["LONG — breakout forming", "SHORT — rejection at resistance", "LONG — volume spike"];
+      const claudeVotes = ["LONG — risk/reward 3.2:1", "HOLD — insufficient data", "SHORT — declining momentum"];
+      const perplVotes = ["LONG — whale accumulation", "LONG — positive funding", "SHORT — news catalyst incoming"];
+      const grokVote = grokVotes[Math.floor(Math.random() * grokVotes.length)];
+      const claudeVote = claudeVotes[Math.floor(Math.random() * claudeVotes.length)];
+      const perplexityVote = perplVotes[Math.floor(Math.random() * perplVotes.length)];
+      const confidence = 65 + Math.floor(Math.random() * 30);
+
+      missionRef.current = { phase: 0, pair, entry, confidence, grokVote, claudeVote, perplexityVote };
+
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+
+      const delay = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+      const typeLines = async (lns: string[], ms: number) => {
+        for (const l of lns) {
+          await delay(ms);
+          addLines(l);
+        }
+      };
+
+      (async () => {
+        await typeLines([
+          `\x1b[36m  ╔══════════════════════════════════════════════════╗\x1b[0m`,
+          `\x1b[36m  ║        MISSION: SIGNAL INTERCEPT                 ║\x1b[0m`,
+          `\x1b[36m  ╚══════════════════════════════════════════════════╝\x1b[0m`,
+          ``,
+        ], 150);
+        await delay(600);
+        await typeLines([
+          `  \x1b[90m[INCOMING TRANSMISSION]\x1b[0m`,
+          `  \x1b[33mSignal detected on \x1b[0m\x1b[36m${pair}\x1b[0m`,
+          `  \x1b[33mEntry zone:\x1b[0m $${entry.toLocaleString()}`,
+          `  \x1b[33mTimestamp:\x1b[0m  ${new Date().toLocaleTimeString("en-NZ")} NZST`,
+          ``,
+        ], 200);
+        await delay(800);
+        addLines(`  \x1b[90m[PHASE 1] Deploying AI scouts...\x1b[0m`);
+        await delay(1200);
+        await typeLines([
+          ``,
+          `  \x1b[31m┌─ GROK ─────────────────────────────────────┐\x1b[0m`,
+          `  \x1b[31m│\x1b[0m  Verdict: \x1b[33m${grokVote}\x1b[0m`,
+          `  \x1b[31m│\x1b[0m  Speed: \x1b[32m${(12 + Math.random() * 8).toFixed(0)}ms\x1b[0m scan time`,
+          `  \x1b[31m└────────────────────────────────────────────┘\x1b[0m`,
+        ], 120);
+        await delay(600);
+        await typeLines([
+          `  \x1b[35m┌─ CLAUDE ───────────────────────────────────┐\x1b[0m`,
+          `  \x1b[35m│\x1b[0m  Verdict: \x1b[33m${claudeVote}\x1b[0m`,
+          `  \x1b[35m│\x1b[0m  Depth: \x1b[32m${(3 + Math.random() * 4).toFixed(1)}\x1b[0m risk layers analyzed`,
+          `  \x1b[35m└────────────────────────────────────────────┘\x1b[0m`,
+        ], 120);
+        await delay(600);
+        await typeLines([
+          `  \x1b[34m┌─ PERPLEXITY ───────────────────────────────┐\x1b[0m`,
+          `  \x1b[34m│\x1b[0m  Verdict: \x1b[33m${perplexityVote}\x1b[0m`,
+          `  \x1b[34m│\x1b[0m  Sources: \x1b[32m${(5 + Math.floor(Math.random() * 8))}\x1b[0m live feeds cross-referenced`,
+          `  \x1b[34m└────────────────────────────────────────────┘\x1b[0m`,
+        ], 120);
+        await delay(800);
+
+        const longCount = [grokVote, claudeVote, perplexityVote].filter(v => v.startsWith("LONG")).length;
+        const shortCount = [grokVote, claudeVote, perplexityVote].filter(v => v.startsWith("SHORT")).length;
+        const consensus = longCount >= 2 ? "LONG" : shortCount >= 2 ? "SHORT" : "SPLIT";
+        const consensusColor = consensus === "LONG" ? "\x1b[32m" : consensus === "SHORT" ? "\x1b[31m" : "\x1b[33m";
+
+        await typeLines([
+          ``,
+          `  \x1b[90m[PHASE 2] Consensus forming...\x1b[0m`,
+          ``,
+          `  ╭───────────────────────────────────────────╮`,
+          `  │  \x1b[36mCONSENSUS:\x1b[0m ${consensusColor}${consensus}\x1b[0m                         │`,
+          `  │  \x1b[36mConfidence:\x1b[0m \x1b[32m${confidence}%\x1b[0m  Votes: ${longCount}L/${shortCount}S/${3-longCount-shortCount}H  │`,
+          `  │  \x1b[36mRisk Level:\x1b[0m ${confidence > 80 ? "\x1b[32mLOW" : confidence > 65 ? "\x1b[33mMODERATE" : "\x1b[31mELEVATED"}\x1b[0m                       │`,
+          `  ╰───────────────────────────────────────────╯`,
+          ``,
+        ], 150);
+        await delay(500);
+        await typeLines([
+          `  \x1b[90m[PHASE 3] Awaiting your orders, Commander.\x1b[0m`,
+          ``,
+          `  \x1b[32mACCEPT\x1b[0m — Execute the ${consensus} signal at $${entry.toLocaleString()}`,
+          `  \x1b[31mABORT\x1b[0m  — Reject signal. Return to standby.`,
+          `  \x1b[33mANALYZE\x1b[0m — Run deeper analysis (adds 1 more factor)`,
+          ``,
+          `  \x1b[90m→ Type your decision:\x1b[0m \x1b[32maccept\x1b[0m\x1b[90m,\x1b[0m \x1b[31mabort\x1b[0m\x1b[90m, or\x1b[0m \x1b[33manalyze\x1b[0m`,
+        ], 100);
+
+        missionRef.current = { ...missionRef.current!, phase: 1 };
+      })();
+      return "";
+    }
 
     // ── Resolve aliases ──
     const resolved = aliases[trimmed] || trimmed;
@@ -1624,6 +3266,505 @@ export default function Terminal() {
     return "";
   }, [addLines, aliases, history, lastOutput, lines]);
 
-  // The rest continues...
-  return <div>Terminal</div>;
+  // Process command with && chaining support
+  const processCommand = useCallback(async (cmd: string) => {
+    // ── BLACKJACK state handler ──
+    const bjState = (globalThis as Record<string, unknown>).__bjState as {
+      deck: { rank: string; suit: string; value: number }[];
+      playerHand: { rank: string; suit: string; value: number }[];
+      dealerHand: { rank: string; suit: string; value: number }[];
+      done: boolean;
+    } | undefined;
+    if (bjState && !bjState.done) {
+      const choice = cmd.trim().toLowerCase();
+      const cardStr = (c: { rank: string; suit: string }) => {
+        const red = c.suit === "♥" || c.suit === "♦";
+        return red ? `\x1b[31m[${c.rank}${c.suit}]\x1b[0m` : `\x1b[36m[${c.rank}${c.suit}]\x1b[0m`;
+      };
+      const handValue = (hand: { value: number }[]) => {
+        let total = hand.reduce((a, c) => a + c.value, 0);
+        let aces = hand.filter((c) => c.value === 11).length;
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      };
+
+      const finishGame = (result: string) => {
+        (globalThis as Record<string, unknown>).__bjState = undefined;
+        const dVal = handValue(bjState.dealerHand);
+        addLines(
+          `  \x1b[33mDealer:\x1b[0m ${bjState.dealerHand.map(cardStr).join(" ")}  = \x1b[33m${dVal}\x1b[0m`,
+          `  ${result}`,
+          `  \x1b[90mType \x1b[32mblackjack\x1b[90m to play again.\x1b[0m`, ``
+        );
+      };
+
+      if (choice === "hit" || choice === "h") {
+        const card = bjState.deck.pop()!;
+        bjState.playerHand.push(card);
+        const pVal = handValue(bjState.playerHand);
+        addLines(
+          `\x1b[32m❯\x1b[0m ${cmd}`,
+          `  \x1b[32m+\x1b[0m Drew ${cardStr(card)}`,
+          `  \x1b[33mYou:\x1b[0m ${bjState.playerHand.map(cardStr).join(" ")}  = ${pVal > 21 ? `\x1b[31m${pVal} BUST\x1b[0m` : `\x1b[32m${pVal}\x1b[0m`}`,
+          ``
+        );
+        if (pVal > 21) {
+          finishGame(`\x1b[31m✗ BUST!\x1b[0m You lose \x1b[31m-100 paper chips\x1b[0m`);
+        } else if (pVal === 21) {
+          addLines(`  \x1b[32m21!\x1b[0m Auto-standing...`, ``);
+          let dVal = handValue(bjState.dealerHand);
+          while (dVal < 17) {
+            bjState.dealerHand.push(bjState.deck.pop()!);
+            dVal = handValue(bjState.dealerHand);
+          }
+          if (dVal > 21) finishGame(`\x1b[32m★ DEALER BUSTS!\x1b[0m You win \x1b[32m+200 paper chips\x1b[0m!`);
+          else if (pVal > dVal) finishGame(`\x1b[32m★ YOU WIN!\x1b[0m +\x1b[32m200 paper chips\x1b[0m!`);
+          else if (pVal === dVal) finishGame(`\x1b[33mPUSH\x1b[0m — Tie. Chips returned.`);
+          else finishGame(`\x1b[31m✗ DEALER WINS.\x1b[0m -\x1b[31m100 paper chips\x1b[0m`);
+        } else {
+          addLines(`  \x1b[90m→ Type\x1b[0m \x1b[32mhit\x1b[0m\x1b[90m or\x1b[0m \x1b[33mstand\x1b[0m`);
+        }
+        return;
+      } else if (choice === "stand" || choice === "s") {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, `  \x1b[33mStanding.\x1b[0m Dealer reveals...`, ``);
+        const pVal = handValue(bjState.playerHand);
+        let dVal = handValue(bjState.dealerHand);
+        addLines(`  \x1b[33mDealer:\x1b[0m ${bjState.dealerHand.map(cardStr).join(" ")}  = \x1b[33m${dVal}\x1b[0m`);
+        const drawCards = () => {
+          if (dVal < 17) {
+            const card = bjState.deck.pop()!;
+            bjState.dealerHand.push(card);
+            dVal = handValue(bjState.dealerHand);
+            addLines(`  \x1b[33m+\x1b[0m Dealer draws ${cardStr(card)}  = \x1b[33m${dVal}\x1b[0m`);
+            if (dVal < 17) {
+              setTimeout(drawCards, 600);
+              return;
+            }
+          }
+          addLines(``);
+          if (dVal > 21) finishGame(`\x1b[32m★ DEALER BUSTS!\x1b[0m You win \x1b[32m+200 paper chips\x1b[0m!`);
+          else if (pVal > dVal) finishGame(`\x1b[32m★ YOU WIN!\x1b[0m +\x1b[32m200 paper chips\x1b[0m!`);
+          else if (pVal === dVal) finishGame(`\x1b[33mPUSH\x1b[0m — Tie. Chips returned.`);
+          else finishGame(`\x1b[31m✗ DEALER WINS.\x1b[0m -\x1b[31m100 paper chips\x1b[0m`);
+        };
+        setTimeout(drawCards, 600);
+        return;
+      } else if (choice === "quit" || choice === "q") {
+        (globalThis as Record<string, unknown>).__bjState = undefined;
+        addLines(`\x1b[33mBlackjack abandoned.\x1b[0m`, ``);
+        return;
+      } else {
+        addLines(`\x1b[31mBlackjack:\x1b[0m Type \x1b[32mhit\x1b[0m, \x1b[33mstand\x1b[0m, or \x1b[90mquit\x1b[0m`);
+        return;
+      }
+    }
+
+    // ── TYPESPEED state handler ──
+    const tsState = (globalThis as Record<string, unknown>).__tsState as {
+      phrase: string;
+      startTime: number;
+      started: boolean;
+    } | undefined;
+    if (tsState) {
+      const typed = cmd.trim();
+      if (!tsState.started) {
+        tsState.started = true;
+        tsState.startTime = Date.now();
+        addLines(`  \x1b[90mTimer started! Type the phrase...\x1b[0m`);
+        return;
+      }
+      (globalThis as Record<string, unknown>).__tsState = undefined;
+      const elapsed = (Date.now() - tsState.startTime) / 1000;
+      const words = tsState.phrase.split(" ").length;
+      const wpm = Math.round((words / elapsed) * 60);
+      const typedLower = typed.toLowerCase();
+      const targetLower = tsState.phrase.toLowerCase();
+      let correct = 0;
+      for (let i = 0; i < targetLower.length; i++) {
+        if (typedLower[i] === targetLower[i]) correct++;
+      }
+      const accuracy = Math.round((correct / targetLower.length) * 100);
+
+      const rating = wpm >= 80 ? "\x1b[32m★ ELITE TRADER\x1b[0m — Faster than Grok's signal feed"
+        : wpm >= 60 ? "\x1b[32mFAST\x1b[0m — You'd outpace most algo bots"
+        : wpm >= 40 ? "\x1b[33mSOLID\x1b[0m — Competitive speed"
+        : wpm >= 20 ? "\x1b[33mSTEADY\x1b[0m — Slow and methodical"
+        : "\x1b[31mSLOW\x1b[0m — Claude thinks faster than this";
+
+      addLines(
+        `\x1b[32m❯\x1b[0m ${cmd}`,
+        ``,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `\x1b[36m  TYPESPEED RESULTS\x1b[0m`,
+        `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+        `  \x1b[33mSpeed:\x1b[0m    \x1b[32m${wpm} WPM\x1b[0m`,
+        `  \x1b[33mAccuracy:\x1b[0m ${accuracy >= 95 ? "\x1b[32m" : accuracy >= 80 ? "\x1b[33m" : "\x1b[31m"}${accuracy}%\x1b[0m`,
+        `  \x1b[33mTime:\x1b[0m     ${elapsed.toFixed(1)}s`,
+        `  \x1b[33mRating:\x1b[0m   ${rating}`,
+        ``,
+        `  \x1b[90mType \x1b[32mtypespeed\x1b[90m to try again. Beat your record.\x1b[0m`, ``
+      );
+      return;
+    }
+
+    const mission = missionRef.current;
+    if (mission && mission.phase === 1) {
+      const choice = cmd.trim().toLowerCase();
+      const delay = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+
+      if (choice === "accept" || choice === "execute") {
+        missionRef.current = null;
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+        addLines(`  \x1b[32m[EXECUTING]\x1b[0m Signal locked. Deploying position...`);
+        await delay(800);
+        const pnl = (Math.random() - 0.35) * mission.entry * 0.02;
+        const pnlStr = pnl >= 0 ? `\x1b[32m+$${pnl.toFixed(2)}\x1b[0m` : `\x1b[31m-$${Math.abs(pnl).toFixed(2)}\x1b[0m`;
+        const exitPrice = +(mission.entry + pnl).toFixed(2);
+        await delay(1000);
+        addLines(
+          `  \x1b[90m...\x1b[0m`,
+          `  \x1b[90m... Position filled at $${mission.entry.toLocaleString()}\x1b[0m`,
+          `  \x1b[90m... Monitoring...\x1b[0m`
+        );
+        await delay(1500);
+        addLines(
+          ``,
+          `  \x1b[36m╔══════════════════════════════════════╗\x1b[0m`,
+          `  \x1b[36m║     MISSION COMPLETE                  ║\x1b[0m`,
+          `  \x1b[36m╚═════════════════════��════════════════╝\x1b[0m`,
+          ``,
+          `  \x1b[33mPair:\x1b[0m   ${mission.pair}`,
+          `  \x1b[33mEntry:\x1b[0m  $${mission.entry.toLocaleString()}`,
+          `  \x1b[33mExit:\x1b[0m   $${exitPrice.toLocaleString()}`,
+          `  \x1b[33mP&L:\x1b[0m    ${pnlStr}`,
+          `  \x1b[33mResult:\x1b[0m ${pnl >= 0 ? "\x1b[32mSIGNAL VALIDATED" : "\x1b[31mSIGNAL FAILED"}\x1b[0m`,
+          ``,
+          `  \x1b[90mPaper trading simulation. Type \x1b[32mmission\x1b[90m for another.\x1b[0m`,
+          ``
+        );
+        return;
+      } else if (choice === "abort") {
+        missionRef.current = null;
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+        addLines(
+          `  \x1b[31m[ABORTED]\x1b[0m Signal rejected. Returning to standby.`,
+          `  \x1b[90mSometimes the best trade is no trade.\x1b[0m`,
+          ``
+        );
+        return;
+      } else if (choice === "analyze") {
+        addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+        addLines(`  \x1b[90m[DEEP SCAN] Running extended analysis...\x1b[0m`);
+        await delay(1200);
+        const factors = [
+          `Funding rate: \x1b[32m+0.0${Math.floor(Math.random() * 9)}%\x1b[0m (slightly long-biased)`,
+          `Open interest: \x1b[33m${(120 + Math.random() * 80).toFixed(0)}M\x1b[0m — elevated`,
+          `Liquidation cluster: $${(mission.entry * 0.97).toFixed(0)} (${(Math.random() * 12 + 3).toFixed(0)}M at risk)`,
+          `Whale wallet activity: \x1b[32m${(2 + Math.floor(Math.random() * 5))}\x1b[0m large transfers detected`,
+          `Social sentiment: \x1b[33m${(55 + Math.floor(Math.random() * 30))}%\x1b[0m bullish (X/Reddit/Telegram)`,
+        ];
+        const picked = factors[Math.floor(Math.random() * factors.length)];
+        await delay(600);
+        addLines(
+          `  \x1b[36m  Additional Factor:\x1b[0m ${picked}`,
+          ``,
+          `  \x1b[90mConfidence adjusted:\x1b[0m \x1b[32m${Math.min(95, mission.confidence + Math.floor(Math.random() * 8 + 3))}%\x1b[0m`,
+          ``,
+          `  \x1b[90m→ Now type\x1b[0m \x1b[32maccept\x1b[0m \x1b[90mor\x1b[0m \x1b[31mabort\x1b[0m`,
+        );
+        return;
+      } else {
+        addLines(`\x1b[31mMission active.\x1b[0m Type \x1b[32maccept\x1b[0m, \x1b[31mabort\x1b[0m, or \x1b[33manalyze\x1b[0m`);
+        return;
+      }
+    }
+
+    const game = gameRef.current;
+    if (game) {
+      const choice = cmd.trim().toLowerCase();
+      if (choice === "quit" || choice === "q") {
+        gameRef.current = null;
+        addLines(`\x1b[33mChallenge abandoned.\x1b[0m`, ``);
+        return;
+      }
+      if (!["buy", "sell", "hold", "b", "s", "h"].includes(choice)) {
+        addLines(`\x1b[31mType BUY, SELL, or HOLD (or QUIT to exit)\x1b[0m`);
+        return;
+      }
+      const action = choice[0] === "b" ? "buy" : choice[0] === "s" ? "sell" : "hold";
+      const scenario = game.scenarios[game.round];
+      const move = scenario.move;
+      const newPrice = +(scenario.price * (1 + move / 100)).toFixed(2);
+
+      let points = 0;
+      let verdict = "";
+      if (action === "buy" && move > 0.3) {
+        points = Math.round(move * 100);
+        verdict = `\x1b[32m✓ GOOD BUY!\x1b[0m Price surged +${move.toFixed(2)}%`;
+      } else if (action === "sell" && move < -0.3) {
+        points = Math.round(Math.abs(move) * 100);
+        verdict = `\x1b[32m✓ GOOD SELL!\x1b[0m Dodged a ${move.toFixed(2)}% drop`;
+      } else if (action === "hold" && Math.abs(move) <= 0.3) {
+        points = 30;
+        verdict = `\x1b[32m✓ SMART HOLD.\x1b[0m Choppy market (${move >= 0 ? "+" : ""}${move.toFixed(2)}%)`;
+      } else if (action === "buy" && move < -0.3) {
+        points = -Math.round(Math.abs(move) * 60);
+        verdict = `\x1b[31m✗ BAD BUY.\x1b[0m Price dropped ${move.toFixed(2)}%`;
+      } else if (action === "sell" && move > 0.3) {
+        points = -Math.round(move * 40);
+        verdict = `\x1b[31m✗ MISSED RALLY.\x1b[0m Price pumped +${move.toFixed(2)}%`;
+      } else {
+        verdict = `\x1b[33m~ FLAT.\x1b[0m Price moved ${move >= 0 ? "+" : ""}${move.toFixed(2)}%`;
+      }
+
+      game.score += points;
+      if (points > 0) {
+        game.streak++;
+        game.bestStreak = Math.max(game.bestStreak, game.streak);
+      } else {
+        game.streak = 0;
+      }
+
+      const streakText = game.streak >= 3 ? ` \x1b[33m[${game.streak}x STREAK]\x1b[0m` : "";
+      const pointsText = points > 0 ? `\x1b[32m+${points}\x1b[0m` : points < 0 ? `\x1b[31m${points}\x1b[0m` : `\x1b[90m+0\x1b[0m`;
+
+      addLines(
+        `  ${verdict}  ${pointsText} pts${streakText}`,
+        `  $${scenario.price.toLocaleString()} → $${newPrice.toLocaleString()}`,
+        ``
+      );
+
+      game.round++;
+
+      if (game.round >= game.scenarios.length) {
+        gameRef.current = null;
+        const rank = game.score >= 700
+          ? "\x1b[33m1st\x1b[0m — AlphaStrat_v7 territory"
+          : game.score >= 500
+            ? "\x1b[32m3rd\x1b[0m — Solid trader"
+            : game.score >= 200
+              ? "\x1b[36m5th\x1b[0m — Room to improve"
+              : "\x1b[31m8th\x1b[0m — More practice needed";
+        addLines(
+          `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+          `\x1b[36m  CHALLENGE COMPLETE\x1b[0m`,
+          `\x1b[36m  ══════════════════════════════════════════\x1b[0m`,
+          `  Score:       ${game.score >= 0 ? "\x1b[32m" : "\x1b[31m"}${game.score} pts\x1b[0m`,
+          `  Best Streak: \x1b[33m${game.bestStreak}x\x1b[0m`,
+          `  League Rank: ${rank}`,
+          `  \x1b[90mPaper trading challenge — real leagues coming soon\x1b[0m`, ``
+        );
+        return;
+      }
+
+      const next = game.scenarios[game.round];
+      const rsiColor = next.rsi > 70 ? "\x1b[31m" : next.rsi < 30 ? "\x1b[32m" : "\x1b[33m";
+      addLines(
+        `\x1b[36m  ── Round ${game.round + 1}/${game.scenarios.length} ──\x1b[0m  Score: ${game.score >= 0 ? "\x1b[32m" : "\x1b[31m"}${game.score}\x1b[0m`,
+        `  \x1b[33m${next.pair}\x1b[0m @ $${next.price.toLocaleString()}  |  RSI: ${rsiColor}${next.rsi}\x1b[0m  |  Vol: ${next.volume}  |  Grok: \x1b[33m${next.grokSays}\x1b[0m`,
+        `  \x1b[90m→ Type\x1b[0m \x1b[32mBUY\x1b[0m\x1b[90m,\x1b[0m \x1b[31mSELL\x1b[0m\x1b[90m, or\x1b[0m \x1b[33mHOLD\x1b[0m`
+      );
+      return;
+    }
+
+    const parts = cmd.split("&&").map((s) => s.trim()).filter(Boolean);
+    for (const part of parts) {
+      await execSingle(part);
+    }
+  }, [execSingle, addLines]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    setHistory((prev) => [input, ...prev]);
+    setHistoryIdx(-1);
+    setTabMatches([]);
+    setTabIdx(0);
+    processCommand(input);
+    setInput("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // ── Tab completion ──
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const partial = input.trim().toLowerCase();
+      if (!partial) return;
+
+      // If already cycling through matches, advance
+      if (tabMatches.length > 0) {
+        const next = (tabIdx + 1) % tabMatches.length;
+        setTabIdx(next);
+        setInput(tabMatches[next]);
+        return;
+      }
+
+      // Find matches
+      const allNames = [...ALL_COMMANDS, ...Object.keys(aliases)];
+      const matches = allNames.filter((c) => c.startsWith(partial) && c !== partial);
+      if (matches.length === 1) {
+        setInput(matches[0]);
+      } else if (matches.length > 1) {
+        setTabMatches(matches);
+        setTabIdx(0);
+        setInput(matches[0]);
+        // Show options briefly
+        addLines(`\x1b[90mTab: ${matches.join("  ")}\x1b[0m`);
+      }
+      return;
+    }
+
+    // Reset tab state on any other key
+    if (tabMatches.length > 0 && e.key !== "Tab") {
+      setTabMatches([]);
+      setTabIdx(0);
+    }
+
+    // ── Arrow keys for history ──
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const next = Math.min(historyIdx + 1, history.length - 1);
+      setHistoryIdx(next);
+      if (history[next]) setInput(history[next]);
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const next = historyIdx - 1;
+      if (next < 0) {
+        setHistoryIdx(-1);
+        setInput("");
+      } else {
+        setHistoryIdx(next);
+        setInput(history[next]);
+      }
+    }
+
+    // ── Ctrl+C to stop watch ──
+    if (e.key === "c" && e.ctrlKey) {
+      e.preventDefault();
+      if (watchRef.current) {
+        clearInterval(watchRef.current);
+        watchRef.current = null;
+        addLines(`\x1b[33m^C\x1b[0m Watch stopped`);
+      }
+    }
+
+    // ── Ctrl+L to clear ──
+    if (e.key === "l" && e.ctrlKey) {
+      e.preventDefault();
+      setLines([]);
+    }
+  };
+
+  // Convert ANSI escape codes to colored HTML spans.
+  // Security: HTML is escaped FIRST, then only safe ANSI codes are converted to spans.
+  // Only known color codes in the allowlist produce HTML tags — everything else is stripped.
+  const ansiToHtml = (text: string) => {
+    const map: Record<string, string> = {
+      "30": "#1e1e2e", "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
+      "34": "#3b82f6", "35": "#a855f7", "36": "#06b6d4", "37": "#e2e8f0",
+      "90": "#64748b",
+    };
+    // Step 1: Escape all HTML entities (prevents XSS from any source)
+    let html = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+    // Step 2: Strip any ANSI sequences that aren't simple color codes
+    html = html.replace(/\x1b\[[0-9;]*[A-Za-z]/g, (match) => {
+      // Only allow SGR sequences (ending in 'm') through to the next step
+      if (match.endsWith("m")) return match;
+      return "";
+    });
+    // Step 3: Convert known ANSI color codes to safe spans
+    html = html.replace(/\x1b\[(\d+)m/g, (_match, code) => {
+      if (code === "0") return "</span>";
+      const color = map[code];
+      return color ? `<span style="color:${color}">` : "";
+    });
+    // Step 4: Close any uncapped spans (lines that open a color but have no \x1b[0m reset)
+    const openCount  = (html.match(/<span /g)  || []).length;
+    const closeCount = (html.match(/<\/span>/g) || []).length;
+    if (openCount > closeCount) html += "</span>".repeat(openCount - closeCount);
+    return html;
+  };
+
+  return (
+    <div
+      style={{
+        background: "var(--bg-terminal)",
+        border: "1px solid var(--border-color)",
+        borderRadius: "8px",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+      }}
+    >
+      {/* Title bar */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "8px 12px",
+          background: "#161b22",
+          borderBottom: "1px solid var(--border-color)",
+          fontSize: "12px",
+        }}
+      >
+        <span style={{ width: 12, height: 12, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+        <span style={{ width: 12, height: 12, borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
+        <span style={{ width: 12, height: 12, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+        <span style={{ marginLeft: "8px", color: "var(--text-secondary)" }}>
+          coreintent — zynthio commander
+        </span>
+      </div>
+
+      {/* Terminal output */}
+      <div
+        ref={termRef}
+        onClick={() => inputRef.current?.focus()}
+        style={{
+          flex: 1,
+          overflow: "auto",
+          padding: "12px",
+          fontFamily: "inherit",
+          fontSize: "13px",
+          lineHeight: "1.6",
+          whiteSpace: "pre-wrap",
+          cursor: "text",
+        }}
+      >
+        {lines.map((line, i) => (
+          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+        ))}
+
+        {/* Input line */}
+        <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}>
+          <span style={{ color: "var(--accent-green)", marginRight: "8px" }}>⚡</span>
+          <input
+            ref={inputRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            autoFocus
+            spellCheck={false}
+            style={{
+              flex: 1,
+              background: "transparent",
+              border: "none",
+              outline: "none",
+              color: "var(--text-primary)",
+              fontFamily: "inherit",
+              fontSize: "13px",
+              caretColor: "var(--accent-green)",
+            }}
+          />
+        </form>
+      </div>
+    </div>
+  );
 }
