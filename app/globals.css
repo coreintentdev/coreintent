@@ -1424,10 +1424,10 @@ html {
    ═══════════════════════════════════════════ */
 
 @keyframes signalFly {
-  0% { transform: translateX(-60px); opacity: 0; }
+  0% { left: -60px; opacity: 0; }
   8% { opacity: 1; }
   92% { opacity: 1; }
-  100% { transform: translateX(calc(100vw - 60px)); opacity: 0; }
+  100% { left: 100%; opacity: 0; }
 }
 
 @keyframes interceptFlash {
@@ -1507,67 +1507,6 @@ html {
   pointer-events: none;
   z-index: 4;
   animation: scoreFloat 0.8s ease-out forwards;
-}
-
-@keyframes electricBorder {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.electric-border {
-  position: relative;
-}
-
-.electric-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(
-    90deg,
-    #10b981 0%,
-    #3b82f6 25%,
-    #a855f7 50%,
-    #3b82f6 75%,
-    #10b981 100%
-  );
-  background-size: 300% 100%;
-  animation: electricBorder 3s linear infinite;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-@keyframes neonTrail {
-  0% { left: -20%; opacity: 0; }
-  10% { opacity: 0.8; }
-  90% { opacity: 0.8; }
-  100% { left: 120%; opacity: 0; }
-}
-
-.neon-trail {
-  position: relative;
-  overflow: hidden;
-}
-
-.neon-trail::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 20%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(16, 185, 129, 0.08),
-    transparent
-  );
-  animation: neonTrail 4s ease-in-out infinite;
-  pointer-events: none;
 }
 
 @media (max-width: 768px) {

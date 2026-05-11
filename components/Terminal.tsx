@@ -3126,7 +3126,7 @@ export default function Terminal() {
         `\x1b[36m  ║                                                  ║\x1b[0m`,
         `\x1b[36m  ║    \x1b[33mGREETINGS, PROFESSOR FALKEN.\x1b[36m                  ║\x1b[0m`,
         `\x1b[36m  ║                                                  ║\x1b[0m`,
-        `\x1b[36m  ║    \x1b[0mSHALL WE PLAY A GAME?\x1b[36m                        ║\x1b[0m`,
+        `\x1b[36m  ║    \x1b[0mSHALL WE PLAY A GAME?\x1b[36m                         ║\x1b[0m`,
         `\x1b[36m  ║                                                  ║\x1b[0m`,
         `\x1b[36m  ╚══════════════════════════════════════════════════╝\x1b[0m`,
         ``

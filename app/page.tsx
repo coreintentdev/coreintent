@@ -1389,7 +1389,7 @@ function SignalInterceptor() {
     const x = tokenRect.left - rect.left + tokenRect.width / 2;
     const y = tokenRect.top - rect.top + tokenRect.height / 2;
 
-    const signal = flying.find(s => s.id === id);
+    const signal = flyingRef.current.find(s => s.id === id);
     if (!signal) return;
 
     const points = Math.round(signal.signal.conf / 10) * 10;
@@ -1409,7 +1409,7 @@ function SignalInterceptor() {
     setTimeout(() => {
       setEffects(prev => prev.filter(ef => ef.id !== effectId));
     }, 800);
-  }, [flying]);
+  }, []);
 
   const accuracy = intercepted + missed > 0 ? Math.round((intercepted / (intercepted + missed)) * 100) : 0;
 
