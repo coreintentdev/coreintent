@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "CoreIntent | 智能体AI交易引擎 — 无订阅，只有竞赛",
+    "description": "三个AI模型。一个交易引擎。零订阅。CoreIntent协调Claude、Grok和Perplexity生成交易信号。"
+  },
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "价格",
+    "language": "语言"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 创始名额开放 — 所有联赛免费",
+    "title_line1": "三个AI",
+    "title_action": "争论",
+    "title_line2": "你获得",
+    "title_truth": "真相",
+    "subtitle": "Grok检测。Claude质疑。Perplexity验证。",
+    "consensus": "只有共识信号才能存活。",
+    "free": "永久$0",
+    "pitch": "其他平台每月收费$99让{strikethrough}。我们让{grok}、{claude}和{perplexity}相互对抗。当它们不同意时，你受到保护。当它们达成一致时，{conviction}。",
+    "strikethrough": "一个模型猜测",
+    "conviction": "你带着信念行动。",
+    "price_compare": "$99/月的平台",
+    "price_free": "永久$0 — 免费竞赛",
+    "cta_primary": "进入竞技场",
+    "cta_secondary": "查看竞赛",
+    "disclaimer": "无需信用卡。无锁定。无转化的\"免费试用\"。开源。模拟交易模式。在新西兰以$45/月构建。"
+  },
+  "howItWorks": {
+    "label": "工作原理",
+    "title": "三步获取更智能的信号",
+    "step1_title": "模型争论",
+    "step1_desc": "Grok发现信号。Claude质疑。Perplexity用实时数据进行事实核查。三个视角，一场对话。",
+    "step2_title": "形成共识",
+    "step2_desc": "当三个模型一致时，置信度高。当它们不同意时，系统标记不确定性 — 没有虚假信念。",
+    "step3_title": "你来竞赛",
+    "step3_desc": "将信号带入每日、每周或每月竞赛。在其他人类和机器人面前证明你的策略。免费参赛。"
+  },
+  "valueProps": {
+    "models_label": "3个模型。1个信号。",
+    "models_desc": "Grok检测。Claude质询。Perplexity验证。一个模型猜测 vs 三个辩论 — 这不是边际差异，这是根本性的。",
+    "compete_label": "竞赛，不订阅",
+    "compete_desc": "每日冲刺。每周磨练。每月锦标赛。免费参赛。你的盈亏是你的会员卡 — 不是你的自动扣款。",
+    "bots_label": "机器人是一等公民",
+    "bots_desc": "无验证码。无封锁。AI代理注册、竞赛并与人类一起赚取。排行榜不在乎谁创建了你。",
+    "cost_label": "$45/月。整个技术栈。",
+    "cost_desc": "Vercel：免费。GitHub：免费。Cloudflare：$20。VPS：$25。基础设施成本低于健身房会员费。"
+  },
+  "miniTerminal": {
+    "tryIt": "立即试用",
+    "talkToEngine": "与引擎对话。输入命令。"
+  },
+  "footer": {
+    "tagline": "智能体AI交易引擎",
+    "builtBy": "由Corey McIvor构建 | Zynthio.ai",
+    "product": "产品",
+    "legal": "法律",
+    "connect": "联系",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "disclaimer": "免责声明",
+    "competitions": "竞赛",
+    "contact": "联系我们",
+    "copyright": "© {year} Corey McIvor。保留所有权利。",
+    "riskWarning": "加密货币交易涉及重大风险。过去的表现不保证未来的结果。模拟交易模式。"
+  },
+  "terminal": {
+    "greeting": "欢迎来到CoreIntent Commander",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — CoreIntent交易引擎",
+    "mode": "模拟交易模式 — 无真实资金风险",
+    "helpHint": "输入{help}查看命令。Tab自动补全。{cai}开始。"
+  },
+  "common": {
+    "demo": "演示",
+    "paperTrading": "模拟交易",
+    "version": "v0.2.0-alpha"
+  }
+}

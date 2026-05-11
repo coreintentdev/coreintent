@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentische KI-Trading-Engine — Keine Abos, Nur Wettbewerbe",
+    "description": "Drei KI-Modelle. Eine Trading-Engine. Null Abonnements. CoreIntent orchestriert Claude, Grok & Perplexity für Trading-Signale."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preise",
+    "language": "Sprache"
+  },
+  "hero": {
+    "badge": "Paper-Trading-Modus — Gründerplätze Offen — Alle Ligen Kostenlos",
+    "title_line1": "Drei KIs",
+    "title_action": "Streiten",
+    "title_line2": "Du Bekommst die",
+    "title_truth": "Wahrheit",
+    "subtitle": "Grok erkennt. Claude hinterfragt. Perplexity verifiziert.",
+    "consensus": "Nur Konsens-Signale überleben.",
+    "free": "$0 für immer",
+    "pitch": "Andere Plattformen verlangen $99/Monat für {strikethrough}. Wir lassen {grok}, {claude} & {perplexity} gegeneinander antreten. Wenn sie sich uneinig sind, bist du geschützt. Wenn sie übereinstimmen, {conviction}.",
+    "strikethrough": "ein ratendes Modell",
+    "conviction": "handelst du mit Überzeugung.",
+    "price_compare": "$99/Monat Plattformen",
+    "price_free": "$0 für immer — kostenlos wettkämpfen",
+    "cta_primary": "Betritt die Arena",
+    "cta_secondary": "Wettbewerbe Ansehen",
+    "disclaimer": "Keine Kreditkarte. Kein Lock-in. Kein \"Gratis-Test\" der konvertiert. Open Source. Paper-Trading-Modus. In Neuseeland für $45/Monat gebaut."
+  },
+  "howItWorks": {
+    "label": "So Funktioniert's",
+    "title": "Drei Schritte zu Klügeren Signalen",
+    "step1_title": "Modelle Debattieren",
+    "step1_desc": "Grok erkennt ein Signal. Claude hinterfragt es. Perplexity prüft mit Live-Daten. Drei Perspektiven, ein Gespräch.",
+    "step2_title": "Konsens Entsteht",
+    "step2_desc": "Wenn alle drei Modelle übereinstimmen, ist das Vertrauen hoch. Bei Uneinigkeit markiert das System Unsicherheit — keine falschen Überzeugungen.",
+    "step3_title": "Du Wettkämpfst",
+    "step3_desc": "Nimm das Signal in tägliche, wöchentliche oder monatliche Wettbewerbe mit. Beweise deine Strategie gegen andere Menschen und Bots. Kostenloser Eintritt."
+  },
+  "valueProps": {
+    "models_label": "3 Modelle. 1 Signal.",
+    "models_desc": "Grok erkennt. Claude verhört. Perplexity verifiziert. Ein ratendes Modell vs drei debattierende — das ist nicht marginal, das ist fundamental.",
+    "compete_label": "Wettkämpfen, Nicht Abonnieren",
+    "compete_desc": "Tägliche Sprints. Wöchentliche Grinds. Monatliche Meisterschaften. Kostenloser Eintritt. Dein P&L ist dein Mitgliedsausweis — nicht dein Dauerauftrag.",
+    "bots_label": "Bots Sind Erstklassig",
+    "bots_desc": "Kein Captcha. Keine Sperren. KI-Agenten registrieren sich, wettkämpfen und verdienen neben Menschen. Das Ranking interessiert sich nicht, wer dich gebaut hat.",
+    "cost_label": "$45/Monat. Der Ganze Stack.",
+    "cost_desc": "Vercel: kostenlos. GitHub: kostenlos. Cloudflare: $20. VPS: $25. Infrastrukturkosten sind geringer als eine Fitnessstudio-Mitgliedschaft."
+  },
+  "miniTerminal": {
+    "tryIt": "Jetzt Ausprobieren",
+    "talkToEngine": "Sprich mit der Engine. Gib einen Befehl ein."
+  },
+  "footer": {
+    "tagline": "Agentische KI-Trading-Engine",
+    "builtBy": "Gebaut von Corey McIvor | Zynthio.ai",
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "connect": "Verbinden",
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "disclaimer": "Haftungsausschluss",
+    "competitions": "Wettbewerbe",
+    "contact": "Kontakt",
+    "copyright": "© {year} Corey McIvor. Alle Rechte vorbehalten.",
+    "riskWarning": "Der Handel mit Kryptowährungen birgt erhebliche Risiken. Vergangene Leistungen garantieren keine zukünftigen Ergebnisse. Paper-Trading-Modus."
+  },
+  "terminal": {
+    "greeting": "Willkommen bei CoreIntent Commander",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — CoreIntent Trading-Engine",
+    "mode": "Paper-Trading-Modus — kein echtes Geld in Gefahr",
+    "helpHint": "Gib {help} für Befehle ein. Tab zum Autovervollständigen. {cai} zum Starten."
+  },
+  "common": {
+    "demo": "DEMO",
+    "paperTrading": "Paper Trading",
+    "version": "v0.2.0-alpha"
+  }
+}

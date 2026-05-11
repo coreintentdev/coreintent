@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -1425,8 +1426,8 @@ export default function Home() {
               >
                 Enter the Arena &rarr;
               </button>
-              <a
-                href="/pricing"
+              <Link
+                href="/en/pricing"
                 className="cta-secondary"
                 style={{
                   padding: "18px 44px",
@@ -1442,7 +1443,7 @@ export default function Home() {
                 }}
               >
                 See the Competitions
-              </a>
+              </Link>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "480px" }}>
               No credit card. No lock-in. No &quot;free trial&quot; that converts.
@@ -1560,8 +1561,8 @@ export default function Home() {
                 Priority placement when leagues launch. Permanent founding badge.
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
-              <a
-                href="/pricing"
+              <Link
+                href="/en/pricing"
                 style={{
                   display: "inline-block",
                   padding: "10px 24px",
@@ -1575,7 +1576,7 @@ export default function Home() {
                 }}
               >
                 Claim Founding Status &rarr;
-              </a>
+              </Link>
             </div>
             </ScrollReveal>
 

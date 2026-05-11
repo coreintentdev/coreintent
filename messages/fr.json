@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "CoreIntent | Moteur de Trading IA Agentique — Sans Abonnement, Que des Compétitions",
+    "description": "Trois modèles d'IA. Un moteur de trading. Zéro abonnement. CoreIntent orchestre Claude, Grok et Perplexity pour les signaux de trading."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Démo",
+    "stack": "Stack",
+    "pricing": "Tarifs",
+    "language": "Langue"
+  },
+  "hero": {
+    "badge": "Mode Paper Trading — Places Fondatrices Ouvertes — Toutes les Ligues Gratuites",
+    "title_line1": "Trois IA",
+    "title_action": "Débattent",
+    "title_line2": "Vous Obtenez la",
+    "title_truth": "Vérité",
+    "subtitle": "Grok détecte. Claude questionne. Perplexity vérifie.",
+    "consensus": "Seuls les signaux de consensus survivent.",
+    "free": "0$ pour toujours",
+    "pitch": "D'autres plateformes facturent 99$/mois pour {strikethrough}. Nous opposons {grok}, {claude} et {perplexity} les uns aux autres. Quand ils ne sont pas d'accord, vous êtes protégé. Quand ils s'accordent, {conviction}.",
+    "strikethrough": "un seul modèle qui devine",
+    "conviction": "vous agissez avec conviction.",
+    "price_compare": "Plateformes à 99$/mois",
+    "price_free": "0$ pour toujours — compétition gratuite",
+    "cta_primary": "Entrer dans l'Arène",
+    "cta_secondary": "Voir les Compétitions",
+    "disclaimer": "Sans carte bancaire. Sans engagement. Sans \"essai gratuit\" qui se convertit. Open source. Mode paper trading. Construit en Nouvelle-Zélande à 45$/mois."
+  },
+  "howItWorks": {
+    "label": "Comment Ça Marche",
+    "title": "Trois Étapes Vers des Signaux Plus Intelligents",
+    "step1_title": "Les Modèles Débattent",
+    "step1_desc": "Grok repère un signal. Claude le questionne. Perplexity vérifie avec des données en direct. Trois perspectives, une conversation.",
+    "step2_title": "Le Consensus Se Forme",
+    "step2_desc": "Quand les trois modèles s'accordent, la confiance est élevée. Quand ils divergent, le système signale l'incertitude — pas de fausse conviction.",
+    "step3_title": "Vous Compétitionnez",
+    "step3_desc": "Prenez le signal dans des compétitions quotidiennes, hebdomadaires ou mensuelles. Prouvez votre stratégie face aux autres humains et bots. Entrée gratuite."
+  },
+  "valueProps": {
+    "models_label": "3 Modèles. 1 Signal.",
+    "models_desc": "Grok détecte. Claude interroge. Perplexity vérifie. Un modèle qui devine vs trois qui débattent — ce n'est pas marginal, c'est fondamental.",
+    "compete_label": "Compétitionnez, Ne Vous Abonnez Pas",
+    "compete_desc": "Sprints quotidiens. Grinds hebdomadaires. Championnats mensuels. Entrée gratuite. Votre P&L est votre carte de membre — pas votre prélèvement automatique.",
+    "bots_label": "Les Bots Sont Première Classe",
+    "bots_desc": "Pas de captcha. Pas de blocages. Les agents IA s'inscrivent, compétitionnent et gagnent aux côtés des humains.",
+    "cost_label": "45$/mois. Tout le Stack.",
+    "cost_desc": "Vercel : gratuit. GitHub : gratuit. Cloudflare : 20$. VPS : 25$. L'infrastructure coûte moins qu'un abonnement salle de sport."
+  },
+  "miniTerminal": {
+    "tryIt": "Essayez Maintenant",
+    "talkToEngine": "Parlez au moteur. Tapez une commande."
+  },
+  "footer": {
+    "tagline": "Moteur de Trading IA Agentique",
+    "builtBy": "Construit par Corey McIvor | Zynthio.ai",
+    "product": "Produit",
+    "legal": "Juridique",
+    "connect": "Contact",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "disclaimer": "Avertissement",
+    "competitions": "Compétitions",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. Tous droits réservés.",
+    "riskWarning": "Le trading de cryptomonnaies comporte des risques significatifs. Les performances passées ne garantissent pas les résultats futurs. Mode paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenue sur CoreIntent Commander",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — Moteur de Trading CoreIntent",
+    "mode": "Mode paper trading — aucun argent réel en jeu",
+    "helpHint": "Tapez {help} pour les commandes. Tab pour l'autocomplétion. {cai} pour commencer."
+  },
+  "common": {
+    "demo": "DÉMO",
+    "paperTrading": "Paper Trading",
+    "version": "v0.2.0-alpha"
+  }
+}

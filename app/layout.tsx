@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import { headers } from "next/headers";
+import { isValidLocale, getDir, getHtmlLang, LOCALES } from "@/lib/i18n";
+import HreflangTags from "@/components/HreflangTags";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -256,17 +259,36 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const localeHeader = headersList.get("x-locale") ?? "en";
+  const locale = isValidLocale(localeHeader) ? localeHeader : "en";
+  const dir = getDir(locale);
+  const htmlLang = getHtmlLang(locale);
+
+  const jsonLdLocalized = {
+    ...jsonLd,
+    "@graph": jsonLd["@graph"].map((item: Record<string, unknown>) => {
+      if (item["@type"] === "WebApplication" || item["@type"] === "WebSite") {
+        return { ...item, inLanguage: htmlLang, availableLanguage: LOCALES };
+      }
+      return item;
+    }),
+  };
+
   return (
-    <html lang="en-NZ" dir="ltr" className={jetbrainsMono.variable}>
+    <html lang={htmlLang} dir={dir} className={jetbrainsMono.variable}>
+      <head>
+        <HreflangTags />
+      </head>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalized).replace(/</g, "\\u003c") }}
         />
         {children}
       </body>
