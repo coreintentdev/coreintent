@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslation } from "@/lib/i18n-context";
 
 function LaunchCountdown() {
   const [now, setNow] = useState(Date.now());
@@ -109,6 +110,8 @@ const STEPS = [
 ];
 
 export default function PricingPage() {
+  const { locale } = useTranslation();
+  const prefix = `/${locale}`;
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
@@ -826,7 +829,7 @@ export default function PricingPage() {
                 {
                   name: "Alex R.",
                   role: "Algorithmic Trader",
-                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn’t support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
+                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
                   color: "#10b981",
                 },
                 {
@@ -838,13 +841,13 @@ export default function PricingPage() {
                 {
                   name: "Priya S.",
                   role: "Independent Trader",
-                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent’s multi-model consensus hasn’t cost me a cent. The platform earns my attention, not my autopay.",
+                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
                   color: "#a855f7",
                 },
                 {
                   name: "Jordan K.",
                   role: "Quant Developer",
-                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn’t a marketing trick — it’s just math.",
+                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
                   color: "#f59e0b",
                 },
               ].map((t) => (
@@ -957,7 +960,7 @@ export default function PricingPage() {
             Risk warnings: Trading cryptocurrency involves significant risk. Past performance does not guarantee future results.
             <br />
             See our{" "}
-            <Link href="/en/disclaimer" style={{ color: "var(--accent-blue)" }}>
+            <Link href={`${prefix}/disclaimer`} style={{ color: "var(--accent-blue)" }}>
               full disclaimer
             </Link>{" "}
             for more information.
