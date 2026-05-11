@@ -1306,6 +1306,7 @@ function SignalInterceptor() {
   const [highScore, setHighScore] = useState(0);
   const nextId = useRef(0);
   const fieldRef = useRef<HTMLDivElement>(null);
+  const flyingRef = useRef<FlyingSignal[]>([]);
   const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const spawnTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const gameStartRef = useRef(0);
@@ -1314,7 +1315,11 @@ function SignalInterceptor() {
   const spawnSignal = useCallback(() => {
     const sig = INTERCEPTOR_SIGNALS[Math.floor(Math.random() * INTERCEPTOR_SIGNALS.length)];
     const y = 15 + Math.random() * 65;
-    setFlying(prev => [...prev, { id: nextId.current++, signal: sig, y, startTime: Date.now() }]);
+    setFlying(prev => {
+      const next = [...prev, { id: nextId.current++, signal: sig, y, startTime: Date.now() }];
+      flyingRef.current = next;
+      return next;
+    });
   }, []);
 
   const startGame = useCallback(() => {
@@ -1322,6 +1327,7 @@ function SignalInterceptor() {
     setIntercepted(0);
     setMissed(0);
     setFlying([]);
+    flyingRef.current = [];
     setEffects([]);
     setGameOver(false);
     setStarted(true);
@@ -1356,12 +1362,11 @@ function SignalInterceptor() {
     if (!started) return;
     const cleanup = setInterval(() => {
       const now = Date.now();
-      let expiredCount = 0;
-      setFlying(prev => {
-        const alive = prev.filter(s => (now - s.startTime) <= s.signal.speed * 1000);
-        expiredCount = prev.length - alive.length;
-        return alive;
-      });
+      const prev = flyingRef.current;
+      const alive = prev.filter(s => (now - s.startTime) <= s.signal.speed * 1000);
+      const expiredCount = prev.length - alive.length;
+      flyingRef.current = alive;
+      setFlying(alive);
       if (expiredCount > 0) {
         setMissed(m => m + expiredCount);
       }
@@ -1389,7 +1394,8 @@ function SignalInterceptor() {
 
     const points = Math.round(signal.signal.conf / 10) * 10;
 
-    setFlying(prev => prev.filter(s => s.id !== id));
+    flyingRef.current = flyingRef.current.filter(s => s.id !== id);
+    setFlying(flyingRef.current);
     setIntercepted(prev => prev + 1);
     setScore(prev => prev + points);
     const effectId = nextId.current++;
