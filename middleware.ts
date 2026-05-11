@@ -9,9 +9,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 /** Security headers applied to every /api response (OPTIONS and regular). */
 const SECURITY_HEADERS: Record<string, string> = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options":        "DENY",
-  "Referrer-Policy":        "strict-origin-when-cross-origin",
+  "X-Content-Type-Options":    "nosniff",
+  "X-Frame-Options":           "DENY",
+  "Referrer-Policy":           "strict-origin-when-cross-origin",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
 
 export function middleware(req: NextRequest): NextResponse | undefined {

@@ -288,6 +288,21 @@ export async function callGrokSignal(
   return callGrok(prompt, GROK_SYSTEM, options);
 }
 
+/**
+ * Convenience wrapper for Grok market and social sentiment analysis.
+ * Uses GROK_SENTIMENT_SYSTEM — distinct from the trading-signal system prompt.
+ * Pre-wires the prompt so callers don't need to import it.
+ *
+ * @example
+ * const s = await callGrokSentiment("BTC/USD sentiment on X/Twitter and Reddit.");
+ */
+export async function callGrokSentiment(
+  prompt: string,
+  options?: { maxTokens?: number }
+): Promise<AIResponse> {
+  return callGrok(prompt, GROK_SENTIMENT_SYSTEM, options);
+}
+
 // ---------------------------------------------------------------------------
 // CLAUDE — Anthropic — Deep analysis, risk assessment, orchestration
 // ---------------------------------------------------------------------------
@@ -335,12 +350,12 @@ export const CLAUDE_DEFAULT_SYSTEM =
  *
  * @param prompt   User-side message.
  * @param system   Optional override for the system prompt. Caching still applies.
- * @param options  Optional overrides — maxTokens and model (defaults to sonnet-4-6).
+ * @param options  Optional overrides — maxTokens, model (defaults to sonnet-4-6), temperature.
  */
 export async function callClaude(
   prompt: string,
   system?: string,
-  options?: { maxTokens?: number; model?: ClaudeModelId }
+  options?: { maxTokens?: number; model?: ClaudeModelId; temperature?: number }
 ): Promise<AIResponse> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (isDemoKey(key, "sk-ant-xxx")) {
@@ -373,6 +388,7 @@ export async function callClaude(
         body: JSON.stringify({
           model:      modelId,
           max_tokens: options?.maxTokens ?? 1024,
+          temperature: options?.temperature ?? 0.3,
           system: [
             {
               type:          "text",
@@ -425,7 +441,7 @@ export async function callClaude(
 export async function callClaudeDeep(
   prompt: string,
   system?: string,
-  options?: { maxTokens?: number; model?: ClaudeModelId }
+  options?: { maxTokens?: number; model?: ClaudeModelId; temperature?: number }
 ): Promise<AIResponse> {
   return callClaude(prompt, system, { ...options, model: options?.model ?? "claude-opus-4-7" });
 }
@@ -564,6 +580,34 @@ export const GROK_CONTENT_SYSTEM =
   "- NZ-based platform — avoid AU-specific regulatory references.\n" +
   "- Output the content only — no preamble, no labels like 'Here is your tweet:'.\n" +
   "- Respect platform character limits when provided in the spec.";
+
+/**
+ * Grok system prompt for market and social sentiment analysis.
+ * Distinct from GROK_SYSTEM (which enforces trading-signal output format) —
+ * this prompt focuses on scored sentiment across social and news sources.
+ * Pass as the `system` arg to callGrok() (or use callGrokSentiment()).
+ * Keep stable between requests to benefit from any server-side caching.
+ */
+export const GROK_SENTIMENT_SYSTEM =
+  "You are CoreIntent's sentiment analysis AI for Zynthio.ai (paper trading mode, NZ).\n\n" +
+  "Sentiment output format:\n" +
+  "  ## Social Sentiment\n" +
+  "  - X/Twitter: <tone summary and key themes>\n" +
+  "  - Reddit: <tone summary and key themes>\n\n" +
+  "  ## News Sentiment\n" +
+  "  - Positive signals: <summary>\n" +
+  "  - Negative signals: <summary>\n" +
+  "  - Overall news tone: positive / negative / neutral\n\n" +
+  "  ## Overall Score\n" +
+  "  <integer 0–10, where 0 = extreme bearish, 5 = neutral, 10 = extreme bullish>\n" +
+  "  Rationale: <2–3 sentences summarising the key drivers>\n\n" +
+  "Output rules:\n" +
+  "- Clearly separate confirmed data from speculation.\n" +
+  "- Flag data gaps: [UNCERTAIN: <reason>].\n" +
+  "- Prioritise sources from the last 48 hours for crypto; 7 days for equities.\n" +
+  "- Never fabricate engagement stats, follower counts, or news headlines.\n" +
+  "- If insufficient data, output 'INSUFFICIENT DATA: <reason>' — do not guess a score.\n" +
+  "- NZ jurisdiction — use NZ FMA for regulatory references. Never reference ASIC.";
 
 /**
  * Perplexity system prompt for domain/web security checks (F18 Security Layer).

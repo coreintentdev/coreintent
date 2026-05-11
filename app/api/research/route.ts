@@ -10,7 +10,7 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.research in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callAIsParallel, callPerplexity, callClaudeDeep, callGrok, validateAiContent, sanitizeForPrompt, CLAUDE_SELF_AWARENESS_SYSTEM, GROK_SYSTEM, PERPLEXITY_SYSTEM, type AIResponse } from "@/lib/ai";
+import { callAIsParallel, callPerplexity, callClaudeDeep, callGrok, callGrokSentiment, validateAiContent, sanitizeForPrompt, CLAUDE_SELF_AWARENESS_SYSTEM, GROK_SYSTEM, PERPLEXITY_SYSTEM, type AIResponse } from "@/lib/ai";
 import { ok, badRequest, gatewayError, serviceUnavailable, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ResearchTask = "research" | "analysis" | "signal" | "sentiment";
@@ -114,12 +114,11 @@ export async function POST(req: NextRequest) {
         `Do not fabricate price data — flag as INSUFFICIENT DATA if current market data is unavailable.`,
         GROK_SYSTEM
       ),
-      sentiment: () => callGrok(
+      sentiment: () => callGrokSentiment(
         `Analyze market and social sentiment for: "${safeTopic}". ` +
-        `Cover: (1) Social media tone (X/Twitter, Reddit), (2) News sentiment (positive/negative/neutral), ` +
-        `(3) Overall sentiment score (0–10, where 10 = maximum bullish). ` +
-        `Flag any data gaps with [UNCERTAIN: <reason>].`,
-        GROK_SYSTEM
+        `Cover X/Twitter, Reddit, and recent news. ` +
+        `Provide an overall sentiment score (0–10). ` +
+        `Flag any data gaps with [UNCERTAIN: <reason>].`
       ),
     };
 
