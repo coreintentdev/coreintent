@@ -1306,6 +1306,7 @@ function SignalInterceptor() {
   const [highScore, setHighScore] = useState(0);
   const nextId = useRef(0);
   const fieldRef = useRef<HTMLDivElement>(null);
+  const gameAreaRef = useRef<HTMLDivElement>(null);
   const flyingRef = useRef<FlyingSignal[]>([]);
   const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const spawnTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -1315,14 +1316,14 @@ function SignalInterceptor() {
   const spawnSignal = useCallback(() => {
     const sig = INTERCEPTOR_SIGNALS[Math.floor(Math.random() * INTERCEPTOR_SIGNALS.length)];
     const y = 15 + Math.random() * 65;
-    setFlying(prev => {
-      const next = [...prev, { id: nextId.current++, signal: sig, y, startTime: Date.now() }];
-      flyingRef.current = next;
-      return next;
-    });
+    const newSignal = { id: nextId.current++, signal: sig, y, startTime: Date.now() };
+    flyingRef.current = [...flyingRef.current, newSignal];
+    setFlying(flyingRef.current);
   }, []);
 
   const startGame = useCallback(() => {
+    if (spawnTimerRef.current) clearInterval(spawnTimerRef.current);
+    if (gameTimerRef.current) clearInterval(gameTimerRef.current);
     setScore(0);
     setIntercepted(0);
     setMissed(0);
@@ -1382,7 +1383,7 @@ function SignalInterceptor() {
 
   const handleIntercept = useCallback((id: number, e: React.MouseEvent | React.TouchEvent) => {
     const target = e.currentTarget as HTMLElement;
-    const rect = fieldRef.current?.getBoundingClientRect();
+    const rect = gameAreaRef.current?.getBoundingClientRect();
     if (!rect) return;
 
     const tokenRect = target.getBoundingClientRect();
@@ -1476,7 +1477,7 @@ function SignalInterceptor() {
         </div>
 
         {/* Game field */}
-        <div style={{ position: "relative", minHeight: "200px" }}>
+        <div ref={gameAreaRef} style={{ position: "relative", minHeight: "200px" }}>
           {!started && !gameOver && (
             <div style={{
               position: "absolute",
