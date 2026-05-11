@@ -3145,7 +3145,6 @@ export default function Terminal() {
 
       const models = ["Grok", "Claude", "Perplexity"];
       const modelColors = ["\x1b[31m", "\x1b[35m", "\x1b[34m"];
-      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT"];
       const scenarios = [
         {
           pair: "BTC/USDT", price: 67420,

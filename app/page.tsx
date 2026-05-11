@@ -1390,15 +1390,16 @@ function SignalInterceptor() {
     setFlying(prev => prev.filter(s => s.id !== id));
     setIntercepted(prev => prev + 1);
     setScore(prev => prev + points);
+    const effectId = nextId.current++;
     setEffects(prev => [...prev, {
-      id: nextId.current++,
+      id: effectId,
       x, y,
       color: signal.signal.color,
       points,
     }]);
 
     setTimeout(() => {
-      setEffects(prev => prev.filter(ef => ef.id !== id));
+      setEffects(prev => prev.filter(ef => ef.id !== effectId));
     }, 800);
   }, [flying]);
 
@@ -1550,8 +1551,6 @@ function SignalInterceptor() {
 
           {/* Flying signals */}
           {flying.map(s => {
-            const elapsed = (Date.now() - s.startTime) / 1000;
-            const progress = elapsed / s.signal.speed;
             const dirColor = s.signal.dir === "LONG" ? "#10b981" : s.signal.dir === "SHORT" ? "#ef4444" : "#f59e0b";
             const dirArrow = s.signal.dir === "LONG" ? "▲" : s.signal.dir === "SHORT" ? "▼" : "◆";
 
@@ -1562,12 +1561,11 @@ function SignalInterceptor() {
                 onClick={(e) => handleIntercept(s.id, e)}
                 style={{
                   top: `${s.y}%`,
-                  left: `${progress * 100}%`,
+                  left: 0,
                   background: `${s.signal.color}18`,
                   border: `1px solid ${s.signal.color}44`,
                   color: s.signal.color,
                   animation: `signalFly ${s.signal.speed}s linear forwards`,
-                  animationDelay: "0s",
                 }}
               >
                 <span style={{ marginRight: "6px", color: dirColor }}>{dirArrow}</span>
