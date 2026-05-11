@@ -1759,6 +1759,45 @@ export default function Home() {
             </div>
             </ScrollReveal>
 
+            {/* Built With — Technology Partners */}
+            <ScrollReveal>
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Built with industry-leading technology
+              </div>
+              <div
+                style={{
+                  padding: "20px 24px",
+                  background: "var(--bg-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "32px",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
+                {[
+                  { name: "Next.js 15", detail: "App Router", color: "#ffffff" },
+                  { name: "TypeScript", detail: "Strict Mode", color: "#3178c6" },
+                  { name: "Vercel", detail: "Edge Network", color: "#ffffff" },
+                  { name: "Cloudflare", detail: "WAF + CDN", color: "#f6821f" },
+                  { name: "GitHub", detail: "Open Source", color: "#ffffff" },
+                ].map((tech) => (
+                  <div key={tech.name} style={{ textAlign: "center", minWidth: "80px" }}>
+                    <div style={{ fontSize: "13px", fontWeight: "bold", color: tech.color, marginBottom: "2px" }}>
+                      {tech.name}
+                    </div>
+                    <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+                      {tech.detail}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            </ScrollReveal>
+
             {/* Leaderboard Preview — DEMO */}
             <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
