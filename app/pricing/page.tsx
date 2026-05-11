@@ -1653,28 +1653,24 @@ export default function PricingPage() {
                     them: "$297",
                     us: "$0",
                     saved: "$297",
-                    num: 297,
                   },
                   {
                     period: "6 Months",
                     them: "$594",
                     us: "$0",
                     saved: "$594",
-                    num: 594,
                   },
                   {
                     period: "1 Year",
                     them: "$1,188",
                     us: "$0",
                     saved: "$1,188",
-                    num: 1188,
                   },
                   {
                     period: "2 Years",
                     them: "$2,376",
                     us: "$0",
                     saved: "$2,376",
-                    num: 2376,
                   },
                 ].map((calc) => (
                   <div

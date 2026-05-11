@@ -406,7 +406,7 @@ export async function callClaude(
     return {
       source:  "claude",
       model:   data.model ?? modelId,
-      content: data.content?.[0]?.text ?? "",
+      content: textBlock?.text ?? "",
       live: true,
     };
   } catch (e) {
