@@ -1268,6 +1268,350 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Signal Interceptor Game ─── */
+const INTERCEPTOR_SIGNALS = [
+  { pair: "BTC/USDT", dir: "LONG", conf: 87, speed: 6, color: "#f7931a" },
+  { pair: "ETH/USDT", dir: "SHORT", conf: 72, speed: 5, color: "#627eea" },
+  { pair: "SOL/USDT", dir: "LONG", conf: 91, speed: 4, color: "#14f195" },
+  { pair: "AVAX/USDT", dir: "HOLD", conf: 65, speed: 7, color: "#e84142" },
+  { pair: "LINK/USDT", dir: "LONG", conf: 83, speed: 5.5, color: "#2a5ada" },
+  { pair: "DOT/USDT", dir: "SHORT", conf: 68, speed: 6.5, color: "#e6007a" },
+  { pair: "DOGE/USDT", dir: "LONG", conf: 76, speed: 4.5, color: "#c2a633" },
+  { pair: "ADA/USDT", dir: "HOLD", conf: 58, speed: 7.5, color: "#0033ad" },
+];
+
+type FlyingSignal = {
+  id: number;
+  signal: typeof INTERCEPTOR_SIGNALS[number];
+  y: number;
+  startTime: number;
+};
+
+type InterceptEffect = {
+  id: number;
+  x: number;
+  y: number;
+  color: string;
+  points: number;
+};
+
+function SignalInterceptor() {
+  const [score, setScore] = useState(0);
+  const [intercepted, setIntercepted] = useState(0);
+  const [missed, setMissed] = useState(0);
+  const [flying, setFlying] = useState<FlyingSignal[]>([]);
+  const [effects, setEffects] = useState<InterceptEffect[]>([]);
+  const [started, setStarted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [highScore, setHighScore] = useState(0);
+  const nextId = useRef(0);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const spawnTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const gameStartRef = useRef(0);
+  const [timeLeft, setTimeLeft] = useState(30);
+
+  const spawnSignal = useCallback(() => {
+    const sig = INTERCEPTOR_SIGNALS[Math.floor(Math.random() * INTERCEPTOR_SIGNALS.length)];
+    const y = 15 + Math.random() * 65;
+    setFlying(prev => [...prev, { id: nextId.current++, signal: sig, y, startTime: Date.now() }]);
+  }, []);
+
+  const startGame = useCallback(() => {
+    setScore(0);
+    setIntercepted(0);
+    setMissed(0);
+    setFlying([]);
+    setEffects([]);
+    setGameOver(false);
+    setStarted(true);
+    setTimeLeft(30);
+    gameStartRef.current = Date.now();
+
+    spawnTimerRef.current = setInterval(() => {
+      spawnSignal();
+    }, 1200);
+
+    gameTimerRef.current = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - gameStartRef.current) / 1000);
+      const remaining = Math.max(0, 30 - elapsed);
+      setTimeLeft(remaining);
+      if (remaining <= 0) {
+        if (spawnTimerRef.current) clearInterval(spawnTimerRef.current);
+        if (gameTimerRef.current) clearInterval(gameTimerRef.current);
+        setGameOver(true);
+        setStarted(false);
+      }
+    }, 250);
+  }, [spawnSignal]);
+
+  useEffect(() => {
+    return () => {
+      if (spawnTimerRef.current) clearInterval(spawnTimerRef.current);
+      if (gameTimerRef.current) clearInterval(gameTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const cleanup = setInterval(() => {
+      setFlying(prev => {
+        const now = Date.now();
+        const expired = prev.filter(s => (now - s.startTime) > s.signal.speed * 1000);
+        if (expired.length > 0) {
+          setMissed(m => m + expired.length);
+        }
+        return prev.filter(s => (now - s.startTime) <= s.signal.speed * 1000);
+      });
+    }, 500);
+    return () => clearInterval(cleanup);
+  }, [started]);
+
+  useEffect(() => {
+    if (gameOver && score > highScore) {
+      setHighScore(score);
+    }
+  }, [gameOver, score, highScore]);
+
+  const handleIntercept = useCallback((id: number, e: React.MouseEvent | React.TouchEvent) => {
+    const target = e.currentTarget as HTMLElement;
+    const rect = fieldRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const tokenRect = target.getBoundingClientRect();
+    const x = tokenRect.left - rect.left + tokenRect.width / 2;
+    const y = tokenRect.top - rect.top + tokenRect.height / 2;
+
+    const signal = flying.find(s => s.id === id);
+    if (!signal) return;
+
+    const points = Math.round(signal.signal.conf / 10) * 10;
+
+    setFlying(prev => prev.filter(s => s.id !== id));
+    setIntercepted(prev => prev + 1);
+    setScore(prev => prev + points);
+    setEffects(prev => [...prev, {
+      id: nextId.current++,
+      x, y,
+      color: signal.signal.color,
+      points,
+    }]);
+
+    setTimeout(() => {
+      setEffects(prev => prev.filter(ef => ef.id !== id));
+    }, 800);
+  }, [flying]);
+
+  const accuracy = intercepted + missed > 0 ? Math.round((intercepted / (intercepted + missed)) * 100) : 0;
+
+  return (
+    <div style={{ marginTop: "36px" }}>
+      <div style={{
+        fontSize: "10px",
+        color: "var(--text-secondary)",
+        textTransform: "uppercase",
+        letterSpacing: "0.5px",
+        marginBottom: "8px",
+        textAlign: "center",
+      }}>
+        Signal Interceptor
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b", marginLeft: 8, verticalAlign: "middle" }} />
+      </div>
+      <h3 style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px", textAlign: "center" }}>
+        Catch signals before they escape.
+      </h3>
+      <p style={{ fontSize: "12px", color: "var(--text-secondary)", textAlign: "center", marginBottom: "16px" }}>
+        Click the flying signals to intercept them. Higher confidence = more points.
+      </p>
+
+      <div
+        ref={fieldRef}
+        className="signal-game-field"
+        style={{
+          background: "var(--bg-terminal)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          minHeight: "260px",
+          maxWidth: "700px",
+          margin: "0 auto",
+          position: "relative",
+        }}
+      >
+        {/* HUD */}
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "10px 16px",
+          borderBottom: "1px solid var(--border-color)",
+          fontSize: "11px",
+          position: "relative",
+          zIndex: 5,
+          background: "rgba(13, 17, 23, 0.9)",
+        }}>
+          <div style={{ display: "flex", gap: "16px" }}>
+            <span style={{ color: "#10b981" }}>SCORE: <strong>{score}</strong></span>
+            <span style={{ color: "#3b82f6" }}>HIT: <strong>{intercepted}</strong></span>
+            <span style={{ color: "#ef4444" }}>MISS: <strong>{missed}</strong></span>
+          </div>
+          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+            <span style={{ color: accuracy >= 70 ? "#10b981" : accuracy >= 40 ? "#f59e0b" : "#ef4444" }}>
+              ACC: <strong>{accuracy}%</strong>
+            </span>
+            {started && (
+              <span style={{ color: timeLeft <= 10 ? "#ef4444" : "#f59e0b", fontWeight: "bold" }}>
+                {timeLeft}s
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Game field */}
+        <div style={{ position: "relative", minHeight: "200px" }}>
+          {!started && !gameOver && (
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 10,
+            }}>
+              <button
+                onClick={startGame}
+                className="cta-primary"
+                style={{
+                  padding: "14px 36px",
+                  background: "var(--accent-green)",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "15px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Start Intercepting
+              </button>
+              {highScore > 0 && (
+                <div style={{ marginTop: "10px", fontSize: "11px", color: "#f59e0b" }}>
+                  Best: {highScore} pts
+                </div>
+              )}
+            </div>
+          )}
+
+          {gameOver && (
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 10,
+              background: "rgba(10, 14, 23, 0.85)",
+              borderRadius: "0 0 10px 10px",
+            }}>
+              <div style={{ fontSize: "24px", fontWeight: "bold", color: "#f59e0b", marginBottom: "4px" }}>
+                {score} pts
+              </div>
+              <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "4px" }}>
+                {intercepted} intercepted | {missed} escaped | {accuracy}% accuracy
+              </div>
+              <div style={{
+                fontSize: "13px",
+                fontWeight: "bold",
+                marginBottom: "12px",
+                color: score >= 500 ? "#10b981" : score >= 300 ? "#f59e0b" : score >= 100 ? "#3b82f6" : "#ef4444",
+              }}>
+                {score >= 500 ? "ELITE INTERCEPTOR" : score >= 300 ? "SIGNAL HUNTER" : score >= 100 ? "ROOKIE TRACKER" : "SIGNAL NOISE"}
+              </div>
+              <button
+                onClick={startGame}
+                style={{
+                  padding: "10px 28px",
+                  background: "transparent",
+                  color: "var(--accent-green)",
+                  border: "1px solid var(--accent-green)",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Play Again
+              </button>
+            </div>
+          )}
+
+          {/* Flying signals */}
+          {flying.map(s => {
+            const elapsed = (Date.now() - s.startTime) / 1000;
+            const progress = elapsed / s.signal.speed;
+            const dirColor = s.signal.dir === "LONG" ? "#10b981" : s.signal.dir === "SHORT" ? "#ef4444" : "#f59e0b";
+            const dirArrow = s.signal.dir === "LONG" ? "▲" : s.signal.dir === "SHORT" ? "▼" : "◆";
+
+            return (
+              <div
+                key={s.id}
+                className="signal-game-token"
+                onClick={(e) => handleIntercept(s.id, e)}
+                style={{
+                  top: `${s.y}%`,
+                  left: `${progress * 100}%`,
+                  background: `${s.signal.color}18`,
+                  border: `1px solid ${s.signal.color}44`,
+                  color: s.signal.color,
+                  animation: `signalFly ${s.signal.speed}s linear forwards`,
+                  animationDelay: "0s",
+                }}
+              >
+                <span style={{ marginRight: "6px", color: dirColor }}>{dirArrow}</span>
+                {s.signal.pair}
+                <span style={{ marginLeft: "6px", fontSize: "10px", opacity: 0.8 }}>{s.signal.conf}%</span>
+              </div>
+            );
+          })}
+
+          {/* Intercept effects */}
+          {effects.map(ef => (
+            <div key={ef.id}>
+              <div
+                className="intercept-flash"
+                style={{
+                  left: ef.x - 20,
+                  top: ef.y - 20,
+                  width: 40,
+                  height: 40,
+                  background: `${ef.color}44`,
+                  border: `2px solid ${ef.color}`,
+                }}
+              />
+              <div
+                className="score-popup"
+                style={{
+                  left: ef.x - 15,
+                  top: ef.y - 20,
+                  color: "#10b981",
+                }}
+              >
+                +{ef.points}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <p style={{ fontSize: "9px", color: "var(--text-secondary)", textAlign: "center", marginTop: "6px" }}>
+        [DEMO] Mini-game — signals are simulated
+      </p>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -1490,6 +1834,11 @@ export default function Home() {
             {/* Animated Signal Pipeline */}
             <ScrollReveal>
             <SignalPipeline />
+            </ScrollReveal>
+
+            {/* Signal Interceptor Mini-Game */}
+            <ScrollReveal>
+            <SignalInterceptor />
             </ScrollReveal>
 
             {/* Animated Counters */}

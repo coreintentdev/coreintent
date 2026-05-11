@@ -107,6 +107,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mdna\x1b[0m         - Trading engine DNA — the genetic code
   \x1b[32mtrain\x1b[0m       - Watch the neural network learn in real time
   \x1b[32mmission\x1b[0m     - Signal infiltration — interactive AI trading op
+  \x1b[32mwargames\x1b[0m    - Shall we play a game? (WarGames x trading)
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -655,6 +656,7 @@ const ALL_COMMANDS = [
   "quantum", "waveform", "worldmap", "spectrum",
   "mission", "accept", "abort", "analyze", "execute",
   "blackjack", "bj", "hit", "stand", "mining", "mine", "typespeed", "wpm",
+  "wargames",
 ];
 
 export default function Terminal() {
@@ -3104,6 +3106,160 @@ export default function Terminal() {
         `  \x1b[33m"${phrase}"\x1b[0m`,
         ``,
         `  \x1b[90m→ Type it now and press Enter\x1b[0m`
+      );
+      return "";
+    }
+
+    // ── WARGAMES: WarGames-inspired AI trading challenge ──
+    if (trimmed === "wargames") {
+      const delay = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`, ``);
+      addLines(`\x1b[90m  Connecting to WOPR...\x1b[0m`);
+      await delay(800);
+      addLines(`\x1b[90m  ... carrier detected ...\x1b[0m`);
+      await delay(600);
+      addLines(`\x1b[90m  ... handshake complete ...\x1b[0m`);
+      await delay(400);
+      addLines(
+        ``,
+        `\x1b[36m  ╔══════════════════════════════════════════════════╗\x1b[0m`,
+        `\x1b[36m  ║                                                  ║\x1b[0m`,
+        `\x1b[36m  ║    \x1b[33mGREETINGS, PROFESSOR FALKEN.\x1b[36m                  ║\x1b[0m`,
+        `\x1b[36m  ║                                                  ║\x1b[0m`,
+        `\x1b[36m  ║    \x1b[0mSHALL WE PLAY A GAME?\x1b[36m                        ║\x1b[0m`,
+        `\x1b[36m  ║                                                  ║\x1b[0m`,
+        `\x1b[36m  ╚══════════════════════════════════════════════════╝\x1b[0m`,
+        ``
+      );
+      await delay(1200);
+      addLines(
+        `\x1b[33m  HOW ABOUT GLOBAL THERMONUCLEAR TRADING?\x1b[0m`,
+        ``
+      );
+      await delay(1000);
+      addLines(
+        `\x1b[90m  LOADING SCENARIO: CRYPTO MARKETS 2026...\x1b[0m`,
+        ``
+      );
+      await delay(800);
+
+      const models = ["Grok", "Claude", "Perplexity"];
+      const modelColors = ["\x1b[31m", "\x1b[35m", "\x1b[34m"];
+      const pairs = ["BTC/USDT", "ETH/USDT", "SOL/USDT"];
+      const scenarios = [
+        {
+          pair: "BTC/USDT", price: 67420,
+          grok: "LONG — X sentiment surge detected, 73% bullish volume",
+          claude: "CAUTION — RSI overbought at 78, resistance at $68,200",
+          perplexity: "LONG — BlackRock ETF inflows $340M today, on-chain accumulation",
+          consensus: "CONTESTED",
+          outcome: { dir: "UP", pct: 2.1, reason: "ETF inflows overwhelmed technical resistance" },
+        },
+        {
+          pair: "ETH/USDT", price: 3285,
+          grok: "SHORT — Whale wallet moved 50K ETH to exchange",
+          claude: "SHORT — Breakdown below 200 EMA, risk/reward 3.8:1 short",
+          perplexity: "HOLD — SEC meeting tomorrow could swing either way",
+          consensus: "BEARISH",
+          outcome: { dir: "DOWN", pct: 4.3, reason: "Whale dump + technical breakdown confirmed" },
+        },
+        {
+          pair: "SOL/USDT", price: 142,
+          grok: "LONG — DeFi TVL surging, memecoin activity 3x baseline",
+          claude: "LONG — Strong momentum, support at $138, targets $155",
+          perplexity: "LONG — Jupiter DEX volume ATH, ecosystem expansion confirmed",
+          consensus: "UNANIMOUS BULLISH",
+          outcome: { dir: "UP", pct: 8.7, reason: "Full model consensus + ecosystem catalysts" },
+        },
+      ];
+
+      let wgScore = 0;
+      const results: string[] = [];
+
+      for (let i = 0; i < scenarios.length; i++) {
+        const sc = scenarios[i];
+        addLines(
+          `\x1b[36m  ── ROUND ${i + 1}/3: ${sc.pair} @ $${sc.price.toLocaleString()} ──\x1b[0m`,
+          ``
+        );
+        await delay(600);
+
+        for (let m = 0; m < 3; m++) {
+          const analysis = m === 0 ? sc.grok : m === 1 ? sc.claude : sc.perplexity;
+          addLines(`  ${modelColors[m]}${models[m]}:\x1b[0m ${analysis}`);
+          await delay(400);
+        }
+
+        addLines(
+          ``,
+          `  \x1b[33mCONSENSUS:\x1b[0m ${sc.consensus}`,
+          ``
+        );
+        await delay(500);
+
+        const dir = sc.outcome.dir;
+        const pct = sc.outcome.pct;
+        const dirColor = dir === "UP" ? "\x1b[32m" : "\x1b[31m";
+        const dirArrow = dir === "UP" ? "▲" : "▼";
+
+        addLines(
+          `  \x1b[90m  WOPR processing market simulation...\x1b[0m`,
+        );
+        await delay(1000);
+
+        addLines(
+          `  ${dirColor}  ${dirArrow} OUTCOME: ${dir} ${pct}%\x1b[0m — ${sc.outcome.reason}`,
+          ``
+        );
+
+        const consensusCorrect =
+          (sc.consensus.includes("BULLISH") && dir === "UP") ||
+          (sc.consensus.includes("BEARISH") && dir === "DOWN");
+        const pts = consensusCorrect
+          ? Math.round(pct * 50) + (sc.consensus.includes("UNANIMOUS") ? 100 : 0)
+          : -Math.round(pct * 20);
+
+        wgScore += pts;
+        const ptColor = pts >= 0 ? "\x1b[32m" : "\x1b[31m";
+        results.push(`  ${sc.pair}: ${ptColor}${pts >= 0 ? "+" : ""}${pts} pts\x1b[0m (${sc.consensus} → ${dir} ${pct}%)`);
+
+        addLines(
+          `  ${ptColor}${pts >= 0 ? "+" : ""}${pts} pts\x1b[0m — Engine ${consensusCorrect ? "correctly predicted" : "missed this one"}`,
+          ``
+        );
+        await delay(800);
+      }
+
+      addLines(
+        `\x1b[36m  ╔══════════════════════════════════════════════════╗\x1b[0m`,
+        `\x1b[36m  ║              GAME RESULTS                         ║\x1b[0m`,
+        `\x1b[36m  ╚══════════════════════════════════════════════════╝\x1b[0m`,
+        ``
+      );
+
+      for (const r of results) {
+        addLines(r);
+      }
+
+      const wgColor = wgScore >= 400 ? "\x1b[32m" : wgScore >= 200 ? "\x1b[33m" : "\x1b[31m";
+      const rank = wgScore >= 500 ? "WOPR MASTER"
+        : wgScore >= 300 ? "SIGNAL COMMANDER"
+        : wgScore >= 100 ? "MARKET CADET"
+        : "NOISE TRADER";
+
+      addLines(
+        ``,
+        `  \x1b[33mFINAL SCORE:\x1b[0m ${wgColor}${wgScore} pts\x1b[0m`,
+        `  \x1b[33mRANK:\x1b[0m        ${wgColor}${rank}\x1b[0m`,
+        ``
+      );
+      await delay(600);
+      addLines(
+        `  \x1b[36m"A STRANGE GAME. THE ONLY WINNING MOVE IS\x1b[0m`,
+        `  \x1b[36m TO LET THREE AIs ARGUE FIRST."\x1b[0m`,
+        ``,
+        `  \x1b[90mPaper trading simulation. Type \x1b[32mwargames\x1b[90m to play again.\x1b[0m`,
+        ``
       );
       return "";
     }

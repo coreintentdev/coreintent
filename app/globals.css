@@ -1418,3 +1418,168 @@ html {
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 6: Signal Game
+   ═══════════════════════════════════════════ */
+
+@keyframes signalFly {
+  0% { transform: translateX(-60px); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translateX(calc(100% + 60px)); opacity: 0; }
+}
+
+@keyframes interceptFlash {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes scoreFloat {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-40px); opacity: 0; }
+}
+
+.signal-game-field {
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.signal-game-field::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 39px,
+      rgba(16, 185, 129, 0.03) 39px,
+      rgba(16, 185, 129, 0.03) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 39px,
+      rgba(16, 185, 129, 0.03) 39px,
+      rgba(16, 185, 129, 0.03) 40px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.signal-game-token {
+  position: absolute;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  z-index: 2;
+}
+
+.signal-game-token:hover {
+  transform: scale(1.15) !important;
+}
+
+.signal-game-token:active {
+  transform: scale(0.95) !important;
+}
+
+.intercept-flash {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  animation: interceptFlash 0.5s ease-out forwards;
+}
+
+.score-popup {
+  position: absolute;
+  font-size: 16px;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 4;
+  animation: scoreFloat 0.8s ease-out forwards;
+}
+
+@keyframes electricBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.electric-border {
+  position: relative;
+}
+
+.electric-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    90deg,
+    #10b981 0%,
+    #3b82f6 25%,
+    #a855f7 50%,
+    #3b82f6 75%,
+    #10b981 100%
+  );
+  background-size: 300% 100%;
+  animation: electricBorder 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes neonTrail {
+  0% { left: -20%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { left: 120%; opacity: 0; }
+}
+
+.neon-trail {
+  position: relative;
+  overflow: hidden;
+}
+
+.neon-trail::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.08),
+    transparent
+  );
+  animation: neonTrail 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .signal-game-token {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signal-game-field {
+    min-height: 200px !important;
+  }
+}
