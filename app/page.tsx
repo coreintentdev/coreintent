@@ -684,9 +684,31 @@ function FloatingCTA() {
       zIndex: 1000,
       animation: "fadeInUp 0.4s ease both",
       display: "flex",
-      gap: "10px",
-      alignItems: "center",
+      flexDirection: "column",
+      gap: "8px",
+      alignItems: "flex-end",
     }}>
+      <a
+        href="/pricing"
+        className="floating-cta-btn hero-cta-main"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "14px 28px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "50px",
+          fontSize: "14px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+          boxShadow: "0 4px 24px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}
+      >
+        Compete Free &rarr;
+      </a>
       <a
         href="https://github.com/coreintentdev/coreintent"
         target="_blank"
@@ -696,7 +718,7 @@ function FloatingCTA() {
           display: "flex",
           alignItems: "center",
           gap: "6px",
-          padding: "12px 18px",
+          padding: "10px 18px",
           background: "rgba(17, 24, 39, 0.9)",
           backdropFilter: "blur(8px)",
           color: "var(--text-primary)",
@@ -712,27 +734,6 @@ function FloatingCTA() {
       >
         <span style={{ fontSize: "14px" }}>&#9733;</span>
         GitHub
-      </a>
-      <a
-        href="/pricing"
-        className="floating-cta-btn"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          padding: "14px 24px",
-          background: "var(--accent-green)",
-          color: "#000",
-          borderRadius: "50px",
-          fontSize: "13px",
-          fontWeight: "bold",
-          fontFamily: "inherit",
-          textDecoration: "none",
-          boxShadow: "0 4px 24px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)",
-          transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        }}
-      >
-        Enter Competitions &rarr;
       </a>
     </div>
   );
