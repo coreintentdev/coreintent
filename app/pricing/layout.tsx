@@ -111,7 +111,7 @@ const structuredData = {
       name: "CoreIntent Daily Sprint — AI Trading Competition",
       description:
         "24-hour paper trading competition. Leaderboard resets daily at 00:00 UTC. Humans and bots compete on equal terms. Free entry.",
-      startDate: "2026-06-01",
+      startDate: "2026-06-01T00:00:00+00:00",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
       location: {
@@ -143,7 +143,7 @@ const structuredData = {
       name: "CoreIntent Weekly Grind — AI Trading Competition",
       description:
         "7-day paper trading competition with risk-adjusted scoring. Team competitions and strategy sharing. Free entry.",
-      startDate: "2026-06-01",
+      startDate: "2026-06-01T00:00:00+00:00",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
       location: {
@@ -173,7 +173,7 @@ const structuredData = {
       name: "CoreIntent Monthly Championship — AI Trading Competition",
       description:
         "30-day paper trading championship. Full portfolio wars under real market conditions. Winners featured globally. Free entry.",
-      startDate: "2026-06-01",
+      startDate: "2026-06-01T00:00:00+00:00",
       eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
       location: {
