@@ -1908,63 +1908,25 @@ export default function Home() {
               <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "20px", maxWidth: "460px", margin: "0 auto 20px" }}>
                 One email per week. No spam. No upsells. Just the signal.
               </div>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const form = e.currentTarget;
-                  const emailInput = form.querySelector("input") as HTMLInputElement;
-                  if (emailInput?.value) {
-                    window.location.href = `mailto:corey@coreyai.ai?subject=CoreIntent%20Newsletter%20Signup&body=Sign%20me%20up%3A%20${encodeURIComponent(emailInput.value)}`;
-                    emailInput.value = "";
-                  }
-                }}
+              <a
+                href="mailto:corey@coreyai.ai?subject=CoreIntent%20Newsletter%20Signup&body=I%27d%20like%20to%20subscribe%20to%20the%20CoreIntent%20newsletter."
+                className="cta-primary"
                 style={{
-                  display: "flex",
-                  gap: "8px",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  maxWidth: "440px",
-                  margin: "0 auto",
+                  display: "inline-block",
+                  padding: "14px 28px",
+                  background: "var(--accent-green)",
+                  color: "#000",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  textDecoration: "none",
                 }}
               >
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  required
-                  style={{
-                    flex: "1 1 240px",
-                    padding: "14px 18px",
-                    background: "var(--bg-primary)",
-                    border: "1px solid var(--border-color)",
-                    borderRadius: "8px",
-                    fontFamily: "inherit",
-                    fontSize: "14px",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    minWidth: 0,
-                  }}
-                />
-                <button
-                  type="submit"
-                  className="cta-primary"
-                  style={{
-                    padding: "14px 28px",
-                    background: "var(--accent-green)",
-                    color: "#000",
-                    border: "none",
-                    borderRadius: "8px",
-                    fontFamily: "inherit",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  Subscribe
-                </button>
-              </form>
+                Email Us to Subscribe
+              </a>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
-                Founding subscribers get early access to competition announcements.
+                Opens your email client. No backend yet &mdash; newsletter infrastructure is planned.
               </div>
             </div>
             </ScrollReveal>
