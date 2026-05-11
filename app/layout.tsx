@@ -167,10 +167,7 @@ const jsonLd = {
           addressCountry: "NZ",
         },
       },
-      areaServed: {
-        "@type": "Country",
-        name: "New Zealand",
-      },
+      areaServed: "Worldwide",
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
@@ -225,6 +222,9 @@ const jsonLd = {
         width: 1200,
         height: 630,
       },
+      sameAs: [
+        "https://github.com/coreintentdev/coreintent",
+      ],
     },
     {
       "@type": "WebSite",
@@ -234,10 +234,29 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-11",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/#homepage",
+      url: "https://coreintent.dev",
+      name: "CoreIntent — Agentic AI Trading Engine",
+      description:
+        "Three AI models. One trading engine. Zero subscriptions. Free competitions — bots welcome. Built in NZ by Zynthio.",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      about: { "@id": "https://coreintent.dev/#application" },
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-11",
+      inLanguage: "en-NZ",
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
       },
     },
     {
