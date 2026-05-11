@@ -115,11 +115,6 @@ export function unauthorized(message = "Unauthorized"): NextResponse<ApiResponse
   return err(message, 401);
 }
 
-/** 403 Forbidden. */
-export function forbidden(message = "Forbidden"): NextResponse<ApiResponse<null>> {
-  return err(message, 403);
-}
-
 /** 400 Bad Request — validation failure shorthand. */
 export function badRequest(message: string): NextResponse<ApiResponse<null>> {
   return err(message, 400);
@@ -178,32 +173,6 @@ export function tooManyRequests(retryAfterSeconds = 60): NextResponse<ApiRespons
       status: 429,
       headers: { ...CORS_HEADERS, "Retry-After": String(retryAfterSeconds), "X-Request-ID": reqId() },
     }
-  );
-}
-
-/**
- * 204 No Content — use for DELETE or clear operations that return no body.
- *
- * @example
- * return noContent(); // DELETE /api/notes/:id
- */
-export function noContent(): NextResponse {
-  return new NextResponse(null, {
-    status: 204,
-    headers: { ...CORS_HEADERS, "X-Request-ID": reqId() },
-  });
-}
-
-/**
- * 405 Method Not Allowed.
- * Next.js handles unexported methods automatically, but this provides a consistent envelope.
- */
-export function methodNotAllowed(
-  allowed: string[] = ["GET", "POST", "OPTIONS"]
-): NextResponse<ApiResponse<null>> {
-  return NextResponse.json(
-    { success: false, data: null, error: `Method not allowed. Allowed: ${allowed.join(", ")}` },
-    { status: 405, headers: { ...CORS_HEADERS, Allow: allowed.join(", "), "X-Request-ID": reqId() } }
   );
 }
 
@@ -299,45 +268,6 @@ export function validateEnum<T extends string>(
   return (allowed as readonly string[]).includes(value) ? (value as T) : null;
 }
 
-/**
- * Validate an array of strings from a request body.
- * Returns the filtered array (non-strings removed) when valid, or null when:
- * - value is not an array
- * - any element exceeds itemMaxLen
- * - resulting array length is outside [minLen, maxLen]
- *
- * @example
- * const tags = validateArray(body.tags, 50, 1, 10);
- * if (!tags) return badRequest("tags must be 1–10 strings, each ≤ 50 chars");
- */
-export function validateArray(
-  value: unknown,
-  itemMaxLen: number,
-  minLen = 0,
-  maxLen = 100,
-): string[] | null {
-  if (!Array.isArray(value)) return null;
-  if (value.length < minLen || value.length > maxLen) return null;
-  const strings = value.filter((v): v is string => typeof v === "string" && v.trim().length > 0 && v.length <= itemMaxLen);
-  if (strings.length !== value.length) return null;
-  return strings;
-}
-
-/**
- * Runtime type guard for the standard ApiResponse envelope.
- * Use in test fixtures or when consuming CoreIntent API responses
- * from an external context where TypeScript compile-time checks don't apply.
- *
- * @example
- * const raw = await res.json();
- * if (!isApiResponse(raw)) throw new Error("Unexpected response shape");
- */
-export function isApiResponse(value: unknown): value is ApiResponse {
-  if (typeof value !== "object" || value === null) return false;
-  const obj = value as Record<string, unknown>;
-  return typeof obj.success === "boolean" && "data" in obj;
-}
-
 // ---------------------------------------------------------------------------
 // Rate limiting — structure ready, implementation pending KV store
 // ---------------------------------------------------------------------------
@@ -362,31 +292,6 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   notes:    { windowMs: 60_000, max: 30 },
   autosave: { windowMs: 60_000, max: 60 },
 };
-
-/**
- * Build standard rate-limit response headers for a given window.
- * Wire these into tooManyRequests() responses once checkRateLimit is backed by KV.
- *
- * @param limit     The request budget for the window (from RATE_LIMITS).
- * @param remaining Requests still available in the current window.
- * @param resetAt   Unix timestamp (seconds) when the window resets.
- *
- * @example
- * const rlHeaders = rateLimitHeaders(RATE_LIMITS.ai.max, 7, Date.now() / 1000 + 60);
- * return NextResponse.json({ ... }, { status: 429, headers: { ...CORS_HEADERS, ...rlHeaders } });
- */
-export function rateLimitHeaders(
-  limit: number,
-  remaining: number,
-  resetAt: number
-): Record<string, string> {
-  return {
-    "X-RateLimit-Limit":     String(limit),
-    "X-RateLimit-Remaining": String(Math.max(0, remaining)),
-    "X-RateLimit-Reset":     String(Math.floor(resetAt)),
-    "Retry-After":           String(Math.max(1, Math.ceil(resetAt - Date.now() / 1000))),
-  };
-}
 
 /**
  * Rate limit check — no-op stub until Cloudflare KV or Upstash Redis is wired in.
