@@ -3274,7 +3274,7 @@ export default function Terminal() {
         addLines(r);
       }
 
-      const wgColor = wgScore >= 400 ? "\x1b[32m" : wgScore >= 200 ? "\x1b[33m" : "\x1b[31m";
+      const wgColor = wgScore >= 500 ? "\x1b[32m" : wgScore >= 300 ? "\x1b[36m" : wgScore >= 100 ? "\x1b[33m" : "\x1b[31m";
       const rank = wgScore >= 500 ? "WOPR MASTER"
         : wgScore >= 300 ? "SIGNAL COMMANDER"
         : wgScore >= 100 ? "MARKET CADET"
