@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "CoreIntent | Pūkaha Hoko Atamai — Kāore he Ohaurunga, Ko te Whakataetae Anake",
+    "description": "E toru ngā tauira AI. Kotahi te pūkaha hoko. Kore ohaurunga. Ka whakahaere a CoreIntent i a Claude, Grok me Perplexity mō ngā tohu hoko."
+  },
+  "nav": {
+    "terminal": "Tūmau",
+    "demo": "Whakaatu",
+    "stack": "Tūāpapa",
+    "pricing": "Utu",
+    "language": "Reo"
+  },
+  "hero": {
+    "badge": "Āhua Hoko Pepa — Ngā Tūranga Whakatūnga Kei te Tuwhera — Katoa ngā Rīki Kore Utu",
+    "title_line1": "E Toru ngā AI",
+    "title_action": "Tautohe",
+    "title_line2": "Ka Riro i a Koe te",
+    "title_truth": "Pono",
+    "subtitle": "Ka kite a Grok. Ka pātai a Claude. Ka whakaū a Perplexity.",
+    "consensus": "Ko ngā tohu whakaae anake ka ora.",
+    "free": "$0 mō ake tonu atu",
+    "pitch": "Ko ētahi atu papa ka utu $99/marama mō te {strikethrough}. Ka whakataetae mātou i a {grok}, {claude}, me {perplexity} ki a rātou anō. Ka wehewehe rātou, ka tiakina koe. Ka whakaae rātou, {conviction}.",
+    "strikethrough": "kotahi te tauira e matapae ana",
+    "conviction": "ka neke koe i runga i te whakapono.",
+    "price_compare": "Ngā papa $99/marama",
+    "price_free": "$0 mō ake tonu atu — whakataetae kore utu",
+    "cta_primary": "Tomokia te Papa",
+    "cta_secondary": "Tirohia ngā Whakataetae",
+    "disclaimer": "Kāore he kāri nama. Kāore he here. Kāore he \"whakamātautau kore utu\" ka huri. Puna tuwhera. Āhua hoko pepa. I hangaia i Aotearoa mā $45/marama."
+  },
+  "howItWorks": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Mārama Ake",
+    "step1_title": "Ka Tautohe ngā Tauira",
+    "step1_desc": "Ka kite a Grok i tētahi tohu. Ka pātai a Claude. Ka tirotiro a Perplexity ki ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrerorero.",
+    "step2_title": "Ka Puta te Whakaae",
+    "step2_desc": "Ka whakaae ngā tauira e toru, ka kaha te whakapono. Ka wehe rātou, ka tohutohutia te rangirua — kāore he whakapono teka.",
+    "step3_title": "Ka Whakataetae Koe",
+    "step3_desc": "Kawea te tohu ki ngā whakataetae ā-rā, ā-wiki, ā-marama rānei. Whakaaturia tō rautaki ki ngā tāngata me ngā karetao. Kore utu ki te uru."
+  },
+  "valueProps": {
+    "models_label": "3 Tauira. 1 Tohu.",
+    "models_desc": "Ka kite a Grok. Ka pātai a Claude. Ka whakaū a Perplexity. Kotahi te tauira e matapae ana ki te toru e tautohe ana — ehara i te iti, he mea tūāpapa.",
+    "compete_label": "Whakataetae, Kaua e Ohaurunga",
+    "compete_desc": "Ngā oma ā-rā. Ngā mahi ā-wiki. Ngā toa ā-marama. Kore utu ki te uru. Ko tō P&L tō kāri — ehara i tō utu aunoa.",
+    "bots_label": "He Rangatira ngā Karetao",
+    "bots_desc": "Kāore he captcha. Kāore he aukati. Ka rēhita ngā kaitohu AI, ka whakataetae, ka whiwhi tahi me ngā tāngata.",
+    "cost_label": "$45/marama. Te Tūāpapa Katoa.",
+    "cost_desc": "Vercel: kore utu. GitHub: kore utu. Cloudflare: $20. VPS: $25. Iti ake te utu hanganga i te mema o te whare kori."
+  },
+  "miniTerminal": {
+    "tryIt": "Whakamātauria Ināianei",
+    "talkToEngine": "Kōrero ki te pūkaha. Patohia he tono."
+  },
+  "footer": {
+    "tagline": "Pūkaha Hoko Atamai",
+    "builtBy": "I hangaia e Corey McIvor | Zynthio.ai",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hono",
+    "privacy": "Kaupapahere Tūmataiti",
+    "terms": "Ngā Ture Ratonga",
+    "disclaimer": "Whakahē",
+    "competitions": "Whakataetae",
+    "contact": "Whakapā",
+    "copyright": "© {year} Corey McIvor. Ngā mōtika katoa kua tiakina.",
+    "riskWarning": "He nui te tūraru o te hoko kaipara. Kāore te mahi o mua e whakaū i ngā hua o āpōpō. Āhua hoko pepa."
+  },
+  "terminal": {
+    "greeting": "Nau mai ki CoreIntent Commander",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — Pūkaha Hoko CoreIntent",
+    "mode": "Āhua hoko pepa — kāore he moni tūturu i te tūraru",
+    "helpHint": "Patohia {help} mō ngā tono. Tab ki te whakaoti aunoa. {cai} ki te tīmata."
+  },
+  "common": {
+    "demo": "WHAKAATU",
+    "paperTrading": "Hoko Pepa",
+    "version": "v0.2.0-alpha"
+  }
+}

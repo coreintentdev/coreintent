@@ -1,6 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from "@/lib/i18n-context";
+
+const ASCII_BANNER = `\x1b[36m
+ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗
+██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝
+██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+\x1b[0m`;
+
+function buildWelcomeBanner(t: (key: string) => string, locale: string): string {
+  const intlLocale = locale === "mi" ? "mi-NZ" : locale === "zh" ? "zh-CN" : locale === "en" ? "en-NZ" : locale;
+  const timeStr = new Date().toLocaleString(intlLocale, { timeZone: "Pacific/Auckland" });
+  return `${ASCII_BANNER}
+\x1b[33m${t("terminal.subtitle")}\x1b[0m
+\x1b[90m${t("terminal.mode")}\x1b[0m
+${t("terminal.helpHint").replace("{help}", "\x1b[32mhelp\x1b[0m").replace("{cai}", "\x1b[32mcai\x1b[0m")}
+\x1b[90m${timeStr} NZST\x1b[0m
+`;
+}
 
 const WELCOME_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
@@ -658,6 +679,7 @@ const ALL_COMMANDS = [
 ];
 
 export default function Terminal() {
+  const { t, locale } = useTranslation();
   const termRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState("");
@@ -695,8 +717,10 @@ export default function Terminal() {
   } | null>(null);
 
   useEffect(() => {
-    setLines([WELCOME_BANNER]);
-  }, []);
+    const banner = locale !== "en" ? buildWelcomeBanner(t, locale) : WELCOME_BANNER;
+    setLines([banner]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale]);
 
   // Auto-scroll to bottom when new lines appear
   useEffect(() => {

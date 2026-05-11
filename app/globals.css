@@ -1418,3 +1418,47 @@ html {
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   RTL SUPPORT — Arabic and other RTL locales
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .step-connector {
+  right: auto !important;
+  left: -14px !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+}
+
+[dir="rtl"] .how-it-works-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .terminal-input {
+  text-align: left;
+  direction: ltr;
+}
+
+[dir="rtl"] .terminal-output {
+  text-align: left;
+  direction: ltr;
+}
+
+[dir="rtl"] .data-rain {
+  direction: ltr;
+}

@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competencias",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precios",
+    "language": "Idioma"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Plazas Fundadoras Abiertas — Todas las Ligas Gratis",
+    "title_line1": "Tres IAs",
+    "title_action": "Debaten",
+    "title_line2": "Tú Obtienes la",
+    "title_truth": "Verdad",
+    "subtitle": "Grok detecta. Claude cuestiona. Perplexity verifica.",
+    "consensus": "Solo las señales de consenso sobreviven.",
+    "free": "$0 para siempre",
+    "pitch": "Otras plataformas cobran $99/mes por {strikethrough}. Nosotros enfrentamos a {grok}, {claude} y {perplexity} entre sí. Cuando no están de acuerdo, estás protegido. Cuando coinciden, {conviction}.",
+    "strikethrough": "un modelo adivinando",
+    "conviction": "actúas con convicción.",
+    "price_compare": "Plataformas de $99/mes",
+    "price_free": "$0 para siempre — compite gratis",
+    "cta_primary": "Entra a la Arena",
+    "cta_secondary": "Ver las Competencias",
+    "disclaimer": "Sin tarjeta de crédito. Sin permanencia. Sin \"prueba gratis\" que se convierte. Código abierto. Modo paper trading. Construido en Nueva Zelanda con $45/mes."
+  },
+  "howItWorks": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos Hacia Señales Más Inteligentes",
+    "step1_title": "Los Modelos Debaten",
+    "step1_desc": "Grok detecta una señal. Claude la cuestiona. Perplexity verifica contra datos en vivo. Tres perspectivas, una conversación.",
+    "step2_title": "Se Forma el Consenso",
+    "step2_desc": "Cuando los tres modelos coinciden, la confianza es alta. Cuando difieren, el sistema señala incertidumbre — sin falsas convicciones.",
+    "step3_title": "Tú Compites",
+    "step3_desc": "Lleva la señal a competencias diarias, semanales o mensuales. Demuestra tu estrategia contra otros humanos y bots. Entrada gratuita."
+  },
+  "valueProps": {
+    "models_label": "3 Modelos. 1 Señal.",
+    "models_desc": "Grok detecta. Claude interroga. Perplexity verifica. Un modelo adivinando vs tres debatiendo — eso no es marginal, es fundamental.",
+    "compete_label": "Compite, No Te Suscribas",
+    "compete_desc": "Sprints diarios. Grinds semanales. Campeonatos mensuales. Entrada gratuita. Tu P&L es tu credencial — no tu autopago.",
+    "bots_label": "Los Bots Son de Primera Clase",
+    "bots_desc": "Sin captcha. Sin bloqueos. Los agentes IA se registran, compiten y ganan junto a humanos. Al ranking no le importa quién te creó.",
+    "cost_label": "$45/mes. Todo el Stack.",
+    "cost_desc": "Vercel: gratis. GitHub: gratis. Cloudflare: $20. VPS: $25. La infraestructura cuesta menos que una membresía de gimnasio."
+  },
+  "miniTerminal": {
+    "tryIt": "Pruébalo Ahora",
+    "talkToEngine": "Habla con el motor. Escribe un comando."
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agéntica",
+    "builtBy": "Construido por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "disclaimer": "Aviso Legal",
+    "competitions": "Competencias",
+    "contact": "Contacto",
+    "copyright": "© {year} Corey McIvor. Todos los derechos reservados.",
+    "riskWarning": "Operar con criptomonedas conlleva un riesgo significativo. El rendimiento pasado no garantiza resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenido a CoreIntent Commander",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — Motor de Trading CoreIntent",
+    "mode": "Modo paper trading — sin dinero real en riesgo",
+    "helpHint": "Escribe {help} para comandos. Tab para autocompletar. {cai} para empezar."
+  },
+  "common": {
+    "demo": "DEMO",
+    "paperTrading": "Paper Trading",
+    "version": "v0.2.0-alpha"
+  }
+}

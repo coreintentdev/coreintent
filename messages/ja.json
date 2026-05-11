@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "CoreIntent | エージェントAIトレーディングエンジン — サブスクなし、競技のみ",
+    "description": "3つのAIモデル。1つのトレーディングエンジン。サブスクゼロ。CoreIntentがClaude、Grok、Perplexityを統合してトレーディングシグナルを生成。"
+  },
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "スタック",
+    "pricing": "料金",
+    "language": "言語"
+  },
+  "hero": {
+    "badge": "ペーパートレーディングモード — 創設メンバー募集中 — 全リーグ無料",
+    "title_line1": "3つのAIが",
+    "title_action": "議論する",
+    "title_line2": "あなたが得るのは",
+    "title_truth": "真実",
+    "subtitle": "Grokが検出。Claudeが疑問を投げる。Perplexityが検証。",
+    "consensus": "合意シグナルだけが生き残る。",
+    "free": "永久$0",
+    "pitch": "他のプラットフォームは{strikethrough}に月額$99を請求します。私たちは{grok}、{claude}、{perplexity}を互いに競わせます。意見が分かれるとき、あなたは守られます。一致するとき、{conviction}。",
+    "strikethrough": "1つのモデルの推測",
+    "conviction": "確信を持って動けます。",
+    "price_compare": "月額$99のプラットフォーム",
+    "price_free": "永久$0 — 無料で競技",
+    "cta_primary": "アリーナに入る",
+    "cta_secondary": "競技を見る",
+    "disclaimer": "クレジットカード不要。ロックインなし。有料転換する\"無料トライアル\"なし。オープンソース。ペーパートレーディングモード。NZで月$45で構築。"
+  },
+  "howItWorks": {
+    "label": "仕組み",
+    "title": "よりスマートなシグナルへの3ステップ",
+    "step1_title": "モデルが議論",
+    "step1_desc": "Grokがシグナルを検出。Claudeが疑問を投げる。Perplexityがリアルタイムデータで事実確認。3つの視点、1つの会話。",
+    "step2_title": "合意が形成",
+    "step2_desc": "3つのモデルが一致すれば、信頼度は高い。意見が分かれれば、不確実性をフラグ — 誤った確信なし。",
+    "step3_title": "あなたが競技",
+    "step3_desc": "シグナルをデイリー、ウィークリー、マンスリーの競技に持ち込む。他の人間やボットに対して戦略を証明。参加無料。"
+  },
+  "valueProps": {
+    "models_label": "3モデル。1シグナル。",
+    "models_desc": "Grokが検出。Claudeが追究。Perplexityが検証。1モデルの推測 vs 3モデルの議論 — それは些細な違いではなく、根本的な違い。",
+    "compete_label": "競技せよ、サブスクするな",
+    "compete_desc": "デイリースプリント。ウィークリーグラインド。マンスリーチャンピオンシップ。参加無料。P&Lがあなたの会員証 — 自動課金ではない。",
+    "bots_label": "ボットはファーストクラス",
+    "bots_desc": "CAPTCHAなし。ブロックなし。AIエージェントが登録し、競技し、人間と共に稼ぐ。リーダーボードは誰が作ったかを気にしない。",
+    "cost_label": "月$45。全スタック。",
+    "cost_desc": "Vercel：無料。GitHub：無料。Cloudflare：$20。VPS：$25。インフラコストはジム会費より安い。"
+  },
+  "miniTerminal": {
+    "tryIt": "今すぐ試す",
+    "talkToEngine": "エンジンと対話。コマンドを入力。"
+  },
+  "footer": {
+    "tagline": "エージェントAIトレーディングエンジン",
+    "builtBy": "Corey McIvor制作 | Zynthio.ai",
+    "product": "プロダクト",
+    "legal": "法務",
+    "connect": "つながる",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "disclaimer": "免責事項",
+    "competitions": "競技",
+    "contact": "お問い合わせ",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "riskWarning": "暗号資産取引には重大なリスクが伴います。過去の実績は将来の結果を保証しません。ペーパートレーディングモード。"
+  },
+  "terminal": {
+    "greeting": "CoreIntent Commanderへようこそ",
+    "subtitle": "Zynthio.ai Commander v0.2.0 — CoreIntentトレーディングエンジン",
+    "mode": "ペーパートレーディングモード — 実際の資金リスクなし",
+    "helpHint": "コマンドは{help}を入力。Tabで自動補完。{cai}で開始。"
+  },
+  "common": {
+    "demo": "デモ",
+    "paperTrading": "ペーパートレーディング",
+    "version": "v0.2.0-alpha"
+  }
+}
