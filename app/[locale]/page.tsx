@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslation } from "@/lib/i18n-context";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -930,7 +931,7 @@ function MarketTicker() {
                 fontSize: "11px",
               }}
             >
-              {t.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(t.change).toFixed(2)}%
+              {t.change >= 0 ? "▲" : "▼"} {Math.abs(t.change).toFixed(2)}%
             </span>
           </span>
         ))}
@@ -1222,7 +1223,7 @@ function SignalPipeline() {
                   minHeight: "14px",
                   transition: "color 0.3s ease",
                 }}>
-                  {isActive ? s.status[statusIdx] : isPast ? s.status[2] : " "}
+                  {isActive ? s.status[statusIdx] : isPast ? s.status[2] : " "}
                 </div>
                 {(isActive || isPast) && (
                   <div style={{
@@ -1270,6 +1271,8 @@ function SignalPipeline() {
 }
 
 export default function Home() {
+  const { locale } = useTranslation();
+  const prefix = `/${locale}`;
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
@@ -1427,7 +1430,7 @@ export default function Home() {
                 Enter the Arena &rarr;
               </button>
               <Link
-                href="/en/pricing"
+                href={`${prefix}/pricing`}
                 className="cta-secondary"
                 style={{
                   padding: "18px 44px",
@@ -1562,7 +1565,7 @@ export default function Home() {
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
               <Link
-                href="/en/pricing"
+                href={`${prefix}/pricing`}
                 style={{
                   display: "inline-block",
                   padding: "10px 24px",
@@ -2182,7 +2185,7 @@ export default function Home() {
                       {cat.questions.length} questions
                     </span>
                     <span style={{ fontSize: "16px", color: "var(--text-secondary)" }}>
-                      {zynripExpanded === cat.category ? "\u25B2" : "\u25BC"}
+                      {zynripExpanded === cat.category ? "▲" : "▼"}
                     </span>
                   </span>
                 </button>
