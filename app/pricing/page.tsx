@@ -36,10 +36,8 @@ function FloatingPricingCTA() {
       zIndex: 1000,
       animation: "fadeInUp 0.4s ease both",
     }}>
-      <a
-        href="https://github.com/coreintentdev/coreintent"
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href="/"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -59,7 +57,7 @@ function FloatingPricingCTA() {
       >
         <span style={{ fontSize: "14px" }}>&#9889;</span>
         Claim Founding Status
-      </a>
+      </Link>
     </div>
   );
 }
@@ -908,7 +906,7 @@ export default function PricingPage() {
                 {
                   name: "Alex R.",
                   role: "Algorithmic Trader",
-                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn’t support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
+                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
                   color: "#10b981",
                 },
                 {
@@ -920,13 +918,13 @@ export default function PricingPage() {
                 {
                   name: "Priya S.",
                   role: "Independent Trader",
-                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent’s multi-model consensus hasn’t cost me a cent. The platform earns my attention, not my autopay.",
+                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
                   color: "#a855f7",
                 },
                 {
                   name: "Jordan K.",
                   role: "Quant Developer",
-                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn’t a marketing trick — it’s just math.",
+                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
                   color: "#f59e0b",
                 },
               ].map((t) => (
