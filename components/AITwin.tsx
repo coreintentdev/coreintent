@@ -109,9 +109,15 @@ const DEMO_STEPS = [
   { delay: 1000, text: "Paper trade executed. Position logged.\n\nThis is what the engine does — three models debate, one decision comes out. All simulated. Type 'help' for more commands." },
 ];
 
+let sharedAudioCtx: AudioContext | null = null;
+
 function playNotificationSound() {
   try {
-    const ctx = new AudioContext();
+    if (!sharedAudioCtx || sharedAudioCtx.state === "closed") {
+      sharedAudioCtx = new AudioContext();
+    }
+    const ctx = sharedAudioCtx;
+    if (ctx.state === "suspended") ctx.resume();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
@@ -183,6 +189,8 @@ export default function AITwin() {
   const inputRef = useRef<HTMLInputElement>(null);
   const wakeTriggered = useRef(false);
   const demoAbort = useRef(false);
+  const greetingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const soundEnabledRef = useRef(false);
 
   useEffect(() => {
     setMounted(true);
@@ -198,7 +206,10 @@ export default function AITwin() {
         wakeTriggered.current = true;
       }
       const sound = localStorage.getItem(SOUND_KEY);
-      if (sound === "true") setSoundEnabled(true);
+      if (sound === "true") {
+        setSoundEnabled(true);
+        soundEnabledRef.current = true;
+      }
     } catch {
       // localStorage not available
     }
@@ -253,11 +264,11 @@ export default function AITwin() {
         setIsTyping(false);
         setTypingText("");
         setMessages((prev) => [...prev, { role: "twin", text }]);
-        if (soundEnabled) playNotificationSound();
+        if (soundEnabledRef.current) playNotificationSound();
       }
     }, speed);
     return () => clearInterval(interval);
-  }, [soundEnabled]);
+  }, []);
 
   const runDemo = useCallback(() => {
     if (demoRunning) return;
@@ -290,14 +301,14 @@ export default function AITwin() {
           setIsTyping(false);
           setTypingText("");
           setMessages((prev) => [...prev, { role: "twin", text: step.text }]);
-          if (soundEnabled) playNotificationSound();
+          if (soundEnabledRef.current) playNotificationSound();
           setTimeout(runStep, step.delay);
         }
       }, speed);
     };
 
     setTimeout(runStep, 500);
-  }, [demoRunning, soundEnabled]);
+  }, [demoRunning]);
 
   const handleSubmit = useCallback(() => {
     const trimmed = input.trim();
@@ -331,15 +342,22 @@ export default function AITwin() {
     if (next) {
       if (messages.length === 0 && !isTyping) {
         const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
-        setTimeout(() => addTwinMessage(greeting), 600);
+        greetingTimeout.current = setTimeout(() => addTwinMessage(greeting), 600);
       }
       setTimeout(() => inputRef.current?.focus(), 300);
+    } else {
+      if (greetingTimeout.current) {
+        clearTimeout(greetingTimeout.current);
+        greetingTimeout.current = null;
+      }
+      demoAbort.current = true;
     }
   }, [isOpen, messages.length, isTyping, addTwinMessage]);
 
   const toggleSound = useCallback(() => {
     const next = !soundEnabled;
     setSoundEnabled(next);
+    soundEnabledRef.current = next;
     try { localStorage.setItem(SOUND_KEY, String(next)); } catch {}
     if (next) playNotificationSound();
   }, [soundEnabled]);
@@ -589,7 +607,7 @@ export default function AITwin() {
               alignItems: "center",
               gap: 8,
             }}>
-              <span style={{ fontSize: 12, color: "#10b981", flexShrink: 0 }}>{">"}</span>
+              <span style={{ fontSize: 12, color: "#10b981", flexShrink: 0 }}>{">​"}</span>
               <input
                 ref={inputRef}
                 type="text"
