@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading com IA Agente — Sem Assinaturas, Apenas Competições",
+    "description": "Três modelos de IA. Um motor de trading. Zero assinaturas. CoreIntent orquestra Claude, Grok e Perplexity para sinais de trading. Competições gratuitas — bots são bem-vindos. Feito na Nova Zelândia pela Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preços",
+    "home": "CoreIntent — Início"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Vagas de Fundador Abertas — Todas as Ligas Grátis",
+    "title1": "Três IAs",
+    "titleHighlight": "Debatem",
+    "title2": "Você Recebe a",
+    "titleTruth": "Verdade",
+    "subtitle": "Grok detecta. Claude questiona. Perplexity verifica.",
+    "subtitleHighlight": "Apenas sinais de consenso sobrevivem.",
+    "subtitleEnd": "$0 para sempre.",
+    "ctaPrimary": "Entrar na Arena",
+    "ctaSecondary": "Ver as Competições",
+    "engineAlive": "MOTOR ATIVO",
+    "signal": "SINAL"
+  },
+  "footer": {
+    "tagline": "Motor de Trading com IA Agente",
+    "builtBy": "Feito por Corey McIvor | Zynthio.ai",
+    "copyright": "© {year} Corey McIvor. Todos os direitos reservados.",
+    "riskWarning": "Negociar criptomoedas envolve riscos significativos. Desempenho passado não garante resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bem-vindo ao Motor de Trading CoreIntent",
+    "paperMode": "Modo paper trading — sem risco de dinheiro real",
+    "helpHint": "Digite help para comandos. Tab para autocompletar. cai para começar."
+  },
+  "common": {
+    "demo": "DEMO",
+    "loading": "Carregando..."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "switchTo": "Mudar para {language}"
+  }
+}

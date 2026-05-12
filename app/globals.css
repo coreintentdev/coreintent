@@ -1418,3 +1418,44 @@ html {
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   RTL (Right-to-Left) Support — Arabic, Hebrew
+   Applied when dir="rtl" is set on a parent
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] .step-connector {
+  right: auto !important;
+  left: -14px !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+}
+
+[dir="rtl"] .how-it-works-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .floating-cta {
+  right: auto !important;
+  left: 24px !important;
+}

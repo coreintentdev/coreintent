@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "CoreIntent | محرك تداول بالذكاء الاصطناعي الوكيل — بدون اشتراكات، مسابقات فقط",
+    "description": "ثلاثة نماذج ذكاء اصطناعي. محرك تداول واحد. صفر اشتراكات. CoreIntent ينسّق Claude وGrok وPerplexity لإشارات التداول. مسابقات مجانية — الروبوتات مرحب بها. صُنع في نيوزيلندا بواسطة Zynthio."
+  },
+  "nav": {
+    "terminal": "الطرفية",
+    "demo": "عرض تجريبي",
+    "stack": "البنية التقنية",
+    "pricing": "الأسعار",
+    "home": "CoreIntent — الرئيسية"
+  },
+  "hero": {
+    "badge": "وضع التداول الورقي — أماكن التأسيس مفتوحة — جميع الدوريات مجانية",
+    "title1": "ثلاثة ذكاءات اصطناعية",
+    "titleHighlight": "تتجادل",
+    "title2": "وأنت تحصل على",
+    "titleTruth": "الحقيقة",
+    "subtitle": "Grok يكتشف. Claude يتساءل. Perplexity يتحقق.",
+    "subtitleHighlight": "فقط إشارات الإجماع تصمد.",
+    "subtitleEnd": "$0 إلى الأبد.",
+    "ctaPrimary": "ادخل الحلبة",
+    "ctaSecondary": "شاهد المسابقات",
+    "engineAlive": "المحرك يعمل",
+    "signal": "إشارة"
+  },
+  "footer": {
+    "tagline": "محرك تداول بالذكاء الاصطناعي الوكيل",
+    "builtBy": "صنعه Corey McIvor | Zynthio.ai",
+    "copyright": "© {year} Corey McIvor. جميع الحقوق محفوظة.",
+    "riskWarning": "ينطوي تداول العملات المشفرة على مخاطر كبيرة. الأداء السابق لا يضمن النتائج المستقبلية. وضع التداول الورقي."
+  },
+  "terminal": {
+    "greeting": "مرحباً بك في محرك التداول CoreIntent",
+    "paperMode": "وضع التداول الورقي — لا مخاطر بأموال حقيقية",
+    "helpHint": "اكتب help للأوامر. Tab للإكمال التلقائي. cai للبدء."
+  },
+  "common": {
+    "demo": "تجريبي",
+    "loading": "جارٍ التحميل..."
+  },
+  "languageSwitcher": {
+    "label": "اللغة",
+    "switchTo": "التبديل إلى {language}"
+  }
+}
