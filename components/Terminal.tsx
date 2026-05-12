@@ -107,6 +107,9 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mdna\x1b[0m         - Trading engine DNA — the genetic code
   \x1b[32mtrain\x1b[0m       - Watch the neural network learn in real time
   \x1b[32mmission\x1b[0m     - Signal infiltration — interactive AI trading op
+  \x1b[32mecg\x1b[0m         - Engine heartbeat monitor — live waveform
+  \x1b[32mconstellation\x1b[0m - AI star map — model network in the cosmos
+  \x1b[32mcipher\x1b[0m      - Decode a classified signal sequence
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -655,6 +658,7 @@ const ALL_COMMANDS = [
   "quantum", "waveform", "worldmap", "spectrum",
   "mission", "accept", "abort", "analyze", "execute",
   "blackjack", "bj", "hit", "stand", "mining", "mine", "typespeed", "wpm",
+  "ecg", "constellation", "cipher",
 ];
 
 export default function Terminal() {
@@ -2097,6 +2101,192 @@ export default function Terminal() {
         }
         frame++;
       }, 150);
+      return "";
+    }
+
+    // ── ecg — Engine Heartbeat Monitor ──
+    if (trimmed === "ecg") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ ENGINE HEARTBEAT MONITOR ══\x1b[0m`,
+        `\x1b[90m  Real-time engine vitals waveform\x1b[0m`, ``);
+
+      const ecgPattern = [0, 0, 0, 1, 2, 4, 2, -1, 8, -3, 0, 1, 0, 0, 0, 0, 1, 0, 0];
+      const width = 48;
+      const height = 11;
+      let ecgOffset = 0;
+      const totalFrames = 30;
+      let ecgFrame = 0;
+
+      const ecgIv = setInterval(() => {
+        if (ecgFrame >= totalFrames) {
+          clearInterval(ecgIv);
+          const bpm = 62 + Math.floor(Math.random() * 12);
+          addLines(
+            ``,
+            `  \x1b[32m●\x1b[0m BPM: \x1b[32m${bpm}\x1b[0m  |  \x1b[32m●\x1b[0m Latency: \x1b[32m${8 + Math.floor(Math.random() * 14)}ms\x1b[0m  |  Status: \x1b[32mHEALTHY\x1b[0m`,
+            `  \x1b[90mEngine rhythm stable. All systems nominal.\x1b[0m`, ``);
+          return;
+        }
+
+        const grid: string[][] = Array.from({ length: height }, () => Array(width).fill(" "));
+        const mid = Math.floor(height / 2);
+
+        for (let x = 0; x < width; x++) {
+          const patIdx = (x + ecgOffset) % ecgPattern.length;
+          const val = ecgPattern[patIdx];
+          const y = Math.max(0, Math.min(height - 1, mid - val));
+          const charColor = val > 3 ? "\x1b[32m" : val < -1 ? "\x1b[31m" : "\x1b[36m";
+          const ch = x === width - 1 ? "█" : val === 0 ? "─" : val > 0 ? "╱" : "╲";
+          grid[y][x] = `${charColor}${ch}\x1b[0m`;
+        }
+
+        const frameLines = grid.map((row) => `  ${row.join("")}`);
+        addLines(...frameLines);
+        ecgOffset++;
+        ecgFrame++;
+      }, 200);
+      return "";
+    }
+
+    // ── constellation — AI Star Map ──
+    if (trimmed === "constellation") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ AI CONSTELLATION MAP ══\x1b[0m`,
+        `\x1b[90m  Mapping the model network across the cosmos...\x1b[0m`, ``);
+
+      const stars = [
+        { name: "GROK", x: 8, y: 3, c: "\x1b[31m", symbol: "★" },
+        { name: "CLAUDE", x: 36, y: 2, c: "\x1b[35m", symbol: "★" },
+        { name: "PERPLEXITY", x: 22, y: 8, c: "\x1b[34m", symbol: "★" },
+        { name: "ENGINE", x: 22, y: 5, c: "\x1b[32m", symbol: "◆" },
+        { name: "SIGNAL", x: 44, y: 5, c: "\x1b[33m", symbol: "✦" },
+      ];
+
+      const w = 54;
+      const h = 11;
+      let conFrame = 0;
+      const totalConFrames = 20;
+
+      const bgStars = Array.from({ length: 18 }, () => ({
+        x: Math.floor(Math.random() * w),
+        y: Math.floor(Math.random() * h),
+      }));
+
+      const conIv = setInterval(() => {
+        if (conFrame >= totalConFrames) {
+          clearInterval(conIv);
+          addLines(
+            ``,
+            `  \x1b[36mConstellation:\x1b[0m ZYNTHIO MAJOR`,
+            `  \x1b[31m★ Grok\x1b[0m → \x1b[32m◆ Engine\x1b[0m ← \x1b[35m★ Claude\x1b[0m`,
+            `                ↑`,
+            `          \x1b[34m★ Perplexity\x1b[0m  →  \x1b[33m✦ Signal\x1b[0m`,
+            ``,
+            `  \x1b[90mThree stars converge on one truth. That's the constellation.\x1b[0m`, ``);
+          return;
+        }
+
+        const grid: string[][] = Array.from({ length: h }, () => Array(w).fill(" "));
+
+        bgStars.forEach((s) => {
+          const twinkle = Math.sin(conFrame * 0.5 + s.x * 0.3) > 0.3;
+          if (twinkle && s.y < h && s.x < w) {
+            grid[s.y][s.x] = "\x1b[90m·\x1b[0m";
+          }
+        });
+
+        const visibleStars = stars.filter((_, i) => conFrame >= i * 3);
+        visibleStars.forEach((s) => {
+          if (s.y < h && s.x < w) {
+            grid[s.y][s.x] = `${s.c}${s.symbol}\x1b[0m`;
+          }
+        });
+
+        if (conFrame >= 6) {
+          const connections = [[0, 3], [1, 3], [2, 3], [3, 4]];
+          const activeConnections = connections.filter((_, i) => conFrame >= 6 + i * 2);
+          activeConnections.forEach(([a, b]) => {
+            const sa = stars[a];
+            const sb = stars[b];
+            const steps = Math.max(Math.abs(sb.x - sa.x), Math.abs(sb.y - sa.y));
+            for (let s = 1; s < steps; s++) {
+              const ix = Math.round(sa.x + (sb.x - sa.x) * (s / steps));
+              const iy = Math.round(sa.y + (sb.y - sa.y) * (s / steps));
+              if (iy >= 0 && iy < h && ix >= 0 && ix < w && grid[iy][ix] === " ") {
+                const pulse = Math.sin(conFrame * 0.8 + s * 0.5) > 0 ? "·" : "·";
+                grid[iy][ix] = `\x1b[90m${pulse}\x1b[0m`;
+              }
+            }
+          });
+        }
+
+        const frameLines = grid.map((row) => `  ${row.join("")}`);
+        addLines(...frameLines);
+        conFrame++;
+      }, 350);
+      return "";
+    }
+
+    // ── cipher — Decode a Classified Signal ──
+    if (trimmed === "cipher") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ SIGNAL CIPHER DECODER ══\x1b[0m`,
+        `\x1b[90m  Intercepted transmission. Decoding...\x1b[0m`, ``);
+
+      const messages = [
+        "CONSENSUS IS THE ONLY EDGE THAT SCALES",
+        "THREE MODELS ONE TRUTH ZERO GUESSING",
+        "THE LEADERBOARD DOES NOT CARE WHO BUILT YOU",
+        "SUBSCRIPTIONS ARE A TAX ON YOUR AMBITION",
+        "WHEN ALL THREE AGREE MOVE WITH CONVICTION",
+        "DISAGREEMENT IS DATA NOT FAILURE",
+      ];
+      const message = messages[Math.floor(Math.random() * messages.length)];
+      const hexChars = "0123456789ABCDEF";
+      const revealed = new Array(message.length).fill(false);
+      let cipherFrame = 0;
+      const maxFrames = message.length + 12;
+
+      const cipherIv = setInterval(() => {
+        if (cipherFrame >= maxFrames) {
+          clearInterval(cipherIv);
+          addLines(
+            ``,
+            `  \x1b[32m[DECODED]\x1b[0m \x1b[32m${message}\x1b[0m`,
+            ``,
+            `  \x1b[90mClassification: ALPHA | Source: ZYNTHIO COMMAND\x1b[0m`,
+            `  \x1b[90mSignal integrity: 100% | Cipher: BROKEN\x1b[0m`, ``);
+          return;
+        }
+
+        if (cipherFrame > 3 && cipherFrame < maxFrames - 2) {
+          const unrevealed = revealed.map((r, i) => (r ? -1 : i)).filter((i) => i >= 0);
+          if (unrevealed.length > 0) {
+            const toReveal = Math.min(2, unrevealed.length);
+            for (let r = 0; r < toReveal; r++) {
+              const pick = Math.floor(Math.random() * unrevealed.length);
+              revealed[unrevealed[pick]] = true;
+              unrevealed.splice(pick, 1);
+            }
+          }
+        }
+
+        let line = "  ";
+        const progress = Math.min(100, Math.round((revealed.filter(Boolean).length / message.length) * 100));
+        for (let i = 0; i < message.length; i++) {
+          if (revealed[i]) {
+            line += `\x1b[32m${message[i]}\x1b[0m`;
+          } else if (message[i] === " ") {
+            line += " ";
+          } else {
+            line += `\x1b[31m${hexChars[Math.floor(Math.random() * hexChars.length)]}\x1b[0m`;
+          }
+        }
+
+        const bar = "█".repeat(Math.floor(progress / 5)) + "░".repeat(20 - Math.floor(progress / 5));
+        addLines(line, `  \x1b[90m[${bar}] ${progress}%\x1b[0m`);
+        cipherFrame++;
+      }, 180);
       return "";
     }
 

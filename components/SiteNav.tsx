@@ -47,7 +47,7 @@ export default function SiteNav() {
           v0.2.0-alpha | Zynthio.ai
         </span>
       </Link>
-      <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">
+      <nav style={{ display: "flex", gap: "4px", alignItems: "center" }} aria-label="Main navigation">
         {NAV_LINKS.map((link) => (
           <Link
             key={link.href}
@@ -67,6 +67,38 @@ export default function SiteNav() {
             {link.label}
           </Link>
         ))}
+        <button
+          onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }))}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            padding: "4px 10px",
+            marginLeft: "8px",
+            background: "transparent",
+            border: "1px solid var(--border-color)",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontFamily: "inherit",
+            fontSize: "11px",
+            color: "var(--text-secondary)",
+            transition: "border-color 0.2s ease, color 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "rgba(16, 185, 129, 0.4)";
+            e.currentTarget.style.color = "var(--accent-green)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "var(--border-color)";
+            e.currentTarget.style.color = "var(--text-secondary)";
+          }}
+          aria-label="Open command palette"
+        >
+          <span style={{ fontSize: "10px" }}>&#9889;</span>
+          <kbd style={{ fontSize: "9px", padding: "1px 3px", background: "var(--bg-primary)", borderRadius: "3px", border: "1px solid var(--border-color)" }}>
+            Ctrl+K
+          </kbd>
+        </button>
       </nav>
     </header>
   );
