@@ -179,7 +179,7 @@ const jsonLd = {
         "@type": "ContactPoint",
         email: "corey@coreyai.ai",
         contactType: "customer support",
-        availableLanguage: ["English", "Spanish", "French", "German", "Portuguese", "Chinese", "Japanese", "Arabic", "Hindi"],
+        availableLanguage: ["English", "Spanish", "Māori", "French", "German", "Portuguese", "Chinese", "Japanese", "Arabic", "Hindi"],
       },
     },
     {
