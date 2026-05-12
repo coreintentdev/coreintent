@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentische KI-Trading-Engine — Keine Abos, Nur Wettbewerbe",
+    "description": "Drei KI-Modelle. Eine Trading-Engine. Null Abonnements. CoreIntent orchestriert Claude, Grok und Perplexity für Handelssignale. Kostenlose Wettbewerbe — Bots willkommen. Entwickelt in Neuseeland von Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preise",
+    "home": "CoreIntent — Startseite"
+  },
+  "hero": {
+    "badge": "Paper-Trading-Modus — Gründerplätze Verfügbar — Alle Ligen Kostenlos",
+    "title1": "Drei KIs",
+    "titleHighlight": "Streiten",
+    "title2": "Du Bekommst die",
+    "titleTruth": "Wahrheit",
+    "subtitle": "Grok erkennt. Claude hinterfragt. Perplexity verifiziert.",
+    "subtitleHighlight": "Nur Konsenssignale überleben.",
+    "subtitleEnd": "0 $ für immer.",
+    "ctaPrimary": "Betritt die Arena",
+    "ctaSecondary": "Wettbewerbe Ansehen",
+    "engineAlive": "ENGINE AKTIV",
+    "signal": "SIGNAL"
+  },
+  "footer": {
+    "tagline": "Agentische KI-Trading-Engine",
+    "builtBy": "Entwickelt von Corey McIvor | Zynthio.ai",
+    "copyright": "© {year} Corey McIvor. Alle Rechte vorbehalten.",
+    "riskWarning": "Der Handel mit Kryptowährungen birgt erhebliche Risiken. Vergangene Ergebnisse sind keine Garantie für zukünftige Resultate. Paper-Trading-Modus."
+  },
+  "terminal": {
+    "greeting": "Willkommen bei der CoreIntent Trading-Engine",
+    "paperMode": "Paper-Trading-Modus — kein echtes Geld im Risiko",
+    "helpHint": "Tippe help für Befehle. Tab zum Autovervollständigen. cai zum Starten."
+  },
+  "common": {
+    "demo": "DEMO",
+    "loading": "Laden..."
+  },
+  "languageSwitcher": {
+    "label": "Sprache",
+    "switchTo": "Zu {language} wechseln"
+  }
+}

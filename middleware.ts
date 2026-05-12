@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * Global Next.js Edge middleware — handles CORS preflight and injects security headers
- * for all /api routes. Runs before any route handler on the Edge runtime.
- *
- * For production: lock ALLOWED_ORIGIN to "https://coreintent.dev" via env var.
- */
+const LOCALES = ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"];
+const DEFAULT_LOCALE = "en";
 
-/** Security headers applied to every /api response (OPTIONS and regular). */
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options":    "nosniff",
   "X-Frame-Options":           "DENY",
@@ -15,8 +10,35 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
 
+function negotiateLocale(acceptLanguage: string | null): string {
+  if (!acceptLanguage) return DEFAULT_LOCALE;
+  const preferred = acceptLanguage
+    .split(",")
+    .map((part) => {
+      const [lang, q] = part.trim().split(";q=");
+      return { lang: lang.trim().toLowerCase(), q: q ? parseFloat(q) : 1 };
+    })
+    .sort((a, b) => b.q - a.q);
+
+  for (const { lang } of preferred) {
+    const exact = LOCALES.find((l) => lang === l);
+    if (exact) return exact;
+    const prefix = lang.split("-")[0];
+    const match = LOCALES.find((l) => l === prefix);
+    if (match) return match;
+  }
+  return DEFAULT_LOCALE;
+}
+
+function getPathnameLocale(pathname: string): string | null {
+  const segment = pathname.split("/")[1];
+  return LOCALES.includes(segment) ? segment : null;
+}
+
 export function middleware(req: NextRequest): NextResponse | undefined {
-  if (req.method === "OPTIONS") {
+  const { pathname } = req.nextUrl;
+
+  if (req.method === "OPTIONS" && pathname.startsWith("/api/")) {
     return new NextResponse(null, {
       status: 204,
       headers: {
@@ -29,13 +51,45 @@ export function middleware(req: NextRequest): NextResponse | undefined {
     });
   }
 
-  const res = NextResponse.next();
-  for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
-    res.headers.set(k, v);
+  if (pathname.startsWith("/api/")) {
+    const res = NextResponse.next();
+    for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
+      res.headers.set(k, v);
+    }
+    return res;
   }
+
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/") ||
+    pathname.includes(".") ||
+    pathname === "/favicon.ico"
+  ) {
+    return undefined;
+  }
+
+  const pathnameLocale = getPathnameLocale(pathname);
+
+  if (!pathnameLocale) {
+    const cookieLocale = req.cookies.get("NEXT_LOCALE")?.value;
+    const locale =
+      (cookieLocale && LOCALES.includes(cookieLocale) ? cookieLocale : null) ||
+      negotiateLocale(req.headers.get("accept-language"));
+
+    const url = req.nextUrl.clone();
+    url.pathname = `/${locale}${pathname}`;
+    return NextResponse.redirect(url);
+  }
+
+  const res = NextResponse.next();
+  res.cookies.set("NEXT_LOCALE", pathnameLocale, {
+    path: "/",
+    maxAge: 365 * 24 * 60 * 60,
+    sameSite: "lax",
+  });
   return res;
 }
 
 export const config = {
-  matcher: "/api/:path*",
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };

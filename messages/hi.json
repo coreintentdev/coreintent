@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "CoreIntent | एजेंटिक AI ट्रेडिंग इंजन — सब्सक्रिप्शन नहीं, सिर्फ प्रतियोगिताएं",
+    "description": "तीन AI मॉडल। एक ट्रेडिंग इंजन। शून्य सब्सक्रिप्शन। CoreIntent Claude, Grok और Perplexity को ट्रेडिंग सिग्नल के लिए संचालित करता है। मुफ्त प्रतियोगिताएं — बॉट्स का स्वागत है। न्यूज़ीलैंड में Zynthio द्वारा निर्मित।"
+  },
+  "nav": {
+    "terminal": "टर्मिनल",
+    "demo": "डेमो",
+    "stack": "स्टैक",
+    "pricing": "मूल्य",
+    "home": "CoreIntent — होम"
+  },
+  "hero": {
+    "badge": "पेपर ट्रेडिंग मोड — संस्थापक स्थान खुले — सभी लीग मुफ्त",
+    "title1": "तीन AI",
+    "titleHighlight": "बहस करते हैं",
+    "title2": "आपको मिलता है",
+    "titleTruth": "सच",
+    "subtitle": "Grok पहचानता है। Claude सवाल करता है। Perplexity सत्यापित करता है।",
+    "subtitleHighlight": "केवल सहमति वाले सिग्नल बचते हैं।",
+    "subtitleEnd": "हमेशा के लिए $0।",
+    "ctaPrimary": "अखाड़े में प्रवेश करें",
+    "ctaSecondary": "प्रतियोगिताएं देखें",
+    "engineAlive": "इंजन सक्रिय",
+    "signal": "सिग्नल"
+  },
+  "footer": {
+    "tagline": "एजेंटिक AI ट्रेडिंग इंजन",
+    "builtBy": "Corey McIvor | Zynthio.ai द्वारा निर्मित",
+    "copyright": "© {year} Corey McIvor. सर्वाधिकार सुरक्षित।",
+    "riskWarning": "क्रिप्टोकरेंसी ट्रेडिंग में महत्वपूर्ण जोखिम शामिल है। पिछला प्रदर्शन भविष्य के परिणामों की गारंटी नहीं देता। पेपर ट्रेडिंग मोड।"
+  },
+  "terminal": {
+    "greeting": "CoreIntent ट्रेडिंग इंजन में आपका स्वागत है",
+    "paperMode": "पेपर ट्रेडिंग मोड — असली पैसे का कोई जोखिम नहीं",
+    "helpHint": "कमांड के लिए help टाइप करें। Tab से ऑटोकम्प्लीट। शुरू करने के लिए cai।"
+  },
+  "common": {
+    "demo": "डेमो",
+    "loading": "लोड हो रहा है..."
+  },
+  "languageSwitcher": {
+    "label": "भाषा",
+    "switchTo": "{language} में बदलें"
+  }
+}

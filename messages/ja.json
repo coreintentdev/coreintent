@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "CoreIntent | エージェント型AI取引エンジン — サブスク不要、競技だけ",
+    "description": "3つのAIモデル。1つの取引エンジン。サブスクゼロ。CoreIntentはClaude、Grok、Perplexityを統合し取引シグナルを生成。無料コンペティション — ボット歓迎。ニュージーランド発、Zynthio製。"
+  },
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "スタック",
+    "pricing": "料金",
+    "home": "CoreIntent — ホーム"
+  },
+  "hero": {
+    "badge": "ペーパートレードモード — 創設メンバー募集中 — 全リーグ無料",
+    "title1": "3つのAIが",
+    "titleHighlight": "議論する",
+    "title2": "あなたが得るのは",
+    "titleTruth": "真実",
+    "subtitle": "Grokが検知。Claudeが疑問を投げかける。Perplexityが検証する。",
+    "subtitleHighlight": "合意したシグナルだけが生き残る。",
+    "subtitleEnd": "永久に$0。",
+    "ctaPrimary": "アリーナに参加",
+    "ctaSecondary": "コンペティションを見る",
+    "engineAlive": "エンジン稼働中",
+    "signal": "シグナル"
+  },
+  "footer": {
+    "tagline": "エージェント型AI取引エンジン",
+    "builtBy": "Corey McIvor | Zynthio.ai 製",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "riskWarning": "暗号通貨の取引には大きなリスクが伴います。過去の実績は将来の結果を保証するものではありません。ペーパートレードモード。"
+  },
+  "terminal": {
+    "greeting": "CoreIntent取引エンジンへようこそ",
+    "paperMode": "ペーパートレードモード — 実際の資金リスクなし",
+    "helpHint": "helpでコマンド一覧。Tabで自動補完。caiで開始。"
+  },
+  "common": {
+    "demo": "デモ",
+    "loading": "読み込み中..."
+  },
+  "languageSwitcher": {
+    "label": "言語",
+    "switchTo": "{language}に切り替え"
+  }
+}

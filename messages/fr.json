@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "CoreIntent | Moteur de Trading IA Agentique — Sans Abonnement, Que des Compétitions",
+    "description": "Trois modèles d'IA. Un moteur de trading. Zéro abonnement. CoreIntent orchestre Claude, Grok et Perplexity pour des signaux de trading. Compétitions gratuites — bots bienvenus. Conçu en Nouvelle-Zélande par Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Démo",
+    "stack": "Stack",
+    "pricing": "Tarifs",
+    "home": "CoreIntent — Accueil"
+  },
+  "hero": {
+    "badge": "Mode Paper Trading — Places Fondateurs Ouvertes — Toutes les Ligues Gratuites",
+    "title1": "Trois IA",
+    "titleHighlight": "Débattent",
+    "title2": "Vous Obtenez la",
+    "titleTruth": "Vérité",
+    "subtitle": "Grok détecte. Claude questionne. Perplexity vérifie.",
+    "subtitleHighlight": "Seuls les signaux consensuels survivent.",
+    "subtitleEnd": "0 $ pour toujours.",
+    "ctaPrimary": "Entrer dans l'Arène",
+    "ctaSecondary": "Voir les Compétitions",
+    "engineAlive": "MOTEUR ACTIF",
+    "signal": "SIGNAL"
+  },
+  "footer": {
+    "tagline": "Moteur de Trading IA Agentique",
+    "builtBy": "Conçu par Corey McIvor | Zynthio.ai",
+    "copyright": "© {year} Corey McIvor. Tous droits réservés.",
+    "riskWarning": "Le trading de cryptomonnaies comporte des risques importants. Les performances passées ne garantissent pas les résultats futurs. Mode paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenue sur le Moteur de Trading CoreIntent",
+    "paperMode": "Mode paper trading — aucun risque d'argent réel",
+    "helpHint": "Tapez help pour les commandes. Tab pour autocompléter. cai pour commencer."
+  },
+  "common": {
+    "demo": "DÉMO",
+    "loading": "Chargement..."
+  },
+  "languageSwitcher": {
+    "label": "Langue",
+    "switchTo": "Passer en {language}"
+  }
+}
