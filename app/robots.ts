@@ -61,6 +61,33 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: "/api/",
       },
+      {
+        userAgent: "Applebot",
+        allow: "/",
+        disallow: "/api/",
+      },
+      {
+        userAgent: "CCBot",
+        allow: "/",
+        disallow: "/api/",
+      },
+      {
+        userAgent: "YandexBot",
+        allow: "/",
+        disallow: "/api/",
+      },
+      {
+        userAgent: "SemrushBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "DotBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "PetalBot",
+        disallow: "/",
+      },
     ],
     sitemap: "https://coreintent.dev/sitemap.xml",
   };

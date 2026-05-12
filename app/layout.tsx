@@ -167,14 +167,12 @@ const jsonLd = {
           addressCountry: "NZ",
         },
       },
-      areaServed: {
-        "@type": "Country",
-        name: "New Zealand",
-      },
+      areaServed: "Worldwide",
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
       ],
+      knowsLanguage: "en",
       contactPoint: {
         "@type": "ContactPoint",
         email: "corey@coreyai.ai",
@@ -234,10 +232,35 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-12",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/#homepage",
+      url: "https://coreintent.dev",
+      name: "CoreIntent — Agentic AI Trading Engine",
+      description:
+        "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals.",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      about: { "@id": "https://coreintent.dev/#application" },
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-12",
+      inLanguage: "en-NZ",
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2", ".sr-only"],
       },
     },
     {

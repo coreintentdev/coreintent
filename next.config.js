@@ -24,6 +24,10 @@ const nextConfig = {
             value: "max-age=31536000; includeSubDomains; preload",
           },
           {
+            key: "X-Robots-Tag",
+            value: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+          },
+          {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
