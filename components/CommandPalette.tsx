@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 interface PaletteItem {
@@ -19,8 +19,16 @@ export default function CommandPalette() {
   const [selected, setSelected] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [copied, setCopied] = useState(false);
 
-  const items: PaletteItem[] = [
+  const copyCmd = useCallback((cmd: string) => {
+    navigator.clipboard.writeText(cmd).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+    setOpen(false);
+  }, []);
+
+  const items: PaletteItem[] = useMemo(() => [
     { id: "home", label: "Terminal", category: "navigate", hint: "Main terminal interface", icon: ">_", color: "#10b981", action: () => router.push("/") },
     { id: "demo", label: "Demo", category: "navigate", hint: "Interactive trading demo", icon: "D", color: "#3b82f6", action: () => router.push("/demo") },
     { id: "stack", label: "Stack", category: "navigate", hint: "Architecture & tech stack", icon: "S", color: "#a855f7", action: () => router.push("/stack") },
@@ -45,18 +53,9 @@ export default function CommandPalette() {
 
     { id: "a-github", label: "Open GitHub", category: "action", hint: "View source on GitHub", icon: "GH", color: "#e2e8f0", action: () => window.open("https://github.com/coreintentdev/coreintent", "_blank") },
     { id: "a-twitter", label: "Follow @coreintentai", category: "action", hint: "X / Twitter", icon: "X", color: "#e2e8f0", action: () => window.open("https://x.com/coreintentai", "_blank") },
-  ];
+  ], [router, copyCmd]);
 
-  const [copied, setCopied] = useState(false);
-
-  const copyCmd = useCallback((cmd: string) => {
-    navigator.clipboard.writeText(cmd).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-    setOpen(false);
-  }, []);
-
-  const filtered = query.trim()
+  const filtered = useMemo(() => query.trim()
     ? items.filter((item) => {
         const q = query.toLowerCase();
         return (
@@ -65,15 +64,15 @@ export default function CommandPalette() {
           item.category.includes(q)
         );
       })
-    : items;
+    : items, [items, query]);
 
-  const grouped = {
+  const grouped = useMemo(() => ({
     navigate: filtered.filter((i) => i.category === "navigate"),
     terminal: filtered.filter((i) => i.category === "terminal"),
     action: filtered.filter((i) => i.category === "action"),
-  };
+  }), [filtered]);
 
-  const flatList = [...grouped.navigate, ...grouped.terminal, ...grouped.action];
+  const flatList = useMemo(() => [...grouped.navigate, ...grouped.terminal, ...grouped.action], [grouped]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
