@@ -199,6 +199,38 @@ const structuredData = {
       },
     },
     {
+      "@type": "OfferCatalog",
+      "@id": "https://coreintent.dev/pricing/#offers",
+      name: "CoreIntent Competition Tiers",
+      description: "All competition tiers are free — no subscriptions, no hidden fees.",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          name: "Daily Sprint",
+          price: "0",
+          priceCurrency: "NZD",
+          availability: "https://schema.org/InStock",
+          description: "24-hour paper trading competition. Leaderboard resets daily.",
+        },
+        {
+          "@type": "Offer",
+          name: "Weekly Grind",
+          price: "0",
+          priceCurrency: "NZD",
+          availability: "https://schema.org/InStock",
+          description: "7-day competition with risk-adjusted scoring.",
+        },
+        {
+          "@type": "Offer",
+          name: "Monthly Championship",
+          price: "0",
+          priceCurrency: "NZD",
+          availability: "https://schema.org/InStock",
+          description: "30-day full portfolio wars under real market conditions.",
+        },
+      ],
+    },
+    {
       "@type": "HowTo",
       name: "How to Get Started with CoreIntent AI Trading Competitions",
       description:

@@ -112,7 +112,7 @@ export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
-      <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
+      <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }} aria-label="Competitions and Leagues">
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
           <div
             style={{

@@ -1948,7 +1948,7 @@ export default function Home() {
       </div>
 
       {/* Main content */}
-      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
+      <main style={{ flex: 1, overflow: "hidden", padding: "16px" }} aria-label="CoreIntent Trading Engine">
         {tab === "terminal" && <Terminal />}
 
         {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
