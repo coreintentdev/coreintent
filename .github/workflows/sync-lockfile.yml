@@ -1,10 +1,14 @@
 name: Sync package-lock.json
 
-# Manually triggered workflow to regenerate package-lock.json so it matches
-# package.json. Run this after any package.json version bump where the lock
-# file could not be committed directly (e.g. large file size constraints).
+# Regenerates package-lock.json to match package.json and commits the result.
+# Triggers:
+#   - workflow_dispatch: manual trigger from GitHub UI
+#   - push to main: auto-fixes any lockfile drift on every commit
+# The workflow commit uses [skip ci] to prevent re-triggering.
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   sync:
@@ -21,7 +25,7 @@ jobs:
       - name: Regenerate lock file
         run: npm install --package-lock-only
 
-      - name: Commit updated lock file
+      - name: Commit updated lock file if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
