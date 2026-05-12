@@ -7,6 +7,8 @@
  * they are never accessible via this endpoint.
  *
  * GET  — list all public notes
+ *   ?tag=general     — filter by tag (exact match)
+ *   ?limit=50        — max notes returned (1–200, default 50; returns most recent)
  * POST — create a new public note (text required, tag optional)
  *
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
@@ -27,9 +29,10 @@ interface NoteRequest {
 }
 
 interface NotesListResponse {
-  notes: Note[];
-  count: number;
-  info:  string;
+  notes:  Note[];
+  count:  number;
+  total:  number;
+  info:   string;
 }
 
 // In-memory store — survives the process lifetime only. Not durable.
@@ -38,12 +41,32 @@ let nextId = 1;
 
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "anon";
-  const limit = await checkRateLimit(ip, "notes");
-  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+  const rl = await checkRateLimit(ip, "notes");
+  if (rl.limited) return tooManyRequests(rl.retryAfter ?? 60);
   try {
+    const tagParam = req.nextUrl.searchParams.get("tag")?.trim();
+    const limitParam = req.nextUrl.searchParams.get("limit");
+
+    let pageLimit = 50;
+    if (limitParam !== null) {
+      const parsed = parseInt(limitParam, 10);
+      if (!Number.isInteger(parsed) || parsed < 1 || parsed > 200) {
+        return badRequest("limit must be an integer between 1 and 200");
+      }
+      pageLimit = parsed;
+    }
+
+    const filtered = tagParam
+      ? publicNotes.filter((n) => n.tag === tagParam)
+      : publicNotes;
+
+    // Return most-recent N notes so the caller always gets the latest.
+    const paged = filtered.slice(-pageLimit);
+
     const data: NotesListResponse = {
-      notes: publicNotes,
-      count: publicNotes.length,
+      notes: paged,
+      count: paged.length,
+      total: filtered.length,
       info:  "Public notes only. Private notes are not accessible via this endpoint.",
     };
     return ok(data);

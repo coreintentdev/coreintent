@@ -6,13 +6,14 @@
  * Prices are static and do NOT reflect real market conditions.
  *
  * Query params:
- *   ?symbol=BTC     — filter to a single pair (e.g. BTC/USD). Case-insensitive.
- *   ?symbol=BTC%2FUSD — full pair match also accepted.
+ *   ?symbol=BTC           — filter to a single pair (e.g. BTC/USD). Case-insensitive.
+ *   ?symbol=BTC%2FUSD     — full pair match also accepted.
+ *   ?symbols=BTC,ETH,SOL  — comma-separated multi-pair filter.
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { demoOk, notFound, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { demoOk, badRequest, notFound, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface MarketPair {
   symbol:    string;
@@ -55,14 +56,30 @@ const ALL_PAIRS: readonly MarketPair[] = [
 
 export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "anon";
-  const limit = await checkRateLimit(ip);
-  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+  const rl = await checkRateLimit(ip);
+  if (rl.limited) return tooManyRequests(rl.retryAfter ?? 60);
   try {
-    const symbolParam = req.nextUrl.searchParams.get("symbol")?.toUpperCase().trim();
+    const symbolParam  = req.nextUrl.searchParams.get("symbol")?.toUpperCase().trim();
+    const symbolsParam = req.nextUrl.searchParams.get("symbols");
 
     let pairs: readonly MarketPair[];
-    if (symbolParam) {
-      // Accept both "BTC" and "BTC/USD" formats.
+
+    if (symbolsParam) {
+      // ?symbols=BTC,ETH,SOL — comma-separated multi-pair filter (max 10).
+      const requested = symbolsParam.split(",")
+        .map((s) => s.toUpperCase().trim())
+        .filter(Boolean)
+        .slice(0, 10);
+      if (requested.length === 0) return badRequest("symbols must be a comma-separated list of pair symbols");
+      pairs = ALL_PAIRS.filter((p) =>
+        requested.some((r) => p.symbol === r || p.symbol.startsWith(r + "/"))
+      );
+      if (pairs.length === 0) {
+        const validSymbols = ALL_PAIRS.map((p) => p.symbol);
+        return notFound(`No market data for symbols: ${requested.join(", ")}. Available: ${validSymbols.join(", ")}`);
+      }
+    } else if (symbolParam) {
+      // ?symbol=BTC — single-pair filter. Accept both "BTC" and "BTC/USD" formats.
       pairs = ALL_PAIRS.filter(
         (p) => p.symbol === symbolParam || p.symbol.startsWith(symbolParam + "/")
       );

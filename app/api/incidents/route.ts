@@ -143,7 +143,7 @@ export async function POST(req: NextRequest) {
   if (!severity) return badRequest(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`);
 
   const incident: Incident = {
-    id:         `INC-${Date.now()}`,
+    id:         `INC-${crypto.randomUUID().slice(0, 8).toUpperCase()}`,
     service,
     severity,
     status:     "detected",
