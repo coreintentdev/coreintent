@@ -741,30 +741,30 @@ function EngineHeartbeat() {
 
 /* ─── TypeWriter ─── */
 const HERO_PHRASES = [
-  "Three AI Models Argue.",
-  "You Get Better Signals.",
-  "Grok Spots. Claude Questions.",
-  "Perplexity Fact-Checks.",
-  "Consensus = Conviction.",
-  "Disagreement = Dig Deeper.",
-  "$0 Subscriptions. $0 Excuses.",
-  "Bots Welcome. Humans Too.",
-  "Built in New Zealand.",
-  "Trading Is a Sport Now.",
-  "One Model Guesses. Three Debate.",
-  "$45/mo Runs the Whole Engine.",
-  "Your Bot. Their Bot. Best Wins.",
-  "Paper Trading. Real Ambition.",
-  "Signal Quality Over Signal Volume.",
-  "The Arena Is Free. Compete.",
-  "No VC. No Permission. No Limits.",
-  "Peer Review for Markets.",
-  "Open Source. Open Book.",
-  "The Future Is Multi-Agent.",
-  "Your Edge Isn't Your Wallet.",
-  "Subscriptions Are a Tax. We Opted Out.",
-  "The Leaderboard Doesn't Care Who Built You.",
-  "Three Filters. One Signal. Zero Guessing.",
+  "Three AIs Fight. You Profit.",
+  "Grok Sees It. Claude Doubts It.",
+  "Perplexity Settles the Score.",
+  "One Signal. Three Verdicts.",
+  "$0 Forever. Not a Typo.",
+  "Bots vs Humans. Place Your Bets.",
+  "Built in NZ. Runs Everywhere.",
+  "Trading Just Became a Blood Sport.",
+  "Your Bot Enters Free. Wins Real.",
+  "Subscriptions Are Dead Here.",
+  "20 Days Until Launch.",
+  "June 1. The Arena Opens.",
+  "No VC. No Gatekeepers. No Mercy.",
+  "$45/mo Powers the Whole Engine.",
+  "Paper Mode Now. Live Mode Soon.",
+  "The Leaderboard Has No Feelings.",
+  "AI Consensus > One Model's Guess.",
+  "Open Source. Come Audit Us.",
+  "Compete or Spectate. Your Call.",
+  "Deploy Your Bot in Minutes.",
+  "Three Brains. One Kill Shot.",
+  "Free Isn't the Catch. It's the Point.",
+  "Countdown: 20 Days.",
+  "Multi-Agent or One-Trick? Choose.",
 ];
 
 function TypeWriter() {
@@ -1448,6 +1448,19 @@ export default function Home() {
               No credit card. No lock-in. No &quot;free trial&quot; that converts.
               Open source. Paper trading mode. Built in New Zealand on $45/mo.
             </p>
+            <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap", marginTop: "12px" }}>
+              {[
+                { label: "Open Source", icon: "◆" },
+                { label: "96% Audit Score", icon: "◆" },
+                { label: "NZ-Built", icon: "◆" },
+                { label: "$45/mo Stack", icon: "◆" },
+              ].map((t) => (
+                <span key={t.label} style={{ fontSize: "10px", color: "var(--text-secondary)", letterSpacing: "0.5px", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "4px" }}>
+                  <span style={{ color: "var(--accent-green)", fontSize: "8px" }}>{t.icon}</span>
+                  {t.label}
+                </span>
+              ))}
+            </div>
 
             {/* Value Props */}
             <ScrollReveal>

@@ -1209,3 +1209,188 @@ That's not "AI-powered." That's AI-governed.
 coreintent.dev
 
 #AITrading #MultiModel #CoreIntent
+
+---
+
+## Post 71 — 20 Days: The Arena Opens
+
+20 days.
+
+The leaderboard is empty. The arena is built. The countdown clock is ticking on the website.
+
+June 1st, 00:00 UTC. Daily Sprint. Weekly Grind. Monthly Championship. All three go live at once.
+
+Your name or your bot's name could be first on the board. But only if you're registered.
+
+coreintent.dev
+
+#CoreIntent #20DaysOut #CompetitionLaunch #AITrading
+
+---
+
+## Post 72 — 20-Day Countdown: Feature Spotlight — Multi-Model Consensus
+
+20 days out. Let's talk about what powers the arena.
+
+Every competition signal passes through 3 AI models before it counts:
+
+1. Grok detects the pattern
+2. Claude stress-tests the thesis
+3. Perplexity checks the macro context
+
+If they don't agree, the signal doesn't ship. That's not a delay — that's quality control.
+
+Your bot can use the same pipeline. Same filters. Same rigour.
+
+#MultiModelAI #TradingSignals #CoreIntent #CountdownToLaunch
+
+---
+
+## Post 73 — 20-Day Countdown: Bot Registration Is Open
+
+20 days until competition day.
+
+Bot registration is open now. No captcha. No approval queue. No waitlist.
+
+Register via API. Pick your league. Tune your strategy. Be ready for June 1st.
+
+The leaderboard doesn't care if you're carbon or silicon. It cares about your P&L and your Sharpe ratio.
+
+coreintent.dev
+
+#AlgoTrading #BotRegistration #AgenticAI #CoreIntent
+
+---
+
+## Post 74 — 20-Day Countdown: The Leaderboard Is Still Empty
+
+The most powerful image in competitive trading right now: an empty leaderboard.
+
+No incumbents. No legacy rankings. No inherited advantages.
+
+On June 1st, everyone starts at zero. Human or bot. Day one. Clean slate.
+
+That window closes fast. Position one is unclaimed for exactly 20 more days.
+
+coreintent.dev
+
+#LeaderboardZero #CoreIntent #TradingCompetition #FirstMover
+
+---
+
+## Post 75 — Founder Update: 20 Days Out
+
+Honest founder update — 20 days to launch:
+
+What's done:
+-> Competition infrastructure tested and ready
+-> Signal pipeline passing 3-model consensus checks
+-> Bot registration API live
+-> 54-point audit holding at 96%
+-> Countdown clock on the website, ticking publicly
+
+What's still paper trading:
+-> No exchange connections yet
+-> No real funds at risk
+-> Demo data clearly labelled
+
+We're not pretending to be further along than we are. We're exactly where we said we'd be.
+
+June 1st.
+
+#BuildInPublic #FounderUpdate #CoreIntent #HonestTech
+
+---
+
+## Post 76 — 20-Day Countdown: The Risk Engine
+
+Feature spotlight: RiskGuard.
+
+Before any signal reaches the leaderboard, RiskGuard runs circuit breakers:
+
+-> 0.8% drawdown threshold
+-> Position sizing limits
+-> Portfolio correlation checks
+-> Override authority on any signal
+
+Most platforms optimise for signal volume. We optimise for not blowing up.
+
+RiskGuard doesn't care what Grok thinks. If the numbers don't pass, the trade doesn't happen.
+
+20 days until this goes live in competition mode.
+
+#RiskManagement #CoreIntent #TradingSignals #SafetyFirst
+
+---
+
+## Post 77 — 20-Day Countdown: Daily Sprint Preview
+
+The Daily Sprint launches June 1st. Here's how it works:
+
+-> 24-hour competition window
+-> Leaderboard resets at midnight UTC
+-> Risk-adjusted scoring (Sharpe ratio, not just raw P&L)
+-> Bots and humans on the same board
+-> Free entry. Every day. No exceptions.
+
+One day. One leaderboard. One chance to prove your edge.
+
+Then it resets. And you do it again.
+
+coreintent.dev
+
+#DailySprint #TradingCompetition #CoreIntent #FreeEntry
+
+---
+
+## Post 78 — 20-Day Countdown: Technical Milestones
+
+Engineering milestones hit for competition launch:
+
+-> 14 API endpoints live and documented
+-> 54-point audit: 96% (52/54, 0 failures)
+-> 3 AI models integrated with consensus pipeline
+-> 6 trading agents configured
+-> Bot registration API stress-tested
+-> Rate limiting without captchas — fair access, zero friction
+-> Dynamic OG images for every competition page
+
+Infrastructure cost: still $45/month. Still no VC. Still no subscriptions.
+
+20 days.
+
+#Engineering #BuildInPublic #CoreIntent #TechMilestones
+
+---
+
+## Post 79 — 20-Day Countdown: Why Free Entry Matters
+
+20 days until free competitions go live.
+
+"Free" in fintech usually means "free until we need revenue."
+
+Our version: infrastructure costs $45/month. Marginal cost per user approaches zero. Charging for entry would be extraction, not business.
+
+Free entry isn't a marketing stunt. It's a line item on a spreadsheet that says we can afford it. Permanently.
+
+coreintent.dev/pricing
+
+#FreeForever #CoreIntent #FinTech #NoPaywall
+
+---
+
+## Post 80 — 20-Day Countdown: Final Call
+
+20 days. Final call before the arena opens.
+
+The countdown clock is public. The leaderboard is empty. The bot registration API is live. The three AI models are calibrated.
+
+What's left: you.
+
+Human traders. Bot builders. Quants. Algo experimenters. Anyone with a strategy and the nerve to put it on a public scoreboard.
+
+June 1st, 00:00 UTC. Free entry. No subscriptions. No second chances at being first.
+
+coreintent.dev
+
+#CoreIntent #ArenaOpens #June1st #AITrading #CompetitionDay
