@@ -1,9 +1,66 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add("revealed"); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
+}
+
+function FloatingPricingCTA() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => setVisible(window.scrollY > 400);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  if (!visible) return null;
+  return (
+    <div className="floating-cta" style={{
+      position: "fixed",
+      bottom: "24px",
+      right: "24px",
+      zIndex: 1000,
+      animation: "fadeInUp 0.4s ease both",
+    }}>
+      <Link
+        href="/"
+        className="floating-cta-btn"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "14px 24px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "50px",
+          fontSize: "13px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+          boxShadow: "0 4px 24px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}
+      >
+        <span style={{ fontSize: "14px" }}>&#9889;</span>
+        Claim Founding Status
+      </Link>
+    </div>
+  );
+}
 
 function LaunchCountdown() {
   const [now, setNow] = useState(Date.now());
@@ -112,6 +169,7 @@ export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
+      <FloatingPricingCTA />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
           <div
@@ -202,6 +260,7 @@ export default function PricingPage() {
           </p>
 
           {/* How It Works */}
+          <ScrollReveal>
           <div
             style={{
               display: "flex",
@@ -214,6 +273,7 @@ export default function PricingPage() {
             {STEPS.map((s) => (
               <div
                 key={s.label}
+                className="card-hover-glow"
                 style={{
                   background: "var(--bg-secondary)",
                   border: "1px solid var(--border-color)",
@@ -240,8 +300,10 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Competition Leagues */}
+          <ScrollReveal>
           <h2 style={{ fontSize: "clamp(22px, 4vw, 30px)", marginBottom: "8px" }}>Pick Your Arena. Prove Your Edge.</h2>
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "15px" }}>
             Three timeframes. One leaderboard. One rule:{" "}
@@ -379,8 +441,10 @@ export default function PricingPage() {
               </article>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Who's This For */}
+          <ScrollReveal>
           <div style={{ marginTop: "48px" }}>
             <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who Is This For?</h2>
             <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
@@ -429,8 +493,10 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
           {/* How CoreIntent Makes Money */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -499,8 +565,10 @@ export default function PricingPage() {
               Core platform is free forever. Revenue comes from optional premium features, not from locking basics behind a paywall.
             </p>
           </div>
+          </ScrollReveal>
 
           {/* Philosophy */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -543,8 +611,10 @@ export default function PricingPage() {
               ))}
             </ul>
           </div>
+          </ScrollReveal>
 
           {/* CoreIntent vs Traditional */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -584,8 +654,10 @@ export default function PricingPage() {
               </tbody>
             </table>
           </div>
+          </ScrollReveal>
 
           {/* Build Quality Signal */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -625,8 +697,10 @@ export default function PricingPage() {
               </a>
             </p>
           </div>
+          </ScrollReveal>
 
           {/* FAQ */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -680,8 +754,10 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Savings Calculator */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -733,8 +809,10 @@ export default function PricingPage() {
               Put that money toward your actual trading. We&apos;ll be here, running on $45/mo.
             </p>
           </div>
+          </ScrollReveal>
 
           {/* Early Mover */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -789,8 +867,10 @@ export default function PricingPage() {
               Competitions launching soon. The platform is free — the timing is the advantage.
             </p>
           </div>
+          </ScrollReveal>
 
           {/* Social Proof — DEMO DATA */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -826,7 +906,7 @@ export default function PricingPage() {
                 {
                   name: "Alex R.",
                   role: "Algorithmic Trader",
-                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn’t support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
+                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
                   color: "#10b981",
                 },
                 {
@@ -838,13 +918,13 @@ export default function PricingPage() {
                 {
                   name: "Priya S.",
                   role: "Independent Trader",
-                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent’s multi-model consensus hasn’t cost me a cent. The platform earns my attention, not my autopay.",
+                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
                   color: "#a855f7",
                 },
                 {
                   name: "Jordan K.",
                   role: "Quant Developer",
-                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn’t a marketing trick — it’s just math.",
+                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
                   color: "#f59e0b",
                 },
               ].map((t) => (
@@ -877,8 +957,10 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Final CTA */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -950,6 +1032,7 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
           <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
             All leagues include full terminal access, AI agents, docs, and community.
