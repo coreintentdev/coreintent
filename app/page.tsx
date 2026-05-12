@@ -350,7 +350,7 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
   return (
     <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
-      <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+      <div className="counter-value counter-value-glow" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
         {prefix}{started ? count.toLocaleString() : "0"}{suffix}
       </div>
       <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
@@ -685,9 +685,7 @@ function FloatingCTA() {
       animation: "fadeInUp 0.4s ease both",
     }}>
       <a
-        href="https://github.com/coreintentdev/coreintent"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/pricing"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -705,8 +703,8 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        <span style={{ fontSize: "14px" }}>&#9889;</span>
+        Enter Free &mdash; $0 Forever
       </a>
     </div>
   );
