@@ -43,8 +43,8 @@ export const CORS_HEADERS: Record<string, string> = {
   "X-Content-Type-Options":        "nosniff",
   "X-Frame-Options":               "DENY",
   "Referrer-Policy":               "strict-origin-when-cross-origin",
-  // Redundant with next.config.js but ensures HSTS fires even on route-handler errors.
-  "Strict-Transport-Security":     "max-age=31536000; includeSubDomains",
+  // Mirrors next.config.js exactly — ensures HSTS (with preload) fires on route-handler errors too.
+  "Strict-Transport-Security":     "max-age=31536000; includeSubDomains; preload",
   "X-Robots-Tag":                  "noindex, nofollow",
 };
 
