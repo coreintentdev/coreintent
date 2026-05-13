@@ -1021,16 +1021,6 @@ const DOMAINS = [
   { domain: "f18security.ai", role: "Digital identity protection", status: "planned" },
 ];
 
-/* ─── Status Cards ─── */
-const STATUS_CARDS = [
-  { label: "Engine", value: "ONLINE", color: "#10b981" },
-  { label: "Exchanges", value: "Planned", color: "#f59e0b" },
-  { label: "AI Agents", value: "Ready", color: "#a855f7" },
-  { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
-  { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "12", color: "#06b6d4" },
-];
-
 /* ─── Architecture Pillars ─── */
 const ARCHITECTURE = [
   { name: "BRAIN", desc: "AI Model Dev (Claude + Grok)", icon: "B", color: "#a855f7" },
@@ -1050,26 +1040,6 @@ const STACK_COSTS = [
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },
   { service: "Cloudzy VPS", role: "Trading backend", cost: "~$25/mo" },
-];
-
-/* ─── Hard Rules ─── */
-const HARD_RULES = [
-  "NEVER rm -rf without explicit confirmation",
-  "NEVER touch /root/silver_bot/ — not ours",
-  "Surname is McIVOR (not McIvor, not Mcivor)",
-  "336 is the signal — always",
-  "NZ-first for ALL legal/business — NEVER Australia",
-  "Build passes clean or you don't push",
-  "Label demo data honestly — no fake green dots",
-  "Free costs fuck all — so give it away",
-  "Bots welcome — AI-to-AI is first-class",
-];
-
-/* ─── TM Portfolio ─── */
-const TRADEMARKS = [
-  { mark: "ZYNTHIO", number: "TM 2619731", jurisdiction: "AU" },
-  { mark: "CoreyAI", number: "TM 2632610", jurisdiction: "AU" },
-  { mark: "SongPal", number: "#1318588", jurisdiction: "NZ" },
 ];
 
 /* ─── ZynRip Identity Questions ─── */
@@ -1120,23 +1090,6 @@ const ZYNRIP_QUESTIONS: { category: string; questions: { q: string; truth: strin
     ],
   },
 ];
-
-/* ─── Helpers ─── */
-function statusDot(status: string) {
-  const colors: Record<string, string> = {
-    active: "#10b981",
-    planned: "#3b82f6",
-    parked: "#64748b",
-  };
-  return colors[status] || "#64748b";
-}
-
-const cardStyle: React.CSSProperties = {
-  padding: "16px",
-  background: "var(--bg-secondary)",
-  border: "1px solid var(--border-color)",
-  borderRadius: "8px",
-};
 
 const sectionTitle: React.CSSProperties = {
   color: "var(--text-secondary)",
