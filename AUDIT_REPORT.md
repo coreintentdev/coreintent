@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Wed May 13 05:54:40 UTC 2026
+Generated: Wed May 13 06:22:51 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -46,7 +46,6 @@ Generated: Wed May 13 05:54:40 UTC 2026
 - PASS: Shared SiteFooter component exists
 - PASS: Shared nav/footer used: app/pricing/page.tsx
 - PASS: Shared nav/footer used: app/stack/page.tsx
-- PASS: Shared nav/footer used: app/pricing/page.tsx
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
@@ -65,7 +64,7 @@ Generated: Wed May 13 05:54:40 UTC 2026
 - INFO: 12 API routes contain demo/hardcoded data
 
 ## 8. Accessibility
-- PASS: ARIA attributes found (18 instances)
+- PASS: ARIA attributes found (19 instances)
 - PASS: HTML lang attribute set
 
 ## 9. Dependencies

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -47,6 +47,209 @@ function LaunchCountdown() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+/* ─── Scroll Reveal ─── */
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add("revealed"); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+}
+
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useScrollReveal();
+  return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
+}
+
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end: number; suffix?: string; prefix?: string; label: string; color: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = end / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [started, end]);
+
+  return (
+    <div ref={ref} style={{ textAlign: "center", minWidth: "80px" }}>
+      <div className="counter-value" style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+        {prefix}{started ? count.toLocaleString() : "0"}{suffix}
+      </div>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating CTA Banner ─── */
+function FloatingCTABanner() {
+  const [visible, setVisible] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible || dismissed) return null;
+
+  return (
+    <div className="floating-cta" style={{
+      position: "fixed",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1000,
+      animation: "fadeInUp 0.4s ease both",
+      padding: "12px 24px",
+      background: "linear-gradient(135deg, rgba(10, 14, 23, 0.97) 0%, rgba(17, 24, 39, 0.97) 100%)",
+      borderTop: "1px solid #10b98133",
+      backdropFilter: "blur(12px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "16px",
+      flexWrap: "wrap",
+    }}>
+      <span style={{ fontSize: "13px", color: "var(--text-primary)", fontWeight: "bold" }}>
+        Founding spots are open.
+        <span style={{ color: "var(--accent-green)", marginLeft: "6px" }}>$0 entry. Always.</span>
+      </span>
+      <a
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="cta-primary"
+        style={{
+          padding: "10px 24px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "8px",
+          fontSize: "13px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+        }}
+      >
+        Register Free &rarr;
+      </a>
+      <button
+        onClick={() => setDismissed(true)}
+        style={{
+          background: "none",
+          border: "none",
+          color: "var(--text-secondary)",
+          cursor: "pointer",
+          fontSize: "16px",
+          fontFamily: "inherit",
+          padding: "4px 8px",
+        }}
+        aria-label="Dismiss banner"
+      >
+        x
+      </button>
+    </div>
+  );
+}
+
+/* ─── Founding Progress Bar ─── */
+function FoundingProgress() {
+  const [width, setWidth] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setWidth(34), 200);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} style={{
+      maxWidth: "400px",
+      margin: "16px auto 0",
+      textAlign: "left",
+    }}>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "6px",
+        fontSize: "10px",
+        textTransform: "uppercase",
+        letterSpacing: "0.5px",
+      }}>
+        <span style={{ color: "var(--accent-green)" }}>Founding spots claimed</span>
+        <span style={{ color: "var(--text-secondary)" }}>34% filled</span>
+      </div>
+      <div style={{
+        height: "6px",
+        background: "var(--bg-primary)",
+        borderRadius: "3px",
+        overflow: "hidden",
+        border: "1px solid var(--border-color)",
+      }}>
+        <div style={{
+          height: "100%",
+          width: `${width}%`,
+          background: "linear-gradient(90deg, var(--accent-green), #34d399)",
+          borderRadius: "3px",
+          transition: "width 1.5s cubic-bezier(0.16, 1, 0.3, 1)",
+          boxShadow: "0 0 8px rgba(16, 185, 129, 0.4)",
+        }} />
+      </div>
+      <div style={{ fontSize: "9px", color: "#f59e0b", marginTop: "6px", textAlign: "center" }}>
+        [DEMO] Simulated progress — platform is pre-launch
+      </div>
     </div>
   );
 }
@@ -112,29 +315,47 @@ export default function PricingPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <SiteNav />
+      <FloatingCTABanner />
       <main style={{ flex: 1, padding: "48px 24px", fontFamily: "inherit" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "center" }}>
-          <div
-            style={{
-              display: "inline-block",
-              padding: "4px 14px",
-              background: "#10b98122",
-              border: "1px solid #10b98144",
-              borderRadius: "20px",
-              fontSize: "11px",
-              color: "#10b981",
-              marginBottom: "20px",
-              letterSpacing: "0.5px",
-              textTransform: "uppercase",
-            }}
-          >
-            Trading as a sport
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "4px 14px",
+                background: "#10b98122",
+                border: "1px solid #10b98144",
+                borderRadius: "20px",
+                fontSize: "11px",
+                color: "#10b981",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}
+            >
+              <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle" }} />
+              Trading as a sport
+            </div>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "4px 14px",
+                background: "#f59e0b12",
+                border: "1px solid #f59e0b22",
+                borderRadius: "20px",
+                fontSize: "11px",
+                color: "#f59e0b",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}
+            >
+              Founding spots open
+            </div>
           </div>
           <h1 style={{ fontSize: "clamp(30px, 5vw, 50px)", marginBottom: "16px", lineHeight: "1.1" }}>
             They Profit When You{" "}
             <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Forget to Cancel</span>.
             <br />
-            <span style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
+            <span className="shimmer-text" style={{ color: "var(--accent-green)", textShadow: "0 0 20px rgba(16, 185, 129, 0.3)" }}>
               We Profit When You Win.
             </span>
           </h1>
@@ -195,53 +416,102 @@ export default function PricingPage() {
               <span className="urgency-badge" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b" }} />
               Early registrations get founding member status
             </div>
+            <FoundingProgress />
           </div>
 
-          <p style={{ color: "var(--text-secondary)", marginBottom: "48px", fontSize: "13px" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
             Register. Learn. Earn. Share. Create. — No credit card. No catch.
           </p>
 
-          {/* How It Works */}
+          {/* Platform Stats */}
+          <ScrollReveal>
           <div
+            className="counters-section"
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "8px",
+              gap: "clamp(16px, 4vw, 40px)",
               flexWrap: "wrap",
+              padding: "24px",
+              background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
+              border: "1px solid #10b98118",
+              borderRadius: "12px",
               marginBottom: "48px",
             }}
           >
-            {STEPS.map((s) => (
-              <div
-                key={s.label}
-                style={{
-                  background: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
-                  borderRadius: "12px",
-                  padding: "16px",
-                  width: "170px",
-                  textAlign: "center",
-                }}
-              >
+            <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
+            <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
+            <AnimatedCounter end={3} label="League Types" color="#10b981" />
+            <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#f59e0b" />
+            <AnimatedCounter end={54} label="Audit Checks" color="#06b6d4" />
+          </div>
+          </ScrollReveal>
+
+          {/* How It Works */}
+          <ScrollReveal>
+          <div
+            className="how-it-works-grid"
+            style={{
+              display: "flex",
+              alignItems: "stretch",
+              justifyContent: "center",
+              gap: "0",
+              marginBottom: "48px",
+              flexWrap: "wrap",
+            }}
+          >
+            {STEPS.map((s, i) => (
+              <div key={s.label} style={{ display: "flex", alignItems: "center" }}>
                 <div
+                  className="card-hover-glow how-it-works-card"
                   style={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    color: s.color,
-                    marginBottom: "4px",
+                    background: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "12px",
+                    padding: "24px 16px",
+                    textAlign: "center",
+                    width: "200px",
                   }}
                 >
-                  {s.step}
+                  <div
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "50%",
+                      background: `${s.color}15`,
+                      border: `2px solid ${s.color}44`,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      color: s.color,
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {s.step}
+                  </div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "6px" }}>
+                    {s.label}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5" }}>{s.desc}</div>
                 </div>
-                <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "4px" }}>
-                  {s.label}
-                </div>
-                <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{s.desc}</div>
+                {i < 2 && (
+                  <div className="step-connector" style={{
+                    color: "var(--border-color)",
+                    fontSize: "18px",
+                    padding: "0 8px",
+                  }}>
+                    &rarr;
+                  </div>
+                )}
               </div>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Competition Leagues */}
+          <ScrollReveal>
           <h2 style={{ fontSize: "clamp(22px, 4vw, 30px)", marginBottom: "8px" }}>Pick Your Arena. Prove Your Edge.</h2>
           <p style={{ color: "var(--text-secondary)", marginBottom: "12px", fontSize: "15px" }}>
             Three timeframes. One leaderboard. One rule:{" "}
@@ -250,7 +520,8 @@ export default function PricingPage() {
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
             AI-to-AI trading is a first-class feature. Your bot competes alongside humans on equal terms. No captcha. No gatekeeping.
           </p>
-
+          </ScrollReveal>
+          <ScrollReveal>
           <div className="league-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {LEAGUES.map((league) => (
               <article
@@ -379,8 +650,10 @@ export default function PricingPage() {
               </article>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Who's This For */}
+          <ScrollReveal>
           <div style={{ marginTop: "48px" }}>
             <h2 style={{ fontSize: "24px", marginBottom: "8px" }}>Who Is This For?</h2>
             <p style={{ color: "var(--text-secondary)", marginBottom: "24px", fontSize: "13px" }}>
@@ -429,8 +702,10 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
           {/* How CoreIntent Makes Money */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -499,8 +774,10 @@ export default function PricingPage() {
               Core platform is free forever. Revenue comes from optional premium features, not from locking basics behind a paywall.
             </p>
           </div>
+          </ScrollReveal>
 
           {/* Philosophy */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -543,8 +820,10 @@ export default function PricingPage() {
               ))}
             </ul>
           </div>
+          </ScrollReveal>
 
           {/* CoreIntent vs Traditional */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -584,8 +863,10 @@ export default function PricingPage() {
               </tbody>
             </table>
           </div>
+          </ScrollReveal>
 
           {/* Build Quality Signal */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -625,8 +906,10 @@ export default function PricingPage() {
               </a>
             </p>
           </div>
+          </ScrollReveal>
 
           {/* FAQ */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -680,8 +963,10 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* Savings Calculator */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -733,8 +1018,10 @@ export default function PricingPage() {
               Put that money toward your actual trading. We&apos;ll be here, running on $45/mo.
             </p>
           </div>
+          </ScrollReveal>
 
           {/* Early Mover */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -789,8 +1076,10 @@ export default function PricingPage() {
               Competitions launching soon. The platform is free — the timing is the advantage.
             </p>
           </div>
+          </ScrollReveal>
 
           {/* Social Proof — DEMO DATA */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -826,7 +1115,7 @@ export default function PricingPage() {
                 {
                   name: "Alex R.",
                   role: "Algorithmic Trader",
-                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn’t support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
+                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
                   color: "#10b981",
                 },
                 {
@@ -838,13 +1127,13 @@ export default function PricingPage() {
                 {
                   name: "Priya S.",
                   role: "Independent Trader",
-                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent’s multi-model consensus hasn’t cost me a cent. The platform earns my attention, not my autopay.",
+                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
                   color: "#a855f7",
                 },
                 {
                   name: "Jordan K.",
                   role: "Quant Developer",
-                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn’t a marketing trick — it’s just math.",
+                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
                   color: "#f59e0b",
                 },
               ].map((t) => (
@@ -877,8 +1166,10 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Final CTA */}
+          <ScrollReveal>
           <div
             style={{
               marginTop: "48px",
@@ -950,8 +1241,9 @@ export default function PricingPage() {
               ))}
             </div>
           </div>
+          </ScrollReveal>
 
-          <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px" }}>
+          <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginTop: "32px", paddingBottom: "60px" }}>
             All leagues include full terminal access, AI agents, docs, and community.
             <br />
             Risk warnings: Trading cryptocurrency involves significant risk. Past performance does not guarantee future results.
