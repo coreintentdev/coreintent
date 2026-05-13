@@ -6,7 +6,7 @@
     "name": "Corey McIvor",
     "handles": ["@coreintentdev", "@coreintentai"],
     "contact": "corey@coreyai.ai",
-    "location": "New Zealand (NEVER register in Australia)"
+    "jurisdiction_rule": "NZ-first; NEVER register in Australia (physical location redacted — see docs/SECURITY_HARDENING_CHECKLIST.md §0)"
   },
   "honest_scope_of_this_session": {
     "where_i_run": "/home/user/coreintent on Linux (Claude Code, GitHub MCP only)",
@@ -118,8 +118,8 @@
     "scope_discipline": [
       "Defamation pack stays defamation-only. No Michele MP3 batch unless explicitly added.",
       "Verify before claiming complete. 'No green dots unless verified.'",
-      "VDS not VPS (Cloudzy terminology)",
-      "NZ-first, never register in Australia"
+      "VDS not VPS (Contabo, not Cloudzy)",
+      "Never register in Australia. Other jurisdiction is operator-only."
     ],
     "do_not_fabricate": [
       "Family data (Hannah is NOT Corey's child; never list as daughter)",

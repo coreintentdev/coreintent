@@ -189,7 +189,7 @@ From repo root:
 ## 4) Non-Negotiables for Desktop Session
 
 - Never mark unverified integrations as connected/active.
-- Keep NZ-first legal/business rule.
+- Never register anything in Australia. Other jurisdiction decisions are operator-only.
 - Label demo data honestly in UI and API payloads.
 - Do not jump to live trading mode before Phases A–F gates.
 - Keep handover files updated at end of each desktop block.

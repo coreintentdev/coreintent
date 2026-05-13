@@ -3,7 +3,8 @@
 ## Owner
 Corey McIvor (@coreintentdev / @coreintentai)
 Contact: corey@coreyai.ai ONLY
-Based in: New Zealand (NEVER register anything in Australia)
+Business rule: NEVER register anything in Australia. Jurisdiction decisions are operator-only — AI must not infer or recommend a country.
+(Operator location is redacted from all AI-context files. See docs/SECURITY_HARDENING_CHECKLIST.md §0.)
 
 ## What This Project IS
 - Agentic AI trading engine (paper trading mode)
@@ -21,7 +22,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 1. READ before you write. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
-4. NEVER register anything in Australia. NZ-first for all legal/business.
+4. NEVER register anything in Australia. Other jurisdiction decisions are operator-only — AI must not infer or recommend a country.
 5. Deploy files immediately — VDS, GitHub, Google Drive.
 6. Build passes clean or you don't push.
 7. If you see fake/demo data, label it honestly. Don't hide behind green dots.
