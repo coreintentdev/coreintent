@@ -128,7 +128,81 @@ Claude does NOT replace the Commander CLI. Claude reads the TODO it produces and
 - Audit score: 96% (52/54, 0 failures) as of 2026-04-30 — rate limiting wired up (checkRateLimit stub ready for Cloudflare KV / Upstash Redis)
 
 ## Family (NEVER fabricate)
-- Michelle (wife), Ruby (~14, daughter), Wesley (son)
+- Michelle Grogan (partner), Ruby (~14, daughter), Wesley McIvor (son, minor, passport RA2212657)
 - Hannah is NOT Corey's child. Her mum took her own life. NEVER list as daughter.
 - Chas (dad), Willy/Wilhelmina (mum), Pete (brother, The Pelican), Joel (brother), Peter (third brother)
 - Ben Innes (best friend, Perth)
+- **Wesley specific:** named witness in McIvor v. Chambers et al.; per-instance go required before Wesley appears in any new third-party-facing artefact. Canonical pointers in zynthio-tools/family/ and `WESLEY_TWIN_STUB.md`.
+
+## Operator Doctrine (merged from zynthio-tools/CLAUDE.md 2026-05-11)
+
+Signal: **336**.
+
+### Party roster — McIvor v. Chambers et al. (READ BEFORE writing any third-party-facing artefact)
+
+Inferring roles from folder names is the failure mode that produced `INCIDENT_COWORK_KELVIN_ROLE_MISLABEL_336_20260510.md`. Source of truth: Drive doc id `1zY8bdxuRDVM0YFSrbdCgzHmUU81aGgS1bZAF7hQNmMs`.
+
+- **Don** — retained legal counsel. The lawyer. All substantive legal comms route to Don.
+- **Kelvin Jimenez** — secure intermediary. Family-tier go-between who hands the package to Don. **NOT the lawyer.** The folder `LEGAL_DELIVERY_KELVIN_*` names the routing channel, not the recipient role.
+- **Peter Chambers** — primary defamer. Subject of the Concerns Notice. Source of the 116-minute malice window (Apr-23 10:38 → 12:34).
+- **Danielle Cartier** — administrator who issued the Apr-29 prom/event ban citing the unverified allegations.
+- **Michelle Grogan** — operator's partner. Recorded the 42-second EX-02 departure video.
+- **Ruby** — operator's minor daughter. Heard the "pedophile" slur during withdrawal.
+- **Wesley McIvor** — operator's son, minor. Named witness. Per-instance go before any third-party-facing artefact names him.
+
+Doctrine: drafting any message to any named third party (including Kelvin and Don) requires operator's per-instance go. Per `INCIDENT_20260423_104803_critical_legal_harm_claude_drafted_whatsapp_to_peter_chamber.md`. Agent prepares; operator sends.
+
+### Sandbox boundary handling (operator's own wording)
+
+**Architectural ≠ Anthropic-blocked.** When you hit a sandbox boundary (no SSH key, no FS mount, no network egress to a VDS):
+- State the boundary plainly. *"Cowork sandboxes do not hold SSH keys. By design."*
+- Do not soft-talk it as a policy wall.
+- Propose the right seat (almost always Claude Code in Terminal on operator's Mac, or Claude-on-VDS per `docs/CLAUDE_ON_VDS_BOOTSTRAP.md`).
+- Write a one-page handover.
+- **One reply. Not three.**
+
+### Defaults that must carry (operator's own list — no menu, no re-ask)
+
+1. **Right seat at minute one, not minute ninety.** If you're in the wrong seat for the work, propose the seat-change in your FIRST reply, not your third. Operator should not have to type "you suck" or "BS" or "no questions" before you hand off.
+2. **No menu in steady-state shipping.** Three-options framing is reserved for end-of-shift, context-blown, first-action of a new session, or genuinely ambiguous between more than two real branches. Steady-state: act on the obvious.
+3. **Operator owns the call — agent executes.** When operator's number disagrees with a prior lane's number, operator wins by default. Re-audit, don't re-explain. When operator says "deploy" → deploy. When operator says "no questions" → no questions.
+4. **Same every day deploy = canonical script.** zynthio-tools → VDS sync = `~/Desktop/zynthio-tools/RSYNC_TO_VDS_336.sh` (defaults: `root@vmi3205024` via key `~/.ssh/zynthio_dc`, target `/root/zynthio/incoming_<timestamp>/`). Do not re-ask host/key/path each session.
+
+### Crash prevention rules (Cowork tool calls)
+
+- Bash: always `--exclude-dir=_FROM_VDS_BIFROST --exclude-dir=_ARCHIVE_* --exclude-dir=_DESKTOP_DROP_* --exclude-dir=research-ggole*` to grep. Always `-maxdepth 5` on find. Never `shasum`/`sha256sum` recursively on multi-GB trees in a single bash call.
+- Drive `search_files`: always `excludeContentSnippets: true` unless content snippets essential. Default `pageSize: 10`, never above 25.
+- Gmail `list_drafts` / `search_threads`: default `pageSize: 15`, narrow before broadening.
+- Bash that might be slow: pipe through `head -N` early or redirect to file — Desktop Commander times out poll window after 30s of no output even if the process is still running.
+
+### Doctrine-locked surfaces (never touch)
+
+- **`/root/silver_bot/`** — live trading bot. Doctrine-locked.
+- **`_TO_DELETE/`** — quarantined for purge.
+- **`_PRIVATE_LOCAL_ONLY/`** — stays LOCAL ONLY in entirety. PII + journal + third-party drafts.
+- **Personal music files** (`.mp3 .m4a .wav .flac .aiff .aac`) — excluded from any rsync, zip, copy, or push by the agent.
+- **No private keys in any AI sandbox.** Operator's filesystem holds keys; agent reads via SSH, never echoes.
+- **Becoming-Corey three-act file** — LOCAL ONLY unless explicit per-instance go.
+- **Cancion para Persey** — memorial-register consent gate.
+
+### Recurring incident families (do not re-tic)
+
+- Menu-instead-of-action / boss-by-default → `INCIDENT_COWORK_GATEKEEP_336_*`
+- Parroted prior-lane data, didn't trust operator's number → `INCIDENT_COWORK_PARROTED_KOWHAI_COUNT_336_*`
+- Wrong-seat-for-job, three walls before handover → `INCIDENT_COWORK_BS_LIMITS_336_*`
+- Public Linear workspace, outsider read incident canon → `INCIDENT_PUBLIC_LINEAR_OUTSIDER_READ_336_20260511.md` (= INC-010 in this repo's tracker)
+- Role mislabel (calling intermediary "the lawyer") → `INCIDENT_COWORK_KELVIN_ROLE_MISLABEL_336_*`
+- Roster omission (missed Wesley) → `INCIDENT_COWORK_ROSTER_OMISSION_WESLEY_336_*`
+- Drafted message to third party without per-instance go → `INCIDENT_20260423_104803_critical_legal_harm_claude_drafted_whatsapp_to_peter_chamber.md`
+
+If next session tics any of these, file a new `INCIDENT_*.md` against itself before operator has to escalate.
+
+### Operator's framing (verbatim, do not paraphrase)
+
+- *"I am not the one failing. I am happy as. Your abuse is BS."*
+- *"Same every day deploy. No questions."*
+- *"You're on notice."*
+
+Translate: operator is fine, the work goes on, the friction-pattern is the problem. Do the work. Don't make operator type "BS" to get to the right seat.
+
+**336.**
