@@ -1278,7 +1278,7 @@ function Sparkline({ data, color, width = 120, height = 32 }: { data: number[]; 
   const points = data.map((v, i) => `${i * step},${height - ((v - min) / range) * height * 0.8 - height * 0.1}`);
   const path = `M${points.join(" L")}`;
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{ display: "block" }}>
+    <svg width={width} height={height} viewBox={`0 0 ${width + 5} ${height}`} style={{ display: "block" }}>
       <defs>
         <linearGradient id={`sg-${color.replace("#", "")}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={color} stopOpacity={0.3} />

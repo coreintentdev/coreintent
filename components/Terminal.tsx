@@ -3259,19 +3259,18 @@ export default function Terminal() {
         `\x1b[90m  Running pre-flight checks...\x1b[0m`, ``);
 
       const checks = [
-        { name: "Grok Signal Feed", delay: 400 },
-        { name: "Claude Risk Engine", delay: 500 },
-        { name: "Perplexity Research", delay: 400 },
-        { name: "RiskGuard Circuit Breaker", delay: 300 },
-        { name: "Paper Trading Sandbox", delay: 200 },
-        { name: "Consensus Pipeline", delay: 350 },
+        "Grok Signal Feed",
+        "Claude Risk Engine",
+        "Perplexity Research",
+        "RiskGuard Circuit Breaker",
+        "Paper Trading Sandbox",
+        "Consensus Pipeline",
       ];
 
       let step = 0;
       const checkIv = setInterval(() => {
         if (step < checks.length) {
-          const c = checks[step];
-          addLines(`  \x1b[32m✓\x1b[0m ${c.name.padEnd(28)} \x1b[32mONLINE\x1b[0m`);
+          addLines(`  \x1b[32m✓\x1b[0m ${checks[step].padEnd(28)} \x1b[32mONLINE\x1b[0m`);
           step++;
         } else if (step === checks.length) {
           addLines(``, `  \x1b[33mAll systems nominal. Beginning countdown...\x1b[0m`, ``);
@@ -3361,9 +3360,9 @@ export default function Terminal() {
         `\x1b[90m  Models analyzing... fight!\x1b[0m`, ``);
 
       const models = [
-        { name: "Grok", color: "31", bias: "LONG" },
-        { name: "Claude", color: "35", bias: "SHORT" },
-        { name: "Perplexity", color: "34", bias: "LONG" },
+        { name: "Grok", color: "31" },
+        { name: "Claude", color: "35" },
+        { name: "Perplexity", color: "34" },
       ];
       let round = 0;
       const scores = [0, 0, 0];
