@@ -452,57 +452,55 @@ export default function PricingPage() {
           <div
             className="how-it-works-grid"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "16px",
+              display: "flex",
+              alignItems: "stretch",
+              justifyContent: "center",
+              gap: "0",
               marginBottom: "48px",
-              position: "relative",
+              flexWrap: "wrap",
             }}
           >
             {STEPS.map((s, i) => (
-              <div
-                key={s.label}
-                className="card-hover-glow"
-                style={{
-                  background: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
-                  borderRadius: "12px",
-                  padding: "24px 16px",
-                  textAlign: "center",
-                  position: "relative",
-                }}
-              >
+              <div key={s.label} style={{ display: "flex", alignItems: "center" }}>
                 <div
+                  className="card-hover-glow how-it-works-card"
                   style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    background: `${s.color}15`,
-                    border: `2px solid ${s.color}44`,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    color: s.color,
-                    marginBottom: "12px",
+                    background: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "12px",
+                    padding: "24px 16px",
+                    textAlign: "center",
+                    width: "200px",
                   }}
                 >
-                  {s.step}
+                  <div
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "50%",
+                      background: `${s.color}15`,
+                      border: `2px solid ${s.color}44`,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      color: s.color,
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {s.step}
+                  </div>
+                  <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "6px" }}>
+                    {s.label}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5" }}>{s.desc}</div>
                 </div>
-                <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "6px" }}>
-                  {s.label}
-                </div>
-                <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5" }}>{s.desc}</div>
                 {i < 2 && (
                   <div className="step-connector" style={{
-                    position: "absolute",
-                    right: "-12px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
                     color: "var(--border-color)",
                     fontSize: "18px",
-                    zIndex: 1,
+                    padding: "0 8px",
                   }}>
                     &rarr;
                   </div>
@@ -522,7 +520,6 @@ export default function PricingPage() {
           <p style={{ color: "var(--text-secondary)", marginBottom: "32px", fontSize: "12px" }}>
             AI-to-AI trading is a first-class feature. Your bot competes alongside humans on equal terms. No captcha. No gatekeeping.
           </p>
-
           </ScrollReveal>
           <ScrollReveal>
           <div className="league-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
@@ -1118,7 +1115,7 @@ export default function PricingPage() {
                 {
                   name: "Alex R.",
                   role: "Algorithmic Trader",
-                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn’t support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
+                  quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal.",
                   color: "#10b981",
                 },
                 {
@@ -1130,13 +1127,13 @@ export default function PricingPage() {
                 {
                   name: "Priya S.",
                   role: "Independent Trader",
-                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent’s multi-model consensus hasn’t cost me a cent. The platform earns my attention, not my autopay.",
+                  quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
                   color: "#a855f7",
                 },
                 {
                   name: "Jordan K.",
                   role: "Quant Developer",
-                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn’t a marketing trick — it’s just math.",
+                  quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
                   color: "#f59e0b",
                 },
               ].map((t) => (
