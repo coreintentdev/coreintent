@@ -58,6 +58,16 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 - The Mansion: BOTH a real owned physical property (operator's actual mansion) AND a gamified world layer (rooms, story missions) — sessions have repeatedly missed that it is also a real place. 100+ original songs by Corey reference this mansion. Do not treat as metaphor-only. The Mansion is also the **home / UI shell** for the Digital Twin layer above — rooms become twin contexts, missions become tasks, the twin lives in the mansion.
 - SongPal: Music layer (Corey's originals, not Suno AI generation). 100+ songs about The Mansion live in his catalogue. Suno tracks across 7 Suno accounts are ripped to VDS for backup + corpus (see `scripts/suno-pull-by-uid.sh`).
 
+## Cloudflare Accounts (TWO)
+- Pro account: `corey.mcivor@gmail.com` — account ID `a61bf8a23a8488f6e4257e7127c70b76` (confirmed via MCP). 27 live zones, 4 Workers.
+- Second account: `zynthioai@gmail.com` — separate auth; NOT exposed in this session's CF MCP. Operator decides whether to consolidate to one account or keep both.
+
+## Holistic Ops (operator preference 2026-05-13)
+- **Canonical master:** VDS (Contabo). Two active hosts (vmi3205024, vmi3217372) + one legacy (5.189.143.170) to be migrated off.
+- **Backup:** Proton Drive (paired with VDS — both safe, both part of the stack).
+- **Working/archive:** Google Drive for docs and song catalogue; Gmail for historical mail (all new mail forwarded to Proton).
+- **Drop reliance on Slack** for ops notifications — Slack was the AI-amnesia bridge, not part of the canonical stack. Keep for human chat only.
+
 ## Data Surfaces (where the corpus lives)
 - **WhatsApp:** 3 operator accounts. Source of conversational truth (defamation evidence, family threads, work threads). No native MCP; ingest via manual chat export → file → VDS.
 - **Gmail:** historical archive only. **All new mail is forwarded to Proton.** Gmail MCP reads remain valid for archive; new context lives in Proton.

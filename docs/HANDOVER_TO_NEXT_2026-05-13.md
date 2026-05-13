@@ -24,6 +24,25 @@ competition-based platform (not subscriptions), multi-AI orchestration
 | Cloudflare | account `a61bf8a23a8488f6e4257e7127c70b76` | 27 zones live, 4 Workers, 48 Pages projects pending |
 | Gmail draft for Kelvin | id `r-4263747605642888706` | Ready to send, awaits Drive share link |
 
+## Master TODO (active — top of queue)
+
+| # | Task | Owner | Status |
+|---|---|---|---|
+| 1 | Paste 3 GitHub secrets (`VDS_SSH_KEY`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`) | Operator | open |
+| 2 | Run "Deploy Cloudflare Pages Skeletons" workflow | Operator | open |
+| 3 | Run `./scripts/deploy-48-live.sh` from Mac for custom-domain attach | Operator | open |
+| 4 | Apple ID: deny recovery request, rotate password, add Recovery Key | Operator | open |
+| 5 | Rotate Cloudflare API tokens (COR-185) | Operator | open |
+| 6 | Linear workspace → Private + GitHub `ZYNTHIO_MASTER_DOCS` → Private (INC-010) | Operator | open |
+| 7 | Update payment card on Stripe/Atlassian/Notion (3 declines May 12) | Operator | open |
+| 8 | Run `scripts/mirror-drive-to-vds.sh` from Mac (Drive → VDS mirror) | Operator | open |
+| 9 | Drop SUNO_API_TOKEN + 7 SUNO_UIDS into VDS `.env`; cron `scripts/suno-pull-by-uid.sh` | Operator | open |
+| 10 | Set up Wesley's new accounts (operator-supervised, parent of minor) | Operator | open |
+| 11 | NZ rego decision: re-register in NZ, lapse, or move to non-AU jurisdiction (operator-only) | Operator | open |
+| 12 | Verify Cloudzy old-VPS billing is closed (legacy `5.189.143.170` migration off) | Operator | open |
+| 13 | File ACCC update with §APPENDIX F now in Drive | Operator | open |
+| 14 | rsync canonical data to Proton Drive AND VDS in parallel (both safe) | Operator | open |
+
 ## What this session shipped (commits on `claude/fix-vds-token-tvSRH`)
 
 1. `.github/workflows/deploy-vds.yml` — push triggers SSH deploy to vmi3205024
