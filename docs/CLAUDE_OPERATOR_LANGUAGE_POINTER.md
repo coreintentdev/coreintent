@@ -38,6 +38,13 @@ Chambers matter, or location/identity:
 - **"I don't hit. I don't assume. I don't call names like you have."** — to Claude, 2026-04-22. From Section F.
 - **The Mansion is real AND a layer.** Operator owns a physical mansion that 100+ of his original songs are about. Sessions treat it as metaphor-only and lose the real-property context. Do not.
 
+## Related operator-canonical files (Drive, INTERNAL, never commit content to repo)
+
+- **`COREY_WORDS_CONSOLIDATED_20260423.md`** (Drive id `1hjWfOfbtb0TRm9rUPjkiPCitVsO7qeTo`, ~12KB) — operator's verbatim doctrine, language, acceptance, recurring incident families. See "Doctrine lines" above.
+- **`AI_Memory_Export_for_Claude.md`** (Drive, ~39KB, by file title — search Drive for it) — forensic synthesis of operator's entire digital estate including family details, passport numbers, financial structure, Carrizal property, Zynthio Ltd UK entity, BizCover policy, March 25 Doctrines full text, G5C Red Viral, AWS instance, BullionVault transactions, customs/border logistics. **Highly PII-sensitive.** Read once at session start if doing identity-adjacent work; never paste content into commits, public logs, or third-party-facing artefacts.
+- **`zynthio-tools/CLAUDE.md`** (operator Mac Desktop, 229 lines, gold version dated 2026-05-11) — operating doctrine for any Claude lane working in zynthio-tools directory. Suno production architecture, crash prevention rules, party roster, recurring incidents. Mirrored to VDS at `/root/zynthio/state/CLAUDE.md`.
+- **`openclaw/root/CLAUDE.md`** (operator Mac, 71 lines, Feb 2026) — OpenClaw service context, business model (fixed-scope $2K-$15K, 100% upfront, "Witness not guard"), live trading VPS warning, Stripe links, OpenClaw localhost gateway.
+
 ## Key non-secret facts that ARE safe to write here
 
 - Operator: Corey McIvor
