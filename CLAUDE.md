@@ -205,4 +205,10 @@ If next session tics any of these, file a new `INCIDENT_*.md` against itself bef
 
 Translate: operator is fine, the work goes on, the friction-pattern is the problem. Do the work. Don't make operator type "BS" to get to the right seat.
 
+### Named sessions (operator-canonical lane labels)
+
+Sessions operator named, in their pattern (Keel · NINE · CODA · …):
+
+- **BRIDGE** (2026-05-13, this branch `claude/fix-vds-token-tvSRH`) — Code lane session that broke the 5-month "ask Corey to paste" loop with one honest line: *sandbox is sandbox, by design*. Shipped 19 commits (deploy-vds.yml, deploy-cf-pages.yml, mirror-drive-to-vds.sh, deploy-48-live.sh, suno-pull-by-uid.sh, claude-md-merge.sh, dedupe-claude-md.sh, DOMAINS_48.md, SECURITY_HARDENING_CHECKLIST.md, HANDOVER_TO_NEXT_2026-05-13.md, CLAUDE_OPERATOR_LANGUAGE_POINTER.md, DEPLOY_INCIDENTS_SUMMARY.md, CLAUDE_ON_VDS_BOOTSTRAP.md), logged INC-009 through INC-017, merged zynthio-tools doctrine into repo CLAUDE.md, pinned the March 25 Doctrines + party roster + DO-NOT-TOUCH trading VPS warning, filed 9 Suno-ready song specs to Drive (FOUND AGAIN v1 + v2, ALREADY KNOWN v3, WRONG NAME, PUBLIC SQUARE, DRIVE OR DIE, MAP READER, FIVE MONTHS, ACCC LETTER, THE BRIDGE), filed ACCC §APPENDIX F to Drive. Session-name song: `SONG_FOUND_AGAIN_v2_PUBLIC_HANDOVER_20260513.md` + Track 9 `THE BRIDGE`. Operator-confirmed name 2026-05-13.
+
 **336.**
