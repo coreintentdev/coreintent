@@ -88,8 +88,8 @@
         "success_criteria": "file count = 12"
       },
       "gate_B_vds_master": {
-        "status": "PENDING gate A",
-        "vds_host": "100.122.99.34",
+        "status": "COMPLETE — VDS master verified 12/12 SHA256 OK (2026-05-13)",
+        "vds_host": "vmi3205024",
         "vds_user": "root",
         "vds_key": "$HOME/.ssh/zynthio_dc",
         "vds_dir": "/srv/legal/KELVIN_DEFAMATION_20260510",

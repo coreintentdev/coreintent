@@ -16,7 +16,7 @@
 
 set -e
 
-VDS_HOST="${VDS_HOST:-100.122.99.34}"
+VDS_HOST="${VDS_HOST:-vmi3205024}"
 VDS_USER="${VDS_USER:-root}"
 VDS_PASS="${VDS_PASS:-}"
 MIRROR_DIR="vds_mirror_$(date +%Y%m%d_%H%M%S)"
