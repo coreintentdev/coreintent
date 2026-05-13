@@ -37,13 +37,15 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Audit: scripts/audit.sh
 - VDS Lens: scripts/vds-lens.sh
 
-## VDS (Cloudzy markets these as VDS, not VPS — terminology matters)
-- Primary VDS: vmi3205024 (Tailscale: 100.125.12.4, public: 161.97.89.49) — canonical master
+## VDS (Contabo — NEW provider. Cloudzy is OLD VPS, being decommissioned)
+- Provider: **Contabo** (vmi-prefix hostname is Contabo's format). NOT Cloudzy.
+- Primary VDS: vmi3205024 (Tailscale: 100.125.12.4; public IP unverified — CLAUDE.md previously said 161.97.89.49, operator terminal showed 104.194.156.109 — needs SSH probe to lock canonical)
 - Secondary VDS: vmi3217372 (Tailscale: 100.121.107.112)
 - NOTE: 100.122.99.34 is WRONG — not reachable, do not use. Use Tailscale hostnames.
-- Auth: SSH key at ~/.ssh/zynthio_dc (VDS_SSH_KEY) + panel API token (VDS_TOKEN) for Cloudzy lifecycle ops
+- Auth: SSH key at ~/.ssh/zynthio_dc (VDS_SSH_KEY) + panel API token (VDS_TOKEN) for Contabo lifecycle ops
 - VDS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
 - 32,503 files, ~19GB on vmi3205024
+- MIGRATION: Cloudzy → Contabo transfer + closure of 3 old Cloudzy VPS hosts: status UNVERIFIED by AI sessions. Operator action required to confirm migration complete and Cloudzy billing closed (see INC-009).
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
