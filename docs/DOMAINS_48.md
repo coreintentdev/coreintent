@@ -1,8 +1,9 @@
 # 48-Domain Roster — Source of Truth
 
 Pinned from Drive `CF_VDS_48_DOMAIN_AUDIT_20260509_100949.md` on 2026-05-13.
-This file lives in the repo so no future AI session has to "ask Corey" or
-hunt through Drive to find it. Update via PR, not chat.
+This file lives in the repo so no future AI session has to "ask Corey" —
+the roster is already here. Look it up; don't re-discover it.
+Update via PR, not chat.
 
 ## Reality check (per 2026-05-09 audit)
 

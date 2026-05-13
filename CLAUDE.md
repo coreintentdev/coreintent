@@ -1,4 +1,6 @@
-# CoreIntent — AI Session Context (Amnesia Shield)
+# CoreIntent — AI Session Knowledge Index
+
+> Read this first. Then `docs/CLAUDE_OPERATOR_LANGUAGE_POINTER.md`. You already know what you need — don't "find" it, look it up.
 
 ## Owner
 Corey McIvor (@coreintentdev / @coreintentai)
