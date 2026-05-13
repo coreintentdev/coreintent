@@ -1268,6 +1268,610 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Live Sparkline Chart ─── */
+function Sparkline({ data, color, width = 120, height = 32 }: { data: number[]; color: string; width?: number; height?: number }) {
+  if (data.length < 2) return null;
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const step = width / (data.length - 1);
+  const points = data.map((v, i) => `${i * step},${height - ((v - min) / range) * height * 0.8 - height * 0.1}`);
+  const path = `M${points.join(" L")}`;
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{ display: "block" }}>
+      <defs>
+        <linearGradient id={`sg-${color.replace("#", "")}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity={0.3} />
+          <stop offset="100%" stopColor={color} stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <path d={`${path} L${width},${height} L0,${height} Z`} fill={`url(#sg-${color.replace("#", "")})`} />
+      <path d={path} fill="none" stroke={color} strokeWidth={1.5} className="sparkline-path" />
+      <circle cx={width} cy={Number(points[points.length - 1].split(",")[1])} r={2.5} fill={color}>
+        <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  );
+}
+
+/* ─── Operations Center (Dashboard) ─── */
+function OperationsCenter() {
+  const [tick, setTick] = useState(0);
+  const [logs, setLogs] = useState<{ id: number; time: string; msg: string; type: string; color: string }[]>([]);
+  const logIdRef = useRef(0);
+
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 2000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const LOG_TEMPLATES = [
+    { msg: "Grok scanned 142 X posts — 3 signals extracted", type: "SIGNAL", color: "#ef4444" },
+    { msg: "Claude risk assessment complete — R:R 2.4:1", type: "ANALYSIS", color: "#a855f7" },
+    { msg: "Perplexity verified: no negative catalysts found", type: "RESEARCH", color: "#3b82f6" },
+    { msg: "Engine consensus: 3/3 LONG BTC — conf 87%", type: "CONSENSUS", color: "#10b981" },
+    { msg: "RiskGuard circuit breaker check — PASS", type: "RISK", color: "#f59e0b" },
+    { msg: "Paper trade executed: LONG BTC/USDT @ $67,420", type: "TRADE", color: "#10b981" },
+    { msg: "SentimentBot: market fear index at 34 (Fear)", type: "SENTIMENT", color: "#ef4444" },
+    { msg: "Signal pipeline latency: 14ms avg", type: "PERF", color: "#06b6d4" },
+    { msg: "TrendFollower: BTC momentum score 0.82", type: "AGENT", color: "#a855f7" },
+    { msg: "Perplexity connector: 9/9 integrations healthy", type: "HEALTH", color: "#10b981" },
+    { msg: "Claude deep analysis: ETH bearish divergence on 4H", type: "ANALYSIS", color: "#a855f7" },
+    { msg: "MeanRevert: SOL reverted to mean — signal closed", type: "AGENT", color: "#3b82f6" },
+  ];
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      const template = LOG_TEMPLATES[Math.floor(Math.random() * LOG_TEMPLATES.length)];
+      const now = new Date();
+      const time = now.toLocaleTimeString("en-NZ", { hour12: false });
+      logIdRef.current += 1;
+      setLogs((prev) => [{ id: logIdRef.current, time, ...template }, ...prev].slice(0, 20));
+    }, 2500);
+    return () => clearInterval(iv);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const pairs = [
+    { symbol: "BTC/USDT", base: 67420, color: "#f7931a" },
+    { symbol: "ETH/USDT", base: 3285, color: "#627eea" },
+    { symbol: "SOL/USDT", base: 142.8, color: "#14f195" },
+    { symbol: "AVAX/USDT", base: 35.6, color: "#e84142" },
+  ];
+
+  const pairData = pairs.map((p) => {
+    const history = Array.from({ length: 20 }, (_, i) => {
+      const seed = p.symbol.charCodeAt(0) + i;
+      return p.base + Math.sin((tick + i) * 0.3 + seed * 0.5) * p.base * 0.008 + Math.cos((tick + i) * 0.7 + seed) * p.base * 0.005;
+    });
+    const current = history[history.length - 1];
+    const prev = history[history.length - 2];
+    const change = ((current - prev) / prev) * 100;
+    return { ...p, history, current, change };
+  });
+
+  const throughput = [
+    { label: "Grok Signals/min", value: 42 + Math.floor(Math.sin(tick * 0.5) * 8), max: 60, color: "#ef4444" },
+    { label: "Claude Analyses/min", value: 18 + Math.floor(Math.cos(tick * 0.4) * 5), max: 30, color: "#a855f7" },
+    { label: "Perplexity Queries/min", value: 24 + Math.floor(Math.sin(tick * 0.6) * 6), max: 40, color: "#3b82f6" },
+    { label: "Engine Decisions/min", value: 12 + Math.floor(Math.cos(tick * 0.3) * 3), max: 20, color: "#10b981" },
+  ];
+
+  const consensus = Math.round(72 + Math.sin(tick * 0.2) * 15);
+  const latency = Math.round(12 + Math.sin(tick * 0.8) * 8);
+  const uptime = "99.97%";
+  const signalsToday = 147 + tick;
+
+  return (
+    <div style={{ overflow: "auto", height: "100%" }}>
+      {/* Top Metrics Bar */}
+      <div className="ops-metrics-grid" style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "10px", marginBottom: "20px" }}>
+        {[
+          { label: "Status", value: "ONLINE", color: "#10b981", pulse: true },
+          { label: "Consensus", value: `${consensus}%`, color: consensus > 75 ? "#10b981" : consensus > 50 ? "#f59e0b" : "#ef4444" },
+          { label: "Latency", value: `${latency}ms`, color: latency < 20 ? "#10b981" : "#f59e0b" },
+          { label: "Uptime", value: uptime, color: "#10b981" },
+          { label: "Signals Today", value: String(signalsToday), color: "#3b82f6" },
+          { label: "Mode", value: "Paper", color: "#f59e0b" },
+        ].map((m) => (
+          <div
+            key={m.label}
+            className="status-card-live"
+            style={{
+              padding: "12px 14px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "8px",
+            }}
+          >
+            <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px", marginBottom: "4px" }}>
+              {m.label}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              {m.pulse && (
+                <span className="engine-alive-dot" style={{ width: 6, height: 6 }} />
+              )}
+              <span style={{ fontSize: "16px", fontWeight: "bold", color: m.color, fontVariantNumeric: "tabular-nums" }}>
+                {m.value}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="ops-charts-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+        {/* Live Price Charts */}
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+            <span style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>Market Prices</span>
+            <span style={{ fontSize: "10px", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
+              <span className="animate-pulse" style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "#10b981" }} />
+              LIVE
+            </span>
+          </div>
+          <div style={{ display: "grid", gap: "12px" }}>
+            {pairData.map((p) => (
+              <div
+                key={p.symbol}
+                className="neon-hover"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  padding: "10px 12px",
+                  background: "var(--bg-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                }}
+              >
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: p.color, flexShrink: 0 }} />
+                <div style={{ flex: "0 0 90px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{p.symbol}</div>
+                  <div style={{ fontSize: "14px", fontWeight: "bold", color: p.color, fontVariantNumeric: "tabular-nums" }}>
+                    ${p.current.toLocaleString("en-US", { minimumFractionDigits: p.base < 100 ? 2 : 0, maximumFractionDigits: p.base < 100 ? 2 : 0 })}
+                  </div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <Sparkline data={p.history} color={p.color} />
+                </div>
+                <div style={{
+                  fontSize: "11px",
+                  fontWeight: "bold",
+                  color: p.change >= 0 ? "#10b981" : "#ef4444",
+                  fontVariantNumeric: "tabular-nums",
+                  minWidth: "50px",
+                  textAlign: "right",
+                }}>
+                  {p.change >= 0 ? "+" : ""}{p.change.toFixed(2)}%
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Activity Log */}
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px", display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+            <span style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>Activity Log</span>
+            <span style={{ fontSize: "10px", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
+              <span className="animate-pulse" style={{ display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: "#10b981" }} />
+              STREAMING
+            </span>
+          </div>
+          <div style={{ flex: 1, overflow: "hidden", maxHeight: "280px" }}>
+            {logs.length === 0 && (
+              <div style={{ fontSize: "11px", color: "var(--text-secondary)", padding: "20px 0", textAlign: "center" }}>
+                Waiting for activity...
+              </div>
+            )}
+            {logs.map((log) => (
+              <div
+                key={log.id}
+                className="log-entry"
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  padding: "6px 0",
+                  borderBottom: "1px solid rgba(30, 41, 59, 0.5)",
+                  fontSize: "11px",
+                }}
+              >
+                <span style={{ color: "var(--text-secondary)", fontVariantNumeric: "tabular-nums", flexShrink: 0, fontSize: "10px" }}>
+                  {log.time}
+                </span>
+                <span style={{
+                  padding: "1px 5px",
+                  background: `${log.color}18`,
+                  color: log.color,
+                  borderRadius: "3px",
+                  fontSize: "9px",
+                  fontWeight: "bold",
+                  flexShrink: 0,
+                  minWidth: "56px",
+                  textAlign: "center",
+                }}>
+                  {log.type}
+                </span>
+                <span style={{ color: "var(--text-secondary)", lineHeight: "1.4" }}>{log.msg}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Throughput + Consensus Gauge */}
+      <div className="ops-charts-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+        {/* Model Throughput */}
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px", marginBottom: "14px" }}>
+            Model Throughput
+          </div>
+          <div style={{ display: "grid", gap: "14px" }}>
+            {throughput.map((t) => (
+              <div key={t.label}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                  <span style={{ fontSize: "11px", color: "var(--text-primary)" }}>{t.label}</span>
+                  <span style={{ fontSize: "11px", fontWeight: "bold", color: t.color, fontVariantNumeric: "tabular-nums" }}>
+                    {t.value}/{t.max}
+                  </span>
+                </div>
+                <div style={{ height: "6px", background: "var(--bg-primary)", borderRadius: "3px", overflow: "hidden" }}>
+                  <div
+                    className="throughput-bar"
+                    style={{
+                      height: "100%",
+                      background: `linear-gradient(90deg, ${t.color}, ${t.color}88)`,
+                      borderRadius: "3px",
+                      "--fill-width": `${(t.value / t.max) * 100}%`,
+                      boxShadow: `0 0 8px ${t.color}44`,
+                    } as React.CSSProperties}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Consensus Gauge */}
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px", marginBottom: "14px" }}>
+            Consensus Gauge
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
+            <svg width="200" height="120" viewBox="0 0 200 120">
+              <defs>
+                <linearGradient id="gauge-grad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#ef4444" />
+                  <stop offset="50%" stopColor="#f59e0b" />
+                  <stop offset="100%" stopColor="#10b981" />
+                </linearGradient>
+              </defs>
+              <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="var(--border-color)" strokeWidth="10" strokeLinecap="round" />
+              <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="url(#gauge-grad)" strokeWidth="10" strokeLinecap="round" strokeDasharray="251" strokeDashoffset={251 - (consensus / 100) * 251} style={{ transition: "stroke-dashoffset 0.8s ease" }} />
+              <line
+                x1="100" y1="110" x2="100" y2="40"
+                stroke="var(--text-primary)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{
+                  transformOrigin: "100px 110px",
+                  transform: `rotate(${(consensus / 100) * 180 - 90}deg)`,
+                  transition: "transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                }}
+              />
+              <circle cx="100" cy="110" r="4" fill="var(--text-primary)" />
+              <text x="100" y="98" textAnchor="middle" fill={consensus > 75 ? "#10b981" : consensus > 50 ? "#f59e0b" : "#ef4444"} fontSize="24" fontWeight="bold" fontFamily="inherit">{consensus}%</text>
+              <text x="20" y="118" textAnchor="start" fill="var(--text-secondary)" fontSize="9">WEAK</text>
+              <text x="180" y="118" textAnchor="end" fill="var(--text-secondary)" fontSize="9">STRONG</text>
+            </svg>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px", marginTop: "4px" }}>
+            {[
+              { model: "Grok", conf: 82 + Math.floor(Math.sin(tick * 0.4) * 8), color: "#ef4444" },
+              { model: "Claude", conf: 76 + Math.floor(Math.cos(tick * 0.3) * 10), color: "#a855f7" },
+              { model: "Perplexity", conf: 79 + Math.floor(Math.sin(tick * 0.5) * 7), color: "#3b82f6" },
+            ].map((m) => (
+              <div key={m.model} style={{ textAlign: "center", padding: "6px", background: "var(--bg-primary)", borderRadius: "6px" }}>
+                <div style={{ fontSize: "10px", color: m.color, fontWeight: "bold" }}>{m.model}</div>
+                <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>{m.conf}%</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Architecture + Stack */}
+      <div className="ops-charts-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+        {/* Architecture Pillars */}
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px", marginBottom: "14px" }}>
+            Architecture Pillars
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "8px" }}>
+            {ARCHITECTURE.map((a, i) => (
+              <div
+                key={a.name}
+                className="neon-hover"
+                style={{
+                  textAlign: "center",
+                  padding: "12px 6px",
+                  background: "var(--bg-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "8px",
+                  cursor: "default",
+                  animation: `fadeInUp 0.4s ease ${i * 0.08}s both`,
+                }}
+              >
+                <div style={{
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "50%",
+                  background: a.color + "18",
+                  color: a.color,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: "bold",
+                  fontSize: "11px",
+                  marginBottom: "6px",
+                }}>
+                  {a.icon}
+                </div>
+                <div style={{ fontWeight: "bold", fontSize: "11px", color: a.color }}>{a.name}</div>
+                <div style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "2px" }}>{a.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stack & Costs */}
+        <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+            <span style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>Stack &amp; Costs</span>
+            <span style={{ fontSize: "11px", fontWeight: "bold", color: "#10b981" }}>~$45/mo</span>
+          </div>
+          <div style={{ display: "grid", gap: "6px" }}>
+            {STACK_COSTS.map((s, i) => (
+              <div
+                key={s.service}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "6px 8px",
+                  background: i % 2 === 0 ? "var(--bg-primary)" : "transparent",
+                  borderRadius: "4px",
+                  fontSize: "11px",
+                }}
+              >
+                <span style={{ fontWeight: "bold", color: "var(--text-primary)" }}>{s.service}</span>
+                <span style={{ color: "var(--accent-green)", fontVariantNumeric: "tabular-nums" }}>{s.cost}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* DEMO disclaimer */}
+      <div style={{ textAlign: "center", fontSize: "9px", color: "var(--text-secondary)", padding: "8px 0" }}>
+        [DEMO] All data simulated — platform is in paper trading mode. No real trades are being executed.
+      </div>
+    </div>
+  );
+}
+
+/* ─── Agent Fleet (Enhanced) ─── */
+const AGENT_FLEET = [
+  { name: "TrendFollower", model: "Claude Opus", status: "scanning" as const, task: "BTC/ETH momentum tracking", color: "#a855f7", uptime: 99.2, signals: 47 },
+  { name: "MeanRevert", model: "Claude Sonnet", status: "idle" as const, task: "SOL mean reversion scanning", color: "#3b82f6", uptime: 98.8, signals: 23 },
+  { name: "SentimentBot", model: "Grok", status: "scanning" as const, task: "Social signal aggregation", color: "#ef4444", uptime: 99.5, signals: 142 },
+  { name: "ArbitrageBot", model: "Claude Haiku", status: "planned" as const, task: "Cross-exchange spread detection", color: "#64748b", uptime: 0, signals: 0 },
+  { name: "RiskGuard", model: "Claude Opus", status: "watching" as const, task: "Circuit breaker monitoring (0.8%)", color: "#f59e0b", uptime: 99.9, signals: 8 },
+  { name: "ResearchAgent", model: "Perplexity", status: "scanning" as const, task: "Market research & news analysis", color: "#3b82f6", uptime: 97.6, signals: 89 },
+];
+
+function AgentFleet() {
+  const [tick, setTick] = useState(0);
+  const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const iv = setInterval(() => setTick((t) => t + 1), 1500);
+    return () => clearInterval(iv);
+  }, []);
+
+  const statusConfig = {
+    scanning: { label: "SCANNING", color: "#10b981", animate: true },
+    idle: { label: "IDLE", color: "#3b82f6", animate: false },
+    watching: { label: "WATCHING", color: "#f59e0b", animate: true },
+    planned: { label: "PLANNED", color: "#64748b", animate: false },
+  };
+
+  const agentThoughts = [
+    "RSI divergence detected on BTC/USDT 4H...",
+    "Checking SOL mean reversion — 1.2 std dev from MA...",
+    "Scanning 847 X posts for sentiment shift...",
+    "Awaiting exchange API integration...",
+    "Portfolio drawdown: 0.3% — within limits",
+    "Cross-referencing 4 news sources on ETH upgrade...",
+  ];
+
+  return (
+    <div style={{ overflow: "auto", height: "100%" }}>
+      {/* Fleet Overview */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+        <div>
+          <h3 style={{ ...sectionTitle, marginBottom: "4px" }}>AI Agent Fleet</h3>
+          <p style={{ color: "var(--text-secondary)", fontSize: "11px", margin: 0 }}>
+            Paper trading mode — agents configured, not live-trading
+          </p>
+        </div>
+        <div style={{ display: "flex", gap: "12px", fontSize: "11px" }}>
+          <span style={{ color: "#10b981" }}>{AGENT_FLEET.filter((a) => a.status !== "planned").length} Active</span>
+          <span style={{ color: "#64748b" }}>{AGENT_FLEET.filter((a) => a.status === "planned").length} Planned</span>
+          <span style={{ color: "var(--text-secondary)" }}>{AGENT_FLEET.reduce((a, b) => a + b.signals, 0)} Signals</span>
+        </div>
+      </div>
+
+      {/* Agent Cards */}
+      <div className="agents-grid-responsive" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "20px" }}>
+        {AGENT_FLEET.map((agent, i) => {
+          const sc = statusConfig[agent.status];
+          const isSelected = selectedAgent === agent.name;
+          const thought = agentThoughts[i];
+          return (
+            <div
+              key={agent.name}
+              onClick={() => setSelectedAgent(isSelected ? null : agent.name)}
+              className="neon-hover"
+              style={{
+                padding: "16px",
+                background: isSelected ? `${agent.color}08` : "var(--bg-secondary)",
+                border: `1px solid ${isSelected ? `${agent.color}44` : "var(--border-color)"}`,
+                borderRadius: "10px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                animation: `fadeInUp 0.4s ease ${i * 0.06}s both`,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                <div style={{
+                  position: "relative",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: `${agent.color}18`,
+                  border: `2px solid ${agent.color}66`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  color: agent.color,
+                }}>
+                  {agent.name[0]}
+                  {sc.animate && (
+                    <div style={{
+                      position: "absolute",
+                      inset: "-3px",
+                      borderRadius: "50%",
+                      border: `2px solid ${sc.color}`,
+                      animation: "pulse 2s ease-in-out infinite",
+                      opacity: 0.5,
+                    }} />
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)" }}>{agent.name}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{agent.model}</div>
+                </div>
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  padding: "3px 8px",
+                  background: `${sc.color}18`,
+                  borderRadius: "4px",
+                }}>
+                  {sc.animate && (
+                    <span className="agent-processing" style={{
+                      display: "inline-block",
+                      width: 5,
+                      height: 5,
+                      borderRadius: "50%",
+                      background: sc.color,
+                    }} />
+                  )}
+                  <span style={{ fontSize: "9px", fontWeight: "bold", color: sc.color, letterSpacing: "0.5px" }}>
+                    {sc.label}
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "10px" }}>
+                {agent.task}
+              </div>
+
+              {/* Stats Row */}
+              <div style={{ display: "flex", gap: "12px", fontSize: "10px" }}>
+                <span style={{ color: "var(--text-secondary)" }}>
+                  Uptime: <span style={{ color: agent.uptime > 99 ? "#10b981" : "#f59e0b", fontWeight: "bold" }}>{agent.uptime}%</span>
+                </span>
+                <span style={{ color: "var(--text-secondary)" }}>
+                  Signals: <span style={{ color: "var(--text-primary)", fontWeight: "bold" }}>{agent.signals + (sc.animate ? Math.floor(Math.sin(tick * 0.5 + i) * 2 + 2) : 0)}</span>
+                </span>
+              </div>
+
+              {/* Expanded Thought */}
+              {isSelected && (
+                <div style={{
+                  marginTop: "10px",
+                  padding: "10px",
+                  background: "var(--bg-primary)",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border-color)",
+                  fontSize: "11px",
+                  color: agent.status === "planned" ? "var(--text-secondary)" : sc.color,
+                  fontStyle: "italic",
+                  animation: "fadeInUp 0.3s ease both",
+                }}>
+                  {agent.status === "planned"
+                    ? "Awaiting exchange API integration..."
+                    : `"${thought}"`
+                  }
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Agent Network Visualization */}
+      <div style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "16px" }}>
+        <div style={{ fontSize: "12px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px", marginBottom: "12px" }}>
+          Agent Orchestration Network
+        </div>
+        <svg viewBox="0 0 600 160" style={{ width: "100%", height: "auto" }}>
+          {AGENT_FLEET.filter((a) => a.status !== "planned").map((agent, i) => {
+            const x = 60 + i * 110;
+            const engineX = 300;
+            const engineY = 130;
+            const progress = ((tick * 3 + i * 15) % 40) / 40;
+            const px = x + (engineX - x) * progress;
+            const py = 40 + (engineY - 40) * progress;
+            return (
+              <g key={agent.name}>
+                <line x1={x} y1={40} x2={engineX} y2={engineY} stroke={agent.color} strokeOpacity={0.15} strokeWidth={1} />
+                <circle cx={px} cy={py} r={2.5} fill={agent.color} opacity={0.8}>
+                  <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite" />
+                </circle>
+                <circle cx={x} cy={40} r={18} fill="none" stroke={agent.color} strokeWidth={1.5} opacity={0.6} />
+                <circle cx={x} cy={40} r={28} fill={`${agent.color}08`} />
+                <text x={x} y={44} textAnchor="middle" fill={agent.color} fontSize="10" fontWeight="bold" fontFamily="inherit">
+                  {agent.name.substring(0, 2).toUpperCase()}
+                </text>
+                <text x={x} y={72} textAnchor="middle" fill="var(--text-secondary)" fontSize="8" fontFamily="inherit">
+                  {agent.name}
+                </text>
+              </g>
+            );
+          })}
+          <circle cx={300} cy={130} r={22} fill="none" stroke="#10b981" strokeWidth={2} opacity={0.8}>
+            <animate attributeName="r" values="22;24;22" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx={300} cy={130} r={32} fill="#10b98108" />
+          <text x={300} y={128} textAnchor="middle" fill="#10b981" fontSize="8" fontWeight="bold" fontFamily="inherit">ENGINE</text>
+          <text x={300} y={138} textAnchor="middle" fill="#10b981" fontSize="7" fontFamily="inherit">ORCHESTRATOR</text>
+        </svg>
+      </div>
+
+      <div style={{ textAlign: "center", fontSize: "9px", color: "var(--text-secondary)", padding: "8px 0" }}>
+        [DEMO] Agent activity simulated — agents configured but not live-trading
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -1951,195 +2555,11 @@ export default function Home() {
       <main style={{ flex: 1, overflow: "hidden", padding: "16px" }}>
         {tab === "terminal" && <Terminal />}
 
-        {/* ═══════════════════════ DASHBOARD ═══════════════════════ */}
-        {tab === "dashboard" && (
-          <div style={{ overflow: "auto", height: "100%" }}>
-            {/* Status cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", marginBottom: "24px" }}>
-              {STATUS_CARDS.map((card) => (
-                <div key={card.label} style={cardStyle}>
-                  <div style={{ fontSize: "12px", color: "var(--text-secondary)", marginBottom: "4px" }}>
-                    {card.label}
-                  </div>
-                  <div style={{ fontSize: "18px", fontWeight: "bold", color: card.color }}>
-                    {card.value}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Domain Portfolio */}
-            <h3 style={sectionTitle}>Domain Portfolio ({DOMAINS.length})</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "8px", marginBottom: "24px" }}>
-              {DOMAINS.map((d) => (
-                <div
-                  key={d.domain}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "10px 14px",
-                    background: "var(--bg-secondary)",
-                    border: "1px solid var(--border-color)",
-                    borderRadius: "8px",
-                  }}
-                >
-                  <span
-                    style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      background: statusDot(d.status),
-                      flexShrink: 0,
-                    }}
-                  />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "13px", fontWeight: "bold", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {d.domain}
-                    </div>
-                    <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{d.role}</div>
-                  </div>
-                  <span style={{ fontSize: "10px", color: statusDot(d.status), textTransform: "uppercase" }}>
-                    {d.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Architecture */}
-            <h3 style={sectionTitle}>Architecture</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px", marginBottom: "24px" }}>
-              {ARCHITECTURE.map((a) => (
-                <div key={a.name} style={{ ...cardStyle, textAlign: "center" }}>
-                  <div
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "50%",
-                      background: a.color + "22",
-                      color: a.color,
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: "bold",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    {a.icon}
-                  </div>
-                  <div style={{ fontWeight: "bold", fontSize: "13px" }}>{a.name}</div>
-                  <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "4px" }}>{a.desc}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Stack & Costs */}
-            <h3 style={sectionTitle}>Stack &amp; Costs (~$45/mo)</h3>
-            <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "24px" }}>
-              <thead>
-                <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
-                  <th style={{ textAlign: "left", padding: "8px", fontSize: "12px", color: "var(--text-secondary)" }}>Service</th>
-                  <th style={{ textAlign: "left", padding: "8px", fontSize: "12px", color: "var(--text-secondary)" }}>Role</th>
-                  <th style={{ textAlign: "right", padding: "8px", fontSize: "12px", color: "var(--text-secondary)" }}>Cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                {STACK_COSTS.map((s) => (
-                  <tr key={s.service} style={{ borderBottom: "1px solid var(--border-color)" }}>
-                    <td style={{ padding: "8px", fontSize: "13px", fontWeight: "bold" }}>{s.service}</td>
-                    <td style={{ padding: "8px", fontSize: "12px", color: "var(--text-secondary)" }}>{s.role}</td>
-                    <td style={{ padding: "8px", fontSize: "12px", color: "var(--accent-green)", textAlign: "right" }}>{s.cost}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* TM Portfolio */}
-            <h3 style={sectionTitle}>Trademark Portfolio</h3>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "24px" }}>
-              {TRADEMARKS.map((tm) => (
-                <div key={tm.mark} style={{ ...cardStyle, display: "flex", alignItems: "center", gap: "12px" }}>
-                  <span style={{ fontSize: "11px", color: "#f59e0b", fontWeight: "bold" }}>TM</span>
-                  <div>
-                    <div style={{ fontWeight: "bold", fontSize: "14px" }}>{tm.mark}</div>
-                    <div style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{tm.number} ({tm.jurisdiction})</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Hard Rules */}
-            <h3 style={sectionTitle}>Hard Rules</h3>
-            <div style={{ ...cardStyle, marginBottom: "24px" }}>
-              {HARD_RULES.map((rule, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: "8px 0",
-                    borderBottom: i < HARD_RULES.length - 1 ? "1px solid var(--border-color)" : "none",
-                    fontSize: "13px",
-                    color: rule.startsWith("NEVER") ? "#ef4444" : "var(--text-primary)",
-                  }}
-                >
-                  <span style={{ color: "var(--text-secondary)", marginRight: "8px" }}>{String(i + 1).padStart(2, "0")}.</span>
-                  {rule}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* ═══════════════════════ DASHBOARD — OPERATIONS CENTER ═══════════════════════ */}
+        {tab === "dashboard" && <OperationsCenter />}
 
         {/* ═══════════════════════ AGENTS ═══════════════════════ */}
-        {tab === "agents" && (
-          <div style={{ overflow: "auto", height: "100%" }}>
-            <h3 style={sectionTitle}>AI Agent Fleet</h3>
-            <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-              Paper trading mode — agents are configured but not live-trading.
-            </p>
-            {[
-              { name: "TrendFollower", model: "Claude Opus", status: "ready", task: "BTC/ETH momentum tracking" },
-              { name: "MeanRevert", model: "Claude Sonnet", status: "ready", task: "SOL mean reversion scanning" },
-              { name: "SentimentBot", model: "Grok", status: "ready", task: "Social signal aggregation" },
-              { name: "ArbitrageBot", model: "Claude Haiku", status: "planned", task: "Cross-exchange spread detection" },
-              { name: "RiskGuard", model: "Claude Opus", status: "ready", task: "Circuit breaker monitoring (0.8% threshold)" },
-              { name: "ResearchAgent", model: "Perplexity", status: "ready", task: "Market research & news analysis" },
-            ].map((agent) => (
-              <div
-                key={agent.name}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "16px",
-                  padding: "12px 16px",
-                  background: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
-                  borderRadius: "8px",
-                  marginBottom: "8px",
-                }}
-              >
-                <span
-                  style={{
-                    width: "10px",
-                    height: "10px",
-                    borderRadius: "50%",
-                    background: agent.status === "ready" ? "#3b82f6" : "#64748b",
-                  }}
-                  aria-label={`${agent.name} status: ${agent.status}`}
-                />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: "bold", fontSize: "14px" }}>{agent.name}</div>
-                  <div style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{agent.task}</div>
-                </div>
-                <span style={{ fontSize: "11px", color: "var(--text-secondary)", background: "var(--bg-primary)", padding: "4px 8px", borderRadius: "4px" }}>
-                  {agent.model}
-                </span>
-                <span style={{ fontSize: "10px", color: agent.status === "ready" ? "#3b82f6" : "#64748b", textTransform: "uppercase" }}>
-                  {agent.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
+        {tab === "agents" && <AgentFleet />}
 
         {/* ═══════════════════════ ZYNRIP ═══════════════════════ */}
         {tab === "zynrip" && (
