@@ -38,10 +38,12 @@ Based in: New Zealand (NEVER register anything in Australia)
 - VDS Lens: scripts/vds-lens.sh
 
 ## VDS (Cloudzy markets these as VDS, not VPS — terminology matters)
-- Cloudzy: 100.122.99.34
-- Auth: SSH key (VDS_SSH_KEY) + panel API token (VDS_TOKEN) for Cloudzy lifecycle ops
+- Primary VDS: vmi3205024 (Tailscale: 100.125.12.4, public: 161.97.89.49) — canonical master
+- Secondary VDS: vmi3217372 (Tailscale: 100.121.107.112)
+- NOTE: 100.122.99.34 is WRONG — not reachable, do not use. Use Tailscale hostnames.
+- Auth: SSH key at ~/.ssh/zynthio_dc (VDS_SSH_KEY) + panel API token (VDS_TOKEN) for Cloudzy lifecycle ops
 - VDS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+- 32,503 files, ~19GB on vmi3205024
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
