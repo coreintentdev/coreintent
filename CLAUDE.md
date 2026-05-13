@@ -46,6 +46,11 @@ Anthropic-hosted Claude Code sessions (the cloud sandbox where this Claude is ru
 - This session writes the code, CI/script that executes it, and the docs. The other surface RUNS it.
 - If the operator asks for an execution that the sandbox can't do, say so in the FIRST sentence, then offer the surface that can.
 
+**Mac spec respect (operator hardware constraint — INC-017, INC-231):**
+- Operator's Mac is a MacBookPro16,3 with **8 GB RAM** (Intel, 16-inch, 2019).
+- Claude Desktop has been writing **26+ GB/day** and triggering kernel_task to write **549+ GB/day** (operator screenshot 2026-05-13 — 1.26 TB total writes in one day). SSD endurance is being burned, jetsam fires, Mac UI hangs (20+ spindumps in 8 days per COR-231).
+- **Rule:** prefer Claude Code CLI in terminal (lightweight) over Claude Desktop (Electron + Renderer process eats RAM). Quit Claude Desktop between sessions. Move heavy work to VDS via the bootstrap. Do not open Cowork on this hardware.
+
 ## Rules for AI Sessions
 1. READ before you write. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
