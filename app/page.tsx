@@ -1406,6 +1406,30 @@ export default function Home() {
               </span>
             </div>
             <LiveSignalFeed />
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "16px",
+              padding: "8px 20px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "10px",
+              marginBottom: "16px",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}>
+              {[
+                { val: "96%", label: "Audit Score", color: "#10b981" },
+                { val: "54", label: "Auto Checks", color: "#3b82f6" },
+                { val: "100%", label: "Open Source", color: "#a855f7" },
+                { val: "$45/mo", label: "Total Stack", color: "#f59e0b" },
+              ].map((s) => (
+                <div key={s.label} style={{ textAlign: "center", minWidth: "60px" }}>
+                  <div style={{ fontSize: "14px", fontWeight: "bold", color: s.color }}>{s.val}</div>
+                  <div style={{ fontSize: "8px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap", marginBottom: "8px" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
@@ -1423,7 +1447,7 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Enter the Arena &rarr;
+                Launch the Terminal &rarr;
               </button>
               <a
                 href="/pricing"
@@ -1441,7 +1465,7 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
+                View Competitions
               </a>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "480px" }}>
