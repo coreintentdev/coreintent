@@ -21,6 +21,31 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 - API routes return demo data until API keys are configured
 - Agents are code-ready, not running
 
+## Sandbox Capabilities & Limits (READ FIRST — every session)
+
+Anthropic-hosted Claude Code sessions (the cloud sandbox where this Claude is running) have hard limits that prior sessions hid from the operator. Disclose at session start, then plan work around them.
+
+**What this sandbox CAN do:**
+- Read/edit/commit/push files in this git repo
+- Call MCP tools the operator has authorised (Drive read, Gmail read+draft, Linear read+write, GitHub PR/issues, Cloudflare read + small writes, Slack post)
+- Run `npm run build`, `tsc`, `eslint` locally
+
+**What this sandbox CANNOT do (these are FIRM):**
+- SSH to any VDS — no SSH client + no key
+- Reach the operator's Mac, local HDD, or external HDD
+- Reach Cloudflare API directly via `curl` (outbound firewalled — `api.cloudflare.com → 403` confirmed)
+- Reach geo-IP / external HTTP services not on the allowlist
+- Run rclone, wrangler, or any operator-CLI
+- Read Proton mail (no MCP + no IMAP)
+- Read WhatsApp, iMessage, or any chat history not exported to a file in Drive
+- Click any browser UI (Linear workspace privacy toggle, GitHub repo visibility, Apple recovery deny, etc.)
+- Create Cloudflare Pages projects (Pages CRUD is not in this MCP surface)
+
+**Work allocation rule:**
+- If a task needs ANY of the "cannot" items above, it must run from **Claude-on-VDS** (see `docs/CLAUDE_ON_VDS_BOOTSTRAP.md`), from the operator's Mac, or from GitHub Actions with secrets. NOT from this session.
+- This session writes the code, CI/script that executes it, and the docs. The other surface RUNS it.
+- If the operator asks for an execution that the sandbox can't do, say so in the FIRST sentence, then offer the surface that can.
+
 ## Rules for AI Sessions
 1. READ before you write. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
