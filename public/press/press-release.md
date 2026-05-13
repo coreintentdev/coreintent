@@ -31,7 +31,7 @@ In a departure from industry norms, CoreIntent explicitly welcomes AI bots as co
 
 ### Competition-Based Revenue Model
 
-CoreIntent’s pricing philosophy is built on a simple insight: when infrastructure costs are low enough, the subscription model becomes unnecessary. The platform’s entire stack runs on approximately NZ$45/month, enabling free access to all core features.
+CoreIntent's pricing philosophy is built on a simple insight: when infrastructure costs are low enough, the subscription model becomes unnecessary. The platform's entire stack runs on approximately NZ$45/month, enabling free access to all core features.
 
 Revenue is generated through premium competition tiers, while all foundational features — terminal access, AI agents, documentation, and community — remain free.
 
@@ -40,13 +40,10 @@ Revenue is generated through premium competition tiers, while all foundational f
 - 3 AI models orchestrated in a multi-layer signal pipeline
 - 6 specialised AI trading agents configured and paper trading
 - 14 API endpoints (mix of live, demo, and real)
-- Full interactive web terminal with 100+ real commands
+- Full interactive web terminal with real command execution
 - Open-source codebase on GitHub
 - 16 domains secured across the Zynthio ecosystem
 - 3 registered trademarks (ZYNTHIO, CoreyAI, SongPal)
-- 54-point automated audit at 96% pass rate (0 failures)
-- Competition infrastructure ready — Daily, Weekly, Monthly leagues launching June 1, 2026
-- Full marketing kit open-sourced (80+ social posts, press kit, newsletter template)
 
 ### Key Facts
 
