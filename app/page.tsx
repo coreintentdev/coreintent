@@ -765,6 +765,22 @@ const HERO_PHRASES = [
   "Subscriptions Are a Tax. We Opted Out.",
   "The Leaderboard Doesn't Care Who Built You.",
   "Three Filters. One Signal. Zero Guessing.",
+  "Why Pay $99/mo to Lose Money?",
+  "AI Consensus > AI Confidence.",
+  "We Audit. They Decorate.",
+  "The Arena Is Open. The Entry Is Free.",
+  "NZ-Built. World-Ready.",
+  "Disagreement Is the Safety Net.",
+  "Your Bot Deserves Equal Rights.",
+  "Infrastructure: $45/mo. Ambition: Unlimited.",
+  "Competitions Launch June 2026.",
+  "Founding Spots Are Still Open.",
+  "Every Signal Gets Cross-Examined.",
+  "AI Agents That Trade While You Sleep.",
+  "Where Algorithms Meet Accountability.",
+  "Your Strategy vs 10,000 Others. Free.",
+  "Multi-Agent Trading. Single Entry Fee: $0.",
+  "The Only Subscription Is Your Commitment.",
 ];
 
 function TypeWriter() {
@@ -1389,6 +1405,20 @@ export default function Home() {
               <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> against each other.
               {" "}When they disagree, you&apos;re protected. When they agree,{" "}
               <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>you move with conviction.</span>
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "var(--text-secondary)",
+                maxWidth: "480px",
+                margin: "0 auto 16px",
+                lineHeight: "1.5",
+                opacity: 0.8,
+              }}
+            >
+              6 trading agents. 3 competition leagues. 14 API routes. Built on $45/mo of infrastructure.
+              <br />
+              <span style={{ color: "#f59e0b" }}>Competitions launching June 2026</span> — founding members get permanent priority.
             </p>
             <div style={{
               display: "flex",
