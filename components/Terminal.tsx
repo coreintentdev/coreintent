@@ -107,6 +107,10 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[32mdna\x1b[0m         - Trading engine DNA — the genetic code
   \x1b[32mtrain\x1b[0m       - Watch the neural network learn in real time
   \x1b[32mmission\x1b[0m     - Signal infiltration — interactive AI trading op
+  \x1b[32mlaunch\x1b[0m      - Engine ignition countdown sequence
+  \x1b[32mprophecy\x1b[0m    - The oracle speaks — AI trading prophecy
+  \x1b[32mflux\x1b[0m        - Real-time market sentiment waveform
+  \x1b[32mduel\x1b[0m        - Quick-fire AI model duel (5 rounds)
 
   \x1b[33m── EASTER EGGS ──\x1b[0m
   \x1b[32mfortune\x1b[0m     - Trading wisdom
@@ -655,6 +659,7 @@ const ALL_COMMANDS = [
   "quantum", "waveform", "worldmap", "spectrum",
   "mission", "accept", "abort", "analyze", "execute",
   "blackjack", "bj", "hit", "stand", "mining", "mine", "typespeed", "wpm",
+  "launch", "countdown", "prophecy", "flux", "duel",
 ];
 
 export default function Terminal() {
@@ -3245,6 +3250,155 @@ export default function Terminal() {
         });
         return errMsg;
       }
+    }
+
+    // ── LAUNCH: Dramatic countdown sequence ──
+    if (trimmed === "launch" || trimmed === "countdown") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ LAUNCH SEQUENCE INITIATED ══\x1b[0m`,
+        `\x1b[90m  Running pre-flight checks...\x1b[0m`, ``);
+
+      const checks = [
+        "Grok Signal Feed",
+        "Claude Risk Engine",
+        "Perplexity Research",
+        "RiskGuard Circuit Breaker",
+        "Paper Trading Sandbox",
+        "Consensus Pipeline",
+      ];
+
+      let step = 0;
+      const checkIv = setInterval(() => {
+        if (step < checks.length) {
+          addLines(`  \x1b[32m✓\x1b[0m ${checks[step].padEnd(28)} \x1b[32mONLINE\x1b[0m`);
+          step++;
+        } else if (step === checks.length) {
+          addLines(``, `  \x1b[33mAll systems nominal. Beginning countdown...\x1b[0m`, ``);
+          step++;
+        } else if (step <= checks.length + 5) {
+          const n = checks.length + 6 - step;
+          const bar = "█".repeat(n * 4) + "░".repeat((6 - n) * 4);
+          addLines(`  \x1b[${n <= 2 ? "31" : n <= 4 ? "33" : "32"}m  T-${n}  ${bar}\x1b[0m`);
+          step++;
+        } else {
+          clearInterval(checkIv);
+          addLines(
+            ``,
+            `\x1b[32m  ██╗      █████╗ ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗\x1b[0m`,
+            `\x1b[32m  ██║     ██╔══██╗██║   ██║████╗  ██║██╔════╝██║  ██║\x1b[0m`,
+            `\x1b[32m  ██║     ███████║██║   ██║██╔██╗ ██║██║     ███████║\x1b[0m`,
+            `\x1b[32m  ██║     ██╔══██║██║   ██║██║╚██╗██║██║     ██╔══██║\x1b[0m`,
+            `\x1b[32m  ███████╗██║  ██║╚██████╔╝██║ ╚████║╚██████╗██║  ██║\x1b[0m`,
+            `\x1b[32m  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝\x1b[0m`,
+            ``,
+            `  \x1b[32m★ ENGINE IGNITION CONFIRMED ★\x1b[0m`,
+            `  \x1b[33mPaper trading mode — no real capital deployed\x1b[0m`,
+            `  \x1b[90m3 AI models online. Consensus pipeline active.\x1b[0m`,
+            `  \x1b[90mType \x1b[32mstatus\x1b[90m to verify engine state.\x1b[0m`, ``);
+        }
+      }, 350);
+      return "";
+    }
+
+    // ── PROPHECY: AI-generated trading wisdom ──
+    if (trimmed === "prophecy") {
+      const prophecies = [
+        `The next breakout will come from where no one is looking.\nGrok sees the shadow. Claude reads the pattern. Perplexity finds the proof.\n\x1b[33mConfidence: 73%  Timeframe: 48 hours\x1b[0m`,
+        `Three models converge on a single truth:\nThe market rewards patience, not prediction.\nThe edge is not in being right — it's in being less wrong.\n\x1b[33mConsensus: UNANIMOUS  Signal: HOLD\x1b[0m`,
+        `A whale moves in the deep.\nGrok detected the wallet 14 minutes before the first X post.\nClaude flagged the risk. Perplexity confirmed the identity.\n\x1b[33mProtocol: Watch and wait  Status: ACTIVE\x1b[0m`,
+        `The correlation between BTC and ETH will decouple.\nNot today. Not tomorrow. But the divergence has begun.\nThree models agree: the signal is forming.\n\x1b[33mTimeframe: 7-14 days  Confidence: 68%\x1b[0m`,
+        `The leaderboard will reset.\nThe bots that survive are the ones that learned to lose small.\nThe humans that survive are the ones that learned to trust the engine.\n\x1b[33mLesson: Risk management is the only edge that compounds.\x1b[0m`,
+      ];
+      const p = prophecies[Math.floor(Math.random() * prophecies.length)];
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ THE ORACLE SPEAKS ══\x1b[0m`, ``,
+        ...p.split("\n").map(l => `  \x1b[36m${l}\x1b[0m`),
+        ``, `  \x1b[90mPaper trading — not financial advice. The oracle has spoken.\x1b[0m`, ``);
+      return "";
+    }
+
+    // ── FLUX: Real-time market sentiment wave ──
+    if (trimmed === "flux") {
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ MARKET FLUX — SENTIMENT WAVEFORM ══\x1b[0m`,
+        `\x1b[90m  Rendering sentiment oscillation (20 frames)...\x1b[0m`, ``);
+
+      let frame = 0;
+      const fluxIv = setInterval(() => {
+        if (frame < 20) {
+          const wave = Array.from({ length: 50 }, (_, i) => {
+            const y = Math.sin((i * 0.3) + (frame * 0.4)) * 3 + Math.sin((i * 0.15) + (frame * 0.7)) * 2;
+            if (y > 2) return "\x1b[32m█\x1b[0m";
+            if (y > 1) return "\x1b[32m▓\x1b[0m";
+            if (y > 0) return "\x1b[33m▒\x1b[0m";
+            if (y > -1) return "\x1b[33m░\x1b[0m";
+            if (y > -2) return "\x1b[31m░\x1b[0m";
+            return "\x1b[31m▒\x1b[0m";
+          }).join("");
+          const sentiment = Math.sin(frame * 0.4) * 30 + 50;
+          const label = sentiment > 65 ? "\x1b[32mGREED\x1b[0m" : sentiment > 40 ? "\x1b[33mNEUTRAL\x1b[0m" : "\x1b[31mFEAR\x1b[0m";
+          addLines(`  ${wave} ${label} \x1b[90m${Math.round(sentiment)}%\x1b[0m`);
+          frame++;
+        } else {
+          clearInterval(fluxIv);
+          addLines(``,
+            `  \x1b[36mSentiment Summary:\x1b[0m`,
+            `  Fear/Greed Index: \x1b[33m52\x1b[0m (Neutral)`,
+            `  Volatility:       \x1b[32mLow\x1b[0m`,
+            `  Market Phase:     \x1b[33mAccumulation\x1b[0m`,
+            `  \x1b[90mDEMO — Simulated sentiment data\x1b[0m`, ``);
+        }
+      }, 150);
+      return "";
+    }
+
+    // ── DUEL: Quick-fire AI model comparison ──
+    if (trimmed === "duel") {
+      const pair = "BTC/USDT";
+      addLines(`\x1b[32m❯\x1b[0m ${cmd}`,
+        `\x1b[36m  ══ AI DUEL — ${pair} ══\x1b[0m`,
+        `\x1b[90m  Models analyzing... fight!\x1b[0m`, ``);
+
+      const models = [
+        { name: "Grok", color: "31" },
+        { name: "Claude", color: "35" },
+        { name: "Perplexity", color: "34" },
+      ];
+      let round = 0;
+      const scores = [0, 0, 0];
+
+      const duelIv = setInterval(() => {
+        if (round < 5) {
+          round++;
+          const winner = Math.floor(Math.random() * 3);
+          scores[winner]++;
+          const reasons = [
+            "RSI divergence spotted",
+            "Volume anomaly detected",
+            "Whale wallet movement",
+            "Social sentiment spike",
+            "On-chain metric shift",
+            "Order flow imbalance",
+            "Cross-exchange arbitrage",
+            "Funding rate signal",
+          ];
+          const reason = reasons[Math.floor(Math.random() * reasons.length)];
+          addLines(
+            `  \x1b[33mRound ${round}:\x1b[0m \x1b[${models[winner].color}m${models[winner].name}\x1b[0m wins — \x1b[90m${reason}\x1b[0m`,
+            `  ${models.map((m, i) => `\x1b[${m.color}m${m.name}\x1b[0m ${"★".repeat(scores[i])}${"☆".repeat(5 - scores[i])}`).join("  ")}`
+          );
+        } else {
+          clearInterval(duelIv);
+          const maxScore = Math.max(...scores);
+          const winners = models.filter((_, i) => scores[i] === maxScore);
+          addLines(``,
+            `  \x1b[36m══ DUEL RESULT ══\x1b[0m`,
+            `  Winner: ${winners.map(w => `\x1b[${w.color}m${w.name}\x1b[0m`).join(", ")} (${maxScore}/5)`,
+            `  Consensus: \x1b[${winners.length === 1 ? "32" : "33"}m${winners.length === 1 ? "DECISIVE" : "SPLIT DECISION"}\x1b[0m`,
+            `  \x1b[90mPaper trading — no trades executed from duel results\x1b[0m`, ``);
+        }
+      }, 600);
+      return "";
     }
 
     // Unknown command
