@@ -45,6 +45,7 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 - NOTE: 100.122.99.34 is WRONG — not reachable, do not use. Use Tailscale hostnames.
 - Auth: SSH key at ~/.ssh/zynthio_dc (VDS_SSH_KEY) + panel API token (VDS_TOKEN) for Contabo lifecycle ops
 - VDS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
+- **READ COREY_WORDS BEFORE INFERRING ANYTHING.** Pointer + rule: docs/CLAUDE_OPERATOR_LANGUAGE_POINTER.md. Do not paste verbatim from that file into commits/public logs.
 - 32,503 files, ~19GB on vmi3205024
 - MIGRATION: Cloudzy → Contabo transfer + closure of 3 old Cloudzy VPS hosts: status UNVERIFIED by AI sessions. Operator action required to confirm migration complete and Cloudzy billing closed (see INC-009).
 
