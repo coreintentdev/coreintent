@@ -59,7 +59,7 @@
 ## Typography
 
 | Usage | Font Stack |
-|-------|------------|
+|-------|-----------|
 | **Primary** | JetBrains Mono |
 | **Fallback 1** | Fira Code |
 | **Fallback 2** | Cascadia Code |
