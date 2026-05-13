@@ -441,9 +441,9 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "8px", textAlign: "center" }}>
+            <h2 style={{ marginBottom: "8px", textAlign: "center", fontSize: "20px" }}>
               &quot;But How Do You Make Money?&quot;
-            </h3>
+            </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "13px", textAlign: "center", marginBottom: "20px", maxWidth: "600px", margin: "0 auto 20px" }}>
               Fair question. Transparency is a feature, not a vulnerability.
             </p>
@@ -511,7 +511,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "12px" }}>The Philosophy</h3>
+            <h2 style={{ marginBottom: "12px", fontSize: "20px" }}>The Philosophy</h2>
             <ul
               className="pricing-philosophy-grid"
               style={{
@@ -555,7 +555,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "16px", textAlign: "center" }}>CoreIntent vs Traditional Platforms</h3>
+            <h2 style={{ marginBottom: "16px", textAlign: "center", fontSize: "20px" }}>CoreIntent vs Traditional Platforms</h2>
             <table className="pricing-compare-table" style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ borderBottom: "2px solid var(--border-color)" }}>
@@ -596,7 +596,7 @@ export default function PricingPage() {
               textAlign: "center",
             }}
           >
-            <h3 style={{ marginBottom: "8px" }}>Built to Ship, Audited to Last</h3>
+            <h2 style={{ marginBottom: "8px", fontSize: "20px" }}>Built to Ship, Audited to Last</h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "13px", marginBottom: "20px" }}>
               Every change runs through a 54-point automated audit. No exceptions.
             </p>
@@ -637,7 +637,7 @@ export default function PricingPage() {
               textAlign: "left",
             }}
           >
-            <h3 style={{ marginBottom: "20px", textAlign: "center" }}>Frequently Asked Questions</h3>
+            <h2 style={{ marginBottom: "20px", textAlign: "center", fontSize: "20px" }}>Frequently Asked Questions</h2>
             {[
               {
                 q: "Is CoreIntent really free?",
@@ -761,9 +761,9 @@ export default function PricingPage() {
             >
               Early Access
             </div>
-            <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>
+            <h2 style={{ fontSize: "18px", marginBottom: "8px" }}>
               First movers get first-mover advantages.
-            </h3>
+            </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginTop: "16px", maxWidth: "600px", margin: "16px auto 0" }}>
               {[
                 { label: "Priority Placement", desc: "Early accounts get featured when leagues launch", color: "#10b981" },
@@ -815,9 +815,9 @@ export default function PricingPage() {
             }}>
               Demo Testimonials — Not Real Users
             </div>
-            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>
+            <h2 style={{ fontSize: "20px", marginBottom: "8px" }}>
               What Competitors Are Saying
-            </h3>
+            </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "12px", marginBottom: "24px" }}>
               Placeholder testimonials representing the types of users CoreIntent is built for.
             </p>
