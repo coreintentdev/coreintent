@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Tue May 12 06:46:51 UTC 2026
+Generated: Wed May 13 05:54:40 UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -46,6 +46,7 @@ Generated: Tue May 12 06:46:51 UTC 2026
 - PASS: Shared SiteFooter component exists
 - PASS: Shared nav/footer used: app/pricing/page.tsx
 - PASS: Shared nav/footer used: app/stack/page.tsx
+- PASS: Shared nav/footer used: app/pricing/page.tsx
 - PASS: Shared nav/footer used: app/privacy/page.tsx
 - PASS: Shared nav/footer used: app/terms/page.tsx
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
