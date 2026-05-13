@@ -52,8 +52,8 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
 - Bots welcome: No captcha, AI-to-AI is first-class.
-- The Mansion: Gamified world (rooms, story missions) — not yet built.
-- SongPal: Music layer (Corey's originals, not Suno AI generation).
+- The Mansion: BOTH a real owned physical property (operator's actual mansion) AND a gamified world layer (rooms, story missions) — sessions have repeatedly missed that it is also a real place. 100+ original songs by Corey reference this mansion. Do not treat as metaphor-only.
+- SongPal: Music layer (Corey's originals, not Suno AI generation). 100+ songs about The Mansion live in his catalogue.
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues

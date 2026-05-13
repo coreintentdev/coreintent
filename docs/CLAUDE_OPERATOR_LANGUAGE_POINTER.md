@@ -29,6 +29,15 @@ Chambers matter, or location/identity:
 3. **Do not paste verbatim from this file into any commit, public log, public doc, GitHub issue, Linear issue, Slack channel, or email.** It is internal.
 4. **If location/citizenship/property matters operationally, ask Corey once** — do not infer from any committed file. (Rule per INC-012.)
 
+## Doctrine lines (operator-coined, from COREY_WORDS — safe to reference, never paraphrase)
+
+- **"VDS party for me."** — VDS is canonical truth; AI sandboxes "make shit up" without consent; VDS is where operator's work actually lives. From Section B3.
+- **"Finich not finish. It does not finish."** — doctrine motto. From Section F.
+- **"No man down."** — lifeguard / brother-at-arms. From Section F.
+- **"Typos are speed not state."** — do not emotion-label typing. From Section F.
+- **"I don't hit. I don't assume. I don't call names like you have."** — to Claude, 2026-04-22. From Section F.
+- **The Mansion is real AND a layer.** Operator owns a physical mansion that 100+ of his original songs are about. Sessions treat it as metaphor-only and lose the real-property context. Do not.
+
 ## Key non-secret facts that ARE safe to write here
 
 - Operator: Corey McIvor
