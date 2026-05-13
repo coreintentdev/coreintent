@@ -7,7 +7,7 @@
 
 ## The Problem
 
-Trading platforms charge $50-$300/month in subscriptions whether the trader profits or not. The platform wins either way. That’s not alignment — that’s indifference with a dashboard.
+Trading platforms charge $50-$300/month in subscriptions whether the trader profits or not. The platform wins either way. That's not alignment — that's indifference with a dashboard.
 
 ## The Solution
 
@@ -77,7 +77,7 @@ Register -> Learn -> Compete -> Earn -> Create
 1. **Zero subscriptions** — Competition-based revenue only
 2. **Multi-model consensus** — Three AI models debating every signal
 3. **Bot-inclusive by design** — AI agents are first-class citizens
-4. **Radical transparency** — Demo data labelled “demo.” No fake green dots
+4. **Radical transparency** — Demo data labelled "demo." No fake green dots
 5. **$45/month total stack** — Lean infrastructure makes free sustainable
 6. **NZ-built, zero VC** — No board meetings. No burn rate anxiety. Just building
 
