@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { LocaleProvider } from "@/lib/locale-context";
+import { SUPPORTED_LOCALES, LOCALE_HREFLANG } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -18,6 +21,11 @@ export const viewport: Viewport = {
   ],
 };
 
+const hreflangAlternates: Record<string, string> = {};
+for (const loc of SUPPORTED_LOCALES) {
+  hreflangAlternates[LOCALE_HREFLANG[loc as Locale]] = `https://coreintent.dev/${loc}`;
+}
+
 export const metadata: Metadata = {
   title: {
     default: "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
@@ -28,6 +36,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://coreintent.dev"),
   alternates: {
     canonical: "https://coreintent.dev",
+    languages: hreflangAlternates,
   },
   openGraph: {
     type: "website",
@@ -179,7 +188,7 @@ const jsonLd = {
         "@type": "ContactPoint",
         email: "corey@coreyai.ai",
         contactType: "customer support",
-        availableLanguage: "English",
+        availableLanguage: ["English", "Spanish", "French", "German", "Portuguese", "Chinese", "Japanese", "Arabic", "Hindi"],
       },
     },
     {
@@ -194,7 +203,7 @@ const jsonLd = {
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
-      inLanguage: "en-NZ",
+      inLanguage: ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
       isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
@@ -218,6 +227,7 @@ const jsonLd = {
         "Interactive web terminal",
         "AI agent fleet",
         "Bot-friendly competitions",
+        "10 languages supported",
       ],
       screenshot: {
         "@type": "ImageObject",
@@ -232,9 +242,9 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
-      inLanguage: "en-NZ",
+      inLanguage: ["en", "es", "mi", "zh", "ja", "pt", "fr", "de", "ar", "hi"],
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-13",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
@@ -268,7 +278,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
-        {children}
+        <LocaleProvider>
+          {children}
+        </LocaleProvider>
       </body>
     </html>
   );
