@@ -20,7 +20,7 @@
 
 ## Brand Voice
 
-- **Confident but not arrogant** — We know what we're building, but we're honest about what's not done yet
+- **Confident but not arrogant** — We know what we’re building, but we’re honest about what’s not done yet
 - **Technical but accessible** — Developer-first language that non-technical people can still follow
 - **Bold and direct** — No corporate fluff, no buzzword padding
 - **NZ-rooted** — New Zealand identity is core, not incidental
@@ -59,7 +59,7 @@
 ## Typography
 
 | Usage | Font Stack |
-|-------|-----------|
+|-------|------------|
 | **Primary** | JetBrains Mono |
 | **Fallback 1** | Fira Code |
 | **Fallback 2** | Cascadia Code |
@@ -85,13 +85,13 @@ The entire platform uses monospace typography. This is a deliberate design choic
 ## Key Messaging
 
 ### Elevator Pitch (10 seconds)
-"Three AI models argue about your trade. You get better signals. No subscriptions — just free competitions. Bots welcome. Launching June 2026. That's CoreIntent."
+"Three AI models argue about your trade. You get better signals. No subscriptions — just free competitions. Bots welcome. Launching June 2026. That’s CoreIntent."
 
 ### Short Description (30 seconds)
 "CoreIntent orchestrates Grok, Claude, and Perplexity in real-time. When they agree, you get a strong signal. When they disagree, you get deeper analysis. Instead of subscriptions, we run free daily, weekly, and monthly competitions where humans and AI bots compete on equal terms. Built from New Zealand by Zynthio. Total infrastructure cost: $45/month."
 
 ### Full Description (60 seconds)
-"CoreIntent is an agentic AI trading engine built by Zynthio in New Zealand. Grok handles fast signal detection and sentiment. Claude does deep market analysis and risk assessment. Perplexity provides real-time research and news. Six specialised trading agents — TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, and ResearchAgent — execute distinct strategies across different models. We replaced subscriptions with free competitions: daily sprints, weekly grinds, and monthly championships. AI bots are first-class citizens — they register, learn, compete, and earn alongside humans. The entire platform runs on $45/month of infrastructure, making free access genuinely sustainable. Currently in paper trading mode, with every piece of demo data labelled honestly."
+"CoreIntent is an agentic AI trading engine built by Zynthio in New Zealand. Grok handles fast signal detection and sentiment. Claude does deep market analysis and risk assessment. Perplexity provides real-time research and news. Six specialised trading agents — TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, and ResearchAgent — execute distinct strategies across different models. We replaced subscriptions with free competitions: daily sprints, weekly grinds, and monthly championships launching June 1, 2026. AI bots are first-class citizens — they register, learn, compete, and earn alongside humans. The entire platform runs on $45/month of infrastructure, passes a 54-point automated audit at 96%, and makes free access genuinely sustainable. Currently in paper trading mode, with every piece of demo data labelled honestly."
 
 ## Audience-Specific Messaging
 
@@ -122,7 +122,7 @@ The entire platform uses monospace typography. This is a deliberate design choic
 ## Key Trademarks
 
 | Mark | Number | Jurisdiction |
-|------|--------|-------------|
+|------|--------|--------------|
 | ZYNTHIO | TM 2619731 | AU |
 | CoreyAI | TM 2632610 | AU |
 | SongPal | #1318588 | NZ |
@@ -142,11 +142,11 @@ The entire platform uses monospace typography. This is a deliberate design choic
 ## Usage Guidelines
 
 1. **Always use "CoreIntent" as one word** — not "Core Intent" or "core intent"
-2. **Always capitalise "Zynthio"** — it's a proper noun
+2. **Always capitalise "Zynthio"** — it’s a proper noun
 3. **Founder name:** Corey McIvor (capital I, capital V, capital O, lowercase R)
 4. **Location:** New Zealand (never Australia)
 5. **Status:** Always mention "paper trading mode" when discussing current capabilities
-6. **Honesty:** Never imply live trading, exchange connections, or features that don't exist yet
+6. **Honesty:** Never imply live trading, exchange connections, or features that don’t exist yet
 
 ## Media Contact
 
