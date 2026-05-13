@@ -1377,6 +1377,186 @@ html {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   INTERACTIVE DEMO — MiniTerminal, Scenario Sim, Signal Lifecycle
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Scanning border for MiniTerminal ─── */
+@keyframes scanBorder {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.mini-terminal-wrap {
+  position: relative;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(135deg, #10b98144, #3b82f644, #a855f744, #10b98144);
+  background-size: 300% 300%;
+  animation: scanBorder 6s ease infinite;
+}
+
+.mini-terminal-inner {
+  background: #0d1117;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ─── Terminal typing cursor ─── */
+@keyframes termCursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.term-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: #10b981;
+  vertical-align: text-bottom;
+  animation: termCursorBlink 1s step-end infinite;
+}
+
+/* ─── Scenario button pulse ring ─── */
+@keyframes scenarioPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 var(--pulse-color); }
+  50% { box-shadow: 0 0 0 8px transparent; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 transparent; }
+}
+
+.scenario-btn {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.scenario-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--btn-accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px color-mix(in srgb, var(--btn-accent) 20%, transparent);
+}
+
+.scenario-btn.active {
+  border-color: var(--btn-accent);
+  background: color-mix(in srgb, var(--btn-accent) 8%, var(--bg-secondary));
+  animation: scenarioPulse 2s ease-in-out infinite;
+  --pulse-color: var(--btn-accent);
+}
+
+/* ─── Signal lifecycle timeline ─── */
+@keyframes lifecycleReveal {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes lifecyclePulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--node-color); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+.lifecycle-step {
+  opacity: 0;
+  animation: lifecycleReveal 0.5s ease forwards;
+}
+
+.lifecycle-node {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
+  transition: all 0.4s ease;
+}
+
+.lifecycle-node.active {
+  animation: lifecyclePulse 1.5s ease-in-out infinite;
+}
+
+.lifecycle-connector {
+  width: 2px;
+  background: var(--border-color);
+  margin-left: 17px;
+  transition: background 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lifecycle-connector.active {
+  background: linear-gradient(180deg, var(--conn-from), var(--conn-to));
+}
+
+@keyframes dataFlowDown {
+  0% { top: -6px; }
+  100% { top: calc(100% + 6px); }
+}
+
+.lifecycle-connector.active::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 6px;
+  border-radius: 2px;
+  background: white;
+  left: -1px;
+  animation: dataFlowDown 0.8s ease-in-out infinite;
+}
+
+/* ─── Scenario AI response typing ─── */
+@keyframes typeIn {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.ai-response-text {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typeIn 0.8s ease forwards;
+}
+
+/* ─── Mini terminal output slide ─── */
+@keyframes slideInOutput {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.term-output-line {
+  animation: slideInOutput 0.15s ease forwards;
+}
+
+/* ─── Scenario result cards ─── */
+@keyframes resultSlideIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.scenario-result {
+  animation: resultSlideIn 0.4s ease forwards;
+}
+
+/* ─── Mobile responsive for demo interactive ─── */
+@media (max-width: 768px) {
+  .scenario-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .lifecycle-row {
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .scenario-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 @media (max-width: 768px) {
   .how-it-works-grid {
     grid-template-columns: 1fr !important;
