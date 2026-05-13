@@ -167,6 +167,26 @@ export default function PricingPage() {
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
             Our stack costs $45/mo total. Free entry isn&apos;t charity — it&apos;s competitive advantage. Great traders make great platforms.
           </p>
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "24px",
+            flexWrap: "wrap",
+            marginBottom: "8px",
+            marginTop: "12px",
+          }}>
+            {[
+              { value: "3", label: "AI Models", color: "#a855f7" },
+              { value: "6", label: "Agents", color: "#3b82f6" },
+              { value: "$0", label: "Entry Fee", color: "#10b981" },
+              { value: "$45", label: "Our Costs/mo", color: "#f59e0b" },
+            ].map((stat) => (
+              <div key={stat.label} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
+                <div style={{ fontSize: "9px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
 
           <div style={{
             padding: "20px 24px",
