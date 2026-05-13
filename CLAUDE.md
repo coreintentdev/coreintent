@@ -58,23 +58,28 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 - The Mansion: BOTH a real owned physical property (operator's actual mansion) AND a gamified world layer (rooms, story missions) — sessions have repeatedly missed that it is also a real place. 100+ original songs by Corey reference this mansion. Do not treat as metaphor-only. The Mansion is also the **home / UI shell** for the Digital Twin layer above — rooms become twin contexts, missions become tasks, the twin lives in the mansion.
 - SongPal: Music layer (Corey's originals, not Suno AI generation). 100+ songs about The Mansion live in his catalogue. Suno tracks across 7 Suno accounts are ripped to VDS for backup + corpus (see `scripts/suno-pull-by-uid.sh`).
 
-## Cloudflare Accounts (TWO)
-- Pro account: `corey.mcivor@gmail.com` — account ID `a61bf8a23a8488f6e4257e7127c70b76` (confirmed via MCP). 27 live zones, 4 Workers.
-- Second account: `zynthioai@gmail.com` — separate auth; NOT exposed in this session's CF MCP. Operator decides whether to consolidate to one account or keep both.
+## ONE Source of Truth (operator architecture 2026-05-13)
 
-## Holistic Ops (operator preference 2026-05-13)
-- **Canonical master:** VDS (Contabo). Two active hosts (vmi3205024, vmi3217372) + one legacy (5.189.143.170) to be migrated off.
-- **Backup:** Proton Drive (paired with VDS — both safe, both part of the stack).
-- **Working/archive:** Google Drive for docs and song catalogue; Gmail for historical mail (all new mail forwarded to Proton).
-- **Drop reliance on Slack** for ops notifications — Slack was the AI-amnesia bridge, not part of the canonical stack. Keep for human chat only.
+Three-tier ladder. No other surface is canonical.
 
-## Data Surfaces (where the corpus lives)
-- **WhatsApp:** 3 operator accounts. Source of conversational truth (defamation evidence, family threads, work threads). No native MCP; ingest via manual chat export → file → VDS.
-- **Gmail:** historical archive only. **All new mail is forwarded to Proton.** Gmail MCP reads remain valid for archive; new context lives in Proton.
-- **Proton Mail:** receives all new mail from Gmail forwarding. No MCP in this session yet; if continuous email context for the twin is needed, run Proton Bridge on the VDS and IMAP-pull from there.
-- **Google Drive:** operator's primary doc / song / evidence store. Drive MCP read-only for permissions. Mirror to VDS via `scripts/mirror-drive-to-vds.sh`.
-- **VDS (Contabo vmi3205024):** canonical master for everything. /root/zynthio/ holds state files, ripped Suno tracks, legal evidence packs, mirror.
-- **COREY_WORDS** (Drive + VDS): doctrine and operator voice — see `docs/CLAUDE_OPERATOR_LANGUAGE_POINTER.md`. The twin's voice comes from this file + the song catalogue, NOT from generic LLM defaults.
+1. **VDS (Contabo)** — `vmi3205024` primary, `vmi3217372` secondary. **THE master.** All state, all ripped tracks, all evidence, all corpus. Operator's own **Commander CLI + ZynRip** live here — Claude works *with* those tools, never replaces them.
+2. **Proton Drive** — redundancy. All Gmail accounts forward to Proton, so Proton holds the live mail + a mirror of VDS state.
+3. **Google Drive (one account only: `corey.mcivor@gmail.com`)** — third-tier archive for docs and song catalogue. Read via MCP, mirror via `scripts/mirror-drive-to-vds.sh`.
+
+**Everything else is a secondary surface, not source of truth:** Slack (human chat only, dropped as ops bridge), Linear (issue tracker), GitHub (code repo), Gmail (legacy archive), WhatsApp (chat exports get fed to VDS), local HDD / external HDD (working copies that sync up to VDS).
+
+**Two Cloudflare accounts** exist (`corey.mcivor@gmail.com` Pro + `zynthioai@gmail.com`); only the first is currently exposed to this session's MCP. Operator decides consolidation.
+
+## VDS reads email → builds TODO (target architecture)
+
+Operator goal 2026-05-13: VDS reads operator's emails (via Proton, since all forward there) and generates the operator's TODO list. Components needed (most already exist on VDS):
+
+1. **Proton Bridge** running on VDS → exposes IMAP locally.
+2. **Cron job** polls IMAP every N minutes → writes new message bodies to `/root/zynthio/inbox/`.
+3. **Existing Commander CLI / ZynRip** parses inbox → emits `/root/zynthio/state/TODO_MASTER_LIVE.md` (already a known VDS state file per the "VDS state files" line above).
+4. Operator opens TODO_MASTER_LIVE on VDS via Commander CLI; Claude reads it when invoked.
+
+Claude does NOT replace the Commander CLI. Claude reads the TODO it produces and acts on it when asked.
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues
