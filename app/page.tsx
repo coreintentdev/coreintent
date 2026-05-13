@@ -1,9 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { useTranslation } from "@/lib/locale-context";
+import { formatNumber } from "@/lib/i18n";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -315,6 +318,7 @@ function ScrollReveal({ children, className = "" }: { children: React.ReactNode;
 
 /* ─── Animated Counter ─── */
 function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end: number; suffix?: string; prefix?: string; label: string; color: string }) {
+  const { locale } = useTranslation();
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -351,7 +355,7 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
   return (
     <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
       <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
-        {prefix}{started ? count.toLocaleString() : "0"}{suffix}
+        {prefix}{started ? formatNumber(count, locale) : "0"}{suffix}
       </div>
       <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
         {label}
@@ -362,34 +366,35 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
 /* ─── How It Works ─── */
 function HowItWorks() {
+  const { t } = useTranslation();
   return (
     <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
       <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-        How It Works
+        {t("how.label")}
       </div>
       <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
-        Three Steps to Smarter Signals
+        {t("how.title")}
       </h2>
       <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
         {[
           {
             step: "01",
-            title: "Models Debate",
-            desc: "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+            title: t("how.step1_title"),
+            desc: t("how.step1_desc"),
             color: "#a855f7",
             icon: "AI",
           },
           {
             step: "02",
-            title: "Consensus Forms",
-            desc: "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+            title: t("how.step2_title"),
+            desc: t("how.step2_desc"),
             color: "#10b981",
             icon: "OK",
           },
           {
             step: "03",
-            title: "You Compete",
-            desc: "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry.",
+            title: t("how.step3_title"),
+            desc: t("how.step3_desc"),
             color: "#3b82f6",
             icon: "GO",
           },
@@ -740,7 +745,7 @@ function EngineHeartbeat() {
 }
 
 /* ─── TypeWriter ─── */
-const HERO_PHRASES = [
+const HERO_PHRASES_FALLBACK = [
   "Three AI Models Argue.",
   "You Get Better Signals.",
   "Grok Spots. Claude Questions.",
@@ -768,13 +773,20 @@ const HERO_PHRASES = [
 ];
 
 function TypeWriter() {
+  const { t, messages } = useTranslation();
+  const phrases = HERO_PHRASES_FALLBACK.map((fallback, i) => {
+    const key = `phrases.${i}`;
+    const translated = messages[key];
+    return translated && translated !== key ? translated : fallback;
+  });
+
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState("");
 
   const tick = useCallback(() => {
-    const current = HERO_PHRASES[phraseIdx];
+    const current = phrases[phraseIdx];
     if (!isDeleting) {
       setText(current.substring(0, charIdx + 1));
       setCharIdx((c) => c + 1);
@@ -787,11 +799,11 @@ function TypeWriter() {
       setCharIdx((c) => c - 1);
       if (charIdx <= 1) {
         setIsDeleting(false);
-        setPhraseIdx((p) => (p + 1) % HERO_PHRASES.length);
+        setPhraseIdx((p) => (p + 1) % phrases.length);
         return;
       }
     }
-  }, [charIdx, isDeleting, phraseIdx]);
+  }, [charIdx, isDeleting, phraseIdx, phrases]);
 
   useEffect(() => {
     const speed = isDeleting ? 40 : 80;
@@ -1269,6 +1281,7 @@ function SignalPipeline() {
 }
 
 export default function Home() {
+  const { t, locale } = useTranslation();
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
@@ -1334,7 +1347,7 @@ export default function Home() {
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Founding Spots Open — All Leagues Free
+              {t("hero.badge")}
             </div>
             <h1
               style={{
@@ -1346,19 +1359,19 @@ export default function Home() {
               }}
             >
               <span className="sr-only">
-                CoreIntent — Three AI Models Argue So You Don&apos;t Have To Guess.
+                {t("hero.sr_title")}
               </span>
               <span aria-hidden="true">
-                Three AIs{" "}
-                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Argue</span>.
+                {t("hero.three_ais")}{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>{t("hero.argue")}</span>.
                 <br />
-                You Get the{" "}
-                <span style={{ color: "#f59e0b" }}>Truth</span>.
+                {t("hero.you_get_the")}{" "}
+                <span style={{ color: "#f59e0b" }}>{t("hero.truth")}</span>.
                 <br />
                 <span style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
-                  Grok detects. Claude questions. Perplexity verifies.
+                  {t("hero.subtitle")}
                   <br />
-                  <span style={{ color: "var(--accent-green)" }}>Only consensus signals survive.</span> $0 forever.
+                  <span style={{ color: "var(--accent-green)" }}>{t("hero.consensus")}</span> {t("hero.free_forever")}
                 </span>
               </span>
             </h1>
@@ -1381,14 +1394,18 @@ export default function Home() {
                 lineHeight: "1.7",
               }}
             >
-              Other platforms charge $99/mo for{" "}
-              <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.6 }}>one model guessing</span>.
-              {" "}We pit{" "}
-              <span style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span>,{" "}
-              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>, &amp;{" "}
-              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> against each other.
-              {" "}When they disagree, you&apos;re protected. When they agree,{" "}
-              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>you move with conviction.</span>
+              {(() => {
+                const pitch = t("hero.pitch", { strikeText: "__STRIKE__", grok: "__GROK__", claude: "__CLAUDE__", perplexity: "__PERP__", conviction: "__CONV__" });
+                const parts = pitch.split(/(__ (?:STRIKE|GROK|CLAUDE|PERP|CONV)__)/);
+                return parts.map((part, i) => {
+                  if (part === "__STRIKE__") return <span key={i} style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.6 }}>{t("hero.pitch_strike")}</span>;
+                  if (part === "__GROK__") return <span key={i} style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span>;
+                  if (part === "__CLAUDE__") return <span key={i} style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>;
+                  if (part === "__PERP__") return <span key={i} style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span>;
+                  if (part === "__CONV__") return <span key={i} style={{ color: "var(--accent-green)", fontWeight: "bold" }}>{t("hero.pitch_conviction")}</span>;
+                  return <span key={i}>{part}</span>;
+                });
+              })()}
             </p>
             <div style={{
               display: "flex",
@@ -1399,10 +1416,10 @@ export default function Home() {
               flexWrap: "wrap",
             }}>
               <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
-                $99/mo platforms
+                {t("hero.price_old")}
               </span>
               <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
-                $0 forever — compete free
+                {t("hero.price_new")}
               </span>
             </div>
             <LiveSignalFeed />
@@ -1423,9 +1440,9 @@ export default function Home() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Enter the Arena &rarr;
+                {t("hero.cta_primary")} &rarr;
               </button>
-              <a
+              <Link
                 href="/pricing"
                 className="cta-secondary"
                 style={{
@@ -1441,12 +1458,11 @@ export default function Home() {
                   display: "inline-block",
                 }}
               >
-                See the Competitions
-              </a>
+                {t("hero.cta_secondary")}
+              </Link>
             </div>
             <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "480px" }}>
-              No credit card. No lock-in. No &quot;free trial&quot; that converts.
-              Open source. Paper trading mode. Built in New Zealand on $45/mo.
+              {t("hero.fine_print")}
             </p>
 
             {/* Value Props */}
@@ -1461,10 +1477,10 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies. One model guessing vs three debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card — not your autopay.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Stack.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership. Subscriptions aren't a business model — they're extraction.", color: "#f59e0b" },
+                { label: t("hero.prop_models"), desc: t("hero.prop_models_desc"), color: "#a855f7" },
+                { label: t("hero.prop_compete"), desc: t("hero.prop_compete_desc"), color: "#10b981" },
+                { label: t("hero.prop_bots"), desc: t("hero.prop_bots_desc"), color: "#3b82f6" },
+                { label: t("hero.prop_cost"), desc: t("hero.prop_cost_desc"), color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
@@ -1560,7 +1576,7 @@ export default function Home() {
                 Priority placement when leagues launch. Permanent founding badge.
                 Direct input on features and roadmap. The arena is free — the timing is the advantage.
               </p>
-              <a
+              <Link
                 href="/pricing"
                 style={{
                   display: "inline-block",
@@ -1575,7 +1591,7 @@ export default function Home() {
                 }}
               >
                 Claim Founding Status &rarr;
-              </a>
+              </Link>
             </div>
             </ScrollReveal>
 

@@ -921,6 +921,51 @@ html {
 }
 
 /* ═══════════════════════════════════════════
+   RTL SUPPORT — Arabic & RTL languages
+   ═══════════════════════════════════════════ */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] nav {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ticker-track {
+  animation-direction: reverse;
+}
+
+[dir="rtl"] .typewriter-text {
+  border-right: none;
+  border-left: 2px solid var(--accent-green);
+}
+
+[dir="rtl"] .signal-flash {
+  animation-name: signalFlashRtl;
+}
+
+@keyframes signalFlashRtl {
+  0% { opacity: 0; transform: translateX(8px); }
+  20% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+[dir="rtl"] .scan-line::after {
+  left: 0;
+  right: 0;
+}
+
+[dir="rtl"] header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] footer nav {
+  flex-direction: row-reverse;
+}
+
+/* ═══════════════════════════════════════════
    MOBILE RESPONSIVE — Landing Page
    ═══════════════════════════════════════════ */
 

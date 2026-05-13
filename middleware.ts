@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, detectLocale, isValidLocale } from "./lib/i18n";
+import type { Locale } from "./lib/i18n";
 
-/**
- * Global Next.js Edge middleware — handles CORS preflight and injects security headers
- * for all /api routes. Runs before any route handler on the Edge runtime.
- *
- * For production: lock ALLOWED_ORIGIN to "https://coreintent.dev" via env var.
- */
-
-/** Security headers applied to every /api response (OPTIONS and regular). */
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options":    "nosniff",
   "X-Frame-Options":           "DENY",
@@ -16,7 +10,9 @@ const SECURITY_HEADERS: Record<string, string> = {
 };
 
 export function middleware(req: NextRequest): NextResponse | undefined {
-  if (req.method === "OPTIONS") {
+  const { pathname } = req.nextUrl;
+
+  if (req.method === "OPTIONS" && pathname.startsWith("/api/")) {
     return new NextResponse(null, {
       status: 204,
       headers: {
@@ -29,7 +25,42 @@ export function middleware(req: NextRequest): NextResponse | undefined {
     });
   }
 
+  if (pathname.startsWith("/api/")) {
+    const res = NextResponse.next();
+    for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
+      res.headers.set(k, v);
+    }
+    return res;
+  }
+
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/") ||
+    pathname.includes(".") ||
+    pathname.startsWith("/favicon")
+  ) {
+    return NextResponse.next();
+  }
+
+  const segments = pathname.split("/");
+  const maybeLocale = segments[1];
+  if (maybeLocale && isValidLocale(maybeLocale)) {
+    const res = NextResponse.next();
+    res.headers.set("x-locale", maybeLocale);
+    for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
+      res.headers.set(k, v);
+    }
+    return res;
+  }
+
+  const cookieLocale = req.cookies.get("coreintent-locale")?.value;
+  const locale: Locale =
+    (cookieLocale && isValidLocale(cookieLocale) ? cookieLocale : null) ??
+    detectLocale(req.headers.get("accept-language"));
+
   const res = NextResponse.next();
+  res.headers.set("x-locale", locale);
+  res.cookies.set("coreintent-locale", locale, { path: "/", maxAge: 365 * 24 * 60 * 60 });
   for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
     res.headers.set(k, v);
   }
@@ -37,5 +68,5 @@ export function middleware(req: NextRequest): NextResponse | undefined {
 }
 
 export const config = {
-  matcher: "/api/:path*",
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };
