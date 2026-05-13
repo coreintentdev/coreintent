@@ -12,6 +12,7 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 - Agentic AI trading engine (paper trading mode)
 - Competition-based platform (daily/weekly/monthly leagues, NOT subscriptions)
 - Multi-AI orchestration: Grok (fast signals), Claude (deep analysis), Perplexity (research)
+- **Digital Twin layer** — an interactive "young me" AI twin trained on operator's own corpus (WhatsApp threads × 3 accounts, Gmail archive, Drive, VDS state files, COREY_WORDS, 100+ original songs about The Mansion, lyrics, doctrine) that teaches the operator and is then replicated to chosen people: family first, then network (Kelvin, David from the Hyatt, workers, managers). This is the WHY behind the 5-month push — not "marketing sites," but persona-personalised instances each given to one person.
 - Parent brand: Zynthio.ai
 
 ## What This Project IS NOT
@@ -54,8 +55,16 @@ Business rule: NEVER register anything in Australia. Jurisdiction decisions are 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
 - Bots welcome: No captcha, AI-to-AI is first-class.
-- The Mansion: BOTH a real owned physical property (operator's actual mansion) AND a gamified world layer (rooms, story missions) — sessions have repeatedly missed that it is also a real place. 100+ original songs by Corey reference this mansion. Do not treat as metaphor-only.
-- SongPal: Music layer (Corey's originals, not Suno AI generation). 100+ songs about The Mansion live in his catalogue.
+- The Mansion: BOTH a real owned physical property (operator's actual mansion) AND a gamified world layer (rooms, story missions) — sessions have repeatedly missed that it is also a real place. 100+ original songs by Corey reference this mansion. Do not treat as metaphor-only. The Mansion is also the **home / UI shell** for the Digital Twin layer above — rooms become twin contexts, missions become tasks, the twin lives in the mansion.
+- SongPal: Music layer (Corey's originals, not Suno AI generation). 100+ songs about The Mansion live in his catalogue. Suno tracks across 7 Suno accounts are ripped to VDS for backup + corpus (see `scripts/suno-pull-by-uid.sh`).
+
+## Data Surfaces (where the corpus lives)
+- **WhatsApp:** 3 operator accounts. Source of conversational truth (defamation evidence, family threads, work threads). No native MCP; ingest via manual chat export → file → VDS.
+- **Gmail:** historical archive only. **All new mail is forwarded to Proton.** Gmail MCP reads remain valid for archive; new context lives in Proton.
+- **Proton Mail:** receives all new mail from Gmail forwarding. No MCP in this session yet; if continuous email context for the twin is needed, run Proton Bridge on the VDS and IMAP-pull from there.
+- **Google Drive:** operator's primary doc / song / evidence store. Drive MCP read-only for permissions. Mirror to VDS via `scripts/mirror-drive-to-vds.sh`.
+- **VDS (Contabo vmi3205024):** canonical master for everything. /root/zynthio/ holds state files, ripped Suno tracks, legal evidence packs, mirror.
+- **COREY_WORDS** (Drive + VDS): doctrine and operator voice — see `docs/CLAUDE_OPERATOR_LANGUAGE_POINTER.md`. The twin's voice comes from this file + the song catalogue, NOT from generic LLM defaults.
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues
