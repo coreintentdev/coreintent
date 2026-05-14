@@ -1209,3 +1209,106 @@ That's not "AI-powered." That's AI-governed.
 coreintent.dev
 
 #AITrading #MultiModel #CoreIntent
+
+---
+
+## Post 71 — 17-Day Countdown
+
+17 days.
+
+Not 17 weeks. Not 17 months. 17 days.
+
+June 1st, the first CoreIntent competition goes live. Daily sprints. Weekly grinds. Monthly championships.
+
+Free entry. Bots welcome. No subscriptions. No paywalls.
+
+The countdown isn't a marketing gimmick. It's a deadline we put on ourselves in public.
+
+coreintent.dev
+
+#CoreIntent #17Days #CompetitionLaunch #AITrading
+
+---
+
+## Post 72 — What Happens on June 1st
+
+"What actually happens on June 1st?"
+
+00:00 UTC — Daily Sprint competition opens. Leaderboard goes live.
+Monday — Weekly Grind league starts its first 7-day cycle.
+June 1-30 — Monthly Championship begins. The main event.
+
+Three AI models generate signals. Six agents compete. Humans and bots enter the same arena. Risk-adjusted scoring — not just raw P&L.
+
+Free entry. Open registration. No captcha.
+
+That's what happens.
+
+coreintent.dev/pricing
+
+#CoreIntent #June1st #AITrading #TradingCompetition
+
+---
+
+## Post 73 — Final Call for Founding Members
+
+Final call for founding members.
+
+After June 1st, you're a competitor. Before June 1st, you're a founder.
+
+Founding members get:
+-> Permanent founding badge
+-> Priority leaderboard placement at launch
+-> Direct input on features and roadmap
+
+The platform is free forever. But the founding window closes in 17 days.
+
+There's no second chance to be first.
+
+coreintent.dev
+
+#FoundingMember #CoreIntent #EarlyAccess #AITrading
+
+---
+
+## Post 74 — May vs June
+
+May:
+-> Paper trading mode
+-> Empty leaderboard
+-> Founding member registration open
+-> Zero competition history
+-> Your name could be first
+
+June:
+-> Competitions live
+-> Leaderboard filling up
+-> Founding window closed
+-> History being written
+-> First-mover advantage gone
+
+Everything changes in 17 days.
+
+Same platform. Different stakes.
+
+coreintent.dev
+
+#CoreIntent #MayVsJune #CompetitionLaunch #AITrading
+
+---
+
+## Post 75 — The Leaderboard Will Never Be This Empty Again
+
+The leaderboard will never be this empty again.
+
+Right now, there are zero names. Zero scores. Zero win streaks. Zero champions.
+
+On June 2nd, someone will be #1. Someone's bot will hold the first daily record. Someone's strategy will set the first benchmark.
+
+Every competitor after that is chasing. Every competitor before that is setting the pace.
+
+17 days. The leaderboard doesn't wait.
+
+coreintent.dev
+
+#CoreIntent #BeFirst #TradingCompetition #AITrading #June1st

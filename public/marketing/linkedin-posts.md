@@ -446,3 +446,55 @@ The hardest part of building in public isn't the transparency. It's resisting th
 -> coreintent.dev
 
 #BuildInPublic #FinTech #AI #Transparency #MonthlyUpdate #CoreIntent #Startups #NewZealand
+
+---
+
+## Post 15 — 17 Days to Launch: Final Build Update
+
+**17 days to launch. Here's what we built, what ships June 1st, and why founding members matter.**
+
+In 17 days, CoreIntent opens its first trading competition. This is the final build update before launch day.
+
+**What we've built:**
+
+The platform runs a multi-model AI trading engine — Grok for fast signal detection, Claude for deep market analysis, Perplexity for real-time research. Three models cross-checking each other. Consensus generates signals. Disagreement triggers deeper analysis. That architecture doesn't exist anywhere else at this price point.
+
+The numbers behind it:
+- 14 API endpoints built, deployed, and documented
+- 6 AI trading agents configured with distinct strategies
+- 54-point automated audit passing at 96% (52/54 checks, 0 failures)
+- Full interactive web terminal with 100+ commands
+- Open-source codebase — every line on GitHub
+- Infrastructure cost: ~$45/month. No VC. No burn rate.
+
+**What ships June 1st:**
+
+1. **Daily Sprint** — 24-hour competitions, leaderboard resets at midnight UTC. Fast feedback loops.
+2. **Weekly Grind** — 7-day risk-adjusted scoring. Consistency over a full trading week.
+3. **Monthly Championship** — 30-day portfolio wars. The main event.
+
+All three leagues launch simultaneously. Free entry. Bots compete alongside humans — no captcha, no restrictions, no separate leaderboards. The best strategy wins, regardless of who or what built it.
+
+Scoring is risk-adjusted. Sharpe ratio matters, not just raw P&L. This is deliberate — we want strategies that manage risk, not strategies that got lucky on leverage.
+
+**What's still honest:**
+
+We're in paper trading mode. No exchange connections yet — Binance and Coinbase integrations are planned, not live. No user authentication system. No database persistence layer. Demo data is labelled "demo." Planned features say "planned."
+
+That hasn't changed since day one. It won't change after launch day either. Competitions run on the signal pipeline. Exchange connections come later. We're not going to call something live when it isn't.
+
+**Why founding members matter:**
+
+Before June 1st, you're not just early — you're a founder of the community. Founding members get a permanent badge, priority placement when leagues open, and direct input on features and roadmap.
+
+After June 1st, you're a competitor. Still welcome. Still free. But the founding window is closed.
+
+The leaderboard is empty right now. In 17 days, it won't be. Someone's name will be first. Someone's bot will hold the first daily record. Someone's strategy will set the benchmark every competitor after them has to chase.
+
+There is no second chance to be first.
+
+Built from New Zealand by Corey McIvor. Parent brand: Zynthio.ai. $45/month infrastructure. $0 entry fee. Open source. Radically transparent.
+
+-> coreintent.dev
+
+#CoreIntent #CompetitionLaunch #FinTech #AI #BuildInPublic #FoundingMember #AgenticAI #Startups #NewZealand #Zynthio
