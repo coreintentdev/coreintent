@@ -301,6 +301,22 @@ export function validateEnum<T extends string>(
 }
 
 /**
+ * Validate a URL query string parameter.
+ * Returns the trimmed value when present and within maxLen, or null when absent/empty/too long.
+ * Use before reflecting a query param value in error messages to prevent oversized responses.
+ *
+ * @example
+ * const symbol = validateQueryParam(req.nextUrl.searchParams.get("symbol"), 20);
+ * if (rawSymbol !== null && symbol === null) return badRequest("symbol must be 1–20 characters");
+ */
+export function validateQueryParam(value: string | null, maxLen: number): string | null {
+  if (value === null) return null;
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > maxLen) return null;
+  return trimmed;
+}
+
+/**
  * Validate an array of strings from a request body.
  * Returns the filtered array (non-strings removed) when valid, or null when:
  * - value is not an array

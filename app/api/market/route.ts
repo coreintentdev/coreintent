@@ -12,7 +12,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { demoOk, notFound, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { demoOk, badRequest, notFound, preflight, serverError, validateQueryParam, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface MarketPair {
   symbol:    string;
@@ -58,7 +58,11 @@ export async function GET(req: NextRequest) {
   const limit = await checkRateLimit(ip);
   if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
-    const symbolParam = req.nextUrl.searchParams.get("symbol")?.toUpperCase().trim();
+    const rawSymbol = req.nextUrl.searchParams.get("symbol");
+    if (rawSymbol !== null && validateQueryParam(rawSymbol, 20) === null) {
+      return badRequest("symbol must be 1–20 characters");
+    }
+    const symbolParam = rawSymbol?.toUpperCase().trim() || undefined;
 
     let pairs: readonly MarketPair[];
     if (symbolParam) {

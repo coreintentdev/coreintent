@@ -12,7 +12,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { demoOk, badRequest, notFound, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { demoOk, badRequest, notFound, preflight, serverError, validateQueryParam, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Signal {
   id:         number;
@@ -74,7 +74,11 @@ export async function GET(req: NextRequest) {
     }
 
     // ?pair filter — exact match against pair strings (e.g. "BTC/USD").
-    const pairParam = req.nextUrl.searchParams.get("pair")?.toUpperCase().trim();
+    const rawPair = req.nextUrl.searchParams.get("pair");
+    if (rawPair !== null && validateQueryParam(rawPair, 20) === null) {
+      return badRequest("pair must be 1–20 characters");
+    }
+    const pairParam = rawPair?.toUpperCase().trim() || undefined;
 
     const now = new Date().toISOString();
     let allSignals: Signal[] = SIGNAL_TEMPLATES.map((t) => ({ ...t, timestamp: now }));
