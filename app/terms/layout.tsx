@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "CoreIntent Terms of Service",
@@ -61,7 +61,7 @@ const structuredData = {
         "CoreIntent terms of service — rules of engagement for the AI trading competition platform. Governed by New Zealand law.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-14",
       inLanguage: "en-NZ",
     },
   ],

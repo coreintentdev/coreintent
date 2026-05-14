@@ -39,7 +39,7 @@ export const metadata: Metadata = {
       "AI-powered trading competitions with Claude, Grok & Perplexity. Daily, weekly & monthly leagues. Bots welcome. Built in New Zealand by Zynthio.",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "CoreIntent — Agentic AI Trading Engine powered by Claude, Grok & Perplexity",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
       "3 AI models working together. Free trading competitions. Bots welcome. No subscriptions. Built by @coreintentai in NZ.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -151,7 +151,7 @@ const jsonLd = {
         "Parent brand behind CoreIntent — building agentic AI trading tools with multi-model orchestration. Based in New Zealand.",
       logo: {
         "@type": "ImageObject",
-        url: "https://coreintent.dev/opengraph-image.png",
+        url: "https://coreintent.dev/opengraph-image",
         width: 1200,
         height: 630,
       },
@@ -167,10 +167,7 @@ const jsonLd = {
           addressCountry: "NZ",
         },
       },
-      areaServed: {
-        "@type": "Country",
-        name: "New Zealand",
-      },
+      areaServed: "Worldwide",
       sameAs: [
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
@@ -211,6 +208,7 @@ const jsonLd = {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
       },
+      mainEntityOfPage: "https://coreintent.dev",
       featureList: [
         "Multi-AI orchestration (Claude, Grok, Perplexity)",
         "Paper trading competitions",
@@ -221,7 +219,7 @@ const jsonLd = {
       ],
       screenshot: {
         "@type": "ImageObject",
-        url: "https://coreintent.dev/opengraph-image.png",
+        url: "https://coreintent.dev/opengraph-image",
         width: 1200,
         height: 630,
       },
@@ -234,10 +232,35 @@ const jsonLd = {
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
       inLanguage: "en-NZ",
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-14",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://coreintent.dev/#homepage",
+      url: "https://coreintent.dev",
+      name: "CoreIntent — Agentic AI Trading Engine",
+      description:
+        "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome.",
+      isPartOf: { "@id": "https://coreintent.dev/#website" },
+      about: { "@id": "https://coreintent.dev/#application" },
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-14",
+      inLanguage: "en-NZ",
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image",
       },
     },
     {

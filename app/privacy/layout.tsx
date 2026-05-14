@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "CoreIntent Privacy Policy",
@@ -61,7 +61,7 @@ const structuredData = {
         "CoreIntent privacy policy — how we handle your data. NZ Privacy Act 2020 compliant.",
       isPartOf: { "@id": "https://coreintent.dev/#website" },
       datePublished: "2026-03-01",
-      dateModified: "2026-05-06",
+      dateModified: "2026-05-14",
       inLanguage: "en-NZ",
     },
   ],
