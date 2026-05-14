@@ -129,14 +129,14 @@ echo ""
 echo "--- SEO CHECK ---"
 
 # OG tags
-if grep -q "openGraph" app/layout.tsx 2>/dev/null; then
+if grep -rq "openGraph" app/layout.tsx app/\[locale\]/layout.tsx 2>/dev/null; then
   log_pass "OpenGraph meta tags configured"
 else
   log_fail "OpenGraph meta tags MISSING"
 fi
 
 # Twitter cards
-if grep -q "twitter" app/layout.tsx 2>/dev/null; then
+if grep -rq "twitter" app/layout.tsx app/\[locale\]/layout.tsx 2>/dev/null; then
   log_pass "Twitter card meta tags configured"
 else
   log_fail "Twitter card meta tags MISSING"
@@ -163,8 +163,8 @@ else
   log_warn "No favicon found"
 fi
 
-# Page-level metadata (check page.tsx or its co-located layout.tsx)
-for page in app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+# Page-level metadata (check [locale] versions for i18n routing)
+for page in app/\[locale\]/privacy/page.tsx app/\[locale\]/terms/page.tsx app/\[locale\]/disclaimer/page.tsx; do
   layout="$(dirname "$page")/layout.tsx"
   if [ -f "$page" ] && (grep -q "metadata" "$page" 2>/dev/null || ([ -f "$layout" ] && grep -q "metadata" "$layout" 2>/dev/null)); then
     log_pass "Page metadata: $page"
@@ -248,8 +248,8 @@ echo "--- NAV/FOOTER CHECK ---"
 [ -f "components/SiteNav.tsx" ] && log_pass "Shared SiteNav component exists" || log_fail "No shared navigation component"
 [ -f "components/SiteFooter.tsx" ] && log_pass "Shared SiteFooter component exists" || log_fail "No shared footer component"
 
-# Check pages use shared nav
-for page in app/pricing/page.tsx app/stack/page.tsx app/privacy/page.tsx app/terms/page.tsx app/disclaimer/page.tsx; do
+# Check pages use shared nav (check [locale] versions for i18n routing)
+for page in app/\[locale\]/pricing/page.tsx app/\[locale\]/stack/page.tsx app/\[locale\]/privacy/page.tsx app/\[locale\]/terms/page.tsx app/\[locale\]/disclaimer/page.tsx app/\[locale\]/demo/page.tsx; do
   if [ -f "$page" ]; then
     if grep -q "SiteNav\|SiteFooter" "$page" 2>/dev/null; then
       log_pass "Shared nav/footer used: $page"
@@ -322,7 +322,7 @@ else
   log_fail "No ARIA attributes found"
 fi
 
-if grep -q 'lang="en' app/layout.tsx 2>/dev/null; then
+if grep -rq 'lang=' app/layout.tsx app/\[locale\]/layout.tsx 2>/dev/null; then
   log_pass "HTML lang attribute set"
 else
   log_fail "HTML lang attribute missing"

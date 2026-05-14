@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | Moteur de Trading IA Agentique — Sans Abonnement, Que des Compétitions",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "Trois modèles d'IA. Un moteur de trading. Zéro abonnement. CoreIntent orchestre Claude, Grok et Perplexity pour les signaux de trading. Compétitions gratuites — bots bienvenus. Construit en NZ par Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Démo",
+    "stack": "Stack",
+    "pricing": "Tarifs",
+    "language": "Langue"
+  },
+  "hero": {
+    "badge": "Mode Paper Trading — Places Fondateurs Ouvertes — Toutes les Ligues Gratuites",
+    "heading1": "Trois IA",
+    "headingHighlight": "Débattent",
+    "heading2": "Vous Obtenez la",
+    "headingTruth": "Vérité",
+    "subheading": "Grok détecte. Claude questionne. Perplexity vérifie.",
+    "consensus": "Seuls les signaux de consensus survivent.",
+    "free": "0$ pour toujours.",
+    "pitch": "Les autres plateformes facturent 99$/mois pour",
+    "pitchStrike": "un modèle qui devine",
+    "pitchWePit": "Nous opposons",
+    "pitchAgainstEach": "les uns aux autres.",
+    "pitchDisagree": "Quand ils ne sont pas d'accord, vous êtes protégé. Quand ils s'accordent,",
+    "pitchConviction": "vous agissez avec conviction.",
+    "ctaTerminal": "Ouvrir le Terminal",
+    "ctaGithub": "Étoile sur GitHub",
+    "engineAlive": "MOTEUR ACTIF",
+    "signal": "SIGNAL",
+    "demo": "DÉMO"
+  },
+  "howItWorks": {
+    "label": "Comment Ça Marche",
+    "title": "Trois Étapes Vers des Signaux Plus Intelligents",
+    "step01": "ÉTAPE 01",
+    "step01Title": "Les Modèles Débattent",
+    "step01Desc": "Grok repère un signal. Claude le questionne. Perplexity vérifie avec des données en direct. Trois perspectives, une conversation.",
+    "step02": "ÉTAPE 02",
+    "step02Title": "Le Consensus se Forme",
+    "step02Desc": "Quand les trois modèles sont d'accord, la confiance est élevée. En cas de désaccord, le système signale l'incertitude — pas de fausse conviction.",
+    "step03": "ÉTAPE 03",
+    "step03Title": "Vous Compétitionnez",
+    "step03Desc": "Amenez le signal dans des compétitions quotidiennes, hebdomadaires ou mensuelles. Prouvez votre stratégie contre d'autres humains et bots. Entrée gratuite."
+  },
+  "miniTerminal": {
+    "tryItNow": "Essayez Maintenant",
+    "talkToEngine": "Parlez au moteur. Tapez une commande.",
+    "launchFull": "Lancer le Terminal Complet (100+ commandes)"
+  },
+  "stats": {
+    "aiModels": "Modèles IA",
+    "apiRoutes": "Routes API",
+    "monthlyInfra": "Infra Mensuelle",
+    "subscriptionCost": "Coût d'Abonnement"
+  },
+  "models": {
+    "title": "L'Orchestre IA",
+    "subtitle": "Trois modèles, trois perspectives, un consensus"
+  },
+  "testimonials": {
+    "title": "Ce Que Disent les Traders",
+    "tag": "DÉMO"
+  },
+  "footer": {
+    "tagline": "Moteur de Trading IA Agentique",
+    "builtBy": "Créé par Corey McIvor | Zynthio.ai",
+    "product": "Produit",
+    "legal": "Légal",
+    "connect": "Contact",
+    "competitions": "Compétitions",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions d'Utilisation",
+    "disclaimer": "Avertissement",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. Tous droits réservés.",
+    "riskWarning": "Le trading de cryptomonnaies comporte des risques importants. Les performances passées ne garantissent pas les résultats futurs. Mode paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenue dans CoreIntent Commander. Tapez help pour les commandes.",
+    "paperMode": "Mode paper trading — pas d'argent réel en jeu",
+    "typeHelp": "Tapez help pour les commandes. Tab pour autocompléter. cai pour commencer."
+  },
+  "notFound": {
+    "title": "Page Non Trouvée",
+    "description": "La page demandée n'existe pas. Elle a peut-être été déplacée ou supprimée.",
+    "backToTerminal": "Retour au Terminal",
+    "competitions": "Compétitions"
+  },
+  "pipeline": {
+    "label": "Pipeline de signaux en direct",
+    "detect": "Détecter",
+    "analyse": "Analyser",
+    "verify": "Vérifier",
+    "decide": "Décider"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

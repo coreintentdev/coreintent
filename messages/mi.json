@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | Pūkaha Hokohoko AI Māia — Kāore he Ohaurunga, Ko ngā Whakataetae Anake",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "E toru ngā tauira AI. Kotahi te pūkaha hokohoko. Kore ohaurunga. Ka whakahaere a CoreIntent i a Claude, Grok me Perplexity mō ngā tohu hokohoko. Whakataetae utukore — e pai ana ngā karetao. I hangaia ki Aotearoa e Zynthio."
+  },
+  "nav": {
+    "terminal": "Tūhono",
+    "demo": "Whakaaturanga",
+    "stack": "Hangarau",
+    "pricing": "Utu",
+    "language": "Reo"
+  },
+  "hero": {
+    "badge": "Aratau Hokohoko Pepa — Ngā Tūranga Kaiwhakatū Kei te Tuwhera — Ngā Rīki Katoa he Utukore",
+    "heading1": "E Toru ngā AI",
+    "headingHighlight": "Tautohe",
+    "heading2": "Ka Riro i a Koe te",
+    "headingTruth": "Pono",
+    "subheading": "Ka kite a Grok. Ka pātai a Claude. Ka whakaū a Perplexity.",
+    "consensus": "Ko ngā tohu whakaae anake ka ora.",
+    "free": "$0 mō ake tonu atu.",
+    "pitch": "Ka utu ētahi atu pūhara $99/marama mō",
+    "pitchStrike": "kotahi te tauira e matapae ana",
+    "pitchWePit": "Ka whakataetae mātou i a",
+    "pitchAgainstEach": "ki a rātou anō.",
+    "pitchDisagree": "Ina kore rātou e whakaae, ka tiakina koe. Ina whakaae rātou,",
+    "pitchConviction": "ka neke koe me te māia.",
+    "ctaTerminal": "Whakatuwheratia te Tūhono",
+    "ctaGithub": "Whetū ki GitHub",
+    "engineAlive": "PŪKAHA ORA",
+    "signal": "TOHU",
+    "demo": "WHAKAATURANGA"
+  },
+  "howItWorks": {
+    "label": "Me Pēhea te Mahi",
+    "title": "E Toru ngā Hipanga ki ngā Tohu Mārakerake",
+    "step01": "HIPANGA 01",
+    "step01Title": "Ka Tautohe ngā Tauira",
+    "step01Desc": "Ka kite a Grok i tētahi tohu. Ka pātai a Claude. Ka tirotiro a Perplexity ki ngā raraunga ora. E toru ngā tirohanga, kotahi te kōrerorero.",
+    "step02": "HIPANGA 02",
+    "step02Title": "Ka Puta te Whakaae",
+    "step02Desc": "Ina whakaae ngā tauira e toru, ka kaha te whakapono. Ina kē ō rātou whakaaro, ka tūtohu te pūnaha i te rangirua — kāore he whakapono teka.",
+    "step03": "HIPANGA 03",
+    "step03Title": "Ka Whakataetae Koe",
+    "step03Desc": "Kawea te tohu ki ngā whakataetae o ia rā, ia wiki, ia marama. Whakaaturia tō rautaki ki ētahi atu tāngata me ngā karetao. Urunga utukore."
+  },
+  "miniTerminal": {
+    "tryItNow": "Whakamātauria Ināianei",
+    "talkToEngine": "Kōrero ki te pūkaha. Patohia he tono.",
+    "launchFull": "Whakarewatia te Tūhono Katoa (100+ tono)"
+  },
+  "stats": {
+    "aiModels": "Tauira AI",
+    "apiRoutes": "Ara API",
+    "monthlyInfra": "Hanganga ā-Marama",
+    "subscriptionCost": "Utu Ohaurunga"
+  },
+  "models": {
+    "title": "Te Ōkahitara AI",
+    "subtitle": "E toru ngā tauira, e toru ngā tirohanga, kotahi te whakaae"
+  },
+  "testimonials": {
+    "title": "He Aha tā ngā Kaihokohoko e Kī Ana",
+    "tag": "WHAKAATURANGA"
+  },
+  "footer": {
+    "tagline": "Pūkaha Hokohoko AI Māia",
+    "builtBy": "Nā Corey McIvor i hanga | Zynthio.ai",
+    "product": "Hua",
+    "legal": "Ture",
+    "connect": "Hono",
+    "competitions": "Whakataetae",
+    "privacyPolicy": "Kaupapahere Tūmataiti",
+    "termsOfService": "Ngā Ture Ratonga",
+    "disclaimer": "Whakakāhoretanga",
+    "contact": "Whakapā",
+    "copyright": "© {year} Corey McIvor. Ngā mōtika katoa kua rāhuitia.",
+    "riskWarning": "He nui te tūraru o te hokohoko moni matihiko. Kāore e taea e ngā hua o mua te whakaū i ngā hua o āpōpō. Aratau hokohoko pepa."
+  },
+  "terminal": {
+    "greeting": "Nau mai ki te CoreIntent Commander. Patohia help mō ngā tono.",
+    "paperMode": "Aratau hokohoko pepa — kāore he moni tūturu kei te tūraru",
+    "typeHelp": "Patohia help mō ngā tono. Tab hei whakakī aunoa. cai hei tīmata."
+  },
+  "notFound": {
+    "title": "Kāore i Kitea te Whārangi",
+    "description": "Kāore i te tīariari te whārangi i tonoa. Tērā pea kua nekehia, kua mukua rānei.",
+    "backToTerminal": "Hoki ki te Tūhono",
+    "competitions": "Whakataetae"
+  },
+  "pipeline": {
+    "label": "Kōhiku tohu ora",
+    "detect": "Kite",
+    "analyse": "Tātari",
+    "verify": "Whakaū",
+    "decide": "Whakatau"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

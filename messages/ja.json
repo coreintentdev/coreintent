@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | エージェントAIトレーディングエンジン — サブスクなし、競技のみ",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "3つのAIモデル。1つのトレーディングエンジン。サブスクリプションゼロ。CoreIntentはClaude、Grok、Perplexityを統合してトレーディングシグナルを生成。無料競技——ボット歓迎。NZのZynthioが構築。"
+  },
+  "nav": {
+    "terminal": "ターミナル",
+    "demo": "デモ",
+    "stack": "スタック",
+    "pricing": "料金",
+    "language": "言語"
+  },
+  "hero": {
+    "badge": "ペーパートレードモード — 創設メンバー募集中 — 全リーグ無料",
+    "heading1": "3つのAIが",
+    "headingHighlight": "議論する",
+    "heading2": "あなたは",
+    "headingTruth": "真実",
+    "subheading": "Grokが検出。Claudeが疑問を呈す。Perplexityが検証。",
+    "consensus": "コンセンサスシグナルだけが生き残る。",
+    "free": "永久無料。",
+    "pitch": "他のプラットフォームは月額$99で",
+    "pitchStrike": "1モデルの推測",
+    "pitchWePit": "私たちは",
+    "pitchAgainstEach": "を互いに競わせます。",
+    "pitchDisagree": "意見が分かれた時はあなたを守り、一致した時は、",
+    "pitchConviction": "確信を持って動けます。",
+    "ctaTerminal": "ターミナルを開く",
+    "ctaGithub": "GitHubでスター",
+    "engineAlive": "エンジン稼働中",
+    "signal": "シグナル",
+    "demo": "デモ"
+  },
+  "howItWorks": {
+    "label": "仕組み",
+    "title": "よりスマートなシグナルへの3ステップ",
+    "step01": "ステップ01",
+    "step01Title": "モデルが議論",
+    "step01Desc": "Grokがシグナルを検出。Claudeが疑問を呈す。Perplexityがライブデータで事実確認。3つの視点、1つの会話。",
+    "step02": "ステップ02",
+    "step02Title": "コンセンサス形成",
+    "step02Desc": "3つのモデルが一致すると確信度は高い。不一致の場合、システムは不確実性をフラグ——偽の確信なし。",
+    "step03": "ステップ03",
+    "step03Title": "あなたが競う",
+    "step03Desc": "シグナルをデイリー、ウィークリー、マンスリーの競技に持ち込む。人間やボットに対して戦略を証明。参加無料。"
+  },
+  "miniTerminal": {
+    "tryItNow": "今すぐ試す",
+    "talkToEngine": "エンジンと対話。コマンドを入力。",
+    "launchFull": "フルターミナルを起動（100+コマンド）"
+  },
+  "stats": {
+    "aiModels": "AIモデル",
+    "apiRoutes": "APIルート",
+    "monthlyInfra": "月間インフラ",
+    "subscriptionCost": "サブスク費用"
+  },
+  "models": {
+    "title": "AIオーケストラ",
+    "subtitle": "3つのモデル、3つの視点、1つのコンセンサス"
+  },
+  "testimonials": {
+    "title": "トレーダーの声",
+    "tag": "デモ"
+  },
+  "footer": {
+    "tagline": "エージェントAIトレーディングエンジン",
+    "builtBy": "Corey McIvor 制作 | Zynthio.ai",
+    "product": "製品",
+    "legal": "法的情報",
+    "connect": "つながる",
+    "competitions": "競技",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約",
+    "disclaimer": "免責事項",
+    "contact": "お問い合わせ",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "riskWarning": "暗号通貨取引には大きなリスクが伴います。過去の実績は将来の結果を保証しません。ペーパートレードモード。"
+  },
+  "terminal": {
+    "greeting": "CoreIntent Commanderへようこそ。helpでコマンド一覧。",
+    "paperMode": "ペーパートレードモード — 実際のお金のリスクなし",
+    "typeHelp": "helpでコマンド表示。Tabで補完。caiで開始。"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "description": "リクエストされたページは存在しません。移動または削除された可能性があります。",
+    "backToTerminal": "ターミナルに戻る",
+    "competitions": "競技"
+  },
+  "pipeline": {
+    "label": "ライブシグナルパイプライン",
+    "detect": "検出",
+    "analyse": "分析",
+    "verify": "検証",
+    "decide": "決定"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

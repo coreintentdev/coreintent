@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | 智能AI交易引擎 — 无订阅，只有竞赛",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "三个AI模型。一个交易引擎。零订阅。CoreIntent协调Claude、Grok和Perplexity生成交易信号。免费竞赛——欢迎机器人。由Zynthio在新西兰打造。"
+  },
+  "nav": {
+    "terminal": "终端",
+    "demo": "演示",
+    "stack": "技术栈",
+    "pricing": "价格",
+    "language": "语言"
+  },
+  "hero": {
+    "badge": "模拟交易模式 — 创始名额开放 — 所有联赛免费",
+    "heading1": "三个AI",
+    "headingHighlight": "辩论",
+    "heading2": "你获得",
+    "headingTruth": "真相",
+    "subheading": "Grok检测。Claude质疑。Perplexity验证。",
+    "consensus": "只有共识信号能存活。",
+    "free": "永久免费。",
+    "pitch": "其他平台每月收费$99，只提供",
+    "pitchStrike": "单模型猜测",
+    "pitchWePit": "我们让",
+    "pitchAgainstEach": "互相对抗。",
+    "pitchDisagree": "当它们意见不同时，你受到保护。当它们达成一致时，",
+    "pitchConviction": "你带着信心行动。",
+    "ctaTerminal": "打开终端",
+    "ctaGithub": "在GitHub上加星",
+    "engineAlive": "引擎运行中",
+    "signal": "信号",
+    "demo": "演示"
+  },
+  "howItWorks": {
+    "label": "工作原理",
+    "title": "三步获取更智能的信号",
+    "step01": "第01步",
+    "step01Title": "模型辩论",
+    "step01Desc": "Grok发现信号。Claude提出质疑。Perplexity用实时数据核实。三个视角，一场对话。",
+    "step02": "第02步",
+    "step02Title": "形成共识",
+    "step02Desc": "当三个模型一致同意时，置信度很高。当它们不同意时，系统标记不确定性——没有虚假的确信。",
+    "step03": "第03步",
+    "step03Title": "你来竞赛",
+    "step03Desc": "将信号带入每日、每周或每月的竞赛。与其他人类和机器人证明你的策略。免费参赛。"
+  },
+  "miniTerminal": {
+    "tryItNow": "立即体验",
+    "talkToEngine": "与引擎对话。输入命令。",
+    "launchFull": "启动完整终端（100+命令）"
+  },
+  "stats": {
+    "aiModels": "AI模型",
+    "apiRoutes": "API路由",
+    "monthlyInfra": "月度基础设施",
+    "subscriptionCost": "订阅费用"
+  },
+  "models": {
+    "title": "AI管弦乐团",
+    "subtitle": "三个模型，三个视角，一个共识"
+  },
+  "testimonials": {
+    "title": "交易者的评价",
+    "tag": "演示"
+  },
+  "footer": {
+    "tagline": "智能AI交易引擎",
+    "builtBy": "由 Corey McIvor 打造 | Zynthio.ai",
+    "product": "产品",
+    "legal": "法律",
+    "connect": "联系",
+    "competitions": "竞赛",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款",
+    "disclaimer": "免责声明",
+    "contact": "联系我们",
+    "copyright": "© {year} Corey McIvor. 保留所有权利。",
+    "riskWarning": "加密货币交易涉及重大风险。过去的表现不能保证未来的结果。模拟交易模式。"
+  },
+  "terminal": {
+    "greeting": "欢迎来到CoreIntent Commander。输入help查看命令。",
+    "paperMode": "模拟交易模式 — 无真实资金风险",
+    "typeHelp": "输入help查看命令。Tab自动补全。cai开始。"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "您请求的页面不存在。可能已被移动或删除。",
+    "backToTerminal": "返回终端",
+    "competitions": "竞赛"
+  },
+  "pipeline": {
+    "label": "实时信号管道",
+    "detect": "检测",
+    "analyse": "分析",
+    "verify": "验证",
+    "decide": "决策"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

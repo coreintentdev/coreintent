@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading con IA Agéntica — Sin Suscripciones, Solo Competencias",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "Tres modelos de IA. Un motor de trading. Cero suscripciones. CoreIntent orquesta Claude, Grok y Perplexity para señales de trading. Competencias gratuitas — bots bienvenidos. Hecho en NZ por Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Precios",
+    "language": "Idioma"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Plazas de Fundador Abiertas — Todas las Ligas Gratis",
+    "heading1": "Tres IAs",
+    "headingHighlight": "Debaten",
+    "heading2": "Tú Obtienes la",
+    "headingTruth": "Verdad",
+    "subheading": "Grok detecta. Claude cuestiona. Perplexity verifica.",
+    "consensus": "Solo las señales de consenso sobreviven.",
+    "free": "$0 para siempre.",
+    "pitch": "Otras plataformas cobran $99/mes por",
+    "pitchStrike": "un modelo adivinando",
+    "pitchWePit": "Nosotros enfrentamos a",
+    "pitchAgainstEach": "entre sí.",
+    "pitchDisagree": "Cuando no están de acuerdo, estás protegido. Cuando coinciden,",
+    "pitchConviction": "actúas con convicción.",
+    "ctaTerminal": "Abrir Terminal",
+    "ctaGithub": "Dar Estrella en GitHub",
+    "engineAlive": "MOTOR ACTIVO",
+    "signal": "SEÑAL",
+    "demo": "DEMO"
+  },
+  "howItWorks": {
+    "label": "Cómo Funciona",
+    "title": "Tres Pasos Hacia Mejores Señales",
+    "step01": "PASO 01",
+    "step01Title": "Los Modelos Debaten",
+    "step01Desc": "Grok detecta una señal. Claude la cuestiona. Perplexity verifica con datos en tiempo real. Tres perspectivas, una conversación.",
+    "step02": "PASO 02",
+    "step02Title": "Se Forma el Consenso",
+    "step02Desc": "Cuando los tres modelos coinciden, la confianza es alta. Cuando discrepan, el sistema marca incertidumbre — sin falsas convicciones.",
+    "step03": "PASO 03",
+    "step03Title": "Tú Compites",
+    "step03Desc": "Lleva la señal a competencias diarias, semanales o mensuales. Demuestra tu estrategia contra otros humanos y bots. Entrada gratuita."
+  },
+  "miniTerminal": {
+    "tryItNow": "Pruébalo Ahora",
+    "talkToEngine": "Habla con el motor. Escribe un comando.",
+    "launchFull": "Abrir Terminal Completo (100+ comandos)"
+  },
+  "stats": {
+    "aiModels": "Modelos de IA",
+    "apiRoutes": "Rutas API",
+    "monthlyInfra": "Infra Mensual",
+    "subscriptionCost": "Costo de Suscripción"
+  },
+  "models": {
+    "title": "La Orquesta de IA",
+    "subtitle": "Tres modelos, tres perspectivas, un consenso"
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen los Traders",
+    "tag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Motor de Trading con IA Agéntica",
+    "builtBy": "Creado por Corey McIvor | Zynthio.ai",
+    "product": "Producto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "competitions": "Competencias",
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio",
+    "disclaimer": "Aviso Legal",
+    "contact": "Contacto",
+    "copyright": "© {year} Corey McIvor. Todos los derechos reservados.",
+    "riskWarning": "El trading de criptomonedas implica un riesgo significativo. El rendimiento pasado no garantiza resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bienvenido al Commander de CoreIntent. Escribe help para ver comandos.",
+    "paperMode": "Modo paper trading — sin dinero real en riesgo",
+    "typeHelp": "Escribe help para comandos. Tab para autocompletar. cai para comenzar."
+  },
+  "notFound": {
+    "title": "Página No Encontrada",
+    "description": "La página solicitada no existe. Puede haber sido movida o eliminada.",
+    "backToTerminal": "Volver al Terminal",
+    "competitions": "Competencias"
+  },
+  "pipeline": {
+    "label": "Pipeline de señales en vivo",
+    "detect": "Detectar",
+    "analyse": "Analizar",
+    "verify": "Verificar",
+    "decide": "Decidir"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

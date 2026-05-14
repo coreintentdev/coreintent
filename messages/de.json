@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentische KI-Trading-Engine — Keine Abos, Nur Wettbewerbe",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "Drei KI-Modelle. Eine Trading-Engine. Null Abonnements. CoreIntent orchestriert Claude, Grok & Perplexity für Trading-Signale. Kostenlose Wettbewerbe — Bots willkommen. Gebaut in NZ von Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preise",
+    "language": "Sprache"
+  },
+  "hero": {
+    "badge": "Paper-Trading-Modus — Gründerplätze offen — Alle Ligen kostenlos",
+    "heading1": "Drei KIs",
+    "headingHighlight": "Debattieren",
+    "heading2": "Du bekommst die",
+    "headingTruth": "Wahrheit",
+    "subheading": "Grok erkennt. Claude hinterfragt. Perplexity verifiziert.",
+    "consensus": "Nur Konsens-Signale überleben.",
+    "free": "0$ für immer.",
+    "pitch": "Andere Plattformen verlangen 99$/Monat für",
+    "pitchStrike": "ein Modell, das rät",
+    "pitchWePit": "Wir lassen",
+    "pitchAgainstEach": "gegeneinander antreten.",
+    "pitchDisagree": "Bei Uneinigkeit bist du geschützt. Bei Einigkeit,",
+    "pitchConviction": "handelst du mit Überzeugung.",
+    "ctaTerminal": "Terminal Öffnen",
+    "ctaGithub": "Stern auf GitHub",
+    "engineAlive": "ENGINE AKTIV",
+    "signal": "SIGNAL",
+    "demo": "DEMO"
+  },
+  "howItWorks": {
+    "label": "So Funktioniert's",
+    "title": "Drei Schritte zu Intelligenteren Signalen",
+    "step01": "SCHRITT 01",
+    "step01Title": "Modelle Debattieren",
+    "step01Desc": "Grok erkennt ein Signal. Claude hinterfragt es. Perplexity prüft mit Live-Daten. Drei Perspektiven, ein Gespräch.",
+    "step02": "SCHRITT 02",
+    "step02Title": "Konsens Entsteht",
+    "step02Desc": "Wenn alle drei Modelle übereinstimmen, ist die Konfidenz hoch. Bei Uneinigkeit markiert das System Unsicherheit — keine falsche Überzeugung.",
+    "step03": "SCHRITT 03",
+    "step03Title": "Du Trittst An",
+    "step03Desc": "Nimm das Signal in tägliche, wöchentliche oder monatliche Wettbewerbe mit. Beweise deine Strategie gegen andere Menschen und Bots. Kostenlose Teilnahme."
+  },
+  "miniTerminal": {
+    "tryItNow": "Jetzt Ausprobieren",
+    "talkToEngine": "Sprich mit der Engine. Gib einen Befehl ein.",
+    "launchFull": "Vollständiges Terminal Starten (100+ Befehle)"
+  },
+  "stats": {
+    "aiModels": "KI-Modelle",
+    "apiRoutes": "API-Routen",
+    "monthlyInfra": "Monatliche Infra",
+    "subscriptionCost": "Abo-Kosten"
+  },
+  "models": {
+    "title": "Das KI-Orchester",
+    "subtitle": "Drei Modelle, drei Perspektiven, ein Konsens"
+  },
+  "testimonials": {
+    "title": "Was Trader Sagen",
+    "tag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Agentische KI-Trading-Engine",
+    "builtBy": "Erstellt von Corey McIvor | Zynthio.ai",
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "connect": "Verbinden",
+    "competitions": "Wettbewerbe",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "disclaimer": "Haftungsausschluss",
+    "contact": "Kontakt",
+    "copyright": "© {year} Corey McIvor. Alle Rechte vorbehalten.",
+    "riskWarning": "Der Handel mit Kryptowährungen birgt erhebliche Risiken. Vergangene Leistungen garantieren keine zukünftigen Ergebnisse. Paper-Trading-Modus."
+  },
+  "terminal": {
+    "greeting": "Willkommen bei CoreIntent Commander. Gib help für Befehle ein.",
+    "paperMode": "Paper-Trading-Modus — kein echtes Geld im Risiko",
+    "typeHelp": "Gib help für Befehle ein. Tab zum Vervollständigen. cai zum Starten."
+  },
+  "notFound": {
+    "title": "Seite Nicht Gefunden",
+    "description": "Die angeforderte Seite existiert nicht. Sie wurde möglicherweise verschoben oder gelöscht.",
+    "backToTerminal": "Zurück zum Terminal",
+    "competitions": "Wettbewerbe"
+  },
+  "pipeline": {
+    "label": "Live-Signal-Pipeline",
+    "detect": "Erkennen",
+    "analyse": "Analysieren",
+    "verify": "Verifizieren",
+    "decide": "Entscheiden"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}
