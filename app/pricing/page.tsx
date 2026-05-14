@@ -255,9 +255,11 @@ export default function PricingPage() {
             {LEAGUES.map((league) => (
               <article
                 key={league.name}
-                className={league.featured ? "pricing-card-featured" : ""}
+                className={`card-hover-glow ${league.featured ? "pricing-card-featured" : ""}`}
                 style={{
-                  background: "var(--bg-secondary)",
+                  background: league.featured
+                    ? `linear-gradient(135deg, var(--bg-secondary) 0%, ${league.color}08 100%)`
+                    : "var(--bg-secondary)",
                   border: `1px solid ${league.featured ? league.color + "44" : "var(--border-color)"}`,
                   borderRadius: "12px",
                   padding: "32px 24px",
@@ -890,7 +892,8 @@ export default function PricingPage() {
             }}
           >
             <h2 style={{ fontSize: "clamp(20px, 4vw, 28px)", marginBottom: "8px" }}>
-              The Leaderboard Is Already Being Built. Your Name Isn&apos;t On It Yet.
+              The Leaderboard Is Being Built.{" "}
+              <span style={{ color: "var(--accent-green)" }}>Your Name Isn&apos;t On It Yet.</span>
             </h2>
             <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "20px", maxWidth: "500px", margin: "0 auto 20px" }}>
               No credit card. No subscription trap. No &quot;free trial&quot; that quietly converts to $99/mo.
