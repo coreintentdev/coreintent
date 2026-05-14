@@ -38,9 +38,12 @@ Based in: New Zealand (NEVER register anything in Australia)
 - VPS Lens: scripts/vps-lens.sh
 
 ## VPS
-- Cloudzy: 100.122.99.34
+- Primary: Contabo 161.97.89.49 (Frankfurt) — hostname vmi3205024 — SSH key: ~/.ssh/zynthio_dc — disk 79% (21G free)
+- Legacy: zynthio @ 5.189.143.170 (alive, alias: ssh zynthio) — hostname vmi3217372 — disk 61% (69G free)
+- 84.247.137.105 — DEAD/UNREACHABLE — remove from all scripts
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+- Directories on primary: Desktop/ coreyai-pages/ zynrip/ zynthio/ zynthio-tools/
+- log-incident.sh + log-win.sh installed on both VDS nodes
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
