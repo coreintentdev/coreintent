@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -1268,16 +1269,234 @@ function SignalPipeline() {
   );
 }
 
+/* ─── Scroll Progress Bar ─── */
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = document.documentElement;
+      const scrollable = el.scrollHeight - el.clientHeight;
+      setProgress(scrollable > 0 ? Math.min((el.scrollTop / scrollable) * 100, 100) : 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (progress <= 0) return null;
+
+  return <div className="scroll-progress" style={{ width: `${progress}%` }} />;
+}
+
+/* ─── Command Palette (Cmd+K / Ctrl+K) ─── */
+const PALETTE_COMMANDS = [
+  { label: "Enter the Arena", desc: "Launch full terminal", icon: ">_", group: "Navigate", action: "terminal" },
+  { label: "Interactive Demo", desc: "AI trading engine in action", icon: "▶", group: "Navigate", action: "/demo" },
+  { label: "Tech Stack", desc: "Architecture & infrastructure", icon: "◆", group: "Navigate", action: "/stack" },
+  { label: "Competitions", desc: "Leagues & free entry", icon: "⚡", group: "Navigate", action: "/pricing" },
+  { label: "Dashboard", desc: "Status, domains, architecture", icon: "□", group: "Navigate", action: "dashboard" },
+  { label: "AI Agents", desc: "View agent fleet", icon: "●", group: "Navigate", action: "agents" },
+  { label: "ZynRip Scorer", desc: "Identity verification", icon: "✓", group: "Navigate", action: "zynrip" },
+  { label: "View Source", desc: "Open source on GitHub", icon: "{ }", group: "External", action: "https://github.com/coreintentdev/coreintent" },
+  { label: "Follow @coreintentai", desc: "X / Twitter", icon: "X", group: "External", action: "https://x.com/coreintentai" },
+  { label: "336", desc: "The signal is dominant", icon: "◉", group: "Secrets", action: "terminal" },
+  { label: "Matrix", desc: "Enter the matrix", icon: "M", group: "Secrets", action: "terminal" },
+  { label: "Zen", desc: "Trading wisdom", icon: "☾", group: "Secrets", action: "terminal" },
+];
+
+function CommandPalette({ onAction }: { onAction: (action: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [sel, setSel] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setOpen((o) => !o);
+        setQuery("");
+        setSel(0);
+      }
+      if (e.key === "Escape" && open) setOpen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [open]);
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 50);
+  }, [open]);
+
+  const filtered = query
+    ? PALETTE_COMMANDS.filter(
+        (c) => c.label.toLowerCase().includes(query.toLowerCase()) || c.desc.toLowerCase().includes(query.toLowerCase())
+      )
+    : PALETTE_COMMANDS;
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); setSel((s) => Math.min(s + 1, filtered.length - 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setSel((s) => Math.max(s - 1, 0)); }
+    else if (e.key === "Enter" && filtered[sel]) { e.preventDefault(); setOpen(false); onAction(filtered[sel].action); }
+  };
+
+  if (!open) return null;
+
+  let lastGroup = "";
+
+  return (
+    <div
+      className="cmd-overlay"
+      onClick={() => setOpen(false)}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Command palette"
+    >
+      <div className="cmd-palette" onClick={(e) => e.stopPropagation()}>
+        <div className="cmd-input-wrap">
+          <span style={{ color: "var(--accent-green)", fontSize: "14px" }}>{"⚡"}</span>
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setSel(0); }}
+            onKeyDown={handleKeyDown}
+            placeholder="Type a command or search..."
+            className="cmd-input"
+            aria-label="Search commands"
+          />
+          <kbd className="cmd-kbd">ESC</kbd>
+        </div>
+        <div className="cmd-results">
+          {filtered.map((cmd, i) => {
+            const showGroup = cmd.group !== lastGroup;
+            lastGroup = cmd.group;
+            return (
+              <div key={cmd.label}>
+                {showGroup && <div className="cmd-group">{cmd.group}</div>}
+                <div
+                  className={`cmd-item ${i === sel ? "cmd-item-active" : ""}`}
+                  onClick={() => { setOpen(false); onAction(cmd.action); }}
+                  onMouseEnter={() => setSel(i)}
+                  role="option"
+                  aria-selected={i === sel}
+                >
+                  <span className="cmd-icon">{cmd.icon}</span>
+                  <div style={{ flex: 1 }}>
+                    <div className="cmd-label">{cmd.label}</div>
+                    <div className="cmd-desc">{cmd.desc}</div>
+                  </div>
+                  {i === sel && <span style={{ color: "var(--text-secondary)", fontSize: "12px" }}>{"↵"}</span>}
+                </div>
+              </div>
+            );
+          })}
+          {filtered.length === 0 && (
+            <div style={{ padding: "24px", textAlign: "center", color: "var(--text-secondary)", fontSize: "13px" }}>
+              No results for &quot;{query}&quot;
+            </div>
+          )}
+        </div>
+        <div className="cmd-footer">
+          <span><kbd className="cmd-kbd-sm">{"↑↓"}</kbd> Navigate</span>
+          <span><kbd className="cmd-kbd-sm">{"↵"}</kbd> Select</span>
+          <span><kbd className="cmd-kbd-sm">ESC</kbd> Close</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Live Activity Feed ─── */
+const ACTIVITY_EVENTS = [
+  { text: "BTC/USDT LONG signal detected", model: "Grok", color: "#ef4444" },
+  { text: "Risk assessment: R:R 2.4:1", model: "Claude", color: "#a855f7" },
+  { text: "No negative catalysts found", model: "Perplexity", color: "#3b82f6" },
+  { text: "Consensus: 3/3 models agree LONG", model: "Engine", color: "#10b981" },
+  { text: "Paper trade executed: BUY BTC", model: "Engine", color: "#10b981" },
+  { text: "ETH momentum shift detected", model: "Grok", color: "#ef4444" },
+  { text: "SOL volatility spike — caution", model: "Claude", color: "#a855f7" },
+  { text: "Whale movement: 500 BTC → exchange", model: "Perplexity", color: "#3b82f6" },
+  { text: "Circuit breaker: threshold OK", model: "RiskGuard", color: "#f59e0b" },
+  { text: "AVAX/USDT SHORT signal — 72%", model: "Grok", color: "#ef4444" },
+  { text: "Correlation check: BTC-ETH 0.87", model: "Claude", color: "#a855f7" },
+  { text: "Earnings catalyst: COIN Q2 report", model: "Perplexity", color: "#3b82f6" },
+];
+
+function LiveActivityFeed() {
+  const [events, setEvents] = useState<typeof ACTIVITY_EVENTS>([]);
+  const [minimized, setMinimized] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const idxRef = useRef(0);
+
+  useEffect(() => {
+    setEvents(ACTIVITY_EVENTS.slice(0, 3));
+    idxRef.current = 3;
+
+    const iv = setInterval(() => {
+      const next = ACTIVITY_EVENTS[idxRef.current % ACTIVITY_EVENTS.length];
+      idxRef.current++;
+      setEvents((prev) => [...prev.slice(-4), next]);
+    }, 4000);
+    return () => clearInterval(iv);
+  }, []);
+
+  if (dismissed) return null;
+
+  return (
+    <div className={`activity-feed ${minimized ? "activity-feed-min" : ""}`}>
+      <div className="activity-header">
+        <span className="activity-live">
+          <span className="activity-dot" />
+          LIVE FEED
+        </span>
+        <span style={{ fontSize: "9px", color: "var(--text-secondary)" }}>DEMO</span>
+        <div style={{ display: "flex", gap: "4px" }}>
+          <button onClick={() => setMinimized((m) => !m)} className="activity-btn" aria-label={minimized ? "Expand" : "Minimize"}>
+            {minimized ? "▲" : "▼"}
+          </button>
+          <button onClick={() => setDismissed(true)} className="activity-btn" aria-label="Dismiss">{"×"}</button>
+        </div>
+      </div>
+      {!minimized && (
+        <div className="activity-list">
+          {events.map((evt, i) => (
+            <div key={`${evt.text}-${i}`} className="activity-item" style={{ animationDelay: `${i * 0.05}s` }}>
+              <span style={{ color: evt.color, fontSize: "8px", flexShrink: 0 }}>{"●"}</span>
+              <span className="activity-text">{evt.text}</span>
+              <span style={{ color: evt.color, fontSize: "9px", flexShrink: 0 }}>{evt.model}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
   const [showHero, setShowHero] = useState(true);
+  const router = useRouter();
+
+  const handlePaletteAction = useCallback((action: string) => {
+    if (action.startsWith("https://")) {
+      window.open(action, "_blank", "noopener,noreferrer");
+    } else if (action.startsWith("/")) {
+      router.push(action);
+    } else if (["terminal", "dashboard", "agents", "zynrip", "docs"].includes(action)) {
+      setShowHero(false);
+      setTab(action as Tab);
+    }
+  }, [router]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <ScrollProgress />
       <SiteNav />
+      <CommandPalette onAction={handlePaletteAction} />
       <KonamiCode />
       <FloatingCTA />
+      <LiveActivityFeed />
 
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
@@ -1945,6 +2164,16 @@ export default function Home() {
             {t === "zynrip" ? "ZynRip" : t.charAt(0).toUpperCase() + t.slice(1)}
           </button>
         ))}
+        <div style={{ flex: 1 }} />
+        <div
+          className="cmd-hint"
+          onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }))}
+          role="button"
+          tabIndex={0}
+          aria-label="Open command palette"
+        >
+          <kbd className="cmd-kbd-sm">{"⌘K"}</kbd>
+        </div>
       </div>
 
       {/* Main content */}
