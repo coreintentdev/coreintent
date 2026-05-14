@@ -142,9 +142,9 @@ Use short observation windows (start, verify logs, then stop with Ctrl+C).
 - `bash ./scripts/audit.sh` (required repo-level audit)
 - Optional syntax pass:
   - `bash -n ./scripts/deploy-vercel.sh`
-  - `bash -n ./scripts/deploy-vps.sh`
+  - `bash -n ./scripts/deploy-vds.sh`
   - `bash -n ./scripts/deploy-all.sh`
-  - `bash -n ./scripts/vps-lens.sh`
+  - `bash -n ./scripts/vds-lens.sh`
 
 ## 4) Standard Cloud testing sequence before commit
 

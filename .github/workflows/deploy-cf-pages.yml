@@ -1,0 +1,58 @@
+name: Deploy Cloudflare Pages Skeletons
+
+# Creates / verifies the 48 Cloudflare Pages skeleton projects.
+# Replaces the "Claude Desktop says no token" loop. See INC-009 + INC-011.
+#
+# Required GitHub repo secrets:
+#   CLOUDFLARE_API_TOKEN   Scoped Pages:Edit + Account:Read
+#   CLOUDFLARE_ACCOUNT_ID  a61bf8a23a8488f6e4257e7127c70b76 (corey.mcivor@gmail.com)
+#
+# Optional secrets:
+#   CF_SKELETON_PREFIX  Defaults to "coreintent-skel" inside the script
+#   CF_SKELETON_COUNT   Defaults to 48 inside the script
+#
+# Trigger: manual only. Pages projects, once created, persist — no need to
+# rerun on every push.
+
+on:
+  workflow_dispatch:
+    inputs:
+      count:
+        description: 'How many skeletons to create (default 48)'
+        required: false
+        default: '48'
+      prefix:
+        description: 'Project name prefix (default coreintent-skel)'
+        required: false
+        default: 'coreintent-skel'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN not set."
+            exit 1
+          fi
+          if [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID not set. Use a61bf8a23a8488f6e4257e7127c70b76."
+            exit 1
+          fi
+
+      - name: Run skeleton deployer
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_SKELETON_COUNT: ${{ github.event.inputs.count }}
+          CF_SKELETON_PREFIX: ${{ github.event.inputs.prefix }}
+        run: |
+          chmod +x scripts/deploy-cf-skeletons.sh
+          ./scripts/deploy-cf-skeletons.sh

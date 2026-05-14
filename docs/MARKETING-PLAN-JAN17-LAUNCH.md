@@ -31,7 +31,7 @@
 - [ ] Create affiliate link structure
 
 **Afternoon (1 PM - 5 PM):**
-- [ ] COR-20: Deploy VPS Scripts (risk_monitor, gtrade_listener, signal_listener)
+- [ ] COR-20: Deploy VDS Scripts (risk_monitor, gtrade_listener, signal_listener)
 - [ ] COR-21: Deploy Website Homepage to Vercel
 - [ ] LinkedIn outreach to 10 AI trading leads (COR-10)
 - [ ] Grok messaging strategy
@@ -120,7 +120,7 @@
 #### **Technology Stack Page:**
 ```
 /tech-stack
-- Deployment: Vercel, Cloudzy VPS, Docker
+- Deployment: Vercel, Cloudzy VDS, Docker
 - AI Services: Claude (Anthropic), Grok (X.ai)
 - Infrastructure: GitHub, Linear, Notion, Perplexity
 - Trading: gTrade Integration
@@ -310,7 +310,7 @@
 
 ### **T-Minus 3 Days (Jan 14)**
 - [ ] Website deployed to Vercel
-- [ ] VPS scripts live
+- [ ] VDS scripts live
 - [ ] Social media accounts ready
 - [ ] Community outreach initiated
 

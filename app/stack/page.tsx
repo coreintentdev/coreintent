@@ -38,7 +38,7 @@ const PLATFORMS = [
   { name: "X Premium+", what: "Grok API, analytics, post reach, @coreintentai", color: "#1d9bf0" },
   { name: "Cloudflare Pro", what: "CDN, WAF, DDoS protection, DNS for coreintent.dev", color: "#f48120" },
   { name: "Vercel", what: "Next.js hosting, edge functions, preview deploys", color: "#fff" },
-  { name: "Cloudzy VPS", what: "Trading engine: risk_monitor, gtrade_listener, signal_listener", color: "#10b981" },
+  { name: "Cloudzy VDS", what: "Trading engine: risk_monitor, gtrade_listener, signal_listener", color: "#10b981" },
   { name: "GitHub", what: "5 repos, CI/CD, open source, coreintentdev org", color: "#8b949e" },
   { name: "Linear", what: "26 tasks, epics: BRAIN/OPS/GROWTH/LAUNCH/COMMAND", color: "#5e6ad2" },
   { name: "Notion", what: "Documentation hub, knowledge base", color: "#fff" },
@@ -68,7 +68,7 @@ const ARCH_NODES = [
   { id: "risk", label: "RiskGuard", role: "Circuit Breaker", color: "#f59e0b", x: 100, y: 180 },
   { id: "terminal", label: "Terminal", role: "Commander", color: "#06b6d4", x: 500, y: 180 },
   { id: "exchange", label: "Exchanges", role: "Planned", color: "#64748b", x: 200, y: 290 },
-  { id: "vps", label: "VPS", role: "Cloudzy", color: "#10b981", x: 400, y: 290 },
+  { id: "vds", label: "VDS", role: "Cloudzy", color: "#10b981", x: 400, y: 290 },
 ];
 
 const ARCH_CONNECTIONS = [
@@ -78,7 +78,7 @@ const ARCH_CONNECTIONS = [
   { from: "engine", to: "risk", label: "risk check" },
   { from: "engine", to: "terminal", label: "commands" },
   { from: "engine", to: "exchange", label: "orders" },
-  { from: "engine", to: "vps", label: "deploy" },
+  { from: "engine", to: "vds", label: "deploy" },
   { from: "risk", to: "engine", label: "limits" },
 ];
 
@@ -417,7 +417,7 @@ function ArchitectureDiagram() {
         />
       </div>
 
-      <svg viewBox="0 0 600 340" role="img" aria-label="CoreIntent architecture diagram showing data flow from AI models through the engine to exchanges and VPS" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
+      <svg viewBox="0 0 600 340" role="img" aria-label="CoreIntent architecture diagram showing data flow from AI models through the engine to exchanges and VDS" style={{ width: "100%", height: "auto", maxHeight: "360px" }}>
         <defs>
           <filter id="nodeGlow">
             <feGaussianBlur stdDeviation="3" result="blur" />
@@ -728,7 +728,7 @@ export default function StackPage() {
                   ["Perplexity", "Max", "$20"],
                   ["Cloudflare", "Pro", "$20"],
                   ["Vercel", "Hobby (free) → Pro", "$0-20"],
-                  ["Cloudzy VPS", "Basic", "~$5-10"],
+                  ["Cloudzy VDS", "Basic", "~$5-10"],
                   ["Claude API", "Pay-per-use", "~$5-30"],
                   ["GitHub", "Free (public)", "$0"],
                   ["Linear", "Free tier", "$0"],

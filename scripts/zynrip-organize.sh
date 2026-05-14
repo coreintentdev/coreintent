@@ -30,7 +30,7 @@ mkdir -p "$MASTER/03_SONGPAL/lyrics"      # Written lyrics
 mkdir -p "$MASTER/03_SONGPAL/distrokid"   # Distribution records
 mkdir -p "$MASTER/04_LEGAL"               # Legal docs, TM, IP, complaints
 mkdir -p "$MASTER/05_AI_SESSIONS"         # Session handovers, Claude/Grok/Gemini logs
-mkdir -p "$MASTER/06_VPS"                 # VPS state, SSH configs, deploy logs
+mkdir -p "$MASTER/06_VDS"                 # VDS state, SSH configs, deploy logs
 mkdir -p "$MASTER/07_BRANDS"              # Zynthio, CoreyAI, Mosoko, Kervalon, etc
 mkdir -p "$MASTER/08_SECURITY"            # F18, identity protection, evidence
 mkdir -p "$MASTER/09_PERSONAL"            # Family, private (NOT for AI)
@@ -141,7 +141,7 @@ Owner: Corey McIvor (@coreintentdev)
 | 03_SONGPAL | Music, lyrics, DistroKid | $(find "$MASTER/03_SONGPAL" -type f 2>/dev/null | wc -l | tr -d ' ') |
 | 04_LEGAL | Legal docs, TM, IP | $(find "$MASTER/04_LEGAL" -type f 2>/dev/null | wc -l | tr -d ' ') |
 | 05_AI_SESSIONS | Handovers, AI logs | $(find "$MASTER/05_AI_SESSIONS" -type f 2>/dev/null | wc -l | tr -d ' ') |
-| 06_VPS | VPS state, SSH, deploys | $(find "$MASTER/06_VPS" -type f 2>/dev/null | wc -l | tr -d ' ') |
+| 06_VDS | VDS state, SSH, deploys | $(find "$MASTER/06_VDS" -type f 2>/dev/null | wc -l | tr -d ' ') |
 | 07_BRANDS | Zynthio, CoreyAI, etc | $(find "$MASTER/07_BRANDS" -type f 2>/dev/null | wc -l | tr -d ' ') |
 | 08_SECURITY | F18, identity, evidence | $(find "$MASTER/08_SECURITY" -type f 2>/dev/null | wc -l | tr -d ' ') |
 | 09_PERSONAL | Family, private | $(find "$MASTER/09_PERSONAL" -type f 2>/dev/null | wc -l | tr -d ' ') |

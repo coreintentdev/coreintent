@@ -3,7 +3,7 @@
  *
  * In-memory store for demo purposes. Replace with Cloudflare KV or a DB
  * once the persistence layer is added.
- * Private notes stay on the VPS at /root/.coreintent/notes/private —
+ * Private notes stay on the VDS at /root/.coreintent/notes/private —
  * they are never accessible via this endpoint.
  *
  * GET  — list all public notes

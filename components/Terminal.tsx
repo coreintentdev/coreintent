@@ -130,10 +130,10 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mBrand:\x1b[0m       Zynthio.ai — parent of all brands
   \x1b[33mEngine:\x1b[0m      CoreIntent v0.1.0-alpha
   \x1b[33mMode:\x1b[0m        \x1b[33mPaper trading\x1b[0m — no real money at risk
-  \x1b[33mMonthly burn:\x1b[0m ~A$45/mo (Claude Pro + VPS only)
+  \x1b[33mMonthly burn:\x1b[0m ~A$45/mo (Claude Pro + VDS only)
 
   \x1b[32m●\x1b[0m Claude Pro     — ACTIVE (main builder)
-  \x1b[32m●\x1b[0m Cloudzy VPS    — ACTIVE
+  \x1b[32m●\x1b[0m Cloudzy VDS    — ACTIVE
   \x1b[32m●\x1b[0m Grok Free      — ACTIVE (research layer)
   \x1b[33m◐\x1b[0m Perplexity     — FREE tier (Max cancelled)
   \x1b[33m◐\x1b[0m zyn-bash       — API overflow (~$0.003/call)
@@ -164,12 +164,12 @@ const STATIC_COMMANDS: Record<string, string> = {
     Mac the Zipper   — Compression & packaging
     PDF Plumber      — Document parsing
     AI-to-AI Transfer — Cross-model context pipeline
-    G4-LENS          — VPS monitoring & session state
+    G4-LENS          — VDS monitoring & session state
 
   \x1b[33mCLI Tools:\x1b[0m
     zyn-bash         — Unlimited API calls (Sonnet/Opus)
-    core CLI (cai)   — VPS session manager
-    vps-lens.sh      — Infrastructure audit
+    core CLI (cai)   — VDS session manager
+    vds-lens.sh      — Infrastructure audit
 
   \x1b[33mVault:\x1b[0m
     439 music tracks  — Suno originals (SongPal)
@@ -181,7 +181,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[33mPAYING (~A$45/mo):\x1b[0m
     \x1b[32m●\x1b[0m Claude Pro        ~A$30/mo   ACTIVE
-    \x1b[32m●\x1b[0m Cloudzy VPS       ~$15/mo    ACTIVE
+    \x1b[32m●\x1b[0m Cloudzy VDS       ~$15/mo    ACTIVE
 
   \x1b[33mFREE / ALREADY PAID:\x1b[0m
     \x1b[32m●\x1b[0m Cloudflare Pages  FREE       16 sites deployed
@@ -214,8 +214,8 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m 10 API routes (returning demo data)
     \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
     \x1b[32m●\x1b[0m 8 domains live, all returning 200
-    \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)
-    \x1b[32m●\x1b[0m cai CLI on VPS with full session state
+    \x1b[32m●\x1b[0m VDS running (Cloudzy + Frankfurt)
+    \x1b[32m●\x1b[0m cai CLI on VDS with full session state
 
   \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
     \x1b[33m◐\x1b[0m All 12 API routes return demo data (keys not set)
@@ -226,7 +226,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[31m○\x1b[0m No user authentication
     \x1b[31m○\x1b[0m No database / persistence layer
     \x1b[31m○\x1b[0m No exchange connections (all planned)
-    \x1b[31m○\x1b[0m VPS scripts written but never deployed
+    \x1b[31m○\x1b[0m VDS scripts written but never deployed
     \x1b[31m○\x1b[0m The Mansion (gamified world — rooms, story missions)
     \x1b[31m○\x1b[0m SongPal full build (site live, needs enhancement)
 
@@ -238,14 +238,14 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mProject:\x1b[0m     CoreIntent (coreintent)
   \x1b[33mStack:\x1b[0m       Next.js 14 + TypeScript (strict) + App Router
   \x1b[33mRepo:\x1b[0m        github.com/coreintentdev/coreintent
-  \x1b[33mVPS Cloudzy:\x1b[0m Cloudzy (Tailscale SSH)
-  \x1b[33mVPS Frankfurt:\x1b[0m Frankfurt VPS
+  \x1b[33mVDS Cloudzy:\x1b[0m Cloudzy (Tailscale SSH)
+  \x1b[33mVDS Frankfurt:\x1b[0m Frankfurt VDS
   \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
   \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
   \x1b[33mSites:\x1b[0m       8/8 returning 200 OK
   \x1b[33mSSL:\x1b[0m         84-88 days remaining
 
-  \x1b[33mKEY FILES ON VPS:\x1b[0m
+  \x1b[33mKEY FILES ON VDS:\x1b[0m
     /root/zynthio/SESSION_STATE.md
     /root/zynthio/MASTER_INDEX.md
     /root/zynthio/CONTENT_INTEL.md
@@ -255,7 +255,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     1. READ before you write
     2. NEVER say "connected" unless verified
     3. All API routes return DEMO data — label honestly
-    4. Deploy to VPS, not Cloudflare (CF is dead end)
+    4. Deploy to VDS, not Cloudflare (CF is dead end)
     5. NZ-first for legal/business (NEVER Australia)
 
   \x1b[90m336 — the signal is dominant\x1b[0m`,
@@ -305,7 +305,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 
   \x1b[33mInfrastructure:\x1b[0m
     \x1b[32m●\x1b[0m Cloudflare      — FREE, 16 sites, DNS + CDN
-    \x1b[32m●\x1b[0m Cloudzy VPS     — $15/mo, 8 domains live
+    \x1b[32m●\x1b[0m Cloudzy VDS     — $15/mo, 8 domains live
     \x1b[32m●\x1b[0m GitHub          — FREE, coreintentdev repos
     \x1b[32m●\x1b[0m Porkbun         — Annual, all domains
 
@@ -314,7 +314,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     Mac the Zipper  — Compression & packaging
     PDF Plumber     — Document parsing
     AI-to-AI Transfer — Cross-model context pipeline
-    G4-LENS         — VPS monitoring & session state`,
+    G4-LENS         — VDS monitoring & session state`,
 
   version: `\x1b[36mCoreIntent Commander v0.2.0\x1b[0m
 Zynthio Trading Engine — Command Center for everyone
@@ -346,7 +346,7 @@ Brand: Zynthio.ai — NZ registered
 \x1b[36m        \\_____/        \x1b[0m  \x1b[33mShell:\x1b[0m    Commander v0.2.0
 \x1b[36m         '---'         \x1b[0m  \x1b[33mTheme:\x1b[0m    Dark (Cyber)
                           \x1b[33mAI:\x1b[0m       Claude + Grok + Perplexity
-                          \x1b[33mVPS:\x1b[0m      Cloudzy (8 domains)
+                          \x1b[33mVDS:\x1b[0m      Cloudzy (8 domains)
                           \x1b[33mDomains:\x1b[0m  16
                           \x1b[33mBurn:\x1b[0m     ~/mo
                           \x1b[33mMode:\x1b[0m     \x1b[33mPaper Trading\x1b[0m
@@ -1012,7 +1012,7 @@ export default function Terminal() {
         `  \x1b[90m[0.5s]\x1b[0m Checking SSL certificates...        \x1b[32m84-88 days remaining\x1b[0m`,
         `  \x1b[90m[0.8s]\x1b[0m Verifying API key rotation...        \x1b[33mDEMO KEYS ACTIVE\x1b[0m`,
         `  \x1b[90m[1.2s]\x1b[0m Scanning 16 domains...              \x1b[32m8 active, 0 compromised\x1b[0m`,
-        `  \x1b[90m[1.5s]\x1b[0m Checking VPS integrity...            \x1b[32mClean\x1b[0m`,
+        `  \x1b[90m[1.5s]\x1b[0m Checking VDS integrity...            \x1b[32mClean\x1b[0m`,
         `  \x1b[90m[1.8s]\x1b[0m Identity verification...             \x1b[32mCorey McIvor — verified\x1b[0m`,
         `  \x1b[90m[2.0s]\x1b[0m Deploying land mines for bad actors...\x1b[32mArmed\x1b[0m`,
         "",
@@ -1138,7 +1138,7 @@ export default function Terminal() {
         { name: "api/signals", type: "api" },
         { name: "api/agents", type: "api" },
         { name: "api/market", type: "api" },
-        { name: "Cloudzy VPS", type: "infra" },
+        { name: "Cloudzy VDS", type: "infra" },
         { name: "GitHub", type: "infra" },
       ];
       let idx = 0;
@@ -1370,7 +1370,7 @@ export default function Terminal() {
         { name: "CSP Headers", status: "PASS" },
         { name: "SSL Certificates", status: "PASS" },
         { name: "Domain Resolution", status: "PASS" },
-        { name: "VPS Connectivity", status: "WARN" },
+        { name: "VDS Connectivity", status: "WARN" },
         { name: "Exchange APIs", status: "SKIP" },
         { name: "Database Layer", status: "SKIP" },
         { name: "Authentication", status: "SKIP" },
@@ -1866,7 +1866,7 @@ export default function Terminal() {
         { name: "Claude API", latency: 88, speed: 245 },
         { name: "Perplexity API", latency: 65, speed: 160 },
         { name: "Market Feed", latency: 12, speed: 890 },
-        { name: "VPS (Cloudzy)", latency: 31, speed: 520 },
+        { name: "VDS (Cloudzy)", latency: 31, speed: 520 },
       ];
       let ti = 0;
       const tiv = setInterval(() => {

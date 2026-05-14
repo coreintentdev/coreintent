@@ -1,7 +1,7 @@
 #!/bin/bash
 # ═══════════════════════════════════════════
 # CoreIntent — FULL DEPLOYMENT
-# Deploys: Vercel (web) + VPS (trading engine)
+# Deploys: Vercel (web) + VDS (trading engine)
 # Run from project root: ./scripts/deploy-all.sh
 # ═══════════════════════════════════════════
 
@@ -15,7 +15,7 @@ echo " ██║     ██║   ██║██╔══██╗██╔═�
 echo " ╚██████╗╚██████╔╝██║  ██║███████╗██║██║ ╚████║   ██║   ███████╗██║ ╚████║   ██║   "
 echo "  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═══╝   ╚═╝"
 echo ""
-echo " FULL DEPLOYMENT — Vercel + VPS"
+echo " FULL DEPLOYMENT — Vercel + VDS"
 echo " Built by Corey McIvor (@coreintentdev)"
 echo ""
 
@@ -41,9 +41,9 @@ echo ""
 bash scripts/deploy-vercel.sh
 
 echo ""
-echo "═══ Phase 2: VPS (Trading Engine) ═══"
+echo "═══ Phase 2: VDS (Trading Engine) ═══"
 echo ""
-bash scripts/deploy-vps.sh
+bash scripts/deploy-vds.sh
 
 echo ""
 echo "═══════════════════════════════════════"
@@ -51,12 +51,12 @@ echo " FULL DEPLOYMENT COMPLETE"
 echo "═══════════════════════════════════════"
 echo ""
 echo " Web App:        Live on Vercel"
-echo " Risk Monitor:   Running on VPS"
-echo " Signal Listener: Running on VPS"
-echo " gTrade Scanner: Running on VPS"
+echo " Risk Monitor:   Running on VDS"
+echo " Signal Listener: Running on VDS"
+echo " gTrade Scanner: Running on VDS"
 echo ""
 echo " Next: Set API keys in Vercel dashboard"
-echo " and in VPS .env file"
+echo " and in VDS .env file"
 echo ""
 echo " Share to care. — Corey"
 echo ""

@@ -354,17 +354,17 @@ fi
 echo "" >> "$REPORT"
 
 # ═══════════════════════════════════════════
-# 10. VPS SCRIPTS
+# 10. VDS SCRIPTS
 # ═══════════════════════════════════════════
-echo "## 10. VPS & Deployment" >> "$REPORT"
+echo "## 10. VDS & Deployment" >> "$REPORT"
 echo ""
-echo "--- VPS CHECK ---"
+echo "--- VDS CHECK ---"
 
 for script in scripts/risk_monitor.ts scripts/signal_listener.ts scripts/gtrade_listener.ts; do
-  [ -f "$script" ] && log_pass "VPS script exists: $script" || log_fail "VPS script missing: $script"
+  [ -f "$script" ] && log_pass "VDS script exists: $script" || log_fail "VDS script missing: $script"
 done
 
-for deploy in scripts/deploy-vps.sh scripts/deploy-vercel.sh scripts/deploy-all.sh; do
+for deploy in scripts/deploy-vds.sh scripts/deploy-vercel.sh scripts/deploy-all.sh; do
   [ -f "$deploy" ] && log_pass "Deploy script exists: $deploy" || log_warn "Deploy script missing: $deploy"
 done
 

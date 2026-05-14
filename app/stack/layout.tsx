@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "The Stack — AI Services, Infrastructure & Architecture",
   description:
-    "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure. Built by Zynthio.",
+    "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VDS infrastructure. Built by Zynthio.",
   alternates: {
     canonical: "https://coreintent.dev/stack",
   },
   openGraph: {
     title: "The Stack — AI Services, Infrastructure & Architecture",
     description:
-      "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VPS infrastructure.",
+      "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration with Cloudflare, Vercel, and VDS infrastructure.",
     url: "https://coreintent.dev/stack",
     type: "website",
     images: [
@@ -57,7 +57,7 @@ const structuredData = {
       "@type": "TechArticle",
       headline: "The Stack — AI Services, Infrastructure & Architecture",
       description:
-        "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure.",
+        "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VDS infrastructure.",
       url: "https://coreintent.dev/stack",
       datePublished: "2026-03-01",
       dateModified: "2026-05-06",

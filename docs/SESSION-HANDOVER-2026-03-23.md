@@ -38,7 +38,7 @@
 - Perplexity — real API calls, falls back to demo without key
 - Orchestrator routes tasks to best AI for the job
 
-### VPS Scripts (COR-20 — FINALLY CREATED)
+### VDS Scripts (COR-20 — FINALLY CREATED)
 - `scripts/risk_monitor.ts` — Circuit breaker at 0.8%, calls Claude for analysis
 - `scripts/signal_listener.ts` — Grok validates signals, Claude double-checks >0.85
 - `scripts/gtrade_listener.ts` — DeFi scanner on Polygon/Arbitrum
@@ -120,10 +120,10 @@
 - **Status**: Tracked in /api/incidents, needs investigation
 - **Action needed**: Find what OpenClaw is, fix or replace
 
-### INC-SESSION-003: VPS Lost
-- **What**: Cloudzy VPS credentials never configured, scripts never deployed
+### INC-SESSION-003: VDS Lost
+- **What**: Cloudzy VDS credentials never configured, scripts never deployed
 - **Root cause**: COR-20 was never completed (70 days overdue)
-- **Fix**: VPS scripts now created, need credentials to deploy
+- **Fix**: VDS scripts now created, need credentials to deploy
 
 ### INC-SESSION-004: Linear Doesn't Remember
 - **What**: Context drifts between AI sessions, tasks not cross-linked
@@ -172,7 +172,7 @@
 - [ ] Find Corey's actual music — document it properly
 - [ ] Research Rose, Innes, Chas, Willy — who are they
 - [ ] Fix OpenClaw — find what it is, why it crashes
-- [ ] Configure VPS credentials, deploy scripts
+- [ ] Configure VDS credentials, deploy scripts
 - [ ] Sync Linear tasks — cross-link everything
 
 ### Should Build
@@ -210,7 +210,7 @@
 |---------|------|------|--------|
 | Cloudflare | Pro | $20/mo | NOT CONFIGURED |
 | Vercel | Hobby/Free | $0 | NOT DEPLOYED |
-| Cloudzy VPS | Basic | ~$5-10/mo | CREDENTIALS EMPTY |
+| Cloudzy VDS | Basic | ~$5-10/mo | CREDENTIALS EMPTY |
 | GitHub | Free | $0 | ACTIVE — 11 commits |
 | GitHub Actions | Free | $0 | CI YAML EXISTS |
 
@@ -239,7 +239,7 @@ Gmail, Google Drive, Linear, Notion, GitHub, Asana, Slack, Jira, Confluence
 ## GIT LOG (This Session)
 ```
 544ab4e Fix TS error in research route, build passes clean (16 routes)
-4cf738f Wire real AI orchestra + research/protect APIs + VPS scripts
+4cf738f Wire real AI orchestra + research/protect APIs + VDS scripts
 3fa183d Save vision notes: digital twin, SongPal, mansion, F18 security
 85db3c0 Add package-lock.json
 4bee97b Fix build: resolve TS duplicate property, add ESLint config
