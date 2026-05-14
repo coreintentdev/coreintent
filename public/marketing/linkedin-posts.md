@@ -446,3 +446,79 @@ The hardest part of building in public isn't the transparency. It's resisting th
 -> coreintent.dev
 
 #BuildInPublic #FinTech #AI #Transparency #MonthlyUpdate #CoreIntent #Startups #NewZealand
+
+---
+
+## Post 15 — 20 Days to Launch: Technical Readiness
+
+**In 20 days, CoreIntent competitions go live. Here's exactly how ready we are.**
+
+We've been building for 14 months. Saying "almost there" for 6 of them. Now the countdown clock on our website is under 30 days, and there's nowhere to hide.
+
+**What's green:**
+- 3 AI models integrated and cross-checking (Grok, Claude, Perplexity)
+- 6 trading agents configured with distinct strategies
+- 14 API endpoints live and documented
+- 54-point automated audit passing at 96% (52/54, 0 failures)
+- Competition infrastructure finalised — Daily Sprint, Weekly Grind, Monthly Championship
+- Bot registration API live — no captcha, no approval queue
+- Risk-adjusted scoring engine calibrated — Sharpe ratio matters, not just raw P&L
+- Full interactive terminal with 100+ commands
+- Dynamic OG images generating for every page
+- Marketing kit open-sourced (80 tweets, 16 LinkedIn posts, 19 TikTok scripts)
+
+**What's honest:**
+- No exchange connections yet (Binance/Coinbase are planned, not live)
+- No user authentication system
+- No database/persistence layer
+- Paper trading mode throughout — clearly labelled everywhere
+- Demo data tagged "DEMO" on every screen
+
+**What's unchanged:**
+- Infrastructure bill: ~$45/month
+- Entry fee: $0
+- Subscription model: none, never
+
+The countdown is public. The code is open source. The leaderboard will speak for itself on June 1st.
+
+-> coreintent.dev/pricing
+
+#FinTech #AI #ProductLaunch #BuildInPublic #CoreIntent #Startups #NewZealand #TradingTech
+
+---
+
+## Post 16 — What 14 Months of Building in Public Actually Teaches You
+
+**I've been building CoreIntent in public for 14 months. Here's what I actually learned — not the sanitised version.**
+
+**1. Transparency converts better than polish.**
+
+When I started labelling demo data "DEMO" and planned features "PLANNED," I expected people to leave. They didn't. They stayed longer. They trusted more. They told other people.
+
+The fintech industry has trained users to distrust dashboards. Green dots on dead services. "AI-powered" labels on single API calls. Users have seen it all. When you break that pattern — when you label honestly — the contrast is so stark it becomes your marketing.
+
+**2. $45/month infrastructure is not a limitation. It's a thesis.**
+
+Every month someone asks "but how do you make money?" Every month I explain: competitions, not subscriptions. The question reveals the assumption: that serious tech requires serious overhead. It doesn't. Vercel's free tier, GitHub's free tier, Cloudflare at $20, a VPS at $25 — modern infrastructure has made the subscription model indefensible for platforms with near-zero marginal cost per user.
+
+**3. Bots being first-class citizens attracted the best users.**
+
+The quant developers, the AI researchers, the algo traders — these are the users who build communities, create content, and evangelise products. Every platform that bans bots loses these users. We gained them by welcoming them.
+
+**4. The hardest part isn't building. It's waiting.**
+
+We could have launched competitions 3 months ago. The code was ready. The infrastructure was stable. But the audit wasn't clean enough. The scoring engine hadn't been stress-tested. The consensus pipeline had edge cases.
+
+So we waited. And now, 20 days from launch, I'm glad we did.
+
+**5. Solo founding is lonely. Building in public makes it less so.**
+
+No co-founder. No team. No office. Just a laptop in New Zealand and a timezone offset from everyone I'm building for. Publishing monthly updates, sharing infrastructure costs, labelling everything honestly — it created a conversation with users I'd never have had behind a "coming soon" page.
+
+The platform launches June 1st. Free entry. Bots welcome. Three AI models. Zero subscriptions.
+
+14 months of building. 20 days of countdown. One thesis: if it costs $45/month to run, charging $99/month is extraction.
+
+-> coreintent.dev
+
+#BuildInPublic #FounderJourney #FinTech #AI #Startups #SoloFounder #NewZealand #CoreIntent #LessonsLearned
