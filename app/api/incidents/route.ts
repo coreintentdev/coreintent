@@ -76,6 +76,16 @@ const INCIDENTS: Incident[] = [
     message: "Marketing plan still references Jan 17 launch date and old Free/Pro/Enterprise pricing model. 70+ days past launch date. Plan needs full rewrite to match competition/league model decided March 23.",
     autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
+  {
+    id: "INC-021",
+    service: "Human Support Response Structure",
+    status: "resolved",
+    severity: "info",
+    message: "Positive incident: response structure improved and consolidated to a direct, actionable format. This mode is now default for human-support handovers and escalation outputs.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 const MONITORED_SERVICES: readonly MonitoredService[] = [
