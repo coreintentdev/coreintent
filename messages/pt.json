@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | Motor de Trading com IA Agêntica — Sem Assinaturas, Apenas Competições",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "Três modelos de IA. Um motor de trading. Zero assinaturas. CoreIntent orquestra Claude, Grok e Perplexity para sinais de trading. Competições gratuitas — bots são bem-vindos. Feito na NZ pela Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Preços",
+    "language": "Idioma"
+  },
+  "hero": {
+    "badge": "Modo Paper Trading — Vagas de Fundador Abertas — Todas as Ligas Grátis",
+    "heading1": "Três IAs",
+    "headingHighlight": "Debatem",
+    "heading2": "Você Obtém a",
+    "headingTruth": "Verdade",
+    "subheading": "Grok detecta. Claude questiona. Perplexity verifica.",
+    "consensus": "Apenas sinais de consenso sobrevivem.",
+    "free": "$0 para sempre.",
+    "pitch": "Outras plataformas cobram $99/mês por",
+    "pitchStrike": "um modelo adivinhando",
+    "pitchWePit": "Nós colocamos",
+    "pitchAgainstEach": "uns contra os outros.",
+    "pitchDisagree": "Quando discordam, você está protegido. Quando concordam,",
+    "pitchConviction": "você age com convicção.",
+    "ctaTerminal": "Abrir Terminal",
+    "ctaGithub": "Estrela no GitHub",
+    "engineAlive": "MOTOR ATIVO",
+    "signal": "SINAL",
+    "demo": "DEMO"
+  },
+  "howItWorks": {
+    "label": "Como Funciona",
+    "title": "Três Passos para Sinais Mais Inteligentes",
+    "step01": "PASSO 01",
+    "step01Title": "Modelos Debatem",
+    "step01Desc": "Grok detecta um sinal. Claude o questiona. Perplexity verifica com dados ao vivo. Três perspectivas, uma conversa.",
+    "step02": "PASSO 02",
+    "step02Title": "Consenso se Forma",
+    "step02Desc": "Quando os três modelos concordam, a confiança é alta. Quando discordam, o sistema sinaliza incerteza — sem falsa convicção.",
+    "step03": "PASSO 03",
+    "step03Title": "Você Compete",
+    "step03Desc": "Leve o sinal para competições diárias, semanais ou mensais. Prove sua estratégia contra outros humanos e bots. Entrada gratuita."
+  },
+  "miniTerminal": {
+    "tryItNow": "Experimente Agora",
+    "talkToEngine": "Fale com o motor. Digite um comando.",
+    "launchFull": "Abrir Terminal Completo (100+ comandos)"
+  },
+  "stats": {
+    "aiModels": "Modelos de IA",
+    "apiRoutes": "Rotas API",
+    "monthlyInfra": "Infra Mensal",
+    "subscriptionCost": "Custo de Assinatura"
+  },
+  "models": {
+    "title": "A Orquestra de IA",
+    "subtitle": "Três modelos, três perspectivas, um consenso"
+  },
+  "testimonials": {
+    "title": "O Que os Traders Dizem",
+    "tag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Motor de Trading com IA Agêntica",
+    "builtBy": "Criado por Corey McIvor | Zynthio.ai",
+    "product": "Produto",
+    "legal": "Legal",
+    "connect": "Conectar",
+    "competitions": "Competições",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Serviço",
+    "disclaimer": "Aviso Legal",
+    "contact": "Contato",
+    "copyright": "© {year} Corey McIvor. Todos os direitos reservados.",
+    "riskWarning": "O trading de criptomoedas envolve risco significativo. Desempenho passado não garante resultados futuros. Modo paper trading."
+  },
+  "terminal": {
+    "greeting": "Bem-vindo ao CoreIntent Commander. Digite help para comandos.",
+    "paperMode": "Modo paper trading — sem dinheiro real em risco",
+    "typeHelp": "Digite help para comandos. Tab para autocompletar. cai para começar."
+  },
+  "notFound": {
+    "title": "Página Não Encontrada",
+    "description": "A página solicitada não existe. Pode ter sido movida ou excluída.",
+    "backToTerminal": "Voltar ao Terminal",
+    "competitions": "Competições"
+  },
+  "pipeline": {
+    "label": "Pipeline de sinais ao vivo",
+    "detect": "Detectar",
+    "analyse": "Analisar",
+    "verify": "Verificar",
+    "decide": "Decidir"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

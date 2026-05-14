@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "Three AI models. One trading engine. Zero subscriptions. CoreIntent orchestrates Claude, Grok & Perplexity for trading signals. Free competitions — bots welcome. Built in NZ by Zynthio."
+  },
+  "nav": {
+    "terminal": "Terminal",
+    "demo": "Demo",
+    "stack": "Stack",
+    "pricing": "Pricing",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "Paper Trading Mode — Founding Spots Open — All Leagues Free",
+    "heading1": "Three AIs",
+    "headingHighlight": "Argue",
+    "heading2": "You Get the",
+    "headingTruth": "Truth",
+    "subheading": "Grok detects. Claude questions. Perplexity verifies.",
+    "consensus": "Only consensus signals survive.",
+    "free": "$0 forever.",
+    "pitch": "Other platforms charge $99/mo for",
+    "pitchStrike": "one model guessing",
+    "pitchWePit": "We pit",
+    "pitchAgainstEach": "against each other.",
+    "pitchDisagree": "When they disagree, you're protected. When they agree,",
+    "pitchConviction": "you move with conviction.",
+    "ctaTerminal": "Open Terminal",
+    "ctaGithub": "Star on GitHub",
+    "engineAlive": "ENGINE ALIVE",
+    "signal": "SIGNAL",
+    "demo": "DEMO"
+  },
+  "howItWorks": {
+    "label": "How It Works",
+    "title": "Three Steps to Smarter Signals",
+    "step01": "STEP 01",
+    "step01Title": "Models Debate",
+    "step01Desc": "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+    "step02": "STEP 02",
+    "step02Title": "Consensus Forms",
+    "step02Desc": "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+    "step03": "STEP 03",
+    "step03Title": "You Compete",
+    "step03Desc": "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry."
+  },
+  "miniTerminal": {
+    "tryItNow": "Try It Now",
+    "talkToEngine": "Talk to the engine. Type a command.",
+    "launchFull": "Launch Full Terminal (100+ commands)"
+  },
+  "stats": {
+    "aiModels": "AI Models",
+    "apiRoutes": "API Routes",
+    "monthlyInfra": "Monthly Infra",
+    "subscriptionCost": "Subscription Cost"
+  },
+  "models": {
+    "title": "The AI Orchestra",
+    "subtitle": "Three models, three perspectives, one consensus"
+  },
+  "testimonials": {
+    "title": "What Traders Say",
+    "tag": "DEMO"
+  },
+  "footer": {
+    "tagline": "Agentic AI Trading Engine",
+    "builtBy": "Built by Corey McIvor | Zynthio.ai",
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "competitions": "Competitions",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "contact": "Contact",
+    "copyright": "© {year} Corey McIvor. All rights reserved.",
+    "riskWarning": "Trading cryptocurrency involves significant risk. Past performance does not guarantee future results. Paper trading mode."
+  },
+  "terminal": {
+    "greeting": "Welcome to CoreIntent Commander. Type help for commands.",
+    "paperMode": "Paper trading mode — no real money at risk",
+    "typeHelp": "Type help for commands. Tab to autocomplete. cai to start."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you requested doesn't exist. It may have been moved or deleted.",
+    "backToTerminal": "Back to Terminal",
+    "competitions": "Competitions"
+  },
+  "pipeline": {
+    "label": "Live signal pipeline",
+    "detect": "Detect",
+    "analyse": "Analyse",
+    "verify": "Verify",
+    "decide": "Decide"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}

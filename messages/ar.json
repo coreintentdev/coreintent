@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "CoreIntent | محرك تداول الذكاء الاصطناعي الوكيل — بدون اشتراكات، مسابقات فقط",
+    "titleTemplate": "%s | CoreIntent",
+    "description": "ثلاثة نماذج ذكاء اصطناعي. محرك تداول واحد. صفر اشتراكات. CoreIntent ينسق Claude وGrok وPerplexity لإشارات التداول. مسابقات مجانية — الروبوتات مرحب بها. صُنع في نيوزيلندا بواسطة Zynthio."
+  },
+  "nav": {
+    "terminal": "الطرفية",
+    "demo": "عرض",
+    "stack": "التقنيات",
+    "pricing": "الأسعار",
+    "language": "اللغة"
+  },
+  "hero": {
+    "badge": "وضع التداول الورقي — أماكن المؤسسين مفتوحة — جميع الدوريات مجانية",
+    "heading1": "ثلاثة ذكاءات اصطناعية",
+    "headingHighlight": "تتناقش",
+    "heading2": "أنت تحصل على",
+    "headingTruth": "الحقيقة",
+    "subheading": "Grok يكتشف. Claude يسائل. Perplexity يتحقق.",
+    "consensus": "فقط إشارات الإجماع تنجو.",
+    "free": "$0 إلى الأبد.",
+    "pitch": "المنصات الأخرى تتقاضى $99/شهر مقابل",
+    "pitchStrike": "نموذج واحد يخمّن",
+    "pitchWePit": "نحن نضع",
+    "pitchAgainstEach": "في مواجهة بعضها البعض.",
+    "pitchDisagree": "عندما يختلفون، أنت محمي. عندما يتفقون،",
+    "pitchConviction": "تتحرك بثقة.",
+    "ctaTerminal": "فتح الطرفية",
+    "ctaGithub": "نجمة على GitHub",
+    "engineAlive": "المحرك نشط",
+    "signal": "إشارة",
+    "demo": "عرض"
+  },
+  "howItWorks": {
+    "label": "كيف يعمل",
+    "title": "ثلاث خطوات نحو إشارات أذكى",
+    "step01": "الخطوة 01",
+    "step01Title": "النماذج تتناقش",
+    "step01Desc": "Grok يكتشف إشارة. Claude يسائلها. Perplexity يتحقق من البيانات الحية. ثلاث وجهات نظر، محادثة واحدة.",
+    "step02": "الخطوة 02",
+    "step02Title": "يتشكل الإجماع",
+    "step02Desc": "عندما تتفق النماذج الثلاثة، الثقة عالية. عندما يختلفون، يُعلّم النظام عدم اليقين — لا اقتناع زائف.",
+    "step03": "الخطوة 03",
+    "step03Title": "أنت تنافس",
+    "step03Desc": "خذ الإشارة إلى مسابقات يومية أو أسبوعية أو شهرية. أثبت استراتيجيتك ضد بشر وروبوتات آخرين. الدخول مجاني."
+  },
+  "miniTerminal": {
+    "tryItNow": "جرّبه الآن",
+    "talkToEngine": "تحدث إلى المحرك. اكتب أمراً.",
+    "launchFull": "تشغيل الطرفية الكاملة (100+ أمر)"
+  },
+  "stats": {
+    "aiModels": "نماذج ذكاء اصطناعي",
+    "apiRoutes": "مسارات API",
+    "monthlyInfra": "بنية تحتية شهرية",
+    "subscriptionCost": "تكلفة الاشتراك"
+  },
+  "models": {
+    "title": "أوركسترا الذكاء الاصطناعي",
+    "subtitle": "ثلاثة نماذج، ثلاث وجهات نظر، إجماع واحد"
+  },
+  "testimonials": {
+    "title": "ماذا يقول المتداولون",
+    "tag": "عرض"
+  },
+  "footer": {
+    "tagline": "محرك تداول الذكاء الاصطناعي الوكيل",
+    "builtBy": "صنعه Corey McIvor | Zynthio.ai",
+    "product": "المنتج",
+    "legal": "قانوني",
+    "connect": "تواصل",
+    "competitions": "المسابقات",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "disclaimer": "إخلاء المسؤولية",
+    "contact": "اتصل بنا",
+    "copyright": "© {year} Corey McIvor. جميع الحقوق محفوظة.",
+    "riskWarning": "ينطوي تداول العملات المشفرة على مخاطر كبيرة. الأداء السابق لا يضمن النتائج المستقبلية. وضع التداول الورقي."
+  },
+  "terminal": {
+    "greeting": "مرحباً بك في CoreIntent Commander. اكتب help للأوامر.",
+    "paperMode": "وضع التداول الورقي — لا أموال حقيقية في خطر",
+    "typeHelp": "اكتب help للأوامر. Tab للإكمال التلقائي. cai للبدء."
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الصفحة المطلوبة غير موجودة. ربما تم نقلها أو حذفها.",
+    "backToTerminal": "العودة إلى الطرفية",
+    "competitions": "المسابقات"
+  },
+  "pipeline": {
+    "label": "خط أنابيب الإشارات المباشر",
+    "detect": "اكتشاف",
+    "analyse": "تحليل",
+    "verify": "تحقق",
+    "decide": "قرار"
+  },
+  "common": {
+    "coreintent": "CoreIntent",
+    "zynthio": "Zynthio.ai"
+  }
+}
