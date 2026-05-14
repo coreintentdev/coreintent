@@ -350,7 +350,7 @@ function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end:
 
   return (
     <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
-      <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+      <div className={`counter-value ${started && count === end ? "counter-value-glow" : ""}`} style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
         {prefix}{started ? count.toLocaleString() : "0"}{suffix}
       </div>
       <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
@@ -685,9 +685,7 @@ function FloatingCTA() {
       animation: "fadeInUp 0.4s ease both",
     }}>
       <a
-        href="https://github.com/coreintentdev/coreintent"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/pricing"
         className="floating-cta-btn"
         style={{
           display: "flex",
@@ -705,8 +703,7 @@ function FloatingCTA() {
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
-        <span style={{ fontSize: "16px" }}>&#9733;</span>
-        Star on GitHub
+        Join Free &mdash; Enter the Arena &rarr;
       </a>
     </div>
   );
@@ -1349,11 +1346,14 @@ export default function Home() {
                 CoreIntent — Three AI Models Argue So You Don&apos;t Have To Guess.
               </span>
               <span aria-hidden="true">
-                Three AIs{" "}
-                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Argue</span>.
+                One Model{" "}
+                <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.5 }}>Guesses</span>.
                 <br />
-                You Get the{" "}
-                <span style={{ color: "#f59e0b" }}>Truth</span>.
+                Three AIs{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Debate</span>.
+                <br />
+                You Get{" "}
+                <span style={{ color: "#f59e0b" }}>Conviction</span>.
                 <br />
                 <span style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
                   Grok detects. Claude questions. Perplexity verifies.
@@ -1411,16 +1411,17 @@ export default function Home() {
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
                 className="cta-primary hero-cta-main"
                 style={{
-                  padding: "18px 44px",
+                  padding: "20px 52px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "10px",
                   fontFamily: "inherit",
-                  fontSize: "16px",
+                  fontSize: "17px",
                   fontWeight: "bold",
                   cursor: "pointer",
-                  letterSpacing: "0.3px",
+                  letterSpacing: "0.5px",
+                  textTransform: "uppercase",
                 }}
               >
                 Enter the Arena &rarr;
@@ -1429,11 +1430,11 @@ export default function Home() {
                 href="/pricing"
                 className="cta-secondary"
                 style={{
-                  padding: "18px 44px",
+                  padding: "20px 44px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
-                  borderRadius: "8px",
+                  borderRadius: "10px",
                   fontFamily: "inherit",
                   fontSize: "16px",
                   cursor: "pointer",
