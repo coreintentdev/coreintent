@@ -23,8 +23,9 @@ if [ -n "$ZYN_SOURCES" ]; then
   IFS=' ' read -ra SOURCES <<< "$ZYN_SOURCES"
 else
   SOURCES=(
-    "root@161.97.89.49"      # Contabo VPS 20 NVMe (kept, $7/mo)
-    "root@84.247.137.105"    # Contabo VPS 30 NVMe (cancelled Apr 2027)
+    "root@100.122.99.34"     # Cloudzy VPS
+    "root@161.97.89.49"      # Contabo Cloud VPS 20 ($7/mo)
+    "root@84.247.137.105"    # Contabo Cloud VPS 30 (cancelled)
   )
 fi
 

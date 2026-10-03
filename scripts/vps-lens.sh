@@ -16,7 +16,7 @@
 
 set -e
 
-VPS_HOST="${VPS_HOST:-161.97.89.49}"
+VPS_HOST="${VPS_HOST:-5.189.143.170}"
 VPS_USER="${VPS_USER:-root}"
 VPS_PASS="${VPS_PASS:-}"
 MIRROR_DIR="vps_mirror_$(date +%Y%m%d_%H%M%S)"
