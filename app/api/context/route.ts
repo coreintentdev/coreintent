@@ -108,7 +108,7 @@ const ZYNCONTEXT = {
     caiCloud: "scripts/cai-cloud — lightweight cloud fallback (conflicts with desktop cai)",
     zynrip: "scripts/zynrip-organize.sh — ZYN_RIP_SRC → organized + manifest",
     vpsLens: "scripts/vps-lens.sh — ZYN_SOURCES → rsync mirror per host",
-    deployVds: "scripts/deploy-vds.sh — deploys app to VDS 100.121.107.112",
+    deployVds: "scripts/deploy-vds.sh — deploys app to VDS 5.189.143.170",
     vdsConsolidation: "scripts/vds-consolidation-deploy.sh (desktop) — ZYN_LOCAL_PAYLOAD → VDS",
     migrateToVds: "scripts/migrate-to-vds.sh — mirrors all VPS to local before teardown",
     g4Lens: "commander/G4-LENS-COMMANDER-v3.sh — defines cai as G4 alias (conflict: rename one)",

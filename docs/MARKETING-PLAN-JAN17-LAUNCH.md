@@ -120,7 +120,7 @@
 #### **Technology Stack Page:**
 ```
 /tech-stack
-- Deployment: Vercel, Cloudzy VPS, Docker
+- Deployment: Vercel, Contabo VPS, Docker
 - AI Services: Claude (Anthropic), Grok (X.ai)
 - Infrastructure: GitHub, Linear, Notion, Perplexity
 - Trading: gTrade Integration

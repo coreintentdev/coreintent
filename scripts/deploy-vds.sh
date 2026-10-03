@@ -4,7 +4,7 @@
 # Deploys EVERYTHING to a single VDS: web app + trading engine +
 # reverse proxy + SSL + systemd services.
 #
-# Replaces: 3x VPS (Cloudzy + Frankfurt + 3rd) → 1x VDS
+# Replaces: 3x VPS (Contabo + Frankfurt + 3rd) → 1x VDS
 # Run from project root: ./scripts/deploy-vds.sh
 #
 # Usage:
@@ -224,8 +224,8 @@ echo "    ssh ${VDS_USER}@${VDS_HOST} pm2 logs coreintent-web"
 echo "    ssh ${VDS_USER}@${VDS_HOST} pm2 restart all"
 echo ""
 echo "  After confirming everything works, close the old VPS accounts:"
-echo "    - Cloudzy:   100.122.99.34"
-echo "    - Frankfurt: 104.194.156.109"
+echo "    - Contabo:   161.97.89.49"
+echo "    - Frankfurt: 84.247.137.105"
 echo "    - 3rd VPS:   (check your accounts)"
 echo ""
 echo "  336 — consolidated."

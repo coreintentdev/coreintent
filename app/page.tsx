@@ -266,7 +266,7 @@ const STACK_COSTS = [
   { service: "Cloudflare Pro", role: "CDN, WAF, DDoS", cost: "$20/mo" },
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },
-  { service: "Cloudzy VPS", role: "Trading backend", cost: "~$25/mo" },
+  { service: "Contabo VPS", role: "Trading backend", cost: "~$25/mo" },
 ];
 
 /* ─── Hard Rules ─── */

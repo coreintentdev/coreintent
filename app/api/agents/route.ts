@@ -1,7 +1,7 @@
 /**
  * /api/agents — List all CoreIntent trading agents and their current status.
  *
- * Returns DEMO data until agents are deployed to the Cloudzy VPS (COR-20).
+ * Returns DEMO data until agents are deployed to the Contabo VPS (COR-20).
  * Agent names, models, and task descriptions reflect the real planned architecture.
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
@@ -24,7 +24,7 @@ interface AgentsResponse {
   totalActive:     number;
   totalPaused:     number;
   totalProcessing: number;
-  /** demo = VPS not yet deployed; live = agents running on Cloudzy */
+  /** demo = VPS not yet deployed; live = agents running on Contabo */
   mode:            "demo" | "live";
   timestamp:       string;
 }

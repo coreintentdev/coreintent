@@ -53,7 +53,7 @@ const INCIDENTS: Incident[] = [
   },
   {
     id: "INC-003", service: "VPS Deployment", status: "detected", severity: "critical",
-    message: "Cloudzy VPS has credentials but scripts were never deployed. COR-20 was 70+ days overdue. 3 scripts (risk_monitor, signal_listener, gtrade_listener) exist in repo but never reached the server.",
+    message: "Contabo VPS has credentials but scripts were never deployed. COR-20 was 70+ days overdue. 3 scripts (risk_monitor, signal_listener, gtrade_listener) exist in repo but never reached the server.",
     autoUpdate: true, detectedAt: "2026-01-17T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
   {

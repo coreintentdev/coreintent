@@ -80,7 +80,7 @@ Building an AI trading platform from New Zealand with:
 -> $0 hosting (Vercel)
 -> $0 CI/CD (GitHub Actions)
 -> $20 CDN/security (Cloudflare)
--> $25 VPS (Cloudzy)
+-> $25 VPS (Contabo)
 -> Pay-per-use AI (Claude API)
 
 Total: ~$45/month.

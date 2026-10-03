@@ -99,7 +99,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mMonthly burn:\x1b[0m ~A$45/mo (Claude Pro + VPS only)
 
   \x1b[32m●\x1b[0m Claude Pro     — ACTIVE (main builder)
-  \x1b[32m●\x1b[0m Cloudzy VPS    — ACTIVE
+  \x1b[32m●\x1b[0m Contabo VPS    — ACTIVE
   \x1b[32m●\x1b[0m Grok Free      — ACTIVE (research layer)
   \x1b[33m◐\x1b[0m Perplexity     — FREE tier (Max cancelled)
   \x1b[33m◐\x1b[0m zyn-bash       — API overflow (~$0.003/call)
@@ -149,7 +149,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[33mPAYING (~A$45/mo):\x1b[0m
     \x1b[32m●\x1b[0m Claude Pro        ~A$30/mo   ACTIVE
-    \x1b[32m●\x1b[0m Cloudzy VPS       ~$15/mo    ACTIVE
+    \x1b[32m●\x1b[0m Contabo VPS       ~$15/mo    ACTIVE
 
   \x1b[33mFREE / ALREADY PAID:\x1b[0m
     \x1b[32m●\x1b[0m Proton Mail/Drive ACTIVE     All accounts imported, encrypted
@@ -183,7 +183,7 @@ const STATIC_COMMANDS: Record<string, string> = {
     \x1b[32m●\x1b[0m 14 API routes (returning demo data)
     \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
     \x1b[32m●\x1b[0m 8 domains live, all returning 200
-    \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)
+    \x1b[32m●\x1b[0m VPS running (Contabo + Frankfurt)
     \x1b[32m●\x1b[0m cai CLI on VPS with full session state
 
   \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
@@ -210,7 +210,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mVDS Primary:\x1b[0m  5.189.143.170 (Contabo VDS S, Tailscale SSH)
   \x1b[33mVPS Kept:\x1b[0m     161.97.89.49 (Contabo VPS 20, $7/mo)
   \x1b[33mVPS Cancelled:\x1b[0m 84.247.137.105 (ends Apr 2027)
-  \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
+  \x1b[33mDisk Contabo:\x1b[0m ~76% (14GB free)
   \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
   \x1b[33mSites:\x1b[0m       8/8 returning 200 OK
   \x1b[33mSSL:\x1b[0m         84-88 days remaining
@@ -277,7 +277,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 
   \x1b[33mInfrastructure:\x1b[0m
     \x1b[32m●\x1b[0m Cloudflare      — FREE, 16 sites, DNS + CDN
-    \x1b[32m●\x1b[0m Cloudzy VPS     — $15/mo, 8 domains live
+    \x1b[32m●\x1b[0m Contabo VPS     — $15/mo, 8 domains live
     \x1b[32m●\x1b[0m GitHub          — FREE, coreintentdev repos
     \x1b[32m●\x1b[0m Porkbun         — Annual, all domains
 
@@ -318,7 +318,7 @@ Brand: Zynthio.ai — NZ registered
 \x1b[36m        \\_____/        \x1b[0m  \x1b[33mShell:\x1b[0m    Commander v0.2.0
 \x1b[36m         '---'         \x1b[0m  \x1b[33mTheme:\x1b[0m    Dark (Cyber)
                           \x1b[33mAI:\x1b[0m       Claude + Grok + Perplexity
-                          \x1b[33mVPS:\x1b[0m      Cloudzy (8 domains)
+                          \x1b[33mVPS:\x1b[0m      Contabo (8 domains)
                           \x1b[33mDomains:\x1b[0m  16
                           \x1b[33mBurn:\x1b[0m     ~/mo
                           \x1b[33mMode:\x1b[0m     \x1b[33mPaper Trading\x1b[0m
@@ -1087,7 +1087,7 @@ export default function Terminal() {
         { name: "api/signals", type: "api" },
         { name: "api/agents", type: "api" },
         { name: "api/market", type: "api" },
-        { name: "Cloudzy VPS", type: "infra" },
+        { name: "Contabo VPS", type: "infra" },
         { name: "GitHub", type: "infra" },
       ];
       let idx = 0;

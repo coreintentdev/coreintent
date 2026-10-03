@@ -146,7 +146,7 @@
 
 "CDN, firewall, DDoS protection. Twenty bucks. Cloudflare Pro."
 
-"Server for the trading backend. Twenty-five dollars. Cloudzy VPS."
+"Server for the trading backend. Twenty-five dollars. Contabo VPS."
 
 "AI? Pay per use. A few cents per call."
 
