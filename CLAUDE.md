@@ -22,25 +22,30 @@ Based in: New Zealand (NEVER register anything in Australia)
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
-5. Deploy files immediately — VPS, GitHub, Google Drive.
+5. Deploy files immediately — VPS, GitHub, Proton Drive.
 6. Build passes clean or you don't push.
 7. If you see fake/demo data, label it honestly. Don't hide behind green dots.
 8. Run `./scripts/audit.sh` after making changes to verify nothing broke.
 
 ## Architecture
-- Next.js 14 (App Router) + TypeScript (strict mode)
+- Next.js 15 (App Router) + TypeScript (strict mode)
 - 6 pages: /, /pricing, /stack, /privacy, /terms, /disclaimer
-- 10 API routes in app/api/
+- 14 API routes in app/api/
 - AI service layer: lib/ai.ts (Grok, Claude, Perplexity with graceful fallback)
 - VPS scripts: scripts/risk_monitor.ts, signal_listener.ts, gtrade_listener.ts
 - Deploy scripts: scripts/deploy-vercel.sh, deploy-vps.sh, deploy-all.sh
 - Audit: scripts/audit.sh
 - VPS Lens: scripts/vps-lens.sh
 
-## VPS
-- Cloudzy: 100.122.99.34
+## VDS / VPS (Contabo — Hub Europe)
+- VDS Primary: 5.189.143.170 (Virtual Dedicated Server S, $51.04/mo, Ubuntu 24.04)
+- VPS Kept: 161.97.89.49 (Cloud VPS 20 NVMe, $7/mo, paid to Apr 2027)
+- VPS Cancelled: 84.247.137.105 (Cloud VPS 30 NVMe, $13.20/mo, cancelled Apr 2027)
+- All connected via Tailscale — no passwords needed for SSH
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+- Desktop CLI: ~/Desktop/zynthio-tools/bin/cai (110 APIs, takes priority over repo scripts)
+- Data flow: Mac (ZYNTHIO_MASTER) → sync payloads → VDS /root/zynthio/
+- This repo = scripts + manifests only, NOT bulk vault data
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
@@ -50,12 +55,12 @@ Based in: New Zealand (NEVER register anything in Australia)
 - F18 Security: Digital identity protection with land mines for bad actors.
 
 ## Known Issues
-- All 10 API routes return hardcoded demo data
+- All 14 API routes return hardcoded demo data
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer
 - Terminal uses dangerouslySetInnerHTML for ANSI (potential XSS)
-- xterm packages in package.json but not actually used
+- No .cursorrules file exists — cursor configuration is in CLAUDE.md and AGENTS.md only
 
 ## Family (NEVER fabricate)
 - Michelle (wife), Ruby (~14, daughter), Wesley (son)

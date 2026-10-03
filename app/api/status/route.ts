@@ -1,23 +1,62 @@
-import { NextResponse } from "next/server";
+/**
+ * /api/status — System health and component status overview.
+ *
+ * Reports real AI key status (active vs demo) derived from env vars.
+ * Exchange connections are all "planned" — no live connections exist yet.
+ * Signal counts reflect the actual DEMO data in /api/signals (not fabricated).
+ * Uptime is process.uptime() — time since the Node process started.
+ *
+ * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
+ */
+import { ok, preflight, serverError } from "@/lib/api";
+import { getAiKeyStatus } from "@/lib/ai";
+import { APP_VERSION, PLATFORM_MODE } from "@/lib/constants";
+
+type AIStatus       = "active" | "demo";
+type ExchangeStatus = "planned" | "connected";
+
+interface StatusResponse {
+  engine:         "online" | "offline";
+  version:        string;
+  /** Process uptime in seconds. */
+  uptime:         number;
+  mode:           "paper_trading" | "live";
+  exchanges:      Record<string, ExchangeStatus>;
+  ai:             Record<string, AIStatus>;
+  /** Demo signal counts — 2 above 0.75 threshold, 1 below (SOL short at 0.62). */
+  signals:        { active: number; pending: number };
+  circuitBreaker: { threshold: number; status: "armed" | "triggered" };
+  timestamp:      string;
+}
 
 export async function GET() {
-  return NextResponse.json({
-    engine: "online",
-    version: "0.1.0-alpha",
-    uptime: process.uptime(),
-    mode: "paper_trading",
-    exchanges: {
-      binance: "planned",
-      coinbase: "planned",
-      gtrade: "planned",
-    },
-    ai: {
-      claude: process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== "sk-ant-xxx" ? "active" : "demo",
-      grok: process.env.GROK_API_KEY && process.env.GROK_API_KEY !== "xai-xxx" ? "active" : "demo",
-      perplexity: process.env.PERPLEXITY_API_KEY && process.env.PERPLEXITY_API_KEY !== "pplx-xxx" ? "active" : "demo",
-    },
-    signals: { active: 12, pending: 3 },
-    circuitBreaker: { threshold: 0.008, status: "armed" },
-    timestamp: new Date().toISOString(),
-  });
+  try {
+    const keys = getAiKeyStatus();
+    const data: StatusResponse = {
+      engine:  "online",
+      version: APP_VERSION,
+      uptime:  process.uptime(),
+      mode:    PLATFORM_MODE,
+      exchanges: {
+        binance:  "planned",
+        coinbase: "planned",
+        gtrade:   "planned",
+      },
+      ai: {
+        claude:     keys.claude     ? "active" : "demo",
+        grok:       keys.grok       ? "active" : "demo",
+        perplexity: keys.perplexity ? "active" : "demo",
+      },
+      signals:        { active: 2, pending: 1 },
+      circuitBreaker: { threshold: 0.008, status: "armed" },
+      timestamp:      new Date().toISOString(),
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
+}
+
+export async function OPTIONS() {
+  return preflight();
 }

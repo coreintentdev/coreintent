@@ -49,8 +49,8 @@ if [ -n "$VPS_PASS" ]; then
       brew install hudochenkov/sshpass/sshpass 2>/dev/null
     fi
   fi
-  SSH_CMD="sshpass -p '$VPS_PASS' ssh -o ConnectTimeout=15 -o StrictHostKeyChecking=no -o PubkeyAuthentication=no ${VPS_USER}@${VPS_HOST}"
-  SCP_CMD="sshpass -p '$VPS_PASS' scp -o ConnectTimeout=15 -o StrictHostKeyChecking=no -o PubkeyAuthentication=no"
+  SSH_CMD="sshpass -p '$VPS_PASS' ssh -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new -o PubkeyAuthentication=no ${VPS_USER}@${VPS_HOST}"
+  SCP_CMD="sshpass -p '$VPS_PASS' scp -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new -o PubkeyAuthentication=no"
 else
   SSH_CMD="ssh -o ConnectTimeout=15 ${VPS_USER}@${VPS_HOST}"
   SCP_CMD="scp -o ConnectTimeout=15"

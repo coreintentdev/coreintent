@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { href: "/", label: "Terminal" },
+  { href: "/demo", label: "Demo" },
   { href: "/stack", label: "Stack" },
   { href: "/pricing", label: "Pricing" },
 ];
@@ -25,6 +26,7 @@ export default function SiteNav() {
     >
       <Link
         href="/"
+        aria-label="CoreIntent — Home"
         style={{
           display: "flex",
           alignItems: "center",
@@ -42,7 +44,7 @@ export default function SiteNav() {
           CoreIntent
         </span>
         <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
-          v0.1.0-alpha | Zynthio.ai
+          v0.2.0-alpha | Zynthio.ai
         </span>
       </Link>
       <nav style={{ display: "flex", gap: "4px" }} aria-label="Main navigation">

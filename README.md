@@ -32,7 +32,9 @@ npm run dev             # http://localhost:3000
 | Grok Pro | Signal detection, content drafts | Near-free (X Premium+) |
 | Claude API | Deep analysis, risk, agents | Pay-per-use |
 | Perplexity Free | Research, 3 Pro searches/day | $0 |
-| Gemini | Gmail/Drive scanning | Free |
+| Proton Mail | Encrypted email (imported) | Proton plan |
+| Suno API | Music generation | Pay-per-use |
+| Google Drive | Via Claude/Perplexity desktop auth | Free |
 | Cloudflare Pro | CDN, WAF, DDoS | $20/mo |
 | Vercel | Hosting | Free |
 | GitHub Actions | CI/CD | Free |
@@ -60,6 +62,10 @@ npm run dev             # http://localhost:3000
 | `/api/autosave` | On-the-fly persistence |
 | `/api/research` | AI research about you |
 | `/api/protect` | Digital identity protection |
+| `/api/notes` | Public customer notes |
+| `/api/connections` | Honest service connection status |
+| `/api/context` | ZynContext (assumption blocker / BS filter) |
+| `/api/music` | SongPal track catalog |
 
 ## Pages
 
