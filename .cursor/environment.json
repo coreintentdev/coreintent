@@ -1,0 +1,6 @@
+{
+  "name": "CoreIntent",
+  "install": "npm install",
+  "start": "bash .cursor/start.sh",
+  "ports": [3000]
+}
