@@ -22,7 +22,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
-5. Deploy files immediately — VPS, GitHub, Google Drive.
+5. Deploy files immediately — VPS, GitHub, Proton Drive.
 6. Build passes clean or you don't push.
 7. If you see fake/demo data, label it honestly. Don't hide behind green dots.
 8. Run `./scripts/audit.sh` after making changes to verify nothing broke.
@@ -37,10 +37,16 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Audit: scripts/audit.sh
 - VPS Lens: scripts/vps-lens.sh
 
-## VPS
-- Cloudzy: 100.122.99.34
+## VDS / VPS (3 active: 2 Contabo + 1 Cloudzy)
+- VDS Primary: 5.189.143.170 (Contabo VDS S, $51.04/mo, Ubuntu 24.04) — deploy target
+- Contabo VPS 20: 161.97.89.49 ($7/mo, paid to Apr 2027)
+- Cloudzy VPS: 100.122.99.34 (~$15/mo)
+- Contabo VPS 30: 84.247.137.105 ($13.20/mo, CANCELLED, expires Apr 2027)
+- All connected via Tailscale — no passwords needed for SSH
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+- Desktop CLI: ~/Desktop/zynthio-tools/bin/cai (110 APIs, takes priority over repo scripts)
+- Data flow: Mac (ZYNTHIO_MASTER) → sync payloads → VDS /root/zynthio/
+- This repo = scripts + manifests only, NOT bulk vault data
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
@@ -59,7 +65,6 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Terminal uses dangerouslySetInnerHTML for ANSI rendering (XSS mitigated: HTML escaped first, only allowlisted ANSI codes converted to spans)
 - xterm packages removed from package.json (resolved 2026-04-27)
 - Security patches confirmed on main (2026-04-30 audit): poweredByHeader:false in next.config.js + serverError() sanitizes all API error responses
-- 30 non-main branches as of 2026-04-30 — cursor/AI tool sprawl; 4 confirmed-stale branches persist (build-monitor/security-audit-fix, claude/check-coreintent-builds-JTrDd, cursor-dependency-security-upgrade-ef32, cursor-zynrip-incident-ef32) — delete these; enable branch auto-delete on merge in GitHub settings
 - Audit score: 96% (52/54, 0 failures) as of 2026-04-30 — rate limiting wired up (checkRateLimit stub ready for Cloudflare KV / Upstash Redis)
 
 ## Family (NEVER fabricate)

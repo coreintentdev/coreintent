@@ -29,7 +29,7 @@ export type ClaudeModelId =
   | "claude-haiku-4-5-20251001";
 
 export interface AIResponse {
-  source: "grok" | "claude" | "perplexity";
+  source: "grok" | "claude" | "perplexity" | "suno";
   model:  string;
   content: string;
   /** true = live API call succeeded; false = demo or error fallback */
@@ -325,7 +325,7 @@ export const CLAUDE_DEFAULT_SYSTEM =
   "- All API routes return demo/static data — no live exchange connections.\n" +
   "- Binance, Coinbase, and gTrade are PLANNED integrations, not yet active.\n" +
   "- Business model: competition-based leagues (daily/weekly/monthly), NOT subscriptions.\n" +
-  "- AI agents are code-ready but not yet deployed to the Cloudzy VPS.\n" +
+  "- AI agents are code-ready but not yet deployed to the Contabo VPS.\n" +
   "- Authentication and database layers do not yet exist.\n\n" +
   "In-scope topics: trading signals, portfolio analysis, market research, risk assessment,\n" +
   "AI agent coordination, platform architecture, brand protection (F18 Security).\n" +
@@ -542,6 +542,58 @@ export async function callPerplexity(
     };
   } catch (e) {
     return classifyFetchError(e, "perplexity", "sonar-pro");
+  }
+}
+
+// --- SUNO (Paid API) — Music generation, track management ---
+export async function callSuno(prompt: string, style?: string): Promise<AIResponse> {
+  const key = process.env.SUNO_API_KEY;
+  const baseUrl = process.env.SUNO_API_URL || "https://api.suno.ai";
+  if (!key) {
+    return { source: "suno", model: "suno-demo", content: `[DEMO] Suno response for: ${prompt}`, live: false };
+  }
+
+  try {
+    const res = await fetch(`${baseUrl}/v1/music`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify({ prompt, style: style || "auto" }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "unknown error");
+      return {
+        source: "suno",
+        model: "suno-api",
+        content: `[API ERROR ${res.status}] ${text}`,
+        live: false,
+      };
+    }
+
+    const data = await res.json();
+    return {
+      source: "suno",
+      model: "suno-api",
+      content: JSON.stringify(data),
+      live: true,
+    };
+  } catch (e) {
+    return classifyFetchError(e, "suno", "suno-api");
+  }
+}
+
+// ---------------------------------------------------------------------------
+// ORCHESTRATOR — Send to best AI for the job
+// ---------------------------------------------------------------------------
+
+export async function orchestrate(task: "signal" | "analysis" | "research" | "content" | "music", prompt: string) {
+  switch (task) {
+    case "signal":   return callGrok(prompt);
+    case "content":  return callGrok(prompt);
+    case "analysis": return callClaude(prompt);
+    case "research": return callPerplexity(prompt);
+    case "music":    return callSuno(prompt);
+    default:         return callGrok(prompt);
   }
 }
 

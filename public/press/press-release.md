@@ -52,7 +52,7 @@ Revenue is generated through premium competition tiers, while all foundational f
 - **Parent Brand:** Zynthio (zynthio.ai)
 - **Headquarters:** New Zealand
 - **Current Status:** Paper trading mode (pre-live)
-- **Tech Stack:** Next.js 15 (App Router), TypeScript (strict), Vercel, Cloudflare, Cloudzy VPS
+- **Tech Stack:** Next.js 15 (App Router), TypeScript (strict), Vercel, Cloudflare, Contabo VPS
 - **Infrastructure Cost:** ~NZ$45/month
 - **AI Models:** Claude (Anthropic), Grok (xAI), Perplexity
 - **Competition Leagues:** Daily (24hr), Weekly (7-day), Monthly (30-day)

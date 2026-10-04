@@ -93,7 +93,7 @@
 ---
 
 ## VPS STATUS (NEEDS FIXING)
-- Cloudzy VPS credentials: EMPTY (never configured)
+- Contabo VPS credentials: EMPTY (never configured)
 - COR-20 (Deploy VPS Scripts): NEVER COMPLETED
 - Scripts needed: risk_monitor, gtrade_listener, signal_listener
 - 70 days past Jan 17 launch date

@@ -38,7 +38,7 @@ const PLATFORMS = [
   { name: "X Premium+", what: "Grok API, analytics, post reach, @coreintentai", color: "#1d9bf0" },
   { name: "Cloudflare Pro", what: "CDN, WAF, DDoS protection, DNS for coreintent.dev", color: "#f48120" },
   { name: "Vercel", what: "Next.js hosting, edge functions, preview deploys", color: "#fff" },
-  { name: "Cloudzy VPS", what: "Trading engine: risk_monitor, gtrade_listener, signal_listener", color: "#10b981" },
+  { name: "Contabo VPS", what: "Trading engine: risk_monitor, gtrade_listener, signal_listener", color: "#10b981" },
   { name: "GitHub", what: "5 repos, CI/CD, open source, coreintentdev org", color: "#8b949e" },
   { name: "Linear", what: "26 tasks, epics: BRAIN/OPS/GROWTH/LAUNCH/COMMAND", color: "#5e6ad2" },
   { name: "Notion", what: "Documentation hub, knowledge base", color: "#fff" },
@@ -49,7 +49,7 @@ const PLATFORMS = [
 ];
 
 const CONNECTORS = [
-  "Gmail + Calendar", "Google Drive", "Linear", "Notion",
+  "Proton Mail + Calendar", "Proton Drive", "Linear", "Notion",
   "GitHub", "Asana", "Slack", "Jira", "Confluence",
 ];
 
@@ -68,7 +68,7 @@ const ARCH_NODES = [
   { id: "risk", label: "RiskGuard", role: "Circuit Breaker", color: "#f59e0b", x: 100, y: 180 },
   { id: "terminal", label: "Terminal", role: "Commander", color: "#06b6d4", x: 500, y: 180 },
   { id: "exchange", label: "Exchanges", role: "Planned", color: "#64748b", x: 200, y: 290 },
-  { id: "vps", label: "VPS", role: "Cloudzy", color: "#10b981", x: 400, y: 290 },
+  { id: "vps", label: "VPS", role: "Contabo", color: "#10b981", x: 400, y: 290 },
 ];
 
 const ARCH_CONNECTIONS = [
@@ -728,7 +728,7 @@ export default function StackPage() {
                   ["Perplexity", "Max", "$20"],
                   ["Cloudflare", "Pro", "$20"],
                   ["Vercel", "Hobby (free) → Pro", "$0-20"],
-                  ["Cloudzy VPS", "Basic", "~$5-10"],
+                  ["Contabo VPS", "Basic", "~$5-10"],
                   ["Claude API", "Pay-per-use", "~$5-30"],
                   ["GitHub", "Free (public)", "$0"],
                   ["Linear", "Free tier", "$0"],

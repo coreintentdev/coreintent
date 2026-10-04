@@ -26,10 +26,12 @@ interface InfraService {
   status:     string;
   role:       string;
   host?:      string;
+  ip?:        string;
   plan?:      string;
   repos?:     number;
   tasks?:     number;
   completed?: number;
+  tailscale?: boolean;
 }
 
 interface Tool {
@@ -76,11 +78,16 @@ export async function GET(req: NextRequest) {
     };
 
     const infrastructure: ConnectionsResponse["infrastructure"] = {
-      vps:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"     },
-      cloudflare: { status: "active", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"       },
-      github:     { status: "active", repos: 5,        role: "CI/CD, source control"     },
-      linear:     { status: "active", tasks: 26, completed: 3, role: "Project management" },
-      notion:     { status: "active", role: "Documentation"                               },
+      vds:          { status: "live",      host: "Contabo VDS S", ip: "5.189.143.170",  role: "Primary — trading engine + web", tailscale: true },
+      vps_kept:     { status: "active",    host: "Contabo VPS 20", ip: "161.97.89.49", role: "$7/mo, paid to Apr 2027" },
+      vps_cancelled:{ status: "cancelled", host: "Contabo VPS 30", ip: "84.247.137.105", role: "Ends Apr 2027" },
+      proton:       { status: "active",    role: "Email (all accounts imported to Proton Mail)" },
+      googleDrive:  { status: "active",    role: "Via Claude/Perplexity desktop app auth" },
+      suno:         { status: "active",    role: "Paid API — suno.api.com, wired in lib/ai.ts" },
+      cloudflare:   { status: "active",    plan: "Pro", role: "CDN, WAF, DDoS, DNS" },
+      github:       { status: "active",    repos: 5,    role: "CI/CD, source control" },
+      linear:       { status: "active",    tasks: 26, completed: 3, role: "Project management" },
+      notion:       { status: "active",    role: "Documentation" },
     };
 
     const tools: ConnectionsResponse["tools"] = {
@@ -88,7 +95,7 @@ export async function GET(req: NextRequest) {
       macTheZipper: { status: "ready",   role: "Compression & packaging"       },
       pdfPlumber:   { status: "ready",   role: "Document parsing"              },
       aiTransfer:   { status: "ready",   role: "Cross-model context pipeline"  },
-      songpal:      { status: "planned", role: "Music layer (Corey originals)" },
+      songpal:      { status: "active",  role: "Music layer — Suno paid API"   },
       f18:          { status: "ready",   role: "Digital identity protection"   },
     };
 

@@ -56,7 +56,7 @@ The key insight: these models disagree with each other. That disagreement is a f
 
 Currently in paper trading mode — validating the architecture before going live.
 
-Tech: Next.js 15, TypeScript (strict), Vercel + Cloudzy VPS.
+Tech: Next.js 15, TypeScript (strict), Vercel + Contabo VPS.
 
 #AI #MachineLearning #FinTech #TradingTechnology #SystemArchitecture
 
