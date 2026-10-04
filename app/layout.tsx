@@ -1,5 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+    { media: "(prefers-color-scheme: light)", color: "#10b981" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: {
@@ -74,10 +91,24 @@ export const metadata: Metadata = {
     "bot trading",
     "free trading platform",
     "AI crypto trading",
+    "trading competitions free",
+    "multi-agent trading",
+    "bot-friendly trading platform",
+    "no subscription trading",
+    "AI signal consensus",
+    "Corey McIvor",
   ],
   category: "Finance",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   other: {
-    "google-site-verification": "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
+    "msapplication-TileColor": "#0a0e17",
+    "color-scheme": "dark",
+    "geo.region": "NZ",
+    "geo.placename": "New Zealand",
   },
 };
 
@@ -114,11 +145,27 @@ const jsonLd = {
       "@type": "Organization",
       "@id": "https://zynthio.ai/#organization",
       name: "Zynthio",
+      alternateName: "Zynthio.ai",
       url: "https://zynthio.ai",
-      logo: "https://coreintent.dev/opengraph-image.png",
+      description:
+        "Parent brand behind CoreIntent — building agentic AI trading tools with multi-model orchestration. Based in New Zealand.",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
       founder: {
         "@type": "Person",
         "@id": "https://coreintent.dev/#person",
+      },
+      foundingDate: "2026",
+      foundingLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "NZ",
+        },
       },
       areaServed: {
         "@type": "Country",
@@ -128,6 +175,12 @@ const jsonLd = {
         "https://github.com/coreintentdev",
         "https://x.com/coreintentai",
       ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "corey@coreyai.ai",
+        contactType: "customer support",
+        availableLanguage: "English",
+      },
     },
     {
       "@type": "WebApplication",
@@ -137,9 +190,12 @@ const jsonLd = {
       description:
         "AI-powered trading signals, paper competitions, and multi-model analysis engine using Claude, Grok, and Perplexity.",
       applicationCategory: "FinanceApplication",
+      applicationSubCategory: "Trading Platform",
       operatingSystem: "Web",
       browserRequirements: "Requires JavaScript. Requires a modern browser.",
       softwareVersion: "0.2.0-alpha",
+      inLanguage: "en-NZ",
+      isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
         price: "0",
@@ -163,6 +219,12 @@ const jsonLd = {
         "AI agent fleet",
         "Bot-friendly competitions",
       ],
+      screenshot: {
+        "@type": "ImageObject",
+        url: "https://coreintent.dev/opengraph-image.png",
+        width: 1200,
+        height: 630,
+      },
     },
     {
       "@type": "WebSite",
@@ -170,18 +232,26 @@ const jsonLd = {
       url: "https://coreintent.dev",
       name: "CoreIntent",
       description: "Agentic AI Trading Engine — No Subscriptions, Just Competitions",
+      inLanguage: "en-NZ",
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-06",
       publisher: {
         "@type": "Organization",
         "@id": "https://zynthio.ai/#organization",
       },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: "https://coreintent.dev/?q={search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
-      },
+    },
+    {
+      "@type": "SiteNavigationElement",
+      name: "Main Navigation",
+      hasPart: [
+        { "@type": "WebPage", name: "Terminal", url: "https://coreintent.dev" },
+        { "@type": "WebPage", name: "Demo", url: "https://coreintent.dev/demo" },
+        { "@type": "WebPage", name: "Stack", url: "https://coreintent.dev/stack" },
+        { "@type": "WebPage", name: "Competitions", url: "https://coreintent.dev/pricing" },
+        { "@type": "WebPage", name: "Privacy Policy", url: "https://coreintent.dev/privacy" },
+        { "@type": "WebPage", name: "Terms of Service", url: "https://coreintent.dev/terms" },
+        { "@type": "WebPage", name: "Disclaimer", url: "https://coreintent.dev/disclaimer" },
+      ],
     },
   ],
 };
@@ -192,11 +262,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-NZ">
+    <html lang="en-NZ" dir="ltr" className={jetbrainsMono.variable}>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         {children}
       </body>

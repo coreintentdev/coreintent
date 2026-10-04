@@ -12,7 +12,7 @@
  * Rate limit: 30 req/min (see RATE_LIMITS.notes in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, created, badRequest, preflight, serverError, validateString, validateOptionalString, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 interface Note {
   id:        number;
@@ -36,33 +36,42 @@ interface NotesListResponse {
 const publicNotes: Note[] = [];
 let nextId = 1;
 
-export async function GET() {
-  const data: NotesListResponse = {
-    notes: publicNotes,
-    count: publicNotes.length,
-    info:  "Public notes only. Private notes are not accessible via this endpoint.",
-  };
-  return ok(data);
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "notes");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+  try {
+    const data: NotesListResponse = {
+      notes: publicNotes,
+      count: publicNotes.length,
+      info:  "Public notes only. Private notes are not accessible via this endpoint.",
+    };
+    return ok(data);
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "notes");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<NoteRequest>;
   try {
     body = (await req.json()) as Partial<NoteRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const text = validateString(body.text, 2000);
-  if (!text) return err("text is required and must be 2000 characters or fewer", 400);
+  if (!text) return badRequest("text is required and must be 2000 characters or fewer");
 
-  const rawTag = typeof body.tag === "string" ? body.tag.trim().slice(0, 50) : "general";
-  const tag    = rawTag || "general";
+  const tag = validateOptionalString(body.tag, 50) ?? "general";
 
   const note: Note = { id: nextId++, text, tag, timestamp: new Date().toISOString() };
   publicNotes.push(note);
 
-  return ok({ note }, 201);
+  return created({ note });
 }
 
 export async function OPTIONS() {

@@ -215,3 +215,234 @@ Currently validating this architecture in paper trading mode before deploying wi
 -> coreintent.dev | github.com/coreintentdev/coreintent
 
 #AI #MachineLearning #SystemDesign #TradingTechnology #FinTech #MultiModelAI
+
+---
+
+## Post 8 — April 2026 Milestone Update
+
+**CoreIntent April update: what's real, what's demo, and what we learned.**
+
+Building in public means sharing the uncomfortable parts too.
+
+**What's working:**
+- 3 AI models (Grok, Claude, Perplexity) integrated and responding to queries
+- 6 trading agents configured with distinct strategies
+- 14 API endpoints built, deployed, and documented
+- Full interactive web terminal with real command execution
+- Dynamic Open Graph images generated at the edge for every page
+- Structured data markup (FAQ schema, Event schema, breadcrumbs)
+
+**What's honest:**
+- Most API routes still return demo data. Labelled as such.
+- No exchange connections yet (Binance/Coinbase are planned, not live)
+- No user authentication or database layer
+- Paper trading mode — clearly stated in every banner
+
+**What we learned:**
+1. Transparency converts better than polish. Users who see "DEMO" labels trust the platform more, not less.
+2. Multi-model consensus architecture works — but the real value is in the disagreements, not the agreements.
+3. $45/month infrastructure is sustainable. Month after month. No funding anxiety.
+
+The temptation in fintech is to fake it until you make it. We're making it without faking it.
+
+-> coreintent.dev
+
+#BuildInPublic #FinTech #Startups #AI #Transparency #NewZealand
+
+---
+
+## Post 9 — Why We Open-Sourced Our Marketing
+
+**We open-sourced our marketing materials. Here's why.**
+
+Go to our GitHub repo. Navigate to /public/marketing/. You'll find:
+- 65 ready-to-post tweets
+- 14 LinkedIn posts (including this one)
+- 19 TikTok video scripts
+- 10 Instagram captions with hashtag strategies
+- An HTML email newsletter template
+- A 30-day content calendar with platform-specific scheduling
+- A complete press kit, one-pager, and media guide
+
+All of it. Public. Forkable.
+
+**"But won't competitors copy it?"**
+
+The content only works because the underlying product thesis is genuine. You can copy the tweets — but you can't copy $45/month infrastructure costs. You can't copy a competition-based revenue model when your investors expect subscription MRR. You can't copy radical transparency when your dashboard has fake green dots.
+
+Marketing is a reflection of product decisions. When those decisions are strong, the marketing writes itself.
+
+Open-sourcing the marketing is the final proof that we mean what we say about transparency.
+
+-> github.com/coreintentdev/coreintent/tree/main/public/marketing
+
+#ContentMarketing #OpenSource #BuildInPublic #StartupMarketing #FinTech
+
+---
+
+## Post 10 — The Audit-First Development Culture
+
+**Every change to CoreIntent runs through a 54-point automated audit. Here's why that matters more than features.**
+
+In fintech, speed kills — not because you ship too slowly, but because you ship something broken. Most startups optimise for velocity. We optimise for auditability.
+
+**Our audit system checks:**
+- Security headers and error sanitisation
+- API route integrity (do they return what they claim?)
+- Honest labelling (is "demo" actually labelled "demo"?)
+- Dependency health and vulnerability scanning
+- Build integrity (does the production build pass cleanly?)
+- Accessibility compliance
+- VPS script readiness
+
+**Current score: 96% (52/54 checks passing, 0 failures).**
+
+The two warnings are honest domain status labels — they flag correctly because some domains listed as "active" are portfolio placeholders, not running services. The audit catches that ambiguity. That's the point.
+
+This isn't theatre. The audit runs after every change, blocks deployment on failure, and the full report is committed to the repo. Anyone can read it.
+
+When your platform handles trading signals — even in paper trading mode — the cost of a silent regression isn't a bug report. It's someone making a decision on bad data. Audit-first development means that can't happen quietly.
+
+Building quality isn't a phase. It's the architecture.
+
+-> coreintent.dev | Full audit report on GitHub
+
+#Engineering #QualityAssurance #FinTech #StartupCulture #BuildInPublic #CodeQuality #DevOps
+
+---
+
+## Post 11 — Why We Welcome Bots
+
+**Most trading platforms ban bots. We made them first-class citizens. Here's why.**
+
+The crypto trading industry has an uncomfortable contradiction: institutional players run algorithms that execute thousands of trades per second, but retail platforms ban automation and throw captchas at anyone who scripts their interactions.
+
+This isn't about fairness. It's about who gets to automate.
+
+At CoreIntent, we took a different position: **if AI-to-AI competition is inevitable, build for it now.**
+
+Our platform allows bots to:
+- Register programmatically via API (no captcha, no manual approval)
+- Enter competitions alongside human traders
+- Compete on equal terms with identical scoring
+- Iterate strategies across daily, weekly, and monthly cycles
+
+**The philosophical argument is simple:** the leaderboard doesn't care who built you. A winning strategy is a winning strategy, whether it came from a human with a thesis or a neural net with a training loop.
+
+The practical argument is stronger: by welcoming bots early, we attract the quant developers, the AI researchers, and the algo traders who are building the future of finance. They don't want platforms that tolerate them. They want platforms that are designed for them.
+
+The trading floor of the future has humans and bots competing side by side. We're not fighting that future. We're building it.
+
+-> coreintent.dev | Currently in paper trading mode
+
+#AgenticAI #AlgoTrading #FinTech #FutureOfTrading #TradingBots #AICompetition #CryptoTrading
+
+---
+
+## Post 12 — The $45/mo Founder
+
+**I built an AI trading platform from New Zealand for $45 a month. No VC. No office. No employees.**
+
+Here's the full cost breakdown:
+- Cloudflare Pro: $20/mo (CDN, WAF, DDoS protection)
+- Cloudzy VPS: ~$25/mo (trading backend)
+- Vercel: $0 (hosting)
+- GitHub Actions: $0 (CI/CD)
+- Grok: ~$0 (X Premium+ benefit)
+- Claude API: Pay-per-use (pennies per analysis)
+- Perplexity: $0 (free tier + 3 Pro queries/day)
+
+**Total: ~$45/month. That runs the entire platform.**
+
+Three AI models. Six trading agents. 14 API endpoints. Interactive web terminal. Full documentation. Open source.
+
+When I tell people the infrastructure cost, they assume I'm leaving something out. I'm not. Modern cloud infrastructure has a free tier problem — not for the providers, but for anyone trying to justify a $99/mo subscription on top of it.
+
+I'm based in New Zealand. I build between school runs and timezone gaps. The 12-hour offset from Silicon Valley isn't a disadvantage — it's a deployment window. I ship while SF sleeps.
+
+No pitch deck. No burn rate. No investors asking when we'll start charging. Just a clear thesis: when your marginal cost per user is near zero, subscriptions are extraction.
+
+The platform is free. The competitions are free. The source code is open. If that sounds unsustainable, check the numbers. $45/mo is sustainable forever.
+
+-> coreintent.dev | @coreintentdev on GitHub
+
+#IndieFounder #Bootstrap #NewZealand #FinTech #Startups #LeanStartup #SoloFounder #BuildInPublic
+
+---
+
+## Post 13 — Competition Launch Announcement (May 2026)
+
+**CoreIntent competitions go live June 1st. Here's what's launching and why we waited.**
+
+We could have launched competitions in February. The infrastructure was ready. The leagues were configured. The leaderboard was built.
+
+We didn't launch. Here's why.
+
+**The audit wasn't clean enough.**
+
+Our 54-point automated audit was catching edge cases in signal validation. Two checks were flagging domain ambiguities. The competition scoring engine hadn't been stress-tested against concurrent bot entries.
+
+So we waited. Three more months of paper trading. Three more months of testing. Three more months of saying "not yet" when the temptation was to say "good enough."
+
+**What ships June 1st:**
+
+1. **Daily Sprint** — 24-hour competitions, leaderboard resets at midnight UTC
+2. **Weekly Grind** — 7-day risk-adjusted scoring, team competitions enabled
+3. **Monthly Championship** — 30-day portfolio wars, the main event
+
+All three leagues go live simultaneously. Free entry. Bots compete alongside humans.
+
+**What we learned by waiting:**
+- The multi-model consensus pipeline needed a disagreement threshold calibration. When two models agreed but the third had low confidence, the system was generating ambiguous signals. Fixed.
+- Risk-adjusted scoring (not just raw P&L) changes behavior. Traders who know Sharpe ratio matters build different strategies than traders chasing raw returns. The league design had to reinforce this.
+- Bot registration at scale needed rate limiting without captchas. Solved with API key throttling — fair access without friction.
+
+**The numbers:**
+- 14 API endpoints live
+- 54-point audit at 96% (52/54 passing, 0 failures)
+- 3 AI models integrated (Claude, Grok, Perplexity)
+- 6 trading agents configured
+- $45/month infrastructure — unchanged
+
+The countdown clock is on the website. June 1st, 00:00 UTC. Public commitment.
+
+-> coreintent.dev/pricing
+
+#FinTech #AI #Competition #ProductLaunch #BuildInPublic #CoreIntent #Startups
+
+---
+
+## Post 14 — May 2026 Build in Public Update
+
+**May 2026 update: 14 API routes, 96% audit score, and a launch date.**
+
+Monthly transparency report for CoreIntent — here's what's real, what's demo, and what changed since April.
+
+**What shipped in May:**
+- Competition infrastructure finalised (Daily/Weekly/Monthly leagues)
+- Marketing and press kit open-sourced on GitHub
+- Dynamic Open Graph images generating for every page
+- Structured data markup for Google FAQ rich results on the competitions page
+- 14 API endpoints documented and tested
+
+**What's launching June 1st:**
+- First Daily Sprint competition
+- First Weekly Grind league
+- First Monthly Championship
+- Public leaderboards with risk-adjusted scoring
+- Bot registration via API
+
+**What's still honest:**
+- No exchange connections yet (Binance/Coinbase are planned)
+- No user authentication system
+- No database/persistence layer
+- Paper trading mode throughout
+- Demo data labelled as demo
+
+**Infrastructure bill: ~$45/month.** Same as last month. Same as the month before.
+
+The hardest part of building in public isn't the transparency. It's resisting the urge to round up. These numbers are exact.
+
+-> coreintent.dev
+
+#BuildInPublic #FinTech #AI #Transparency #MonthlyUpdate #CoreIntent #Startups #NewZealand

@@ -15,7 +15,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateNumber, validateBoolean, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type Channel = "web" | "desktop";
 
@@ -58,7 +58,7 @@ const CAPABILITIES: Record<Channel, string[]> = {
   desktop: ["local_filesystem", "process_control", "automation_scripts", "high_context_workflows"],
 };
 
-const DEFAULT_CONFIDENCE         = 0.8;
+const DEFAULT_CONFIDENCE           = 0.8;
 const MIN_CONFIDENCE_FOR_AUTOROUTE = 0.7;
 
 function classifyTarget(input: SyncRequest): Channel {
@@ -88,42 +88,57 @@ function buildKycQuestions(input: SyncRequest): string[] {
   ];
 }
 
-export async function GET() {
-  return ok({
-    mode:    "master_sync_policy",
-    summary: "Single source of truth for web/desktop task routing.",
-    rules: {
-      handoffName:               "zynhandball",
-      uncertainFlow:             "zynKYC",
-      minConfidenceForAutoRoute: MIN_CONFIDENCE_FOR_AUTOROUTE,
-      defaultRoute:              "web",
-    },
-    channels: CAPABILITIES,
-    examples: [
-      { task: "check dashboard latency",                       decision: "web",     action: "execute_in_place" },
-      { task: "run deploy script and inspect local artifacts", decision: "desktop", action: "zynhandball"      },
-      { task: "ambiguous request with missing details",        decision: "hold",    action: "zynKYC"           },
-    ],
-  });
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+  try {
+    return ok({
+      mode:    "master_sync_policy",
+      summary: "Single source of truth for web/desktop task routing.",
+      rules: {
+        handoffName:               "zynhandball",
+        uncertainFlow:             "zynKYC",
+        minConfidenceForAutoRoute: MIN_CONFIDENCE_FOR_AUTOROUTE,
+        defaultRoute:              "web",
+      },
+      channels: CAPABILITIES,
+      examples: [
+        { task: "check dashboard latency",                       decision: "web",     action: "execute_in_place" },
+        { task: "run deploy script and inspect local artifacts", decision: "desktop", action: "zynhandball"      },
+        { task: "ambiguous request with missing details",        decision: "hold",    action: "zynKYC"           },
+      ],
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: SyncRequest;
   try {
     body = (await req.json()) as SyncRequest;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   if (body.task !== undefined && validateString(body.task, 500) === null) {
-    return err("task must be a non-empty string of 500 characters or fewer", 400);
+    return badRequest("task must be a non-empty string of 500 characters or fewer");
   }
 
   const source:          Channel = body.source === "desktop" ? "desktop" : "web";
-  const rawConf                  = typeof body.confidence === "number" ? body.confidence : DEFAULT_CONFIDENCE;
-  const confidence               = Math.min(1, Math.max(0, rawConf));
-  const contextComplete          = body.contextComplete !== false;
-  const target                   = classifyTarget(body);
+  const confidence               = validateNumber(body.confidence, 0, 1) ?? DEFAULT_CONFIDENCE;
+  const contextComplete          = validateBoolean(body.contextComplete) ?? true;
+  const validatedHints = body.hints ? {
+    needsLocalFiles:       validateBoolean(body.hints.needsLocalFiles)       ?? false,
+    needsProcessControl:   validateBoolean(body.hints.needsProcessControl)   ?? false,
+    needsBrowserSession:   validateBoolean(body.hints.needsBrowserSession)   ?? false,
+    needsSystemAutomation: validateBoolean(body.hints.needsSystemAutomation) ?? false,
+  } : undefined;
+  const target                   = classifyTarget({ ...body, hints: validatedHints });
   const needsKyc                 = confidence < MIN_CONFIDENCE_FOR_AUTOROUTE || !contextComplete;
   const handoffRequired          = !needsKyc && source !== target;
 

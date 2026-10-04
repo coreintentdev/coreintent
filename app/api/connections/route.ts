@@ -6,7 +6,9 @@
  *
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
-import { ok, preflight, serverError } from "@/lib/api";
+import { NextRequest } from "next/server";
+import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
+import { getAiKeyStatus } from "@/lib/ai";
 
 interface AIService {
   status: "keyed" | "demo";
@@ -21,9 +23,15 @@ interface Exchange {
 }
 
 interface InfraService {
-  status: string;
-  role:   string;
-  [key: string]: unknown;
+  status:     string;
+  role:       string;
+  host?:      string;
+  ip?:        string;
+  plan?:      string;
+  repos?:     number;
+  tasks?:     number;
+  completed?: number;
+  tailscale?: boolean;
 }
 
 interface Tool {
@@ -36,28 +44,28 @@ interface ConnectionsResponse {
   exchanges:      Record<string, Exchange>;
   infrastructure: Record<string, InfraService>;
   tools:          Record<string, Tool>;
-  summary:        { total: number; live: number; demo: number; planned: number; ready: number };
+  summary:        { total: number; live: number; keyed: number; demo: number; planned: number; ready: number };
 }
 
-function keyStatus(key: string | undefined, placeholder: string): "keyed" | "demo" {
-  return key && key !== placeholder ? "keyed" : "demo";
-}
-
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
+    const keys = getAiKeyStatus();
     const ai: ConnectionsResponse["ai"] = {
       grok: {
-        status: keyStatus(process.env.GROK_API_KEY, "xai-xxx"),
+        status: keys.grok       ? "keyed" : "demo",
         model:  "grok-3",
         role:   "Signal detection, fast, near-free via X Premium+",
       },
       claude: {
-        status: keyStatus(process.env.ANTHROPIC_API_KEY, "sk-ant-xxx"),
+        status: keys.claude     ? "keyed" : "demo",
         model:  "claude-sonnet-4-6",
         role:   "Deep analysis, risk assessment, orchestration",
       },
       perplexity: {
-        status: keyStatus(process.env.PERPLEXITY_API_KEY, "pplx-xxx"),
+        status: keys.perplexity ? "keyed" : "demo",
         model:  "sonar-pro",
         role:   "Research, 9 connectors, fact-checking",
       },
@@ -100,13 +108,15 @@ export async function GET() {
     const summary = {
       total,
       live:    infraValues.filter((s) => s.status === "live" || s.status === "active").length,
+      /** AI services with keys configured but not yet verified live (key present, not called). */
+      keyed:   aiValues.filter((s) => s.status === "keyed").length,
       demo:    aiValues.filter((s) => s.status === "demo").length,
       planned: exchangeValues.filter((s) => s.status === "planned").length +
                toolValues.filter((s) => s.status === "planned").length,
       ready:   toolValues.filter((s) => s.status === "ready").length,
     };
 
-    return ok({ ai, exchanges, infrastructure, tools, summary });
+    return ok({ ai, exchanges, infrastructure, tools, summary, timestamp: new Date().toISOString() });
   } catch (e) {
     return serverError(e);
   }

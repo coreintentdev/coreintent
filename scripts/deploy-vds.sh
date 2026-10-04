@@ -177,9 +177,9 @@ server {
 NGINX
 
   ln -sf /etc/nginx/sites-available/coreintent /etc/nginx/sites-enabled/
-  rm -f /etc/nginx/sites-enabled/default
+  # DO NOT remove default or other sites — fleet pages are already running
   nginx -t && systemctl reload nginx
-  echo 'Nginx configured'
+  echo 'Nginx configured — added coreintent alongside existing fleet sites'
 "
 echo -e "${GREEN}Nginx running.${NC}"
 
@@ -188,13 +188,15 @@ echo -e "${GREEN}Nginx running.${NC}"
 # ═══════════════════════════════════════════
 echo -e "${CYAN}[8/8] Firewall + SSL...${NC}"
 ssh_run "
-  ufw allow 22/tcp
-  ufw allow 80/tcp
-  ufw allow 443/tcp
-  ufw --force enable
-  echo 'Firewall set: 22, 80, 443'
+  # Only add rules, don't force-enable — VDS may already have firewall configured
+  ufw allow 22/tcp 2>/dev/null
+  ufw allow 80/tcp 2>/dev/null
+  ufw allow 443/tcp 2>/dev/null
+  ufw status | head -5
+  echo 'Firewall rules added (22, 80, 443)'
 
-  # SSL — only if domain resolves to this IP
+  # SSL — if domain points here directly (not via Cloudflare proxy)
+  # coreintent.dev is behind Cloudflare — SSL handled there, not certbot
   if host ${DOMAIN} 2>/dev/null | grep -q '${VDS_HOST}'; then
     certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos -m corey@coreyai.ai || echo 'SSL: domain not pointing here yet'
   else

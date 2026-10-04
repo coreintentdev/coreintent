@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.default in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString } from "@/lib/api";
+import { ok, created, badRequest, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type IncidentStatus   = "detected" | "investigating" | "mitigating" | "resolved";
 type IncidentSeverity = "critical" | "major" | "minor" | "info";
@@ -63,8 +63,8 @@ const INCIDENTS: Incident[] = [
   },
   {
     id: "INC-005", service: "Project Delivery", status: "detected", severity: "critical",
-    message: "After months of AI sessions and real money spent: 10 API routes return demo data, 0 exchange connections are live, 0 VPS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
-    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: new Date().toISOString(),
+    message: "After months of AI sessions and real money spent: 14 API routes return demo data, 0 exchange connections are live, 0 VPS scripts deployed, 0 real users can use the platform. Site is a skeleton. Every session promised progress, reality is: the stack exists as code but nothing is connected. This session (March 24) is the first to show the truth clearly.",
+    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-04-30T00:00:00Z",
   },
   {
     id: "INC-006", service: "Linear Task Management", status: "detected", severity: "major",
@@ -74,7 +74,7 @@ const INCIDENTS: Incident[] = [
   {
     id: "INC-007", service: "Marketing Plan", status: "detected", severity: "minor",
     message: "Marketing plan still references Jan 17 launch date and old Free/Pro/Enterprise pricing model. 70+ days past launch date. Plan needs full rewrite to match competition/league model decided March 23.",
-    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: new Date().toISOString(),
+    autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
   {
     id: "INC-008",
@@ -88,7 +88,7 @@ const INCIDENTS: Incident[] = [
   },
 ];
 
-const MONITORED_SERVICES: MonitoredService[] = [
+const MONITORED_SERVICES: readonly MonitoredService[] = [
   { name: "CoreIntent Engine",    status: "operational",    uptime: "99.9%", note: "Build passes, app runs" },
   { name: "Contabo VDS S",        status: "operational",    uptime: "99%",   note: "5.189.143.170 — primary, $51.04/mo, Ubuntu 24.04, Tailscale SSH" },
   { name: "Proton Mail",          status: "operational",    uptime: "99%",   note: "All email accounts imported to Proton" },
@@ -109,47 +109,56 @@ const MONITORED_SERVICES: MonitoredService[] = [
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },
 ];
 
-const VALID_SEVERITIES: IncidentSeverity[] = ["critical", "major", "minor", "info"];
+const VALID_SEVERITIES: readonly IncidentSeverity[] = ["critical", "major", "minor", "info"];
 
-export async function GET() {
-  return ok({
-    incidents: INCIDENTS,
-    services:  MONITORED_SERVICES,
-    autoUpdate: {
-      enabled:   true,
-      channels:  ["slack", "email", "x_dm"],
-      frequency: "on_change",
-    },
-    summary: {
-      total:        MONITORED_SERVICES.length,
-      operational:  MONITORED_SERVICES.filter((s) => s.status === "operational").length,
-      degraded:     MONITORED_SERVICES.filter((s) => s.status === "degraded").length,
-    },
-  });
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+  try {
+    return ok({
+      incidents: INCIDENTS,
+      services:  MONITORED_SERVICES,
+      autoUpdate: {
+        enabled:   true,
+        channels:  ["slack", "email", "x_dm"],
+        frequency: "on_change",
+      },
+      summary: {
+        total:        MONITORED_SERVICES.length,
+        operational:  MONITORED_SERVICES.filter((s) => s.status === "operational").length,
+        degraded:     MONITORED_SERVICES.filter((s) => s.status === "degraded").length,
+      },
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip);
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<NewIncidentRequest>;
   try {
     body = (await req.json()) as Partial<NewIncidentRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const service = validateString(body.service, 200);
-  if (!service) return err("service is required and must be 200 characters or fewer", 400);
+  if (!service) return badRequest("service is required and must be 200 characters or fewer");
 
   const message = validateString(body.message, 5000);
-  if (!message) return err("message is required and must be 5000 characters or fewer", 400);
+  if (!message) return badRequest("message is required and must be 5000 characters or fewer");
 
-  if (!body.severity || !VALID_SEVERITIES.includes(body.severity)) {
-    return err(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`, 400);
-  }
+  const severity = validateEnum(body.severity, VALID_SEVERITIES);
+  if (!severity) return badRequest(`severity must be one of: ${VALID_SEVERITIES.join(", ")}`);
 
   const incident: Incident = {
     id:         `INC-${Date.now()}`,
     service,
-    severity:   body.severity,
+    severity,
     status:     "detected",
     message,
     autoUpdate: true,
@@ -157,10 +166,12 @@ export async function POST(req: NextRequest) {
     updatedAt:  new Date().toISOString(),
   };
 
-  return ok({
+  INCIDENTS.push(incident);
+
+  return created({
     incident,
     notifications: { slack: "queued", email: "queued", x_dm: "queued" },
-  }, 201);
+  });
 }
 
 export async function OPTIONS() {

@@ -10,7 +10,7 @@
  * Rate limit: 60 req/min (see RATE_LIMITS.autosave in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { ok, err, preflight, validateString, validateEnum } from "@/lib/api";
+import { ok, badRequest, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type BackendKey = "primary" | "docs" | "files" | "cache" | "links" | "state";
 type SaveType   = "link" | "doc" | "state" | "command" | "config" | "signal" | "agent";
@@ -29,7 +29,7 @@ interface BackendResult {
 const SAVE_BACKENDS: Record<BackendKey, string> = {
   primary: "github",         // Free — commit to repo
   docs:    "notion",         // Free tier — knowledge base
-  files:   "google_drive",   // Via Claude/Perplexity desktop app auth
+  files:   "google_drive",   // 15GB free — Gemini scans them too
   cache:   "cloudflare_kv",  // Free tier — 100k reads/day
   links:   "repo_json",      // Free — JSON file in the repo
   state:   "local_storage",  // Free — browser-side
@@ -40,8 +40,8 @@ const OUTSOURCE_MAP: Record<string, { to: string; cost: string; why: string }> =
   content_drafts:    { to: "grok_pro",              cost: "near-free",              why: "bulk draft generation, fast output"  },
   content_polish:    { to: "claude_api",            cost: "~$0.01/request",         why: "best quality for final copy"         },
   research:          { to: "perplexity_max",        cost: "$20/mo flat",            why: "unlimited searches, 9 connectors"   },
-  email_scan:        { to: "proton_mail",           cost: "Proton plan",            why: "encrypted, private, all accounts imported" },
-  drive_scan:        { to: "google_drive",          cost: "free",                   why: "via Claude/Perplexity desktop app auth"   },
+  email_scan:        { to: "gemini",                cost: "free (Gmail built-in)",  why: "auto-categorize, summarize"          },
+  drive_scan:        { to: "gemini",                cost: "free (Drive built-in)",  why: "index & find lost files"             },
   cdn_security:      { to: "cloudflare_pro",        cost: "$20/mo",                 why: "replaces $200+/mo of separate WAF/DDoS" },
   hosting:           { to: "vercel_hobby",          cost: "$0",                     why: "free for personal projects"          },
   ci_cd:             { to: "github_actions",        cost: "$0",                     why: "2000 min/mo free"                   },
@@ -53,7 +53,6 @@ const OUTSOURCE_MAP: Record<string, { to: string; cost: string; why: string }> =
   data_extraction:   { to: "the_ripper",            cost: "$0",                     why: "custom built"                       },
   pdf_parsing:       { to: "pdf_plumber",           cost: "$0",                     why: "custom built"                       },
   ai_context_sync:   { to: "ai_to_ai_transfer",     cost: "$0",                     why: "share context between models via weblinks" },
-  music:             { to: "suno_api",              cost: "pay-per-use",            why: "paid API via suno.api.com"           },
 };
 
 const SERVICES_REPLACED = [
@@ -64,70 +63,81 @@ const SERVICES_REPLACED = [
   { replaced: "Project management tool",   saved: "$10/mo",  with: "Linear free"                 },
   { replaced: "Docs platform",            saved: "$8/mo",   with: "Notion free"                 },
   { replaced: "Multiple AI subscriptions", saved: "$100/mo", with: "Grok via X Premium+ ($16)"  },
-  { replaced: "Email assistant",           saved: "$15/mo",  with: "Proton Mail (encrypted, imported)" },
-  { replaced: "File search tool",          saved: "$10/mo",  with: "Google Drive (desktop app auth)"   },
+  { replaced: "Email assistant",           saved: "$15/mo",  with: "Gemini (free in Gmail)"      },
+  { replaced: "File search tool",          saved: "$10/mo",  with: "Gemini (free in Drive)"      },
 ];
 
 const TOTAL_MONTHLY_COST = 66;
 
-export async function GET() {
-  const totalSaved = SERVICES_REPLACED.reduce((sum, r) => {
-    const match = r.saved.match(/\d+/);
-    return sum + (match ? parseInt(match[0]) : 0);
-  }, 0);
+const VALID_SAVE_TYPES: readonly SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
 
-  return ok({
-    autosave: {
-      enabled:     true,
-      saveOnEvery: ["command", "config_change", "trade_signal", "agent_event", "link_share"],
-      backends:    SAVE_BACKENDS,
-    },
-    outsourceMap: OUTSOURCE_MAP,
-    costAnalysis: {
-      currentMonthly:       `~$${TOTAL_MONTHLY_COST}`,
-      equivalentIfSeparate: `~$${TOTAL_MONTHLY_COST + totalSaved}`,
-      monthlySavings:       `~$${totalSaved}`,
-      annualSavings:        `~$${totalSaved * 12}`,
-      servicesReplaced:     SERVICES_REPLACED,
-    },
-    weblinks: {
-      description: "Share integration via URL — no auth, no setup, just a link",
-      uses: [
-        "Share AI context between Claude/Grok/Perplexity sessions",
-        "Send terminal state to collaborators",
-        "Link Google Drive docs directly into workflows",
-        "Quick-share incident reports",
-        "Integration via URL params (backwards-compatible discovery)",
-      ],
-    },
-    recovery: {
-      description: "Find lost stuff via unconventional paths",
-      methods: [
-        "Google Drive version history (via desktop app auth)",
-        "Proton Mail search (everything is an email trail)",
-        "GitHub commit history (every save is recoverable)",
-        "Perplexity re-research (re-find anything you found before)",
-        "Cloudflare analytics (see what was accessed when)",
-      ],
-    },
-  });
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "autosave");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+  try {
+    const totalSaved = SERVICES_REPLACED.reduce((sum, r) => {
+      const match = r.saved.match(/\d+/);
+      return sum + (match ? parseInt(match[0]) : 0);
+    }, 0);
+
+    return ok({
+      autosave: {
+        enabled:     true,
+        saveOnEvery: ["command", "config_change", "trade_signal", "agent_event", "link_share"],
+        backends:    SAVE_BACKENDS,
+      },
+      outsourceMap: OUTSOURCE_MAP,
+      costAnalysis: {
+        currentMonthly:       `~$${TOTAL_MONTHLY_COST}`,
+        equivalentIfSeparate: `~$${TOTAL_MONTHLY_COST + totalSaved}`,
+        monthlySavings:       `~$${totalSaved}`,
+        annualSavings:        `~$${totalSaved * 12}`,
+        servicesReplaced:     SERVICES_REPLACED,
+      },
+      weblinks: {
+        description: "Share integration via URL — no auth, no setup, just a link",
+        uses: [
+          "Share AI context between Claude/Grok/Perplexity sessions",
+          "Send terminal state to collaborators",
+          "Link Google Drive docs directly into workflows",
+          "Quick-share incident reports",
+          "Integration via URL params (backwards-compatible discovery)",
+        ],
+      },
+      recovery: {
+        description: "Find lost stuff via unconventional paths",
+        methods: [
+          "Google Drive version history (30 days)",
+          "Gmail search (everything is an email trail)",
+          "GitHub commit history (every save is recoverable)",
+          "Perplexity re-research (re-find anything you found before)",
+          "Cloudflare analytics (see what was accessed when)",
+        ],
+      },
+    });
+  } catch (e) {
+    return serverError(e);
+  }
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "autosave");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<SaveRequest>;
   try {
     body = (await req.json()) as Partial<SaveRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
-  const VALID_SAVE_TYPES: readonly SaveType[] = ["link", "doc", "state", "command", "config", "signal", "agent"];
   const type: SaveType = validateEnum(body.type, VALID_SAVE_TYPES) ?? "state";
 
   if (body.content !== undefined) {
     const content = validateString(body.content, 10_000);
     if (content === null) {
-      return err("content must be a string of 10,000 characters or fewer", 400);
+      return badRequest("content must be a non-empty string of 10,000 characters or fewer");
     }
   }
 

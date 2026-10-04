@@ -10,8 +10,8 @@
  * Rate limit: 5 req/min — AI calls are expensive (see RATE_LIMITS.protect in lib/api.ts)
  */
 import { NextRequest } from "next/server";
-import { callPerplexity, callGrok, callClaude, validateAiContent } from "@/lib/ai";
-import { ok, err, preflight, serverError, validateString } from "@/lib/api";
+import { callAIsParallel, callPerplexity, callGrok, callClaudeDeep, validateAiContent, sanitizeForPrompt, GROK_SECURITY_SYSTEM, CLAUDE_RISK_SYSTEM, PERPLEXITY_SECURITY_SYSTEM, type AIResponse } from "@/lib/ai";
+import { ok, badRequest, gatewayError, serviceUnavailable, preflight, serverError, validateString, validateEnum, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 type ThreatCheckType = "impersonation" | "domain" | "threat" | "general";
 
@@ -28,41 +28,51 @@ const PROTECTED_ASSETS = {
   customTools: ["The Ripper", "Mac the Zipper", "PDF Plumber", "SongPal"],
 } as const;
 
-const VALID_TYPES: ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
+const VALID_TYPES: readonly ThreatCheckType[] = ["impersonation", "domain", "threat", "general"];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "protect");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   try {
-    const [impersonationScan, webScan, threatAnalysis] = await Promise.all([
-      callGrok(
+    const results = await callAIsParallel({
+      grok:
         `Scan X/Twitter for accounts impersonating or copying: ${PROTECTED_ASSETS.socials.join(", ")}. ` +
         `Check for unauthorized use of these names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
-        `Report any suspicious accounts or copycat activity. Be specific.`
-      ),
-      callPerplexity(
+        `Report any suspicious accounts or copycat activity. Be specific.`,
+      perplexity:
         `Search the web for unauthorized use of these brands and names: ${PROTECTED_ASSETS.names.join(", ")}. ` +
         `Check for typosquatting near: ${PROTECTED_ASSETS.domains.join(", ")}. ` +
-        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`
-      ),
-      callClaude(
+        `Look for phishing attempts, brand impersonation, or cloned repos at: ${PROTECTED_ASSETS.repos.join(", ")}.`,
+      claude:
         `Assess the digital identity protection status for:\n` +
         `Names: ${PROTECTED_ASSETS.names.join(", ")}\n` +
         `Domains: ${PROTECTED_ASSETS.domains.join(", ")}\n` +
         `Socials: ${PROTECTED_ASSETS.socials.join(", ")}\n` +
         `Custom IP: ${PROTECTED_ASSETS.customTools.join(", ")}\n\n` +
         `What are the top 3 risks? What needs immediate action to prevent impersonation or IP theft?`,
-        "You are the F18 Security AI for CoreIntent. Protect the digital identity. Be specific and actionable."
-      ),
-    ]);
+      systems: {
+        grok:       GROK_SECURITY_SYSTEM,
+        perplexity: PERPLEXITY_SECURITY_SYSTEM,
+        claude:     CLAUDE_RISK_SYSTEM,
+      },
+      claudeModel: "claude-opus-4-7",
+    });
+
+    // All 3 AIs have errorType = actual API failure (keys present but calls failed), not demo mode.
+    const allErrored = [results.grok, results.perplexity, results.claude].every((r) => r.errorType);
+    if (allErrored) return serviceUnavailable("All AI services returned errors. Please retry shortly.");
 
     return ok({
       protectedAssets: PROTECTED_ASSETS,
       scan: {
-        impersonation:    { ...impersonationScan, purpose: "Fast X/Twitter scan",             contentValid: validateAiContent(impersonationScan) },
-        webPresence:      { ...webScan,           purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(webScan)           },
-        threatAssessment: { ...threatAnalysis,    purpose: "Risk analysis & recommendations", contentValid: validateAiContent(threatAnalysis)     },
+        impersonation:    { ...results.grok,       purpose: "Fast X/Twitter scan",             contentValid: validateAiContent(results.grok)       },
+        webPresence:      { ...results.perplexity, purpose: "Web-wide brand monitoring",       contentValid: validateAiContent(results.perplexity) },
+        threatAssessment: { ...results.claude,     purpose: "Risk analysis & recommendations", contentValid: validateAiContent(results.claude)     },
       },
-      allLive:  impersonationScan.live && webScan.live && threatAnalysis.live,
-      allValid: validateAiContent(impersonationScan) && validateAiContent(webScan) && validateAiContent(threatAnalysis),
+      allLive:     results.allLive,
+      partialLive: results.partialLive,
+      allValid:    results.allValid,
       landmines: {
         status:   "armed",
         coverage: PROTECTED_ASSETS.names.length + PROTECTED_ASSETS.domains.length + PROTECTED_ASSETS.socials.length,
@@ -75,44 +85,50 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "protect");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
   let body: Partial<ProtectRequest>;
   try {
     body = (await req.json()) as Partial<ProtectRequest>;
   } catch {
-    return err("Invalid JSON body", 400);
+    return badRequest("Invalid JSON body");
   }
 
   const check = validateString(body.check, 500);
-  if (!check) return err("check is required and must be 500 characters or fewer", 400);
+  if (!check) return badRequest("check is required and must be 500 characters or fewer");
 
-  const type: ThreatCheckType = VALID_TYPES.includes(body.type as ThreatCheckType)
-    ? (body.type as ThreatCheckType)
-    : "general";
+  const type = validateEnum(body.type, VALID_TYPES) ?? "general";
+
+  const safeCheck = sanitizeForPrompt(check, 500);
 
   try {
-    type ScanFn = () => ReturnType<typeof callGrok | typeof callPerplexity | typeof callClaude>;
+    type ScanFn = () => Promise<AIResponse>;
     const scanMap: Record<ThreatCheckType, ScanFn> = {
       impersonation: () => callGrok(
-        `Is "${check}" impersonating or copying CoreIntent / Corey McIvor? ` +
-        `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`
+        `Is "${safeCheck}" impersonating or copying CoreIntent / Corey McIvor? ` +
+        `Analyze the account or entity and rate the threat level (none/low/medium/high/critical).`,
+        GROK_SECURITY_SYSTEM
       ),
       domain: () => callPerplexity(
-        `Is the domain "${check}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
-        `Check registration date, content, and stated intent.`
+        `Is the domain "${safeCheck}" a typosquat or phishing attempt targeting coreintent.dev or zynthio.ai? ` +
+        `Check registration date, content, and stated intent.`,
+        PERPLEXITY_SECURITY_SYSTEM
       ),
-      threat: () => callClaude(
-        `Assess this as a potential threat to CoreIntent's digital identity: "${check}". ` +
+      threat: () => callClaudeDeep(
+        `Assess this as a potential threat to CoreIntent's digital identity: "${safeCheck}". ` +
         `Threat level (low/medium/high/critical)? What immediate action should be taken?`,
-        "You are the F18 Security AI for CoreIntent. Be specific and actionable."
+        CLAUDE_RISK_SYSTEM
       ),
       general: () => callPerplexity(
-        `Does "${check}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`
+        `Does "${safeCheck}" pose any risk to the CoreIntent / Zynthio brand or Corey McIvor's digital identity?`,
+        PERPLEXITY_SECURITY_SYSTEM
       ),
     };
 
     const result = await scanMap[type]();
     if (!validateAiContent(result)) {
-      return err("AI returned an empty response", 502);
+      return gatewayError("AI returned an empty response");
     }
 
     return ok({ check, type, result, timestamp: new Date().toISOString() });

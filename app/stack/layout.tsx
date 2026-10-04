@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/stack/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "CoreIntent Technology Stack — Claude, Grok & Perplexity",
+        alt: "CoreIntent — The Stack: Claude, Grok & Perplexity AI Architecture",
       },
     ],
   },
@@ -29,25 +29,72 @@ export const metadata: Metadata = {
       "Claude + Grok + Perplexity — the multi-AI stack powering CoreIntent trading engine.",
     creator: "@coreintentai",
     site: "@coreintentai",
-    images: ["/opengraph-image.png"],
+    images: ["/stack/opengraph-image"],
   },
 };
 
-const breadcrumbJsonLd = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://coreintent.dev",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://coreintent.dev",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "The Stack",
+          item: "https://coreintent.dev/stack",
+        },
+      ],
     },
     {
-      "@type": "ListItem",
-      position: 2,
-      name: "The Stack",
-      item: "https://coreintent.dev/stack",
+      "@type": "TechArticle",
+      headline: "The Stack — AI Services, Infrastructure & Architecture",
+      description:
+        "Full technology stack powering CoreIntent: Claude, Grok, Perplexity AI orchestration, Cloudflare, Vercel, and VPS infrastructure.",
+      url: "https://coreintent.dev/stack",
+      datePublished: "2026-03-01",
+      dateModified: "2026-05-06",
+      author: {
+        "@type": "Person",
+        "@id": "https://coreintent.dev/#person",
+      },
+      publisher: {
+        "@type": "Organization",
+        "@id": "https://zynthio.ai/#organization",
+      },
+      mainEntityOfPage: "https://coreintent.dev/stack",
+      about: [
+        {
+          "@type": "SoftwareApplication",
+          name: "Grok",
+          applicationCategory: "AI Signal Detection",
+          operatingSystem: "Web",
+          creator: { "@type": "Organization", name: "xAI" },
+        },
+        {
+          "@type": "SoftwareApplication",
+          name: "Claude",
+          applicationCategory: "AI Deep Analysis",
+          operatingSystem: "Web",
+          creator: { "@type": "Organization", name: "Anthropic" },
+        },
+        {
+          "@type": "SoftwareApplication",
+          name: "Perplexity",
+          applicationCategory: "AI Research",
+          operatingSystem: "Web",
+          creator: { "@type": "Organization", name: "Perplexity AI" },
+        },
+      ],
+      proficiencyLevel: "Expert",
+      inLanguage: "en-NZ",
     },
   ],
 };
@@ -61,7 +108,7 @@ export default function StackLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
       {children}
     </>

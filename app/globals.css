@@ -20,7 +20,7 @@
 html,
 body {
   height: 100%;
-  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  font-family: var(--font-mono), "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
   background: var(--bg-primary);
   color: var(--text-primary);
 }
@@ -361,9 +361,1060 @@ a {
   animation: signalFlash 0.5s ease both;
 }
 
+/* ─── Glitch Text Effect ─── */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 2px); }
+}
+
+@keyframes glitchClip {
+  0% { clip-path: inset(0 0 85% 0); }
+  10% { clip-path: inset(15% 0 60% 0); }
+  20% { clip-path: inset(50% 0 20% 0); }
+  30% { clip-path: inset(80% 0 0 0); }
+  40% { clip-path: inset(10% 0 70% 0); }
+  50% { clip-path: inset(40% 0 30% 0); }
+  60% { clip-path: inset(70% 0 10% 0); }
+  70% { clip-path: inset(20% 0 55% 0); }
+  80% { clip-path: inset(60% 0 15% 0); }
+  90% { clip-path: inset(5% 0 80% 0); }
+  100% { clip-path: inset(0 0 85% 0); }
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  color: #ef4444;
+  animation: glitchClip 3s linear infinite, glitch 0.3s linear infinite;
+  opacity: 0.7;
+}
+
+.glitch-text::after {
+  color: #3b82f6;
+  animation: glitchClip 3s linear infinite reverse, glitch 0.3s linear infinite reverse;
+  opacity: 0.7;
+}
+
+/* ─── Subtle Glitch Text ─── */
+.glitch-text-subtle {
+  position: relative;
+}
+
+.glitch-text-subtle::before,
+.glitch-text-subtle::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glitch-text-subtle::before {
+  color: #ef4444;
+  animation: glitchClip 8s linear infinite;
+  opacity: 0.3;
+}
+
+.glitch-text-subtle::after {
+  color: #3b82f6;
+  animation: glitchClip 8s linear infinite reverse;
+  opacity: 0.3;
+}
+
+/* ─── CTA Button Glow ─── */
+.cta-primary {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.15);
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.15), 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.cta-primary:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.cta-secondary {
+  transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.cta-secondary:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--accent-green) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+  background: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* ─── Energy Pulse Ring ─── */
+@keyframes energyPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.energy-pulse {
+  animation: energyPulse 2s ease-out infinite;
+}
+
+/* ─── Holo Scan Border ─── */
+@keyframes holoScan {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+.holo-border {
+  position: relative;
+}
+
+.holo-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    #10b98144 25%,
+    #3b82f644 50%,
+    #a855f744 75%,
+    transparent 100%
+  );
+  background-size: 100% 200%;
+  animation: holoScan 4s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 3 Animations
+   ═══════════════════════════════════════════ */
+
+/* ─── Scroll Reveal ─── */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.scroll-reveal.revealed {
+  animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.scroll-reveal.revealed:nth-child(2) { animation-delay: 0.08s; }
+.scroll-reveal.revealed:nth-child(3) { animation-delay: 0.16s; }
+.scroll-reveal.revealed:nth-child(4) { animation-delay: 0.24s; }
+.scroll-reveal.revealed:nth-child(5) { animation-delay: 0.32s; }
+.scroll-reveal.revealed:nth-child(6) { animation-delay: 0.40s; }
+
+/* ─── Floating Particle Field ─── */
+@keyframes particleDrift {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.3);
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.3);
+  }
+  100% {
+    transform: translate(var(--drift-x, 40px), var(--drift-y, -60px)) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: particleDrift var(--duration, 12s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ─── Engine Heartbeat Indicator ─── */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  15% {
+    transform: scale(1.15);
+    box-shadow: 0 0 12px 4px rgba(16, 185, 129, 0.3);
+  }
+  30% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.1);
+  }
+  45% {
+    transform: scale(1.08);
+    box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.2);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+.engine-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* ─── Value Prop Cards Glow Sweep ─── */
+@keyframes glowSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.card-hover-glow {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.05) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-hover-glow:hover {
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.12), 0 0 0 1px rgba(16, 185, 129, 0.08);
+}
+
+.card-hover-glow:hover::before {
+  opacity: 1;
+  animation: glowSweep 2s ease infinite;
+}
+
+/* ─── Stat Counter ─── */
+@keyframes countIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stat-count-in {
+  animation: countIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Konami Code Easter Egg ─── */
+.konami-overlay {
+  backdrop-filter: blur(8px);
+}
+
+.konami-336 {
+  text-shadow: 0 0 40px rgba(16, 185, 129, 0.3), 0 0 80px rgba(59, 130, 246, 0.2);
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
+}
+
 /* ─── Responsive: Stack grid on mobile ─── */
 @media (max-width: 768px) {
   .arch-diagram-grid {
     grid-template-columns: 1fr !important;
+  }
+}
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 4 Animations
+   ═══════════════════════════════════════════ */
+
+/* ─── Candlestick Appear ─── */
+@keyframes candleGrow {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.candle-appear {
+  transform-origin: bottom;
+  animation: candleGrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Data Stream Effect ─── */
+@keyframes dataStream {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -200px;
+  }
+}
+
+.data-stream::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(16, 185, 129, 0.02) 3px,
+    rgba(16, 185, 129, 0.02) 4px
+  );
+  background-size: 100% 200px;
+  animation: dataStream 8s linear infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ─── Crypto Price Flash ─── */
+@keyframes priceFlash {
+  0% { background: transparent; }
+  20% { background: var(--flash-color, rgba(16, 185, 129, 0.15)); }
+  100% { background: transparent; }
+}
+
+.price-flash-up {
+  --flash-color: rgba(16, 185, 129, 0.15);
+  animation: priceFlash 0.6s ease;
+}
+
+.price-flash-down {
+  --flash-color: rgba(239, 68, 68, 0.15);
+  animation: priceFlash 0.6s ease;
+}
+
+/* ─── Signal Ping Ripple ─── */
+@keyframes signalPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.signal-ping::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-green);
+  animation: signalPing 2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ─── Morphing Border ─── */
+@keyframes morphBorder {
+  0%, 100% {
+    border-radius: 10px 4px 10px 4px;
+  }
+  25% {
+    border-radius: 4px 10px 4px 10px;
+  }
+  50% {
+    border-radius: 10px 10px 4px 4px;
+  }
+  75% {
+    border-radius: 4px 4px 10px 10px;
+  }
+}
+
+.morph-border {
+  animation: morphBorder 8s ease-in-out infinite;
+}
+
+/* ─── Stagger Children Reveal ─── */
+.stagger-reveal > *:nth-child(1) { animation-delay: 0s; }
+.stagger-reveal > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger-reveal > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger-reveal > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger-reveal > *:nth-child(5) { animation-delay: 0.24s; }
+.stagger-reveal > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger-reveal > *:nth-child(7) { animation-delay: 0.36s; }
+.stagger-reveal > *:nth-child(8) { animation-delay: 0.42s; }
+
+/* ─── Crosshair cursor for charts ─── */
+.chart-crosshair {
+  cursor: crosshair;
+}
+
+/* ─── Neon box on hover ─── */
+.neon-hover {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.neon-hover:hover {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2), 0 0 30px rgba(16, 185, 129, 0.05), inset 0 0 15px rgba(16, 185, 129, 0.03);
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+/* ─── Typing cursor animation ─── */
+@keyframes terminalCursorPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent-green); }
+  50% { opacity: 0.3; box-shadow: none; }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--accent-green);
+  animation: terminalCursorPulse 1.2s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+/* ─── Responsive: Order book stacks on mobile ─── */
+@media (max-width: 768px) {
+  .demo-dual-panel {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   LANDING PAGE OPTIMIZER — Conversion Layer
+   ═══════════════════════════════════════════ */
+
+/* ─── Animated Counter Pulse ─── */
+@keyframes counterPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.counter-value {
+  animation: counterPop 0.3s ease;
+}
+
+/* ─── Floating CTA ─── */
+.floating-cta-btn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.5), 0 0 0 2px rgba(16, 185, 129, 0.3) !important;
+}
+
+.floating-cta-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* ─── How It Works step connector ─── */
+.step-connector {
+  transition: color 0.3s ease;
+}
+
+/* ─── Trust Badge Hover ─── */
+.trust-badge {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+}
+
+/* ─── Pricing Card Highlight ─── */
+.pricing-card-featured {
+  position: relative;
+  border-color: #a855f744 !important;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.1), 0 0 0 1px rgba(168, 85, 247, 0.1);
+}
+
+.pricing-card-featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #a855f744, #10b98144, #3b82f644);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Urgency Badge Pulse ─── */
+@keyframes urgencyPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.urgency-badge {
+  animation: urgencyPulse 2s ease-in-out infinite;
+}
+
+/* ─── Smooth Scroll ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Hero CTA Attention Pulse ─── */
+@keyframes ctaAttention {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 0 0 rgba(16, 185, 129, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+.hero-cta-main {
+  animation: ctaAttention 3s ease-in-out infinite;
+}
+
+.hero-cta-main:hover {
+  animation: none;
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVE — Landing Page
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .how-it-works-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .step-connector {
+    display: none !important;
+  }
+
+  .counters-section {
+    gap: 20px !important;
+    padding: 20px 16px !important;
+  }
+
+  .floating-cta {
+    bottom: 16px !important;
+    right: 16px !important;
+    left: 16px !important;
+  }
+
+  .floating-cta-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .pricing-compare-table {
+    display: block !important;
+    overflow-x: auto;
+  }
+
+  .pricing-compare-table td,
+  .pricing-compare-table th {
+    padding: 8px 6px !important;
+    font-size: 11px !important;
+  }
+
+  .pricing-philosophy-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .why-coreintent-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .savings-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .how-it-works-card {
+    padding: 20px 16px !important;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-cta-main {
+    padding: 16px 24px !important;
+    font-size: 15px !important;
+  }
+
+  .savings-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .ticker-track {
+    gap: 24px;
+    animation-duration: 30s;
+  }
+}
+
+@media (max-width: 900px) {
+  .league-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .league-grid article {
+    transform: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE LAYER — Phase 5: Alive Effects
+   ═══════════════════════════════════════════ */
+
+/* ─── Matrix Data Rain ─── */
+@keyframes dataRain {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.data-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.data-rain-column {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  font-size: 10px;
+  font-family: inherit;
+  line-height: 1.2;
+  writing-mode: vertical-rl;
+  color: rgba(16, 185, 129, 0.08);
+  text-shadow: 0 0 4px rgba(16, 185, 129, 0.1);
+  animation: dataRain var(--rain-duration, 15s) linear infinite;
+  animation-delay: var(--rain-delay, 0s);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ─── Magnetic Cursor Spotlight ─── */
+.cursor-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(16, 185, 129, 0.04),
+    rgba(59, 130, 246, 0.02) 40%,
+    transparent 70%
+  );
+}
+
+.cursor-spotlight.active {
+  opacity: 1;
+}
+
+/* ─── Live Engine Dot ─── */
+@keyframes engineAlive {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.6), 0 0 8px rgba(16, 185, 129, 0.3);
+    background: #10b981;
+  }
+  25% {
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.8), 0 0 16px rgba(16, 185, 129, 0.4);
+    background: #34d399;
+  }
+  50% {
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.4), 0 0 6px rgba(16, 185, 129, 0.2);
+    background: #059669;
+  }
+  75% {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.9), 0 0 20px rgba(16, 185, 129, 0.5);
+    background: #10b981;
+  }
+}
+
+.engine-alive-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  animation: engineAlive 2s ease-in-out infinite;
+}
+
+/* ─── Section Divider Glow ─── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.2) 20%,
+    rgba(59, 130, 246, 0.3) 50%,
+    rgba(168, 85, 247, 0.2) 80%,
+    transparent
+  );
+  margin: 0;
+  border: none;
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.08) 20%,
+    rgba(59, 130, 246, 0.12) 50%,
+    rgba(168, 85, 247, 0.08) 80%,
+    transparent
+  );
+  filter: blur(3px);
+}
+
+/* ─── Breath Animation for Cards ─── */
+@keyframes breathe {
+  0%, 100% { border-color: rgba(30, 41, 59, 0.5); }
+  50% { border-color: rgba(16, 185, 129, 0.15); }
+}
+
+.card-breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.card-breathe:nth-child(2) { animation-delay: 1s; }
+.card-breathe:nth-child(3) { animation-delay: 2s; }
+.card-breathe:nth-child(4) { animation-delay: 3s; }
+.card-breathe:nth-child(5) { animation-delay: 4s; }
+.card-breathe:nth-child(6) { animation-delay: 5s; }
+
+/* ─── Pulsing Border Trace ─── */
+@keyframes borderTrace {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.border-trace {
+  position: relative;
+}
+
+.border-trace::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #10b98133 10%,
+    #3b82f633 20%,
+    transparent 30%,
+    transparent 100%
+  );
+  background-size: 100% 100%;
+  animation: borderTrace 6s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Status Ticker Glow ─── */
+@keyframes tickerGlow {
+  0%, 100% { text-shadow: none; }
+  50% { text-shadow: 0 0 6px rgba(16, 185, 129, 0.4); }
+}
+
+.ticker-item-glow {
+  animation: tickerGlow 3s ease-in-out infinite;
+}
+
+/* ─── Focus Ring for Accessibility ─── */
+.terminal-input:focus-visible {
+  outline: 1px solid rgba(16, 185, 129, 0.5);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   LANDING PAGE OPTIMIZER — Phase 4: Convert
+   ═══════════════════════════════════════════ */
+
+/* ─── CTA shimmer text ─── */
+@keyframes textShimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--accent-green) 0%,
+    #34d399 40%,
+    #6ee7b7 50%,
+    #34d399 60%,
+    var(--accent-green) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textShimmer 3s linear infinite;
+}
+
+/* ─── Neon underline for key text ─── */
+.neon-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.neon-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-green);
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4), 0 0 16px rgba(16, 185, 129, 0.2);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* ─── Stacked card depth effect ─── */
+.depth-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.depth-card::before {
+  content: '';
+  position: absolute;
+  inset: 4px 4px -4px -4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.5;
+  transition: transform 0.3s ease;
+}
+
+.depth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.depth-card:hover::before {
+  transform: translate(2px, 4px);
+}
+
+/* ─── Pulsing entry point indicator ─── */
+@keyframes entryPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    border-color: rgba(16, 185, 129, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+}
+
+.entry-pulse {
+  animation: entryPulse 2.5s ease-in-out infinite;
+}
+
+/* ─── Glassmorphism card ─── */
+.glass-card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 41, 59, 0.8);
+}
+
+/* ─── Enhanced focus states for accessibility ─── */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+/* ─── Hero CTA Attention Pulse ─── */
+@keyframes ctaAttention {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 0 0 rgba(16, 185, 129, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+.hero-cta-main {
+  animation: ctaAttention 3s ease-in-out infinite;
+}
+
+.hero-cta-main:hover {
+  animation: none;
+}
+
+/* ─── Counter glow effect ─── */
+@keyframes counterGlow {
+  0%, 100% { text-shadow: 0 0 8px currentColor; }
+  50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+}
+
+.counter-value-glow {
+  animation: counterGlow 3s ease-in-out infinite;
+}
+
+/* ─── Smooth Scroll ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Floating CTA ─── */
+.floating-cta-btn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.5), 0 0 0 2px rgba(16, 185, 129, 0.3) !important;
+}
+
+.floating-cta-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* ─── Trust Badge Hover ─── */
+.trust-badge {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+}
+
+/* ─── Premium hover lift for league cards ─── */
+.league-grid article {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.league-grid article:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.1);
+}
+
+/* ─── Mobile: Leaderboard responsive ─── */
+@media (max-width: 480px) {
+  .border-trace::before {
+    display: none;
+  }
+
+  .hero-cta-main {
+    padding: 16px 24px !important;
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-it-works-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .step-connector {
+    display: none !important;
+  }
+
+  .counters-section {
+    gap: 20px !important;
+    padding: 20px 16px !important;
+  }
+
+  .floating-cta {
+    bottom: 16px !important;
+    right: 16px !important;
+    left: 16px !important;
+  }
+
+  .floating-cta-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .why-coreintent-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .league-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .league-grid article {
+    transform: none !important;
   }
 }

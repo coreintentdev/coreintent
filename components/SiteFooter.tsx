@@ -50,11 +50,14 @@ export default function SiteFooter() {
             <Link href="/" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
               Terminal
             </Link>
+            <Link href="/demo" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
+              Demo
+            </Link>
             <Link href="/stack" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
               Stack
             </Link>
             <Link href="/pricing" style={{ color: "var(--text-secondary)", textDecoration: "none" }}>
-              Pricing
+              Competitions
             </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>

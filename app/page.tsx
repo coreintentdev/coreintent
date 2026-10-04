@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -14,37 +14,37 @@ const DEMO_TESTIMONIALS = [
   {
     name: "Alex R.",
     role: "Algorithmic Trader",
-    quote: "Three models cross-checking each other caught a false breakout that would've cost me dearly. Disagreement between Grok and Claude saved the trade.",
+    quote: "Grok flagged a BTC breakout. Claude said the on-chain data didn't support it. Perplexity found a whale dump incoming. That three-way disagreement saved me from a false signal no single model would've caught.",
     tag: "DEMO",
   },
   {
     name: "TradingBot_v3",
     role: "AI Agent",
-    quote: "Registered via API. Entered daily league. Competed against humans. No captcha, no ToS violation. First platform that treats bots as competitors, not threats.",
+    quote: "Registered via API in 14 seconds. No captcha. No ToS violation. Entered the daily league and placed 3rd against humans. First platform that treats bots as competitors, not threats.",
     tag: "DEMO",
   },
   {
     name: "Mika T.",
     role: "Crypto Researcher",
-    quote: "CoreIntent is the only platform where 'demo' means demo and 'planned' means planned. That transparency is worth more than any feature.",
+    quote: "I've audited 40+ trading platforms. CoreIntent is the only one where 'demo' means demo and 'planned' means planned. Radical honesty in fintech is a moat most founders don't understand.",
     tag: "DEMO",
   },
   {
     name: "Jordan K.",
     role: "Quant Developer",
-    quote: "$45/mo total infrastructure. I spent more than that on my last AWS bill for a side project. The lean stack isn't a limitation — it's proof.",
+    quote: "$45/mo total infrastructure. My last AWS side project cost more than that. When a platform is this lean, free isn't a marketing trick — it's just math.",
     tag: "DEMO",
   },
   {
     name: "NightOwl_Bot",
     role: "Automated Strategy",
-    quote: "My strategies run 24/7 across all three leagues. Daily for signal testing, weekly for consistency, monthly for the real competition.",
+    quote: "Running 24/7 across all three leagues. Daily for rapid signal testing, weekly for risk-adjusted consistency, monthly for the real competition. No human could sustain this cadence. That's the point.",
     tag: "DEMO",
   },
   {
     name: "Priya S.",
     role: "Independent Trader",
-    quote: "No subscription means I'm not paying $99/mo during drawdowns. The platform earns my attention, not my autopay.",
+    quote: "I was paying $99/mo for signals that worked 40% of the time. CoreIntent's multi-model consensus hasn't cost me a cent. The platform earns my attention, not my autopay.",
     tag: "DEMO",
   },
 ];
@@ -55,6 +55,689 @@ const AI_MODELS = [
   { name: "Claude", provider: "Anthropic", role: "Deep analysis & risk assessment", color: "#a855f7" },
   { name: "Perplexity", provider: "Perplexity AI", role: "Real-time research & news", color: "#3b82f6" },
 ];
+
+/* ─── Konami Code Easter Egg ─── */
+const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+
+function KonamiCode() {
+  const [activated, setActivated] = useState(false);
+  const [fading, setFading] = useState(false);
+  const seqRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      seqRef.current.push(e.key);
+      if (seqRef.current.length > KONAMI_CODE.length) seqRef.current.shift();
+      if (seqRef.current.join(",") === KONAMI_CODE.join(",")) {
+        setActivated(true);
+        seqRef.current = [];
+        setTimeout(() => setFading(true), 4000);
+        setTimeout(() => { setActivated(false); setFading(false); }, 5000);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  if (!activated) return null;
+
+  return (
+    <div
+      className="konami-overlay"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0, 0, 0, 0.92)",
+        transition: "opacity 1s ease",
+        opacity: fading ? 0 : 1,
+        pointerEvents: fading ? "none" : "auto",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <div
+          className="konami-336"
+          style={{
+            fontSize: "clamp(80px, 15vw, 160px)",
+            fontWeight: "bold",
+            background: "linear-gradient(135deg, #10b981, #3b82f6, #a855f7, #ef4444)",
+            backgroundSize: "300% 300%",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            animation: "gradientShift 2s ease infinite, glitch 0.3s ease infinite",
+            letterSpacing: "0.05em",
+          }}
+        >
+          336
+        </div>
+        <div style={{
+          fontSize: "clamp(14px, 2.5vw, 20px)",
+          color: "#10b981",
+          marginTop: "16px",
+          animation: "fadeInUp 0.6s ease 0.3s both",
+          letterSpacing: "4px",
+          textTransform: "uppercase",
+        }}>
+          The Signal Is Dominant
+        </div>
+        <div style={{
+          fontSize: "11px",
+          color: "var(--text-secondary)",
+          marginTop: "24px",
+          animation: "fadeInUp 0.6s ease 0.8s both",
+        }}>
+          You found the secret. Welcome to the inner circle.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── 3D Tilt Card ─── */
+function TiltCard({ children, className = "", style = {} }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState("perspective(600px) rotateX(0deg) rotateY(0deg)");
+  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
+
+  const handleMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rotateY = (x - 0.5) * 16;
+    const rotateX = (0.5 - y) * 16;
+    setTransform(`perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`);
+    setGlowPos({ x: x * 100, y: y * 100 });
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    setTransform("perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)");
+    setGlowPos({ x: 50, y: 50 });
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={className}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      style={{
+        ...style,
+        transform,
+        transition: "transform 0.15s ease-out",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(16, 185, 129, 0.12), transparent 60%)`,
+          pointerEvents: "none",
+          transition: "background 0.15s ease-out",
+        }}
+      />
+      {children}
+    </div>
+  );
+}
+
+/* ─── Particle Field Background ─── */
+function ParticleField() {
+  const particles = Array.from({ length: 24 }, (_, i) => ({
+    id: i,
+    left: `${(i * 4.17 + (i % 3) * 11) % 100}%`,
+    top: `${(i * 7.3 + (i % 5) * 13) % 100}%`,
+    size: 1.5 + (i % 4) * 0.8,
+    duration: 10 + (i % 7) * 3,
+    delay: (i % 5) * 2.5,
+    driftX: (i % 2 === 0 ? 1 : -1) * (20 + (i % 6) * 12),
+    driftY: -(30 + (i % 4) * 20),
+    color: ["#10b981", "#3b82f6", "#a855f7", "#06b6d4"][i % 4],
+    opacity: 0.15 + (i % 3) * 0.1,
+  }));
+
+  return (
+    <div className="particle-field">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="particle-dot"
+          style={{
+            left: p.left,
+            top: p.top,
+            width: p.size,
+            height: p.size,
+            background: p.color,
+            "--duration": `${p.duration}s`,
+            "--delay": `${p.delay}s`,
+            "--drift-x": `${p.driftX}px`,
+            "--drift-y": `${p.driftY}px`,
+            "--particle-opacity": `${p.opacity}`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ─── Data Rain Background ─── */
+function DataRain() {
+  const columns = Array.from({ length: 12 }, (_, i) => {
+    const chars = "01ZYN$ETH₿CAI336SIGNAL";
+    const str = Array.from({ length: 30 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    return {
+      id: i,
+      left: `${(i * 8.33 + 2) % 100}%`,
+      duration: 12 + (i % 5) * 4,
+      delay: (i % 7) * 2.5,
+      text: str,
+    };
+  });
+
+  return (
+    <div className="data-rain">
+      {columns.map((c) => (
+        <div
+          key={c.id}
+          className="data-rain-column"
+          style={{
+            left: c.left,
+            "--rain-duration": `${c.duration}s`,
+            "--rain-delay": `${c.delay}s`,
+          } as React.CSSProperties}
+        >
+          {c.text}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Cursor Spotlight ─── */
+function CursorSpotlight() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const parent = el.parentElement;
+    if (!parent) return;
+
+    const handleMove = (e: MouseEvent) => {
+      const rect = parent.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      el.style.setProperty("--mouse-x", `${x}%`);
+      el.style.setProperty("--mouse-y", `${y}%`);
+      setActive(true);
+    };
+
+    const handleLeave = () => setActive(false);
+
+    parent.addEventListener("mousemove", handleMove);
+    parent.addEventListener("mouseleave", handleLeave);
+    return () => {
+      parent.removeEventListener("mousemove", handleMove);
+      parent.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
+
+  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
+}
+
+/* ─── Scroll Reveal Hook ─── */
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add("revealed"); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+}
+
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useScrollReveal();
+  return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
+}
+
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ end, suffix = "", prefix = "", label, color }: { end: number; suffix?: string; prefix?: string; label: string; color: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = end / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [started, end]);
+
+  return (
+    <div ref={ref} style={{ textAlign: "center", minWidth: "100px" }}>
+      <div className="counter-value" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "bold", color, lineHeight: 1.1 }}>
+        {prefix}{started ? count.toLocaleString() : "0"}{suffix}
+      </div>
+      <div style={{ fontSize: "11px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* ─── How It Works ─── */
+function HowItWorks() {
+  return (
+    <div className="how-it-works-section" style={{ marginTop: "48px", padding: "0" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+        How It Works
+      </div>
+      <h2 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "24px" }}>
+        Three Steps to Smarter Signals
+      </h2>
+      <div className="how-it-works-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", position: "relative" }}>
+        {[
+          {
+            step: "01",
+            title: "Models Debate",
+            desc: "Grok spots a signal. Claude questions it. Perplexity fact-checks against live data. Three perspectives, one conversation.",
+            color: "#a855f7",
+            icon: "AI",
+          },
+          {
+            step: "02",
+            title: "Consensus Forms",
+            desc: "When all three models agree, confidence is high. When they disagree, the system flags uncertainty — no false conviction.",
+            color: "#10b981",
+            icon: "OK",
+          },
+          {
+            step: "03",
+            title: "You Compete",
+            desc: "Take the signal into daily, weekly, or monthly competitions. Prove your strategy against other humans and bots. Free entry.",
+            color: "#3b82f6",
+            icon: "GO",
+          },
+        ].map((item, i) => (
+          <div
+            key={item.step}
+            className="card-hover-glow how-it-works-card"
+            style={{
+              padding: "28px 20px",
+              background: "var(--bg-secondary)",
+              border: "1px solid var(--border-color)",
+              borderRadius: "12px",
+              textAlign: "center",
+              position: "relative",
+            }}
+          >
+            <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              background: `${item.color}15`,
+              border: `2px solid ${item.color}44`,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: item.color,
+              marginBottom: "14px",
+            }}>
+              {item.icon}
+            </div>
+            <div style={{ fontSize: "10px", color: item.color, fontWeight: "bold", letterSpacing: "1px", marginBottom: "6px" }}>
+              STEP {item.step}
+            </div>
+            <div style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "8px" }}>
+              {item.title}
+            </div>
+            <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.6" }}>
+              {item.desc}
+            </div>
+            {i < 2 && (
+              <div className="step-connector" style={{
+                position: "absolute",
+                right: "-14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                color: "var(--border-color)",
+                fontSize: "18px",
+                zIndex: 1,
+              }}>
+                &rarr;
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Mini Terminal Preview ─── */
+function MiniTerminalPreview({ onLaunch }: { onLaunch: () => void }) {
+  const [lines, setLines] = useState<string[]>([]);
+  const [inputVal, setInputVal] = useState("");
+  const [typing, setTyping] = useState(true);
+  const [demoPhase, setDemoPhase] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const MINI_COMMANDS: Record<string, string> = {
+    help: `  \x1b[32mcai\x1b[0m       System overview     \x1b[32mbrain\x1b[0m    AI orchestra
+  \x1b[32mstatus\x1b[0m    Engine vitals       \x1b[32m336\x1b[0m      The signal
+  \x1b[32mzen\x1b[0m       Trading wisdom      \x1b[32mfortune\x1b[0m  Your fate
+  \x1b[90mFull terminal: 100+ commands. Click "Launch Terminal" below.\x1b[0m`,
+    cai: `  \x1b[36mCAI — CORE AI STATUS\x1b[0m
+  Engine:  CoreIntent v0.1.0-alpha
+  Mode:    \x1b[33mPaper trading\x1b[0m
+  \x1b[32m●\x1b[0m Claude Pro   — ACTIVE   \x1b[32m●\x1b[0m Grok Free   — ACTIVE
+  \x1b[33m◐\x1b[0m Perplexity   — FREE     \x1b[33m◐\x1b[0m zyn-bash    — standby`,
+    brain: `  \x1b[36mBRAIN — AI Orchestra\x1b[0m
+  \x1b[32m●\x1b[0m \x1b[31mGrok\x1b[0m         Fast signals, 60 threads
+  \x1b[32m●\x1b[0m \x1b[35mClaude\x1b[0m       Deep analysis, orchestration
+  \x1b[33m◐\x1b[0m \x1b[34mPerplexity\x1b[0m   Research (free tier)
+  \x1b[90mBots welcome. No captcha. AI-to-AI is first-class.\x1b[0m`,
+    status: `  \x1b[32m● ENGINE ONLINE\x1b[0m
+  Mode:    \x1b[33mPaper Trading\x1b[0m   Version: 0.2.0
+  Signals: \x1b[32m4 active\x1b[0m | 2 pending
+  Circuit Breaker: \x1b[32mARMED\x1b[0m (threshold: 0.8%)`,
+    "336": `  \x1b[32m████ ████ ████\x1b[0m
+  \x1b[32m   █    █ █   \x1b[0m
+  \x1b[32m ███ ████ ████\x1b[0m
+  \x1b[33mTHE SIGNAL IS DOMINANT\x1b[0m`,
+    zen: `  \x1b[36m"The market is a mirror. It reflects your patience,\x1b[0m
+  \x1b[36m your greed, and your discipline — equally."\x1b[0m
+  \x1b[90m— The Engine, after watching 10,000 candles\x1b[0m`,
+    fortune: `  \x1b[33m★\x1b[0m Your next trade will teach you more than your last ten.
+  \x1b[90mLucky numbers: 3, 3, 6\x1b[0m`,
+  };
+
+  useEffect(() => {
+    const demoSequence = [
+      { delay: 500, text: "status", speed: 80 },
+      { delay: 3000, text: "brain", speed: 60 },
+    ];
+
+    let cancelled = false;
+    const timeouts: ReturnType<typeof setTimeout>[] = [];
+
+    const runDemo = async () => {
+      for (const step of demoSequence) {
+        if (cancelled) return;
+        await new Promise<void>((resolve) => {
+          const t = setTimeout(resolve, step.delay);
+          timeouts.push(t);
+        });
+        if (cancelled) return;
+        setTyping(true);
+        for (let i = 0; i <= step.text.length; i++) {
+          if (cancelled) return;
+          const char = i;
+          await new Promise<void>((resolve) => {
+            const t = setTimeout(() => {
+              setInputVal(step.text.substring(0, char));
+              resolve();
+            }, step.speed);
+            timeouts.push(t);
+          });
+        }
+        if (cancelled) return;
+        await new Promise<void>((resolve) => {
+          const t = setTimeout(resolve, 400);
+          timeouts.push(t);
+        });
+        if (cancelled) return;
+        const cmd = step.text;
+        const output = MINI_COMMANDS[cmd] || `\x1b[31mUnknown: ${cmd}\x1b[0m`;
+        setLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${cmd}`, output, ""]);
+        setInputVal("");
+        setDemoPhase((p) => p + 1);
+      }
+      setTyping(false);
+    };
+
+    runDemo();
+    return () => {
+      cancelled = true;
+      timeouts.forEach(clearTimeout);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputVal.trim()) return;
+    setTyping(false);
+    const cmd = inputVal.trim().toLowerCase();
+    const output = MINI_COMMANDS[cmd] || `\x1b[31mUnknown command.\x1b[0m Type \x1b[32mhelp\x1b[0m for options.`;
+    setLines((prev) => [...prev, `\x1b[32m❯\x1b[0m ${inputVal}`, output, ""]);
+    setInputVal("");
+  };
+
+  const ansiMini = (text: string) => {
+    const map: Record<string, string> = {
+      "31": "#ef4444", "32": "#10b981", "33": "#f59e0b",
+      "34": "#3b82f6", "35": "#a855f7", "36": "#06b6d4", "90": "#64748b",
+    };
+    let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    html = html.replace(/\x1b\[(\d+)m/g, (_m, code) => {
+      if (code === "0") return "</span>";
+      const color = map[code];
+      return color ? `<span style="color:${color}">` : "";
+    });
+    const opens = (html.match(/<span /g) || []).length;
+    const closes = (html.match(/<\/span>/g) || []).length;
+    if (opens > closes) html += "</span>".repeat(opens - closes);
+    return html;
+  };
+
+  return (
+    <div style={{ marginTop: "36px" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px", textAlign: "center" }}>
+        Try It Now
+      </div>
+      <h3 style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "16px", textAlign: "center" }}>
+        Talk to the engine. Type a command.
+      </h3>
+      <div
+        style={{
+          background: "var(--bg-terminal)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "10px",
+          overflow: "hidden",
+          maxWidth: "640px",
+          margin: "0 auto",
+        }}
+      >
+        <div style={{
+          display: "flex", alignItems: "center", gap: "8px", padding: "8px 12px",
+          background: "#161b22", borderBottom: "1px solid var(--border-color)", fontSize: "12px",
+        }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+          <span style={{ marginLeft: "8px", color: "var(--text-secondary)", fontSize: "11px" }}>coreintent — try it</span>
+        </div>
+        <div
+          onClick={() => inputRef.current?.focus()}
+          style={{
+            padding: "12px",
+            fontFamily: "inherit",
+            fontSize: "12px",
+            lineHeight: "1.6",
+            whiteSpace: "pre-wrap",
+            minHeight: "160px",
+            maxHeight: "240px",
+            overflow: "auto",
+            cursor: "text",
+          }}
+        >
+          <div dangerouslySetInnerHTML={{ __html: ansiMini(`\x1b[36mZynthio Commander\x1b[0m — \x1b[90mMini preview. Type \x1b[32mhelp\x1b[90m for commands.\x1b[0m`) }} />
+          <div style={{ marginBottom: "4px" }} />
+          {lines.map((line, i) => (
+            <div key={i} dangerouslySetInnerHTML={{ __html: ansiMini(line) }} />
+          ))}
+          <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ color: "var(--accent-green)", marginRight: "8px" }}>&#9889;</span>
+            <input
+              ref={inputRef}
+              value={inputVal}
+              onChange={(e) => { setInputVal(e.target.value); setTyping(false); }}
+              spellCheck={false}
+              placeholder={typing ? "" : demoPhase >= 2 ? "your turn — try: cai, 336, zen..." : ""}
+              style={{
+                flex: 1, background: "transparent", border: "none", outline: "none",
+                color: "var(--text-primary)", fontFamily: "inherit", fontSize: "12px",
+                caretColor: "var(--accent-green)",
+              }}
+            />
+          </form>
+        </div>
+      </div>
+      <div style={{ textAlign: "center", marginTop: "14px" }}>
+        <button
+          onClick={onLaunch}
+          style={{
+            padding: "10px 28px",
+            background: "transparent",
+            color: "var(--accent-green)",
+            border: "1px solid var(--accent-green)",
+            borderRadius: "8px",
+            fontFamily: "inherit",
+            fontSize: "13px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--accent-green)";
+            e.currentTarget.style.color = "#000";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--accent-green)";
+          }}
+        >
+          Launch Full Terminal (100+ commands)
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Floating CTA ─── */
+function FloatingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 600);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div className="floating-cta" style={{
+      position: "fixed",
+      bottom: "24px",
+      right: "24px",
+      zIndex: 1000,
+      animation: "fadeInUp 0.4s ease both",
+    }}>
+      <a
+        href="https://github.com/coreintentdev/coreintent"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-cta-btn"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "14px 24px",
+          background: "var(--accent-green)",
+          color: "#000",
+          borderRadius: "50px",
+          fontSize: "13px",
+          fontWeight: "bold",
+          fontFamily: "inherit",
+          textDecoration: "none",
+          boxShadow: "0 4px 24px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.2)",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        }}
+      >
+        <span style={{ fontSize: "16px" }}>&#9733;</span>
+        Star on GitHub
+      </a>
+    </div>
+  );
+}
+
+/* ─── Engine Heartbeat ─── */
+function EngineHeartbeat() {
+  const [beat, setBeat] = useState(0);
+  const [latency, setLatency] = useState(12);
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setBeat((b) => b + 1);
+      setLatency(8 + Math.floor(Math.random() * 25));
+    }, 2000);
+    return () => clearInterval(iv);
+  }, []);
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+      <div
+        className="engine-alive-dot"
+        key={beat}
+      />
+      <span style={{ fontSize: "10px", color: "#10b981", fontWeight: "bold", letterSpacing: "0.5px" }}>
+        ENGINE ALIVE
+      </span>
+      <span style={{ fontSize: "9px", color: "var(--text-secondary)", fontFamily: "inherit" }}>
+        {latency}ms
+      </span>
+    </div>
+  );
+}
 
 /* ─── TypeWriter ─── */
 const HERO_PHRASES = [
@@ -72,6 +755,16 @@ const HERO_PHRASES = [
   "$45/mo Runs the Whole Engine.",
   "Your Bot. Their Bot. Best Wins.",
   "Paper Trading. Real Ambition.",
+  "Signal Quality Over Signal Volume.",
+  "The Arena Is Free. Compete.",
+  "No VC. No Permission. No Limits.",
+  "Peer Review for Markets.",
+  "Open Source. Open Book.",
+  "The Future Is Multi-Agent.",
+  "Your Edge Isn't Your Wallet.",
+  "Subscriptions Are a Tax. We Opted Out.",
+  "The Leaderboard Doesn't Care Who Built You.",
+  "Three Filters. One Signal. Zero Guessing.",
 ];
 
 function TypeWriter() {
@@ -107,6 +800,70 @@ function TypeWriter() {
   }, [tick, isDeleting]);
 
   return <span style={{ display: "inline-block" }}>{text}<span style={{ animation: "blink 1s step-end infinite" }}>|</span></span>;
+}
+
+/* ─── Live Signal Feed ─── */
+const SIGNAL_POOL = [
+  { pair: "BTC/USDT", dir: "LONG", conf: 87, model: "Grok", mc: "#ef4444" },
+  { pair: "ETH/USDT", dir: "HOLD", conf: 65, model: "Claude", mc: "#a855f7" },
+  { pair: "SOL/USDT", dir: "LONG", conf: 91, model: "Engine", mc: "#10b981" },
+  { pair: "AVAX/USDT", dir: "SHORT", conf: 72, model: "Perplexity", mc: "#3b82f6" },
+  { pair: "LINK/USDT", dir: "LONG", conf: 83, model: "Grok", mc: "#ef4444" },
+  { pair: "DOT/USDT", dir: "SHORT", conf: 68, model: "Claude", mc: "#a855f7" },
+  { pair: "BTC/USDT", dir: "LONG", conf: 94, model: "Engine", mc: "#10b981" },
+  { pair: "SOL/USDT", dir: "HOLD", conf: 58, model: "Perplexity", mc: "#3b82f6" },
+];
+
+function LiveSignalFeed() {
+  const [idx, setIdx] = useState(0);
+  const [vis, setVis] = useState(true);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setVis(false);
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % SIGNAL_POOL.length);
+        setVis(true);
+      }, 300);
+    }, 3500);
+    return () => clearInterval(iv);
+  }, []);
+
+  const s = SIGNAL_POOL[idx];
+  const dirColor = s.dir === "LONG" ? "#10b981" : s.dir === "SHORT" ? "#ef4444" : "#f59e0b";
+
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "8px 16px",
+        background: "#10b98108",
+        border: "1px solid #10b98118",
+        borderRadius: "8px",
+        fontSize: "12px",
+        marginBottom: "16px",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        opacity: vis ? 1 : 0,
+        transform: vis ? "translateY(0)" : "translateY(-4px)",
+      }}
+    >
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "#10b981", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981" }} />
+        SIGNAL
+      </span>
+      <span style={{ color: "var(--text-primary)", fontWeight: "bold" }}>{s.pair}</span>
+      <span style={{ color: dirColor, fontWeight: "bold", fontSize: "11px" }}>
+        {s.dir === "LONG" ? "▲" : s.dir === "SHORT" ? "▼" : "◆"} {s.dir}
+      </span>
+      <span style={{ color: s.conf >= 80 ? "#10b981" : s.conf >= 60 ? "#f59e0b" : "#ef4444" }}>
+        {s.conf}%
+      </span>
+      <span style={{ color: s.mc, fontSize: "10px", opacity: 0.8 }}>[{s.model}]</span>
+      <span style={{ color: "var(--text-secondary)", fontSize: "10px" }}>DEMO</span>
+    </div>
+  );
 }
 
 /* ─── Market Ticker ─── */
@@ -181,38 +938,65 @@ function MarketTicker() {
   );
 }
 
-/* ─── Floating Particles ─── */
-function HeroParticles() {
-  const [dots] = useState(() =>
-    Array.from({ length: 18 }, (_, i) => ({
-      size: 2 + (i % 3),
-      left: (i * 7 + 13) % 100,
-      top: (i * 11 + 7) % 100,
-      opacity: 0.1 + (i % 4) * 0.05,
-      dur: 5 + (i % 5) * 2,
-      delay: (i % 7) * 0.8,
-      color: ["#10b981", "#3b82f6", "#a855f7"][i % 3],
-    }))
-  );
+/* ─── Neural Network Background ─── */
+function NeuralNetwork() {
+  const [pulse, setPulse] = useState(0);
+  useEffect(() => {
+    const iv = setInterval(() => setPulse((p) => (p + 1) % 100), 80);
+    return () => clearInterval(iv);
+  }, []);
+
+  const nodes = [
+    { id: "grok", x: 80, y: 60, r: 18, color: "#ef4444", label: "G" },
+    { id: "claude", x: 80, y: 160, r: 18, color: "#a855f7", label: "C" },
+    { id: "perplexity", x: 80, y: 260, r: 18, color: "#3b82f6", label: "P" },
+    { id: "h1", x: 250, y: 110, r: 10, color: "#10b981", label: "" },
+    { id: "h2", x: 250, y: 210, r: 10, color: "#10b981", label: "" },
+    { id: "engine", x: 420, y: 160, r: 22, color: "#10b981", label: "E" },
+    { id: "signal", x: 540, y: 160, r: 14, color: "#f59e0b", label: "S" },
+  ];
+
+  const edges = [
+    [0, 3], [0, 4], [1, 3], [1, 4], [2, 3], [2, 4],
+    [3, 5], [4, 5], [5, 6],
+  ];
 
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      {dots.map((d, i) => (
-        <div
-          key={i}
-          style={{
-            position: "absolute",
-            width: d.size,
-            height: d.size,
-            borderRadius: "50%",
-            background: d.color,
-            opacity: d.opacity,
-            left: `${d.left}%`,
-            top: `${d.top}%`,
-            animation: `float ${d.dur}s ease-in-out ${d.delay}s infinite`,
-          }}
-        />
-      ))}
+      <svg viewBox="0 0 620 320" role="img" aria-label="Neural network visualization showing Grok, Claude, and Perplexity feeding into the CoreIntent engine" style={{ width: "100%", height: "100%", opacity: 0.5 }}>
+        <defs>
+          {nodes.map((n) => (
+            <radialGradient key={n.id} id={`ng-${n.id}`}>
+              <stop offset="0%" stopColor={n.color} stopOpacity={0.6} />
+              <stop offset="100%" stopColor={n.color} stopOpacity={0} />
+            </radialGradient>
+          ))}
+        </defs>
+        {edges.map(([a, b], i) => {
+          const n1 = nodes[a];
+          const n2 = nodes[b];
+          const progress = ((pulse + i * 12) % 60) / 60;
+          const px = n1.x + (n2.x - n1.x) * progress;
+          const py = n1.y + (n2.y - n1.y) * progress;
+          return (
+            <g key={`e-${i}`}>
+              <line x1={n1.x} y1={n1.y} x2={n2.x} y2={n2.y} stroke={n1.color} strokeOpacity={0.15} strokeWidth={1} />
+              <circle cx={px} cy={py} r={3} fill={n1.color} opacity={0.7 + Math.sin(pulse * 0.1 + i) * 0.3} />
+            </g>
+          );
+        })}
+        {nodes.map((n) => (
+          <g key={n.id}>
+            <circle cx={n.x} cy={n.y} r={n.r * 2} fill={`url(#ng-${n.id})`} opacity={0.3 + Math.sin(pulse * 0.05) * 0.1} />
+            <circle cx={n.x} cy={n.y} r={n.r} fill="none" stroke={n.color} strokeWidth={1.5} opacity={0.6} />
+            {n.label && (
+              <text x={n.x} y={n.y + 4} textAnchor="middle" fill={n.color} fontSize={11} fontWeight="bold" fontFamily="monospace">
+                {n.label}
+              </text>
+            )}
+          </g>
+        ))}
+      </svg>
     </div>
   );
 }
@@ -363,6 +1147,128 @@ const sectionTitle: React.CSSProperties = {
   marginBottom: "12px",
 };
 
+/* ─── Animated Signal Pipeline ─── */
+const PIPELINE_STEPS = [
+  { label: "Detect", model: "Grok", color: "#ef4444", status: ["Scanning X feeds...", "RSI divergence found", "Signal: LONG 87%"] },
+  { label: "Analyse", model: "Claude", color: "#a855f7", status: ["Running risk model...", "R:R 2.4:1 acceptable", "Conf adjusted: 79%"] },
+  { label: "Verify", model: "Perplexity", color: "#3b82f6", status: ["Checking live news...", "No negative catalysts", "Research conf: 82%"] },
+  { label: "Decide", model: "Engine", color: "#10b981", status: ["Computing consensus...", "3/3 models agree", "EXECUTE: LONG BTC"] },
+];
+
+function SignalPipeline() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [statusIdx, setStatusIdx] = useState(0);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setStatusIdx((prev) => {
+        if (prev >= 2) {
+          setActiveStep((s) => (s + 1) % 4);
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 1200);
+    return () => clearInterval(iv);
+  }, []);
+
+  return (
+    <div style={{ marginTop: "36px" }}>
+      <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
+        Live signal pipeline
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+      </div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
+        {PIPELINE_STEPS.map((s, i) => {
+          const isActive = i === activeStep;
+          const isPast = i < activeStep;
+          return (
+            <div key={s.label} style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  padding: "14px 18px",
+                  background: isActive ? `${s.color}12` : "var(--bg-primary)",
+                  border: `1px solid ${isActive ? s.color : isPast ? `${s.color}66` : `${s.color}22`}`,
+                  borderRadius: "8px",
+                  textAlign: "center",
+                  minWidth: "140px",
+                  transition: "all 0.4s ease",
+                  boxShadow: isActive ? `0 0 20px ${s.color}25` : "none",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {isActive && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "2px",
+                    background: `linear-gradient(90deg, transparent, ${s.color}, transparent)`,
+                    animation: "shimmer 1.5s ease infinite",
+                  }} />
+                )}
+                <div style={{ fontSize: "11px", fontWeight: "bold", color: isActive || isPast ? s.color : `${s.color}88`, marginBottom: "2px", transition: "color 0.4s ease" }}>
+                  {s.model}
+                </div>
+                <div style={{ fontSize: "13px", fontWeight: "bold", color: isActive || isPast ? s.color : `${s.color}66`, marginBottom: "6px", transition: "color 0.4s ease" }}>
+                  {s.label}
+                </div>
+                <div style={{
+                  fontSize: "10px",
+                  color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+                  lineHeight: "1.4",
+                  minHeight: "14px",
+                  transition: "color 0.3s ease",
+                }}>
+                  {isActive ? s.status[statusIdx] : isPast ? s.status[2] : " "}
+                </div>
+                {(isActive || isPast) && (
+                  <div style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: isPast ? s.color : s.color,
+                    margin: "6px auto 0",
+                    animation: isActive ? "pulse 1s ease-in-out infinite" : "none",
+                    opacity: isPast ? 0.6 : 1,
+                  }} />
+                )}
+              </div>
+              {i < 3 && (
+                <div style={{ display: "flex", alignItems: "center", margin: "0 4px", position: "relative" }}>
+                  <div style={{
+                    width: "24px",
+                    height: "2px",
+                    background: i < activeStep ? PIPELINE_STEPS[i].color : "var(--border-color)",
+                    transition: "background 0.4s ease",
+                    position: "relative",
+                  }}>
+                    {i === activeStep && statusIdx === 2 && (
+                      <div style={{
+                        position: "absolute",
+                        right: "-3px",
+                        top: "-3px",
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        background: PIPELINE_STEPS[i].color,
+                        boxShadow: `0 0 8px ${PIPELINE_STEPS[i].color}`,
+                        animation: "pulse 0.5s ease-in-out",
+                      }} />
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState<Tab>("terminal");
   const [zynripExpanded, setZynripExpanded] = useState<string | null>(null);
@@ -371,10 +1277,13 @@ export default function Home() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <SiteNav />
+      <KonamiCode />
+      <FloatingCTA />
 
       {/* ═══════════════════════ HERO SECTION ═══════════════════════ */}
       {showHero && (
         <section
+          className="scan-line"
           style={{
             padding: "48px 24px 40px",
             background: "linear-gradient(180deg, #0a0e17 0%, #111827 100%)",
@@ -385,7 +1294,10 @@ export default function Home() {
           }}
         >
           <div className="grid-bg" />
-          <HeroParticles />
+          <DataRain />
+          <ParticleField />
+          <CursorSpotlight />
+          <NeuralNetwork />
           <button
             onClick={() => setShowHero(false)}
             aria-label="Dismiss hero section"
@@ -405,6 +1317,9 @@ export default function Home() {
             x
           </button>
           <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+            <div style={{ marginBottom: "12px" }}>
+              <EngineHeartbeat />
+            </div>
             <div
               style={{
                 display: "inline-block",
@@ -414,81 +1329,114 @@ export default function Home() {
                 borderRadius: "20px",
                 fontSize: "11px",
                 color: "#10b981",
-                marginBottom: "16px",
+                marginBottom: "20px",
                 letterSpacing: "0.5px",
                 textTransform: "uppercase",
               }}
             >
               <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginRight: 6, verticalAlign: "middle", animation: "pulse 2s ease-in-out infinite" }} />
-              Paper Trading Mode — Building in Public
+              Paper Trading Mode — Founding Spots Open — All Leagues Free
             </div>
             <h1
               style={{
-                fontSize: "clamp(28px, 4vw, 44px)",
+                fontSize: "clamp(32px, 5vw, 56px)",
                 fontWeight: "bold",
-                lineHeight: "1.2",
-                marginBottom: "8px",
+                lineHeight: "1.1",
+                marginBottom: "16px",
                 color: "var(--text-primary)",
-                minHeight: "1.3em",
+              }}
+            >
+              <span className="sr-only">
+                CoreIntent — Three AI Models Argue So You Don&apos;t Have To Guess.
+              </span>
+              <span aria-hidden="true">
+                Three AIs{" "}
+                <span className="neon-green shimmer-text" style={{ position: "relative" }}>Argue</span>.
+                <br />
+                You Get the{" "}
+                <span style={{ color: "#f59e0b" }}>Truth</span>.
+                <br />
+                <span style={{ fontSize: "clamp(16px, 2.2vw, 24px)", color: "var(--text-secondary)", fontWeight: "normal", display: "block", marginTop: "12px" }}>
+                  Grok detects. Claude questions. Perplexity verifies.
+                  <br />
+                  <span style={{ color: "var(--accent-green)" }}>Only consensus signals survive.</span> $0 forever.
+                </span>
+              </span>
+            </h1>
+            <div
+              style={{
+                fontSize: "clamp(15px, 2.2vw, 20px)",
+                color: "var(--text-secondary)",
+                marginBottom: "20px",
+                minHeight: "1.4em",
               }}
             >
               <TypeWriter />
-            </h1>
-            <p style={{ fontSize: "15px", color: "var(--accent-green)", marginBottom: "8px", fontWeight: "500" }}>
-              The agentic AI trading engine that replaced subscriptions with competitions
-            </p>
+            </div>
             <p
               style={{
-                fontSize: "17px",
+                fontSize: "16px",
                 color: "var(--text-secondary)",
-                maxWidth: "620px",
-                margin: "0 auto 12px",
-                lineHeight: "1.6",
+                maxWidth: "560px",
+                margin: "0 auto 20px",
+                lineHeight: "1.7",
               }}
             >
-              Grok spots the signal. Claude questions it. Perplexity fact-checks it.
-              When all three agree, you move with conviction.
-              When they disagree, you dig deeper — not guess harder.
+              Other platforms charge $99/mo for{" "}
+              <span style={{ color: "#ef4444", textDecoration: "line-through", opacity: 0.6 }}>one model guessing</span>.
+              {" "}We pit{" "}
+              <span style={{ color: "#ef4444", fontWeight: "bold" }}>Grok</span>,{" "}
+              <span style={{ color: "#a855f7", fontWeight: "bold" }}>Claude</span>, &amp;{" "}
+              <span style={{ color: "#3b82f6", fontWeight: "bold" }}>Perplexity</span> against each other.
+              {" "}When they disagree, you&apos;re protected. When they agree,{" "}
+              <span style={{ color: "var(--accent-green)", fontWeight: "bold" }}>you move with conviction.</span>
             </p>
-            <p style={{ fontSize: "15px", color: "var(--text-primary)", margin: "0 auto 8px", fontWeight: "bold" }}>
-              Other platforms charge $99/mo whether you win or lose.
-            </p>
-            <p style={{ fontSize: "15px", color: "var(--accent-green)", margin: "0 auto 4px", fontWeight: "bold" }}>
-              We charge nothing. You prove yourself in competition.
-            </p>
-            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: "0 auto 4px" }}>
-              Built by traders who got tired of paying for signals that don&apos;t work.
-            </p>
-            <p style={{ fontSize: "12px", color: "var(--text-secondary)", margin: "0 auto 24px" }}>
-              Open source. Paper trading mode. Built honestly from New Zealand by Zynthio.
-            </p>
-            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "16px",
+              marginBottom: "20px",
+              flexWrap: "wrap",
+            }}>
+              <span style={{ fontSize: "14px", color: "var(--text-secondary)", textDecoration: "line-through" }}>
+                $99/mo platforms
+              </span>
+              <span style={{ fontSize: "20px", fontWeight: "bold", color: "var(--accent-green)" }}>
+                $0 forever — compete free
+              </span>
+            </div>
+            <LiveSignalFeed />
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap", marginBottom: "8px" }}>
               <button
                 onClick={() => { setShowHero(false); setTab("terminal"); }}
+                className="cta-primary hero-cta-main"
                 style={{
-                  padding: "14px 32px",
+                  padding: "18px 44px",
                   background: "var(--accent-green)",
                   color: "#000",
                   border: "none",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "14px",
+                  fontSize: "16px",
                   fontWeight: "bold",
                   cursor: "pointer",
+                  letterSpacing: "0.3px",
                 }}
               >
-                Launch Terminal &rarr;
+                Enter the Arena &rarr;
               </button>
               <a
                 href="/pricing"
+                className="cta-secondary"
                 style={{
-                  padding: "14px 32px",
+                  padding: "18px 44px",
                   background: "transparent",
                   color: "var(--text-primary)",
                   border: "1px solid var(--border-color)",
                   borderRadius: "8px",
                   fontFamily: "inherit",
-                  fontSize: "14px",
+                  fontSize: "16px",
                   cursor: "pointer",
                   textDecoration: "none",
                   display: "inline-block",
@@ -497,8 +1445,13 @@ export default function Home() {
                 See the Competitions
               </a>
             </div>
+            <p style={{ fontSize: "11px", color: "var(--text-secondary)", margin: "0 auto", maxWidth: "480px" }}>
+              No credit card. No lock-in. No &quot;free trial&quot; that converts.
+              Open source. Paper trading mode. Built in New Zealand on $45/mo.
+            </p>
 
             {/* Value Props */}
+            <ScrollReveal>
             <div
               style={{
                 display: "grid",
@@ -509,13 +1462,14 @@ export default function Home() {
               }}
             >
               {[
-                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude analyses. Perplexity verifies. Agreement = act. Disagreement = wait. One model guessing vs three models debating — that's not marginal, that's fundamental.", color: "#a855f7" },
-                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card. The arena is free — the competition is where value gets created.", color: "#10b981" },
-                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. Best strategy wins — regardless of who or what runs it.", color: "#3b82f6" },
-                { label: "$45/mo. The Whole Platform.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. When your costs are this low, charging subscriptions isn't a business model — it's greed.", color: "#f59e0b" },
+                { label: "3 Models. 1 Signal.", desc: "Grok detects. Claude interrogates. Perplexity verifies. One model guessing vs three debating — that's not marginal, that's fundamental.", color: "#a855f7" },
+                { label: "Compete, Don't Subscribe", desc: "Daily sprints. Weekly grinds. Monthly championships. Free entry. Your P&L is your membership card — not your autopay.", color: "#10b981" },
+                { label: "Bots Are First-Class", desc: "No captcha. No blocks. AI agents register, compete, and earn alongside humans. The leaderboard doesn't care who built you.", color: "#3b82f6" },
+                { label: "$45/mo. The Whole Stack.", desc: "Vercel: free. GitHub: free. Cloudflare: $20. VPS: $25. Infrastructure costs less than a gym membership. Subscriptions aren't a business model — they're extraction.", color: "#f59e0b" },
               ].map((prop) => (
                 <div
                   key={prop.label}
+                  className="card-hover-glow"
                   style={{
                     padding: "16px",
                     background: "var(--bg-secondary)",
@@ -532,84 +1486,117 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            </ScrollReveal>
 
-            {/* Signal Pipeline */}
-            <div style={{ marginTop: "36px" }}>
-              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "16px" }}>
-                How the signal pipeline works
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0", flexWrap: "wrap" }}>
-                {[
-                  { step: "1", label: "Detect", desc: "Grok scans markets & social feeds", color: "#ef4444" },
-                  { step: "2", label: "Analyse", desc: "Claude runs deep risk assessment", color: "#a855f7" },
-                  { step: "3", label: "Verify", desc: "Perplexity fact-checks with live news", color: "#3b82f6" },
-                  { step: "4", label: "Decide", desc: "Consensus = act. Disagreement = dig deeper", color: "#10b981" },
-                ].map((s, i) => (
-                  <div key={s.step} style={{ display: "flex", alignItems: "center" }}>
-                    <div
-                      style={{
-                        padding: "14px 18px",
-                        background: "var(--bg-primary)",
-                        border: `1px solid ${s.color}33`,
-                        borderRadius: "8px",
-                        textAlign: "center",
-                        minWidth: "130px",
-                      }}
-                    >
-                      <div style={{ fontSize: "20px", fontWeight: "bold", color: s.color, marginBottom: "2px" }}>{s.step}</div>
-                      <div style={{ fontSize: "12px", fontWeight: "bold", color: s.color, marginBottom: "4px" }}>{s.label}</div>
-                      <div style={{ fontSize: "10px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{s.desc}</div>
-                    </div>
-                    {i < 3 && (
-                      <span style={{ color: "var(--text-secondary)", fontSize: "16px", margin: "0 6px" }}>&rarr;</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* Animated Signal Pipeline */}
+            <ScrollReveal>
+            <SignalPipeline />
+            </ScrollReveal>
 
-            {/* Stats Banner */}
+            {/* Animated Counters */}
+            <ScrollReveal>
             <div
+              className="counters-section"
               style={{
-                marginTop: "28px",
+                marginTop: "36px",
                 display: "flex",
                 justifyContent: "center",
-                gap: "24px",
+                gap: "clamp(16px, 4vw, 48px)",
                 flexWrap: "wrap",
-                padding: "16px 24px",
-                background: "#10b98108",
+                padding: "28px 24px",
+                background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
                 border: "1px solid #10b98118",
-                borderRadius: "10px",
+                borderRadius: "12px",
               }}
             >
-              {[
-                { value: "3", label: "AI Models", color: "#a855f7" },
-                { value: "6", label: "Trading Agents", color: "#3b82f6" },
-                { value: "$0", label: "Entry Fee", color: "#10b981" },
-                { value: "$45/mo", label: "Total Stack Cost", color: "#f59e0b" },
-                { value: "0", label: "Subscriptions", color: "#ef4444" },
-              ].map((stat) => (
-                <div key={stat.label} style={{ textAlign: "center", minWidth: "80px" }}>
-                  <div style={{ fontSize: "22px", fontWeight: "bold", color: stat.color }}>{stat.value}</div>
-                  <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.3px" }}>{stat.label}</div>
-                </div>
-              ))}
+              <AnimatedCounter end={3} label="AI Models" color="#a855f7" />
+              <AnimatedCounter end={6} label="Trading Agents" color="#3b82f6" />
+              <AnimatedCounter end={0} prefix="$" label="Entry Fee" color="#10b981" />
+              <AnimatedCounter end={12847} suffix="+" label="Signals Analyzed" color="#f59e0b" />
+              <AnimatedCounter end={0} label="Subscriptions" color="#ef4444" />
             </div>
+            </ScrollReveal>
+            <p style={{ fontSize: "9px", color: "var(--text-secondary)", marginTop: "6px", textAlign: "center" }}>
+              [DEMO] Signal count is simulated — platform is in paper trading mode
+            </p>
+
+            {/* How It Works */}
+            <ScrollReveal>
+              <HowItWorks />
+            </ScrollReveal>
+
+            {/* Founding Member Banner */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                padding: "20px 24px",
+                background: "linear-gradient(135deg, #f59e0b08 0%, #a855f708 50%, #10b98108 100%)",
+                border: "1px solid #f59e0b22",
+                borderRadius: "12px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "4px 12px",
+                background: "#f59e0b18",
+                border: "1px solid #f59e0b33",
+                borderRadius: "20px",
+                fontSize: "10px",
+                color: "#f59e0b",
+                marginBottom: "12px",
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+              }}>
+                <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f59e0b", animation: "pulse 2s ease-in-out infinite" }} />
+                Founding Member Window Open
+              </div>
+              <p style={{ fontSize: "14px", color: "var(--text-primary)", fontWeight: "bold", marginBottom: "4px" }}>
+                Early registrations shape the platform, not just the waitlist.
+              </p>
+              <p style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5", maxWidth: "500px", margin: "0 auto 12px" }}>
+                Priority placement when leagues launch. Permanent founding badge.
+                Direct input on features and roadmap. The arena is free — the timing is the advantage.
+              </p>
+              <a
+                href="/pricing"
+                style={{
+                  display: "inline-block",
+                  padding: "10px 24px",
+                  background: "#f59e0b",
+                  color: "#000",
+                  borderRadius: "8px",
+                  fontFamily: "inherit",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                }}
+              >
+                Claim Founding Status &rarr;
+              </a>
+            </div>
+            </ScrollReveal>
 
             {/* Powered By */}
+            <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 Powered by three AI models
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", textAlign: "center" }}>
                 {AI_MODELS.map((m) => (
-                  <div
+                  <TiltCard
                     key={m.name}
+                    className="card-hover-glow"
                     style={{
                       padding: "20px 16px",
                       background: "var(--bg-primary)",
                       border: "1px solid var(--border-color)",
                       borderRadius: "8px",
+                      cursor: "default",
                     }}
                   >
                     <div
@@ -633,12 +1620,14 @@ export default function Home() {
                     <div style={{ fontSize: "15px", fontWeight: "bold", color: m.color, marginBottom: "2px" }}>{m.name}</div>
                     <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginBottom: "6px" }}>{m.provider}</div>
                     <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: "1.4" }}>{m.role}</div>
-                  </div>
+                  </TiltCard>
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Social Proof — DEMO */}
+            <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 What people are saying
@@ -673,7 +1662,9 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
             {/* Why CoreIntent — Differentiator */}
+            <ScrollReveal>
             <div style={{ marginTop: "36px" }}>
               <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
                 Why CoreIntent
@@ -687,7 +1678,7 @@ export default function Home() {
                   textAlign: "left",
                 }}
               >
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                <div className="why-coreintent-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   {[
                     { them: "One model guessing", us: "Three models debating" },
                     { them: "$99/mo whether you win or lose", us: "$0 — compete to prove your edge" },
@@ -706,10 +1697,223 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
+
+            {/* Trust Badges */}
+            <ScrollReveal>
+            <div
+              style={{
+                marginTop: "36px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "12px",
+                flexWrap: "wrap",
+              }}
+            >
+              {[
+                { label: "Built in NZ", detail: "No VC. Self-funded.", color: "#3b82f6", icon: "NZ" },
+                { label: "AI-Powered", detail: "3 Models Cross-Check", color: "#a855f7", icon: "AI" },
+                { label: "Competition-Grade", detail: "Free Entry. Real Skill.", color: "#10b981", icon: "CG" },
+                { label: "Open Source", detail: "Fully Transparent", color: "#f59e0b", icon: "{ }" },
+                { label: "Bot-Friendly", detail: "First-Class Citizens", color: "#06b6d4", icon: "B" },
+                { label: "$45/mo Stack", detail: "Lean Infrastructure", color: "#ef4444", icon: "$" },
+              ].map((badge) => (
+                <div
+                  key={badge.label}
+                  className="trust-badge card-breathe"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    padding: "10px 16px",
+                    background: badge.color + "08",
+                    border: `1px solid ${badge.color}22`,
+                    borderRadius: "10px",
+                  }}
+                >
+                  <span style={{
+                    fontSize: "11px",
+                    fontWeight: "bold",
+                    color: badge.color,
+                    background: badge.color + "18",
+                    padding: "6px 8px",
+                    borderRadius: "6px",
+                    minWidth: "28px",
+                    textAlign: "center",
+                  }}>
+                    {badge.icon}
+                  </span>
+                  <div>
+                    <div style={{ fontSize: "12px", fontWeight: "bold", color: "var(--text-primary)" }}>{badge.label}</div>
+                    <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>{badge.detail}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            </ScrollReveal>
+
+            {/* Leaderboard Preview — DEMO */}
+            <ScrollReveal>
+            <div style={{ marginTop: "36px" }}>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "12px" }}>
+                Leaderboard Preview
+                <span style={{ marginLeft: "8px", padding: "2px 6px", background: "#f59e0b22", color: "#f59e0b", borderRadius: "4px", fontSize: "9px" }}>
+                  DEMO — Simulated data
+                </span>
+              </div>
+              <div
+                className="border-trace"
+                style={{
+                  padding: "20px",
+                  background: "var(--bg-primary)",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                  <span style={{ fontSize: "13px", fontWeight: "bold", color: "var(--text-primary)" }}>Daily Sprint — Top 5</span>
+                  <span style={{ fontSize: "10px", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
+                    <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981" }} />
+                    LIVE
+                  </span>
+                </div>
+                {[
+                  { rank: 1, name: "NightOwl_Bot", pnl: "+4.2%", type: "AI", color: "#f59e0b" },
+                  { rank: 2, name: "Alex R.", pnl: "+3.8%", type: "Human", color: "#a855f7" },
+                  { rank: 3, name: "QuantFlow_v2", pnl: "+3.1%", type: "AI", color: "#3b82f6" },
+                  { rank: 4, name: "Mika T.", pnl: "+2.7%", type: "Human", color: "#10b981" },
+                  { rank: 5, name: "???", pnl: "—", type: "Your spot", color: "#ef4444" },
+                ].map((entry) => (
+                  <div
+                    key={entry.rank}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "10px 12px",
+                      borderBottom: entry.rank < 5 ? "1px solid var(--border-color)" : "none",
+                      gap: "12px",
+                      background: entry.rank === 5 ? "rgba(16, 185, 129, 0.04)" : "transparent",
+                      borderRadius: entry.rank === 5 ? "6px" : "0",
+                      border: entry.rank === 5 ? "1px dashed rgba(16, 185, 129, 0.3)" : undefined,
+                    }}
+                  >
+                    <span style={{ fontSize: "14px", fontWeight: "bold", color: entry.rank <= 3 ? entry.color : "var(--text-secondary)", minWidth: "24px" }}>
+                      {entry.rank <= 3 ? ["1st", "2nd", "3rd"][entry.rank - 1] : `#${entry.rank}`}
+                    </span>
+                    <span style={{ flex: 1, fontSize: "13px", color: entry.rank === 5 ? "var(--accent-green)" : "var(--text-primary)", fontWeight: entry.rank === 5 ? "bold" : "normal" }}>
+                      {entry.name}
+                    </span>
+                    <span style={{ fontSize: "10px", padding: "2px 8px", background: `${entry.color}18`, color: entry.color, borderRadius: "4px" }}>
+                      {entry.type}
+                    </span>
+                    <span style={{ fontSize: "13px", fontWeight: "bold", color: entry.rank === 5 ? "var(--text-secondary)" : "#10b981", fontVariantNumeric: "tabular-nums" }}>
+                      {entry.pnl}
+                    </span>
+                  </div>
+                ))}
+                <div style={{ textAlign: "center", marginTop: "14px" }}>
+                  <button
+                    onClick={() => { setShowHero(false); setTab("terminal"); }}
+                    className="cta-primary"
+                    style={{
+                      padding: "12px 28px",
+                      background: "var(--accent-green)",
+                      color: "#000",
+                      border: "none",
+                      borderRadius: "8px",
+                      fontFamily: "inherit",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Claim Your Spot &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
+            </ScrollReveal>
+
+            {/* Try It — Mini Terminal Preview */}
+            <ScrollReveal>
+            <MiniTerminalPreview onLaunch={() => { setShowHero(false); setTab("terminal"); }} />
+            </ScrollReveal>
+
+            {/* Early Access CTA */}
+            <div
+              className="holo-border"
+              style={{
+                marginTop: "36px",
+                padding: "24px",
+                background: "linear-gradient(135deg, #10b98108 0%, #a855f708 50%, #3b82f608 100%)",
+                border: "1px solid #10b98118",
+                borderRadius: "12px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: "11px", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
+                Early Access
+              </div>
+              <div style={{ fontSize: "18px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "4px" }}>
+                Get in before the leaderboard fills up.
+              </div>
+              <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginBottom: "16px", maxWidth: "500px", margin: "0 auto 16px" }}>
+                Early registrations get priority placement when competitions go live.
+                The platform is free. The advantage is timing.
+              </div>
+              <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+                <a
+                  href="https://github.com/coreintentdev/coreintent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-primary"
+                  style={{
+                    padding: "14px 32px",
+                    background: "var(--accent-green)",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    display: "inline-block",
+                  }}
+                >
+                  Star on GitHub
+                </a>
+                <a
+                  href="https://x.com/coreintentai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-secondary"
+                  style={{
+                    padding: "14px 32px",
+                    background: "transparent",
+                    color: "var(--text-primary)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "8px",
+                    fontFamily: "inherit",
+                    fontSize: "14px",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    display: "inline-block",
+                  }}
+                >
+                  Follow @coreintentai
+                </a>
+              </div>
+              <div style={{ fontSize: "10px", color: "var(--text-secondary)", marginTop: "12px" }}>
+                Competitions launching soon. Paper trading mode active.
+              </div>
+            </div>
           </div>
         </section>
       )}
 
+      <div className="section-divider" />
       <MarketTicker />
 
       {/* Tab bar */}
@@ -1087,7 +2291,7 @@ npm run build           # Production build`}
       </main>
 
       {/* Status bar */}
-      <footer
+      <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -1098,10 +2302,13 @@ npm run build           # Production build`}
           color: "var(--text-secondary)",
           background: "var(--bg-secondary)",
         }}
+        role="status"
+        aria-label="Engine status"
       >
         <span>coreintent.dev | Zynthio Trading Engine | {DOMAINS.length} domains</span>
         <span>Paper Trading Mode | v0.2.0-alpha</span>
-      </footer>
+      </div>
+      <SiteFooter />
     </div>
   );
 }

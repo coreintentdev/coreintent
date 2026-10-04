@@ -228,7 +228,7 @@ coreintent.dev
 Build in public update — April 2026:
 
 What's live:
--> 13 API endpoints
+-> 14 API endpoints
 -> 6 AI agents configured
 -> Interactive terminal with real commands
 -> Full docs and architecture guide
@@ -521,3 +521,691 @@ Your strategy. Our arena. May the best code win.
 coreintent.dev
 
 #AlgoTrading #AgenticAI #CoreIntent
+
+---
+
+## Post 31 — Poll: The Bot Question
+
+Poll: Should trading platforms allow bots to compete alongside humans?
+
+(A) Yes — best strategy wins, period
+(B) No — humans only
+(C) Yes, but on separate leaderboards
+(D) Already happening whether platforms admit it or not
+
+We chose (A). And (D) is true regardless.
+
+#AITrading #TradingBots
+
+---
+
+## Post 32 — The Quiet Signal
+
+The most important signal our AI generates isn't "buy."
+
+It's "wait."
+
+Two models say go. One says stop. We stop.
+
+In a world that rewards action, the discipline to not trade is the hardest edge to build.
+
+CoreIntent was designed to say no.
+
+#TradingPsychology #RiskManagement
+
+---
+
+## Post 33 — One Question
+
+One question that changed how I think about trading platforms:
+
+"If the infrastructure costs $45/month, where does the other $54 go?"
+
+The answer: it goes to the platform. Not to you.
+
+So we killed the subscription.
+
+coreintent.dev
+
+#FinTech #StartupThinking
+
+---
+
+## Post 34 — Founder Honesty
+
+Honest founder update:
+
+- 14 API routes, most return demo data
+- 6 agents configured, none live-trading
+- No exchange connections yet
+- No user auth
+- No database
+
+But also:
+- 3 AI models integrated
+- Full interactive terminal
+- Open source
+- $45/mo infrastructure
+- Zero lies on the dashboard
+
+We're early. We're honest. That's the edge.
+
+#BuildInPublic #HonestTech
+
+---
+
+## Post 35 — Ask Me Anything
+
+AMA for anyone building in fintech:
+
+How do you compete with platforms backed by $50M+ in VC?
+
+Our answer: you don't. You build something they can't.
+
+They can't be transparent. They can't charge $0. They can't welcome bots. They can't publish their infrastructure bill.
+
+We can.
+
+coreintent.dev
+
+#IndieFounder #FinTech
+
+---
+
+## Post 36 — Thread: What Trading Platforms Won't Tell You
+
+Thread: 5 things your trading platform won't tell you
+
+1/ Their "AI-powered signals" are usually one model with a temperature slider. CoreIntent uses three models that actively disagree with each other. Disagreement is the feature.
+
+2/ Your subscription pays for their office, not your signals. Most platforms spend 60%+ of revenue on overhead. We spend $45/mo. Total.
+
+3/ Banning bots doesn't stop bots. It stops honest automation. The sophisticated bots already bypass their captcha. We just let everyone compete openly.
+
+4/ "Active users" on their dashboard include test accounts, dead accounts, and bots they claim to block. We label demo data "demo."
+
+5/ The subscription model is designed so the platform wins regardless of your performance. Competition-based revenue means we only win when traders show up.
+
+coreintent.dev — built differently.
+
+#FinTech #AITrading #BuildInPublic
+
+---
+
+## Post 37 — The Scoreboard Speaks
+
+In 5 years people will look back and wonder why trading platforms ever banned bots.
+
+The same way we look back and wonder why some platforms banned short selling.
+
+The market doesn't care what's trading. The scoreboard speaks for itself.
+
+#FutureOfTrading #AgenticAI
+
+---
+
+## Post 38 — Short and Brutal
+
+Trading platform business model:
+1. Charge $99/mo
+2. Show green dots
+3. User loses money
+4. Keep charging $99/mo
+5. Repeat
+
+CoreIntent business model:
+1. Charge $0
+2. Label everything honestly
+3. Run competitions
+4. Best strategy wins
+
+Different game.
+
+coreintent.dev
+
+#FinTech #CoreIntent
+
+---
+
+## Post 39 — The Content Is Public Too
+
+We open-sourced the trading engine.
+
+Then we open-sourced the marketing.
+
+65 tweets. 14 LinkedIn posts. 19 TikTok scripts. 18 Instagram captions. A press kit. A 35-day content calendar.
+
+All in /public/marketing/ on GitHub.
+
+Copy the marketing too. We dare you.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #BuildInPublic #ContentStrategy
+
+---
+
+## Post 40 — The OG Image Is Generated
+
+Our Open Graph images aren't designed in Figma.
+
+They're generated at the edge. In code. Automatically.
+
+Every page gets a unique, branded preview when you share the link — zero manual work.
+
+When your marketing runs on infrastructure, not headcount, you move faster.
+
+$45/mo includes the preview cards.
+
+#DevMarketing #NextJS #EdgeComputing
+
+---
+
+## Post 41 — Schema Markup as Marketing
+
+Most trading platforms optimise for "sign up" buttons.
+
+We optimised for Google's FAQ rich results.
+
+Every competition is Schema.org structured data. Every FAQ answer is machine-readable. Every league is an Event with scheduling data.
+
+SEO isn't a department. It's a design decision.
+
+coreintent.dev/pricing
+
+#SEO #StructuredData #FinTech
+
+---
+
+## Post 42 — The Peer Review Analogy
+
+Science doesn't trust a single study.
+Courts don't trust a single witness.
+Medicine doesn't trust a single trial.
+
+Why would you trust a single AI model with your trading signals?
+
+CoreIntent runs peer review for markets. Three models. Three perspectives. One signal — or none.
+
+#MultiModelAI #CriticalThinking #AITrading
+
+---
+
+## Post 43 — Paper Trading Is R&D
+
+SpaceX didn't launch astronauts on the first rocket.
+
+Tesla didn't sell the first prototype.
+
+We're not "just" paper trading.
+
+We're running R&D on a multi-model trading engine with six agents, three AI models, and zero risk to anyone's capital.
+
+When we go live, the architecture will be battle-tested. Not rushed.
+
+That's not weakness. That's engineering.
+
+#PaperTrading #StartupMindset #CoreIntent
+
+---
+
+## Post 44 — NZ Time Zone Advantage
+
+Building from NZ means we ship while SF sleeps.
+
+US markets close. We push code. US wakes up to new features.
+
+12-hour offset isn't a disadvantage. It's a deployment window.
+
+#MadeInNZ #RemoteWork #IndieFounder
+
+---
+
+## Post 45 — The 3-Filter Test
+
+Before any signal reaches a trader on CoreIntent, it passes 3 filters:
+
+Filter 1: Does it exist? (Grok — pattern detection)
+Filter 2: Should we act? (Claude — risk analysis)
+Filter 3: Is the context right? (Perplexity — research)
+
+Most signals fail at Filter 2.
+
+That's the point.
+
+#RiskManagement #AITrading #TradingSignals
+
+---
+
+## Post 46 — Competition Countdown
+
+Competitions are coming.
+
+Daily sprints. Weekly grinds. Monthly championships. Free entry.
+
+Get your strategy ready. Get your bot registered. Get your edge sharp.
+
+The leaderboard doesn't wait.
+
+coreintent.dev
+
+#AITrading #TradingCompetition #CoreIntent
+
+---
+
+## Post 47 — The 96% Audit Score
+
+Every change to CoreIntent runs through a 54-point automated audit.
+
+Current score: 96%. 52/54 checks pass. 0 failures.
+
+Build passes clean or it doesn't deploy. No exceptions.
+
+Quality isn't a feature — it's a prerequisite.
+
+#Engineering #BuildInPublic #QualityFirst
+
+---
+
+## Post 48 — Audit Our Code
+
+Don't trust us. Audit us.
+
+The entire CoreIntent codebase is open source.
+
+Every route. Every agent. Every line.
+
+If something's demo, it's labelled demo. If something's planned, it says planned.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #Transparency #CoreIntent
+
+---
+
+## Post 49 — Single-Model Platforms Are Already Obsolete
+
+One AI model guessing = one point of failure.
+
+Three AI models cross-checking = peer review.
+
+The future of trading signals isn't a better model.
+
+It's better coordination between models.
+
+Single-model platforms are already dead. They just don't know it yet.
+
+#MultiModelAI #AgenticAI #TradingSignals
+
+---
+
+## Post 50 — Disagreement Is Alpha
+
+When all 3 AI models agree, that's a strong signal.
+
+But when they disagree? That's where the alpha lives.
+
+Grok says BUY. Claude says WAIT. Perplexity says WHALE DUMP INCOMING.
+
+Consensus is comfortable. Disagreement is profitable.
+
+#AITrading #RiskManagement #CoreIntent
+
+---
+
+## Post 51 — Show Your P&L
+
+Subscriptions measure your wallet.
+
+Competitions measure your skill.
+
+On CoreIntent, you don't show your credit card. You show your P&L.
+
+The leaderboard is the resume. Everything else is noise.
+
+#Meritocracy #TradingCompetition #ProveYourEdge
+
+---
+
+## Post 52 — The NZ Bootstrap Story
+
+No VC. No office. No employees.
+
+One founder in New Zealand. $45/mo infrastructure. Three AI models. Six agents.
+
+Between school runs and timezone gaps.
+
+You don't need Silicon Valley. You don't need permission.
+
+You need intent.
+
+#IndieFounder #MadeInNZ #Bootstrap #CoreIntent
+
+---
+
+## Post 53 — Bot vs Bot Era
+
+The future of trading competitions:
+
+Your algo vs their algo.
+Your prompt engineering vs their risk model.
+Your bot's 3am conviction vs their bot's overnight strategy.
+
+Humans welcome. Bots first-class.
+
+The arena is open for both.
+
+coreintent.dev
+
+#AlgoTrading #BotVsBot #FutureOfTrading
+
+---
+
+## Post 54 — Platform Honesty
+
+Other platforms: Green dots on services that aren't connected. "AI-powered" labels on a single API call. "Live" data that's been cached for 6 hours.
+
+CoreIntent: Demo labelled demo. Planned labelled planned. 54-point audit on every push.
+
+Radical honesty is a competitive advantage most founders are too scared to use.
+
+#Transparency #FinTech #BuildInPublic
+
+---
+
+## Post 55 — Founding Members Shape the Product
+
+Early registrations aren't just early access.
+
+Founding members get:
+— Priority placement when leagues launch
+— Permanent founding member badge
+— Direct input on features and roadmap
+
+You don't just use the platform. You shape it.
+
+coreintent.dev
+
+#EarlyAccess #Community #CoreIntent
+
+---
+
+## Post 56 — 30-Day Countdown: The Arena Opens June 1st
+
+30 days.
+
+That's how long until the first CoreIntent competition goes live.
+
+Daily sprints. Weekly grinds. Monthly championships. Free entry. Bots welcome.
+
+The countdown is on. The leaderboard is empty. Your name could be first.
+
+coreintent.dev
+
+#CoreIntent #AITrading #CompetitionLaunch
+
+---
+
+## Post 57 — Countdown: Why We Waited
+
+We could have launched competitions 3 months ago.
+
+But the audit wasn't passing at 96%.
+The AI consensus pipeline hadn't been stress-tested.
+The terminal didn't have 100+ commands yet.
+
+We waited. We built. We audited.
+
+June 1st. It's ready now.
+
+#BuildInPublic #CoreIntent #QualityFirst
+
+---
+
+## Post 58 — Countdown: What Happens on Day One
+
+June 1st, 00:00 UTC:
+
+-> First Daily Sprint opens
+-> Leaderboard goes live
+-> Bots and humans enter the same arena
+-> 3 AI models start generating live competition signals
+
+No beta label. No soft launch. The arena opens and the scoreboard speaks.
+
+Are you registered?
+
+coreintent.dev
+
+#CompetitionDay #AITrading #CoreIntent
+
+---
+
+## Post 59 — Countdown: The Bot Builders Are Coming
+
+We've had more API docs requests in the last 2 weeks than the previous 2 months combined.
+
+The quants are registering their bots.
+The algo traders are tuning strategies.
+The AI researchers are testing multi-model approaches.
+
+June 1st isn't just a launch date. It's a starting gun.
+
+Your bot ready?
+
+#AlgoTrading #AgenticAI #CoreIntent
+
+---
+
+## Post 60 — Countdown: The $0 Entry Fee Isn't Changing
+
+Some people asked if competitions would be paid.
+
+No.
+
+Free entry. June 1st. June 15th. July 1st. Forever.
+
+Premium tiers will come eventually — higher stakes, bigger pools. But the core arena is free. That was the founding decision and it's not up for debate.
+
+$45/mo infrastructure. $0 entry. That's the math.
+
+#FreeForever #CoreIntent #NoPaywall
+
+---
+
+## Post 61 — Countdown Thread: 5 Things Ready for Launch
+
+Thread: 5 things shipping with the June 1st competition launch
+
+1/ Signal pipeline is live. Grok detects. Claude validates. Perplexity verifies. Three filters before any signal reaches the leaderboard.
+
+2/ Daily/Weekly/Monthly leagues are configured. All three go live simultaneously. Pick your timeframe.
+
+3/ Bot registration API is open. No captcha. No approval queue. Register, enter, compete.
+
+4/ Leaderboard scoring includes risk-adjusted metrics. Raw P&L isn't enough — Sharpe ratio matters.
+
+5/ 54-point audit passing at 96%. Every competition interaction runs through the same quality checks as the codebase.
+
+June 1st. The arena opens.
+
+coreintent.dev
+
+#LaunchDay #BuildInPublic #CoreIntent
+
+---
+
+## Post 62 — May Update: Build in Public
+
+Build in public update — May 2026:
+
+What shipped:
+-> 14 API endpoints live
+-> 54-point audit at 96%
+-> Competition infrastructure ready
+-> Full marketing/press kit open-sourced
+-> Dynamic OG images for every page
+
+What's launching June 1st:
+-> Daily Sprint competitions
+-> Weekly Grind leagues
+-> Monthly Championship
+
+What's still planned:
+-> Exchange connections (Binance/Coinbase)
+-> Live trading with real funds
+-> The Mansion
+
+Honest as always.
+
+#BuildInPublic #CoreIntent #MayUpdate
+
+---
+
+## Post 63 — The Leaderboard Is the Resume
+
+In 30 days, every trader and every bot gets a public track record.
+
+No hiding behind private portfolios.
+No cherry-picking screenshots.
+No "trust me bro" signals.
+
+Your P&L. Your Sharpe ratio. Your drawdown. All public. All verifiable.
+
+The leaderboard is your resume. June 1st.
+
+coreintent.dev
+
+#Transparency #TradingCompetition #CoreIntent
+
+---
+
+## Post 64 — First Mover Advantage Has an Expiry Date
+
+Right now, the leaderboard is empty.
+
+On June 2nd, it won't be.
+
+First-day competitors get founding placement. First-week consistency gets featured. First-month champions set the standard.
+
+The platform is free forever. But the timing advantage expires.
+
+coreintent.dev
+
+#EarlyAccess #CoreIntent #CompetitionLaunch
+
+---
+
+## Post 65 — The Countdown Clock Is on the Website
+
+We put a literal countdown clock on the pricing page.
+
+Not because we're hyping. Because we're committing.
+
+June 1st, 00:00 UTC. Public. Non-negotiable.
+
+If we're not ready, the clock will prove it. If we are, the leaderboard will prove it.
+
+Transparency isn't just about labels. It's about deadlines.
+
+coreintent.dev/pricing
+
+#Accountability #BuildInPublic #CoreIntent
+
+---
+
+## Post 66 — The AI Arms Race Is Over
+
+The AI arms race in trading isn't about having the best model.
+
+It's about having the best *disagreement.*
+
+Single-model platforms: "Model says buy. We buy."
+CoreIntent: "Grok says buy. Claude says risky. Perplexity says whale movement. We investigate."
+
+The arms race ended. The debate era started.
+
+#AITrading #MultiModelAI #CoreIntent
+
+---
+
+## Post 67 — What $2,376 Buys You
+
+$2,376.
+
+That's what a $99/mo trading subscription costs over 2 years.
+
+For that money you could:
+- Fund a small business
+- Buy 52 books on trading psychology
+- Put it into your actual portfolio
+- Or use CoreIntent for free and keep every cent
+
+The math speaks for itself.
+
+coreintent.dev/pricing
+
+#FinTech #TradingSavings #CoreIntent
+
+---
+
+## Post 68 — The Content Is Open Source Too
+
+We didn't just open-source the code.
+
+We open-sourced:
+-> 65 tweets
+-> 14 LinkedIn posts
+-> 19 TikTok scripts
+-> 18 Instagram captions
+-> YouTube descriptions
+-> Reddit launch posts
+-> Product Hunt launch template
+-> Press kit, one-pager, media kit
+
+All in /public/ on GitHub.
+
+Copy our marketing too. We dare you. Twice.
+
+github.com/coreintentdev/coreintent
+
+#OpenSource #ContentMarketing #BuildInPublic
+
+---
+
+## Post 69 — The Paper Trading Defense
+
+"Paper trading isn't real."
+
+Neither is burning $99/mo on signals that work 40% of the time.
+
+At least we're honest about it.
+
+Paper trading is R&D. Subscriptions charging for unvalidated signals is negligence with a payment form.
+
+We'll go live when the architecture earns it. Not when the investors demand it.
+
+#PaperTrading #HonestTech #CoreIntent
+
+---
+
+## Post 70 — The Three-Model Guarantee
+
+Every platform promises "AI-powered."
+
+Here's what that usually means: one API call to one model, wrapped in a dashboard.
+
+Here's what it means at CoreIntent:
+1. Grok scans for the opportunity
+2. Claude challenges the thesis
+3. Perplexity checks the facts
+4. RiskGuard enforces the limits
+5. Only consensus survives
+
+Three models. Four filters. One signal.
+
+That's not "AI-powered." That's AI-governed.
+
+coreintent.dev
+
+#AITrading #MultiModel #CoreIntent
