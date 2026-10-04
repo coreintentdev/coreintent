@@ -38,9 +38,19 @@ Based in: New Zealand (NEVER register anything in Australia)
 - VPS Lens: scripts/vps-lens.sh
 
 ## VPS
-- Cloudzy: 100.122.99.34
+- Documented Contabo VDS public origin: 5.189.143.170
+- Documented Tailscale: 100.121.107.112
+- Retired Cloudzy address: 100.122.99.34 — do not deploy there
+- These hosts were copied from the 2026-09-30 fleet map. They were not probed by the session that wrote this.
+- Scripts in this repo are not deployed. deploy-vps.sh stops if SSH fails.
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
-- 32,503 files, ~19GB
+
+## Already paid inventories — read these, do not re-ask
+- This website has 14 demo routes. The list is `lib/stack-record.ts`. There is no 110-route catalog in this repo.
+- Connector map (2026-03-23): 22 Perplexity services, 363 tools, 11 VPS key names. Drive: CC_HANDOVER_API_CONNECTOR_MAP.md
+- Fleet map: coreintentai `ops/handover/cursor-incidents-20261001/ZYNTHIO-MAPS-20260930.md` (842 domains, 111 generated sites)
+- Engine code that kept moving after May 2026: github.com/coreintentdev/coreintentai
+- Billing record of repeat sessions: coreintentai `ops/handover/cursor-incidents-20261001/incidents/INC-20261001-CURSOR-BILLING-ASYMMETRY-OPERATOR-PAYS.md`
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
@@ -52,7 +62,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 ## Known Issues
 - Exchange/market routes (market, portfolio, signals, agents) return hardcoded demo data — no live exchange connections
 - protect/research/content routes call live AI APIs when env keys are set; fall back to [DEMO] gracefully when not
-- health/status/connections derive real values from env vars (no hardcoded data)
+- health/status derive values from env vars. /api/connections labels infra as unverified or not_deployed. It does not probe hosts.
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer

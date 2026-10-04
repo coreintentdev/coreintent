@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { API_ROUTE_COUNT, VDS_LABEL } from "@/lib/stack-record";
 
 const WELCOME_BANNER = `\x1b[36m
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗
@@ -133,7 +134,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mMonthly burn:\x1b[0m ~A$45/mo (Claude Pro + VPS only)
 
   \x1b[32m●\x1b[0m Claude Pro     — ACTIVE (main builder)
-  \x1b[32m●\x1b[0m Cloudzy VPS    — ACTIVE
+  \x1b[33m◐\x1b[0m ${VDS_LABEL}    — NOT DEPLOYED
   \x1b[32m●\x1b[0m Grok Free      — ACTIVE (research layer)
   \x1b[33m◐\x1b[0m Perplexity     — FREE tier (Max cancelled)
   \x1b[33m◐\x1b[0m zyn-bash       — API overflow (~$0.003/call)
@@ -181,7 +182,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[33mPAYING (~A$45/mo):\x1b[0m
     \x1b[32m●\x1b[0m Claude Pro        ~A$30/mo   ACTIVE
-    \x1b[32m●\x1b[0m Cloudzy VPS       ~$15/mo    ACTIVE
+    \x1b[33m◐\x1b[0m ${VDS_LABEL}       documented NOT DEPLOYED
 
   \x1b[33mFREE / ALREADY PAID:\x1b[0m
     \x1b[32m●\x1b[0m Cloudflare Pages  FREE       16 sites deployed
@@ -211,14 +212,14 @@ const STATIC_COMMANDS: Record<string, string> = {
 \x1b[36m══════════════════════════════════════════\x1b[0m
   \x1b[32mBUILT & WORKING:\x1b[0m
     \x1b[32m●\x1b[0m 6 pages: / /pricing /stack /privacy /terms /disclaimer
-    \x1b[32m●\x1b[0m 10 API routes (returning demo data)
+    \x1b[32m●\x1b[0m ${API_ROUTE_COUNT} API routes (returning demo data)
     \x1b[32m●\x1b[0m Build passes clean — Next.js 14 + TypeScript strict
     \x1b[32m●\x1b[0m 8 domains live, all returning 200
-    \x1b[32m●\x1b[0m VPS running (Cloudzy + Frankfurt)
+    \x1b[33m◐\x1b[0m VDS scripts written, not deployed (${VDS_LABEL})
     \x1b[32m●\x1b[0m cai CLI on VPS with full session state
 
   \x1b[33mDEMO / PLACEHOLDER:\x1b[0m
-    \x1b[33m◐\x1b[0m All 12 API routes return demo data (keys not set)
+    \x1b[33m◐\x1b[0m All ${API_ROUTE_COUNT} API routes return demo data (keys not set)
     \x1b[32m●\x1b[0m Terminal XSS hardened (ansiToHtml sanitized)
     \x1b[32m●\x1b[0m Commander mode: tab complete, watch, ask AI, chaining
 
@@ -238,7 +239,7 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mProject:\x1b[0m     CoreIntent (coreintent)
   \x1b[33mStack:\x1b[0m       Next.js 14 + TypeScript (strict) + App Router
   \x1b[33mRepo:\x1b[0m        github.com/coreintentdev/coreintent
-  \x1b[33mVPS Cloudzy:\x1b[0m Cloudzy (Tailscale SSH)
+  \x1b[33mVDS:\x1b[0m ${VDS_LABEL} (documented, not probed)
   \x1b[33mVPS Frankfurt:\x1b[0m Frankfurt VPS
   \x1b[33mDisk Cloudzy:\x1b[0m ~76% (14GB free)
   \x1b[33mDisk Frankfurt:\x1b[0m ~78% (13GB free)
@@ -305,7 +306,7 @@ const STATIC_COMMANDS: Record<string, string> = {
 
   \x1b[33mInfrastructure:\x1b[0m
     \x1b[32m●\x1b[0m Cloudflare      — FREE, 16 sites, DNS + CDN
-    \x1b[32m●\x1b[0m Cloudzy VPS     — $15/mo, 8 domains live
+    \x1b[33m◐\x1b[0m ${VDS_LABEL}     — documented, scripts not deployed
     \x1b[32m●\x1b[0m GitHub          — FREE, coreintentdev repos
     \x1b[32m●\x1b[0m Porkbun         — Annual, all domains
 
@@ -1138,7 +1139,7 @@ export default function Terminal() {
         { name: "api/signals", type: "api" },
         { name: "api/agents", type: "api" },
         { name: "api/market", type: "api" },
-        { name: "Cloudzy VPS", type: "infra" },
+        { name: VDS_LABEL, type: "infra" },
         { name: "GitHub", type: "infra" },
       ];
       let idx = 0;
@@ -1364,7 +1365,7 @@ export default function Terminal() {
       const checks = [
         { name: "Next.js Build", status: "PASS" },
         { name: "TypeScript Strict", status: "PASS" },
-        { name: "API Routes (12)", status: "PASS" },
+        { name: `API Routes (${API_ROUTE_COUNT})`, status: "PASS" },
         { name: "XSS Hardening", status: "PASS" },
         { name: "ANSI Sanitization", status: "PASS" },
         { name: "CSP Headers", status: "PASS" },

@@ -9,6 +9,7 @@
 import { NextRequest } from "next/server";
 import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 import { getAiKeyStatus } from "@/lib/ai";
+import { VDS, VDS_LABEL, VDS_STATUS } from "@/lib/stack-record";
 
 interface AIService {
   status: "keyed" | "demo";
@@ -76,11 +77,11 @@ export async function GET(req: NextRequest) {
     };
 
     const infrastructure: ConnectionsResponse["infrastructure"] = {
-      vps:        { status: "live",   host: "Cloudzy", role: "Trading engine backend"     },
-      cloudflare: { status: "active", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"       },
-      github:     { status: "active", repos: 5,        role: "CI/CD, source control"     },
-      linear:     { status: "active", tasks: 26, completed: 3, role: "Project management" },
-      notion:     { status: "active", role: "Documentation"                               },
+      vps:        { status: VDS_STATUS, host: `${VDS_LABEL} ${VDS.publicHost}`, role: "Scripts in repo, not deployed. Host not probed this session." },
+      cloudflare: { status: "unverified", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"       },
+      github:     { status: "unverified", repos: 5,        role: "CI/CD, source control"     },
+      linear:     { status: "unverified", tasks: 26, completed: 3, role: "Project management" },
+      notion:     { status: "unverified", role: "Documentation"                               },
     };
 
     const tools: ConnectionsResponse["tools"] = {

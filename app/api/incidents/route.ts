@@ -90,7 +90,7 @@ const MONITORED_SERVICES: readonly MonitoredService[] = [
   { name: "OpenClaw",             status: "degraded",       uptime: "0%",    note: "Frequently crashing, unknown service" },
   { name: "Cloudflare CDN",       status: "not_configured", uptime: "0%",    note: "Pro plan — not configured for coreintent.dev" },
   { name: "Vercel Hosting",       status: "not_deployed",   uptime: "0%",    note: "App ready for Vercel — never deployed" },
-  { name: "Cloudzy VPS",          status: "not_deployed",   uptime: "0%",    note: "Server provisioned — scripts never deployed" },
+  { name: "Contabo VDS",          status: "not_deployed",   uptime: "0%",    note: "Documented host 5.189.143.170. Scripts never deployed. Cloudzy 100.122.99.34 is retired." },
   { name: "X Premium+ API",       status: "not_configured", uptime: "0%",    note: "Account exists — API not wired" },
   { name: "Linear",               status: "operational",    uptime: "N/A",   note: "26 tasks, 3 completed, no cross-links" },
   { name: "GitHub",               status: "operational",    uptime: "99.9%", note: "Repo active, CI/CD yaml exists" },

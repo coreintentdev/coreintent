@@ -1,12 +1,14 @@
 #!/bin/bash
 # ═══════════════════════════════════════════
-# CoreIntent — Deploy VPS Scripts to Cloudzy
+# CoreIntent — Deploy VPS Scripts to the documented Contabo VDS
 # Run from project root: ./scripts/deploy-vps.sh
+# Default host is the 2026-09-30 map public origin. Tailscale: 100.121.107.112
+# Retired Cloudzy 100.122.99.34. This script still refuses to continue if SSH fails.
 # ═══════════════════════════════════════════
 
 set -e
 
-VPS_HOST="${VPS_HOST:-100.122.99.34}"
+VPS_HOST="${VPS_HOST:-5.189.143.170}"
 VPS_USER="${VPS_USER:-root}"
 REMOTE_DIR="/root/coreintent"
 

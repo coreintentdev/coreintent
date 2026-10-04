@@ -1,5 +1,5 @@
 # CoreIntent Audit Report
-Generated: Thu May 14 07:54:52 UTC 2026
+Generated: Sun Oct  4 03:01:29 PM UTC 2026
 
 ## 1. Build
 - PASS: npm run build succeeds
@@ -39,7 +39,7 @@ Generated: Thu May 14 07:54:52 UTC 2026
 - PASS: Referrer-Policy configured
 - PASS: No exposed secrets in source code
 - PASS: .env is NOT tracked by git
-- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:3732:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
+- WARN: dangerouslySetInnerHTML used (potential XSS): components/Terminal.tsx:3733:          <div key={i} dangerouslySetInnerHTML={{ __html: ansiToHtml(line) }} />
 
 ## 6. Navigation & Footer
 - PASS: Shared SiteNav component exists
@@ -51,11 +51,15 @@ Generated: Thu May 14 07:54:52 UTC 2026
 - PASS: Shared nav/footer used: app/disclaimer/page.tsx
 - PASS: next/link used in 5 files
 
+## 6b. Stack record
+- PASS: lib/stack-record.ts lists all 14 API routes
+- PASS: Deploy scripts default to documented Contabo host and still name the retired Cloudzy address
+
 ## 7. Truth Check
 - WARN: Potentially misleading status '"active"' found in pages
-  app/page.tsx:292:  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
-  app/page.tsx:1006:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
-  app/page.tsx:1007:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
+  app/page.tsx:293:  return <div ref={ref} className={`cursor-spotlight ${active ? "active" : ""}`} />;
+  app/page.tsx:1007:  { domain: "coreyai.ai", role: "Personal AI brand", status: "active" },
+  app/page.tsx:1008:  { domain: "zynthio.ai", role: "Parent brand / trading engine", status: "active" },
 - PASS: Honest label 'planned' found in pages
 - PASS: Honest label 'ready' found in pages
 - PASS: Honest label 'paper' found in pages
@@ -85,8 +89,8 @@ Generated: Thu May 14 07:54:52 UTC 2026
 
 | Result | Count |
 |--------|-------|
-| PASS | 52 |
+| PASS | 54 |
 | FAIL | 0 |
 | WARN | 2 |
 
-**Audit Score: 96%** (52/54 checks passed)
+**Audit Score: 96%** (54/56 checks passed)

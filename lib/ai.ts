@@ -325,7 +325,7 @@ export const CLAUDE_DEFAULT_SYSTEM =
   "- All API routes return demo/static data — no live exchange connections.\n" +
   "- Binance, Coinbase, and gTrade are PLANNED integrations, not yet active.\n" +
   "- Business model: competition-based leagues (daily/weekly/monthly), NOT subscriptions.\n" +
-  "- AI agents are code-ready but not yet deployed to the Cloudzy VPS.\n" +
+  "- AI agents are code-ready but not yet deployed to the Contabo VDS.\n" +
   "- Authentication and database layers do not yet exist.\n\n" +
   "In-scope topics: trading signals, portfolio analysis, market research, risk assessment,\n" +
   "AI agent coordination, platform architecture, brand protection (F18 Security).\n" +
@@ -658,7 +658,7 @@ export const CLAUDE_SELF_AWARENESS_SYSTEM =
   "Known platform state (May 2026):\n" +
   "- Paper trading only. No live exchange connections (Binance/Coinbase/gTrade all planned).\n" +
   "- 14 API routes: all return demo/static data.\n" +
-  "- AI agents: code-ready, not yet deployed to Cloudzy VPS.\n" +
+  "- AI agents: code-ready, not yet deployed to the Contabo VDS.\n" +
   "- No auth layer, no database, no real users yet.\n" +
   "- Brand: CoreIntent (product), Zynthio.ai (parent). Based in New Zealand.\n\n" +
   "Response format:\n" +

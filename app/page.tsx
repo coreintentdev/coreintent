@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { API_ROUTE_COUNT, VDS_LABEL } from "@/lib/stack-record";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -1028,7 +1029,7 @@ const STATUS_CARDS = [
   { label: "AI Agents", value: "Ready", color: "#a855f7" },
   { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
   { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "12", color: "#06b6d4" },
+  { label: "API Routes", value: String(API_ROUTE_COUNT), color: "#06b6d4" },
 ];
 
 /* ─── Architecture Pillars ─── */
@@ -1049,7 +1050,7 @@ const STACK_COSTS = [
   { service: "Cloudflare Pro", role: "CDN, WAF, DDoS", cost: "$20/mo" },
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },
-  { service: "Cloudzy VPS", role: "Trading backend", cost: "~$25/mo" },
+  { service: VDS_LABEL, role: "Documented host, scripts not deployed", cost: "provisioned" },
 ];
 
 /* ─── Hard Rules ─── */
