@@ -76,6 +76,28 @@ const INCIDENTS: Incident[] = [
     message: "Marketing plan still references Jan 17 launch date and old Free/Pro/Enterprise pricing model. 70+ days past launch date. Plan needs full rewrite to match competition/league model decided March 23.",
     autoUpdate: true, detectedAt: "2026-03-24T00:00:00Z", updatedAt: "2026-03-24T00:00:00Z",
   },
+  {
+    id: "INC-021",
+    service: "Human Support Response Mode",
+    status: "resolved",
+    severity: "info",
+    message:
+      "Positive incident: response structure improved. Actionable/direct response mode is now treated as the default and retained going forward.",
+    autoUpdate: true,
+    detectedAt: "2026-04-20T00:00:00Z",
+    updatedAt: "2026-04-20T12:00:00Z",
+  },
+  {
+    id: "INC-022",
+    service: "Handover Retention / Work Churn",
+    status: "detected",
+    severity: "critical",
+    message:
+      "Pattern: Corey pays for sessions; handover docs get written (March 270-line session handover, April addendum) but next agents do not read them. New posts claim consolidation while dropping checklists. March must-fix: 1/8 done after weeks. VPS scripts still undeployed. API routes still demo. Work is tossed, never read. Fix: MASTER_HANDOVER.md + HANDOVER_ACCOUNTABILITY doc mandatory read; ship one TODO item per session; update checklist in same commit.",
+    autoUpdate: true,
+    detectedAt: "2026-04-21T00:00:00Z",
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 const MONITORED_SERVICES: readonly MonitoredService[] = [

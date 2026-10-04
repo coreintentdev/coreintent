@@ -245,14 +245,22 @@ const STATIC_COMMANDS: Record<string, string> = {
   \x1b[33mSites:\x1b[0m       8/8 returning 200 OK
   \x1b[33mSSL:\x1b[0m         84-88 days remaining
 
+  \x1b[33mKEY FILES (READ FIRST):\x1b[0m
+    MASTER_HANDOVER.md (repo root)
+    docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md
+    docs/SESSION-HANDOVER-2026-03-23.md
+    TODO_MASTER_LIVE.md
+
   \x1b[33mKEY FILES ON VPS:\x1b[0m
     /root/zynthio/SESSION_STATE.md
     /root/zynthio/MASTER_INDEX.md
-    /root/zynthio/CONTENT_INTEL.md
     /root/zynthio/COREY_WORDS.md
 
+  \x1b[33mINCIDENTS:\x1b[0m INC-002 context loss | INC-005 delivery gap | INC-022 handover churn
+
   \x1b[33mRULES FOR NEXT SESSION:\x1b[0m
-    1. READ before you write
+    1. READ old handovers before you write
+    2. READ before you write
     2. NEVER say "connected" unless verified
     3. All API routes return DEMO data — label honestly
     4. Deploy to VPS, not Cloudflare (CF is dead end)

@@ -18,6 +18,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Agents are code-ready, not running
 
 ## Rules for AI Sessions
+0. READ `MASTER_HANDOVER.md` and `docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md` FIRST — then old handovers. Do not wait for Corey to re-explain.
 1. READ before you write. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
@@ -39,7 +40,8 @@ Based in: New Zealand (NEVER register anything in Australia)
 
 ## VPS
 - Cloudzy: 100.122.99.34
-- VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
+- VPS state files on server: SESSION_STATE.md, COREY_WORDS.md (pull via `./scripts/vps-lens.sh`)
+- Repo handover files: `MASTER_HANDOVER.md`, `TODO_MASTER_LIVE.md`, `docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md`
 - 32,503 files, ~19GB
 
 ## Key Decisions (March 2026)
