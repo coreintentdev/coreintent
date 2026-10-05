@@ -18,7 +18,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Agents are code-ready, not running
 
 ## Rules for AI Sessions
-1. READ before you write. Search the codebase before assuming anything.
+1. READ before you write. Start with `docs/ops/HANDOVER-20261005.md`, then `docs/skills/cloud-agent-starter.md`. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
