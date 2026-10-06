@@ -1,0 +1,33 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Consequence Record
+description: Schema for a single Layer 6 outcome record.
+
+type: object
+required:
+  - task_id
+  - timestamp
+  - result
+
+properties:
+  task_id:
+    type: string
+  timestamp:
+    type: string
+    format: date-time
+  result:
+    type: string
+    enum: [success, failure, partial, unknown]
+  notes:
+    type: string
+  verifier:
+    type: string
+    enum: [correct, wrong, ""]
+  investigator:
+    type: string
+    enum: [hit, miss, ""]
+  executor:
+    type: string
+    enum: [success, fail, ""]
+  custom_role:
+    type: string
+    enum: [hit, miss, ""]

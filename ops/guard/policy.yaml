@@ -1,0 +1,63 @@
+policy:
+  name: CoreIntent Guard Safety Policy
+  version: "2026-10-06"
+
+  # Destructive operations require explicit operator disposition
+  destructive_requires_approval: true
+
+  # No execute path may run until Verifier returns "proceed"
+  verify_before_execute: true
+
+  # Record every executed outcome for consequence scoring
+  record_consequences: true
+
+  # Consequence engine tuning
+  weight_bounds: [0.2, 2.0]
+  weight_delta: 0.1
+  default_weight: 1.0
+
+  # Ledger retention
+  ledger_dir: output/ledger
+  weights_file: output/ledger/weights.json
+  truth_ledger: output/ledger/truth.jsonl
+
+  # VDS truth (verified)
+  vds_host: "100.64.0.2"
+  vds_ssh_alias: "vds"
+  vds_git_mirror: "/srv/git"
+
+  # Destructive keywords (heuristic; Verifier can override with evidence)
+  destructive_keywords:
+    - rm -rf
+    - drop
+    - delete
+    - destroy
+    - truncate
+    - overwrite
+    - force-push
+    - rewrite
+    - --yes
+    - --force
+    - --delete-during
+
+  # Paths that are never modified without explicit operator go
+  protected_paths:
+    - /root/.ssh
+    - /root/.gnupg
+    - /root/zynthio/keys
+    - /srv/git
+    - /var/www
+    - /etc/nginx
+    - /etc/headscale
+
+  # Mesh defaults (override via env)
+  mesh:
+    timeout_seconds: 120
+    required_models: 2
+
+  # Evidence rules
+  evidence:
+    commands_preferred: true
+    logs_accepted: true
+    screenshots_accepted: false
+    assertions_without_proof: rejected
