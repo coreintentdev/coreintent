@@ -9,11 +9,13 @@
 ## Mandatory read order (do not skip)
 
 1. `MASTER_HANDOVER.md` (this file)
-2. `docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md` — old vs new handover diff, done vs not done
-3. `docs/SESSION-HANDOVER-2026-03-23.md` — original full session context (270 lines, still authoritative)
-4. `docs/HANDOVER_HUMAN_SUPPORT_2026-04-20.md` — human-support addendum (Nicaragua path, response mode)
-5. `CLAUDE.md` — amnesia shield rules
-6. `app/api/incidents/route.ts` — live incident truth (especially INC-002, INC-005, INC-022)
+2. `docs/HANDOVER_VDS_GIT_2026-05-14.md` — **canonical git remote is VDS, not GitHub**
+3. `docs/DEPLOY_INCIDENTS_SUMMARY.md` — 5-month deploy roll-call (21 Linear tickets)
+4. `docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md` — old vs new handover diff
+5. `docs/SESSION-HANDOVER-2026-03-23.md` — original full session context (270 lines)
+6. `docs/CLAUDE_ON_VDS_BOOTSTRAP.md` — run work on VDS, not sandbox
+7. `CLAUDE.md` — amnesia shield rules
+8. `app/api/incidents/route.ts` — INC-001 through INC-023
 
 ---
 
@@ -44,10 +46,18 @@ If you finish a task, update this file and the accountability doc in the same co
 
 ---
 
-## VPS agents — you are not done
+## Git remote — push here, not GitHub
 
-Cloudzy: `100.122.99.34`  
-Frankfurt: `104.194.156.109`  
+```bash
+./scripts/push-to-vds-git.sh cursor/handover-update-0fbd
+```
+
+Remote: `vds-public:/root/git/zyn.git` (INC-023 if you pushed to origin instead)
+
+## VDS agents — you are not done
+
+Contabo VDS: `vmi3205024` (5.189.143.170)  
+Legacy Cloudzy IPs are stale — do not deploy there (INC-009)  
 
 On VPS (not in this git repo):
 - `/root/zynthio/SESSION_STATE.md`
