@@ -11,6 +11,7 @@
 - [ ] INC-003 — Deploy VPS scripts to 100.122.99.34
 - [ ] INC-005 — Replace demo API data with real connections (at least one route)
 - [ ] INC-022 — Stop handover churn; agents must read old posts first
+- [ ] INC-023 — Push handover to VDS git (`./scripts/push-to-vds-git.sh`), not GitHub only
 
 ## March handover must-fix (remaining)
 
