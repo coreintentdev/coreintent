@@ -263,6 +263,17 @@ const INCIDENTS: Incident[] = [
       "Handover/incident commits pushed to GitHub origin; operator canonical repo is VDS bare git at vds-public:/root/git/zyn.git. This branch has no GitHub upstream for operator workflow. Fix: ./scripts/push-to-vds-git.sh after every handover commit. See docs/HANDOVER_VDS_GIT_2026-05-14.md.",
     autoUpdate: true,
     detectedAt: "2026-05-14T00:00:00Z",
+    updatedAt: "2026-05-14T00:00:00Z",
+  },
+  {
+    id: "INC-024",
+    service: "Cloud Sandbox Cannot Execute VDS Handover",
+    status: "mitigating",
+    severity: "critical",
+    message:
+      "Cloud agents write handover docs but cannot SSH to VDS (no valid zynthio_dc key, vds-public unresolved, Headscale key invalid). Fix shipped: scripts/vds-handover-all.sh + vds-install-jobs.sh + GHA workflow vds-handover-sync.yml. Operator runs ONE command on Mac OR triggers GHA with VDS_SSH_KEY secret. Stop claiming done until /root/zynthio/SESSION_STATE.md exists on VDS.",
+    autoUpdate: true,
+    detectedAt: "2026-05-14T12:00:00Z",
     updatedAt: new Date().toISOString(),
   },
 ];

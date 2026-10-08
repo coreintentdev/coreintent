@@ -1,0 +1,86 @@
+name: Deploy VDS
+
+# Pushes the coreintent repo + trading scripts to the Contabo VDS (vmi3205024).
+# Replaces the "ask operator to paste rsync" loop that has blocked deploys
+# for months. See INC-003 + INC-009 in app/api/incidents/route.ts.
+#
+# Required GitHub repo secrets (Settings -> Secrets and variables -> Actions):
+#   VDS_SSH_KEY    Contents of ~/.ssh/zynthio_dc (the private key)
+#   VDS_HOST       Hostname or IP. Default: vmi3205024 (Tailscale) if unset.
+#                  If GitHub-hosted runners cannot resolve Tailscale, set
+#                  this to the canonical Contabo public IP instead.
+#   VDS_USER       SSH user. Default: root.
+#   VDS_KNOWN_HOSTS  Output of `ssh-keyscan -H <host>`; pin server fingerprint.
+#
+# Trigger: manual (workflow_dispatch) + push to main when scripts/ changes.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/risk_monitor.ts'
+      - 'scripts/signal_listener.ts'
+      - 'scripts/gtrade_listener.ts'
+      - 'scripts/deploy-vds.sh'
+      - '.github/workflows/deploy-vds.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-vds
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          VDS_SSH_KEY: ${{ secrets.VDS_SSH_KEY }}
+          VDS_KNOWN_HOSTS: ${{ secrets.VDS_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VDS_SSH_KEY:-}" ]; then
+            echo "::error::VDS_SSH_KEY secret not set. Add ~/.ssh/zynthio_dc contents in repo Settings -> Secrets -> Actions."
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$VDS_SSH_KEY" > ~/.ssh/id_vds
+          chmod 600 ~/.ssh/id_vds
+          if [ -n "${VDS_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$VDS_KNOWN_HOSTS" > ~/.ssh/known_hosts
+            chmod 644 ~/.ssh/known_hosts
+          else
+            echo "::warning::VDS_KNOWN_HOSTS not set; using StrictHostKeyChecking=accept-new (first connect trusted)."
+          fi
+
+      - name: Deploy
+        env:
+          VDS_HOST: ${{ secrets.VDS_HOST || 'vmi3205024' }}
+          VDS_USER: ${{ secrets.VDS_USER || 'root' }}
+          VDS_KNOWN_HOSTS: ${{ secrets.VDS_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          STRICT="accept-new"
+          if [ -n "${VDS_KNOWN_HOSTS:-}" ]; then
+            STRICT="yes"
+          fi
+          SSH="ssh -i ~/.ssh/id_vds -o StrictHostKeyChecking=${STRICT} -o BatchMode=yes"
+          REMOTE="${VDS_USER}@${VDS_HOST}"
+          echo "Target: ${REMOTE}"
+
+          $SSH "$REMOTE" "mkdir -p /root/coreintent /root/coreintent/scripts /var/log/coreintent"
+
+          rsync -avh --delete \
+            --exclude '.git' --exclude 'node_modules' --exclude '.next' \
+            -e "$SSH" ./ "$REMOTE":/root/coreintent/
+
+          $SSH "$REMOTE" 'bash -lc "
+            set -euo pipefail
+            cd /root/coreintent
+            command -v node >/dev/null || (apt-get update && apt-get install -y nodejs npm)
+            npm ci --omit=dev || npm install --omit=dev
+            echo \"--- VDS deploy complete ---\"
+            ls -la scripts/risk_monitor.ts scripts/signal_listener.ts scripts/gtrade_listener.ts
+          "'

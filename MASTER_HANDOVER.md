@@ -48,11 +48,17 @@ If you finish a task, update this file and the accountability doc in the same co
 
 ## Git remote — push here, not GitHub
 
+**ONE command (Mac or GHA with VDS_SSH_KEY):**
+
 ```bash
-./scripts/push-to-vds-git.sh cursor/handover-update-0fbd
+./scripts/vds-handover-all.sh cursor/handover-update-0fbd
 ```
 
-Remote: `vds-public:/root/git/zyn.git` (INC-023 if you pushed to origin instead)
+This pushes to `vds-public:/root/git/zyn.git`, checks out `/root/zynthio/coreintent`, copies all handover docs to `/root/zynthio/state/handover/`, writes `SESSION_STATE.md`, installs systemd + cron on VDS.
+
+GHA fallback: Actions → **VDS Handover Sync** → Run workflow.
+
+Cloud sandbox **cannot** run this — INC-024. Do not claim VDS handover done from cloud without verification.
 
 ## VDS agents — you are not done
 

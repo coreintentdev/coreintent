@@ -1,0 +1,48 @@
+name: VDS Handover Sync
+
+# Push full workspace handover to VDS git + run jobs on VDS.
+# Requires same secrets as deploy-vds.yml (VDS_SSH_KEY, VDS_HOST, VDS_USER).
+# Operator: paste secrets once, then workflow_dispatch — no Claude session needed.
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to push to VDS
+        required: false
+        default: cursor/handover-update-0fbd
+
+jobs:
+  handover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Configure SSH
+        env:
+          VDS_SSH_KEY: ${{ secrets.VDS_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VDS_SSH_KEY:-}" ]; then
+            echo "::error::VDS_SSH_KEY not set. Paste ~/.ssh/zynthio_dc in repo Secrets."
+            exit 1
+          fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$VDS_SSH_KEY" > ~/.ssh/zynthio_dc
+          chmod 600 ~/.ssh/zynthio_dc
+
+      - name: VDS handover all
+        env:
+          VDS_HOST: ${{ secrets.VDS_HOST }}
+          VDS_USER: ${{ secrets.VDS_USER }}
+          VDS_SSH_KEY_FILE: ~/.ssh/zynthio_dc
+        run: |
+          set -euo pipefail
+          HOST="${VDS_HOST:-5.189.143.170}"
+          USER="${VDS_USER:-root}"
+          export VDS_REMOTE="${USER}@${HOST}"
+          export VDS_HOST="$HOST"
+          chmod +x scripts/vds-handover-all.sh scripts/vds-install-jobs.sh scripts/push-to-vds-git.sh scripts/vds-git-post-receive.sh
+          ./scripts/vds-handover-all.sh "${{ github.event.inputs.branch }}"
