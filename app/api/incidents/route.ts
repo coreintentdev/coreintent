@@ -174,6 +174,17 @@ const INCIDENTS: Incident[] = [
     detectedAt: "2026-05-14T00:00:00Z",
     updatedAt: "2026-05-14T00:00:00Z",
   },
+  {
+    id: "INC-024",
+    service: "Cloud Sandbox Cannot Execute VDS Handover",
+    status: "mitigating",
+    severity: "critical",
+    message:
+      "Cloud agents write handover docs but cannot SSH to VDS (no valid zynthio_dc key, vds-public unresolved, Headscale key invalid). Fix shipped: scripts/vds-handover-all.sh + vds-install-jobs.sh + GHA workflow vds-handover-sync.yml. Operator runs ONE command on Mac OR triggers GHA with VDS_SSH_KEY secret. Stop claiming done until /root/zynthio/SESSION_STATE.md exists on VDS.",
+    autoUpdate: true,
+    detectedAt: "2026-05-14T12:00:00Z",
+    updatedAt: "2026-05-14T12:00:00Z",
+  },
 ];
 
 const MONITORED_SERVICES: readonly MonitoredService[] = [

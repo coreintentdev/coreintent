@@ -14,10 +14,13 @@ VDS_GIT="${VDS_GIT:-/root/git/zyn.git}"
 BRANCH="${1:-$(git branch --show-current)}"
 REMOTE_NAME="${REMOTE_NAME:-vds}"
 
-if ! git remote get-url "$REMOTE_NAME" &>/dev/null; then
-  git remote add "$REMOTE_NAME" "${VDS_REMOTE}:${VDS_GIT}"
-  echo "Added remote ${REMOTE_NAME} -> ${VDS_REMOTE}:${VDS_GIT}"
+TARGET="${VDS_REMOTE}:${VDS_GIT}"
+if git remote get-url "$REMOTE_NAME" &>/dev/null; then
+  git remote set-url "$REMOTE_NAME" "$TARGET"
+else
+  git remote add "$REMOTE_NAME" "$TARGET"
 fi
+echo "Remote ${REMOTE_NAME} -> ${TARGET}"
 
 echo "Pushing ${BRANCH} -> ${REMOTE_NAME}:${BRANCH}"
 git push "$REMOTE_NAME" "${BRANCH}:${BRANCH}"
