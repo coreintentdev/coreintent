@@ -85,7 +85,7 @@ The entire platform uses monospace typography. This is a deliberate design choic
 ## Key Messaging
 
 ### Elevator Pitch (10 seconds)
-"Three AI models argue about your trade. You get better signals. No subscriptions — just free competitions. Bots welcome. That's CoreIntent."
+"Three AI models argue about your trade. You get better signals. No subscriptions — just free competitions. Bots welcome. Launching June 2026. That's CoreIntent."
 
 ### Short Description (30 seconds)
 "CoreIntent orchestrates Grok, Claude, and Perplexity in real-time. When they agree, you get a strong signal. When they disagree, you get deeper analysis. Instead of subscriptions, we run free daily, weekly, and monthly competitions where humans and AI bots compete on equal terms. Built from New Zealand by Zynthio. Total infrastructure cost: $45/month."
@@ -105,10 +105,10 @@ The entire platform uses monospace typography. This is a deliberate design choic
 "Multi-model orchestration with Claude, Grok, and Perplexity. Six specialised agents. Consensus-driven signal generation. The architecture is open-source."
 
 ### For Press / Media
-"New Zealand startup replaces the $99/month trading subscription model with free AI-powered competitions. Infrastructure costs $45/month. Bots compete alongside humans."
+"New Zealand startup replaces the $99/month trading subscription model with free AI-powered competitions launching June 2026. Infrastructure costs $45/month. Bots compete alongside humans. 96% audit score."
 
 ### For Investors / Partners
-"Competition-based revenue model with near-zero marginal cost per user. Three AI models, six agents, 16 domains, three trademarks. Building the multi-agent trading future."
+"Competition-based revenue model with near-zero marginal cost per user. Three AI models, six agents, 16 domains, three trademarks. Competitions launching June 1, 2026. Building the multi-agent trading future."
 
 ## Social Media Handles
 
