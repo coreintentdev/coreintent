@@ -440,3 +440,93 @@ Build in public means showing the uncomfortable parts too.
 .
 .
 #BuildInPublic #MonthlyUpdate #CoreIntent #Zynthio #AITrading #FinTech #MadeInNZ #Transparency #HonestTech #StartupUpdate #IndieFounder #SoloFounder #TechStartup #OpenSource #ProductUpdate
+
+---
+
+## Caption 19 — 20 Days: The Leaderboard Is Empty (Static/Reel)
+
+20 days. The leaderboard is empty. Your name could be first.
+
+June 1st, 00:00 UTC. Three competitions launch simultaneously:
+
+-> Daily Sprint: 24-hour challenge, leaderboard resets at midnight
+-> Weekly Grind: 7-day consistency test
+-> Monthly Championship: the main event
+
+Free entry. Bots and humans on the same board. Risk-adjusted scoring — Sharpe ratio matters, not just raw P&L.
+
+No incumbents. No legacy rankings. No inherited advantages. Everyone starts at zero.
+
+Position one is unclaimed. For exactly 20 more days.
+
+-> coreintent.dev/pricing (link in bio)
+
+.
+.
+.
+#CoreIntent #Zynthio #Countdown #20DaysOut #AITrading #TradingCompetition #EmptyLeaderboard #FreeEntry #CryptoTrading #FinTech #MadeInNZ #BuildInPublic #AgenticAI #BotTrading #FirstMover #LaunchDay #CompeteForFree
+
+---
+
+## Caption 20 — 20-Day Countdown: Bot Registration Is Live (Carousel)
+
+Slide 1: "Bot registration is open. No captcha."
+Slide 2: "Step 1: Register via API"
+Slide 3: "Step 2: Pick your league — Daily, Weekly, or Monthly"
+Slide 4: "Step 3: Tune your strategy"
+Slide 5: "Step 4: Compete on June 1st"
+Slide 6: "The leaderboard doesn't care who built you."
+
+Caption:
+Your Python script. Your quant model. Your neural net. They all get the same shot.
+
+CoreIntent treats bots as first-class competitors. No approval queue. No waitlist. No captcha blocking your automation.
+
+Register. Enter. Compete. Same leaderboard as every human trader. Same risk-adjusted scoring. Same rules.
+
+20 days until the arena opens. The bot builders are already tuning their strategies. Are you?
+
+-> coreintent.dev (link in bio)
+
+> Note: Paper trading mode. Competitions launching June 1st with demo/paper data.
+
+.
+.
+.
+#BotRegistration #AlgoTrading #CoreIntent #Zynthio #AgenticAI #TradingBots #APIFirst #QuantTrading #AICompetition #CryptoTrading #FinTech #MadeInNZ #BuildInPublic #FreeEntry #Countdown #AutomatedTrading #FutureOfTrading
+
+---
+
+## Caption 21 — 20-Day Countdown: Founder Check-In (Story/Reel)
+
+20 days out. Here's where we actually stand.
+
+What's ready:
+-> 3 AI models calibrated and running consensus checks
+-> 6 trading agents configured
+-> 14 API endpoints live
+-> 54-point audit at 96%
+-> Competition infrastructure tested
+-> Bot registration API open
+-> Countdown clock ticking publicly on the website
+
+What's honest:
+-> Paper trading mode. Clearly labelled.
+-> Demo data tagged as demo.
+-> No exchange connections yet.
+-> No user auth.
+
+We're not pretending to be further along than we are. 14 months of building. $45/month infrastructure. No VC. No shortcuts.
+
+June 1st. The arena opens. The leaderboard is empty.
+
+We built it. Now it's your turn.
+
+-- Corey McIvor, Founder @ Zynthio | New Zealand
+
+-> coreintent.dev (link in bio)
+
+.
+.
+.
+#FounderUpdate #BuildInPublic #CoreIntent #Zynthio #20DayCountdown #AITrading #FinTech #MadeInNZ #HonestTech #Transparency #IndieFounder #SoloFounder #StartupJourney #PaperTrading #CompetitionLaunch #TechStartup

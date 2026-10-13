@@ -162,7 +162,7 @@ export default function PricingPage() {
             }}>$0</span>
           </div>
           <p style={{ color: "var(--text-secondary)", marginBottom: "8px", fontSize: "15px", maxWidth: "560px", margin: "0 auto 8px" }}>
-            Subscription platforms profit whether you win or lose. Their incentive is your autopay — not your alpha.
+            20 days until the first competition. Subscription platforms profit whether you win or lose — we only succeed when the arena is full.
           </p>
           <p style={{ color: "var(--accent-green)", marginBottom: "12px", fontSize: "14px", fontWeight: "bold" }}>
             Our stack costs $45/mo total. Free entry isn&apos;t charity — it&apos;s competitive advantage. Great traders make great platforms.
@@ -663,12 +663,20 @@ export default function PricingPage() {
                 q: "Where is CoreIntent based?",
                 a: "New Zealand. Built by Corey McIvor under the Zynthio brand. No Silicon Valley, no VC money — just a clear thesis and lean infrastructure.",
               },
+              {
+                q: "When do competitions launch?",
+                a: "June 1st, 2026 at midnight UTC. All three leagues — Daily Sprint, Weekly Grind, and Monthly Championship — go live simultaneously. The countdown is already ticking on this page.",
+              },
+              {
+                q: "What happens if I register now?",
+                a: "You lock in founding member status — a permanent badge on your profile, priority placement when leagues go live, and direct input on features and roadmap. These benefits are only available to accounts created before launch day.",
+              },
             ].map((faq, i) => (
               <div
                 key={i}
                 style={{
                   padding: "16px 0",
-                  borderBottom: i < 5 ? "1px solid var(--border-color)" : "none",
+                  borderBottom: i < 7 ? "1px solid var(--border-color)" : "none",
                 }}
               >
                 <div style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)", marginBottom: "6px" }}>
