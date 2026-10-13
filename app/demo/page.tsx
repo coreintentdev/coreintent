@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import Link from "next/link";
@@ -24,6 +24,612 @@ function useScrollReveal() {
 function ScrollReveal({ children }: { children: React.ReactNode }) {
   const ref = useScrollReveal();
   return <div ref={ref} className="scroll-reveal">{children}</div>;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MINI TERMINAL — Try commands without leaving the demo page
+   ═══════════════════════════════════════════════════════════════ */
+
+const MINI_COMMANDS: Record<string, string[]> = {
+  help: [
+    "\x1b[36m── MINI TERMINAL ──\x1b[0m",
+    "  \x1b[32mcai\x1b[0m       Core AI status",
+    "  \x1b[32mbrain\x1b[0m     AI orchestra overview",
+    "  \x1b[32msignals\x1b[0m   Active trading signals",
+    "  \x1b[32mstatus\x1b[0m    Engine status",
+    "  \x1b[32m336\x1b[0m       The signal",
+    "  \x1b[32mzen\x1b[0m       Trading wisdom",
+    "  \x1b[32mfortune\x1b[0m   Fortune cookie",
+    "  \x1b[32mwhoami\x1b[0m    Identity",
+    "  \x1b[32mclear\x1b[0m     Clear terminal",
+    "\x1b[90m  Open full terminal for 100+ commands\x1b[0m",
+  ],
+  cai: [
+    "\x1b[36m  CAI — CORE AI STATUS\x1b[0m",
+    "  \x1b[33mEngine:\x1b[0m   CoreIntent v0.2.0-alpha",
+    "  \x1b[33mMode:\x1b[0m     \x1b[33mPaper trading\x1b[0m",
+    "  \x1b[32m●\x1b[0m Claude    — ACTIVE (deep analysis)",
+    "  \x1b[32m●\x1b[0m Grok      — ACTIVE (fast signals)",
+    "  \x1b[33m◐\x1b[0m Perplexity — FREE tier",
+    "  \x1b[90m336 — the signal is dominant\x1b[0m",
+  ],
+  brain: [
+    "\x1b[36m  BRAIN — AI Orchestra\x1b[0m",
+    "  \x1b[32m●\x1b[0m \x1b[33mClaude\x1b[0m      Deep analysis, orchestration",
+    "  \x1b[32m●\x1b[0m \x1b[33mGrok\x1b[0m        Fast signals, 60 threads",
+    "  \x1b[33m◐\x1b[0m \x1b[33mPerplexity\x1b[0m  Research (free tier)",
+    "  \x1b[90mBots welcome. No captcha. AI-to-AI first-class.\x1b[0m",
+  ],
+  status: [
+    "  \x1b[32m● ENGINE ONLINE\x1b[0m",
+    "  Mode:     \x1b[33mPaper Trading\x1b[0m",
+    "  Signals:  \x1b[32m4 active\x1b[0m | 2 pending",
+    "  Uptime:   " + Math.floor(Math.random() * 86400) + "s",
+    "  Circuit:  \x1b[32mArmed\x1b[0m (threshold: 5.0%)",
+  ],
+  signals: [
+    "\x1b[36m  ACTIVE SIGNALS\x1b[0m",
+    "  \x1b[32m▲\x1b[0m BTC/USDT  \x1b[32mLONG\x1b[0m   87%  Grok+Claude",
+    "  \x1b[32m▲\x1b[0m ETH/USDT  \x1b[32mLONG\x1b[0m   82%  Claude",
+    "  \x1b[31m▼\x1b[0m SOL/USDT  \x1b[31mSHORT\x1b[0m  74%  Grok",
+    "  \x1b[32m▲\x1b[0m AVAX/USDT \x1b[32mLONG\x1b[0m   91%  All 3 Models",
+    "  \x1b[90mSimulated — paper trading mode\x1b[0m",
+  ],
+  "336": [
+    "\x1b[32m  ██████╗ ██████╗  ██████╗\x1b[0m",
+    "\x1b[32m  ╚════██║╚════██║██╔════╝\x1b[0m",
+    "\x1b[32m   █████╔╝ █████╔╝███████╗\x1b[0m",
+    "\x1b[32m   ╚═══██╗ ╚═══██╗██╔═══██║\x1b[0m",
+    "\x1b[32m  ██████╔╝██████╔╝╚██████╔╝\x1b[0m",
+    "\x1b[32m  ╚═════╝ ╚═════╝  ╚═════╝\x1b[0m",
+    "  \x1b[33mTHE SIGNAL IS DOMINANT\x1b[0m",
+  ],
+  whoami: [
+    "\x1b[36m  WHOAMI\x1b[0m",
+    "  \x1b[33mName:\x1b[0m     Corey McIvor",
+    "  \x1b[33mHandle:\x1b[0m   @coreintentdev",
+    "  \x1b[33mBased in:\x1b[0m New Zealand",
+    "  \x1b[33mBrand:\x1b[0m    Zynthio.ai",
+    '  \x1b[90m"Every human needs a bot."\x1b[0m',
+  ],
+};
+
+const ZEN_POOL = [
+  "The impatient trader feeds the patient one.",
+  "Three models disagree — that IS the signal.",
+  "Your stop loss is your best friend. Respect it.",
+  "The market doesn't care who built you.",
+  "Paper trading teaches everything except pain.",
+  "Consensus without conviction is noise.",
+  "The best trade is the one you didn't take.",
+];
+
+const FORTUNE_POOL = [
+  "A whale watches your position with great interest.",
+  "Your next trade will be... educational.",
+  "The models agree: patience is not a strategy, it's THE strategy.",
+  "Today's chart pattern: a shrug emoji.",
+  "Three AIs walk into a trade. Only one walks out profitable.",
+  "Your portfolio's future is written in the order book.",
+];
+
+function miniAnsi(text: string): string {
+  const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return escaped
+    .replace(/\x1b\[32m/g, '<span style="color:#10b981">')
+    .replace(/\x1b\[33m/g, '<span style="color:#f59e0b">')
+    .replace(/\x1b\[31m/g, '<span style="color:#ef4444">')
+    .replace(/\x1b\[36m/g, '<span style="color:#06b6d4">')
+    .replace(/\x1b\[35m/g, '<span style="color:#a855f7">')
+    .replace(/\x1b\[90m/g, '<span style="color:#64748b">')
+    .replace(/\x1b\[0m/g, "</span>");
+}
+
+function MiniTerminal() {
+  const [history, setHistory] = useState<Array<{ cmd: string; output: string[] }>>([]);
+  const [input, setInput] = useState("");
+  const [focused, setFocused] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const cmdHistory = useRef<string[]>([]);
+  const historyIdx = useRef(-1);
+
+  const runCommand = useCallback((raw: string) => {
+    const trimmed = raw.trim().toLowerCase();
+    if (!trimmed) return;
+    cmdHistory.current.unshift(trimmed);
+    historyIdx.current = -1;
+
+    if (trimmed === "clear") {
+      setHistory([]);
+      return;
+    }
+
+    let output: string[];
+    if (MINI_COMMANDS[trimmed]) {
+      output = MINI_COMMANDS[trimmed];
+    } else if (trimmed === "zen") {
+      output = ["\x1b[36m  ZEN\x1b[0m", `  \x1b[33m"${ZEN_POOL[Math.floor(Math.random() * ZEN_POOL.length)]}"\x1b[0m`];
+    } else if (trimmed === "fortune") {
+      output = ["\x1b[36m  FORTUNE\x1b[0m", `  \x1b[33m${FORTUNE_POOL[Math.floor(Math.random() * FORTUNE_POOL.length)]}\x1b[0m`];
+    } else {
+      output = [`  \x1b[31mUnknown:\x1b[0m ${trimmed}. Type \x1b[32mhelp\x1b[0m for commands.`, "  \x1b[90mFull terminal has 100+ commands →\x1b[0m"];
+    }
+
+    setHistory(prev => [...prev, { cmd: raw.trim(), output }]);
+  }, []);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [history]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runCommand(input);
+      setInput("");
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const cmds = cmdHistory.current;
+      if (cmds.length > 0) {
+        const next = Math.min(historyIdx.current + 1, cmds.length - 1);
+        historyIdx.current = next;
+        setInput(cmds[next]);
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const cmds = cmdHistory.current;
+      const next = historyIdx.current - 1;
+      if (next < 0) { historyIdx.current = -1; setInput(""); }
+      else { historyIdx.current = next; setInput(cmds[next]); }
+    }
+  };
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        Try The Terminal
+        <span style={{ marginLeft: "8px", fontSize: "10px", color: "#10b981", fontWeight: "normal", textTransform: "none" }}>interactive</span>
+      </h2>
+      <div className="mini-terminal-wrap">
+        <div className="mini-terminal-inner">
+          {/* Title bar */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", background: "#161b22", borderBottom: "1px solid #21262d" }}>
+            <div style={{ display: "flex", gap: "6px" }}>
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }} />
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} />
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#10b981" }} />
+            </div>
+            <span style={{ fontSize: "11px", color: "#64748b", marginLeft: "8px" }}>commander@coreintent ~ mini</span>
+          </div>
+          {/* Output + input */}
+          <div
+            ref={scrollRef}
+            onClick={() => inputRef.current?.focus()}
+            style={{ padding: "12px 16px", maxHeight: "280px", overflowY: "auto", cursor: "text", minHeight: "120px" }}
+          >
+            {/* Welcome */}
+            {history.length === 0 && (
+              <div style={{ fontSize: "12px", lineHeight: "1.6" }}>
+                <div style={{ color: "#06b6d4", fontWeight: "bold" }}>Zynthio Commander — Mini Terminal</div>
+                <div style={{ color: "#64748b" }}>Type <span style={{ color: "#10b981" }}>help</span> for commands. Try <span style={{ color: "#10b981" }}>cai</span>, <span style={{ color: "#10b981" }}>brain</span>, or <span style={{ color: "#10b981" }}>336</span>.</div>
+              </div>
+            )}
+            {/* History */}
+            {history.map((entry, i) => (
+              <div key={i} className="term-output-line" style={{ marginTop: i === 0 && history.length === 1 ? "8px" : "6px" }}>
+                <div style={{ fontSize: "12px" }}>
+                  <span style={{ color: "#10b981" }}>❯</span>{" "}
+                  <span style={{ color: "#e2e8f0" }}>{entry.cmd}</span>
+                </div>
+                <div style={{ fontSize: "12px", lineHeight: "1.5", marginTop: "2px" }}>
+                  {entry.output.map((line, j) => (
+                    <div key={j} dangerouslySetInnerHTML={{ __html: miniAnsi(line) }} style={{ whiteSpace: "pre" }} />
+                  ))}
+                </div>
+              </div>
+            ))}
+            {/* Input line */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "6px", fontSize: "12px" }}>
+              <span style={{ color: "#10b981" }}>❯</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+                placeholder={focused ? "" : "type a command..."}
+                style={{
+                  flex: 1,
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  color: "#e2e8f0",
+                  fontFamily: "inherit",
+                  fontSize: "12px",
+                  padding: 0,
+                  caretColor: "#10b981",
+                }}
+              />
+              {focused && !input && <span className="term-cursor" />}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
+        <span style={{ fontSize: "10px", color: "var(--text-secondary)" }}>
+          Mini preview — {Object.keys(MINI_COMMANDS).length + 2} commands available
+        </span>
+        <Link
+          href="/"
+          style={{ fontSize: "10px", color: "#10b981", textDecoration: "none" }}
+        >
+          Open full terminal (100+ commands) →
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENARIO SIMULATOR — Pick a market event, watch AI react
+   ═══════════════════════════════════════════════════════════════ */
+
+const SCENARIOS = [
+  {
+    id: "crash",
+    name: "Flash Crash",
+    icon: "⚡",
+    accent: "#ef4444",
+    desc: "BTC drops 12% in 5 minutes",
+    responses: [
+      { model: "Grok", color: "#ef4444", text: "ALERT: Cascading liquidations detected. $2.1B longs wiped. Funding rate inverted. Extreme fear.", delay: 0 },
+      { model: "Claude", color: "#a855f7", text: "Circuit breaker engaged. Historical analysis: 73% of flash crashes recover 60%+ within 4 hours. Reducing position size to 2%.", delay: 1200 },
+      { model: "Perplexity", color: "#3b82f6", text: "No regulatory news. Exchange APIs stable. Likely algorithmic cascade — whale wallet moved 8,400 BTC pre-crash.", delay: 2400 },
+      { model: "Engine", color: "#10b981", text: "DECISION: HOLD positions. Set staggered limit buys at -15%, -18%, -22%. Risk: ELEVATED. No panic selling.", delay: 3600 },
+    ],
+  },
+  {
+    id: "whale",
+    name: "Whale Alert",
+    icon: "🐋",
+    accent: "#3b82f6",
+    desc: "50,000 ETH moved to exchange",
+    responses: [
+      { model: "Grok", color: "#ef4444", text: "Whale wallet 0x7a9f...3e2b transferred 50,000 ETH ($164M) to Binance hot wallet. Historically bearish signal.", delay: 0 },
+      { model: "Claude", color: "#a855f7", text: "Context check: This wallet is a known market maker. Previous large deposits were followed by OTC deals, not spot selling. Confidence in bearish thesis: 34%.", delay: 1200 },
+      { model: "Perplexity", color: "#3b82f6", text: "Cross-referencing: Ethereum Foundation hasn't sold. No upcoming unlock events. Binance ETH reserves still below 30-day average.", delay: 2400 },
+      { model: "Engine", color: "#10b981", text: "DECISION: HOLD. Signal overridden — market maker activity, not distribution. Tighten stops to -3% as precaution.", delay: 3600 },
+    ],
+  },
+  {
+    id: "bull",
+    name: "Bull Breakout",
+    icon: "🚀",
+    accent: "#10b981",
+    desc: "BTC breaks all-time high with volume",
+    responses: [
+      { model: "Grok", color: "#ef4444", text: "BREAKOUT CONFIRMED. BTC above $73,800 on 3.2x average volume. Social sentiment: euphoria. Google Trends spiking.", delay: 0 },
+      { model: "Claude", color: "#a855f7", text: "Technical: Clean break above resistance with no bearish divergence. Fibonacci extension targets $82,400. Risk/reward: 4.1:1. Position sizing: 8% portfolio.", delay: 1200 },
+      { model: "Perplexity", color: "#3b82f6", text: "Spot ETF inflows hit $1.2B today — highest since launch. Institutional FOMO confirmed. No negative regulatory catalysts in pipeline.", delay: 2400 },
+      { model: "Engine", color: "#10b981", text: "DECISION: LONG BTC/USDT. Consensus: 94%. Entry: $73,800. Target: $82,400. Stop: $71,200. All three models aligned.", delay: 3600 },
+    ],
+  },
+  {
+    id: "blackswan",
+    name: "Black Swan",
+    icon: "🦢",
+    accent: "#a855f7",
+    desc: "Major exchange halts withdrawals",
+    responses: [
+      { model: "Grok", color: "#ef4444", text: "CRITICAL: Major exchange suspends all withdrawals citing 'technical maintenance'. Social media exploding. FUD level: maximum.", delay: 0 },
+      { model: "Claude", color: "#a855f7", text: "Risk assessment: CRITICAL. Exposure analysis — 0% of portfolio on affected exchange. But contagion risk is real. Reducing all positions by 50% immediately.", delay: 1200 },
+      { model: "Perplexity", color: "#3b82f6", text: "Fact-check: Exchange proof-of-reserves last updated 72h ago. Chainalysis shows unusual outflows past 48h. Pattern matches historical insolvency events.", delay: 2400 },
+      { model: "Engine", color: "#10b981", text: "DECISION: DEFENSIVE. Reduce all positions 50%. Move remaining to cold storage signals. Circuit breaker: TRIPPED. No new trades until resolved.", delay: 3600 },
+    ],
+  },
+];
+
+function ScenarioSimulator() {
+  const [activeScenario, setActiveScenario] = useState<string | null>(null);
+  const [visibleResponses, setVisibleResponses] = useState<number>(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const runScenario = useCallback((id: string) => {
+    if (isPlaying) return;
+    setActiveScenario(id);
+    setVisibleResponses(0);
+    setIsPlaying(true);
+
+    const scenario = SCENARIOS.find(s => s.id === id)!;
+    scenario.responses.forEach((r, i) => {
+      setTimeout(() => {
+        setVisibleResponses(i + 1);
+        if (i === scenario.responses.length - 1) {
+          setTimeout(() => setIsPlaying(false), 1000);
+        }
+      }, r.delay);
+    });
+  }, [isPlaying]);
+
+  const active = SCENARIOS.find(s => s.id === activeScenario);
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "4px" }}>
+        Scenario Simulator
+        <span style={{ marginLeft: "8px", fontSize: "10px", color: "#f59e0b", fontWeight: "normal", textTransform: "none" }}>interactive</span>
+      </h2>
+      <p style={{ fontSize: "11px", color: "var(--text-secondary)", marginBottom: "16px" }}>
+        Pick a market event. Watch three AI models analyze and respond in real-time.
+      </p>
+
+      <div className="scenario-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
+        {SCENARIOS.map(s => (
+          <button
+            key={s.id}
+            className={`scenario-btn${activeScenario === s.id ? " active" : ""}`}
+            style={{
+              "--btn-accent": s.accent,
+              padding: "16px 12px",
+              borderRadius: "10px",
+              fontFamily: "inherit",
+              textAlign: "center",
+              opacity: isPlaying && activeScenario !== s.id ? 0.4 : 1,
+              transition: "all 0.3s ease",
+            } as React.CSSProperties}
+            onClick={() => runScenario(s.id)}
+            disabled={isPlaying}
+          >
+            <div style={{ fontSize: "24px", marginBottom: "6px" }}>{s.icon}</div>
+            <div style={{ fontSize: "12px", fontWeight: "bold", color: s.accent, marginBottom: "4px" }}>{s.name}</div>
+            <div style={{ fontSize: "10px", color: "var(--text-secondary)", lineHeight: "1.3" }}>{s.desc}</div>
+          </button>
+        ))}
+      </div>
+
+      {active && visibleResponses > 0 && (
+        <div
+          className="scenario-result"
+          style={{
+            background: "var(--bg-secondary)",
+            border: `1px solid ${active.accent}33`,
+            borderRadius: "10px",
+            padding: "20px",
+          }}
+        >
+          <div style={{ fontSize: "11px", color: active.accent, fontWeight: "bold", textTransform: "uppercase", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <span>{active.icon}</span>
+            <span>SCENARIO: {active.name}</span>
+            {isPlaying && (
+              <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: active.accent, marginLeft: 4 }} />
+            )}
+          </div>
+
+          {active.responses.slice(0, visibleResponses).map((r, i) => (
+            <div
+              key={i}
+              className="scenario-result"
+              style={{
+                display: "flex",
+                gap: "12px",
+                marginBottom: "10px",
+                padding: "12px 14px",
+                background: r.model === "Engine" ? "#10b98110" : "var(--bg-primary)",
+                borderRadius: "8px",
+                borderLeft: `3px solid ${r.color}`,
+                animationDelay: `${i * 0.1}s`,
+              }}
+            >
+              <div style={{
+                width: 28, height: 28, borderRadius: "50%",
+                background: `${r.color}22`, border: `1px solid ${r.color}44`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "11px", fontWeight: "bold", color: r.color, flexShrink: 0,
+              }}>
+                {r.model[0]}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: "12px", fontWeight: "bold", color: r.color, marginBottom: "2px" }}>{r.model}</div>
+                <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: "1.5" }}>{r.text}</div>
+              </div>
+            </div>
+          ))}
+
+          {isPlaying && visibleResponses < active.responses.length && (
+            <div style={{ padding: "10px 14px", display: "flex", gap: "12px", alignItems: "center" }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--bg-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ color: "var(--text-secondary)", fontSize: "10px" }}>AI</span>
+              </div>
+              <div style={{ display: "flex", gap: "4px" }}>
+                {[0, 1, 2].map(d => (
+                  <span key={d} className="animate-pulse" style={{
+                    width: 5, height: 5, borderRadius: "50%", background: "var(--text-secondary)",
+                    display: "inline-block", animationDelay: `${d * 0.2}s`,
+                  }} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!activeScenario && (
+        <div style={{
+          textAlign: "center", padding: "40px 20px",
+          background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
+          borderRadius: "10px", color: "var(--text-secondary)", fontSize: "12px",
+        }}>
+          Select a scenario above to see how three AI models respond to market events
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIGNAL LIFECYCLE — Animated timeline of a signal's journey
+   ═══════════════════════════════════════════════════════════════ */
+
+const LIFECYCLE_STEPS = [
+  { label: "Detection", model: "Grok", color: "#ef4444", icon: "⚡", detail: "Pattern identified on 4H chart" },
+  { label: "Deep Analysis", model: "Claude", color: "#a855f7", icon: "🧠", detail: "Risk/reward calculated, position sized" },
+  { label: "Fact-Check", model: "Perplexity", color: "#3b82f6", icon: "🔍", detail: "News & fundamentals verified" },
+  { label: "Consensus", model: "Engine", color: "#10b981", icon: "⚙️", detail: "Weighted vote from all models" },
+  { label: "Execution", model: "Paper Trade", color: "#f59e0b", icon: "📊", detail: "Order placed in paper portfolio" },
+];
+
+const LIFECYCLE_PAIRS = ["BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT"];
+const LIFECYCLE_DIRS = ["LONG", "LONG", "SHORT", "LONG"];
+const LIFECYCLE_CONFS = [87, 82, 74, 91];
+
+function SignalLifecycle() {
+  const [activeStep, setActiveStep] = useState(-1);
+  const [cycle, setCycle] = useState(0);
+  const [signalPair, setSignalPair] = useState("BTC/USDT");
+
+  useEffect(() => {
+    let step = -1;
+    setActiveStep(-1);
+    setSignalPair(LIFECYCLE_PAIRS[cycle % LIFECYCLE_PAIRS.length]);
+
+    const iv = setInterval(() => {
+      step++;
+      if (step >= LIFECYCLE_STEPS.length) {
+        clearInterval(iv);
+        setTimeout(() => setCycle(c => c + 1), 3000);
+        return;
+      }
+      setActiveStep(step);
+    }, 1200);
+
+    return () => clearInterval(iv);
+  }, [cycle]);
+
+  const dir = LIFECYCLE_DIRS[cycle % LIFECYCLE_DIRS.length];
+  const conf = LIFECYCLE_CONFS[cycle % LIFECYCLE_CONFS.length];
+  const dirColor = dir === "LONG" ? "#10b981" : "#ef4444";
+
+  return (
+    <section style={{ marginBottom: "40px" }}>
+      <h2 style={{ fontSize: "12px", textTransform: "uppercase", color: "var(--text-secondary)", letterSpacing: "0.5px", marginBottom: "12px" }}>
+        Signal Lifecycle
+        <span className="animate-pulse" style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#10b981", marginLeft: 8, verticalAlign: "middle" }} />
+      </h2>
+
+      <div style={{
+        background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
+        borderRadius: "10px", padding: "24px",
+      }}>
+        {/* Signal header */}
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          marginBottom: "20px", padding: "10px 16px",
+          background: "var(--bg-primary)", borderRadius: "8px",
+          border: `1px solid ${dirColor}33`,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text-primary)" }}>{signalPair}</span>
+            <span style={{
+              fontSize: "11px", padding: "2px 10px", borderRadius: "4px",
+              background: `${dirColor}22`, color: dirColor, fontWeight: "bold",
+            }}>
+              {dir === "LONG" ? "▲" : "▼"} {dir}
+            </span>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "10px", color: "var(--text-secondary)" }}>Confidence</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold", color: conf >= 80 ? "#10b981" : "#f59e0b" }}>
+              {activeStep >= 3 ? `${conf}%` : activeStep >= 0 ? "..." : "—"}
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {LIFECYCLE_STEPS.map((step, i) => {
+            const isActive = i === activeStep;
+            const isDone = i < activeStep;
+            const isPending = i > activeStep;
+
+            return (
+              <div key={step.label}>
+                {/* Step row */}
+                <div
+                  className={isDone || isActive ? "lifecycle-step" : ""}
+                  style={{
+                    display: "flex", alignItems: "center", gap: "16px",
+                    opacity: isPending ? 0.3 : 1,
+                    transition: "opacity 0.4s ease",
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                >
+                  <div
+                    className={`lifecycle-node${isActive ? " active" : ""}`}
+                    style={{
+                      "--node-color": step.color,
+                      background: isDone ? step.color : isActive ? `${step.color}33` : "var(--bg-primary)",
+                      border: `2px solid ${isDone || isActive ? step.color : "var(--border-color)"}`,
+                      color: isDone ? "#fff" : step.color,
+                    } as React.CSSProperties}
+                  >
+                    {isDone ? "✓" : step.icon}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "bold", color: isDone || isActive ? step.color : "var(--text-secondary)" }}>
+                        {step.label}
+                      </span>
+                      <span style={{ fontSize: "10px", color: "var(--text-secondary)", padding: "1px 6px", background: "var(--bg-primary)", borderRadius: "3px" }}>
+                        {step.model}
+                      </span>
+                      {isActive && (
+                        <span className="animate-pulse" style={{ fontSize: "10px", color: step.color }}>processing...</span>
+                      )}
+                      {isDone && (
+                        <span style={{ fontSize: "10px", color: "#10b981" }}>complete</span>
+                      )}
+                    </div>
+                    {(isDone || isActive) && (
+                      <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "2px" }}>
+                        {step.detail}
+                      </div>
+                    )}
+                  </div>
+                  {(isDone || isActive) && (
+                    <div style={{
+                      fontSize: "10px", color: "var(--text-secondary)",
+                      padding: "2px 8px", background: "var(--bg-primary)",
+                      borderRadius: "4px",
+                    }}>
+                      {isDone ? `${(Math.random() * 200 + 100).toFixed(0)}ms` : isActive ? "..." : ""}
+                    </div>
+                  )}
+                </div>
+                {/* Connector */}
+                {i < LIFECYCLE_STEPS.length - 1 && (
+                  <div
+                    className={`lifecycle-connector${isDone ? " active" : ""}`}
+                    style={{
+                      "--conn-from": step.color,
+                      "--conn-to": LIFECYCLE_STEPS[i + 1].color,
+                      height: "20px",
+                    } as React.CSSProperties}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{ fontSize: "10px", color: "var(--text-secondary)", textAlign: "center", marginTop: "16px" }}>
+          Signal #{847 + cycle} — Auto-cycles through trading pairs. Simulated data.
+        </div>
+      </div>
+    </section>
+  );
 }
 
 /* ─── Model Agreement Matrix ─── */
@@ -950,6 +1556,9 @@ export default function DemoPage() {
             </p>
           </section>
 
+          {/* ═══ MINI TERMINAL — TRY IT ═══ */}
+          <MiniTerminal />
+
           {/* ═══ LIVE PRICE TICKER ═══ */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={sectionLabel}>
@@ -1087,6 +1696,11 @@ export default function DemoPage() {
               </div>
             </div>
           </section>
+
+          {/* ═══ SCENARIO SIMULATOR ═══ */}
+          <ScrollReveal>
+          <ScenarioSimulator />
+          </ScrollReveal>
 
           {/* ═══ SIGNAL FEED + CHART ═══ */}
           <ScrollReveal>
@@ -1300,6 +1914,11 @@ export default function DemoPage() {
           {/* ═══ AI DEBATE ═══ */}
           <ScrollReveal>
           <AIDebate />
+          </ScrollReveal>
+
+          {/* ═══ SIGNAL LIFECYCLE ═══ */}
+          <ScrollReveal>
+          <SignalLifecycle />
           </ScrollReveal>
 
           {/* ═══ CTA ═══ */}
