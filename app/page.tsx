@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback, useRef } from "react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import { API_ROUTE_COUNT, VDS_LABEL } from "@/lib/stack-record";
 
 const Terminal = dynamic(() => import("@/components/Terminal"), { ssr: false });
 
@@ -1028,7 +1029,7 @@ const STATUS_CARDS = [
   { label: "AI Agents", value: "Ready", color: "#a855f7" },
   { label: "Mode", value: "Paper Trading", color: "#3b82f6" },
   { label: "Domains", value: `${DOMAINS.length}`, color: "#ec4899" },
-  { label: "API Routes", value: "14", color: "#06b6d4" },
+  { label: "API Routes", value: String(API_ROUTE_COUNT), color: "#06b6d4" },
 ];
 
 /* ─── Architecture Pillars ─── */
@@ -1045,12 +1046,11 @@ const STACK_COSTS = [
   { service: "Grok Pro", role: "Signal detection, content", cost: "~$0 (X Premium+)" },
   { service: "Claude API", role: "Deep analysis, agents", cost: "Pay-per-use" },
   { service: "Perplexity Free", role: "Research, 3 Pro/day", cost: "$0" },
-  { service: "Proton Mail", role: "Encrypted email (imported)", cost: "Proton plan" },
-  { service: "Suno API", role: "Music generation (paid)", cost: "Pay-per-use" },
+  { service: "Gemini", role: "Gmail/Drive scanning", cost: "Free" },
   { service: "Cloudflare Pro", role: "CDN, WAF, DDoS", cost: "$20/mo" },
   { service: "Vercel", role: "Hosting", cost: "Free" },
   { service: "GitHub Actions", role: "CI/CD", cost: "Free" },
-  { service: "Contabo VPS", role: "Trading backend", cost: "~$25/mo" },
+  { service: VDS_LABEL, role: "Documented host, scripts not deployed", cost: "provisioned" },
 ];
 
 /* ─── Hard Rules ─── */
@@ -2258,8 +2258,6 @@ npm run build           # Production build`}
                     ["/api/incidents", "Service monitoring", "Semi-real"],
                     ["/api/notes", "In-memory notes", "Real"],
                     ["/api/autosave", "On-the-fly persistence", "Demo"],
-                    ["/api/context", "ZynContext (assumption blocker)", "Live"],
-                    ["/api/music", "SongPal track catalog", "Real"],
                   ].map(([route, desc, type]) => (
                     <tr key={route} style={{ borderBottom: "1px solid var(--border-color)" }}>
                       <td style={{ padding: "8px", color: "var(--accent-blue)" }}>{route}</td>

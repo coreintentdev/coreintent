@@ -18,7 +18,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Agents are code-ready, not running
 
 ## Rules for AI Sessions
-1. READ before you write. Search the codebase before assuming anything.
+1. READ before you write. Start with `docs/ops/HANDOVER-20261005.md`, then `docs/skills/cloud-agent-starter.md`. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
 4. NEVER register anything in Australia. NZ-first for all legal/business.
@@ -37,16 +37,25 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Audit: scripts/audit.sh
 - VPS Lens: scripts/vps-lens.sh
 
-## VDS / VPS (3 active: 2 Contabo + 1 Cloudzy)
-- VDS Primary: 5.189.143.170 (Contabo VDS S, $51.04/mo, Ubuntu 24.04) — deploy target
+## VPS
+- Documented Contabo VDS public origin: 5.189.143.170
+- Documented Tailscale: 100.121.107.112
 - Contabo VPS 20: 161.97.89.49 ($7/mo, paid to Apr 2027)
-- Cloudzy VPS: 100.122.99.34 (~$15/mo)
-- Contabo VPS 30: 84.247.137.105 ($13.20/mo, CANCELLED, expires Apr 2027)
-- All connected via Tailscale — no passwords needed for SSH
+- Retired Cloudzy address: 100.122.99.34 — do not deploy there
+- Contabo VPS 30: 84.247.137.105 ($13.20/mo, CANCELLED)
+- These hosts were copied from the 2026-09-30 fleet map. They were not probed by the session that wrote this.
+- Scripts in this repo are not deployed. deploy-vps.sh stops if SSH fails.
 - VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
 - Desktop CLI: ~/Desktop/zynthio-tools/bin/cai (110 APIs, takes priority over repo scripts)
 - Data flow: Mac (ZYNTHIO_MASTER) → sync payloads → VDS /root/zynthio/
 - This repo = scripts + manifests only, NOT bulk vault data
+
+## Already paid inventories — read these, do not re-ask
+- This website has 14 demo routes. The list is `lib/stack-record.ts`. There is no 110-route catalog in this repo.
+- Connector map (2026-03-23): 22 Perplexity services, 363 tools, 11 VPS key names. Drive: CC_HANDOVER_API_CONNECTOR_MAP.md
+- Fleet map: coreintentai `ops/handover/cursor-incidents-20261001/ZYNTHIO-MAPS-20260930.md` (842 domains, 111 generated sites)
+- Engine code that kept moving after May 2026: github.com/coreintentdev/coreintentai
+- Billing record of repeat sessions: coreintentai `ops/handover/cursor-incidents-20261001/incidents/INC-20261001-CURSOR-BILLING-ASYMMETRY-OPERATOR-PAYS.md`
 
 ## Key Decisions (March 2026)
 - Pricing: Competitions, not subscriptions. "Free costs fuck all to serve."
@@ -58,7 +67,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 ## Known Issues
 - Exchange/market routes (market, portfolio, signals, agents) return hardcoded demo data — no live exchange connections
 - protect/research/content routes call live AI APIs when env keys are set; fall back to [DEMO] gracefully when not
-- health/status/connections derive real values from env vars (no hardcoded data)
+- health/status derive values from env vars. /api/connections labels infra as unverified or not_deployed. It does not probe hosts.
 - VPS scripts written but never deployed (COR-20, overdue)
 - No user authentication yet
 - No database/persistence layer

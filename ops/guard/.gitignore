@@ -1,0 +1,5 @@
+# Runtime outputs of the guard layer
+output/
+.guard/
+*.ledger
+weights.json

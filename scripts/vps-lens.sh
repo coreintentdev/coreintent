@@ -16,6 +16,8 @@
 
 set -e
 
+# Documented Contabo public origin (2026-09-30 map). Tailscale: 100.121.107.112
+# Retired Cloudzy: 100.122.99.34
 VPS_HOST="${VPS_HOST:-5.189.143.170}"
 VPS_USER="${VPS_USER:-root}"
 VPS_PASS="${VPS_PASS:-}"

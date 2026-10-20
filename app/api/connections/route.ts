@@ -9,6 +9,7 @@
 import { NextRequest } from "next/server";
 import { ok, preflight, serverError, checkRateLimit, tooManyRequests } from "@/lib/api";
 import { getAiKeyStatus } from "@/lib/ai";
+import { VDS, VDS_LABEL, VDS_STATUS } from "@/lib/stack-record";
 
 interface AIService {
   status: "keyed" | "demo";
@@ -26,12 +27,10 @@ interface InfraService {
   status:     string;
   role:       string;
   host?:      string;
-  ip?:        string;
   plan?:      string;
   repos?:     number;
   tasks?:     number;
   completed?: number;
-  tailscale?: boolean;
 }
 
 interface Tool {
@@ -78,16 +77,11 @@ export async function GET(req: NextRequest) {
     };
 
     const infrastructure: ConnectionsResponse["infrastructure"] = {
-      vds:          { status: "live",      host: "Contabo VDS S", ip: "5.189.143.170",  role: "Primary — trading engine + web", tailscale: true },
-      vps_kept:     { status: "active",    host: "Contabo VPS 20", ip: "161.97.89.49", role: "$7/mo, paid to Apr 2027" },
-      vps_cancelled:{ status: "cancelled", host: "Contabo VPS 30", ip: "84.247.137.105", role: "Ends Apr 2027" },
-      proton:       { status: "active",    role: "Email (all accounts imported to Proton Mail)" },
-      googleDrive:  { status: "active",    role: "Via Claude/Perplexity desktop app auth" },
-      suno:         { status: "active",    role: "Paid API — suno.api.com, wired in lib/ai.ts" },
-      cloudflare:   { status: "active",    plan: "Pro", role: "CDN, WAF, DDoS, DNS" },
-      github:       { status: "active",    repos: 5,    role: "CI/CD, source control" },
-      linear:       { status: "active",    tasks: 26, completed: 3, role: "Project management" },
-      notion:       { status: "active",    role: "Documentation" },
+      vps:        { status: VDS_STATUS, host: `${VDS_LABEL} ${VDS.publicHost}`, role: "Scripts in repo, not deployed. Host not probed this session." },
+      cloudflare: { status: "unverified", plan: "Pro",     role: "CDN, WAF, DDoS, DNS"       },
+      github:     { status: "unverified", repos: 5,        role: "CI/CD, source control"     },
+      linear:     { status: "unverified", tasks: 26, completed: 3, role: "Project management" },
+      notion:     { status: "unverified", role: "Documentation"                               },
     };
 
     const tools: ConnectionsResponse["tools"] = {

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIS Day — Consequence Engine & Perspective Mesh</title>
+  <meta name="description" content="A research layer that turns AI opinions into a living system: verify, compare, score, and learn." />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --code-bg: #f1f5f9;
+      --ok: #16a34a;
+      --warn: #ca8a04;
+      --bad: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --fg: #f8fafc;
+        --muted: #94a3b8;
+        --accent: #60a5fa;
+        --accent-soft: #1e3a8a;
+        --card: #1e293b;
+        --border: #334155;
+        --code-bg: #1e293b;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    header, main, footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    header { border-bottom: 1px solid var(--border); }
+    h1 { margin: 0 0 0.25rem; font-size: 1.8rem; }
+    .lead { color: var(--muted); margin: 0; }
+    h2 { margin-top: 2rem; font-size: 1.3rem; }
+    h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin: 1rem 0;
+    }
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      margin: 1.5rem 0 0;
+      flex-wrap: wrap;
+    }
+    .tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-weight: 500;
+    }
+    .tab[aria-selected="true"] {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.85rem;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .tag {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      margin-right: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    footer { color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+    a { color: var(--accent); }
+    ul { padding-left: 1.25rem; }
+    .layer { display: flex; gap: 0.75rem; align-items: baseline; }
+    .layer-n { font-weight: 800; color: var(--accent); min-width: 1.6rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AIS Day</h1>
+    <p class="lead">Consequence Engine & Perspective Mesh — a research layer that learns from outcomes instead of generating opinions.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <p>This page documents a seven-layer reasoning system. It is a research artifact, not a live trading engine. The goal is simple: turn AI-generated perspectives into checked, comparable, improvable decisions.</p>
+      <p><span class="tag">repo-first</span><span class="tag">evidence-before-action</span><span class="tag">no destructive defaults</span></p>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="layers">Layers</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="scripts">Scripts</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="example">Example Run</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="deploy">Deploy</button>
+    </div>
+
+    <section id="layers" class="panel active" role="tabpanel">
+      <h2>The seven layers</h2>
+      <div class="layer"><span class="layer-n">1</span><div><strong>Executor</strong> — Proposes a concrete, verifiable action and lists assumptions.</div></div>
+      <div class="layer"><span class="layer-n">2</span><div><strong>Verifier</strong> — Blocks unverified or unsafe assumptions. Gatekeeper.</div></div>
+      <div class="layer"><span class="layer-n">3</span><div><strong>Investigator</strong> — Finds blind spots, rollback plans, side effects.</div></div>
+      <div class="layer"><span class="layer-n">4</span><div><strong>User-defined roles</strong> — Domain lenses: cost, infra, legal, etc.</div></div>
+      <div class="layer"><span class="layer-n">5</span><div><strong>Report / site</strong> — Renders the structured result. Not the source of truth.</div></div>
+      <div class="layer"><span class="layer-n">6</span><div><strong>Consequence Engine</strong> — Records outcomes and weights each role's accuracy over time.</div></div>
+      <div class="layer"><span class="layer-n">7</span><div><strong>Perspective Mesh</strong> — Runs the same task through multiple models and surfaces consensus, dissent, and shared assumptions.</div></div>
+
+      <h2>Why this matters</h2>
+      <ul>
+        <li>Right now, most AI systems produce opinions. Nothing checks whether the opinion was right.</li>
+        <li>Layer 6 closes the loop between perspectives and reality.</li>
+        <li>Layer 7 turns disagreement into signal instead of noise.</li>
+        <li>The shared assumptions across independent instances are the most dangerous blind spots.</li>
+      </ul>
+    </section>
+
+    <section id="scripts" class="panel" role="tabpanel">
+      <h2>Repository</h2>
+      <p>Source of truth lives in the CoreIntent repo under <code>ops/guard/</code>:</p>
+      <ul>
+        <li><code>perspective-engine.sh</code> — Layers 1–4</li>
+        <li><code>consequence.sh</code> — Layer 6 ledger and scoring</li>
+        <li><code>mesh.sh</code> — Layer 7 multi-model comparison</li>
+        <li><code>jev-schema.yaml</code> — Typed output schema</li>
+        <li><code>jev-validator.sh</code> — Validate outputs</li>
+      </ul>
+
+      <h3>policy.yaml</h3>
+      <pre><code>policy:
+  destructive_requires_approval: true
+  verify_before_execute: true
+  record_consequences: true
+  weight_bounds: [0.2, 2.0]
+  weight_delta: 0.1</code></pre>
+
+      <h3>Example: record and score</h3>
+      <pre><code>./consequence.sh record \
+  --task-id vds-push-001 \
+  --result success \
+  --notes "SSH succeeded, checksum matched" \
+  --verifier correct
+
+./consequence.sh score
+./consequence.sh report --role verifier</code></pre>
+
+      <h3>Example: mesh</h3>
+      <pre><code>export MESH_CMD_CLAUDE="ollama run qwen3:8b-64k"
+export MESH_CMD_GROK="ollama run hermes3:8b"
+
+./mesh.sh \
+  --problem "Should we rebuild the nginx config for aisday.com?" \
+  --models "claude,grok"</code></pre>
+
+      <h3>Output shape</h3>
+      <pre><code>{
+  "consensus": "NEEDS-EVIDENCE",
+  "dissenters": ["grok"],
+  "shared_assumptions": [
+    "nginx config exists",
+    "operator has not explicitly approved the change"
+  ],
+  "confidence": 0.5
+}</code></pre>
+    </section>
+
+    <section id="example" class="panel" role="tabpanel">
+      <h2>Example run</h2>
+      <p>Task: <em>Push a new build to the VDS.</em></p>
+      <table>
+        <thead><tr><th>Role</th><th>Output</th><th>Gate</th></tr></thead>
+        <tbody>
+          <tr><td>Executor</td><td>Proposed: rsync build to 100.64.0.2:/var/www/coreintent</td><td>—</td></tr>
+          <tr><td>Verifier</td><td><span class="warn">needs-evidence</span>: human disposition missing, no checksum yet</td><td>block</td></tr>
+          <tr><td>Investigator</td><td>Blind spots: rollback, downtime, disk at 87%</td><td>—</td></tr>
+          <tr><td>Cost Lens</td><td>Use existing VDS; no paid API calls required</td><td>ask</td></tr>
+          <tr><td>Infra Lens</td><td>Target alias <code>ssh vds</code>; verify nginx reload path</td><td>ask</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Judgment:</strong> <span class="warn">needs-evidence</span>. The operator must confirm disposition before the action proceeds.</p>
+      <p><strong>After execution:</strong> run <code>consequence.sh record</code> so the Verifier weight updates.</p>
+    </section>
+
+    <section id="deploy" class="panel" role="tabpanel">
+      <h2>Deploy</h2>
+      <p>This page is a thin renderer. The authoritative system is the repo guard layer.</p>
+      <ul>
+        <li>Next.js app: place <code>public/aisday.html</code> and it is served at <code>/aisday.html</code>.</li>
+        <li>VDS / nginx: copy <code>public/aisday.html</code> to a static vhost root for <code>aisday.com</code>.</li>
+        <li>Cloudflare Pages is intentionally not used for this artifact per fleet rules.</li>
+      </ul>
+      <p>Build the repo first:</p>
+      <pre><code>npm install
+npm run build
+./scripts/audit.sh</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>AIS Day research layer · Built for <a href="https://zynthio.ai">Zynthio.ai</a> · Source: coreintentdev/coreintent · ops/guard</p>
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const id = tab.getAttribute('aria-controls');
+        tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById(id).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

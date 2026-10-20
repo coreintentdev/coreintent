@@ -270,6 +270,28 @@ fi
 echo "" >> "$REPORT"
 
 # ═══════════════════════════════════════════
+# 6b. STACK RECORD — route list matches the tree
+# ═══════════════════════════════════════════
+echo "## 6b. Stack record" >> "$REPORT"
+echo ""
+echo "--- STACK RECORD ---"
+
+FOUND_ROUTES=$(find app/api -mindepth 2 -name route.ts | wc -l | tr -d ' ')
+LISTED_ROUTES=$(grep -c '^  "[a-z][a-z]*",$' lib/stack-record.ts | tr -d ' ')
+if [ "$FOUND_ROUTES" = "$LISTED_ROUTES" ] && [ "$FOUND_ROUTES" = "14" ]; then
+  log_pass "lib/stack-record.ts lists all $FOUND_ROUTES API routes"
+else
+  log_fail "API route count drift: tree=$FOUND_ROUTES record=$LISTED_ROUTES"
+fi
+if grep -q '100.122.99.34' scripts/deploy-vps.sh scripts/vps-lens.sh && grep -q 'VPS_HOST="${VPS_HOST:-5.189.143.170}"' scripts/deploy-vps.sh scripts/vps-lens.sh; then
+  log_pass "Deploy scripts default to documented Contabo host and still name the retired Cloudzy address"
+else
+  log_fail "Deploy script host defaults drifted from lib/stack-record.ts"
+fi
+
+echo "" >> "$REPORT"
+
+# ═══════════════════════════════════════════
 # 7. TRUTH CHECK — No Fake Status Claims
 # ═══════════════════════════════════════════
 echo "## 7. Truth Check" >> "$REPORT"
