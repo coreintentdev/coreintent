@@ -160,3 +160,5 @@ Thumbs.db
 *~
 .idea/
 .vscode/
+.open-next
+migration_*

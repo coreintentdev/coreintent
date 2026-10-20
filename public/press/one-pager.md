@@ -43,7 +43,7 @@ Register -> Learn -> Compete -> Earn -> Create
 
 **6 AI Agents:** TrendFollower, MeanRevert, SentimentBot, ArbitrageBot, RiskGuard, ResearchAgent
 
-**Stack:** Next.js 15 / TypeScript (strict) / Vercel / Cloudflare Pro / Cloudzy VPS
+**Stack:** Next.js 15 / TypeScript (strict) / Vercel / Cloudflare Pro / Contabo VPS
 
 **Monthly infrastructure cost:** ~NZ$45
 

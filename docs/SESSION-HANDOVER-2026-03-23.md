@@ -20,7 +20,8 @@
 - `/pricing` — Free/Pro/Enterprise (NEEDS REWRITE to competition model)
 - `/stack` — Full API orchestra with cost breakdown
 
-### API Routes (10)
+### API Routes (12 at session end, 14+ now)
+
 - `/api/status` — Engine health, exchanges, circuit breakers
 - `/api/portfolio` — Holdings, P&L
 - `/api/signals` — Trading signals with confidence scores
@@ -31,6 +32,8 @@
 - `/api/autosave` — On-the-fly persistence, outsource cost map
 - `/api/research` — REAL: All 3 AIs research Corey's digital identity
 - `/api/protect` — REAL: F18 security, impersonation scanning, brand monitoring
+- `/api/notes` — Public customer notes (in-memory)
+- `/api/connections` — Honest service connection status
 
 ### Real AI Integration (lib/ai.ts)
 - Grok (x.ai) — real API calls, falls back to demo without key
@@ -121,7 +124,7 @@
 - **Action needed**: Find what OpenClaw is, fix or replace
 
 ### INC-SESSION-003: VPS Lost
-- **What**: Cloudzy VPS credentials never configured, scripts never deployed
+- **What**: Contabo VPS credentials never configured, scripts never deployed
 - **Root cause**: COR-20 was never completed (70 days overdue)
 - **Fix**: VPS scripts now created, need credentials to deploy
 
@@ -210,7 +213,7 @@
 |---------|------|------|--------|
 | Cloudflare | Pro | $20/mo | NOT CONFIGURED |
 | Vercel | Hobby/Free | $0 | NOT DEPLOYED |
-| Cloudzy VPS | Basic | ~$5-10/mo | CREDENTIALS EMPTY |
+| Contabo VPS | Basic | ~$5-10/mo | CREDENTIALS EMPTY |
 | GitHub | Free | $0 | ACTIVE — 11 commits |
 | GitHub Actions | Free | $0 | CI YAML EXISTS |
 

@@ -90,7 +90,7 @@ Our entire AI trading platform costs ~$45/month to run:
 - Vercel: $0
 - GitHub Actions: $0
 - Cloudflare Pro: $20
-- Cloudzy VPS: $25
+- Contabo VPS: $25
 - AI APIs: Pay-per-use
 
 Proof that you don't need VC money to build serious tech.
@@ -277,7 +277,7 @@ We did:
 Hosting -> $0 (Vercel)
 CI/CD -> $0 (GitHub)
 CDN -> $20 (Cloudflare)
-VPS -> $25 (Cloudzy)
+VPS -> $25 (Contabo)
 
 Total: $45/mo. Your move.
 

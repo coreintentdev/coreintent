@@ -11,6 +11,7 @@ set -e
 VPS_HOST="${VPS_HOST:-5.189.143.170}"
 VPS_USER="${VPS_USER:-root}"
 REMOTE_DIR="/root/coreintent"
+# Tailscale SSH — no passwords needed
 
 echo "═══════════════════════════════════════"
 echo " CoreIntent → VPS Deployment"
