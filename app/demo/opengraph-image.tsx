@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 
 export const alt = "CoreIntent — Interactive AI Trading Demo. Watch 3 Models Debate Trades.";
 export const size = { width: 1200, height: 630 };
