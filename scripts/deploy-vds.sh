@@ -4,7 +4,7 @@
 # Deploys EVERYTHING to a single VDS: web app + trading engine +
 # reverse proxy + SSL + systemd services.
 #
-# Replaces: 3x VPS (Contabo + Frankfurt + 3rd) → 1x VDS
+# Consolidates to a single VDS (see CLAUDE.md for host inventory)
 # Run from project root: ./scripts/deploy-vds.sh
 #
 # Usage:
@@ -41,8 +41,8 @@ if [ ! -f "package.json" ]; then
 fi
 
 # Tailscale SSH — no passwords, no keys, just works
-ssh_run() { ssh -o ConnectTimeout=15 ${VDS_USER}@${VDS_HOST} "$1"; }
-scp_to() { scp -o ConnectTimeout=15 $1 ${VDS_USER}@${VDS_HOST}:$2; }
+ssh_run() { ssh -o ConnectTimeout=15 "${VDS_USER}@${VDS_HOST}" "$1"; }
+scp_to() { scp -o ConnectTimeout=15 "$1" "${VDS_USER}@${VDS_HOST}:$2"; }
 
 # ═══════════════════════════════════════════
 # PHASE 1: Connection + System Setup
@@ -95,10 +95,10 @@ scp_to "scripts/risk_monitor.ts" "${REMOTE_DIR}/scripts/"
 scp_to "scripts/signal_listener.ts" "${REMOTE_DIR}/scripts/"
 scp_to "scripts/gtrade_listener.ts" "${REMOTE_DIR}/scripts/"
 
-# Copy app directory
-eval "$SCP_CMD -r app/ ${VDS_USER}@${VDS_HOST}:${REMOTE_DIR}/"
-eval "$SCP_CMD -r components/ ${VDS_USER}@${VDS_HOST}:${REMOTE_DIR}/"
-eval "$SCP_CMD -r public/ ${VDS_USER}@${VDS_HOST}:${REMOTE_DIR}/"
+# Copy app directories
+for d in app components public; do
+  scp -o ConnectTimeout=15 -r "$d/" "${VDS_USER}@${VDS_HOST}:${REMOTE_DIR}/"
+done
 
 # Copy .env
 if [ -f ".env" ]; then
@@ -197,7 +197,7 @@ ssh_run "
 
   # SSL — if domain points here directly (not via Cloudflare proxy)
   # coreintent.dev is behind Cloudflare — SSL handled there, not certbot
-  if host ${DOMAIN} 2>/dev/null | grep -q '${VDS_HOST}'; then
+  if host ${DOMAIN} 2>/dev/null | grep -qF '${VDS_HOST}'; then
     certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos -m corey@coreyai.ai || echo 'SSL: domain not pointing here yet'
   else
     echo 'SSL skipped — point ${DOMAIN} DNS to ${VDS_HOST} first, then run:'
@@ -225,9 +225,8 @@ echo "    ssh ${VDS_USER}@${VDS_HOST} pm2 list"
 echo "    ssh ${VDS_USER}@${VDS_HOST} pm2 logs coreintent-web"
 echo "    ssh ${VDS_USER}@${VDS_HOST} pm2 restart all"
 echo ""
-echo "  After confirming everything works, close the old VPS accounts:"
-echo "    - Cloudzy:   100.122.99.34"
-echo "    - Frankfurt: 84.247.137.105"
+echo "  After confirming everything works, close retired VPS accounts."
+echo "  See CLAUDE.md for the current host inventory."
 echo "    - 3rd VPS:   (check your accounts)"
 echo ""
 echo "  336 — consolidated."

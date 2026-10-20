@@ -546,6 +546,8 @@ export async function callPerplexity(
 }
 
 // --- SUNO (Paid API) — Music generation, track management ---
+const SUNO_TIMEOUT_MS = 60_000;
+
 export async function callSuno(prompt: string, style?: string): Promise<AIResponse> {
   const key = process.env.SUNO_API_KEY;
   const baseUrl = process.env.SUNO_API_URL || "https://api.suno.ai";
@@ -554,19 +556,21 @@ export async function callSuno(prompt: string, style?: string): Promise<AIRespon
   }
 
   try {
-    const res = await fetch(`${baseUrl}/v1/music`, {
+    const res = await fetchWithTimeout(`${baseUrl}/v1/music`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
       body: JSON.stringify({ prompt, style: style || "auto" }),
-    });
+    }, SUNO_TIMEOUT_MS);
 
     if (!res.ok) {
-      const text = await res.text().catch(() => "unknown error");
       return {
         source: "suno",
         model: "suno-api",
-        content: `[API ERROR ${res.status}] ${text}`,
+        content: sanitizeApiError(res.status, "suno"),
         live: false,
+        errorType: res.status === 429 ? "rate_limit"
+                 : (res.status === 401 || res.status === 403) ? "auth_error"
+                 : "api_error",
       };
     }
 

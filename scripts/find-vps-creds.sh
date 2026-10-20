@@ -52,7 +52,7 @@ for DIR in "${SEARCH_DIRS[@]}"; do
     HAS_VPS=$(grep -il "VPS_HOST\|VPS_PASS\|VPS_USER\|SSH_KEY\|CLOUDZY\|100\.122\|104\.194" "$f" 2>/dev/null)
     if [ -n "$HAS_VPS" ]; then
       echo -e "  ${GREEN}MATCH:${NC} $f"
-      grep -i "VPS_HOST\|VPS_PASS\|VPS_USER\|VPS_SSH\|SSH_KEY\|CLOUDZY\|FRANKFURT" "$f" 2>/dev/null | sed 's/^/    /'
+      grep -i "VPS_HOST\|VPS_PASS\|VPS_USER\|VPS_SSH\|SSH_KEY\|CLOUDZY\|FRANKFURT" "$f" 2>/dev/null | sed -E 's/=.*/=<redacted>/; s/^/    /'
     fi
   done
 done
@@ -74,7 +74,7 @@ if [ -d "$MASTER/06_VPS" ]; then
   for f in "$MASTER/06_VPS"/*; do
     [ -f "$f" ] || continue
     echo -e "\n  ${GREEN}=== $(basename "$f") ===${NC}"
-    cat "$f" 2>/dev/null | head -50
+    echo "  (file listing only — contents not printed to avoid leaking secrets)"
   done
 else
   echo "  06_VPS folder not found. Checking for VPS files elsewhere..."
@@ -87,7 +87,7 @@ echo ""
 echo -e "${YELLOW}── VPS state files (if mirrored) ──${NC}"
 find "$MASTER" -name "SESSION_STATE.md" -o -name "MASTER_HANDOVER.md" -o -name "COREY_WORDS.md" 2>/dev/null | while read f; do
   echo -e "  ${GREEN}STATE:${NC} $f"
-  grep -i "host\|ip\|server\|ssh\|pass\|credential\|cloudzy\|frankfurt" "$f" 2>/dev/null | head -10 | sed 's/^/    /'
+  grep -i "host\|ip\|server\|ssh\|pass\|credential\|cloudzy\|frankfurt" "$f" 2>/dev/null | head -10 | sed -E 's/=.*/=<redacted>/; s/^/    /'
 done
 
 echo ""

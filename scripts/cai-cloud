@@ -4,8 +4,8 @@
  * Local CLI for managing the stack from your Mac.
  * Bridges what the web terminal can't: SSH, file ops, VDS management.
  *
- * Install: chmod +x scripts/cai && ln -sf $(pwd)/scripts/cai /usr/local/bin/cai
- * Usage:   cai <command>
+ * Install: chmod +x scripts/cai-cloud && ln -sf $(pwd)/scripts/cai-cloud /usr/local/bin/cai-cloud
+ * Usage:   cai-cloud <command>
  *
  * This runs on YOUR machine — not in a sandbox, not in a browser.
  * Full access to SSH, filesystem, and all your local tools.
@@ -17,7 +17,7 @@ const path = require("path");
 const readline = require("readline");
 
 const VERSION = "1.0.0";
-const VDS_HOST = process.env.VDS_HOST || process.env.VPS_HOST || "100.122.99.34";
+const VDS_HOST = process.env.VDS_HOST || process.env.VPS_HOST || "5.189.143.170";
 const VDS_USER = process.env.VDS_USER || process.env.VPS_USER || "root";
 
 const CYAN = "\x1b[36m";
@@ -39,13 +39,17 @@ function run(cmd, opts = {}) {
   try {
     return execSync(cmd, { encoding: "utf-8", stdio: opts.silent ? "pipe" : "inherit", ...opts }).trim();
   } catch (e) {
-    if (opts.silent) return "";
+    if (opts.swallow) return "";
     throw e;
   }
 }
 
+function runQuiet(cmd) {
+  return execSync(cmd, { encoding: "utf-8", stdio: "pipe" }).trim();
+}
+
 function ssh(cmd) {
-  return run(`ssh -o ConnectTimeout=10 ${VDS_USER}@${VDS_HOST} "${cmd.replace(/"/g, '\\"')}"`, { silent: true });
+  return runQuiet(`ssh -o ConnectTimeout=10 ${VDS_USER}@${VDS_HOST} "${cmd.replace(/"/g, '\\"')}"`);
 }
 
 const BANNER = `${CYAN}
@@ -174,7 +178,7 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
     for (const f of files) {
       const name = path.basename(f);
       try {
-        run(`scp -o ConnectTimeout=10 ${VDS_USER}@${VDS_HOST}:${f} ${dir}/`, { silent: true });
+        execSync(`scp -o ConnectTimeout=10 ${VDS_USER}@${VDS_HOST}:${f} ${dir}/`, { stdio: "pipe" });
         print(green(`  Pulled: ${name}`));
       } catch {
         print(yellow(`  Not found: ${name}`));
@@ -209,7 +213,7 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
     run("bash scripts/zynrip-organize.sh");
   },
 
-  tracks: (args) => {
+  tracks: async (args) => {
     const home = process.env.HOME || "/Users/coreymcivor";
     const searchDirs = [
       path.join(home, "Music"),
@@ -228,7 +232,7 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
     print(cyan("═══ Suno Track Scan ═══"));
     for (const dir of searchDirs) {
       if (fs.existsSync(dir)) {
-        const result = run(`find "${dir}" -type f \\( ${extPattern} \\) 2>/dev/null`, { silent: true });
+        const result = run(`find "${dir}" -type f \\( ${extPattern} \\) 2>/dev/null`, { swallow: true });
         const files = result.split("\n").filter(Boolean);
         totalTracks += files.length;
         allFiles.push(...files);
@@ -247,17 +251,25 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
       }));
 
       const batchSize = 100;
+      let pushed = 0;
       for (let i = 0; i < tracks.length; i += batchSize) {
         const batch = tracks.slice(i, i + batchSize);
         try {
-          const res = run(`curl -s -X POST ${base}/api/music -H "Content-Type: application/json" -d '${JSON.stringify({ tracks: batch })}'`, { silent: true });
-          const data = JSON.parse(res);
-          print(`  Batch ${Math.floor(i / batchSize) + 1}: ${green(String(data.added))} added (total: ${data.total})`);
+          const r = await fetch(`${base}/api/music`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tracks: batch }),
+          });
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          const data = await r.json();
+          const added = data?.data?.added ?? batch.length;
+          pushed += added;
+          print(`  Batch ${Math.floor(i / batchSize) + 1}: ${green(String(added))} added`);
         } catch (e) {
           print(red(`  Batch failed: ${e}`));
         }
       }
-      print(green(`\nDone. ${totalTracks} tracks pushed to /api/music`));
+      print(green(`\nDone. ${pushed}/${totalTracks} tracks pushed to /api/music`));
     } else {
       print(dim("\nTo push to API: cai tracks --push"));
     }
@@ -293,7 +305,7 @@ ${DIM}VDS: ${VDS_USER}@${VDS_HOST} | Set VDS_HOST env to change${RESET}
     print(cyan("═══ API Route Test ═══"));
     for (const r of routes) {
       try {
-        const code = run(`curl -s -o /dev/null -w "%{http_code}" ${base}/api/${r}`, { silent: true });
+        const code = run(`curl -s -o /dev/null -w "%{http_code}" ${base}/api/${r}`, { swallow: true });
         const icon = code === "200" ? green("●") : red("○");
         print(`  ${icon} /api/${r} — ${code}`);
       } catch {
@@ -376,9 +388,7 @@ ${cyan("═══ ZynContext — Active Filters ═══")}
 
   ${YELLOW}● KYC${RESET}               ${dim("Know Your Corey")}
     Owner: Corey McIvor, NZ
-    Wife: Michelle, Daughter: Ruby (~14), Son: Wesley
-    Hannah is NOT his child. Never list as daughter.
-    Best friend: Ben Innes (Perth)
+    Family: see CLAUDE.md (not exposed in public APIs or committed scripts)
     Signal: 336
 
 ${dim("ZynContext = the amnesia shield for every AI session.")}

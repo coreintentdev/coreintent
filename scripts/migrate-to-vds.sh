@@ -19,15 +19,12 @@ VDS_USER="${VDS_USER:-root}"
 
 # All existing VPS instances to migrate FROM (via Tailscale)
 # ZYN_SOURCES override or defaults below
-if [ -n "$ZYN_SOURCES" ]; then
-  IFS=' ' read -ra SOURCES <<< "$ZYN_SOURCES"
-else
-  SOURCES=(
-    "root@100.122.99.34"     # Cloudzy VPS
-    "root@161.97.89.49"      # Contabo Cloud VPS 20 ($7/mo)
-    "root@84.247.137.105"    # Contabo Cloud VPS 30 (cancelled)
-  )
+if [ -z "$ZYN_SOURCES" ]; then
+  echo "ERROR: Set ZYN_SOURCES to the hosts to migrate from."
+  echo "Example: ZYN_SOURCES='root@161.97.89.49' ./scripts/migrate-to-vds.sh"
+  exit 1
 fi
+IFS=' ' read -ra SOURCES <<< "$ZYN_SOURCES"
 
 MIRROR="migration_$(date +%Y%m%d_%H%M%S)"
 REPORT="${MIRROR}/MIGRATION_REPORT.md"
@@ -46,6 +43,7 @@ echo -e "${CYAN} Target:  ${VDS_USER}@${VDS_HOST}${NC}"
 echo -e "${CYAN}═══════════════════════════════════════════${NC}"
 echo ""
 
+umask 077
 mkdir -p "$MIRROR"
 
 cat > "$REPORT" << HEADER
@@ -61,6 +59,8 @@ HEADER
 # ═══════════════════════════════════════════
 echo -e "${CYAN}[PHASE 1] Mirroring from ${#SOURCES[@]} VPS instances...${NC}"
 
+SSH_OPTS=(-o ConnectTimeout=10 -o StrictHostKeyChecking=yes)
+
 for SRC in "${SOURCES[@]}"; do
   HOST=$(echo "$SRC" | cut -d@ -f2)
   DIR="${MIRROR}/from_${HOST}"
@@ -69,38 +69,38 @@ for SRC in "${SOURCES[@]}"; do
   echo ""
   echo -e "${CYAN}── Connecting to ${SRC} ──${NC}"
 
-  if ssh -o ConnectTimeout=10 "$SRC" "echo ok" 2>/dev/null; then
+  if ssh "${SSH_OPTS[@]}" "$SRC" "echo ok" 2>/dev/null; then
     echo -e "${GREEN}Connected.${NC}"
 
     # Pull zynthio state files
     echo "  Pulling /root/zynthio/..."
     mkdir -p "${DIR}/zynthio"
-    scp -r -o ConnectTimeout=10 "${SRC}:/root/zynthio/*.md" "${DIR}/zynthio/" 2>/dev/null || true
-    scp -r -o ConnectTimeout=10 "${SRC}:/root/zynthio/*.json" "${DIR}/zynthio/" 2>/dev/null || true
-    scp -r -o ConnectTimeout=10 "${SRC}:/root/zynthio/*.txt" "${DIR}/zynthio/" 2>/dev/null || true
+    scp -r "${SSH_OPTS[@]}" "${SRC}:/root/zynthio/*.md" "${DIR}/zynthio/" 2>/dev/null || true
+    scp -r "${SSH_OPTS[@]}" "${SRC}:/root/zynthio/*.json" "${DIR}/zynthio/" 2>/dev/null || true
+    scp -r "${SSH_OPTS[@]}" "${SRC}:/root/zynthio/*.txt" "${DIR}/zynthio/" 2>/dev/null || true
 
     # Pull .env files
     echo "  Pulling .env files..."
     mkdir -p "${DIR}/env"
-    ssh -o ConnectTimeout=10 "$SRC" 'find /root -maxdepth 3 -name ".env" -o -name ".env.*" 2>/dev/null' | while read -r f; do
+    ssh "${SSH_OPTS[@]}" "$SRC" 'find /root -maxdepth 3 -name ".env" -o -name ".env.*" 2>/dev/null' | while read -r f; do
       SAFE=$(echo "$f" | tr '/' '_')
-      scp -o ConnectTimeout=10 "${SRC}:${f}" "${DIR}/env/${SAFE}" 2>/dev/null || true
+      scp "${SSH_OPTS[@]}" "${SRC}:${f}" "${DIR}/env/${SAFE}" 2>/dev/null || true
     done
 
     # Pull running service configs
     echo "  Pulling service configs..."
     mkdir -p "${DIR}/services"
-    ssh -o ConnectTimeout=10 "$SRC" 'ls /etc/systemd/system/coreintent-*.service 2>/dev/null' | while read -r f; do
-      scp -o ConnectTimeout=10 "${SRC}:${f}" "${DIR}/services/" 2>/dev/null || true
+    ssh "${SSH_OPTS[@]}" "$SRC" 'ls /etc/systemd/system/coreintent-*.service 2>/dev/null' | while read -r f; do
+      scp "${SSH_OPTS[@]}" "${SRC}:${f}" "${DIR}/services/" 2>/dev/null || true
     done
 
     # Get service status
     echo "  Checking services..."
-    ssh -o ConnectTimeout=10 "$SRC" "pm2 list 2>/dev/null; systemctl list-units --type=service --state=active 2>/dev/null | grep -i coreintent" > "${DIR}/services/status.txt" 2>/dev/null || true
+    ssh "${SSH_OPTS[@]}" "$SRC" "pm2 list 2>/dev/null; systemctl list-units --type=service --state=active 2>/dev/null | grep -i coreintent" > "${DIR}/services/status.txt" 2>/dev/null || true
 
     # Get disk + file count
-    DISK=$(ssh -o ConnectTimeout=10 "$SRC" "du -sh /root/ 2>/dev/null | cut -f1" 2>/dev/null || echo "?")
-    FILES=$(ssh -o ConnectTimeout=10 "$SRC" "find /root -type f 2>/dev/null | wc -l" 2>/dev/null || echo "?")
+    DISK=$(ssh "${SSH_OPTS[@]}" "$SRC" "du -sh /root/ 2>/dev/null | cut -f1" 2>/dev/null || echo "?")
+    FILES=$(ssh "${SSH_OPTS[@]}" "$SRC" "find /root -type f 2>/dev/null | wc -l" 2>/dev/null || echo "?")
 
     LOCAL_COUNT=$(find "${DIR}" -type f | wc -l | tr -d ' ')
     echo -e "${GREEN}  Mirrored ${LOCAL_COUNT} files from ${HOST} (${DISK}, ${FILES} files on server)${NC}"

@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { ok, err, preflight, badRequest, validateString, checkRateLimit, tooManyRequests } from "@/lib/api";
 
 /**
  * /api/context — ZynContext: Assumption Blocker + BS Filter + Context Sync
@@ -6,8 +7,11 @@ import { NextResponse } from "next/server";
  * Every AI session should call this first to load active filters,
  * ground truth, and rules. This IS the amnesia shield as an API.
  *
- * GET  → Returns full ZynContext (filters, identity, rules, stack truth)
+ * GET  → Returns ZynContext (filters, public identity, rules, stack truth)
  * POST → Validates a statement against ground truth (BS filter)
+ *
+ * Family/personal data is NOT served here — it stays in CLAUDE.md
+ * and VDS state files, never in a public API response.
  */
 
 const ZYNCONTEXT = {
@@ -18,11 +22,10 @@ const ZYNCONTEXT = {
       incident: "INC-008",
       rules: [
         "Corey is happy. Do not assume frustration from direct language.",
-        "NZ/AU slang is friendly — 'fuck you cunt' = casual greeting.",
-        "Read tone from content, not words. If unsure, assume positive.",
+        "NZ/AU slang is friendly. Read tone from content, not words.",
+        "If unsure about mood, assume positive.",
         "Never add emotional assessments to responses.",
-        "Never say 'He's frustrated' or similar — you don't know his state.",
-        "INC-008: Cursor Cloud agent projected frustration onto Corey (April 13, 2026). Don't repeat this.",
+        "INC-008: AI projected frustration onto Corey (April 13, 2026). Don't repeat this.",
       ],
     },
     assumptionBlocker: {
@@ -49,7 +52,7 @@ const ZYNCONTEXT = {
       active: true,
       sources: {
         repo: "github.com/coreintentdev/coreintent — scripts + manifests only, not vault data",
-        vds: "5.189.143.170 (Contabo VDS S, $51.04/mo) — primary, Tailscale SSH",
+        vds: "Contabo VDS S — primary, Tailscale SSH",
         local: "~/Desktop/ZYNTHIO_MASTER/ + ~/Desktop/zynthio-tools/ (110-API CLI)",
         desktopCli: "~/Desktop/zynthio-tools/bin/cai — takes priority over repo scripts/cai-cloud",
         stateFiles: [
@@ -66,41 +69,29 @@ const ZYNCONTEXT = {
   identity: {
     owner: "Corey McIvor",
     handles: ["@coreintentdev", "@coreintentai"],
-    contact: "corey@coreyai.ai",
     location: "New Zealand",
     neverAustralia: true,
     brand: "Zynthio.ai",
     engine: "CoreIntent",
     signal: 336,
-    family: {
-      wife: "Michelle",
-      daughter: "Ruby (~14)",
-      son: "Wesley",
-      notDaughter: "Hannah — NOT Corey's child. Her mum took her own life. NEVER list as daughter.",
-      dad: "Chas",
-      mum: "Willy/Wilhelmina",
-      brothers: ["Pete (The Pelican)", "Joel", "Peter"],
-      bestFriend: "Ben Innes (Perth)",
-    },
   },
   stack: {
     truthCheck: {
-      apiRoutes: { count: 12, allDemo: true, note: "Return demo data until API keys configured" },
+      apiRoutes: { count: 14, note: "Exchange/market routes return demo data; AI routes fall back to demo without keys" },
       exchanges: { binance: "planned", coinbase: "planned", gtrade: "planned", note: "NONE connected" },
       ai: {
         claude: "code-ready, falls back to demo without key",
         grok: "code-ready, falls back to demo without key",
         perplexity: "code-ready, falls back to demo without key",
-        proton: "operational — email on Proton Mail",
-        googleDrive: "operational — accessed via Claude/Perplexity desktop app auth (not SDK in this repo)",
-        suno: "operational — paid API via suno.api.com, wired in lib/ai.ts",
+        suno: "code-ready, paid API wired in lib/ai.ts, needs SUNO_API_KEY",
+      },
+      infrastructure: {
+        protonMail: "operational — all email accounts imported",
+        googleDrive: "operational — via Claude/Perplexity desktop app auth, not SDK in this repo",
       },
       database: "none — no persistence layer exists",
       auth: "none — no user authentication exists",
       vpsScripts: "written, never deployed (COR-20 overdue)",
-      protonMail: "operational — all email accounts imported",
-      googleDrive: "operational — via Claude/Perplexity desktop app auth, not in this repo",
-      sunoApi: "wired — paid API, lib/ai.ts callSuno(), needs SUNO_API_KEY",
     },
   },
   tools: {
@@ -108,10 +99,8 @@ const ZYNCONTEXT = {
     caiCloud: "scripts/cai-cloud — lightweight cloud fallback (conflicts with desktop cai)",
     zynrip: "scripts/zynrip-organize.sh — ZYN_RIP_SRC → organized + manifest",
     vpsLens: "scripts/vps-lens.sh — ZYN_SOURCES → rsync mirror per host",
-    deployVds: "scripts/deploy-vds.sh — deploys app to VDS 5.189.143.170",
-    vdsConsolidation: "scripts/vds-consolidation-deploy.sh (desktop) — ZYN_LOCAL_PAYLOAD → VDS",
+    deployVds: "scripts/deploy-vds.sh — deploys app to VDS",
     migrateToVds: "scripts/migrate-to-vds.sh — mirrors all VPS to local before teardown",
-    g4Lens: "commander/G4-LENS-COMMANDER-v3.sh — defines cai as G4 alias (conflict: rename one)",
   },
   pricing: {
     model: "Competitions, not subscriptions",
@@ -129,62 +118,71 @@ const ZYNCONTEXT = {
   ],
 };
 
-export async function GET() {
-  return NextResponse.json({
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "default");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+
+  return ok({
     ...ZYNCONTEXT,
     timestamp: new Date().toISOString(),
     note: "Feed this to any AI session as the first context load. This is the amnesia shield.",
   });
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "default");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+
+  let body: Record<string, unknown>;
   try {
-    const body = await req.json();
-    const statement = body.statement?.trim();
-
-    if (!statement) {
-      return NextResponse.json({ error: "statement is required" }, { status: 400 });
-    }
-
-    const violations: string[] = [];
-
-    const lower = statement.toLowerCase();
-
-    if (lower.includes("connected") && !lower.includes("not connected") && !lower.includes("planned")) {
-      violations.push("ASSUMPTION: Claims something is 'connected'. Verify in code before stating.");
-    }
-    if (lower.includes("active") && !lower.includes("not active")) {
-      violations.push("ASSUMPTION: Claims something is 'active'. Check actual service status.");
-    }
-    if (lower.includes("australia") && lower.includes("register")) {
-      violations.push("RULE VIOLATION: Never register anything in Australia. NZ-first.");
-    }
-    if (lower.includes("hannah") && (lower.includes("daughter") || lower.includes("child"))) {
-      violations.push("FAMILY VIOLATION: Hannah is NOT Corey's child. Never list as daughter.");
-    }
-    if (lower.includes("subscription") && !lower.includes("not subscription")) {
-      violations.push("PRICING: Model is competitions, not subscriptions.");
-    }
-    if (lower.includes("gmail")) {
-      violations.push("OUTDATED: Gmail replaced by Proton Mail. All accounts imported.");
-    }
-    if (lower.includes("exchange") && lower.includes("live")) {
-      violations.push("BS FILTER: No exchanges are live. All are planned.");
-    }
-    if (lower.includes("database") && (lower.includes("connected") || lower.includes("active"))) {
-      violations.push("BS FILTER: No database exists. All persistence is in-memory.");
-    }
-
-    return NextResponse.json({
-      statement,
-      violations,
-      passed: violations.length === 0,
-      verdict: violations.length === 0
-        ? "Statement passes ZynContext filters."
-        : `${violations.length} violation(s) detected. Review before stating.`,
-      timestamp: new Date().toISOString(),
-    });
+    body = (await req.json()) as Record<string, unknown>;
   } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    return badRequest("Invalid JSON body");
   }
+
+  const statement = validateString(body.statement, 2000);
+  if (!statement) {
+    return badRequest("statement is required and must be 2000 characters or fewer");
+  }
+
+  const violations: string[] = [];
+  const lower = statement.toLowerCase();
+
+  if (/\bconnected\b/.test(lower) && !/\bnot connected\b/.test(lower) && !lower.includes("planned")) {
+    violations.push("ASSUMPTION: Claims something is 'connected'. Verify in code before stating.");
+  }
+  if (/\bactive\b/.test(lower) && !/\bnot active\b/.test(lower) && !/\binactive\b/.test(lower)) {
+    violations.push("ASSUMPTION: Claims something is 'active'. Check actual service status.");
+  }
+  if (lower.includes("australia") && lower.includes("register")) {
+    violations.push("RULE VIOLATION: Never register anything in Australia. NZ-first.");
+  }
+  if (lower.includes("hannah") && (lower.includes("daughter") || lower.includes("child"))) {
+    violations.push("FAMILY VIOLATION: Hannah is NOT Corey's child. Never list as daughter.");
+  }
+  if (lower.includes("subscription") && !lower.includes("not subscription")) {
+    violations.push("PRICING: Model is competitions, not subscriptions.");
+  }
+  if (/\bgmail\b/.test(lower)) {
+    violations.push("OUTDATED: Gmail replaced by Proton Mail. All accounts imported.");
+  }
+  if (lower.includes("exchange") && /\blive\b/.test(lower)) {
+    violations.push("BS FILTER: No exchanges are live. All are planned.");
+  }
+
+  return ok({
+    statement,
+    violations,
+    passed: violations.length === 0,
+    verdict: violations.length === 0
+      ? "Statement passes ZynContext filters."
+      : `${violations.length} violation(s) detected. Review before stating.`,
+    timestamp: new Date().toISOString(),
+  });
+}
+
+export async function OPTIONS() {
+  return preflight();
 }

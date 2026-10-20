@@ -89,7 +89,7 @@ export async function GET(req: NextRequest) {
       macTheZipper: { status: "ready",   role: "Compression & packaging"       },
       pdfPlumber:   { status: "ready",   role: "Document parsing"              },
       aiTransfer:   { status: "ready",   role: "Cross-model context pipeline"  },
-      songpal:      { status: "active",  role: "Music layer — Suno paid API"   },
+      songpal:      { status: process.env.SUNO_API_KEY ? "active" : "planned", role: "Music layer — Suno paid API" },
       f18:          { status: "ready",   role: "Digital identity protection"   },
     };
 
@@ -101,7 +101,8 @@ export async function GET(req: NextRequest) {
 
     const summary = {
       total,
-      live:    infraValues.filter((s) => s.status === "live" || s.status === "active").length,
+      live:    infraValues.filter((s) => s.status === "live" || s.status === "active").length +
+               toolValues.filter((s) => s.status === "active").length,
       /** AI services with keys configured but not yet verified live (key present, not called). */
       keyed:   aiValues.filter((s) => s.status === "keyed").length,
       demo:    aiValues.filter((s) => s.status === "demo").length,

@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { ok, badRequest, preflight, checkRateLimit, tooManyRequests, validateString } from "@/lib/api";
 
 /**
  * /api/music — SongPal Music API
@@ -6,9 +7,12 @@ import { NextResponse } from "next/server";
  * GET  → Returns track catalog + stats
  * POST → Add tracks (from cai rip, Suno export, or manual entry)
  *
- * In-memory until database layer is added.
- * Accepts bulk uploads from local CLI: cai tracks --push
+ * In-memory until a persistence layer (KV/D1) is added.
+ * On Workers, isolate memory is not durable — tracks reset between cold starts.
  */
+
+const MAX_CATALOG_SIZE = 5000;
+const MAX_BATCH_SIZE = 200;
 
 interface Track {
   id: number;
@@ -24,8 +28,12 @@ interface Track {
 const catalog: Track[] = [];
 let nextId = 1;
 
-export async function GET() {
-  return NextResponse.json({
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "default");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+
+  return ok({
     tracks: catalog,
     count: catalog.length,
     sources: {
@@ -40,52 +48,72 @@ export async function GET() {
   });
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anon";
+  const limit = await checkRateLimit(ip, "default");
+  if (limit.limited) return tooManyRequests(limit.retryAfter ?? 60);
+
+  let body: Record<string, unknown>;
   try {
-    const body = await req.json();
-
-    if (Array.isArray(body.tracks)) {
-      const added: Track[] = [];
-      for (const t of body.tracks) {
-        const track: Track = {
-          id: nextId++,
-          title: t.title || t.filename || `Track ${nextId}`,
-          artist: t.artist || "Corey McIvor",
-          source: t.source || "suno",
-          genre: t.genre || "unknown",
-          duration: t.duration || 0,
-          filename: t.filename || "",
-          addedAt: new Date().toISOString(),
-        };
-        catalog.push(track);
-        added.push(track);
-      }
-      return NextResponse.json({
-        success: true,
-        added: added.length,
-        total: catalog.length,
-      });
-    }
-
-    const title = body.title?.trim();
-    if (!title) {
-      return NextResponse.json({ error: "title is required (or send {tracks: [...]})" }, { status: 400 });
-    }
-
-    const track: Track = {
-      id: nextId++,
-      title,
-      artist: body.artist || "Corey McIvor",
-      source: body.source || "original",
-      genre: body.genre || "unknown",
-      duration: body.duration || 0,
-      filename: body.filename || "",
-      addedAt: new Date().toISOString(),
-    };
-    catalog.push(track);
-
-    return NextResponse.json({ success: true, track, total: catalog.length });
+    body = (await req.json()) as Record<string, unknown>;
   } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    return badRequest("Invalid JSON body");
   }
+
+  if (catalog.length >= MAX_CATALOG_SIZE) {
+    return badRequest(`Catalog full (max ${MAX_CATALOG_SIZE} tracks)`);
+  }
+
+  if (Array.isArray(body.tracks)) {
+    if (body.tracks.length > MAX_BATCH_SIZE) {
+      return badRequest(`Batch too large (max ${MAX_BATCH_SIZE} tracks per request)`);
+    }
+    if (catalog.length + body.tracks.length > MAX_CATALOG_SIZE) {
+      return badRequest(`Would exceed catalog limit (${MAX_CATALOG_SIZE}). Current: ${catalog.length}`);
+    }
+
+    const added: Track[] = [];
+    for (const t of body.tracks) {
+      if (!t || typeof t !== "object") continue;
+      const raw = t as Record<string, unknown>;
+      const id = nextId++;
+      const track: Track = {
+        id,
+        title: validateString(raw.title, 200) || validateString(raw.filename, 200) || `Track ${id}`,
+        artist: validateString(raw.artist, 200) || "Corey McIvor",
+        source: validateString(raw.source, 50) || "suno",
+        genre: validateString(raw.genre, 50) || "unknown",
+        duration: typeof raw.duration === "number" && raw.duration >= 0 ? raw.duration : 0,
+        filename: validateString(raw.filename, 500) || "",
+        addedAt: new Date().toISOString(),
+      };
+      catalog.push(track);
+      added.push(track);
+    }
+    return ok({ added: added.length, total: catalog.length });
+  }
+
+  const title = validateString(body.title, 200);
+  if (!title) {
+    return badRequest("title is required (max 200 chars), or send {tracks: [...]}");
+  }
+
+  const id = nextId++;
+  const track: Track = {
+    id,
+    title,
+    artist: validateString(body.artist, 200) || "Corey McIvor",
+    source: validateString(body.source, 50) || "original",
+    genre: validateString(body.genre, 50) || "unknown",
+    duration: typeof body.duration === "number" && (body.duration as number) >= 0 ? (body.duration as number) : 0,
+    filename: validateString(body.filename, 500) || "",
+    addedAt: new Date().toISOString(),
+  };
+  catalog.push(track);
+
+  return ok({ track, total: catalog.length });
+}
+
+export async function OPTIONS() {
+  return preflight();
 }
