@@ -18,6 +18,7 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Agents are code-ready, not running
 
 ## Rules for AI Sessions
+0. READ `MASTER_HANDOVER.md` and `docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md` FIRST — then old handovers. Do not wait for Corey to re-explain.
 1. READ before you write. Start with `docs/ops/HANDOVER-20261005.md`, then `docs/skills/cloud-agent-starter.md`. Search the codebase before assuming anything.
 2. NEVER say something is "connected" or "active" unless you've verified it works.
 3. NEVER fabricate family data. If unsure, say "I don't know."
@@ -41,9 +42,11 @@ Based in: New Zealand (NEVER register anything in Australia)
 - Documented Contabo VDS public origin: 5.189.143.170
 - Documented Tailscale: 100.121.107.112
 - Retired Cloudzy address: 100.122.99.34 — do not deploy there
+- Canonical git remote: `vds-public:/root/git/zyn.git` — use `./scripts/vds-handover-all.sh`
 - These hosts were copied from the 2026-09-30 fleet map. They were not probed by the session that wrote this.
 - Scripts in this repo are not deployed. deploy-vps.sh stops if SSH fails.
-- VPS state files: SESSION_STATE.md, MASTER_HANDOVER.md, TODO_MASTER_LIVE.md, COREY_WORDS.md
+- VPS state files on server: SESSION_STATE.md, COREY_WORDS.md (pull via `./scripts/vps-lens.sh`)
+- Repo handover files: `MASTER_HANDOVER.md`, `TODO_MASTER_LIVE.md`, `docs/HANDOVER_ACCOUNTABILITY_2026-04-21.md`
 
 ## Already paid inventories — read these, do not re-ask
 - This website has 14 demo routes. The list is `lib/stack-record.ts`. There is no 110-route catalog in this repo.
